@@ -1,0 +1,33 @@
+<div class="main-content">
+    <div class="container-fluid">
+      <div class="container-fluid">
+        <div class="header text-center">
+          <h3 class="title">Weather Forecast</h3>
+          
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+        
+                <table class="table">
+                    <thead class="thead-light">
+                        <tr>
+                            <th class="th">Date</th>
+                            <th class="th">Celcius</th>
+                            <th class="th">Farenheit</th>
+                            <th class="th">Summary</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let pd of service.wlist">
+                            <td >{{pd.date}}</td>
+                            <td >{{pd.temperatureC}}</td>
+                            <td >{{pd.temperatureF}}</td>
+                            <td >{{pd.summary}}</td> 
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
