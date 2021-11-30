@@ -22,7 +22,17 @@ export const AppRoutes: Routes = [
         path: 'weather',
         loadChildren: () => import('./weather/weather.module').then(m => m.WeatherModule)
         //component: WeatherComponent
-    }
+    },
+    {
+      path: 'formList',
+      loadChildren: () => import('./form-list/form-list.module').then(m => m.FormListModule)
+      //component: formList Component 
+  },
+  {
+    path: 'formDesign',
+    loadChildren: () => import('./form-design/form-design.module').then(m => m.FormDesignModule)
+    //component: formList Component 
+}
   ]}, {
       path: '',
       component: AuthLayoutComponent,

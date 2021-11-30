@@ -45,6 +45,12 @@ export const ROUTES: RouteInfo[] = [{
         title: 'Weather',
         type: 'link',
         icontype: 'cloud'
+    },
+    {
+        path: '/formList',
+        title: 'Form',
+        type: 'link',
+        icontype: 'feed'
     }
 ];
 @Component({

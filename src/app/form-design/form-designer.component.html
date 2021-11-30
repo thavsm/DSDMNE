@@ -1,0 +1,1357 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="container-fluid">
+            <div class="row">
+                <div>
+                    <div cdkDropListGroup>
+                        <!-- Form type list -->
+                        <div class="example-container"
+                            style="margin-left: 0%;width: 200px;height: 50px;position: fixed;">
+                            <!-- Header Of form types -->
+                            <h2>Field Types</h2>
+                            <!-- <p>Drag field types to form design on the right</p> -->
+                            <!-- Header Of form types end-->
+
+                            <!-- Form types -->
+                            <div cdkDropList [cdkDropListData]="fieldTypes" class="example-list"
+                                style="text-align: center">
+                                <div class="example-box" *ngFor="let item of fieldTypes" cdkDrag
+                                    style="text-align: center;font-size: small;height: 1px;background-color: whitesmoke;">
+                                    <div>
+                                        <p style="color: black;font-weight:500;">{{item.label}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Form types end-->
+
+                        </div>
+
+                        <!-- Form Design Layout -->
+                        <div class="example-container" style="width: 700px;margin-left: 35%;">
+                            <!-- Header Of form builder -->
+                            <h2>Form Name</h2>
+                            <h4>Form Description:Tells us more about the form</h4>
+                            <div style="margin-left: -0.5%;width: 250px;">
+                                <!-- <mat-icon>save</mat-icon> -->
+                                <button class="btn btn-md"
+                                    style="background-color: crimson;color: white;font-weight: 400;width: 100px;">Save</button>
+                                &nbsp;
+                                <!-- <mat-icon>preview</mat-icon> -->
+                                <button class="btn btn-md"
+                                    style="background-color: crimson;color: white;font-weight: 400;width: 100px;">Preview</button>
+                            </div>
+                            <div style="height: 10px;"></div>
+                            <!-- Header Of form builder End-->
+
+                            <!-- Form Builder -->
+                            <div cdkDropList [cdkDropListData]="formDesign" class="example-list"
+                                (cdkDropListDropped)="drop($event)" style="background: gainsboro;">
+                                <div class="example-box" *ngFor="let item of formDesign;let i= index;" cdkDrag
+                                    style="background-color: whitesmoke;border-color: darkgrey;border-style:dashed;border-width: 2px;">
+                                    <!-- Attachment Type -->
+                                    <div *ngIf="item.type=='attachment'">
+                                        <div style="margin-right: 96%;">
+                                            <mat-icon>{{item.icon}}</mat-icon>
+                                        </div>
+                                        <label>{{i+1}}.{{item.Question}}</label>
+                                        <!-- <label *ngIf="item.required" class="text-danger">*</label> -->
+                                        <input type="file" class="form-control" style="width:576px;">
+                                        <small class="form-text text-danger">(File can't be uploaded right now)</small>
+                                        <!--#region attributes tab  -->
+                                        <div *ngIf="item.toggle">
+                                            <hr>
+                                            <h2 style="color: grey;font-weight: bold;"><u>Field Details:</u></h2>
+                                            <mat-tab-group title="Field Attributes">
+                                                <mat-tab label="Field Attributes">
+                                                    <div class="form-group">
+                                                        <label>Question Name:</label>
+                                                        <input class="form-control" type="text"
+                                                            [(ngModel)]="item.Question" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Friendly Name:</label>
+                                                        <input class="form-control" type="text"
+                                                            [(ngModel)]="item.name" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Tooltip</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Displayable</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Locked</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Group Name</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                </mat-tab>
+                                                <mat-tab label="Field Style">
+                                                    <div class="form-group">
+                                                        <label>Width:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Height:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>CSS Class</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                </mat-tab>
+                                                <mat-tab label="Field Validation">
+                                                    <div class="form-group">
+                                                        <label>Max File Size</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Editable</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Hidden</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Required</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                        <!-- Add Advanced Validation -->
+                                                    </div>
+                                                </mat-tab>
+                                            </mat-tab-group>
+                                        </div>
+                                        <!--#endregion -->
+                                    </div>
+
+                                    <!-- Calculation Type -->
+                                    <div *ngIf="item.type=='calculation'">
+                                        <div style="margin-right: 96%;">
+                                            <mat-icon>{{item.icon}}</mat-icon>
+                                        </div>
+                                        <label>{{i+1}}.{{item.Question}}</label>
+                                        <!-- <label *ngIf="item.required" class="text-danger">*</label> -->
+                                        <input type="text" class="form-control" style="width:576px;" readonly
+                                            placeholder="Your Calculation">
+                                        <!--#region attributes tab  -->
+                                        <div *ngIf="item.toggle">
+                                            <hr>
+                                            <h2 style="color: grey;font-weight: bold;"><u>Field Details:</u></h2>
+                                            <mat-tab-group title="Field Attributes">
+                                                <mat-tab label="Field Attributes ">
+                                                    <div class="form-group">
+                                                        <label>Question Name:</label>
+                                                        <input class="form-control" type="text"
+                                                            [(ngModel)]="item.Question" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Friendly Name:</label>
+                                                        <input class="form-control" type="text"
+                                                            [(ngModel)]="item.name" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Tooltip</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Displayable</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Locked</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Group Name</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                </mat-tab>
+                                                <mat-tab label="Calculation Config">
+                                                    <h1>Configure calculation</h1>
+                                                </mat-tab>
+                                                <mat-tab label="Field Style">
+                                                    <div class="form-group">
+                                                        <label>Width:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Height:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>CSS Class</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                </mat-tab>
+                                                <mat-tab label="Field Validation">
+                                                    <div class="form-group">
+                                                        <label>Data Length:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Editable</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Hidden</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Required</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                        <!-- Add Advanced Validation -->
+                                                    </div>
+                                                </mat-tab>
+                                            </mat-tab-group>
+                                        </div>
+                                        <!--#endregion -->
+                                    </div>
+
+                                    <!-- Checkbox Type -->
+                                    <div *ngIf="item.type=='checkbox'">
+                                        <div style="margin-right: 96%;">
+                                            <mat-icon>{{item.icon}}</mat-icon>
+                                        </div>
+                                        <label>{{i+1}}.{{item.Question}}</label>
+                                        <!-- <label *ngIf="item.required" class="text-danger">*</label> -->
+                                        <div *ngFor="let v of item.values" class="inline-form-group"
+                                            style="width:576px;">
+                                            <label class="cust-check-bx">
+                                                <input type="checkbox" [value]="v.value" name="{{item.name}}">
+                                                {{v.label}}
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+                                        <!--#region attributes tab  -->
+                                        <div *ngIf="item.toggle">
+                                            <hr>
+                                            <h2 style="color: grey;font-weight: bold;"><u>Field Details:</u></h2>
+                                            <mat-tab-group title="Field Attributes">
+                                                <mat-tab label="Field Attributes ">
+                                                    <div class="form-group">
+                                                        <label>Question Name:</label>
+                                                        <input class="form-control" type="text"
+                                                            [(ngModel)]="item.Question" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Friendly Name:</label>
+                                                        <input class="form-control" type="text"
+                                                            [(ngModel)]="item.name" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Tooltip</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Displayable</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Locked</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Group Name</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Values(Comma Seperated)</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                </mat-tab>
+                                                <mat-tab label="Field Style">
+                                                    <div class="form-group">
+                                                        <label>Width:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Height:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>CSS Class</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                </mat-tab>
+                                                <mat-tab label="Field Validation">
+                                                    <div class="form-group">
+                                                        <label>Data Length:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Editable</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Hidden</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Required</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                        <!-- Add Advanced Validation -->
+                                                    </div>
+                                                </mat-tab>
+                                            </mat-tab-group>
+                                        </div>
+                                        <!--#endregion -->
+                                    </div>
+
+                                    <!-- Date Type -->
+                                    <div *ngIf="item.type=='date'">
+                                        <div style="margin-right: 96%;">
+                                            <mat-icon>{{item.icon}}</mat-icon>
+                                        </div>
+                                        <label>{{i+1}}.{{item.Question}}</label>
+                                        <!-- <label *ngIf="item.required" class="text-danger">*</label> -->
+                                        <input type="date" class="form-control" id="{{item.name}}" style="width:576px;"
+                                            placeholder="Select Date">
+                                        <!--#region attributes tab  -->
+                                        <div *ngIf="item.toggle">
+                                            <hr>
+                                            <h2 style="color: grey;font-weight: bold;"><u>Field Details:</u></h2>
+                                            <mat-tab-group title="Field Attributes">
+                                                <mat-tab label="Field Attributes ">
+                                                    <div class="form-group">
+                                                        <label>Question Name:</label>
+                                                        <input class="form-control" type="text"
+                                                            [(ngModel)]="item.Question" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Friendly Name:</label>
+                                                        <input class="form-control" type="text"
+                                                            [(ngModel)]="item.name" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Tooltip</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Displayable</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Locked</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Group Name</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                </mat-tab>
+                                                <mat-tab label="Field Style">
+                                                    <div class="form-group">
+                                                        <label>Width:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Height:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>CSS Class</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                </mat-tab>
+                                                <mat-tab label="Field Validation">
+                                                    <div class="form-group">
+                                                        <label>Data Length:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Editable</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Hidden</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Required</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                        <!-- Add Advanced Validation -->
+                                                    </div>
+                                                </mat-tab>
+                                            </mat-tab-group>
+                                        </div>
+                                        <!--#endregion -->
+                                    </div>
+
+                                    <!-- Email Type -->
+                                    <div *ngIf="item.type=='email'">
+                                        <div style="margin-right: 96%;">
+                                            <mat-icon>{{item.icon}}</mat-icon>
+                                        </div>
+                                        <label>{{i+1}}.{{item.Question}}</label>
+                                        <!-- <label *ngIf="item.required" class="text-danger">*</label> -->
+                                        <input type="email" class="form-control" style="width:576px;"
+                                            placeholder="Enter Email address">
+                                        <!--#region attributes tab  -->
+                                        <div *ngIf="item.toggle">
+                                            <hr>
+                                            <h2 style="color: grey;font-weight: bold;"><u>Field Details:</u></h2>
+                                            <mat-tab-group title="Field Attributes">
+                                                <mat-tab label="Field Attributes ">
+                                                    <div class="form-group">
+                                                        <label>Question Name:</label>
+                                                        <input class="form-control" type="text"
+                                                            [(ngModel)]="item.Question" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Friendly Name:</label>
+                                                        <input class="form-control" type="text"
+                                                            [(ngModel)]="item.name" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Tooltip</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Displayable</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Locked</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Group Name</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                </mat-tab>
+                                                <mat-tab label="Field Style">
+                                                    <div class="form-group">
+                                                        <label>Width:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Height:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>CSS Class</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                </mat-tab>
+                                                <mat-tab label="Field Validation">
+                                                    <div class="form-group">
+                                                        <label>Data Length:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Editable</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Hidden</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Required</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                        <!-- Add Advanced Validation -->
+                                                    </div>
+                                                </mat-tab>
+                                            </mat-tab-group>
+                                        </div>
+                                        <!--#endregion -->
+                                    </div>
+
+                                    <!-- Embedded Form Type -->
+                                    <div *ngIf="item.type=='embeddedform'">
+                                        <div style="margin-right: 96%;">
+                                            <mat-icon>{{item.icon}}</mat-icon>
+                                        </div>
+                                        <label>{{i+1}}.{{item.Question}}</label>
+                                        <!-- <label *ngIf="item.required" class="text-danger">*</label> -->
+                                        <select class="form-control" id="{{item.name}}" style="width:576px;">
+                                            <option *ngFor="let v of item.values" [value]="v.value">{{v.label}}</option>
+                                        </select>
+                                        <!--#region attributes tab  -->
+                                        <div *ngIf="item.toggle">
+                                            <hr>
+                                            <h2 style="color: grey;font-weight: bold;"><u>Field Details:</u></h2>
+                                            <mat-tab-group title="Field Attributes">
+                                                <mat-tab label="Field Attributes ">
+                                                    <div class="form-group">
+                                                        <label>Question Name:</label>
+                                                        <input class="form-control" type="text"
+                                                            [(ngModel)]="item.Question" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Friendly Name:</label>
+                                                        <input class="form-control" type="text"
+                                                            [(ngModel)]="item.name" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Tooltip</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Displayable</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Locked</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Group Name</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                </mat-tab>
+                                                <mat-tab label="Field Style">
+                                                    <div class="form-group">
+                                                        <label>Width:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Height:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>CSS Class</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                </mat-tab>
+                                                <mat-tab label="Field Validation">
+                                                    <div class="form-group">
+                                                        <label>Data Length:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Editable</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Hidden</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Required</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                        <!-- Add Advanced Validation -->
+                                                    </div>
+                                                </mat-tab>
+                                            </mat-tab-group>
+                                        </div>
+                                        <!--#endregion -->
+                                    </div>
+
+                                    <!-- Macro Type -->
+                                    <div *ngIf="item.type=='macro'">
+                                        <div style="margin-right: 96%;">
+                                            <mat-icon>{{item.icon}}</mat-icon>
+                                        </div>
+                                        <label>{{i+1}}.{{item.Question}}</label>
+                                        <!-- <label *ngIf="item.required" class="text-danger">*</label> -->
+                                        <input type="text" class="form-control" style="width:576px;"
+                                            placeholder="Enter Macro">
+                                        <!--#region attributes tab  -->
+                                        <div *ngIf="item.toggle">
+                                            <hr>
+                                            <h2 style="color: grey;font-weight: bold;"><u>Field Details:</u></h2>
+                                            <mat-tab-group title="Field Attributes">
+                                                <mat-tab label="Field Attributes ">
+                                                    <div class="form-group">
+                                                        <label>Question Name:</label>
+                                                        <input class="form-control" type="text"
+                                                            [(ngModel)]="item.Question" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Friendly Name:</label>
+                                                        <input class="form-control" type="text"
+                                                            [(ngModel)]="item.name" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Tooltip</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Displayable</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Locked</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Group Name</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                </mat-tab>
+                                                <mat-tab label="Macro Config">
+
+                                                </mat-tab>
+                                                <mat-tab label="Field Style">
+                                                    <div class="form-group">
+                                                        <label>Width:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Height:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>CSS Class</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                </mat-tab>
+                                                <mat-tab label="Field Validation">
+                                                    <div class="form-group">
+                                                        <label>Data Length:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Editable</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Hidden</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Required</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                        <!-- Add Advanced Validation -->
+                                                    </div>
+                                                </mat-tab>
+                                            </mat-tab-group>
+                                        </div>
+                                        <!--#endregion -->
+                                    </div>
+
+                                    <!-- Number Type -->
+                                    <div *ngIf="item.type=='number'">
+                                        <div style="margin-right: 96%;">
+                                            <mat-icon>{{item.icon}}</mat-icon>
+                                        </div>
+                                        <label>{{i+1}}.{{item.Question}}</label>
+                                        <!-- <label *ngIf="item.required" class="text-danger">*</label> -->
+                                        <input type="number" class="form-control" style="width:576px;"
+                                            placeholder="Enter value">
+                                        <!--#region attributes tab  -->
+                                        <div *ngIf="item.toggle">
+                                            <hr>
+                                            <h2 style="color: grey;font-weight: bold;"><u>Field Details:</u></h2>
+                                            <mat-tab-group title="Field Attributes">
+                                                <mat-tab label="Field Attributes ">
+                                                    <div class="form-group">
+                                                        <label>Question Name:</label>
+                                                        <input class="form-control" type="text"
+                                                            [(ngModel)]="item.Question" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Friendly Name:</label>
+                                                        <input class="form-control" type="text"
+                                                            [(ngModel)]="item.name" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Tooltip</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Displayable</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Locked</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Group Name</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                </mat-tab>
+                                                <mat-tab label="Field Style">
+                                                    <div class="form-group">
+                                                        <label>Width:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Height:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>CSS Class</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                </mat-tab>
+                                                <mat-tab label="Field Validation">
+                                                    <div class="form-group">
+                                                        <label>Data Length:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Editable</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Hidden</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Required</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                        <!-- Add Advanced Validation -->
+                                                    </div>
+                                                </mat-tab>
+                                            </mat-tab-group>
+                                        </div>
+                                        <!--#endregion -->
+                                    </div>
+
+                                    <!-- Radio Type -->
+                                    <div *ngIf="item.type=='radio'">
+                                        <div style="margin-right: 96%;">
+                                            <mat-icon>{{item.icon}}</mat-icon>
+                                        </div>
+                                        <label>{{i+1}}.{{item.Question}}</label>
+                                        <!-- <label *ngIf="item.required" class="text-danger">*</label> -->
+                                        <div *ngFor="let v of item.values" class="inline-form-group"
+                                            style="width:576px;">
+                                            <label class="cust-check-bx">
+                                                <input type="radio" [value]="v.value" name="{{item.name}}"> {{v.label}}
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+                                        <!--#region attributes tab  -->
+                                        <div *ngIf="item.toggle">
+                                            <hr>
+                                            <h2 style="color: grey;font-weight: bold;"><u>Field Details:</u></h2>
+                                            <mat-tab-group title="Field Attributes">
+                                                <mat-tab label="Field Attributes ">
+                                                    <div class="form-group">
+                                                        <label>Question Name:</label>
+                                                        <input class="form-control" type="text"
+                                                            [(ngModel)]="item.Question" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Friendly Name:</label>
+                                                        <input class="form-control" type="text"
+                                                            [(ngModel)]="item.name" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Tooltip</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Displayable</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Locked</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Group Name</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Values(Comma Seperated)</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                </mat-tab>
+                                                <mat-tab label="Field Style">
+                                                    <div class="form-group">
+                                                        <label>Width:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Height:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>CSS Class</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                </mat-tab>
+                                                <mat-tab label="Field Validation">
+                                                    <div class="form-group">
+                                                        <label>Data Length:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Editable</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Hidden</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Required</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                        <!-- Add Advanced Validation -->
+                                                    </div>
+                                                </mat-tab>
+                                            </mat-tab-group>
+                                        </div>
+                                        <!--#endregion -->
+                                    </div>
+
+                                    <!-- Group Type -->
+                                    <div *ngIf="item.type=='repeatgroup'">
+                                        <div style="margin-right: 96%;">
+                                            <mat-icon>{{item.icon}}</mat-icon>
+                                        </div>
+                                        <label>{{i+1}}.{{item.Question}}</label>
+                                        <!-- <label *ngIf="item.required" class="text-danger">*</label> -->
+                                        <div
+                                            style="background:paleturquoise;width:576px;height: 50px;  border-radius: 25px;">
+
+                                        </div>
+                                        <!--#region attributes tab  -->
+                                        <div *ngIf="item.toggle">
+                                            <hr>
+                                            <h2 style="color: grey;font-weight: bold;"><u>Field Details:</u></h2>
+                                            <mat-tab-group title="Field Attributes">
+                                                <mat-tab label="Field Attributes ">
+                                                    <div class="form-group">
+                                                        <label>Question Name:</label>
+                                                        <input class="form-control" type="text"
+                                                            [(ngModel)]="item.Question" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Friendly Name:</label>
+                                                        <input class="form-control" type="text"
+                                                            [(ngModel)]="item.name" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Tooltip</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Displayable</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Locked</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Group Name</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                </mat-tab>
+                                                <mat-tab label="Field Style">
+                                                    <div class="form-group">
+                                                        <label>Width:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Height:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>CSS Class</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                </mat-tab>
+                                                <mat-tab label="Field Validation">
+                                                    <div class="form-group">
+                                                        <label>Data Length:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Editable</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Hidden</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Required</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                        <!-- Add Advanced Validation -->
+                                                    </div>
+                                                </mat-tab>
+                                            </mat-tab-group>
+                                        </div>
+                                        <!--#endregion -->
+                                    </div>
+
+                                    <!-- Section Type -->
+                                    <div *ngIf="item.type=='section'">
+                                        <div style="margin-right: 96%;">
+                                            <mat-icon>{{item.icon}}</mat-icon>
+                                        </div>
+                                        <label>{{i+1}}.{{item.Question}}</label>
+                                        <!-- <label *ngIf="item.required" class="text-danger">*</label> -->
+                                        <div
+                                            style="background:palegoldenrod;width:576px;height: 50px;  border-radius: 25px;">
+
+                                        </div>
+                                        <!--#region attributes tab  -->
+                                        <div *ngIf="item.toggle">
+                                            <hr>
+                                            <h2 style="color: grey;font-weight: bold;"><u>Field Details:</u></h2>
+                                            <mat-tab-group title="Field Attributes">
+                                                <mat-tab label="Field Attributes ">
+                                                    <div class="form-group">
+                                                        <label>Question Name:</label>
+                                                        <input class="form-control" type="text"
+                                                            [(ngModel)]="item.Question" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Friendly Name:</label>
+                                                        <input class="form-control" type="text"
+                                                            [(ngModel)]="item.name" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Tooltip</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Displayable</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Locked</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Group Name</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                </mat-tab>
+                                                <mat-tab label="Field Style">
+                                                    <div class="form-group">
+                                                        <label>Width:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Height:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>CSS Class</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                </mat-tab>
+                                                <mat-tab label="Field Validation">
+                                                    <div class="form-group">
+                                                        <label>Data Length:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Editable</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Hidden</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Required</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                        <!-- Add Advanced Validation -->
+                                                    </div>
+                                                </mat-tab>
+                                            </mat-tab-group>
+                                        </div>
+                                        <!--#endregion -->
+                                    </div>
+
+                                    <!-- Dropdown Type -->
+                                    <div *ngIf="item.type=='select'">
+                                        <div style="margin-right: 96%;">
+                                            <mat-icon>{{item.icon}}</mat-icon>
+                                        </div>
+                                        <label>{{i+1}}.{{item.Question}}</label>
+                                        <!-- <label *ngIf="item.required" class="text-danger">*</label> -->
+                                        <select class="form-control" id="{{item.name}}" style="width:576px;">
+                                            <option *ngFor="let v of item.values" [value]="v.value">{{v.label}}</option>
+                                        </select>
+                                        <!--#region attributes tab  -->
+                                        <div *ngIf="item.toggle">
+                                            <hr>
+                                            <h2 style="color: grey;font-weight: bold;"><u>Field Details:</u></h2>
+                                            <mat-tab-group title="Field Attributes">
+                                                <mat-tab label="Field Attributes ">
+                                                    <div class="form-group">
+                                                        <label>Question Name:</label>
+                                                        <input class="form-control" type="text"
+                                                            [(ngModel)]="item.Question" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Friendly Name:</label>
+                                                        <input class="form-control" type="text"
+                                                            [(ngModel)]="item.name" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Tooltip</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Displayable</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Locked</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Group Name</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                </mat-tab>
+                                                <mat-tab label="Field Style">
+                                                    <div class="form-group">
+                                                        <label>Width:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Height:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>CSS Class</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                </mat-tab>
+                                                <mat-tab label="Field Validation">
+                                                    <div class="form-group">
+                                                        <label>Data Length:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Editable</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Hidden</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Required</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                        <!-- Add Advanced Validation -->
+                                                    </div>
+                                                </mat-tab>
+                                            </mat-tab-group>
+                                        </div>
+                                        <!--#endregion -->
+                                    </div>
+
+                                    <!-- Text Type -->
+                                    <div *ngIf="item.type=='text'">
+                                        <div style="margin-right: 96%;">
+                                            <mat-icon>{{item.icon}}</mat-icon>
+                                        </div>
+                                        <label>{{i+1}}.{{item.Question}}</label>
+                                        <!-- <label *ngIf="item.required" class="text-danger">*</label> -->
+                                        <input type="text" class="form-control" style="width: 880px;"
+                                            placeholder="Enter data">
+                                        <!--#region attributes tab  -->
+                                        <div *ngIf="item.toggle">
+                                            <hr>
+                                            <h2 style="color: grey;font-weight: bold;"><u>Field Details:</u></h2>
+                                            <mat-tab-group title="Field Attributes">
+                                                <mat-tab label="Field Attributes">
+                                                    <div class="form-group">
+                                                        <label>Question Name:</label>
+                                                        <input class="form-control" type="text"
+                                                            [(ngModel)]="item.Question" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Friendly Name:</label>
+                                                        <input class="form-control" type="text"
+                                                            [(ngModel)]="item.name" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Tooltip</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Displayable</label>
+                                                        <select class="form-control" style="width: 576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Locked</label>
+                                                        <select class="form-control" style="width: 576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Group Name</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                </mat-tab>
+                                                <mat-tab label="Field Style">
+                                                    <div class="form-group">
+                                                        <label>Width:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Height:</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>CSS Class</label>
+                                                        <input class="form-control" type="text" />
+                                                    </div>
+                                                </mat-tab>
+                                                <mat-tab label="Field Validation">
+                                                    <div class="form-group">
+                                                        <label>Max File Size</label>
+                                                        <input class="form-control" type="number" />
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Editable</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Hidden</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Is Required</label>
+                                                        <select class="form-control" style="width:576px;">
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                        </select>
+                                                        <!-- Add Advanced Validation -->
+                                                    </div>
+                                                </mat-tab>
+                                            </mat-tab-group>
+                                        </div>
+                                        <!--#endregion -->
+                                    </div>
+                                    <div>
+                                        <hr>
+                                        <mat-icon title="Collaspe Attributes" *ngIf="item.toggle"
+                                            (click)="item.toggle=false">
+                                            expand_less
+                                        </mat-icon>
+                                        <mat-icon title="Expand Attributes" *ngIf="!item.toggle"
+                                            (click)="item.toggle=true">expand_more
+                                        </mat-icon>
+                                        <mat-icon title="Delete Field" (click)="removeField(i)">delete</mat-icon>
+                                    </div>
+                                </div>
+                                <!-- End div -->
+                            </div>
+
+
+                            <!-- Form Builder End -->
+                        </div>
+                    </div>             
+                </div>
+                 <!-- Page List -->
+                 <div class="example-container" style="width: 200px;position: fixed;margin-left: 65%;">
+                    <h2>Pages</h2>
+                    <div style="margin-right: 55%;">
+                        <mat-icon title="Add Page" (click)="addPage()">post_add</mat-icon>Add Page
+                    </div>
+                    <div style="height: 10px;"></div>
+                    <div class="example-list" style="text-align:center">
+                        <div class="example-box" *ngFor="let page of pages;let i=index;"
+                            style="text-align: center;font-size: small;background-color: whitesmoke;color: black;font-weight:500;height: 1px;">
+                            {{page}} {{i+1}}
+                            <div>
+                                <mat-icon title="View Page" (click)="viewPage(i)">remove_red_eye</mat-icon>
+                                <mat-icon title="Delete Page" (click)="removePage(i)">delete</mat-icon>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
