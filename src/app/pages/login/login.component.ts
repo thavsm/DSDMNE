@@ -1,4 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
+import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+
 
 declare var $: any;
 
@@ -12,8 +15,15 @@ export class LoginComponent implements OnInit, OnDestroy {
     private toggleButton: any;
     private sidebarVisible: boolean;
     private nativeElement: Node;
+    formModel = this.fb.group({
+      UserName: ['',[Validators.required,Validators.email]],
+      Password: ['', Validators.required]
+     
+    });
 
-    constructor(private element: ElementRef) {
+      
+
+    constructor(private element: ElementRef, private fb: FormBuilder, private http: HttpClient) {
         this.nativeElement = element.nativeElement;
         this.sidebarVisible = false;
     }
@@ -51,4 +61,55 @@ export class LoginComponent implements OnInit, OnDestroy {
       body.classList.remove('login-page');
       body.classList.remove('off-canvas-sidebar');
     }
+
+    showNotification(from: any, align: any, message: any, title: any, type: string) {
+      //const type = ['', 'info', 'success', 'warning', 'danger', 'rose', 'primary'];
+
+      //const color = Math.floor((Math.random() * 6) + 1);
+
+      $.notify({
+          icon: 'notifications',
+          title: title,
+          message: message
+      }, {
+          type: type,
+          timer: 3000,
+          placement: {
+              from: from,
+              align: align
+          },
+          template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
+            '<button mat-raised-button type="button" aria-hidden="true" class="close" data-notify="dismiss">  <i class="material-icons">close</i></button>' +
+            '<i class="material-icons" data-notify="icon">notifications</i> ' +
+            '<span data-notify="title">{1}</span> ' +
+            '<span data-notify="message">{2}</span>' +
+            '<div class="progress" data-notify="progressbar">' +
+              '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+            '</div>' +
+            '<a href="{3}" target="{4}" data-notify="url"></a>' +
+          '</div>'
+      });
+  }
+    
+    onSubmit() {
+        
+        let bd ={UserName: this.formModel.value.UserName, Password: this.formModel.value.Password};
+        this.http.post('https://localhost:44305/api/ApplicationUser/Login', bd).subscribe(
+          (res: any) => {
+            localStorage.setItem('token', res.token);
+            window.location.replace("/dashboard");
+            //this.router.navigateByUrl('/home');
+          },
+          err => {
+            if (err.status == 400)
+              //alert('Invalid');
+              this.showNotification('top','right','Incorrect username or password.', 'Authentication failed.','danger');
+            else
+              console.log(err);
+          }
+        );
+
+    }
+
+
 }

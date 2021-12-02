@@ -1,0 +1,57 @@
+@import "../../../node_modules/bpmn-js/dist/assets/diagram-js.css";
+@import "../../../node_modules/bpmn-js/dist/assets/bpmn-font/css/bpmn.css";
+@import "../../../node_modules/bootstrap/dist/css/bootstrap.css";
+@import "../../assets/css/bootstrap-float-label.min.css";
+
+
+.diagram-parent {
+  height: 650px;
+  /* border: solid 3px #EEE;*/
+  position: relative;
+}
+
+.import-error {
+  color: red;
+  padding: 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.bjs-powered-by-lightbox {
+  display: none !important;
+}
+
+.bjs-powered-by {
+  display: none !important;
+}
+
+.diagram-note {
+  background-color: rgba(66, 180, 21, 0.7);
+  color: White;
+  border-radius: 5px;
+  font-family: Arial;
+  font-size: 12px;
+  padding: 5px;
+  min-height: 16px;
+  width: 50px;
+  text-align: center;
+}
+
+.highlight:not(.djs-connection) .djs-visual > :nth-child(1) {
+  fill: #FFCECE !important; /* color elements as fill: #f2dede !important */
+}
+
+.needs-discussion:not(.djs-connection) .djs-visual > :nth-child(1) {
+  stroke: rgba(66, 180, 21, 0.7) !important; /* color elements as red */
+}
+
+.highlight-connection.djs-connection .djs-visual > :nth-child(1) {
+  stroke: #FFCECE !important; /* color elements as stroke: #f2dede !important */
+}
+
+.form-control, .form-control:read-only {
+  background-image: url();
+}
+
+

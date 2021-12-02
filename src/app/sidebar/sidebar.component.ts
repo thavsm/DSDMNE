@@ -51,6 +51,12 @@ export const ROUTES: RouteInfo[] = [{
         title: 'Form',
         type: 'link',
         icontype: 'feed'
+    },
+    {
+        path: '/process',
+        title: 'process',
+        type: 'link',
+        icontype: 'cloud'
     }
 ];
 @Component({

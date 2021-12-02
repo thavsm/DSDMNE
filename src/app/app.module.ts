@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { APP_BASE_HREF } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import {MatNativeDateModule} from '@angular/material/core';
@@ -105,8 +105,9 @@ export class MaterialModule {}
     CommonModule,
     BrowserAnimationsModule,
     FormsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot(AppRoutes,{
-      useHash: true
+      useHash: false
     }),
     HttpClientModule,
 

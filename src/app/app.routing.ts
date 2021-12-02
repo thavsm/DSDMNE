@@ -32,6 +32,14 @@ export const AppRoutes: Routes = [
     path: 'formDesign',
     loadChildren: () => import('./form-design/form-design.module').then(m => m.FormDesignModule)
     //component: formList Component 
+},
+{
+  path: 'process',
+  loadChildren: () => import('./process/process.module').then(m => m.ProcessModule)
+},
+{
+  path: 'workflow',
+  loadChildren: () => import('./workflow/workflow.module').then(m => m.WorkflowModule)
 }
   ]}, {
       path: '',
