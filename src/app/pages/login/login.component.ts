@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { UserService } from 'src/app/shared/user.service';
 
 
 declare var $: any;
@@ -23,7 +24,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
       
 
-    constructor(private element: ElementRef, private fb: FormBuilder, private http: HttpClient) {
+    constructor(private element: ElementRef, private fb: FormBuilder, private service: UserService) {
         this.nativeElement = element.nativeElement;
         this.sidebarVisible = false;
     }
@@ -93,17 +94,15 @@ export class LoginComponent implements OnInit, OnDestroy {
     
     onSubmit() {
         
-        let bd ={UserName: this.formModel.value.UserName, Password: this.formModel.value.Password};
-        this.http.post('https://localhost:44305/api/ApplicationUser/Login', bd).subscribe(
+        //let bd ={UserName: this.formModel.value.UserName, Password: this.formModel.value.Password};
+        this.service.login(this.formModel.value).subscribe(
           (res: any) => {
             localStorage.setItem('token', res.token);
             window.location.replace("/dashboard");
-            //this.router.navigateByUrl('/home');
           },
           err => {
             if (err.status == 400)
-              //alert('Invalid');
-              this.showNotification('top','right','Incorrect username or password.', 'Authentication failed.','danger');
+            this.showNotification('top','right','Incorrect username or password.', 'Authentication failed.','danger');
             else
               console.log(err);
           }

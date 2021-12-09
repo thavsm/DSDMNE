@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { APP_BASE_HREF } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -52,6 +52,8 @@ import { NavbarModule} from './shared/navbar/navbar.module';
 import { FixedpluginModule} from './shared/fixedplugin/fixedplugin.module';
 import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
+import { UserService } from './shared/user.service';
+import { AuthInterceptor } from './auth/auth.interceptor';
 
 @NgModule({
   exports: [
@@ -117,7 +119,14 @@ export class MaterialModule {}
     FooterModule,
     FixedpluginModule
   ],
-  providers: [MatNativeDateModule],
+  providers: [
+    MatNativeDateModule,
+    UserService, {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

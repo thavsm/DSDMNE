@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { UserService } from 'src/app/shared/user.service';
 
 declare var $: any;
 
@@ -21,7 +22,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }, { validators: this.comparePasswords 
     });
 
-    constructor(private fb: FormBuilder, private http: HttpClient) {
+    constructor(private fb: FormBuilder, private service: UserService) {
         
     }
 
@@ -87,7 +88,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         Password: this.formModel.value.Password
       };
       //let bd ={Email: this.formModel.Email, Password: this.formModel.Password, FullName: this.formModel.FullName};
-      this.http.post('https://localhost:44305/api/ApplicationUser/Register', body).subscribe(
+      this.service.register(body).subscribe(
         (res: any) => {
           if (res.succeeded) {
             this.formModel.reset();
