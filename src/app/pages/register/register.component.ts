@@ -1,23 +1,48 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgModule } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 declare var $: any;
 
 @Component({
     selector: 'app-register-cmp',
-    templateUrl: './register.component.html'
+    templateUrl: './register.component.html'    
 })
 
 export class RegisterComponent implements OnInit, OnDestroy {
     test: Date = new Date();
+
+    
+    selectedValue: string;
+    currentCity: string[];
+    saving = false;
+
+    selectTheme = 'primary';
+    cities = [
+      {value: '7', viewValue: 'Western Cape'},
+      {value: '1', viewValue: 'Eastern Cape'},
+      {value: '2', viewValue: 'Northern Cape'},
+      {value: '3', viewValue: 'Kwa-ZuluNatal'},
+      {value: '4', viewValue: 'Free State'},
+      {value: '5', viewValue: 'Gauteng'},
+      {value: '6', viewValue: 'North West'},
+      {value: '8', viewValue: 'Mphumulanga'},
+      {value: '9', viewValue: 'Limpopo'},
+    ];
+    
+    roles = [
+      {value: 'Admin', viewValue: 'Admin'},
+      {value: 'Customer', viewValue: 'Customer'},      
+    ];
     
     
     formModel = this.fb.group({
       Email: ['',[Validators.required,Validators.email]],
       FullName: ['', Validators.required],
       Password: ['', [Validators.required, Validators.minLength(4)]],
-      ConfirmPassword: ['',Validators.required]
+      ConfirmPassword: ['',Validators.required],
+      Location: ['',Validators.required],
+      Role: ['',Validators.required]
     }, { validators: this.comparePasswords 
     });
 
@@ -80,19 +105,24 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
     onSubmit() {
+      this.saving = true;
       
       var body = {
         Email: this.formModel.value.Email,
         FullName: this.formModel.value.FullName,
-        Password: this.formModel.value.Password
+        Password: this.formModel.value.Password,
+        Location: this.formModel.value.Location,
+        Role: this.formModel.value.Role
       };
       //let bd ={Email: this.formModel.Email, Password: this.formModel.Password, FullName: this.formModel.FullName};
       this.http.post('https://localhost:44305/api/ApplicationUser/Register', body).subscribe(
         (res: any) => {
           if (res.succeeded) {
+            this.saving = false;
             this.formModel.reset();
             this.showNotification('top','right','New user created!', 'Registration successful.','success');
           } else {
+            this.saving = false;
             res.errors.forEach(element => {
               switch (element.code) {
                 case 'DuplicateUserName':
@@ -107,6 +137,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
           }
         },
         err => {
+          this.saving = false;
           console.log(err);
         }
       );

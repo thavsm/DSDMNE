@@ -115,7 +115,8 @@ export class MaterialModule {}
     SidebarModule,
     NavbarModule,
     FooterModule,
-    FixedpluginModule
+    FixedpluginModule,
+    MatProgressSpinnerModule,
   ],
   providers: [MatNativeDateModule],
   bootstrap: [AppComponent]
