@@ -31,7 +31,7 @@
                     <div class="collapse" id="collapseExample">
                         <ul class="nav">
                             <li class="nav-item">
-                                <a href="javascript:void(0)" class="nav-link">
+                                <a [routerLink]="userProfile" class="nav-link">
                                     <span class="sidebar-mini">MP</span>
                                     <span class="sidebar-normal">My Profile</span>
                                 </a>
@@ -123,5 +123,11 @@
                     </div>
                 </li>
             </ul>
+            <ul class="nav">
+              <li class="nav-item">
+                <button class="btn btn-primary btn-round btn-block mt-2" onclick="localStorage.removeItem('token');window.location.replace('/login');">Log Out</button>
+              </li>
+            </ul>
+            
 
         </div>

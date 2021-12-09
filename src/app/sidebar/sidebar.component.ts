@@ -67,6 +67,7 @@ export const ROUTES: RouteInfo[] = [{
 export class SidebarComponent implements OnInit {
     public menuItems: any[];
     ps: any;
+    public userProfile = "/userprofile";
     isMobileMenu() {
         if ($(window).width() > 991) {
             return false;
