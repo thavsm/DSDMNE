@@ -5,7 +5,7 @@ import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 
 import { LoginComponent } from './pages/login/login.component';
-
+ 
 export const AppRoutes: Routes = [
     {
       path: '',
@@ -20,6 +20,10 @@ export const AppRoutes: Routes = [
           loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
           canActivate:[AuthGuard]
       },
+      {
+     path: 'appusers',
+     loadChildren: () => import('./appusers/appusers.module').then(m => m.AppusersModule)
+ },
          {
         path: 'weather',
         loadChildren: () => import('./weather/weather.module').then(m => m.WeatherModule)

@@ -18,7 +18,8 @@ import { MaterialModule } from '../app.module';
     ],
     
     declarations: [
-    ]
+        
+  ]
 })
 
 export class UserProfileModule {}

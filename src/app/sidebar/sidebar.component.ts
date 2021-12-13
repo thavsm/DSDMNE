@@ -41,6 +41,11 @@ export const ROUTES: RouteInfo[] = [{
             {path: 'user', title: 'User Page', ab:'UP'}
         ]
     },{
+        path: '/appusers',
+        title: 'Users',
+        type: 'link',
+        icontype: 'person'
+    },{
         path: '/weather',
         title: 'Weather',
         type: 'link',
@@ -81,7 +86,19 @@ export class SidebarComponent implements OnInit {
             const elemSidebar = <HTMLElement>document.querySelector('.sidebar .sidebar-wrapper');
             this.ps = new PerfectScrollbar(elemSidebar);
         }
-    }
+
+        
+      const $sidebar = $('.sidebar');
+      
+
+      const new_color = 'black';
+
+          if ($sidebar.length !== 0) {
+              $sidebar.attr('data-background-color', new_color);
+          }
+
+         
+        }
     updatePS(): void  {
         if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
             this.ps.update();

@@ -15,7 +15,8 @@ export class WeatherForecastService {
   wformData:WeatherForecast = new WeatherForecast();
   public wlist:WeatherForecast[];
   
-  readonly wbaseURL = 'https://localhost:44305/WeatherForecast';
+  //readonly wbaseURL = 'https://localhost:44305/WeatherForecast';
+  readonly wbaseURL = 'https://app1.terra.group/MNE_API/WeatherForecast';
 
   refreshwlist(){
     this.http.get(this.wbaseURL)

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { User } from './user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,20 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 export class UserService {
 
   constructor(private fb: FormBuilder, private http: HttpClient) { }
-  readonly BaseURI = 'https://localhost:44305/api';
+  //readonly BaseURI = 'https://localhost:44305/api';
+  readonly BaseURI = 'https://app1.terra.group/MNE_API/api';
+
+  
+  public ulist:User[];
+
+  getUsers(){
+    this.http.get(this.BaseURI)
+    .toPromise()
+    .then(res=> this.ulist = res as User[]);
+
+    console.log(this.ulist);
+  }
+
 
 
   register(body: any) {
