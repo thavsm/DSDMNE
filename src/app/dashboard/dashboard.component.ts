@@ -3,6 +3,7 @@ import { TableData } from '../md/md-table/md-table.component';
 import { LegendItem, ChartType } from '../md/md-chart/md-chart.component';
 
 import * as Chartist from 'chartist';
+import { UserService } from '../shared/user.service';
 
 declare const $: any;
 
@@ -11,8 +12,16 @@ declare const $: any;
   templateUrl: './dashboard.component.html'
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
-  // constructor(private navbarTitleService: NavbarTitleService, private notificationService: NotificationService) { }
+  
   public tableData: TableData;
+  public data: [];
+
+  public data1: [];
+
+  constructor(private service: UserService) {
+      
+  }
+
   startAnimationForLineChart(chart: any) {
       let seq: any, delays: any, durations: any;
       seq = 0;
@@ -70,15 +79,22 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
   // constructor(private navbarTitleService: NavbarTitleService) { }
   public ngOnInit() {
+
+    this.service.getInbox1().subscribe(
+      res => {
+        this.data1 = res;
+      },
+      err => {
+        console.log(err);
+      },
+    );
+  
+
       this.tableData = {
-          headerRow: ['ID', 'Name', 'Salary', 'Country', 'City'],
+          headerRow: ['ID', 'Action Required', 'Process', 'PostedOn', 'User'],
           dataRows: [
-              ['US', 'USA', '2.920	', '53.23%'],
-              ['DE', 'Germany', '1.300', '20.43%'],
-              ['AU', 'Australia', '760', '10.35%'],
-              ['GB', 'United Kingdom	', '690', '7.87%'],
-              ['RO', 'Romania', '600', '5.94%'],
-              ['BR', 'Brasil', '550', '4.34%']
+             ['Id' , 'Action Required', 'Process', 'PostedOn', 'User'],
+             ['1' , 'Review', 'Process 1', '10 Dec', 'Admin']
           ]
        };
       /* ----------==========     Daily Sales Chart initialization    ==========---------- */

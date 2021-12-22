@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { User } from './user.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +10,8 @@ import { User } from './user.model';
 export class UserService {
 
   constructor(private fb: FormBuilder, private http: HttpClient) { }
-  //readonly BaseURI = 'https://localhost:44305/api';
-  readonly BaseURI = 'https://app1.terra.group/MNE_API/api';
+  readonly BaseURI = environment.API_URL;
+  //readonly BaseURI = 'https://app1.terra.group/MNE_API/api';
 
   
   public ulist:User[];
@@ -39,6 +40,30 @@ export class UserService {
     //return this.http.get(this.BaseURI + '/UserProfile',{ headers: httpOptions });
     return this.http.get(this.BaseURI + '/UserProfile');
   }
+
+  getInbox1() {
+    //let httpOptions = new HttpHeaders()
+    //.set('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    //return this.http.get(this.BaseURI + '/UserProfile',{ headers: httpOptions });
+    return this.http.get<[]>(this.BaseURI + '/UserProfile/Inbox');
+  }
+
+  getuserTask(formData: any) {
+    //let httpOptions = new HttpHeaders()
+    //.set('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    //return this.http.get(this.BaseURI + '/UserProfile',{ headers: httpOptions });
+    //return this.http.get(this.BaseURI + '/UserProfile/Task');
+    return this.http.post(this.BaseURI + '/UserProfile/Task', formData);
+  }
+
+  completeTask(formData: any) {
+    //let httpOptions = new HttpHeaders()
+    //.set('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    //return this.http.get(this.BaseURI + '/UserProfile',{ headers: httpOptions });
+    //return this.http.get(this.BaseURI + '/UserProfile/Task');
+    return this.http.post(this.BaseURI + '/UserProfile/CompleteTask', formData);
+  }
+
 
   roleMatch(allowedRoles): boolean {
     var isMatch = false;

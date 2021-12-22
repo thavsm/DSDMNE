@@ -19,12 +19,12 @@
 
             <div class="user">
                 <div class="photo">
-                    <img src="./assets/img/faces/avatar.jpg" />
+                    <img src="./assets/img/default-avatar.png" />
                 </div>
                 <div class="user-info">
                     <a data-toggle="collapse" href="#collapseExample" class="collapsed">
                         <span>
-                            Thavashin Moonsamy
+                          {{ userDetail['fullName'] }}
                             <b class="caret"></b>
                         </span>
                     </a>
@@ -125,7 +125,7 @@
             </ul>
             <ul class="nav">
               <li class="nav-item">
-                <button class="btn btn-primary btn-round btn-block mt-2" onclick="localStorage.removeItem('token');window.location.replace('/login');">Log Out</button>
+                <button class="btn btn-primary btn-round btn-block mt-2" onclick="localStorage.removeItem('token');window.location.replace('../pages/login');">Log Out</button>
               </li>
             </ul>
             

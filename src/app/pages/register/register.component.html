@@ -70,16 +70,16 @@
                        <span class="text-danger ml-5" *ngIf="formModel.get('Role').touched && formModel.get('Role').errors?.required">This
                         field is mandatory.</span> 
                     </div>
-                    <div class="form-group has-default">
+                    <!-- <div class="form-group has-default">
                       <div class="input-group">
                         <div class="input-group-prepend">
                           <span class="input-group-text">
                             <i class="material-icons">public</i>
                           </span>
                         </div>
-                        <!-- <input type="text" class="form-control" placeholder="Location..." formControlName="Location"> -->
+                        <input type="text" class="form-control" placeholder="Location..." formControlName="Location">
                         <mat-form-field class="form-control" >
-                          <mat-select placeholder="Location" formControlName="Location" >
+                          <mat-select placeholder="Location" formControlName="Location">
                             <mat-option *ngFor="let city of cities" [value]="city.value">
                               {{ city.viewValue }}
                             </mat-option>
@@ -89,7 +89,8 @@
                       </div>
                        <span class="text-danger ml-5" *ngIf="formModel.get('Location').touched && formModel.get('Location').errors?.required">This
                         field is mandatory.</span> 
-                    </div>
+                    </div> -->
+
                     <div class="form-group has-default">
                       <div class="input-group">
                         <div class="input-group-prepend">

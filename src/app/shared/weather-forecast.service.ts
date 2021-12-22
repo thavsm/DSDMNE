@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
 import { WeatherForecast } from './weather-forecast.model';
 
 @Injectable({
@@ -15,8 +16,7 @@ export class WeatherForecastService {
   wformData:WeatherForecast = new WeatherForecast();
   public wlist:WeatherForecast[];
   
-  //readonly wbaseURL = 'https://localhost:44305/WeatherForecast';
-  readonly wbaseURL = 'https://app1.terra.group/MNE_API/WeatherForecast';
+  readonly wbaseURL = environment.API_URL + '/WeatherForecast';
 
   refreshwlist(){
     this.http.get(this.wbaseURL)

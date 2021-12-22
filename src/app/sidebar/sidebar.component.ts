@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import PerfectScrollbar from 'perfect-scrollbar';
+import { UserService } from '../shared/user.service';
 
 declare const $: any;
 
@@ -73,6 +74,13 @@ export class SidebarComponent implements OnInit {
     public menuItems: any[];
     ps: any;
     public userProfile = "/userprofile";
+    userDetail: any;
+    
+    
+    constructor(private service: UserService) {
+      
+    }
+
     isMobileMenu() {
         if ($(window).width() > 991) {
             return false;
@@ -81,6 +89,16 @@ export class SidebarComponent implements OnInit {
     };
 
     ngOnInit() {
+       
+        this.service.getUserProfile().subscribe(
+            res => {
+              this.userDetail = res;
+            },
+            err => {
+              console.log(err);
+            },
+          );
+
         this.menuItems = ROUTES.filter(menuItem => menuItem);
         if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
             const elemSidebar = <HTMLElement>document.querySelector('.sidebar .sidebar-wrapper');

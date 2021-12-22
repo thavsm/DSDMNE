@@ -98,11 +98,11 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.service.login(this.formModel.value).subscribe(
           (res: any) => {
             localStorage.setItem('token', res.token);
-            window.location.replace("/dashboard");
+            window.location.replace("../../dashboard");
           },
           err => {
             if (err.status == 400)
-            this.showNotification('top','right','Incorrect username or password.', 'Authentication failed.','danger');
+            this.showNotification('top','right',err.error.message, 'Authentication failed.','danger');
             else
               console.log(err);
           }

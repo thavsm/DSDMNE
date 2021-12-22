@@ -33,7 +33,19 @@ export class RegisterComponent implements OnInit, OnDestroy {
     
     roles = [
       {value: 'Admin', viewValue: 'Admin'},
-      {value: 'Customer', viewValue: 'Customer'},      
+      {value: 'System Administrator', viewValue: 'System Administrator'},
+      {value: 'Head of M&E', viewValue: 'Head of M&E'},
+      {value: 'Head Of Department ', viewValue: 'Head Of Department '},
+      {value: 'Chief Director', viewValue: 'Chief Director'},
+      {value: 'Director', viewValue: 'Director'},
+      {value: 'Assistant Director', viewValue: 'Assistant Director'},
+      {value: 'Programme Manager', viewValue: 'Programme Manager'},
+      {value: 'District Manager', viewValue: 'District Manager'},
+      {value: 'Service Point Manager', viewValue: 'Service Point Manager'},
+      {value: 'Social Worker/CDP', viewValue: 'Social Worker/CDP'},
+      {value: 'Facility Manager', viewValue: 'Facility Manager'},
+      {value: 'M&E Coordinator', viewValue: 'M&E Coordinator'},
+      {value: 'Social Worker Manager', viewValue: 'Social Worker Manager'}     
     ];
     
     
@@ -42,7 +54,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       FullName: ['', Validators.required],
       Password: ['', [Validators.required, Validators.minLength(4)]],
       ConfirmPassword: ['',Validators.required],
-      Location: ['',Validators.required],
+      //Location: ['',Validators.required],
       Role: ['',Validators.required]
     }, { validators: this.comparePasswords 
     });

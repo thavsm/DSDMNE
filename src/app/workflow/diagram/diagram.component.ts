@@ -27,6 +27,7 @@ import { map, switchMap } from 'rxjs/operators';
 import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
 
 import { from, Observable, Subscription } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 /*import * as $ from 'jquery/dist/jquery.js';
 import { async } from 'rxjs';*/
@@ -60,6 +61,8 @@ export class DiagramComponent implements AfterContentInit, OnChanges, OnDestroy,
   private pID = 0;
 
   private lookup = { MODULE: [], XREF: [], ROLE: [], LOCATION: [], GROUP: [], LEVEL: [], FORMID: [], ALLOCATIONTYPE: [], NOTICATIONTEM: [], MASTERRECORDSTATUS: [], ACTIONTAKEN: [], ACTIONREQUIRED: [], STATUSEXTERNAL: [] };
+  
+  readonly BaseURI = environment.API_URL;
 
   constructor(private http: HttpClient) {
 
@@ -156,7 +159,7 @@ export class DiagramComponent implements AfterContentInit, OnChanges, OnDestroy,
 
   getLookup(processID: number) {
 
-    let url = "https://localhost:44305/api/lookup";
+    let url = this.BaseURI + '/lookup';
 
     this.http.get<{}>(url).subscribe(result => {
 
@@ -176,7 +179,7 @@ export class DiagramComponent implements AfterContentInit, OnChanges, OnDestroy,
 
   getProcess(processID: number) {
 
-    const url = "https://localhost:44305/api/process/" + processID;
+    const url = this.BaseURI + '/process/' + processID;
 
     this.http.get<[]>(url).subscribe(result => {
 
@@ -847,7 +850,7 @@ export class DiagramComponent implements AfterContentInit, OnChanges, OnDestroy,
 
     const body = JSON.stringify(outDataVal);
 
-    const url = 'https://localhost:44305/api/process';
+    const url = this.BaseURI + '/process';
 
     this.http.post(url, body, { 'headers': headers, observe: 'response' }).subscribe(response => {
 

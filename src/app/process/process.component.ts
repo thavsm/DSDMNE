@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 declare const $: any;
 
@@ -13,10 +14,12 @@ export class ProcessComponent implements OnInit {
 
   public data: [];
 
+  readonly BaseURI = environment.API_URL;
+  
   constructor(private http: HttpClient) {
 
     
-    http.get<{}>('https://localhost:44305/api/lookup').subscribe(result => {
+    http.get<{}>(this.BaseURI +'/lookup').subscribe(result => {
 
       this.lookup = result;
 
@@ -38,10 +41,10 @@ export class ProcessComponent implements OnInit {
     let selProvince = document.querySelector('#selProvince') as HTMLSelectElement;
     let selModule = document.querySelector('#selModule') as HTMLSelectElement;
 
-    let url = 'https://localhost:44305/api/ProcessS/1/-1/1';
+    let url = this.BaseURI + '/ProcessS/1/-1/1';
 
     if (selVersion !== null)
-      url = 'https://localhost:44305/api/ProcessS/' + selVersion.value + '/' + selProvince.value + '/' + selModule.value;
+      url = this.BaseURI + '/ProcessS/' + selVersion.value + '/' + selProvince.value + '/' + selModule.value;
 
     this.http.get<[]>(url).subscribe(result => {
 
@@ -105,7 +108,7 @@ export class ProcessComponent implements OnInit {
       return;
     }
 
-    const url = 'https://localhost:44305/api/ProcessS/' + procnameVal + '/' + procdescVal + '/' + selModule1.value + '/' + selProvince1.value;
+    const url = this.BaseURI + '/ProcessS/' + procnameVal + '/' + procdescVal + '/' + selModule1.value + '/' + selProvince1.value;
     
     this.http.post(url, body, { 'headers': headers, observe: 'response' }).subscribe(response => {
 
