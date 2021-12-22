@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  API_URL: 'https://app1.terra.group/MNE_API/api'
+  API_URL: 'https://localhost:44305/api'
 };
 
 /*
