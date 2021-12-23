@@ -1,0 +1,47 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 ml-auto mr-auto">
+                <div class="card">
+                    <form method="post">
+                        <div class="row mt-2">
+                            <div class="col-md-4">
+                                <div class="profile-img">
+                                    <img src="../../assets/img/default-avatar.png" alt="">
+                                    <div class="file btn btn-lg btn-primary">
+                                        Change Photo
+                                        <input type="file" name="file">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="profile-head">
+                                    <h5>{{ userDetail.fullName }}</h5>
+                                    <h6 class="text-primary">Admin</h6>
+                                    <h6 class="mt-5">Details</h6>
+                                    <hr>
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control" placeholder="Full Name..."
+                                            formControlName="FullName" value="{{ userDetail.fullName }}">
+                                    </div>
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control" placeholder="Email..."
+                                            formControlName="Email" value="{{ userDetail.email }}">
+                                    </div>
+                                    <div class="form-group has-default">
+                                        <input type="text" class="form-control" placeholder="Role..."
+                                            formControlName="roles" value="{{ userDetail.roles }}">
+                                    </div>
+                                    <div class="">
+                                            <button type="submit" class="btn btn-primary btn-round mt-4">Update</button>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

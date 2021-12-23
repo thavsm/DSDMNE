@@ -1,0 +1,120 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12 ml-auto mr-auto">
+        <div class="card">
+          <div class="card-header card-header-rose card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">assignment</i>
+            </div>
+            <h4 class="card-title">Processes</h4>
+          </div>
+          <div class="card-body p-2">
+            <div class="row">
+              <div class="col-sm-2">
+                <div class="form-group has-float-label">
+                  <select name="Version" id="selVersion" class="form-control">
+                    <option *ngFor="let prove of lookup['PROCESSVERSION'];" value="{{prove.key}}">{{prove.value}}</option>
+                  </select>
+                  <label for="selVersion">Version</label>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group has-float-label">
+                  <select name="Province" id="selProvince" class="form-control">
+                    <option *ngFor="let prov of lookup['PROVINCE'];" value="{{prov.key}}">{{prov.value}}</option>
+                  </select>
+                  <label for="selProvince">Province</label>
+                </div>
+              </div>
+              <div class="col-sm-3">
+                <div class="form-group has-float-label">
+                  <select id="selModule" class="form-control">
+                    <option *ngFor="let modl of lookup['MODULE'];" value="{{modl.key}}">{{modl.value}}</option>
+                  </select>
+                  <label for="selModule">Module</label>
+                </div>
+              </div>
+              <div class="col-sm-4">
+                <button id="btnSearch" class="btn btn-primary mr-1" (click)="getRecords()">Search</button>
+                <button id="btnAddNewProcess" class="btn btn-primary" (click)="openModal()">Add New</button>
+        
+              </div>
+            </div>
+            <p *ngIf="!data"><em>Loading...</em></p>
+            <table id="tblProcess" class="table table-striped">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Province</th>
+                  <th>Published Version</th>
+                  <th>Date</th>
+                  <th>Draft Version</th>
+                  <th>Link</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let obj of data">
+                  <td>{{ obj['ProcessId'] }}</td>
+                  <td>{{ obj['Name'] }}</td>
+                  <td>{{ obj['ProvinceName'] }}</td>
+                  <td>{{ obj['PublishedVersion'] }}</td>
+                  <td>{{ obj['DateCreated'] }}</td>
+                  <td>{{ obj['DraftVersion'] }}</td>
+                  <td><a href="../workflow?PID={{ obj['ProcessId'] }}">Show Process</a></td>
+                </tr>
+              </tbody>
+        
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal Header -->
+<div class="modal fade" id="modalWindow" aria-modal="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Add new process</h4>
+        <button type="button" class="close" data-dismiss="modal" (click)="closeModal()">×</button>
+      </div>
+
+      <!-- Modal body -->
+      <div id="mModalbody" class="modal-body">
+        <div id="dvNewProcess">
+          <mat-form-field class="example-full-width">
+            <input matInput type="text" id="txtProcessName" placeholder="Process Name">
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <textarea matInput id="txtDescription" placeholder="Description"></textarea>
+          </mat-form-field>
+          
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary close-button" data-dismiss="modal" (click)="closeModal()">Close</button>
+        <button id="AddNewProcess" type="button" class="btn btn-primary add-process-button" (click)="createNewProcess()">Add Process</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- The Modal Message-->
+<div class="modal fade" id="modalWindowMessage">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="alert alert-success mb-0">
+        <strong>Successfully Added.</strong>
+        <button type="button" class="close" data-dismiss="modal" (click)="closeModalMessage()">&times;</button>
+      </div>
+    </div>
+  </div>
+</div>

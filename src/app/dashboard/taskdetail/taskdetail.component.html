@@ -1,0 +1,128 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 ml-auto mr-auto">
+                <div class="card">
+                    <div class="card-header card-header-rose card-header-icon">
+                        <div class="card-icon">
+                          <i class="material-icons">assignment</i>
+                        </div>
+                        <h4 class="card-title">Task</h4>
+                      </div>
+                    <div class=card-body>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <mat-form-field appearance="standard">
+                                    <mat-label>Comment</mat-label>
+                                    <textarea matInput rows="1" [(ngModel)]="comment"></textarea>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-sm-2">
+                                <mat-form-field appearance="standard">
+                                    <mat-label>Action Taken</mat-label>
+                                    <mat-select (selectionChange)='onActionSelected($event)'>
+                                        <mat-option *ngFor="let actTak of actionTakenAll" [value]="actTak.id">
+                                            {{actTak.description}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-sm-2">
+                                <mat-form-field appearance="standard">
+                                    <mat-label>User</mat-label>
+                                    <mat-select (selectionChange)='onUserSelected($event)'>
+                                        <mat-option *ngFor="let accU of asgnUsers" [value]="accU.key">
+                                            {{accU.value}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-sm-4">
+                                <button id="btnSearch" class="btn btn-primary mr-1"
+                                    (click)="completeTask()">Complete</button>
+                                <!-- <button id="btnAddNewProcess" class="btn btn-primary">Reject</button> -->
+
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header bg-light">
+                                <a class="card-link" data-toggle="collapse" href="#collapse2" aria-expanded="true">Form
+                                </a>
+                            </div>
+                            <div id="collapse2" class="collapse show">
+                                <div class="card-body">
+                                    <mat-form-field appearance="standard">
+                                        <mat-label>Full Name</mat-label>
+                                        <input matInput [value]="formData['fullName']" disabled>
+                                    </mat-form-field>
+                                    <mat-form-field appearance="standard">
+                                        <mat-label>Email</mat-label>
+                                        <input matInput [value]="formData['email']" disabled>
+                                    </mat-form-field>
+                                    <mat-form-field appearance="standard">
+                                        <mat-label>Role</mat-label>
+                                        <mat-select [(ngModel)]="roleID">
+                                            <mat-option value="1">Admin</mat-option>
+                                            <mat-option value="3">System Administrator</mat-option>
+                                            <mat-option value="4">Head of M&E</mat-option>
+                                            <mat-option value="5">Head Of Department </mat-option>
+                                            <mat-option value="6">Chief Director</mat-option>
+                                            <mat-option value="7">Director</mat-option>
+                                            <mat-option value="8">Assistant Director</mat-option>
+                                            <mat-option value="9">Programme Manager</mat-option>
+                                            <mat-option value="10">District Manager</mat-option>
+                                            <mat-option value="11">Service Point Manager</mat-option>
+                                            <mat-option value="12">Social Worker/CDP</mat-option>
+                                            <mat-option value="13">Facility Manager</mat-option>
+                                            <mat-option value="14">M&E Coordinator</mat-option>
+                                            <mat-option value="15">Social Worker Manager</mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header bg-light">
+                                <a class="card-link" data-toggle="collapse" href="#collapseworkf"
+                                    aria-expanded="true">Task Details
+                                </a>
+                            </div>
+                            <div id="collapseworkf" class="collapse">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <table id="tblProcess" class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>User</th>
+                                                        <th>Action Required</th>
+                                                        <th>Action Taken</th>
+                                                        <th>Posted On</th>
+                                                        <th>Completed On</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let obj of workflowData['list'];let i = index">
+                                                        <td>{{ i+1 }}</td>
+                                                        <td>{{ obj['userDescription'] }}</td>
+                                                        <td>{{ obj['actionRequiredDescription'] }}</td>
+                                                        <td>{{ obj['actionTakenDescription'] }}</td>
+                                                        <td>{{ obj['postedOn'] }}</td>
+                                                        <td>{{ obj['completedOn'] }}</td>
+                                                    </tr>
+                                                </tbody>
+
+                                            </table>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
