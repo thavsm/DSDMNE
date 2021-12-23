@@ -2277,18 +2277,38 @@ export class FormDesignerComponent implements OnInit {
 
     refreshGroupSectionList() {
         this.service.getFormGroupsPerPage(this.formData.formID, this.currentPage.pageGUID).subscribe(data => {
-            this.groupSectionList = [];
-            this.sectionList = [];
+            this.groupSectionList = [
+                {
+                    "groupGUID": "",
+                    "name": "No Group",
+                    "isRequired": true,
+                    "pageGUID": "string",
+                    "parentGroupID": 0,
+                    "type": "string",
+                    "isActive": true
+                  }
+            ];
+            this.sectionList = [
+                {
+                    "groupGUID": "",
+                    "name": "No Group",
+                    "isRequired": true,
+                    "pageGUID": "string",
+                    "parentGroupID": 0,
+                    "type": "string",
+                    "isActive": true
+                  }
+            ];
             var sections: any = [];
             var groups: any = [];
 
             sections = data.filter(item => item.type === 'section');
             groups = data.filter(item => item.type === 'repeatgroup');
             if (groups.length > 0) {
-                this.groupSectionList = groups;
+                merge(this.groupSectionList, groups);
             }
             if (sections.length > 0) {
-                this.sectionList = sections;
+                merge(this.sectionList, sections);
                 merge(this.groupSectionList,sections);
             }
         });
