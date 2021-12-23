@@ -1,0 +1,32 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="container-fluid">
+      <div>
+        <h3 class="title">Capture Form</h3>
+      </div>
+      <div class="row">
+        <div>
+          <mat-form-field appearance="outline" style="width: 500px;">
+            <mat-label>Form Name</mat-label>
+           <input matInput type="text" [(ngModel)]="formData.formName"/>
+        </mat-form-field>
+          <mat-form-field appearance="outline" style="width: 500px;">
+            <mat-label>Form template</mat-label>
+            <mat-select [(ngModel)]="formData.formID">
+                <mat-option *ngFor="let form of formList"
+                    [value]="form.formID">
+                   {{form.formName}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <button class="btn btn-md"
+        style="background-color: crimson;color: white;font-weight: 400;width: 150px;"
+        (click)="addForm()">Create Form</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-spinner bdColor="rgba(	237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: black">Processing...</p>
+</ngx-spinner>

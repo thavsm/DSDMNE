@@ -18,40 +18,49 @@ export interface ChildrenItems {
     title: string;
     ab: string;
     type?: string;
+    collapse?: string;
+    children?: ChildrenItems[];
 }
 
 //Menu Items
 export const ROUTES: RouteInfo[] = [{
-        path: '/dashboard',
-        title: 'Dashboard',
-        type: 'link',
-        icontype: 'dashboard'
-    },{
-        path: '/pages',
-        title: 'Pages',
-        type: 'sub',
-        icontype: 'image',
-        collapse: 'pages',
-        children: [
-            {path: 'pricing', title: 'Pricing', ab:'P'},
-            {path: 'timeline', title: 'Timeline Page', ab:'TP'},
-            {path: 'login', title: 'Login Page', ab:'LP'},
-            {path: 'register', title: 'Register Page', ab:'RP'},
-            {path: 'lock', title: 'Lock Screen Page', ab:'LSP'},
-            {path: 'user', title: 'User Page', ab:'UP'}
-        ]
-    },{
-        path: '/weather',
-        title: 'Weather',
-        type: 'link',
-        icontype: 'cloud'
-    },
-    {
-        path: '/formList',
-        title: 'Form',
-        type: 'link',
-        icontype: 'feed'
-    }
+    path: '/dashboard',
+    title: 'Dashboard',
+    type: 'link',
+    icontype: 'dashboard'
+}, {
+    path: '/pages',
+    title: 'Pages',
+    type: 'sub',
+    icontype: 'image',
+    collapse: 'pages',
+    children: [
+        { path: 'pricing', title: 'Pricing', ab: 'P' },
+        { path: 'timeline', title: 'Timeline Page', ab: 'TP' },
+        { path: 'login', title: 'Login Page', ab: 'LP' },
+        { path: 'register', title: 'Register Page', ab: 'RP' },
+        { path: 'lock', title: 'Lock Screen Page', ab: 'LSP' },
+        { path: 'user', title: 'User Page', ab: 'UP' }
+    ]
+}, {
+    path: '/weather',
+    title: 'Weather',
+    type: 'link',
+    icontype: 'cloud'
+},
+{
+    path: '',
+    title: 'Forms',
+    type: 'sub',
+    icontype: 'feed',
+    collapse: 'formList',
+    children: [
+        {path: 'formCategory',title: 'Form Category',ab: 'FC'},
+        {path: 'formList',title: 'Form Template',ab: 'FD'},
+        { path: 'formCapture', title: 'Form Capture', ab: 'FC' },
+        { path: 'formInbox', title: 'Form Inbox', ab: 'FI' },
+    ]
+}
 ];
 @Component({
     selector: 'app-sidebar-cmp',
@@ -75,7 +84,7 @@ export class SidebarComponent implements OnInit {
             this.ps = new PerfectScrollbar(elemSidebar);
         }
     }
-    updatePS(): void  {
+    updatePS(): void {
         if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
             this.ps.update();
         }

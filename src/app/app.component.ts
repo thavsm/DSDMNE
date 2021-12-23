@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs/Subscription';
 export class AppComponent implements OnInit {
   private _router: Subscription;
 
-  constructor( private router: Router ) {
+  constructor( private router: Router) {
   }
 
     ngOnInit() {

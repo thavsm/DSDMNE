@@ -1,3 +1,4 @@
+
 <div class="main-content">
     <div class="container-fluid">
         <div class="container-fluid">
@@ -11,132 +12,176 @@
                             <h2>Field Types</h2>
                             <!-- <p>Drag field types to form design on the right</p> -->
                             <!-- Header Of form types end-->
-
                             <!-- Form types -->
-                            <div cdkDropList [cdkDropListData]="fieldTypes" class="example-list"
-                                style="text-align: center">
-                                <div class="example-box" *ngFor="let item of fieldTypes" cdkDrag
-                                    style="text-align: center;font-size: small;height: 1px;background-color: whitesmoke;">
-                                    <div>
-                                        <p style="color: black;font-weight:500;">{{item.label}}</p>
-                                    </div>
+                            <div cdkDropList [cdkDropListData]="fieldTypes">
+                                <div *ngFor="let item of fieldTypes" cdkDrag
+                                    style="text-align: left;font-size: small;height: 35px;background-color: whitesmoke;border-color: rgb(207, 204, 204);border-style: outset;border-width: 0.5px;">
+                                    <p style="color: black;font-weight:500;">
+                                        <mat-icon style="font-size: 20px">{{item.fieldType.description}}</mat-icon>
+                                        {{item.fieldType.displayName}}
+                                    </p>
                                 </div>
                             </div>
                             <!-- Form types end-->
-
                         </div>
 
                         <!-- Form Design Layout -->
-                        <div class="example-container" style="width: 700px;margin-left: 35%;">
+                        <div class="example-container" style="width: 700px;margin-left: 35%;text-align:center;">
                             <!-- Header Of form builder -->
-                            <h2>Form Name</h2>
-                            <h4>Form Description:Tells us more about the form</h4>
-                            <div style="margin-left: -0.5%;width: 250px;">
+                            <h2>{{formData.formName}}</h2>
+                            <h4>{{formData.formDescription}}</h4>
+                            <div style="margin-left: 32%;width: 250px;">
                                 <!-- <mat-icon>save</mat-icon> -->
-                                <button class="btn btn-md"
-                                    style="background-color: crimson;color: white;font-weight: 400;width: 100px;">Save</button>
-                                &nbsp;
-                                <!-- <mat-icon>preview</mat-icon> -->
-                                <button class="btn btn-md"
-                                    style="background-color: crimson;color: white;font-weight: 400;width: 100px;">Preview</button>
+                                <button class="btn btn-sm"
+                                    style="background-color: crimson;color: white;font-weight: 400;width: 100px;"
+                                    (click)="savePage()">Save</button>
                             </div>
                             <div style="height: 10px;"></div>
-                            <!-- Header Of form builder End-->
+                            <div style="margin-left: 32%;width: 250px;">
+                                <h5>{{currentPage.name}}</h5>
+                            </div>
 
                             <!-- Form Builder -->
                             <div cdkDropList [cdkDropListData]="formDesign" class="example-list"
                                 (cdkDropListDropped)="drop($event)" style="background: gainsboro;">
-                                <div class="example-box" *ngFor="let item of formDesign;let i= index;" cdkDrag
-                                    style="background-color: whitesmoke;border-color: darkgrey;border-style:dashed;border-width: 2px;">
+                                <div class="example-box" *ngFor="let item of formDesign;let i= index;" cdkDrag 
+                                    style="border-color: darkgrey;border-style:dashed;border-width: 2px;" [style.background]="item.fieldStyles[0].cssClass">
                                     <!-- Attachment Type -->
-                                    <div *ngIf="item.type=='attachment'">
+                                    <div *ngIf="item.fieldType.value=='attachment' && item.isActive===true"
+                                        style="width: 700px;">
                                         <div style="margin-right: 96%;">
-                                            <mat-icon>{{item.icon}}</mat-icon>
+                                            <mat-icon>{{item.fieldType.description}}</mat-icon>
                                         </div>
-                                        <label>{{i+1}}.{{item.Question}}</label>
-                                        <!-- <label *ngIf="item.required" class="text-danger">*</label> -->
-                                        <input type="file" class="form-control" style="width:576px;">
-                                        <small class="form-text text-danger">(File can't be uploaded right now)</small>
+                                        <label style="color: black;">{{item.questionName}}</label>
                                         <!--#region attributes tab  -->
-                                        <div *ngIf="item.toggle">
+                                        <div *ngIf="item.toggle" style="text-align: left;">
                                             <hr>
-                                            <h2 style="color: grey;font-weight: bold;"><u>Field Details:</u></h2>
-                                            <mat-tab-group title="Field Attributes">
+                                            <mat-tab-group mat-align-tabs="center" style="color: black;">
                                                 <mat-tab label="Field Attributes">
-                                                    <div class="form-group">
-                                                        <label>Question Name:</label>
-                                                        <input class="form-control" type="text"
-                                                            [(ngModel)]="item.Question" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Friendly Name:</label>
-                                                        <input class="form-control" type="text"
-                                                            [(ngModel)]="item.name" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Tooltip</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Displayable</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Locked</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Group Name</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
+                                                    <br>
+                                                    <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Question Name</label>
+                                                                <label style="color: red;">*</label>
+                                                                <label style="color: black;">:</label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    [(ngModel)]="item.questionName"
+                                                                    style="width: 300px;"
+                                                                    placeholder="Enter question name here" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row  style="display: none;">
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Field Name</label>
+                                                                <label style="color: red;">*</label>
+                                                                <label style="color: black;">:</label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    [(ngModel)]="item.fieldName" style="width:300px;"
+                                                                    placeholder="Enter field name here" value="ua_"  />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Tooltip: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    style="width:300px;"
+                                                                    placeholder="Enter tooltip here"
+                                                                    [(ngModel)]="item.toolTip" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Group/Section: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-form-field appearance="outline">
+                                                                    <mat-label>Select a Group/Section </mat-label>
+                                                                    <mat-select [(ngModel)]="item.parentFieldName">
+                                                                       
+                                                                        <mat-option *ngFor="let gs of groupSectionList"
+                                                                            [value]="gs.groupGUID">
+                                                                            {{gs.name}}
+                                                                        </mat-option>
+                                                                    </mat-select>
+                                                                </mat-form-field>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </mat-tab>
                                                 <mat-tab label="Field Style">
-                                                    <div class="form-group">
-                                                        <label>Width:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Height:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>CSS Class</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
+                                                    <br>
+                                                   <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Width: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    style="width:300px;" placeholder="Enter width here"
+                                                                    [(ngModel)]="item.fieldStyles[0].width" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Height: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    style="width:300px;" placeholder="Enter width here"
+                                                                    [(ngModel)]="item.fieldStyles[0].height" />
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </mat-tab>
                                                 <mat-tab label="Field Validation">
-                                                    <div class="form-group">
-                                                        <label>Max File Size</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Editable</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Hidden</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Required</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                        <!-- Add Advanced Validation -->
-                                                    </div>
+                                                    <br>
+                                                    <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Maximum File Size: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    style="width:300px;"
+                                                                    placeholder="Enter max file size here" [(ngModel)]="item.fieldValidations[0].dataLength"/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                           <td mat-cell>
+                                                                <label style="color: black;">Editable: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.fieldValidations[0].isEditable">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Hidden: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.fieldValidations[0].isHidden">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <td mat-cell>
+                                                            <label style="color: black;">Required: </label>
+                                                        </td>
+                                                        <td mat-cell>
+                                                            <mat-checkbox class="example-margin"
+                                                                [(ngModel)]="item.fieldValidations[0].isRequired">
+                                                            </mat-checkbox>
+                                                        </td>
+                                                    </table>
                                                 </mat-tab>
                                             </mat-tab-group>
                                         </div>
@@ -144,202 +189,332 @@
                                     </div>
 
                                     <!-- Calculation Type -->
-                                    <div *ngIf="item.type=='calculation'">
+                                    <div *ngIf="item.fieldType.value=='calculation' && item.isActive===true"
+                                        style="text-align: center;">
                                         <div style="margin-right: 96%;">
-                                            <mat-icon>{{item.icon}}</mat-icon>
+                                            <mat-icon>{{item.fieldType.description}}</mat-icon>
                                         </div>
-                                        <label>{{i+1}}.{{item.Question}}</label>
-                                        <!-- <label *ngIf="item.required" class="text-danger">*</label> -->
-                                        <input type="text" class="form-control" style="width:576px;" readonly
-                                            placeholder="Your Calculation">
+                                        <label style="color: black;">{{item.questionName}}</label>
                                         <!--#region attributes tab  -->
-                                        <div *ngIf="item.toggle">
+                                        <div *ngIf="item.toggle" style="text-align: left;">
                                             <hr>
-                                            <h2 style="color: grey;font-weight: bold;"><u>Field Details:</u></h2>
-                                            <mat-tab-group title="Field Attributes">
-                                                <mat-tab label="Field Attributes ">
-                                                    <div class="form-group">
-                                                        <label>Question Name:</label>
-                                                        <input class="form-control" type="text"
-                                                            [(ngModel)]="item.Question" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Friendly Name:</label>
-                                                        <input class="form-control" type="text"
-                                                            [(ngModel)]="item.name" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Tooltip</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Displayable</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Locked</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Group Name</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
-                                                </mat-tab>
-                                                <mat-tab label="Calculation Config">
-                                                    <h1>Configure calculation</h1>
+                                            <mat-tab-group mat-align-tabs="center" style="color: black;">
+                                                <mat-tab label="Field Attributes">
+                                                    <br>
+                                                    <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Question Name</label>
+                                                                <label style="color: red;">*</label>
+                                                                <label style="color: black;">:</label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    [(ngModel)]="item.questionName"
+                                                                    style="width: 300px;"
+                                                                    placeholder="Enter question name here" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row  style="display: none;">
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Field Name</label>
+                                                                <label style="color: red;">*</label>
+                                                                <label style="color: black;">:</label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    [(ngModel)]="item.fieldName" style="width:300px;"
+                                                                    placeholder="Enter field name here" value="ua_"/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Tooltip: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    style="width:300px;"
+                                                                    placeholder="Enter tooltip here"
+                                                                    [(ngModel)]="item.toolTip" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Group/Section: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-form-field appearance="outline">
+                                                                    <mat-label>Select a Group/Section </mat-label>
+                                                                    <mat-select [(ngModel)]="item.parentFieldName">
+                                                                       
+                                                                        <mat-option *ngFor="let gs of groupSectionList"
+                                                                            [value]="gs.groupGUID">
+                                                                            {{gs.name}}
+                                                                        </mat-option>
+                                                                    </mat-select>
+                                                                </mat-form-field>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Calculation: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <textarea class="form-control" style="width:300px;"
+                                                                    readonly [(ngModel)]="item.calculation"></textarea>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <mat-form-field appearance="outline"
+                                                                    *ngIf="greyedOut===false">
+                                                                    <mat-label>{{operationField}}</mat-label>
+                                                                    <mat-select style="width: 150px;"
+                                                                        [(ngModel)]="value.data">
+                                                                        <mat-option
+                                                                            *ngFor="let fieldOp of fieldOperatorList"
+                                                                            [value]="fieldOp.viewValue">
+                                                                            {{fieldOp.viewValue}}
+                                                                        </mat-option>
+                                                                    </mat-select>
+                                                                </mat-form-field>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <button class="btn btn-sm"
+                                                                    style="background-color: crimson;color: white;font-weight: 400;width: 200px;"
+                                                                    (click)="addCalc(item)"
+                                                                    *ngIf="greyedOut===false">Add to
+                                                                    Calculation</button>
+                                                                <button class="btn btn-sm"
+                                                                    style="background-color: crimson;color: white;font-weight: 400;width: 200px;"
+                                                                    (click)="clearCalc(i)"
+                                                                    *ngIf="greyedOut===false">Clear Calculation</button>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </mat-tab>
                                                 <mat-tab label="Field Style">
-                                                    <div class="form-group">
-                                                        <label>Width:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Height:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>CSS Class</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
+                                                    <br>
+                                                    <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Width: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    style="width:300px;" placeholder="Enter width here"
+                                                                    [(ngModel)]="item.fieldStyles[0].width" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Height: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    style="width:300px;" placeholder="Enter width here"
+                                                                    [(ngModel)]="item.fieldStyles[0].height" />
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </mat-tab>
                                                 <mat-tab label="Field Validation">
-                                                    <div class="form-group">
-                                                        <label>Data Length:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Editable</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Hidden</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Required</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                        <!-- Add Advanced Validation -->
-                                                    </div>
+                                                    <br>
+                                                    <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Maximum File Size: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    style="width:300px;"
+                                                                    placeholder="Enter max file size here" [(ngModel)]="item.fieldValidations[0].dataLength"/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Editable: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.fieldValidations[0].isEditable">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Hidden: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.fieldValidations[0].isHidden">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <td mat-cell>
+                                                            <label style="color: black;">Required: </label>
+                                                        </td>
+                                                        <td mat-cell>
+                                                            <mat-checkbox class="example-margin"
+                                                                [(ngModel)]="item.fieldValidations[0].isRequired">
+                                                            </mat-checkbox>
+                                                        </td>
+                                                    </table>
                                                 </mat-tab>
                                             </mat-tab-group>
                                         </div>
                                         <!--#endregion -->
                                     </div>
 
-                                    <!-- Checkbox Type -->
-                                    <div *ngIf="item.type=='checkbox'">
+                                    <!-- Checkbox/field or/lexicon data Type -->
+                                    <div *ngIf="(item.fieldType.value=='lexicon data' || item.fieldType.value=='field or' || item.fieldType.value=='checkbox') && item.isActive===true"
+                                        style="text-align: center;">
                                         <div style="margin-right: 96%;">
-                                            <mat-icon>{{item.icon}}</mat-icon>
+                                            <mat-icon>{{item.fieldType.description}}</mat-icon>
                                         </div>
-                                        <label>{{i+1}}.{{item.Question}}</label>
-                                        <!-- <label *ngIf="item.required" class="text-danger">*</label> -->
-                                        <div *ngFor="let v of item.values" class="inline-form-group"
-                                            style="width:576px;">
-                                            <label class="cust-check-bx">
-                                                <input type="checkbox" [value]="v.value" name="{{item.name}}">
-                                                {{v.label}}
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </div>
+                                        <label style="color: black;">{{item.questionName}}</label>
                                         <!--#region attributes tab  -->
-                                        <div *ngIf="item.toggle">
+                                        <div *ngIf="item.toggle" style="text-align: left;">
                                             <hr>
-                                            <h2 style="color: grey;font-weight: bold;"><u>Field Details:</u></h2>
-                                            <mat-tab-group title="Field Attributes">
-                                                <mat-tab label="Field Attributes ">
-                                                    <div class="form-group">
-                                                        <label>Question Name:</label>
-                                                        <input class="form-control" type="text"
-                                                            [(ngModel)]="item.Question" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Friendly Name:</label>
-                                                        <input class="form-control" type="text"
-                                                            [(ngModel)]="item.name" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Tooltip</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Displayable</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Locked</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Group Name</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Values(Comma Seperated)</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
+                                            <mat-tab-group mat-align-tabs="center" style="color: black;">
+                                                <mat-tab label="Field Attributes">
+                                                    <br>
+                                                    <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Question Name</label>
+                                                                <label style="color: red;">*</label>
+                                                                <label style="color: black;">:</label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    [(ngModel)]="item.questionName"
+                                                                    style="width: 300px;"
+                                                                    placeholder="Enter question name here" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row  style="display: none;">
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Field Name</label>
+                                                                <label style="color: red;">*</label>
+                                                                <label style="color: black;">:</label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    [(ngModel)]="item.fieldName" style="width:300px;"
+                                                                    placeholder="Enter field name here" value="ua_"  />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Tooltip: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    style="width:300px;"
+                                                                    placeholder="Enter tooltip here"
+                                                                    [(ngModel)]="item.toolTip" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Group/Section: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-form-field appearance="outline">
+                                                                    <mat-label>Select a Group/Section </mat-label>
+                                                                    <mat-select [(ngModel)]="item.parentFieldName">
+                                                                       
+                                                                        <mat-option *ngFor="let gs of groupSectionList"
+                                                                            [value]="gs.groupGUID">
+                                                                            {{gs.name}}
+                                                                        </mat-option>
+                                                                    </mat-select>
+                                                                </mat-form-field>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">List Values(Comma
+                                                                    seperated): </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <textarea class="form-control" style="width:300px;"
+                                                                    placeholder="e.g one,two,three"
+                                                                    [(ngModel)]="item.listValue"></textarea>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </mat-tab>
                                                 <mat-tab label="Field Style">
-                                                    <div class="form-group">
-                                                        <label>Width:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Height:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>CSS Class</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
+                                                    <br>
+                                                    <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Width: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    style="width:300px;" placeholder="Enter width here"
+                                                                    [(ngModel)]="item.fieldStyles[0].width" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Height: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    style="width:300px;" placeholder="Enter width here"
+                                                                    [(ngModel)]="item.fieldStyles[0].height" />
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </mat-tab>
                                                 <mat-tab label="Field Validation">
-                                                    <div class="form-group">
-                                                        <label>Data Length:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Editable</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Hidden</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Required</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                        <!-- Add Advanced Validation -->
-                                                    </div>
+                                                    <br>
+                                                    <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Maximum File Size: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    style="width:300px;"
+                                                                    placeholder="Enter max file size here" [(ngModel)]="item.fieldValidations[0].dataLength" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Editable: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.fieldValidations[0].isEditable">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Hidden: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.fieldValidations[0].isHidden">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row></tr>
+                                                        <td mat-cell>
+                                                            <label style="color: black;">Required:</label>
+                                                        </td>
+                                                        <td mat-cell>
+                                                            <mat-checkbox class="example-margin"
+                                                                [(ngModel)]="item.fieldValidations[0].isRequired">
+                                                            </mat-checkbox>
+                                                        </td>
+                                                        <tr>
+                                                    </table>
                                                 </mat-tab>
                                             </mat-tab-group>
                                         </div>
@@ -347,582 +522,292 @@
                                     </div>
 
                                     <!-- Date Type -->
-                                    <div *ngIf="item.type=='date'">
+                                    <div *ngIf="item.fieldType.value=='date' && item.isActive===true">
                                         <div style="margin-right: 96%;">
-                                            <mat-icon>{{item.icon}}</mat-icon>
+                                            <mat-icon>{{item.fieldType.description}}</mat-icon>
                                         </div>
-                                        <label>{{i+1}}.{{item.Question}}</label>
-                                        <!-- <label *ngIf="item.required" class="text-danger">*</label> -->
-                                        <input type="date" class="form-control" id="{{item.name}}" style="width:576px;"
-                                            placeholder="Select Date">
+                                        <label style="color: black;">{{item.questionName}}</label>
                                         <!--#region attributes tab  -->
-                                        <div *ngIf="item.toggle">
+                                        <div *ngIf="item.toggle" style="text-align: left;">
                                             <hr>
-                                            <h2 style="color: grey;font-weight: bold;"><u>Field Details:</u></h2>
-                                            <mat-tab-group title="Field Attributes">
-                                                <mat-tab label="Field Attributes ">
-                                                    <div class="form-group">
-                                                        <label>Question Name:</label>
-                                                        <input class="form-control" type="text"
-                                                            [(ngModel)]="item.Question" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Friendly Name:</label>
-                                                        <input class="form-control" type="text"
-                                                            [(ngModel)]="item.name" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Tooltip</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Displayable</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Locked</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Group Name</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
+                                            <mat-tab-group mat-align-tabs="center" style="color: black;">
+                                                <mat-tab label="Field Attributes">
+                                                    <br>
+                                                    <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Question Name</label>
+                                                                <label style="color: red;">*</label>
+                                                                <label style="color: black;">:</label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    [(ngModel)]="item.questionName"
+                                                                    style="width: 300px;"
+                                                                    placeholder="Enter question name here" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row  style="display: none;">
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Field Name</label>
+                                                                <label style="color: red;">*</label>
+                                                                <label style="color: black;">:</label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    [(ngModel)]="item.fieldName" style="width:300px;"
+                                                                    placeholder="Enter field name here" value="ua_"  />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Tooltip: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    style="width:300px;"
+                                                                    placeholder="Enter tooltip here"
+                                                                    [(ngModel)]="item.toolTip" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Format: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-form-field appearance="outline">
+                                                                    <mat-label>Select a Date Format </mat-label>
+                                                                    <mat-select [(ngModel)]="item.childFieldName">
+                                                                        <mat-option *ngFor="let format of dateFormats"
+                                                                            [value]="format.value">
+                                                                            {{format.displayName}}
+                                                                        </mat-option>
+                                                                    </mat-select>
+                                                                </mat-form-field>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Group/Section: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-form-field appearance="outline">
+                                                                    <mat-label>Select a Group/Section </mat-label>
+                                                                    <mat-select [(ngModel)]="item.parentFieldName">                                                                     
+                                                                        <mat-option *ngFor="let gs of groupSectionList"
+                                                                            [value]="gs.groupGUID">
+                                                                            {{gs.name}}
+                                                                        </mat-option>
+                                                                    </mat-select>
+                                                                </mat-form-field>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </mat-tab>
                                                 <mat-tab label="Field Style">
-                                                    <div class="form-group">
-                                                        <label>Width:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Height:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>CSS Class</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
+                                                    <br>
+                                                    <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Width: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    style="width:300px;" placeholder="Enter width here"
+                                                                    [(ngModel)]="item.fieldStyles[0].width" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Height: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    style="width:300px;" placeholder="Enter width here"
+                                                                    [(ngModel)]="item.fieldStyles[0].height" />
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </mat-tab>
                                                 <mat-tab label="Field Validation">
-                                                    <div class="form-group">
-                                                        <label>Data Length:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Editable</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Hidden</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Required</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                        <!-- Add Advanced Validation -->
-                                                    </div>
+                                                    <br>
+                                                    <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Editable: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.fieldValidations[0].isEditable">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Hidden: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.fieldValidations[0].isHidden">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <td mat-cell>
+                                                            <label style="color: black;">Required: </label>
+                                                        </td>
+                                                        <td mat-cell>
+                                                            <mat-checkbox class="example-margin"
+                                                                [(ngModel)]="item.fieldValidations[0].isRequired">
+                                                            </mat-checkbox>
+                                                        </td>
+                                                    </table>
                                                 </mat-tab>
                                             </mat-tab-group>
                                         </div>
                                         <!--#endregion -->
                                     </div>
 
-                                    <!-- Email Type -->
-                                    <div *ngIf="item.type=='email'">
+                                    <!-- Time Type -->
+                                    <div *ngIf="item.fieldType.value=='Time' && item.isActive===true">
                                         <div style="margin-right: 96%;">
-                                            <mat-icon>{{item.icon}}</mat-icon>
+                                            <mat-icon>{{item.fieldType.description}}</mat-icon>
                                         </div>
-                                        <label>{{i+1}}.{{item.Question}}</label>
-                                        <!-- <label *ngIf="item.required" class="text-danger">*</label> -->
-                                        <input type="email" class="form-control" style="width:576px;"
-                                            placeholder="Enter Email address">
+                                        <label style="color: black;">{{item.questionName}}</label>
                                         <!--#region attributes tab  -->
-                                        <div *ngIf="item.toggle">
+                                        <div *ngIf="item.toggle" style="text-align: left;">
                                             <hr>
-                                            <h2 style="color: grey;font-weight: bold;"><u>Field Details:</u></h2>
-                                            <mat-tab-group title="Field Attributes">
-                                                <mat-tab label="Field Attributes ">
-                                                    <div class="form-group">
-                                                        <label>Question Name:</label>
-                                                        <input class="form-control" type="text"
-                                                            [(ngModel)]="item.Question" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Friendly Name:</label>
-                                                        <input class="form-control" type="text"
-                                                            [(ngModel)]="item.name" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Tooltip</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Displayable</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Locked</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Group Name</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
+                                            <mat-tab-group mat-align-tabs="center" style="color: black;">
+                                                <mat-tab label="Field Attributes">
+                                                    <br>
+                                                    <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Question Name</label>
+                                                                <label style="color: red;">*</label>
+                                                                <label style="color: black;">:</label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    [(ngModel)]="item.questionName"
+                                                                    style="width: 300px;"
+                                                                    placeholder="Enter question name here" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row style="display: none;">
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Field Name</label>
+                                                               <label style="color: red;">*</label>
+                                                                <label style="color: black;">:</label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    [(ngModel)]="item.fieldName" style="width:300px;"
+                                                                    placeholder="Enter field name here" value="ua_"  />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Tooltip: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    style="width:300px;"
+                                                                    placeholder="Enter tooltip here"
+                                                                    [(ngModel)]="item.toolTip" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Format: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-form-field appearance="outline">
+                                                                    <mat-label>Select a Time Format </mat-label>
+                                                                    <mat-select [(ngModel)]="item.childFieldName">
+                                                                        <mat-option *ngFor="let format of timeFormats"
+                                                                            [value]="format.value">
+                                                                            {{format.displayName}}
+                                                                        </mat-option>
+                                                                    </mat-select>
+                                                                </mat-form-field>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Group/Section: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-form-field appearance="outline">
+                                                                    <mat-label>Select a Group/Section </mat-label>
+                                                                    <mat-select [(ngModel)]="item.parentFieldName">
+                                                                       
+                                                                        <mat-option *ngFor="let gs of groupSectionList"
+                                                                            [value]="gs.groupGUID">
+                                                                            {{gs.name}}
+                                                                        </mat-option>
+                                                                    </mat-select>
+                                                                </mat-form-field>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </mat-tab>
                                                 <mat-tab label="Field Style">
-                                                    <div class="form-group">
-                                                        <label>Width:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Height:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>CSS Class</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
+                                                    <br>
+                                                    <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Width: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    style="width:300px;" placeholder="Enter width here"
+                                                                    [(ngModel)]="item.fieldStyles[0].width" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Height: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    style="width:300px;" placeholder="Enter width here"
+                                                                    [(ngModel)]="item.fieldStyles[0].height" />
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </mat-tab>
                                                 <mat-tab label="Field Validation">
-                                                    <div class="form-group">
-                                                        <label>Data Length:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Editable</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Hidden</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Required</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                        <!-- Add Advanced Validation -->
-                                                    </div>
-                                                </mat-tab>
-                                            </mat-tab-group>
-                                        </div>
-                                        <!--#endregion -->
-                                    </div>
-
-                                    <!-- Embedded Form Type -->
-                                    <div *ngIf="item.type=='embeddedform'">
-                                        <div style="margin-right: 96%;">
-                                            <mat-icon>{{item.icon}}</mat-icon>
-                                        </div>
-                                        <label>{{i+1}}.{{item.Question}}</label>
-                                        <!-- <label *ngIf="item.required" class="text-danger">*</label> -->
-                                        <select class="form-control" id="{{item.name}}" style="width:576px;">
-                                            <option *ngFor="let v of item.values" [value]="v.value">{{v.label}}</option>
-                                        </select>
-                                        <!--#region attributes tab  -->
-                                        <div *ngIf="item.toggle">
-                                            <hr>
-                                            <h2 style="color: grey;font-weight: bold;"><u>Field Details:</u></h2>
-                                            <mat-tab-group title="Field Attributes">
-                                                <mat-tab label="Field Attributes ">
-                                                    <div class="form-group">
-                                                        <label>Question Name:</label>
-                                                        <input class="form-control" type="text"
-                                                            [(ngModel)]="item.Question" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Friendly Name:</label>
-                                                        <input class="form-control" type="text"
-                                                            [(ngModel)]="item.name" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Tooltip</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Displayable</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Locked</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Group Name</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
-                                                </mat-tab>
-                                                <mat-tab label="Field Style">
-                                                    <div class="form-group">
-                                                        <label>Width:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Height:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>CSS Class</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
-                                                </mat-tab>
-                                                <mat-tab label="Field Validation">
-                                                    <div class="form-group">
-                                                        <label>Data Length:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Editable</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Hidden</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Required</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                        <!-- Add Advanced Validation -->
-                                                    </div>
-                                                </mat-tab>
-                                            </mat-tab-group>
-                                        </div>
-                                        <!--#endregion -->
-                                    </div>
-
-                                    <!-- Macro Type -->
-                                    <div *ngIf="item.type=='macro'">
-                                        <div style="margin-right: 96%;">
-                                            <mat-icon>{{item.icon}}</mat-icon>
-                                        </div>
-                                        <label>{{i+1}}.{{item.Question}}</label>
-                                        <!-- <label *ngIf="item.required" class="text-danger">*</label> -->
-                                        <input type="text" class="form-control" style="width:576px;"
-                                            placeholder="Enter Macro">
-                                        <!--#region attributes tab  -->
-                                        <div *ngIf="item.toggle">
-                                            <hr>
-                                            <h2 style="color: grey;font-weight: bold;"><u>Field Details:</u></h2>
-                                            <mat-tab-group title="Field Attributes">
-                                                <mat-tab label="Field Attributes ">
-                                                    <div class="form-group">
-                                                        <label>Question Name:</label>
-                                                        <input class="form-control" type="text"
-                                                            [(ngModel)]="item.Question" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Friendly Name:</label>
-                                                        <input class="form-control" type="text"
-                                                            [(ngModel)]="item.name" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Tooltip</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Displayable</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Locked</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Group Name</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
-                                                </mat-tab>
-                                                <mat-tab label="Macro Config">
-
-                                                </mat-tab>
-                                                <mat-tab label="Field Style">
-                                                    <div class="form-group">
-                                                        <label>Width:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Height:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>CSS Class</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
-                                                </mat-tab>
-                                                <mat-tab label="Field Validation">
-                                                    <div class="form-group">
-                                                        <label>Data Length:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Editable</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Hidden</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Required</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                        <!-- Add Advanced Validation -->
-                                                    </div>
-                                                </mat-tab>
-                                            </mat-tab-group>
-                                        </div>
-                                        <!--#endregion -->
-                                    </div>
-
-                                    <!-- Number Type -->
-                                    <div *ngIf="item.type=='number'">
-                                        <div style="margin-right: 96%;">
-                                            <mat-icon>{{item.icon}}</mat-icon>
-                                        </div>
-                                        <label>{{i+1}}.{{item.Question}}</label>
-                                        <!-- <label *ngIf="item.required" class="text-danger">*</label> -->
-                                        <input type="number" class="form-control" style="width:576px;"
-                                            placeholder="Enter value">
-                                        <!--#region attributes tab  -->
-                                        <div *ngIf="item.toggle">
-                                            <hr>
-                                            <h2 style="color: grey;font-weight: bold;"><u>Field Details:</u></h2>
-                                            <mat-tab-group title="Field Attributes">
-                                                <mat-tab label="Field Attributes ">
-                                                    <div class="form-group">
-                                                        <label>Question Name:</label>
-                                                        <input class="form-control" type="text"
-                                                            [(ngModel)]="item.Question" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Friendly Name:</label>
-                                                        <input class="form-control" type="text"
-                                                            [(ngModel)]="item.name" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Tooltip</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Displayable</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Locked</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Group Name</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
-                                                </mat-tab>
-                                                <mat-tab label="Field Style">
-                                                    <div class="form-group">
-                                                        <label>Width:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Height:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>CSS Class</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
-                                                </mat-tab>
-                                                <mat-tab label="Field Validation">
-                                                    <div class="form-group">
-                                                        <label>Data Length:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Editable</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Hidden</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Required</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                        <!-- Add Advanced Validation -->
-                                                    </div>
-                                                </mat-tab>
-                                            </mat-tab-group>
-                                        </div>
-                                        <!--#endregion -->
-                                    </div>
-
-                                    <!-- Radio Type -->
-                                    <div *ngIf="item.type=='radio'">
-                                        <div style="margin-right: 96%;">
-                                            <mat-icon>{{item.icon}}</mat-icon>
-                                        </div>
-                                        <label>{{i+1}}.{{item.Question}}</label>
-                                        <!-- <label *ngIf="item.required" class="text-danger">*</label> -->
-                                        <div *ngFor="let v of item.values" class="inline-form-group"
-                                            style="width:576px;">
-                                            <label class="cust-check-bx">
-                                                <input type="radio" [value]="v.value" name="{{item.name}}"> {{v.label}}
-                                                <span class="checkmark"></span>
-                                            </label>
-                                        </div>
-                                        <!--#region attributes tab  -->
-                                        <div *ngIf="item.toggle">
-                                            <hr>
-                                            <h2 style="color: grey;font-weight: bold;"><u>Field Details:</u></h2>
-                                            <mat-tab-group title="Field Attributes">
-                                                <mat-tab label="Field Attributes ">
-                                                    <div class="form-group">
-                                                        <label>Question Name:</label>
-                                                        <input class="form-control" type="text"
-                                                            [(ngModel)]="item.Question" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Friendly Name:</label>
-                                                        <input class="form-control" type="text"
-                                                            [(ngModel)]="item.name" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Tooltip</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Displayable</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Locked</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Group Name</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Values(Comma Seperated)</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
-                                                </mat-tab>
-                                                <mat-tab label="Field Style">
-                                                    <div class="form-group">
-                                                        <label>Width:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Height:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>CSS Class</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
-                                                </mat-tab>
-                                                <mat-tab label="Field Validation">
-                                                    <div class="form-group">
-                                                        <label>Data Length:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Editable</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Hidden</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Required</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                        <!-- Add Advanced Validation -->
-                                                    </div>
+                                                    <br>
+                                                    <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Editable: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.fieldValidations[0].isEditable">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Hidden: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.fieldValidations[0].isHidden">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <td mat-cell>
+                                                            <label style="color: black;">Required: </label>
+                                                        </td>
+                                                        <td mat-cell>
+                                                            <mat-checkbox class="example-margin"
+                                                                [(ngModel)]="item.fieldValidations[0].isRequired">
+                                                            </mat-checkbox>
+                                                        </td>
+                                                    </table>
                                                 </mat-tab>
                                             </mat-tab-group>
                                         </div>
@@ -930,96 +815,97 @@
                                     </div>
 
                                     <!-- Group Type -->
-                                    <div *ngIf="item.type=='repeatgroup'">
+                                    <div *ngIf="item.fieldType.value=='repeatgroup' && item.isActive===true">
                                         <div style="margin-right: 96%;">
-                                            <mat-icon>{{item.icon}}</mat-icon>
+                                            <mat-icon>{{item.fieldType.description}}</mat-icon>
                                         </div>
-                                        <label>{{i+1}}.{{item.Question}}</label>
-                                        <!-- <label *ngIf="item.required" class="text-danger">*</label> -->
-                                        <div
-                                            style="background:paleturquoise;width:576px;height: 50px;  border-radius: 25px;">
-
-                                        </div>
+                                        <label
+                                            style="color: black;">{{item.group.name}}</label>
                                         <!--#region attributes tab  -->
-                                        <div *ngIf="item.toggle">
+                                        <div *ngIf="item.toggle" style="text-align: left;">
                                             <hr>
-                                            <h2 style="color: grey;font-weight: bold;"><u>Field Details:</u></h2>
-                                            <mat-tab-group title="Field Attributes">
-                                                <mat-tab label="Field Attributes ">
-                                                    <div class="form-group">
-                                                        <label>Question Name:</label>
-                                                        <input class="form-control" type="text"
-                                                            [(ngModel)]="item.Question" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Friendly Name:</label>
-                                                        <input class="form-control" type="text"
-                                                            [(ngModel)]="item.name" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Tooltip</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Displayable</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Locked</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Group Name</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
+                                            <mat-tab-group mat-align-tabs="center" style="color: black;">
+                                                <mat-tab label="Group Information">
+                                                    <br>
+                                                    <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Group Name</label>
+                                                                <label style="color: red;">*</label>
+                                                                <label style="color: black;">:</label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text" [(ngModel)]="item.group.name" style="width:300px;"
+                                                                    placeholder="Enter group name here" [disabled]="(item.groupGUID!=='string')" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Required: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin" [(ngModel)]="item.group.isRequired"
+                                                                    [disabled]="(item.groupGUID!=='string')"></mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                    
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <button class="btn btn-sm"
+                                                                    style="background-color: crimson;color: white;font-weight: 400;width: 150px;"
+                                                                    (click)="addGroup(item,i)" [disabled]="(item.groupGUID!=='string')">Add Group</button>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Section: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-form-field appearance="outline">
+                                                                    <mat-label>Select a Section</mat-label>
+                                                                    <mat-select [(ngModel)]="item.parentFieldName">
+                                                                       
+                                                                        <mat-option *ngFor="let sub of sectionList" [value]="sub.groupGUID">
+                                                                            {{sub.name}}
+                                                                        </mat-option>
+                                                                    </mat-select>
+                                                                </mat-form-field>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </mat-tab>
-                                                <mat-tab label="Field Style">
-                                                    <div class="form-group">
-                                                        <label>Width:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Height:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>CSS Class</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
-                                                </mat-tab>
-                                                <mat-tab label="Field Validation">
-                                                    <div class="form-group">
-                                                        <label>Data Length:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Editable</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Hidden</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Required</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                        <!-- Add Advanced Validation -->
-                                                    </div>
+                                            </mat-tab-group>
+                                        </div>
+                                        <!--#endregion -->
+                                    </div>
+
+                                    <!-- Page Title Type -->
+                                    <div *ngIf="item.fieldType.value=='PageTitle' && item.isActive===true">
+                                        <div style="margin-right: 96%;">
+                                            <mat-icon>{{item.fieldType.description}}</mat-icon>
+                                        </div>
+                                        <label style="color: black;">{{item.questionName}}</label>
+                                        <!--#region attributes tab  -->
+                                        <div *ngIf="item.toggle" style="text-align: left;">
+                                            <hr>
+                                            <mat-tab-group mat-align-tabs="center" style="color: black;">
+                                                <mat-tab label="Page Title Information">
+                                                    <br>
+                                                    <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Page Title</label>
+                                                                <label style="color: red;">*</label>
+                                                                <label style="color: black;">:</label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text" [(ngModel)]="item.questionName" style="width:300px;"
+                                                                    placeholder="Enter page title here" />
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </mat-tab>
                                             </mat-tab-group>
                                         </div>
@@ -1027,326 +913,295 @@
                                     </div>
 
                                     <!-- Section Type -->
-                                    <div *ngIf="item.type=='section'">
+                                    <div *ngIf="item.fieldType.value=='section' && item.isActive===true" >
                                         <div style="margin-right: 96%;">
-                                            <mat-icon>{{item.icon}}</mat-icon>
+                                            <mat-icon>{{item.fieldType.description}}</mat-icon>
                                         </div>
-                                        <label>{{i+1}}.{{item.Question}}</label>
-                                        <!-- <label *ngIf="item.required" class="text-danger">*</label> -->
-                                        <div
-                                            style="background:palegoldenrod;width:576px;height: 50px;  border-radius: 25px;">
-
-                                        </div>
+                                        <label style="color: black;">{{item.group.name}}</label>
                                         <!--#region attributes tab  -->
-                                        <div *ngIf="item.toggle">
+                                        <div *ngIf="item.toggle" style="text-align: left;">
                                             <hr>
-                                            <h2 style="color: grey;font-weight: bold;"><u>Field Details:</u></h2>
-                                            <mat-tab-group title="Field Attributes">
-                                                <mat-tab label="Field Attributes ">
-                                                    <div class="form-group">
-                                                        <label>Question Name:</label>
-                                                        <input class="form-control" type="text"
-                                                            [(ngModel)]="item.Question" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Friendly Name:</label>
-                                                        <input class="form-control" type="text"
-                                                            [(ngModel)]="item.name" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Tooltip</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Displayable</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Locked</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Group Name</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
-                                                </mat-tab>
-                                                <mat-tab label="Field Style">
-                                                    <div class="form-group">
-                                                        <label>Width:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Height:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>CSS Class</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
-                                                </mat-tab>
-                                                <mat-tab label="Field Validation">
-                                                    <div class="form-group">
-                                                        <label>Data Length:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Editable</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Hidden</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Required</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                        <!-- Add Advanced Validation -->
-                                                    </div>
+                                            <mat-tab-group mat-align-tabs="center" style="color: black;">
+                                                <mat-tab label="Section Information">
+                                                    <br>
+                                                    <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Section Name</label>
+                                                                <label style="color: red;">*</label>
+                                                                <label style="color: black;">:</label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    [(ngModel)]="item.group.name" style="width:300px;"
+                                                                    placeholder="Enter section name here" [disabled]="(item.groupGUID!=='string')" 
+                                                                     />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;" >Required: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.group.isRequired" [disabled]="(item.groupGUID!=='string')"  ></mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <button class="btn btn-sm"
+                                                                    style="background-color: crimson;color: white;font-weight: 400;width: 150px;"
+                                                                    (click)="addSection(item,i)" [disabled]="(item.groupGUID!=='string')" >Add Section</button>
+                                                            </td>
+                                                        </tr>                                                       
+                                                    </table>
                                                 </mat-tab>
                                             </mat-tab-group>
                                         </div>
                                         <!--#endregion -->
                                     </div>
 
-                                    <!-- Dropdown Type -->
-                                    <div *ngIf="item.type=='select'">
+                                    <!-- Sub Section Type -->
+                                    <div *ngIf="item.fieldType.value=='subSection' && item.isActive===true">
                                         <div style="margin-right: 96%;">
-                                            <mat-icon>{{item.icon}}</mat-icon>
+                                            <mat-icon>{{item.fieldType.description}}</mat-icon>
                                         </div>
-                                        <label>{{i+1}}.{{item.Question}}</label>
-                                        <!-- <label *ngIf="item.required" class="text-danger">*</label> -->
-                                        <select class="form-control" id="{{item.name}}" style="width:576px;">
-                                            <option *ngFor="let v of item.values" [value]="v.value">{{v.label}}</option>
-                                        </select>
+                                        <label style="color: black;">{{item.questionName}}</label>
                                         <!--#region attributes tab  -->
-                                        <div *ngIf="item.toggle">
+                                        <div *ngIf="item.toggle" style="text-align: left;">
                                             <hr>
-                                            <h2 style="color: grey;font-weight: bold;"><u>Field Details:</u></h2>
-                                            <mat-tab-group title="Field Attributes">
-                                                <mat-tab label="Field Attributes ">
-                                                    <div class="form-group">
-                                                        <label>Question Name:</label>
-                                                        <input class="form-control" type="text"
-                                                            [(ngModel)]="item.Question" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Friendly Name:</label>
-                                                        <input class="form-control" type="text"
-                                                            [(ngModel)]="item.name" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Tooltip</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Displayable</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Locked</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Group Name</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
-                                                </mat-tab>
-                                                <mat-tab label="Field Style">
-                                                    <div class="form-group">
-                                                        <label>Width:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Height:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>CSS Class</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
-                                                </mat-tab>
-                                                <mat-tab label="Field Validation">
-                                                    <div class="form-group">
-                                                        <label>Data Length:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Editable</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Hidden</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Required</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                        <!-- Add Advanced Validation -->
-                                                    </div>
-                                                </mat-tab>
-                                            </mat-tab-group>
-                                        </div>
-                                        <!--#endregion -->
-                                    </div>
-
-                                    <!-- Text Type -->
-                                    <div *ngIf="item.type=='text'">
-                                        <div style="margin-right: 96%;">
-                                            <mat-icon>{{item.icon}}</mat-icon>
-                                        </div>
-                                        <label>{{i+1}}.{{item.Question}}</label>
-                                        <!-- <label *ngIf="item.required" class="text-danger">*</label> -->
-                                        <input type="text" class="form-control" style="width: 880px;"
-                                            placeholder="Enter data">
-                                        <!--#region attributes tab  -->
-                                        <div *ngIf="item.toggle">
-                                            <hr>
-                                            <h2 style="color: grey;font-weight: bold;"><u>Field Details:</u></h2>
-                                            <mat-tab-group title="Field Attributes">
+                                            <mat-tab-group mat-align-tabs="center" style="color: black;">
                                                 <mat-tab label="Field Attributes">
-                                                    <div class="form-group">
-                                                        <label>Question Name:</label>
-                                                        <input class="form-control" type="text"
-                                                            [(ngModel)]="item.Question" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Friendly Name:</label>
-                                                        <input class="form-control" type="text"
-                                                            [(ngModel)]="item.name" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Tooltip</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Displayable</label>
-                                                        <select class="form-control" style="width: 576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Locked</label>
-                                                        <select class="form-control" style="width: 576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Group Name</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
-                                                </mat-tab>
-                                                <mat-tab label="Field Style">
-                                                    <div class="form-group">
-                                                        <label>Width:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Height:</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>CSS Class</label>
-                                                        <input class="form-control" type="text" />
-                                                    </div>
-                                                </mat-tab>
-                                                <mat-tab label="Field Validation">
-                                                    <div class="form-group">
-                                                        <label>Max File Size</label>
-                                                        <input class="form-control" type="number" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Editable</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Hidden</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Is Required</label>
-                                                        <select class="form-control" style="width:576px;">
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                        </select>
-                                                        <!-- Add Advanced Validation -->
-                                                    </div>
+                                                    <br>
+                                                    <table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Question Name</label>
+                                                                <label style="color: red;">*</label>
+                                                                <label style="color: black;">:</label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text" [(ngModel)]="item.questionName"
+                                                                    style="width: 300px;" placeholder="Enter question name here" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row  style="display: none;">
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Field Name</label>
+                                                                <label style="color: red;">*</label>
+                                                                <label style="color: black;">:</label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    [(ngModel)]="item.fieldName" style="width:300px;"
+                                                                    placeholder="Enter field name here" value="ua_group"  />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Section:</label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-form-field appearance="outline">
+                                                                    <mat-label>Select a Group/Section </mat-label>
+                                                                   
+                                                                    <mat-select [(ngModel)]="item.parentFieldName">
+                                                                        <mat-option *ngFor="let gs of groupSectionList" [value]="gs.groupGUID">
+                                                                            {{gs.name}}
+                                                                        </mat-option>
+                                                                    </mat-select>
+                                                                </mat-form-field>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </mat-tab>
                                             </mat-tab-group>
                                         </div>
                                         <!--#endregion -->
                                     </div>
-                                    <div>
+
+                                    <!-- Text/Number Type -->
+                                    <div
+                                        *ngIf="(item.fieldType.value=='text' || item.fieldType.value=='number' || item.fieldType.value=='EmailAddress' || item.fieldType.value=='Alphanumeric') && item.isActive===true">
+                                        <div style="margin-right: 96%;">
+                                            <mat-icon>{{item.fieldType.description}}</mat-icon>
+                                        </div>
+                                        <label style="color: black;">{{item.questionName}}</label>
+                                        <!--#region attributes tab  -->
+                                        <div *ngIf="item.toggle" style="text-align: left;">
+                                            <hr>
+                                            <mat-tab-group mat-align-tabs="center" style="color: black;">
+                                                <mat-tab label="Field Attributes">
+                                                    <br>
+                                                    <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Question Name</label>
+                                                                <label style="color: red;">*</label>
+                                                                <label style="color: black;">:</label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    [(ngModel)]="item.questionName"
+                                                                    style="width: 300px;"
+                                                                    placeholder="Enter question name here" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row  style="display: none;"> 
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Field Name</label>
+                                                                <label style="color: red;">*</label>
+                                                                <label style="color: black;">:</label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    [(ngModel)]="item.fieldName" style="width:300px;"
+                                                                    placeholder="Enter field name here" value="ua_"  />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Tooltip: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    style="width:300px;"
+                                                                    placeholder="Enter tooltip here"
+                                                                    [(ngModel)]="item.toolTip" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Group/Section: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-form-field appearance="outline">
+                                                                    <mat-label>Select a Group/Section </mat-label>
+                                                                   
+                                                                    <mat-select [(ngModel)]="item.parentFieldName">
+                                                                        
+                                                                        <mat-option *ngFor="let gs of groupSectionList"
+                                                                            [value]="gs.groupGUID">
+                                                                            {{gs.name}}
+                                                                        </mat-option>
+                                                                    </mat-select>
+                                                                </mat-form-field>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </mat-tab>
+                                                <mat-tab label="Field Style">
+                                                    <br>
+                                                   <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Width: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    style="width:300px;" placeholder="Enter width here"
+                                                                    [(ngModel)]="item.fieldStyles[0].width" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Height: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    style="width:300px;" placeholder="Enter width here"
+                                                                    [(ngModel)]="item.fieldStyles[0].height" />
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </mat-tab>
+                                                <mat-tab label="Field Validation">
+                                                    <br>
+                                                    <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Maximum Length: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    style="width:300px;"
+                                                                    placeholder="Enter max file size here" [(ngModel)]="item.fieldValidations[0].dataLength"/>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Editable: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.fieldValidations[0].isEditable">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Hidden: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.fieldValidations[0].isHidden">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Required: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.fieldValidations[0].isRequired">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </mat-tab>
+                                            </mat-tab-group>
+                                        </div>
+                                        <!--#endregion -->
+                                    </div>
+
+                                    <!-- Toggle icons -->
+                                    <div *ngIf="item.isActive===true">
                                         <hr>
                                         <mat-icon title="Collaspe Attributes" *ngIf="item.toggle"
                                             (click)="item.toggle=false">
                                             expand_less
                                         </mat-icon>
                                         <mat-icon title="Expand Attributes" *ngIf="!item.toggle"
-                                            (click)="item.toggle=true">expand_more
+                                            (click)="toggleValue(item)">expand_more
                                         </mat-icon>
-                                        <mat-icon title="Delete Field" (click)="removeField(i)">delete</mat-icon>
+                                        <mat-icon title="Delete Field" (click)="removeField(i)" *ngIf="item.fieldType.value!=='PageTitle'">delete</mat-icon>
                                     </div>
                                 </div>
                                 <!-- End div -->
                             </div>
-
-
                             <!-- Form Builder End -->
                         </div>
-                    </div>             
-                </div>
-                 <!-- Page List -->
-                 <div class="example-container" style="width: 200px;position: fixed;margin-left: 65%;">
-                    <h2>Pages</h2>
-                    <div style="margin-right: 55%;">
-                        <mat-icon title="Add Page" (click)="addPage()">post_add</mat-icon>Add Page
                     </div>
+                </div>
+
+                <!-- Page List -->
+                <div style="width: 200px;position: fixed;margin-left: 65%;">
+                    <h2>Pages</h2>
+                    <button class="btn btn-sm"
+                        style="background-color: crimson;color: white;font-weight: 400;width: 100px;"
+                        (click)="addPage()">Add Page</button>
                     <div style="height: 10px;"></div>
                     <div class="example-list" style="text-align:center">
                         <div class="example-box" *ngFor="let page of pages;let i=index;"
-                            style="text-align: center;font-size: small;background-color: whitesmoke;color: black;font-weight:500;height: 1px;">
-                            {{page}} {{i+1}}
+                            style="text-align: center;font-size: small;background-color: white;color: black;font-weight:500;height: 1px;">
+                            {{page.name}}
                             <div>
-                                <mat-icon title="View Page" (click)="viewPage(i)">remove_red_eye</mat-icon>
-                                <mat-icon title="Delete Page" (click)="removePage(i)">delete</mat-icon>
+                                <mat-icon title="View Page" (click)="viewPage(i,page)">remove_red_eye</mat-icon>
+                                <mat-icon title="Delete Page" (click)="removePage(i,page)">delete</mat-icon>
                             </div>
                         </div>
                     </div>
@@ -1355,3 +1210,6 @@
         </div>
     </div>
 </div>
+<ngx-spinner bdColor="rgba(       237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: black">Processing...</p>
+</ngx-spinner>
