@@ -33,6 +33,7 @@
     "bootstrap-rtl": "3.3.4",
     "bootstrap-select": "1.13.18",
     "bootstrap-tagsinput": "0.7.1",
+    "bpmn-js": "^8.8.3",
     "chartist": "0.11.4",
     "chartist-plugin-zoom": "0.6.0",
     "core-js": "3.15.2",
