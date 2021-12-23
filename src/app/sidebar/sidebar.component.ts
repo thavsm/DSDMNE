@@ -25,7 +25,6 @@ export interface ChildrenItems {
 
 //Menu Items
 export const ROUTES: RouteInfo[] = [{
-<<<<<<< HEAD
     path: '/dashboard',
     title: 'Dashboard',
     type: 'link',
@@ -63,49 +62,6 @@ export const ROUTES: RouteInfo[] = [{
         { path: 'formInbox', title: 'Form Inbox', ab: 'FI' },
     ]
 }
-=======
-        path: '/dashboard',
-        title: 'Dashboard',
-        type: 'link',
-        icontype: 'dashboard'
-    },{
-        path: '/pages',
-        title: 'Pages',
-        type: 'sub',
-        icontype: 'image',
-        collapse: 'pages',
-        children: [
-            {path: 'pricing', title: 'Pricing', ab:'P'},
-            {path: 'timeline', title: 'Timeline Page', ab:'TP'},
-            {path: 'login', title: 'Login Page', ab:'LP'},
-            {path: 'register', title: 'Register Page', ab:'RP'},
-            {path: 'lock', title: 'Lock Screen Page', ab:'LSP'},
-            {path: 'user', title: 'User Page', ab:'UP'}
-        ]
-    },{
-        path: '/appusers',
-        title: 'Users',
-        type: 'link',
-        icontype: 'person'
-    },{
-        path: '/weather',
-        title: 'Weather',
-        type: 'link',
-        icontype: 'cloud'
-    },
-    {
-        path: '/formList',
-        title: 'Form',
-        type: 'link',
-        icontype: 'feed'
-    },
-    {
-        path: '/process',
-        title: 'process',
-        type: 'link',
-        icontype: 'cloud'
-    }
->>>>>>> f7a6a4a0b811aecc7e5134f220490fcc45fc1c97
 ];
 @Component({
     selector: 'app-sidebar-cmp',
@@ -146,25 +102,8 @@ export class SidebarComponent implements OnInit {
             const elemSidebar = <HTMLElement>document.querySelector('.sidebar .sidebar-wrapper');
             this.ps = new PerfectScrollbar(elemSidebar);
         }
-<<<<<<< HEAD
     }
     updatePS(): void {
-=======
-
-        
-      const $sidebar = $('.sidebar');
-      
-
-      const new_color = 'black';
-
-          if ($sidebar.length !== 0) {
-              $sidebar.attr('data-background-color', new_color);
-          }
-
-         
-        }
-    updatePS(): void  {
->>>>>>> f7a6a4a0b811aecc7e5134f220490fcc45fc1c97
         if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
             this.ps.update();
         }
