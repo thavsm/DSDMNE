@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { UserService } from 'src/app/shared/user.service';
-
+import { Router } from '@angular/router';
 
 declare var $: any;
 
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
       
 
-    constructor(private element: ElementRef, private fb: FormBuilder, private service: UserService) {
+    constructor(private element: ElementRef, private fb: FormBuilder, private service: UserService, private router: Router) {
         this.nativeElement = element.nativeElement;
         this.sidebarVisible = false;
     }
@@ -98,7 +98,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.service.login(this.formModel.value).subscribe(
           (res: any) => {
             localStorage.setItem('token', res.token);
-            window.location.replace("../../dashboard");
+            this.router.navigate(['/dashboard']);
           },
           err => {
             if (err.status == 400)

@@ -9,7 +9,7 @@
             <div class="card-body">
               <div class="row">
                 <div class="col-md-5 ml-auto">
-                  <img src="../../../assets/img/DSD.png" style="width: 250px; height: 250px;" alt="logo">
+                  <img src="./assets/img/DSD.png" style="width: 250px; height: 250px;" alt="logo">
                 </div>
                 <div class="col-md-5 mr-auto">                  
                   <!-- <div class="social text-center">
@@ -123,9 +123,6 @@
                     <div class="text-center">
                       <button type="submit" class="btn btn-primary btn-round mt-4" [disabled]="!formModel.valid">Sign Up</button>
                     </div>
-                    <div *ngIf="saving" style="margin:0 auto;">
-                      <mat-spinner [diameter]="50" color="accent"></mat-spinner>
-                    </div>
                   </form>
                 </div>
               </div>
@@ -159,3 +156,6 @@
     </footer>
   </div>
 </div>
+<ngx-spinner bdColor="rgba(	237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: black">Processing...</p>
+</ngx-spinner>

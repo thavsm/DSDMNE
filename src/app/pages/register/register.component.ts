@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, OnDestroy, NgModule } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { UserService } from 'src/app/shared/user.service';
+import {NgxSpinner, NgxSpinnerService} from 'ngx-spinner';
 
 declare var $: any;
 
@@ -16,7 +17,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     
     selectedValue: string;
     currentCity: string[];
-    saving = false;
 
     selectTheme = 'primary';
     cities = [
@@ -59,7 +59,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }, { validators: this.comparePasswords 
     });
 
-    constructor(private fb: FormBuilder, private service: UserService) {
+    constructor(private fb: FormBuilder, private service: UserService, private spinner: NgxSpinnerService) {
         
     }
 
@@ -118,8 +118,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
     onSubmit() {
-      this.saving = true;
-      
+      //this.saving = true;
+      this.spinner.show();
       var body = {
         Email: this.formModel.value.Email,
         FullName: this.formModel.value.FullName,
@@ -130,12 +130,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
       //let bd ={Email: this.formModel.Email, Password: this.formModel.Password, FullName: this.formModel.FullName};
       this.service.register(body).subscribe(
         (res: any) => {
+          this.spinner.hide();
           if (res.succeeded) {
-            this.saving = false;
             this.formModel.reset();
             this.showNotification('top','right','New user created!', 'Registration successful.','success');
-          } else {
-            this.saving = false;
+          } 
+          else {  
             res.errors.forEach(element => {
               switch (element.code) {
                 case 'DuplicateUserName':
@@ -150,7 +150,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
           }
         },
         err => {
-          this.saving = false;
+          this.spinner.hide();
           console.log(err);
         }
       );

@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { UserService } from 'src/app/shared/user.service';
-
+import {NgxSpinner, NgxSpinnerService} from 'ngx-spinner';
 
 declare const $: any;
 
@@ -19,7 +19,7 @@ export class TaskDetailComponent implements OnInit {
   asgnUsers: any;
   roleID: string;
 
-  constructor(private service: UserService) {
+  constructor(private service: UserService, private spinner: NgxSpinnerService) {
 
   }
 
@@ -58,6 +58,7 @@ export class TaskDetailComponent implements OnInit {
 
     this.service.getuserTask(body).subscribe(
         res => {
+          
           this.workflowData = res['workflow'];
           this.formData = res['formData'];
           this.roleID =this.formData['roleId'];
@@ -87,6 +88,7 @@ export class TaskDetailComponent implements OnInit {
   }
 
   completeTask() {
+    this.spinner.show();
     const wkid =new URLSearchParams(window.location.search).get('workflowid');
     const tid =new URLSearchParams(window.location.search).get('taskid');
     
@@ -101,10 +103,12 @@ export class TaskDetailComponent implements OnInit {
     };
     this.service.completeTask(formData1).subscribe(
       res => {
+        this.spinner.hide();
         //this.data1 = res;
         window.location.replace("/dashboard");
       },
       err => {
+        this.spinner.hide();
         console.log(err);
       },
     );

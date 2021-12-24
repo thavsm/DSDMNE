@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { UserService } from '../shared/user.service';
+import { Router } from '@angular/router';
 
 declare const $: any;
 
@@ -84,7 +85,7 @@ export class SidebarComponent implements OnInit {
     userDetail: any;
     
     
-    constructor(private service: UserService) {
+    constructor(private service: UserService, private router: Router) {
       
     }
 
@@ -135,5 +136,9 @@ export class SidebarComponent implements OnInit {
             bool = true;
         }
         return bool;
+    }
+    logout() {
+        localStorage.removeItem('token');
+        this.router.navigate(['/login']);
     }
 }
