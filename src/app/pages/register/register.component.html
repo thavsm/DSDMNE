@@ -57,15 +57,12 @@
                           <span class="input-group-text">
                             <i class="material-icons">accessibility</i>
                           </span>
-                        </div>                        
-                        <mat-form-field class="form-control" >
-                          <mat-select placeholder="Role" formControlName="Role" >
+                        </div>
+                          <mat-select class="form-control" placeholder="Role..." formControlName="Role" >
                             <mat-option *ngFor="let role of roles" [value]="role.value">
                               {{ role.viewValue }}
                             </mat-option>
                           </mat-select>
-                      </mat-form-field>
-                    
                       </div>
                        <span class="text-danger ml-5" *ngIf="formModel.get('Role').touched && formModel.get('Role').errors?.required">This
                         field is mandatory.</span> 
