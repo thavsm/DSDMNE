@@ -100,7 +100,7 @@ export class SidebarComponent implements OnInit {
        
         this.service.getUserProfile().subscribe(
             res => {
-              this.userDetail = res;
+              this.userDetail = res['formData'];
             },
             err => {
               console.log(err);

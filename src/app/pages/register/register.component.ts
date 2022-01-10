@@ -54,8 +54,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
       FullName: ['', Validators.required],
       Password: ['', [Validators.required, Validators.minLength(4)]],
       ConfirmPassword: ['',Validators.required],
-      //Location: ['',Validators.required],
-      Role: ['',Validators.required]
+      Location: ['',Validators.required],
+      Role: ['',Validators.required],
+      PhoneNumber: ['',Validators.required],
+      EmployeeNo: [''],
+      ServicePoint: [''],
+      Address: ['']
     }, { validators: this.comparePasswords 
     });
 
@@ -125,7 +129,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
         FullName: this.formModel.value.FullName,
         Password: this.formModel.value.Password,
         Location: this.formModel.value.Location,
-        Role: this.formModel.value.Role
+        Role: this.formModel.value.Role,
+        PhoneNumber: this.formModel.value.PhoneNumber,
+        EmployeeNo: this.formModel.value.EmployeeNo,
+        ServicePoint: this.formModel.value.ServicePoint,
+        Address: this.formModel.value.Address,
       };
       //let bd ={Email: this.formModel.Email, Password: this.formModel.Password, FullName: this.formModel.FullName};
       this.service.register(body).subscribe(
