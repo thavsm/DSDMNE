@@ -11,6 +11,7 @@ export interface RouteInfo {
     title: string;
     type: string;
     icontype: string;
+    role: string[];
     collapse?: string;
     children?: ChildrenItems[];
 }
@@ -27,12 +28,14 @@ export const ROUTES: RouteInfo[] = [{
         path: '/dashboard',
         title: 'Dashboard',
         type: 'link',
-        icontype: 'dashboard'
+        icontype: 'dashboard',
+        role: []
     },{
         path: '/pages',
         title: 'Pages',
         type: 'sub',
         icontype: 'image',
+        role: ['District Manager'],
         collapse: 'pages',
         children: [
             {path: 'pricing', title: 'Pricing', ab:'P'},
@@ -46,24 +49,28 @@ export const ROUTES: RouteInfo[] = [{
         path: '/appusers',
         title: 'Users',
         type: 'link',
-        icontype: 'person'
+        icontype: 'person',
+        role: ['District Manager']
     },{
         path: '/weather',
         title: 'Weather',
         type: 'link',
-        icontype: 'cloud'
+        icontype: 'cloud',
+        role: ['District Manager']
     },
     {
         path: '/process',
         title: 'process',
         type: 'link',
-        icontype: 'cloud'
+        icontype: 'cloud',
+        role: ['District Manager']
     },
     {
         path: '',
         title: 'Form',
         type: 'sub',
         icontype: 'feed',
+        role: [],
         collapse: 'formList',
         children: [
             {path: 'formCategory',title: 'Form Category',ab: 'FC'},
@@ -106,8 +113,9 @@ export class SidebarComponent implements OnInit {
               console.log(err);
             },
           );
-
-        this.menuItems = ROUTES.filter(menuItem => menuItem);
+        
+        let userRole= this.service.getRole();
+        this.menuItems = ROUTES.filter(menuItem => menuItem.role.length ==0 || menuItem.role.indexOf(userRole) > -1);
         if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
             const elemSidebar = <HTMLElement>document.querySelector('.sidebar .sidebar-wrapper');
             this.ps = new PerfectScrollbar(elemSidebar);

@@ -80,7 +80,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   // constructor(private navbarTitleService: NavbarTitleService) { }
   public ngOnInit() {
 
-    this.service.getInbox1().subscribe(
+    this.service.getInbox().subscribe(
       res => {
         this.data1 = res;
       },
