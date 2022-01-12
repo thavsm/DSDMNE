@@ -75,4 +75,8 @@ export class UserService {
     return urole;
   }
 
+  changePassword(body: any) {
+    return this.http.post(this.BaseURI + '/ApplicationUser/ChangePassword', body);
+  }
+
 }

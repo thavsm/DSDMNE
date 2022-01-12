@@ -31,6 +31,16 @@ export const ROUTES: RouteInfo[] = [{
         icontype: 'dashboard',
         role: []
     },{
+        path: '',
+        title: 'user manager',
+        type: 'sub',
+        icontype: 'image',
+        role: ['District Manager'],
+        collapse: 'usermanager',
+        children: [
+            {path: 'appusers',title: 'Users', ab:'U'}
+        ]
+    },{
         path: '/pages',
         title: 'Pages',
         type: 'sub',
@@ -46,12 +56,6 @@ export const ROUTES: RouteInfo[] = [{
             {path: 'user', title: 'User Page', ab:'UP'}
         ]
     },{
-        path: '/appusers',
-        title: 'Users',
-        type: 'link',
-        icontype: 'person',
-        role: ['District Manager']
-    },{
         path: '/weather',
         title: 'Weather',
         type: 'link',
@@ -62,7 +66,7 @@ export const ROUTES: RouteInfo[] = [{
         path: '/process',
         title: 'process',
         type: 'link',
-        icontype: 'cloud',
+        icontype: 'image',
         role: ['District Manager']
     },
     {
@@ -88,7 +92,6 @@ export const ROUTES: RouteInfo[] = [{
 export class SidebarComponent implements OnInit {
     public menuItems: any[];
     ps: any;
-    public userProfile = "/userprofile";
     userDetail: any;
     
     

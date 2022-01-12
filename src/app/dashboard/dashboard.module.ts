@@ -9,6 +9,7 @@ import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutes } from './dashboard.routing';
 import { TaskDetailComponent } from './taskdetail/taskdetail.component';
 import { UserProfileComponent } from '../userprofile/userprofile.component';
+import { ChangePasswordComponent } from '../userprofile/changepassword/changepassword.component';
 
 @NgModule({
     imports: [
@@ -21,7 +22,8 @@ import { UserProfileComponent } from '../userprofile/userprofile.component';
     declarations: [
         DashboardComponent,
         TaskDetailComponent,
-        UserProfileComponent
+        UserProfileComponent,
+        ChangePasswordComponent
     ]
 })
 
