@@ -31,14 +31,15 @@ export const ROUTES: RouteInfo[] = [{
         icontype: 'dashboard',
         role: []
     },{
-        path: '',
+        path: '/usermanager',
         title: 'user manager',
         type: 'sub',
         icontype: 'image',
         role: ['District Manager'],
         collapse: 'usermanager',
         children: [
-            {path: 'appusers',title: 'Users', ab:'U'}
+            {path: 'appusers',title: 'Users', ab:'U'},
+            {path: 'role',title: 'Roles', ab:'R'}
         ]
     },{
         path: '/pages',

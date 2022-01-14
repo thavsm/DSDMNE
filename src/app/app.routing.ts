@@ -70,6 +70,10 @@ export const AppRoutes: Routes = [
       {
         path: 'formInbox',
         loadChildren: () => import('./form-inbox/form-inbox.module').then(m => m.FormInboxModule)
+      },
+      {
+        path: 'usermanager',
+        loadChildren: () => import('./usermanager/usermanager.module').then(m => m.UserManagerModule)
       }
     ]
   }, {

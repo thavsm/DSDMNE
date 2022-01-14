@@ -3,6 +3,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { User } from './user.model';
 import { environment } from '../../environments/environment';
+import { role } from './lookup.model';
 
 @Injectable({
   providedIn: 'root'
@@ -77,6 +78,21 @@ export class UserService {
 
   changePassword(body: any) {
     return this.http.post(this.BaseURI + '/ApplicationUser/ChangePassword', body);
+  }
+
+  roleUsersCount() {
+    return this.http.get(this.BaseURI + '/ApplicationUser/RoleUsersCount');
+  }
+
+  getRoles() {
+
+    return this.http.get<role[]>(this.BaseURI + '/Lookup/GetRoles');
+  }
+
+  addRole(body: string) {
+
+    return this.http.post(this.BaseURI + '/Lookup/AddRole?roleName='+body,body);
+    //return this.http.post(this.BaseURI + '/Lookup/AddRole', body);
   }
 
 }
