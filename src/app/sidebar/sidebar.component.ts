@@ -35,7 +35,7 @@ export const ROUTES: RouteInfo[] = [{
         title: 'user manager',
         type: 'sub',
         icontype: 'image',
-        role: ['District Manager'],
+        role: [],
         collapse: 'usermanager',
         children: [
             {path: 'appusers',title: 'Users', ab:'U'},
@@ -68,7 +68,7 @@ export const ROUTES: RouteInfo[] = [{
         title: 'process',
         type: 'link',
         icontype: 'image',
-        role: ['District Manager']
+        role: []
     },
     {
         path: '',
