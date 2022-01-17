@@ -1,18 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { UserService } from '../shared/user.service';
+import { UserService } from 'src/app/shared/user.service';
 import { __assign } from 'tslib';
 import { User } from 'src/app/shared/user.model'
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { UserProfileComponent } from '../userprofile/userprofile.component';
+import { UserProfileComponent } from 'src/app/userprofile/userprofile.component';
 import {MatTableModule} from '@angular/material/table';
-
-declare interface DataTable {
-  headerRow: string[];
-  footerRow: string[];
-  dataRows: string[][];
-}
 
 declare var $: any;
 
@@ -20,14 +14,9 @@ declare var $: any;
 @Component({
   selector: 'app-appusers',
   templateUrl: './appusers.component.html',
-  styleUrls: ['./appusers.component.css']
+  styleUrls: []
 })
-export class UsersComponent implements OnInit {
-
-  public dataTable: DataTable;
-  users: string[][];
-  ulist: any;
-  usr: string[];
+export class AppusersComponent implements OnInit {
 
   constructor(public service: UserService, public dialog: MatDialog) { }
 

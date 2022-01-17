@@ -5,6 +5,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../app.module';
 import { UserManagerRoutes } from './usermanager.routing';
 import { RoleComponent } from './role/role.component';
+import { AppusersComponent } from './appusers/appusers.component';
+import { FormrolesComponent } from './formroles/formroles.component';
+import { AddformrolesComponent } from './addformroles/addformroles.component';
 
 
 @NgModule({
@@ -17,7 +20,10 @@ import { RoleComponent } from './role/role.component';
     ],
 
     declarations: [
-        RoleComponent
+        RoleComponent,
+        AppusersComponent,
+        FormrolesComponent,
+        AddformrolesComponent
     ]
 })
 

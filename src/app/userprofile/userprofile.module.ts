@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserProfileRoutes } from './userprofile.routing';
 import { MaterialModule } from '../app.module';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 // import { LbdTableComponent } from '../lbd/lbd-table/lbd-table.component';
 
@@ -19,7 +20,11 @@ import { MaterialModule } from '../app.module';
     
     declarations: [
         
-  ]
+  ],
+  providers: [
+    { provide: MAT_DIALOG_DATA, useValue: {} }
+    ]
+
 })
 
 export class UserProfileModule {}

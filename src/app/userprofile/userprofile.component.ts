@@ -1,10 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ElementRef, OnDestroy, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ElementRef, OnDestroy, AfterViewInit, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { UserService } from '../shared/user.service';
 import { FormsModule } from '@angular/forms';
-
-
+import { MAT_DIALOG_DATA } from '@angular/material/dialog'
 
 declare var $: any;
 
@@ -50,7 +49,7 @@ export class UserProfileComponent implements OnInit {
     {value: '9', viewValue: 'Limpopo'}
   ];
   
-    constructor(private element: ElementRef, private fb: FormBuilder, private service: UserService) {
+    constructor(private element: ElementRef, private fb: FormBuilder, private service: UserService, @Inject(MAT_DIALOG_DATA) public data: any) {
       //this.passData.isChild = false;
     }
 

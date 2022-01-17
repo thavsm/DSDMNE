@@ -24,6 +24,11 @@ export class UserService {
     console.log(this.ulist);
   }
 
+  
+  getAllUsers(){
+    return this.http.get<any>(this.BaseURI + '/ApplicationUser');
+  }
+
 
   register(body: any) {
     return this.http.post(this.BaseURI + '/ApplicationUser/Register', body);

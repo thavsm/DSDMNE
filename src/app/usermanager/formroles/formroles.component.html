@@ -1,0 +1,56 @@
+<div class="main-content">
+    <div class="container-fluid">
+      <div class="container-fluid">
+        <div class="header text-center">
+          <h3 class="title">Form Roles</h3>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-rose card-header-icon">
+                      <div class="card-icon">
+                        <i class="material-icons">assignment</i>
+                      </div>
+                      <h4 class="card-title">Forms</h4>
+                    </div>
+                      <div class="card-body">
+                        <div class="table-responsive">                            
+                            <table mat-table [dataSource]="formList" matSort class="table">
+                                <ng-container matColumnDef="formName">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header>Template Name </th>
+                                <td mat-cell *matCellDef="let element"> {{element.formName}} </td>
+                                </ng-container>
+                    
+                                <ng-container matColumnDef="formDescription">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+                                <td mat-cell *matCellDef="let element"> {{element.formDescription}} </td>
+                                </ng-container>
+                    
+                                <ng-container matColumnDef="formCategory">
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Category </th>
+                                <td mat-cell *matCellDef="let element"> {{element.formCategory.name}} </td>
+                                </ng-container>
+                    
+                                <ng-container matColumnDef="roles">
+                                <th mat-header-cell *matHeaderCellDef> Roles </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <button mat-icon-button (click)="clickEdit(element)">
+                                    <mat-icon class="mat-18">edit</mat-icon>
+                                    </button>
+                                </td>
+                                </ng-container>
+                                        
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>     
+                            </table>
+                            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                            aria-label="Select page of forms">
+                            </mat-paginator>
+                        </div>
+                      </div>
+                </div>
+            </div>
+          </div>
+      </div>
+    </div>
+</div>       
