@@ -34,7 +34,7 @@ export const ROUTES: RouteInfo[] = [{
         path: '/usermanager',
         title: 'user manager',
         type: 'sub',
-        icontype: 'image',
+        icontype: 'person',
         role: [],
         collapse: 'usermanager',
         children: [
@@ -67,13 +67,6 @@ export const ROUTES: RouteInfo[] = [{
         icontype: 'account_tree',
         role: []
 
-    }, 
-    {
-        path: '/appusers',
-        title: 'Users',
-        type: 'link',
-        icontype: 'person',
-        role: []
     },{
         path: '/weather',
         title: 'Weather',
