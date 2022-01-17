@@ -1,0 +1,14 @@
+:host {
+    height: 600px;
+    overflow: auto;
+  }
+
+  .k-treeview .k-in{
+
+    width: 100px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+
+}

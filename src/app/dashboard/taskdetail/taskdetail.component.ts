@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { UserService } from 'src/app/shared/user.service';
-
+import {NgxSpinner, NgxSpinnerService} from 'ngx-spinner';
 
 declare const $: any;
 
@@ -8,6 +8,7 @@ declare const $: any;
   selector: 'app-taskdetail',
   templateUrl: './taskdetail.component.html'
 })
+
 export class TaskDetailComponent implements OnInit {
   
   workflowData: any;
@@ -17,10 +18,40 @@ export class TaskDetailComponent implements OnInit {
   nextUserID: string;
   actionTakenAll: any;
   asgnUsers: any;
-  roleID: string;
+  
 
-  constructor(private service: UserService) {
+  roles = [
+    {value: '1', viewValue: 'Admin'},
+    {value: '3', viewValue: 'System Administrator'},
+    {value: '4', viewValue: 'Head of M&E'},
+    {value: '5', viewValue: 'Head Of Department'},
+    {value: '6', viewValue: 'Chief Director'},
+    {value: '7', viewValue: 'Director'},
+    {value: '8', viewValue: 'Assistant Director'},
+    {value: '9', viewValue: 'Programme Manager'},
+    {value: '10', viewValue: 'District Manager'},
+    {value: '11', viewValue: 'Service Point Manager'},
+    {value: '12', viewValue: 'Social Worker/CDP'},
+    {value: '13', viewValue: 'Facility Manager'},
+    {value: '14', viewValue: 'M&E Coordinator'},
+    {value: '15', viewValue: 'Social Worker Manager'}
+  ];
 
+  cities = [
+    {value: '7', viewValue: 'Western Cape'},
+    {value: '1', viewValue: 'Eastern Cape'},
+    {value: '2', viewValue: 'Northern Cape'},
+    {value: '3', viewValue: 'Kwa-ZuluNatal'},
+    {value: '4', viewValue: 'Free State'},
+    {value: '5', viewValue: 'Gauteng'},
+    {value: '6', viewValue: 'North West'},
+    {value: '8', viewValue: 'Mphumulanga'},
+    {value: '9', viewValue: 'Limpopo'}
+  ];
+  
+  constructor(private service: UserService, private spinner: NgxSpinnerService) {
+    
+     
   }
 
   onActionSelected(event) {
@@ -58,9 +89,10 @@ export class TaskDetailComponent implements OnInit {
 
     this.service.getuserTask(body).subscribe(
         res => {
+          
           this.workflowData = res['workflow'];
           this.formData = res['formData'];
-          this.roleID =this.formData['roleId'];
+          
           var taskArray = res['workflow']['list'].filter(obj1 => {
             return obj1.id == parseInt(tid)
         });
@@ -87,9 +119,12 @@ export class TaskDetailComponent implements OnInit {
   }
 
   completeTask() {
+    this.spinner.show();
     const wkid =new URLSearchParams(window.location.search).get('workflowid');
     const tid =new URLSearchParams(window.location.search).get('taskid');
     
+    let appUserModel =this.formData;
+
     let formData1 = {
       WorkflowID: parseInt(wkid),
       TaskID: parseInt(tid),
@@ -97,17 +132,26 @@ export class TaskDetailComponent implements OnInit {
       ActionTakenID: parseInt(this.actTakenID),
       NextUserID: parseInt(this.nextUserID),
       Comment: this.comment,
-      Role: this.roleID
+      ApplicationUserModel: appUserModel
+      //Role: this.formData['roleId']
     };
     this.service.completeTask(formData1).subscribe(
       res => {
+        this.spinner.hide();
         //this.data1 = res;
         window.location.replace("/dashboard");
       },
       err => {
+        this.spinner.hide();
         console.log(err);
       },
     );
   }
+
+  addItem(newItem: any) {
+    //this.items.push(newItem);
+    this.formData = newItem;
+  }
+
 
 }

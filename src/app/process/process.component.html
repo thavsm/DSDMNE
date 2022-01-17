@@ -12,28 +12,34 @@
           <div class="card-body p-2">
             <div class="row">
               <div class="col-sm-2">
-                <div class="form-group has-float-label">
-                  <select name="Version" id="selVersion" class="form-control">
-                    <option *ngFor="let prove of lookup['PROCESSVERSION'];" value="{{prove.key}}">{{prove.value}}</option>
-                  </select>
-                  <label for="selVersion">Version</label>
-                </div>
+                <mat-form-field appearance="standard">
+                  <mat-label>Version</mat-label>
+                  <mat-select [(ngModel)]="sVersion">
+                      <mat-option *ngFor="let prove of lookup['PROCESSVERSION'];" [value]="prove.key">
+                          {{prove.value}}
+                      </mat-option>
+                  </mat-select>
+              </mat-form-field>
               </div>
               <div class="col-sm-3">
-                <div class="form-group has-float-label">
-                  <select name="Province" id="selProvince" class="form-control">
-                    <option *ngFor="let prov of lookup['PROVINCE'];" value="{{prov.key}}">{{prov.value}}</option>
-                  </select>
-                  <label for="selProvince">Province</label>
-                </div>
+                <mat-form-field appearance="standard">
+                  <mat-label>Province</mat-label>
+                  <mat-select [(ngModel)]="sProvince">
+                      <mat-option *ngFor="let prov of lookup['PROVINCE'];" [value]="prov.key">
+                          {{prov.value}}
+                      </mat-option>
+                  </mat-select>
+              </mat-form-field>
               </div>
               <div class="col-sm-3">
-                <div class="form-group has-float-label">
-                  <select id="selModule" class="form-control">
-                    <option *ngFor="let modl of lookup['MODULE'];" value="{{modl.key}}">{{modl.value}}</option>
-                  </select>
-                  <label for="selModule">Module</label>
-                </div>
+                <mat-form-field appearance="standard">
+                  <mat-label>Module</mat-label>
+                  <mat-select [(ngModel)]="sModule">
+                      <mat-option *ngFor="let modl of lookup['MODULE'];" [value]="modl.key">
+                          {{modl.value}}
+                      </mat-option>
+                  </mat-select>
+              </mat-form-field>
               </div>
               <div class="col-sm-4">
                 <button id="btnSearch" class="btn btn-primary mr-1" (click)="getRecords()">Search</button>
@@ -62,7 +68,7 @@
                   <td>{{ obj['PublishedVersion'] }}</td>
                   <td>{{ obj['DateCreated'] }}</td>
                   <td>{{ obj['DraftVersion'] }}</td>
-                  <td><a href="../workflow?PID={{ obj['ProcessId'] }}">Show Process</a></td>
+                  <td><a href="./workflow?PID={{ obj['ProcessId'] }}">Show Process</a></td>
                 </tr>
               </tbody>
         
@@ -88,10 +94,10 @@
       <div id="mModalbody" class="modal-body">
         <div id="dvNewProcess">
           <mat-form-field class="example-full-width">
-            <input matInput type="text" id="txtProcessName" placeholder="Process Name">
+            <input matInput type="text" id="txtProcessName" placeholder="Process Name" [(ngModel)]="procName">
           </mat-form-field>
           <mat-form-field class="example-full-width">
-            <textarea matInput id="txtDescription" placeholder="Description"></textarea>
+            <textarea matInput id="txtDescription" placeholder="Description" [(ngModel)]="procDesc"></textarea>
           </mat-form-field>
           
         </div>
@@ -99,22 +105,10 @@
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary close-button" data-dismiss="modal" (click)="closeModal()">Close</button>
-        <button id="AddNewProcess" type="button" class="btn btn-primary add-process-button" (click)="createNewProcess()">Add Process</button>
+        <button type="button" class="btn btn-primary close-button" data-dismiss="modal" (click)="closeModal()">Close</button>
+        <button id="AddNewProcess" type="button" class="btn btn-primary add-process-button ml-2" (click)="createNewProcess()">Add Process</button>
       </div>
 
-    </div>
-  </div>
-</div>
-
-<!-- The Modal Message-->
-<div class="modal fade" id="modalWindowMessage">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="alert alert-success mb-0">
-        <strong>Successfully Added.</strong>
-        <button type="button" class="close" data-dismiss="modal" (click)="closeModalMessage()">&times;</button>
-      </div>
     </div>
   </div>
 </div>

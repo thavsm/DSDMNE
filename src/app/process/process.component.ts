@@ -15,41 +15,35 @@ export class ProcessComponent implements OnInit {
   public data: [];
 
   readonly BaseURI = environment.API_URL;
+
+  sVersion = 1;
+  sProvince = -1;
+  sModule = 1;
+  procName = '';
+  procDesc = '';
   
   constructor(private http: HttpClient) {
-
-    
-    http.get<{}>(this.BaseURI +'/lookup').subscribe(result => {
-
-      this.lookup = result;
-
-    }, error => console.error(error));
-
-    this.getRecords();
 
   }
 
   ngOnInit() {
 
+    this.http.get<{}>(this.BaseURI +'/lookup').subscribe(result => {
 
+      this.lookup = result;
+
+    }, error => console.error(error));
+    
+    this.getRecords();
   }
 
   getRecords() {
 
-    
-    let selVersion = document.querySelector('#selVersion') as HTMLSelectElement;
-    let selProvince = document.querySelector('#selProvince') as HTMLSelectElement;
-    let selModule = document.querySelector('#selModule') as HTMLSelectElement;
-
-    let url = this.BaseURI + '/ProcessS/1/-1/1';
-
-    if (selVersion !== null)
-      url = this.BaseURI + '/ProcessS/' + selVersion.value + '/' + selProvince.value + '/' + selModule.value;
+    let url = this.BaseURI + '/ProcessS/' + this.sVersion + '/' + this.sProvince + '/' + this.sModule;
 
     this.http.get<[]>(url).subscribe(result => {
 
       this.data = result;
-
 
     }, error => console.error(error));
   }
@@ -68,60 +62,59 @@ export class ProcessComponent implements OnInit {
 
   }
 
-  openModalMessage() {
-
-    $('#modalWindowMessage').addClass('show');
-    $('#modalWindowMessage').css('display', 'block');
-  }
-
-  closeModalMessage() {
-
-    $('#modalWindowMessage').removeClass('show');
-    $('#modalWindowMessage').css('display', 'none');
-  }
-
   createNewProcess() {
 
-    
-    let selProvince1 = document.querySelector('#selProvince') as HTMLSelectElement;
-    let selModule1 = document.querySelector('#selModule') as HTMLSelectElement;
-    let procname = document.querySelector('#txtProcessName') as HTMLInputElement;
-    let procdesc = document.querySelector('#txtDescription') as HTMLTextAreaElement;
-
-    
     const headers = { 'content-type': 'application/json' }
-    
-    //const outDataVal = {
-    //  "processName": procname.value,
-    //  "processDescription": procdesc.value,
-    //  "moduleID": selModule1.value,
-    //  "provinceID": selProvince1.value
-    //};
-
     const body = '';// JSON.stringify(outDataVal);
+    let procnameVal= this.procName.trim();
+    let procdescVal= this.procDesc.trim();
     
-    let procnameVal= procname.value.trim();
-    let procdescVal= procdesc.value.trim();
-    
-    if(procnameVal === '' || procdescVal === '')
-    {
-      return;
-    }
+    if(procnameVal !== '' && procdescVal !== '') {
 
-    const url = this.BaseURI + '/ProcessS/' + procnameVal + '/' + procdescVal + '/' + selModule1.value + '/' + selProvince1.value;
+    const url = this.BaseURI + '/ProcessS/' + procnameVal + '/' + procdescVal + '/' + this.sModule + '/' + this.sProvince;
     
     this.http.post(url, body, { 'headers': headers, observe: 'response' }).subscribe(response => {
 
-      //this.data = result;
-      //console.log(response);
       this.closeModal();
-      this.openModalMessage();
+      this.showNotification('top','right','Successfully Added.', 'Process successful','success');
       this.getRecords();
+      this.procName = '';
+      this.procDesc = '';
 
     }, error => console.error(error));
 
-  }
+   }
 
+ }
+
+ showNotification(from: any, align: any, message: any, title: any, type: string) {
+  //const type = ['', 'info', 'success', 'warning', 'danger', 'rose', 'primary'];
+
+  //const color = Math.floor((Math.random() * 6) + 1);
+
+  $.notify({
+      icon: 'notifications',
+      title: title,
+      message: message
+  }, {
+      type: type,
+      timer: 3000,
+      placement: {
+          from: from,
+          align: align
+      },
+      template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
+        '<button mat-raised-button type="button" aria-hidden="true" class="close" data-notify="dismiss">  <i class="material-icons">close</i></button>' +
+        '<i class="material-icons" data-notify="icon">notifications</i> ' +
+        '<span data-notify="title">{1}</span> ' +
+        '<span data-notify="message">{2}</span>' +
+        '<div class="progress" data-notify="progressbar">' +
+          '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+        '</div>' +
+        '<a href="{3}" target="{4}" data-notify="url"></a>' +
+      '</div>'
+  });
+}
 
 }
 

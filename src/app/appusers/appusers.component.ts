@@ -1,6 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../shared/user.service';
 import { __assign } from 'tslib';
+import { User } from 'src/app/shared/user.model'
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { UserProfileComponent } from '../userprofile/userprofile.component';
+import {MatTableModule} from '@angular/material/table';
+
+declare interface DataTable {
+  headerRow: string[];
+  footerRow: string[];
+  dataRows: string[][];
+}
+
+declare var $: any;
+
 
 @Component({
   selector: 'app-appusers',
@@ -9,13 +24,48 @@ import { __assign } from 'tslib';
 })
 export class UsersComponent implements OnInit {
 
-  constructor(public service: UserService) { }
+  public dataTable: DataTable;
+  users: string[][];
+  ulist: any;
+  usr: string[];
+
+  constructor(public service: UserService, public dialog: MatDialog) { }
+
+  
+  formAdd: any;
+  public displayedColumns = ['userid', 'userName', 'email', 'update' ];
+  public userList = new MatTableDataSource<any>();
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  ngAfterViewInit() {
+    this.userList.paginator = this.paginator;
+  }
+
 
   ngOnInit(): void {
     console.log('before');
-    this.service.getUsers();
-    console.log('after');
+    this.service.getUsers(); 
+    
+    this.service.getAllUsers().subscribe(data => {
+      this.userList.data = data;
+    });
+    
   }
 
+  clickEdit(item: any) {
+    this.formAdd = item;
+    const dialogRef = this.dialog.open(UserProfileComponent 
+    , {
+      width: '60%',
+      height: '60%',
+      data: this.formAdd,
+      disableClose:false
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');      
+    });
+  }
 
 }

@@ -3,6 +3,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { User } from './user.model';
 import { environment } from '../../environments/environment';
+import { role } from './lookup.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,6 @@ export class UserService {
   constructor(private fb: FormBuilder, private http: HttpClient) { }
   readonly BaseURI = environment.API_URL;
   //readonly BaseURI = 'https://app1.terra.group/MNE_API/api';
-
   
   public ulist:User[];
 
@@ -24,6 +24,10 @@ export class UserService {
     console.log(this.ulist);
   }
 
+  
+  getAllUsers(){
+    return this.http.get<any>(this.BaseURI + '/ApplicationUser');
+  }
 
 
   register(body: any) {
@@ -35,35 +39,21 @@ export class UserService {
   }
 
   getUserProfile() {
-    //let httpOptions = new HttpHeaders()
-    //.set('Authorization', 'Bearer ' + localStorage.getItem('token'));
-    //return this.http.get(this.BaseURI + '/UserProfile',{ headers: httpOptions });
+    
     return this.http.get(this.BaseURI + '/UserProfile');
   }
 
-  getInbox1() {
-    //let httpOptions = new HttpHeaders()
-    //.set('Authorization', 'Bearer ' + localStorage.getItem('token'));
-    //return this.http.get(this.BaseURI + '/UserProfile',{ headers: httpOptions });
+  getInbox() {
     return this.http.get<[]>(this.BaseURI + '/UserProfile/Inbox');
   }
 
   getuserTask(formData: any) {
-    //let httpOptions = new HttpHeaders()
-    //.set('Authorization', 'Bearer ' + localStorage.getItem('token'));
-    //return this.http.get(this.BaseURI + '/UserProfile',{ headers: httpOptions });
-    //return this.http.get(this.BaseURI + '/UserProfile/Task');
     return this.http.post(this.BaseURI + '/UserProfile/Task', formData);
   }
 
   completeTask(formData: any) {
-    //let httpOptions = new HttpHeaders()
-    //.set('Authorization', 'Bearer ' + localStorage.getItem('token'));
-    //return this.http.get(this.BaseURI + '/UserProfile',{ headers: httpOptions });
-    //return this.http.get(this.BaseURI + '/UserProfile/Task');
     return this.http.post(this.BaseURI + '/UserProfile/CompleteTask', formData);
   }
-
 
   roleMatch(allowedRoles): boolean {
     var isMatch = false;
@@ -80,4 +70,34 @@ export class UserService {
     });
     return isMatch;
   }
+
+  getRole(): string {
+    let urole = '';
+    if (localStorage.getItem('token') != null) {
+    let payLoad = JSON.parse(window.atob(localStorage.getItem('token').split('.')[1]));
+    urole = payLoad.role;
+    
+    }
+    return urole;
+  }
+
+  changePassword(body: any) {
+    return this.http.post(this.BaseURI + '/ApplicationUser/ChangePassword', body);
+  }
+
+  roleUsersCount() {
+    return this.http.get(this.BaseURI + '/ApplicationUser/RoleUsersCount');
+  }
+
+  getRoles() {
+
+    return this.http.get<role[]>(this.BaseURI + '/Lookup/GetRoles');
+  }
+
+  addRole(body: string) {
+
+    return this.http.post(this.BaseURI + '/Lookup/AddRole?roleName='+body,body);
+    //return this.http.post(this.BaseURI + '/Lookup/AddRole', body);
+  }
+
 }

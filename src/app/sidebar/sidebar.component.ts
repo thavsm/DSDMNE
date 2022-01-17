@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { UserService } from '../shared/user.service';
+import { Router } from '@angular/router';
 
 declare const $: any;
 
@@ -10,6 +11,7 @@ export interface RouteInfo {
     title: string;
     type: string;
     icontype: string;
+    role: string[];
     collapse?: string;
     children?: ChildrenItems[];
 }
@@ -26,12 +28,26 @@ export const ROUTES: RouteInfo[] = [{
         path: '/dashboard',
         title: 'Dashboard',
         type: 'link',
-        icontype: 'dashboard'
+        icontype: 'dashboard',
+        role: []
+    },{
+        path: '/usermanager',
+        title: 'user manager',
+        type: 'sub',
+        icontype: 'person',
+        role: [],
+        collapse: 'usermanager',
+        children: [
+            {path: 'appusers',title: 'Users', ab:'U'},
+            {path: 'role',title: 'Roles', ab:'R'},
+            {path: 'formroles',title: 'Forms', ab:'F'}
+        ]
     },{
         path: '/pages',
         title: 'Pages',
         type: 'sub',
         icontype: 'image',
+        role: ['District Manager'],
         collapse: 'pages',
         children: [
             {path: 'pricing', title: 'Pricing', ab:'P'},
@@ -41,28 +57,36 @@ export const ROUTES: RouteInfo[] = [{
             {path: 'lock', title: 'Lock Screen Page', ab:'LSP'},
             {path: 'user', title: 'User Page', ab:'UP'}
         ]
-    },{
-        path: '/appusers',
-        title: 'Users',
+    },
+    
+    {
+
+        path: '/hierarchy-management',
+        title: 'hierarchy management',
         type: 'link',
-        icontype: 'person'
+        icontype: 'account_tree',
+        role: []
+
     },{
         path: '/weather',
         title: 'Weather',
         type: 'link',
-        icontype: 'cloud'
+        icontype: 'cloud',
+        role: ['District Manager']
     },
     {
         path: '/process',
         title: 'process',
         type: 'link',
-        icontype: 'cloud'
+        icontype: 'image',
+        role: []
     },
     {
         path: '',
         title: 'Form',
         type: 'sub',
         icontype: 'feed',
+        role: [],
         collapse: 'formList',
         children: [
             {path: 'formCategory',title: 'Form Category',ab: 'FC'},
@@ -80,11 +104,10 @@ export const ROUTES: RouteInfo[] = [{
 export class SidebarComponent implements OnInit {
     public menuItems: any[];
     ps: any;
-    public userProfile = "/userprofile";
     userDetail: any;
     
     
-    constructor(private service: UserService) {
+    constructor(private service: UserService, private router: Router) {
       
     }
 
@@ -99,14 +122,15 @@ export class SidebarComponent implements OnInit {
        
         this.service.getUserProfile().subscribe(
             res => {
-              this.userDetail = res;
+              this.userDetail = res['formData'];
             },
             err => {
               console.log(err);
             },
           );
-
-        this.menuItems = ROUTES.filter(menuItem => menuItem);
+        
+        let userRole= this.service.getRole();
+        this.menuItems = ROUTES.filter(menuItem => menuItem.role.length ==0 || menuItem.role.indexOf(userRole) > -1);
         if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
             const elemSidebar = <HTMLElement>document.querySelector('.sidebar .sidebar-wrapper');
             this.ps = new PerfectScrollbar(elemSidebar);
@@ -135,5 +159,9 @@ export class SidebarComponent implements OnInit {
             bool = true;
         }
         return bool;
+    }
+    logout() {
+        localStorage.removeItem('token');
+        this.router.navigate(['/login']);
     }
 }
