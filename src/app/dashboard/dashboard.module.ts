@@ -8,6 +8,8 @@ import { MaterialModule } from '../app.module';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardRoutes } from './dashboard.routing';
 import { TaskDetailComponent } from './taskdetail/taskdetail.component';
+import { UserProfileComponent } from '../userprofile/userprofile.component';
+import { ChangePasswordComponent } from '../userprofile/changepassword/changepassword.component';
 
 @NgModule({
     imports: [
@@ -19,7 +21,9 @@ import { TaskDetailComponent } from './taskdetail/taskdetail.component';
     ],
     declarations: [
         DashboardComponent,
-        TaskDetailComponent
+        TaskDetailComponent,
+        UserProfileComponent,
+        ChangePasswordComponent
     ]
 })
 

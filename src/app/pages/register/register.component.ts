@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, OnDestroy, NgModule } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { UserService } from 'src/app/shared/user.service';
+import { UserService } from '../../shared/user.service';
 import {NgxSpinner, NgxSpinnerService} from 'ngx-spinner';
+import { role } from '../../shared/lookup.model';
 
 declare var $: any;
 
@@ -31,31 +32,19 @@ export class RegisterComponent implements OnInit, OnDestroy {
       {value: '9', viewValue: 'Limpopo'},
     ];
     
-    roles = [
-      {value: 'Admin', viewValue: 'Admin'},
-      {value: 'System Administrator', viewValue: 'System Administrator'},
-      {value: 'Head of M&E', viewValue: 'Head of M&E'},
-      {value: 'Head Of Department ', viewValue: 'Head Of Department '},
-      {value: 'Chief Director', viewValue: 'Chief Director'},
-      {value: 'Director', viewValue: 'Director'},
-      {value: 'Assistant Director', viewValue: 'Assistant Director'},
-      {value: 'Programme Manager', viewValue: 'Programme Manager'},
-      {value: 'District Manager', viewValue: 'District Manager'},
-      {value: 'Service Point Manager', viewValue: 'Service Point Manager'},
-      {value: 'Social Worker/CDP', viewValue: 'Social Worker/CDP'},
-      {value: 'Facility Manager', viewValue: 'Facility Manager'},
-      {value: 'M&E Coordinator', viewValue: 'M&E Coordinator'},
-      {value: 'Social Worker Manager', viewValue: 'Social Worker Manager'}     
-    ];
-    
+    roles: role[];
     
     formModel = this.fb.group({
       Email: ['',[Validators.required,Validators.email]],
       FullName: ['', Validators.required],
       Password: ['', [Validators.required, Validators.minLength(4)]],
       ConfirmPassword: ['',Validators.required],
-      //Location: ['',Validators.required],
-      Role: ['',Validators.required]
+      Location: ['',Validators.required],
+      Role: ['',Validators.required],
+      PhoneNumber: ['',Validators.required],
+      EmployeeNo: [''],
+      ServicePoint: [''],
+      Address: ['']
     }, { validators: this.comparePasswords 
     });
 
@@ -79,6 +68,15 @@ export class RegisterComponent implements OnInit, OnDestroy {
       const body = document.getElementsByTagName('body')[0];
       body.classList.add('register-page');
       body.classList.add('off-canvas-sidebar');
+
+      this.service.getRoles().subscribe(
+        res => {
+          this.roles = res;
+        },
+        err => {
+          console.log(err);
+        },
+      );
       
     }
 
@@ -125,7 +123,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
         FullName: this.formModel.value.FullName,
         Password: this.formModel.value.Password,
         Location: this.formModel.value.Location,
-        Role: this.formModel.value.Role
+        Role: this.formModel.value.Role,
+        PhoneNumber: this.formModel.value.PhoneNumber,
+        EmployeeNo: this.formModel.value.EmployeeNo,
+        ServicePoint: this.formModel.value.ServicePoint,
+        Address: this.formModel.value.Address,
       };
       //let bd ={Email: this.formModel.Email, Password: this.formModel.Password, FullName: this.formModel.FullName};
       this.service.register(body).subscribe(

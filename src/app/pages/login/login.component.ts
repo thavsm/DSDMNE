@@ -3,6 +3,7 @@ import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { UserService } from 'src/app/shared/user.service';
 import { Router } from '@angular/router';
+import {NgxSpinner, NgxSpinnerService} from 'ngx-spinner';
 
 declare var $: any;
 
@@ -24,7 +25,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
       
 
-    constructor(private element: ElementRef, private fb: FormBuilder, private service: UserService, private router: Router) {
+    constructor(private element: ElementRef, private fb: FormBuilder, private service: UserService, private router: Router, private spinner: NgxSpinnerService) {
         this.nativeElement = element.nativeElement;
         this.sidebarVisible = false;
     }
@@ -95,16 +96,23 @@ export class LoginComponent implements OnInit, OnDestroy {
     onSubmit() {
         
         //let bd ={UserName: this.formModel.value.UserName, Password: this.formModel.value.Password};
+        this.spinner.show();
         this.service.login(this.formModel.value).subscribe(
           (res: any) => {
+            this.spinner.hide();
             localStorage.setItem('token', res.token);
             this.router.navigate(['/dashboard']);
           },
           err => {
-            if (err.status == 400)
+            this.spinner.hide();
+            if (err.status == 400) {
             this.showNotification('top','right',err.error.message, 'Authentication failed.','danger');
+            }
             else
+            {
+              this.showNotification('top','right','Unable to login', 'Authentication failed.','danger');
               console.log(err);
+            }
           }
         );
 
