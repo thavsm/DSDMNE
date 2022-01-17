@@ -39,7 +39,8 @@ export const ROUTES: RouteInfo[] = [{
         collapse: 'usermanager',
         children: [
             {path: 'appusers',title: 'Users', ab:'U'},
-            {path: 'role',title: 'Roles', ab:'R'}
+            {path: 'role',title: 'Roles', ab:'R'},
+            {path: 'formroles',title: 'Forms', ab:'F'}
         ]
     },{
         path: '/pages',
