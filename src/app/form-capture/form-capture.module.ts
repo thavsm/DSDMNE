@@ -22,6 +22,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatExpansionModule} from '@angular/material/expansion';
+import { SignaturePadModule } from 'angular2-signaturepad';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
     FormsModule,
     MatDialogModule,
     MatIconModule,
+    SignaturePadModule,
     MatButtonModule,
     MatDialogModule,
     MatTabsModule,

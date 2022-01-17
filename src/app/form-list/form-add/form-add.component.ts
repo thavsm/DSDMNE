@@ -125,7 +125,8 @@ export class FormAddComponent implements OnInit {
             "isRequired": true,
             "pageGUID": "",
             "parentGroupID": 0,
-            "type": ""
+            "type": "",
+            "dataTableGroup": "string"
         },
         "fieldCustomValidations": [
             {
@@ -139,8 +140,8 @@ export class FormAddComponent implements OnInit {
         "fieldStyles": [
             {
                 "fieldStyleID": 0,
-                "width": 0,
-                "height": 0,
+                "width": 760,
+                "height": 70,
                 "cssClass": "linear-gradient(147deg, #eff3f7 72%, #028ea7 28%)"
             }
         ],

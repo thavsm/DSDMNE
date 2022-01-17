@@ -1,9 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CdkDragDrop, moveItemInArray, transferArrayItem, copyArrayItem } from '@angular/cdk/drag-drop';
 import { FormbuilderService } from '../shared/formbuilder.service';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
 import { merge } from 'jquery';
+import { FormPreviewComponent } from '../form-preview/form-preview.component';
 declare var $: any;
 
 @Component({
@@ -12,6 +14,7 @@ declare var $: any;
     styleUrls: ['./form-designer.component.css']
 })
 export class FormDesignerComponent implements OnInit {
+
     dateFormats: any = [
         {
             "value": "Date DD",
@@ -23,7 +26,7 @@ export class FormDesignerComponent implements OnInit {
         },
         {
             "value": "Date YY",
-            "displayName": "DD-MM-YY"
+            "displayName": "YY-MM-DD"
         },
         {
             "value": "Date YYYY",
@@ -73,7 +76,7 @@ export class FormDesignerComponent implements OnInit {
             "fieldType": {
                 "fieldTypeID": 22,
                 "displayName": "Alpha Numeric",
-                "description": "title",
+                "description": "rtt",
                 "value": "Alphanumeric"
             },
             "formPage": {
@@ -88,7 +91,8 @@ export class FormDesignerComponent implements OnInit {
                 "isRequired": true,
                 "pageGUID": "",
                 "parentGroupID": 0,
-                "type": ""
+                "type": "",
+                "dataTableGroup": "string"
             },
             "fieldCustomValidations": [
                 {
@@ -102,8 +106,8 @@ export class FormDesignerComponent implements OnInit {
             "fieldStyles": [
                 {
                     "fieldStyleID": 0,
-                    "width": 0,
-                    "height": 0,
+                    "width": 760,
+                    "height": 70,
                     "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
                 }
             ],
@@ -156,7 +160,8 @@ export class FormDesignerComponent implements OnInit {
                 "isRequired": true,
                 "pageGUID": "string",
                 "parentGroupID": 0,
-                "type": "string"
+                "type": "string",
+                "dataTableGroup": "string"
             },
             "fieldCustomValidations": [
                 {
@@ -170,8 +175,8 @@ export class FormDesignerComponent implements OnInit {
             "fieldStyles": [
                 {
                     "fieldStyleID": 0,
-                    "width": 0,
-                    "height": 0,
+                    "width": 760,
+                    "height": 70,
                     "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
                 }
             ],
@@ -224,7 +229,8 @@ export class FormDesignerComponent implements OnInit {
                 "isRequired": true,
                 "pageGUID": "string",
                 "parentGroupID": 0,
-                "type": "string"
+                "type": "string",
+                "dataTableGroup": "string"
             },
             "fieldCustomValidations": [
                 {
@@ -238,8 +244,8 @@ export class FormDesignerComponent implements OnInit {
             "fieldStyles": [
                 {
                     "fieldStyleID": 0,
-                    "width": 0,
-                    "height": 0,
+                    "width": 760,
+                    "height": 70,
                     "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
                 }
             ],
@@ -293,7 +299,8 @@ export class FormDesignerComponent implements OnInit {
                 "isRequired": true,
                 "pageGUID": "string",
                 "parentGroupID": 0,
-                "type": "string"
+                "type": "string",
+                "dataTableGroup": "string"
             },
             "fieldCustomValidations": [
                 {
@@ -307,8 +314,8 @@ export class FormDesignerComponent implements OnInit {
             "fieldStyles": [
                 {
                     "fieldStyleID": 0,
-                    "width": 0,
-                    "height": 0,
+                    "width": 760,
+                    "height": 70,
                     "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
                 }
             ],
@@ -362,7 +369,8 @@ export class FormDesignerComponent implements OnInit {
                 "isRequired": true,
                 "pageGUID": "string",
                 "parentGroupID": 0,
-                "type": "string"
+                "type": "string",
+                "dataTableGroup": "string"
             },
             "fieldCustomValidations": [
                 {
@@ -376,8 +384,146 @@ export class FormDesignerComponent implements OnInit {
             "fieldStyles": [
                 {
                     "fieldStyleID": 0,
-                    "width": 0,
-                    "height": 0,
+                    "width": 760,
+                    "height": 70,
+                    "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
+                }
+            ],
+            "fieldValidations": [
+                {
+                    "fieldValidationID": 0,
+                    "dataLength": 50,
+                    "isEditable": true,
+                    "isRequired": false,
+                    "isHidden": false,
+                }
+            ]
+        },
+        {
+            "fieldID": 0,
+            "fieldTypeID": 29,
+            "pageGUID": "pageGUID",
+            "fieldName": "",
+            "questionName": "",
+            "isDisplayable": false,
+            "toolTip": "",
+            "parentFieldName": "",
+            "childFieldName": "",
+            "listValue": "",
+            "calculation": "",
+            "groupGUID": "string",
+            "isLocked": false,
+            "lockedByUserID": 0,
+            "meetAllCustomValidationConditions": true,
+            "dateCreated": "2021-12-01T12:32:22.006Z",
+            "createdByUserID": 0,
+            "dateLastModified": "2021-12-01T12:32:22.006Z",
+            "lastModifiedByUserID": 0,
+            "isActive": true,
+            "fieldType": {
+                "fieldTypeID": 29,
+                "displayName": "Decimal",
+                "description": "fiber_manual_record",
+                "value": "decimal"
+            },
+            "formPage": {
+                "pageGUID": "string",
+                "name": "string",
+                "formID": 0,
+                "isActive": true
+            },
+            "group": {
+                "groupGUID": "string",
+                "name": "string",
+                "isRequired": true,
+                "pageGUID": "",
+                "parentGroupID": 0,
+                "type": "",
+                "dataTableGroup": "string"
+            },
+            "fieldCustomValidations": [
+                {
+                    "fieldCustomValidationID": 0,
+                    "displayText": "",
+                    "condition": "",
+                    "value": "",
+                    "errorMessage": ""
+                }
+            ],
+            "fieldStyles": [
+                {
+                    "fieldStyleID": 0,
+                    "width": 760,
+                    "height": 70,
+                    "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
+                }
+            ],
+            "fieldValidations": [
+                {
+                    "fieldValidationID": 0,
+                    "dataLength": 50,
+                    "isEditable": true,
+                    "isRequired": false,
+                    "isHidden": false,
+                }
+            ]
+        },
+        {
+            "fieldID": 0,
+            "fieldTypeID": 30,
+            "pageGUID": "pageGUID",
+            "fieldName": "",
+            "questionName": "",
+            "isDisplayable": false,
+            "toolTip": "",
+            "parentFieldName": "",
+            "childFieldName": "",
+            "listValue": "",
+            "calculation": "",
+            "groupGUID": "string",
+            "isLocked": false,
+            "lockedByUserID": 0,
+            "meetAllCustomValidationConditions": true,
+            "dateCreated": "2021-12-01T12:32:22.006Z",
+            "createdByUserID": 0,
+            "dateLastModified": "2021-12-01T12:32:22.006Z",
+            "lastModifiedByUserID": 0,
+            "isActive": true,
+            "fieldType": {
+                "fieldTypeID": 30,
+                "displayName": "Drawing Area",
+                "description": "brush",
+                "value": "imagearea"
+            },
+            "formPage": {
+                "pageGUID": "string",
+                "name": "string",
+                "formID": 0,
+                "isActive": true
+            },
+            "group": {
+                "groupGUID": "string",
+                "name": "string",
+                "isRequired": true,
+                "pageGUID": "",
+                "parentGroupID": 0,
+                "type": "",
+                "dataTableGroup": "string"
+            },
+            "fieldCustomValidations": [
+                {
+                    "fieldCustomValidationID": 0,
+                    "displayText": "",
+                    "condition": "",
+                    "value": "",
+                    "errorMessage": ""
+                }
+            ],
+            "fieldStyles": [
+                {
+                    "fieldStyleID": 0,
+                    "width": 760,
+                    "height": 70,
                     "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
                 }
             ],
@@ -430,7 +576,8 @@ export class FormDesignerComponent implements OnInit {
                 "isRequired": true,
                 "pageGUID": "",
                 "parentGroupID": 0,
-                "type": ""
+                "type": "",
+                "dataTableGroup": "string"
             },
             "fieldCustomValidations": [
                 {
@@ -444,8 +591,78 @@ export class FormDesignerComponent implements OnInit {
             "fieldStyles": [
                 {
                     "fieldStyleID": 0,
-                    "width": 0,
-                    "height": 0,
+                    "width": 760,
+                    "height": 70,
+                    "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
+                }
+            ],
+            "fieldValidations": [
+                {
+                    "fieldValidationID": 0,
+                    "dataLength": 50,
+                    "isEditable": true,
+                    "isRequired": false,
+                    "isHidden": false,
+                }
+            ]
+        },
+        {
+            "fieldID": 0,
+            "fieldTypeID": 31,
+            "pageGUID": "pageGUID",
+            "fieldName": "",
+            "questionName": "",
+            "isDisplayable": false,
+            "toolTip": "",
+            "parentFieldName": "",
+            "childFieldName": "",
+            "listValue": "",
+            "calculation": "",
+            "groupGUID": "string",
+            "isLocked": false,
+            "lockedByUserID": 0,
+            "meetAllCustomValidationConditions": true,
+            "dateCreated": "2021-12-01T12:32:22.006Z",
+            "createdByUserID": 0,
+            "dateLastModified": "2021-12-01T12:32:22.006Z",
+            "lastModifiedByUserID": 0,
+            "isActive": true,
+            "fieldType": {
+                "fieldTypeID": 31,
+                "displayName": "Information",
+                "description": "info",
+                "value": "information"
+            },
+
+            "formPage": {
+                "pageGUID": "string",
+                "name": "string",
+                "formID": 0,
+                "isActive": true
+            },
+            "group": {
+                "groupGUID": "string",
+                "name": "string",
+                "isRequired": true,
+                "pageGUID": "string",
+                "parentGroupID": 0,
+                "type": "string",
+                "dataTableGroup": "string"
+            },
+            "fieldCustomValidations": [
+                {
+                    "fieldCustomValidationID": 0,
+                    "displayText": "",
+                    "condition": "",
+                    "value": "",
+                    "errorMessage": ""
+                }
+            ],
+            "fieldStyles": [
+                {
+                    "fieldStyleID": 0,
+                    "width": 760,
+                    "height": 70,
                     "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
                 }
             ],
@@ -499,7 +716,8 @@ export class FormDesignerComponent implements OnInit {
                 "isRequired": true,
                 "pageGUID": "string",
                 "parentGroupID": 0,
-                "type": "string"
+                "type": "string",
+                "dataTableGroup": "string"
             },
             "fieldCustomValidations": [
                 {
@@ -513,8 +731,148 @@ export class FormDesignerComponent implements OnInit {
             "fieldStyles": [
                 {
                     "fieldStyleID": 0,
-                    "width": 0,
-                    "height": 0,
+                    "width": 760,
+                    "height": 70,
+                    "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
+                }
+            ],
+            "fieldValidations": [
+                {
+                    "fieldValidationID": 0,
+                    "dataLength": 50,
+                    "isEditable": true,
+                    "isRequired": false,
+                    "isHidden": false,
+                }
+            ]
+        },
+        {
+            "fieldID": 0,
+            "fieldTypeID": 27,
+            "pageGUID": "pageGUID",
+            "fieldName": "",
+            "questionName": "",
+            "isDisplayable": false,
+            "toolTip": "",
+            "parentFieldName": "",
+            "childFieldName": "",
+            "listValue": "",
+            "calculation": "",
+            "groupGUID": "string",
+            "isLocked": false,
+            "lockedByUserID": 0,
+            "meetAllCustomValidationConditions": true,
+            "dateCreated": "2021-12-01T12:32:22.006Z",
+            "createdByUserID": 0,
+            "dateLastModified": "2021-12-01T12:32:22.006Z",
+            "lastModifiedByUserID": 0,
+            "isActive": true,
+            "fieldType": {
+                "fieldTypeID": 27,
+                "displayName": "Plain Alpha",
+                "description": "title",
+                "value": "plainalpha"
+            },
+
+            "formPage": {
+                "pageGUID": "string",
+                "name": "string",
+                "formID": 0,
+                "isActive": true
+            },
+            "group": {
+                "groupGUID": "string",
+                "name": "string",
+                "isRequired": true,
+                "pageGUID": "string",
+                "parentGroupID": 0,
+                "type": "string",
+                "dataTableGroup": "string"
+            },
+            "fieldCustomValidations": [
+                {
+                    "fieldCustomValidationID": 0,
+                    "displayText": "",
+                    "condition": "",
+                    "value": "",
+                    "errorMessage": ""
+                }
+            ],
+            "fieldStyles": [
+                {
+                    "fieldStyleID": 0,
+                    "width": 760,
+                    "height": 70,
+                    "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
+                }
+            ],
+            "fieldValidations": [
+                {
+                    "fieldValidationID": 0,
+                    "dataLength": 50,
+                    "isEditable": true,
+                    "isRequired": false,
+                    "isHidden": false,
+                }
+            ]
+        },
+        {
+            "fieldID": 0,
+            "fieldTypeID": 4,
+            "pageGUID": "pageGUID",
+            "fieldName": "",
+            "questionName": "",
+            "isDisplayable": false,
+            "toolTip": "",
+            "parentFieldName": "",
+            "childFieldName": "",
+            "listValue": "",
+            "calculation": "",
+            "groupGUID": "string",
+            "isLocked": false,
+            "lockedByUserID": 0,
+            "meetAllCustomValidationConditions": true,
+            "dateCreated": "2021-12-01T12:32:22.006Z",
+            "createdByUserID": 0,
+            "dateLastModified": "2021-12-01T12:32:22.006Z",
+            "lastModifiedByUserID": 0,
+            "isActive": true,
+            "fieldType": {
+                "fieldTypeID": 4,
+                "displayName": "Plain Text",
+                "description": "text_fields",
+                "value": "plaintext"
+            },
+
+            "formPage": {
+                "pageGUID": "string",
+                "name": "string",
+                "formID": 0,
+                "isActive": true
+            },
+            "group": {
+                "groupGUID": "string",
+                "name": "string",
+                "isRequired": true,
+                "pageGUID": "string",
+                "parentGroupID": 0,
+                "type": "string",
+                "dataTableGroup": "string"
+            },
+            "fieldCustomValidations": [
+                {
+                    "fieldCustomValidationID": 0,
+                    "displayText": "",
+                    "condition": "",
+                    "value": "",
+                    "errorMessage": ""
+                }
+            ],
+            "fieldStyles": [
+                {
+                    "fieldStyleID": 0,
+                    "width": 760,
+                    "height": 70,
                     "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
                 }
             ],
@@ -568,7 +926,8 @@ export class FormDesignerComponent implements OnInit {
                 "isRequired": true,
                 "pageGUID": "string",
                 "parentGroupID": 0,
-                "type": "string"
+                "type": "string",
+                "dataTableGroup": "string"
             },
             "fieldCustomValidations": [
                 {
@@ -582,8 +941,8 @@ export class FormDesignerComponent implements OnInit {
             "fieldStyles": [
                 {
                     "fieldStyleID": 0,
-                    "width": 0,
-                    "height": 0,
+                    "width": 760,
+                    "height": 70,
                     "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
                 }
             ],
@@ -651,8 +1010,8 @@ export class FormDesignerComponent implements OnInit {
             "fieldStyles": [
                 {
                     "fieldStyleID": 0,
-                    "width": 0,
-                    "height": 0,
+                    "width": 760,
+                    "height": 70,
                     "cssClass": "linear-gradient(147deg, #eff3f7 72%, #00f7ff 28%)"
                 }
             ],
@@ -720,8 +1079,8 @@ export class FormDesignerComponent implements OnInit {
             "fieldStyles": [
                 {
                     "fieldStyleID": 0,
-                    "width": 0,
-                    "height": 0,
+                    "width": 760,
+                    "height": 70,
                     "cssClass": "linear-gradient(147deg, #eff3f7 72%, #00d9ff 28%)"
                 }
             ],
@@ -775,7 +1134,8 @@ export class FormDesignerComponent implements OnInit {
                 "isRequired": true,
                 "pageGUID": "string",
                 "parentGroupID": 0,
-                "type": "string"
+                "type": "string",
+                "dataTableGroup": "string"
             },
             "fieldCustomValidations": [
                 {
@@ -789,8 +1149,77 @@ export class FormDesignerComponent implements OnInit {
             "fieldStyles": [
                 {
                     "fieldStyleID": 0,
-                    "width": 0,
-                    "height": 0,
+                    "width": 760,
+                    "height": 70,
+                    "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
+                }
+            ],
+            "fieldValidations": [
+                {
+                    "fieldValidationID": 0,
+                    "dataLength": 50,
+                    "isEditable": true,
+                    "isRequired": false,
+                    "isHidden": false,
+                }
+            ]
+        },
+        {
+            "fieldID": 0,
+            "fieldTypeID": 28,
+            "pageGUID": "pageGUID",
+            "fieldName": "",
+            "questionName": "",
+            "isDisplayable": false,
+            "toolTip": "",
+            "parentFieldName": "",
+            "childFieldName": "",
+            "listValue": "",
+            "calculation": "",
+            "groupGUID": "string",
+            "isLocked": false,
+            "lockedByUserID": 0,
+            "meetAllCustomValidationConditions": true,
+            "dateCreated": "2021-12-01T12:32:22.006Z",
+            "createdByUserID": 0,
+            "dateLastModified": "2021-12-01T12:32:22.006Z",
+            "lastModifiedByUserID": 0,
+            "isActive": true,
+            "fieldType": {
+                "fieldTypeID": 28,
+                "displayName": "Signature",
+                "description": "border_color",
+                "value": "signature"
+            },
+            "formPage": {
+                "pageGUID": "string",
+                "name": "string",
+                "formID": 0,
+                "isActive": true
+            },
+            "group": {
+                "groupGUID": "string",
+                "name": "string",
+                "isRequired": true,
+                "pageGUID": "",
+                "parentGroupID": 0,
+                "type": "",
+                "dataTableGroup": "string"
+            },
+            "fieldCustomValidations": [
+                {
+                    "fieldCustomValidationID": 0,
+                    "displayText": "",
+                    "condition": "",
+                    "value": "",
+                    "errorMessage": ""
+                }
+            ],
+            "fieldStyles": [
+                {
+                    "fieldStyleID": 0,
+                    "width": 760,
+                    "height": 70,
                     "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
                 }
             ],
@@ -844,7 +1273,8 @@ export class FormDesignerComponent implements OnInit {
                 "isRequired": true,
                 "pageGUID": "string",
                 "parentGroupID": 0,
-                "type": "string"
+                "type": "string",
+                "dataTableGroup": "string"
             },
             "fieldCustomValidations": [
                 {
@@ -858,78 +1288,9 @@ export class FormDesignerComponent implements OnInit {
             "fieldStyles": [
                 {
                     "fieldStyleID": 0,
-                    "width": 0,
-                    "height": 0,
+                    "width": 760,
+                    "height": 70,
                     "cssClass": "linear-gradient(147deg, #eff3f7 72%, #9ff1ff 28%)"
-                }
-            ],
-            "fieldValidations": [
-                {
-                    "fieldValidationID": 0,
-                    "dataLength": 50,
-                    "isEditable": true,
-                    "isRequired": false,
-                    "isHidden": false,
-                }
-            ]
-        },
-        {
-            "fieldID": 0,
-            "fieldTypeID": 4,
-            "pageGUID": "pageGUID",
-            "fieldName": "",
-            "questionName": "",
-            "isDisplayable": false,
-            "toolTip": "",
-            "parentFieldName": "",
-            "childFieldName": "",
-            "listValue": "",
-            "calculation": "",
-            "groupGUID": "string",
-            "isLocked": false,
-            "lockedByUserID": 0,
-            "meetAllCustomValidationConditions": true,
-            "dateCreated": "2021-12-01T12:32:22.006Z",
-            "createdByUserID": 0,
-            "dateLastModified": "2021-12-01T12:32:22.006Z",
-            "lastModifiedByUserID": 0,
-            "isActive": true,
-            "fieldType": {
-                "fieldTypeID": 4,
-                "displayName": "Text",
-                "description": "text_fields",
-                "value": "text"
-            },
-
-            "formPage": {
-                "pageGUID": "string",
-                "name": "string",
-                "formID": 0,
-                "isActive": true
-            },
-            "group": {
-                "groupGUID": "string",
-                "name": "string",
-                "isRequired": true,
-                "pageGUID": "string",
-                "parentGroupID": 0,
-                "type": "string"
-            },
-            "fieldCustomValidations": [
-                {
-                    "fieldCustomValidationID": 0,
-                    "displayText": "",
-                    "condition": "",
-                    "value": "",
-                    "errorMessage": ""
-                }
-            ],
-            "fieldStyles": [
-                {
-                    "fieldStyleID": 0,
-                    "width": 0,
-                    "height": 0,
-                    "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
                 }
             ],
             "fieldValidations": [
@@ -981,7 +1342,8 @@ export class FormDesignerComponent implements OnInit {
                 "isRequired": true,
                 "pageGUID": "",
                 "parentGroupID": 0,
-                "type": ""
+                "type": "",
+                "dataTableGroup": "string"
             },
             "fieldCustomValidations": [
                 {
@@ -995,8 +1357,8 @@ export class FormDesignerComponent implements OnInit {
             "fieldStyles": [
                 {
                     "fieldStyleID": 0,
-                    "width": 0,
-                    "height": 0,
+                    "width": 760,
+                    "height": 70,
                     "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
                 }
             ],
@@ -1011,6 +1373,8 @@ export class FormDesignerComponent implements OnInit {
             ]
         }
     ];
+
+    publishStatus: string = "Unpublished";
 
     pages: any = [];
 
@@ -1056,7 +1420,7 @@ export class FormDesignerComponent implements OnInit {
 
     disableGroupAdd: boolean = false;
 
-    constructor(private service: FormbuilderService, private spinner: NgxSpinnerService) {
+    constructor(public dialog: MatDialog, private service: FormbuilderService, private spinner: NgxSpinnerService) {
         this.formData = JSON.parse(localStorage.getItem('formDesignInfo') || '{}');
     }
 
@@ -1079,7 +1443,7 @@ export class FormDesignerComponent implements OnInit {
                     this.operationField = "Select an operator";
                 }
                 else {
-                    this.fieldOperatorList = this.updateCalcuationFieldList();
+                    this.fieldOperatorList = this.updateCalculationFieldList();
                     this.operationField = "Select a field";
                 }
             }
@@ -1109,13 +1473,14 @@ export class FormDesignerComponent implements OnInit {
             position: 'top',
             allowOutsideClick: false,
             confirmButtonColor: '#000000',
-            cancelButtonColor: '#000000'
+            cancelButtonColor: '#000000',
+            background: '#ffcccb'
         }).then((result) => {
             if (result.value) {
                 if (i > -1) {
                     if (this.formDesign[i].pageGUID === "pageGUID") {
                         this.formDesign.splice(i, 1);
-                        this.fields = this.updateCalcuationFieldList();
+                        this.fields = this.updateCalculationFieldList();
                         this.showNotification('top', 'center', 'The fields has been deleted Successfully!', 'Success.', 'success');
                     }
                     else {
@@ -1131,8 +1496,73 @@ export class FormDesignerComponent implements OnInit {
         this.saveDesignPerPage(this.currentPage.pageGUID);
     }
 
-    savePages(i: any) {
-        this.autoSaveDesignPerPage(this.currentPage.pageGUID, 0, i);
+    publishPage() {
+        let pageGUID = this.currentPage.pageGUID;
+        var errorMessage = "Please ensure number ";
+        this.formDesign.forEach((fieldVal, index) => {
+            if (fieldVal.questionName == "") {
+                errorMessage = errorMessage + (index + 1) + ",";
+            }
+
+            if (fieldVal.fieldType.value === "subSection") {
+                fieldVal.fieldName = "ua_group_" + (fieldVal.questionName).split(/\s/).join('');
+            }
+            else {
+                fieldVal.fieldName = "ua_" + (fieldVal.questionName).split(/\s/).join('');
+            }
+
+            fieldVal.pageGUID = pageGUID;
+            fieldVal.formPage.name = this.currentPage.name;
+        });
+        if (errorMessage === "Please ensure number ") {
+            this.spinner.show();
+            this.service.addFieldPerPage(this.formDesign, this.formData.formID, pageGUID).subscribe(ret => {
+                this.spinner.show();
+                let columnsNoGroups = "";
+                this.formDesign.forEach(element => {
+                    let groupColumns = "";
+                    let groupGUID = "";
+                    this.spinner.show();
+                    if (element.fieldType.value === "repeatgroup") {
+                        groupGUID = element.groupGUID;
+                        this.formDesign.forEach(field => {
+                            if (field.parentFieldName === groupGUID && field.fieldType.value!=="subSection") {
+                                groupColumns += (field.questionName).split(/\s/).join('') + " varchar(" + field.fieldValidations[0].dataLength + "),";
+                            }
+                        });
+                        this.service.getTableNameForGroup(groupGUID).subscribe(res => {
+                            let data = {
+                                "tableName": res,
+                                "columns": groupColumns
+                            }
+                            this.spinner.show();
+                            this.service.createGroupTable(data).subscribe(val => {
+                                this.getDesignPerPage(pageGUID);
+                                this.spinner.hide();
+                            });
+                        });
+                    }
+                    else if (element.fieldType.value !== "subSection" && element.fieldType.value !== "section" && element.fieldType.value !== "repeatgroup" && element.fieldType.value !== "PageTitle") {
+                        columnsNoGroups += (element.questionName).split(/\s/).join('') + " varchar(" + element.fieldValidations[0].dataLength + "),";
+                    }
+                });
+
+                let data = {
+                    "tableName": (this.formData.formName).split(/\s/).join('') + "_" + (this.currentPage.name).split(/\s/).join(''),
+                    "columns": columnsNoGroups
+                }
+
+                this.service.createTemplateFormTable(data).subscribe(res => {
+                    this.showNotification('top', 'center', 'Page has been published successfully!', 'Success.', 'success');
+                    this.publishStatus = "Published";
+                    this.spinner.hide();
+                });
+            });
+        }
+        else {
+            errorMessage = errorMessage + " form fields have question names before saving";
+            this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
+        }
     }
 
     viewPage(i: any, page: any) {
@@ -1148,11 +1578,65 @@ export class FormDesignerComponent implements OnInit {
             cancelButtonColor: '#000000'
         }).then((result) => {
             if (result.value) {
-                this.formDesign = [];
-                this.savePages(2);
-                this.getDesignPerPage(page.pageGUID);
-                this.currentPage = page;
-                this.refreshGroupSectionList();
+                var errorMessage = "Please ensure number ";
+                var count = 0;
+                this.formDesign.forEach((element, index) => {
+                    if (element.isDisplayable !== false && this.currentPage.name == "Page 1") {
+                        count++;
+                    }
+
+                    if (element.questionName == "") {
+                        errorMessage = errorMessage + (index + 1) + ",";
+                    }
+
+                    if (element.fieldType.value === "subSection") {
+                        element.fieldName = "ua_group_" + (element.questionName).split(/\s/).join('');
+                    }
+                    else {
+                        element.fieldName = "ua_" + (element.questionName).split(/\s/).join('');
+                    }
+
+                    element.pageGUID = this.currentPage.pageGUID;
+                    element.formPage.name = this.currentPage.name;
+                });
+                if (errorMessage === "Please ensure number ") {
+                    if (this.currentPage.name === "Page 1" && count === 2) {
+                        if (errorMessage === "Please ensure number ") {
+                            this.spinner.show();
+                            this.service.addFieldPerPage(this.formDesign, this.formData.formID, this.currentPage.pageGUID).subscribe(data => {
+                                this.formDesign = [];
+                                this.getDesignPerPage(page.pageGUID);
+                                this.currentPage = page;
+                                this.refreshGroupSectionList();
+                            });
+                        }
+                    }
+                    else if (this.currentPage.name !== "Page 1") {
+                        if (errorMessage === "Please ensure number ") {
+                            this.spinner.show();
+                            this.service.addFieldPerPage(this.formDesign, this.formData.formID, this.currentPage.pageGUID).subscribe(data => {
+                                this.formDesign = [];
+                                this.getDesignPerPage(page.pageGUID);
+                                this.currentPage = page;
+                                this.refreshGroupSectionList();
+
+                            });
+                        }
+                    }
+                    else {
+                        if (errorMessage === "Please ensure number ") {
+                            errorMessage = "Please ensure two displayables are set on the form before going to another page"
+                        }
+                        else {
+                            errorMessage = errorMessage + " form fields have question names and that two displayables are set on the form before going to another page";
+                        }
+                        this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
+                    }
+                }
+                else {
+                    errorMessage = errorMessage + " form fields have question names and that two displayables are set on the form before saving";
+                    this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
+                }
             }
         })
     }
@@ -1204,7 +1688,8 @@ export class FormDesignerComponent implements OnInit {
                 "isRequired": true,
                 "pageGUID": "",
                 "parentGroupID": 0,
-                "type": ""
+                "type": "",
+                "dataTableGroup": "string"
             },
             "fieldCustomValidations": [
                 {
@@ -1218,8 +1703,8 @@ export class FormDesignerComponent implements OnInit {
             "fieldStyles": [
                 {
                     "fieldStyleID": 0,
-                    "width": 0,
-                    "height": 0,
+                    "width": 760,
+                    "height": 70,
                     "cssClass": "linear-gradient(147deg, #eff3f7 72%, #028ea7 28%)"
                 }
             ],
@@ -1244,7 +1729,7 @@ export class FormDesignerComponent implements OnInit {
         });
     }
 
-    updateCalcuationFieldList(): any[] {
+    updateCalculationFieldList(): any[] {
         this.formDesign.forEach(element => {
             if (element.fieldType.value === "number" && element.isActive == true && element.fieldName !== "") {
                 let x = {
@@ -1268,7 +1753,8 @@ export class FormDesignerComponent implements OnInit {
                 position: 'top',
                 allowOutsideClick: false,
                 confirmButtonColor: '#000000',
-                cancelButtonColor: '#000000'
+                cancelButtonColor: '#000000',
+                background: '#ffcccb'
             }).then((result) => {
                 if (result.value) {
                     this.spinner.show();
@@ -1300,7 +1786,7 @@ export class FormDesignerComponent implements OnInit {
                 event.currentIndex,
             );
             this.fields = [];
-            this.fieldOperatorList = this.updateCalcuationFieldList();
+            this.fieldOperatorList = this.updateCalculationFieldList();
             this.fieldTypes = [
                 {
                     "fieldID": 0,
@@ -1326,7 +1812,7 @@ export class FormDesignerComponent implements OnInit {
                     "fieldType": {
                         "fieldTypeID": 22,
                         "displayName": "Alpha Numeric",
-                        "description": "title",
+                        "description": "rtt",
                         "value": "Alphanumeric"
                     },
                     "formPage": {
@@ -1341,7 +1827,8 @@ export class FormDesignerComponent implements OnInit {
                         "isRequired": true,
                         "pageGUID": "",
                         "parentGroupID": 0,
-                        "type": ""
+                        "type": "",
+                        "dataTableGroup": "string"
                     },
                     "fieldCustomValidations": [
                         {
@@ -1355,8 +1842,8 @@ export class FormDesignerComponent implements OnInit {
                     "fieldStyles": [
                         {
                             "fieldStyleID": 0,
-                            "width": 0,
-                            "height": 0,
+                            "width": 760,
+                            "height": 70,
                             "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
                         }
                     ],
@@ -1409,7 +1896,8 @@ export class FormDesignerComponent implements OnInit {
                         "isRequired": true,
                         "pageGUID": "string",
                         "parentGroupID": 0,
-                        "type": "string"
+                        "type": "string",
+                        "dataTableGroup": "string"
                     },
                     "fieldCustomValidations": [
                         {
@@ -1423,8 +1911,8 @@ export class FormDesignerComponent implements OnInit {
                     "fieldStyles": [
                         {
                             "fieldStyleID": 0,
-                            "width": 0,
-                            "height": 0,
+                            "width": 760,
+                            "height": 70,
                             "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
                         }
                     ],
@@ -1477,7 +1965,8 @@ export class FormDesignerComponent implements OnInit {
                         "isRequired": true,
                         "pageGUID": "string",
                         "parentGroupID": 0,
-                        "type": "string"
+                        "type": "string",
+                        "dataTableGroup": "string"
                     },
                     "fieldCustomValidations": [
                         {
@@ -1491,8 +1980,8 @@ export class FormDesignerComponent implements OnInit {
                     "fieldStyles": [
                         {
                             "fieldStyleID": 0,
-                            "width": 0,
-                            "height": 0,
+                            "width": 760,
+                            "height": 70,
                             "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
                         }
                     ],
@@ -1546,7 +2035,8 @@ export class FormDesignerComponent implements OnInit {
                         "isRequired": true,
                         "pageGUID": "string",
                         "parentGroupID": 0,
-                        "type": "string"
+                        "type": "string",
+                        "dataTableGroup": "string"
                     },
                     "fieldCustomValidations": [
                         {
@@ -1560,8 +2050,8 @@ export class FormDesignerComponent implements OnInit {
                     "fieldStyles": [
                         {
                             "fieldStyleID": 0,
-                            "width": 0,
-                            "height": 0,
+                            "width": 760,
+                            "height": 70,
                             "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
                         }
                     ],
@@ -1615,7 +2105,8 @@ export class FormDesignerComponent implements OnInit {
                         "isRequired": true,
                         "pageGUID": "string",
                         "parentGroupID": 0,
-                        "type": "string"
+                        "type": "string",
+                        "dataTableGroup": "string"
                     },
                     "fieldCustomValidations": [
                         {
@@ -1629,8 +2120,146 @@ export class FormDesignerComponent implements OnInit {
                     "fieldStyles": [
                         {
                             "fieldStyleID": 0,
-                            "width": 0,
-                            "height": 0,
+                            "width": 760,
+                            "height": 70,
+                            "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
+                        }
+                    ],
+                    "fieldValidations": [
+                        {
+                            "fieldValidationID": 0,
+                            "dataLength": 50,
+                            "isEditable": true,
+                            "isRequired": false,
+                            "isHidden": false,
+                        }
+                    ]
+                },
+                {
+                    "fieldID": 0,
+                    "fieldTypeID": 29,
+                    "pageGUID": "pageGUID",
+                    "fieldName": "",
+                    "questionName": "",
+                    "isDisplayable": false,
+                    "toolTip": "",
+                    "parentFieldName": "",
+                    "childFieldName": "",
+                    "listValue": "",
+                    "calculation": "",
+                    "groupGUID": "string",
+                    "isLocked": false,
+                    "lockedByUserID": 0,
+                    "meetAllCustomValidationConditions": true,
+                    "dateCreated": "2021-12-01T12:32:22.006Z",
+                    "createdByUserID": 0,
+                    "dateLastModified": "2021-12-01T12:32:22.006Z",
+                    "lastModifiedByUserID": 0,
+                    "isActive": true,
+                    "fieldType": {
+                        "fieldTypeID": 29,
+                        "displayName": "Decimal",
+                        "description": "fiber_manual_record",
+                        "value": "decimal"
+                    },
+                    "formPage": {
+                        "pageGUID": "string",
+                        "name": "string",
+                        "formID": 0,
+                        "isActive": true
+                    },
+                    "group": {
+                        "groupGUID": "string",
+                        "name": "string",
+                        "isRequired": true,
+                        "pageGUID": "",
+                        "parentGroupID": 0,
+                        "type": "",
+                        "dataTableGroup": "string"
+                    },
+                    "fieldCustomValidations": [
+                        {
+                            "fieldCustomValidationID": 0,
+                            "displayText": "",
+                            "condition": "",
+                            "value": "",
+                            "errorMessage": ""
+                        }
+                    ],
+                    "fieldStyles": [
+                        {
+                            "fieldStyleID": 0,
+                            "width": 760,
+                            "height": 70,
+                            "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
+                        }
+                    ],
+                    "fieldValidations": [
+                        {
+                            "fieldValidationID": 0,
+                            "dataLength": 50,
+                            "isEditable": true,
+                            "isRequired": false,
+                            "isHidden": false,
+                        }
+                    ]
+                },
+                {
+                    "fieldID": 0,
+                    "fieldTypeID": 30,
+                    "pageGUID": "pageGUID",
+                    "fieldName": "",
+                    "questionName": "",
+                    "isDisplayable": false,
+                    "toolTip": "",
+                    "parentFieldName": "",
+                    "childFieldName": "",
+                    "listValue": "",
+                    "calculation": "",
+                    "groupGUID": "string",
+                    "isLocked": false,
+                    "lockedByUserID": 0,
+                    "meetAllCustomValidationConditions": true,
+                    "dateCreated": "2021-12-01T12:32:22.006Z",
+                    "createdByUserID": 0,
+                    "dateLastModified": "2021-12-01T12:32:22.006Z",
+                    "lastModifiedByUserID": 0,
+                    "isActive": true,
+                    "fieldType": {
+                        "fieldTypeID": 30,
+                        "displayName": "Drawing Area",
+                        "description": "brush",
+                        "value": "imagearea"
+                    },
+                    "formPage": {
+                        "pageGUID": "string",
+                        "name": "string",
+                        "formID": 0,
+                        "isActive": true
+                    },
+                    "group": {
+                        "groupGUID": "string",
+                        "name": "string",
+                        "isRequired": true,
+                        "pageGUID": "",
+                        "parentGroupID": 0,
+                        "type": "",
+                        "dataTableGroup": "string"
+                    },
+                    "fieldCustomValidations": [
+                        {
+                            "fieldCustomValidationID": 0,
+                            "displayText": "",
+                            "condition": "",
+                            "value": "",
+                            "errorMessage": ""
+                        }
+                    ],
+                    "fieldStyles": [
+                        {
+                            "fieldStyleID": 0,
+                            "width": 760,
+                            "height": 70,
                             "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
                         }
                     ],
@@ -1683,7 +2312,8 @@ export class FormDesignerComponent implements OnInit {
                         "isRequired": true,
                         "pageGUID": "",
                         "parentGroupID": 0,
-                        "type": ""
+                        "type": "",
+                        "dataTableGroup": "string"
                     },
                     "fieldCustomValidations": [
                         {
@@ -1697,8 +2327,78 @@ export class FormDesignerComponent implements OnInit {
                     "fieldStyles": [
                         {
                             "fieldStyleID": 0,
-                            "width": 0,
-                            "height": 0,
+                            "width": 760,
+                            "height": 70,
+                            "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
+                        }
+                    ],
+                    "fieldValidations": [
+                        {
+                            "fieldValidationID": 0,
+                            "dataLength": 50,
+                            "isEditable": true,
+                            "isRequired": false,
+                            "isHidden": false,
+                        }
+                    ]
+                },
+                {
+                    "fieldID": 0,
+                    "fieldTypeID": 31,
+                    "pageGUID": "pageGUID",
+                    "fieldName": "",
+                    "questionName": "",
+                    "isDisplayable": false,
+                    "toolTip": "",
+                    "parentFieldName": "",
+                    "childFieldName": "",
+                    "listValue": "",
+                    "calculation": "",
+                    "groupGUID": "string",
+                    "isLocked": false,
+                    "lockedByUserID": 0,
+                    "meetAllCustomValidationConditions": true,
+                    "dateCreated": "2021-12-01T12:32:22.006Z",
+                    "createdByUserID": 0,
+                    "dateLastModified": "2021-12-01T12:32:22.006Z",
+                    "lastModifiedByUserID": 0,
+                    "isActive": true,
+                    "fieldType": {
+                        "fieldTypeID": 31,
+                        "displayName": "Information",
+                        "description": "info",
+                        "value": "information"
+                    },
+
+                    "formPage": {
+                        "pageGUID": "string",
+                        "name": "string",
+                        "formID": 0,
+                        "isActive": true
+                    },
+                    "group": {
+                        "groupGUID": "string",
+                        "name": "string",
+                        "isRequired": true,
+                        "pageGUID": "string",
+                        "parentGroupID": 0,
+                        "type": "string",
+                        "dataTableGroup": "string"
+                    },
+                    "fieldCustomValidations": [
+                        {
+                            "fieldCustomValidationID": 0,
+                            "displayText": "",
+                            "condition": "",
+                            "value": "",
+                            "errorMessage": ""
+                        }
+                    ],
+                    "fieldStyles": [
+                        {
+                            "fieldStyleID": 0,
+                            "width": 760,
+                            "height": 70,
                             "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
                         }
                     ],
@@ -1752,7 +2452,8 @@ export class FormDesignerComponent implements OnInit {
                         "isRequired": true,
                         "pageGUID": "string",
                         "parentGroupID": 0,
-                        "type": "string"
+                        "type": "string",
+                        "dataTableGroup": "string"
                     },
                     "fieldCustomValidations": [
                         {
@@ -1766,8 +2467,148 @@ export class FormDesignerComponent implements OnInit {
                     "fieldStyles": [
                         {
                             "fieldStyleID": 0,
-                            "width": 0,
-                            "height": 0,
+                            "width": 760,
+                            "height": 70,
+                            "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
+                        }
+                    ],
+                    "fieldValidations": [
+                        {
+                            "fieldValidationID": 0,
+                            "dataLength": 50,
+                            "isEditable": true,
+                            "isRequired": false,
+                            "isHidden": false,
+                        }
+                    ]
+                },
+                {
+                    "fieldID": 0,
+                    "fieldTypeID": 27,
+                    "pageGUID": "pageGUID",
+                    "fieldName": "",
+                    "questionName": "",
+                    "isDisplayable": false,
+                    "toolTip": "",
+                    "parentFieldName": "",
+                    "childFieldName": "",
+                    "listValue": "",
+                    "calculation": "",
+                    "groupGUID": "string",
+                    "isLocked": false,
+                    "lockedByUserID": 0,
+                    "meetAllCustomValidationConditions": true,
+                    "dateCreated": "2021-12-01T12:32:22.006Z",
+                    "createdByUserID": 0,
+                    "dateLastModified": "2021-12-01T12:32:22.006Z",
+                    "lastModifiedByUserID": 0,
+                    "isActive": true,
+                    "fieldType": {
+                        "fieldTypeID": 27,
+                        "displayName": "Plain Alpha",
+                        "description": "title",
+                        "value": "plainalpha"
+                    },
+
+                    "formPage": {
+                        "pageGUID": "string",
+                        "name": "string",
+                        "formID": 0,
+                        "isActive": true
+                    },
+                    "group": {
+                        "groupGUID": "string",
+                        "name": "string",
+                        "isRequired": true,
+                        "pageGUID": "string",
+                        "parentGroupID": 0,
+                        "type": "string",
+                        "dataTableGroup": "string"
+                    },
+                    "fieldCustomValidations": [
+                        {
+                            "fieldCustomValidationID": 0,
+                            "displayText": "",
+                            "condition": "",
+                            "value": "",
+                            "errorMessage": ""
+                        }
+                    ],
+                    "fieldStyles": [
+                        {
+                            "fieldStyleID": 0,
+                            "width": 760,
+                            "height": 70,
+                            "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
+                        }
+                    ],
+                    "fieldValidations": [
+                        {
+                            "fieldValidationID": 0,
+                            "dataLength": 50,
+                            "isEditable": true,
+                            "isRequired": false,
+                            "isHidden": false,
+                        }
+                    ]
+                },
+                {
+                    "fieldID": 0,
+                    "fieldTypeID": 4,
+                    "pageGUID": "pageGUID",
+                    "fieldName": "",
+                    "questionName": "",
+                    "isDisplayable": false,
+                    "toolTip": "",
+                    "parentFieldName": "",
+                    "childFieldName": "",
+                    "listValue": "",
+                    "calculation": "",
+                    "groupGUID": "string",
+                    "isLocked": false,
+                    "lockedByUserID": 0,
+                    "meetAllCustomValidationConditions": true,
+                    "dateCreated": "2021-12-01T12:32:22.006Z",
+                    "createdByUserID": 0,
+                    "dateLastModified": "2021-12-01T12:32:22.006Z",
+                    "lastModifiedByUserID": 0,
+                    "isActive": true,
+                    "fieldType": {
+                        "fieldTypeID": 4,
+                        "displayName": "Plain Text",
+                        "description": "text_fields",
+                        "value": "plaintext"
+                    },
+
+                    "formPage": {
+                        "pageGUID": "string",
+                        "name": "string",
+                        "formID": 0,
+                        "isActive": true
+                    },
+                    "group": {
+                        "groupGUID": "string",
+                        "name": "string",
+                        "isRequired": true,
+                        "pageGUID": "string",
+                        "parentGroupID": 0,
+                        "type": "string",
+                        "dataTableGroup": "string"
+                    },
+                    "fieldCustomValidations": [
+                        {
+                            "fieldCustomValidationID": 0,
+                            "displayText": "",
+                            "condition": "",
+                            "value": "",
+                            "errorMessage": ""
+                        }
+                    ],
+                    "fieldStyles": [
+                        {
+                            "fieldStyleID": 0,
+                            "width": 760,
+                            "height": 70,
                             "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
                         }
                     ],
@@ -1821,7 +2662,8 @@ export class FormDesignerComponent implements OnInit {
                         "isRequired": true,
                         "pageGUID": "string",
                         "parentGroupID": 0,
-                        "type": "string"
+                        "type": "string",
+                        "dataTableGroup": "string"
                     },
                     "fieldCustomValidations": [
                         {
@@ -1835,8 +2677,8 @@ export class FormDesignerComponent implements OnInit {
                     "fieldStyles": [
                         {
                             "fieldStyleID": 0,
-                            "width": 0,
-                            "height": 0,
+                            "width": 760,
+                            "height": 70,
                             "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
                         }
                     ],
@@ -1904,8 +2746,8 @@ export class FormDesignerComponent implements OnInit {
                     "fieldStyles": [
                         {
                             "fieldStyleID": 0,
-                            "width": 0,
-                            "height": 0,
+                            "width": 760,
+                            "height": 70,
                             "cssClass": "linear-gradient(147deg, #eff3f7 72%, #00f7ff 28%)"
                         }
                     ],
@@ -1973,8 +2815,8 @@ export class FormDesignerComponent implements OnInit {
                     "fieldStyles": [
                         {
                             "fieldStyleID": 0,
-                            "width": 0,
-                            "height": 0,
+                            "width": 760,
+                            "height": 70,
                             "cssClass": "linear-gradient(147deg, #eff3f7 72%, #00d9ff 28%)"
                         }
                     ],
@@ -2028,7 +2870,8 @@ export class FormDesignerComponent implements OnInit {
                         "isRequired": true,
                         "pageGUID": "string",
                         "parentGroupID": 0,
-                        "type": "string"
+                        "type": "string",
+                        "dataTableGroup": "string"
                     },
                     "fieldCustomValidations": [
                         {
@@ -2042,8 +2885,77 @@ export class FormDesignerComponent implements OnInit {
                     "fieldStyles": [
                         {
                             "fieldStyleID": 0,
-                            "width": 0,
-                            "height": 0,
+                            "width": 760,
+                            "height": 70,
+                            "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
+                        }
+                    ],
+                    "fieldValidations": [
+                        {
+                            "fieldValidationID": 0,
+                            "dataLength": 50,
+                            "isEditable": true,
+                            "isRequired": false,
+                            "isHidden": false,
+                        }
+                    ]
+                },
+                {
+                    "fieldID": 0,
+                    "fieldTypeID": 28,
+                    "pageGUID": "pageGUID",
+                    "fieldName": "",
+                    "questionName": "",
+                    "isDisplayable": false,
+                    "toolTip": "",
+                    "parentFieldName": "",
+                    "childFieldName": "",
+                    "listValue": "",
+                    "calculation": "",
+                    "groupGUID": "string",
+                    "isLocked": false,
+                    "lockedByUserID": 0,
+                    "meetAllCustomValidationConditions": true,
+                    "dateCreated": "2021-12-01T12:32:22.006Z",
+                    "createdByUserID": 0,
+                    "dateLastModified": "2021-12-01T12:32:22.006Z",
+                    "lastModifiedByUserID": 0,
+                    "isActive": true,
+                    "fieldType": {
+                        "fieldTypeID": 28,
+                        "displayName": "Signature",
+                        "description": "border_color",
+                        "value": "signature"
+                    },
+                    "formPage": {
+                        "pageGUID": "string",
+                        "name": "string",
+                        "formID": 0,
+                        "isActive": true
+                    },
+                    "group": {
+                        "groupGUID": "string",
+                        "name": "string",
+                        "isRequired": true,
+                        "pageGUID": "",
+                        "parentGroupID": 0,
+                        "type": "",
+                        "dataTableGroup": "string"
+                    },
+                    "fieldCustomValidations": [
+                        {
+                            "fieldCustomValidationID": 0,
+                            "displayText": "",
+                            "condition": "",
+                            "value": "",
+                            "errorMessage": ""
+                        }
+                    ],
+                    "fieldStyles": [
+                        {
+                            "fieldStyleID": 0,
+                            "width": 760,
+                            "height": 70,
                             "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
                         }
                     ],
@@ -2097,7 +3009,8 @@ export class FormDesignerComponent implements OnInit {
                         "isRequired": true,
                         "pageGUID": "string",
                         "parentGroupID": 0,
-                        "type": "string"
+                        "type": "string",
+                        "dataTableGroup": "string"
                     },
                     "fieldCustomValidations": [
                         {
@@ -2111,78 +3024,9 @@ export class FormDesignerComponent implements OnInit {
                     "fieldStyles": [
                         {
                             "fieldStyleID": 0,
-                            "width": 0,
-                            "height": 0,
+                            "width": 760,
+                            "height": 70,
                             "cssClass": "linear-gradient(147deg, #eff3f7 72%, #9ff1ff 28%)"
-                        }
-                    ],
-                    "fieldValidations": [
-                        {
-                            "fieldValidationID": 0,
-                            "dataLength": 50,
-                            "isEditable": true,
-                            "isRequired": false,
-                            "isHidden": false,
-                        }
-                    ]
-                },
-                {
-                    "fieldID": 0,
-                    "fieldTypeID": 4,
-                    "pageGUID": "pageGUID",
-                    "fieldName": "",
-                    "questionName": "",
-                    "isDisplayable": false,
-                    "toolTip": "",
-                    "parentFieldName": "",
-                    "childFieldName": "",
-                    "listValue": "",
-                    "calculation": "",
-                    "groupGUID": "string",
-                    "isLocked": false,
-                    "lockedByUserID": 0,
-                    "meetAllCustomValidationConditions": true,
-                    "dateCreated": "2021-12-01T12:32:22.006Z",
-                    "createdByUserID": 0,
-                    "dateLastModified": "2021-12-01T12:32:22.006Z",
-                    "lastModifiedByUserID": 0,
-                    "isActive": true,
-                    "fieldType": {
-                        "fieldTypeID": 4,
-                        "displayName": "Text",
-                        "description": "text_fields",
-                        "value": "text"
-                    },
-
-                    "formPage": {
-                        "pageGUID": "string",
-                        "name": "string",
-                        "formID": 0,
-                        "isActive": true
-                    },
-                    "group": {
-                        "groupGUID": "string",
-                        "name": "string",
-                        "isRequired": true,
-                        "pageGUID": "string",
-                        "parentGroupID": 0,
-                        "type": "string"
-                    },
-                    "fieldCustomValidations": [
-                        {
-                            "fieldCustomValidationID": 0,
-                            "displayText": "",
-                            "condition": "",
-                            "value": "",
-                            "errorMessage": ""
-                        }
-                    ],
-                    "fieldStyles": [
-                        {
-                            "fieldStyleID": 0,
-                            "width": 0,
-                            "height": 0,
-                            "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
                         }
                     ],
                     "fieldValidations": [
@@ -2234,7 +3078,8 @@ export class FormDesignerComponent implements OnInit {
                         "isRequired": true,
                         "pageGUID": "",
                         "parentGroupID": 0,
-                        "type": ""
+                        "type": "",
+                        "dataTableGroup": "string"
                     },
                     "fieldCustomValidations": [
                         {
@@ -2248,8 +3093,8 @@ export class FormDesignerComponent implements OnInit {
                     "fieldStyles": [
                         {
                             "fieldStyleID": 0,
-                            "width": 0,
-                            "height": 0,
+                            "width": 760,
+                            "height": 70,
                             "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
                         }
                     ],
@@ -2280,24 +3125,24 @@ export class FormDesignerComponent implements OnInit {
             this.groupSectionList = [
                 {
                     "groupGUID": "",
-                    "name": "No Group",
+                    "name": "No Group/Section",
                     "isRequired": true,
                     "pageGUID": "string",
                     "parentGroupID": 0,
                     "type": "string",
                     "isActive": true
-                  }
+                }
             ];
             this.sectionList = [
                 {
                     "groupGUID": "",
-                    "name": "No Group",
+                    "name": "No Section",
                     "isRequired": true,
                     "pageGUID": "string",
                     "parentGroupID": 0,
                     "type": "string",
                     "isActive": true
-                  }
+                }
             ];
             var sections: any = [];
             var groups: any = [];
@@ -2309,7 +3154,7 @@ export class FormDesignerComponent implements OnInit {
             }
             if (sections.length > 0) {
                 merge(this.sectionList, sections);
-                merge(this.groupSectionList,sections);
+                merge(this.groupSectionList, sections);
             }
         });
     }
@@ -2318,16 +3163,8 @@ export class FormDesignerComponent implements OnInit {
         this.spinner.show();
         this.service.getFormFieldsPerPage(this.formData.formID, pageGUID).subscribe(data => {
             this.formDesign = data;
-            this.fieldOperatorList = this.updateCalcuationFieldList();
+            this.fieldOperatorList = this.updateCalculationFieldList();
             this.spinner.hide();
-        });
-    }
-
-    autoSaveDesignPerPage(pageGUID: any, isDeleted: any, i: any) {
-        this.formDesign.forEach((element) => {
-            element.pageGUID = pageGUID;
-            element.formPage.name = this.currentPage.name;
-            element.group.name = "group name";
         });
     }
 
@@ -2347,7 +3184,7 @@ export class FormDesignerComponent implements OnInit {
             }
         }
         else {
-            this.showNotification('top', 'center', 'Please select a field/opertion before adding to calculation!', 'Error.', 'danger');
+            this.showNotification('top', 'center', 'Please select a field/operation before adding to calculation!', 'Error.', 'danger');
         }
     }
 
@@ -2359,7 +3196,13 @@ export class FormDesignerComponent implements OnInit {
 
     saveDesignPerPage(pageGUID: any) {
         var errorMessage = "Please ensure number ";
+        var count = 0;
+
         this.formDesign.forEach((element, index) => {
+            if (element.isDisplayable !== false && this.currentPage.name == "Page 1") {
+                count++;
+            }
+
             if (element.questionName == "") {
                 errorMessage = errorMessage + (index + 1) + ",";
             }
@@ -2370,23 +3213,46 @@ export class FormDesignerComponent implements OnInit {
             else {
                 element.fieldName = "ua_" + (element.questionName).split(/\s/).join('');
             }
-            
+
             element.pageGUID = pageGUID;
             element.formPage.name = this.currentPage.name;
         });
+
         if (errorMessage === "Please ensure number ") {
-            this.spinner.show();
-            this.service.addFieldPerPage(this.formDesign, this.formData.formID, pageGUID).subscribe(data => {
-                this.spinner.hide();
-                this.getDesignPerPage(pageGUID);
-                this.showNotification('top', 'center', 'Page fields have been saved Successfully!', 'Success.', 'success');
-            });
+            if (this.currentPage.name === "Page 1" && count === 2) {
+                if (errorMessage === "Please ensure number ") {
+                    this.spinner.show();
+                    this.service.addFieldPerPage(this.formDesign, this.formData.formID, this.currentPage.pageGUID).subscribe(data => {
+                        this.spinner.hide();
+                        this.getDesignPerPage(pageGUID);
+                        this.refreshGroupSectionList();
+                    });
+                }
+            }
+            else if (this.currentPage.name !== "Page 1") {
+                if (errorMessage === "Please ensure number ") {
+                    this.spinner.show();
+                    this.service.addFieldPerPage(this.formDesign, this.formData.formID, this.currentPage.pageGUID).subscribe(data => {
+                        this.spinner.hide();
+                        this.getDesignPerPage(pageGUID);
+                        this.refreshGroupSectionList();
+                    });
+                }
+            }
+            else {
+                if (errorMessage === "Please ensure number ") {
+                    errorMessage = "Please ensure two displayables are set on the form before saving"
+                }
+                else {
+                    errorMessage = errorMessage + " form fields have question names and that two displayables are set on the form before saving";
+                }
+                this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
+            }
         }
         else {
-            errorMessage = errorMessage + " form fields have question names before saving";
+            errorMessage = errorMessage + " form fields have question names and that two displayables are set on the form before saving";
             this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
         }
-
     }
 
     addSection(item: any, i: any) {
@@ -2401,7 +3267,7 @@ export class FormDesignerComponent implements OnInit {
         }
         this.spinner.show();
         this.service.addGroupOrSection(obj, this.currentPage.pageGUID).subscribe(data => {
-            this.formDesign[i].GroupGUID = JSON.parse(JSON.stringify(data)).groupGUID;
+            this.formDesign[i].groupGUID = JSON.parse(JSON.stringify(data)).groupGUID;
             this.formDesign[i].questionName = JSON.parse(JSON.stringify(data)).name;
             this.refreshGroupSectionList();
             this.spinner.hide();
@@ -2426,6 +3292,106 @@ export class FormDesignerComponent implements OnInit {
             this.spinner.hide();
             this.showNotification('top', 'center', 'Group Saved Successfully!', 'Success', 'success');
         });
+    }
+
+    previewPage() {
+        Swal.fire({
+            title: 'Are you sure want to go to save the page and preview the form ?',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No',
+            toast: true,
+            position: 'top',
+            allowOutsideClick: false,
+            confirmButtonColor: '#000000',
+            cancelButtonColor: '#000000'
+        }).then((result) => {
+            if (result.value) {
+                var errorMessage = "Please ensure number ";
+                var count = 0;
+                this.formDesign.forEach((element, index) => {
+                    if (element.isDisplayable !== false && this.currentPage.name == "Page 1") {
+                        count++;
+                    }
+
+                    if (element.questionName == "") {
+                        errorMessage = errorMessage + (index + 1) + ",";
+                    }
+
+                    if (element.fieldType.value === "subSection") {
+                        element.fieldName = "ua_group_" + (element.questionName).split(/\s/).join('');
+                    }
+                    else {
+                        element.fieldName = "ua_" + (element.questionName).split(/\s/).join('');
+                    }
+
+                    element.pageGUID = this.currentPage.pageGUID;
+                    element.formPage.name = this.currentPage.name;
+                });
+
+                if (errorMessage === "Please ensure number ") {
+                    if (this.currentPage.name === "Page 1" && count === 2) {
+                        if (errorMessage === "Please ensure number ") {
+                            this.spinner.show();
+                            this.service.addFieldPerPage(this.formDesign, this.formData.formID, this.currentPage.pageGUID).subscribe(data => {
+                                let myObj = {
+                                    formID: this.formData.formID,
+                                    formName: this.formData.formName,
+                                    formCaptureID: 0,
+                                    state: 'add'
+                                };
+                                this.spinner.hide();
+                                localStorage.setItem('formPreviewDetails', JSON.stringify(myObj));
+                                const dialogRef = this.dialog.open(FormPreviewComponent, {
+                                    width: '85%',
+                                    height: '85%',
+                                    disableClose: true
+                                });
+                                dialogRef.afterClosed().subscribe(result => {
+                                    console.log('The dialog was closed');
+                                });
+                            });
+                        }
+                    }
+                    else if (this.currentPage.name !== "Page 1") {
+                        if (errorMessage === "Please ensure number ") {
+                            this.spinner.show();
+                            this.service.addFieldPerPage(this.formDesign, this.formData.formID, this.currentPage.pageGUID).subscribe(data => {
+                                let myObj = {
+                                    formID: this.formData.formID,
+                                    formName: this.formData.formName,
+                                    formCaptureID: 0,
+                                    state: 'add'
+                                };
+                                this.spinner.hide();
+                                localStorage.setItem('formPreviewDetails', JSON.stringify(myObj));
+                                const dialogRef = this.dialog.open(FormPreviewComponent, {
+                                    width: '85%',
+                                    height: '85%',
+                                    disableClose: true
+                                });
+                                dialogRef.afterClosed().subscribe(result => {
+                                    console.log('The dialog was closed');
+                                });
+                            });
+                        }
+                    }
+                    else {
+                        if (errorMessage === "Please ensure number ") {
+                            errorMessage = "Please ensure two displayables are set on the form before previewing"
+                        }
+                        else {
+                            errorMessage = errorMessage + " form fields have question names and that two displayables are set on the form before saving";
+                        }
+                        this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
+                    }
+                }
+                else {
+                    errorMessage = errorMessage + " form fields have question names and that two displayables are set on the form before pr";
+                    this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
+                }
+            }
+        })
     }
 
     showNotification(from: any, align: any, message: any, title: any, type: string) {

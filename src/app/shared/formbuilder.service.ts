@@ -8,7 +8,6 @@ import { Observable } from 'rxjs';
 export class FormbuilderService {
 
   readonly APIUrl='https://localhost:44305/1/';
-  // readonly APIUrl='https://app.terra.group/forms-builder-api/1/';
 
   constructor(private http:HttpClient) { }
 
@@ -73,6 +72,58 @@ export class FormbuilderService {
 
   addformcategories(data:any){
     return this.http.post(this.APIUrl+'formcategories',data);
+  }
+
+  createTemplateFormTable(data:any){
+    return this.http.post(this.APIUrl+'FormTables',data,{responseType: 'text'});
+  }
+
+  getCapturedForms(){
+    return this.http.get<any>(this.APIUrl+'CapturedForms');
+  }
+
+  addCapturedForms(data:any){
+    return this.http.post(this.APIUrl+'CapturedForms',data,{responseType: 'text'});
+  }
+
+  getMetadataValue(pageGUID:any,columnName:any,formCaptureID:any){
+    return this.http.get(this.APIUrl+pageGUID+'/'+columnName+'/'+formCaptureID+'/MetadataValue',{responseType: 'text'});
+  }
+
+  getTableNameForGroup(groupGUID:any){
+    return this.http.get(this.APIUrl+groupGUID+'/GroupTableName',{responseType: 'text'});
+  }
+
+  saveFormMetadata(formCaptureID:any,data:any){
+    return this.http.post(this.APIUrl+formCaptureID+'/AddMetadata',data,{responseType: 'text'});
+  }
+
+  saveGroupMetadata(formCaptureID:any,groupGUID:any,data:any){
+    return this.http.post(this.APIUrl+formCaptureID+'/'+groupGUID+'/AddGroupMetadata',data,{responseType: 'text'});
+  }
+  
+  UpdateFormMetadata(formCaptureID:any,data:any){
+    return this.http.put(this.APIUrl+formCaptureID+'/UpdateMetadata',data,{responseType: 'text'});
+  }
+
+  createGroupTable(data:any){
+    return this.http.post(this.APIUrl+'GroupTables',data,{responseType: 'text'});
+  }
+
+  getGroupTableData(groupGUID:any,formCaptureID:any){
+    return this.http.get<any>(this.APIUrl+groupGUID+'/'+formCaptureID+'/GroupTableData');
+  }
+
+  deleteClone(groupGUID:any,formCaptureID:any,cloneNUM:any){
+    return this.http.delete(this.APIUrl+groupGUID+'/'+formCaptureID+'/'+cloneNUM+'/'+'DeleteRepeat',{responseType: 'text'});
+  }
+
+  getMetadataValuePerGroup(groupGUID:any,columnName:any,formCaptureID:any,cloneNum:any){
+    return this.http.get(this.APIUrl+groupGUID+'/'+columnName+'/'+formCaptureID+'/'+cloneNum+'/MetadataValue',{responseType: 'text'});
+  }
+
+  UpdateGroupMetadata(formCaptureID:any,groupGUID:any,cloneNum:any,data:any){
+    return this.http.put(this.APIUrl+formCaptureID+'/'+groupGUID+'/'+cloneNum+'/UpdateGroupMetadata',data,{responseType: 'text'});
   }
 //#endregion
 
