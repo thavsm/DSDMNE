@@ -78,7 +78,11 @@ export const AppRoutes: Routes = [
       {
         path: 'treediagram',  
         loadChildren: () => import('./treediagram/treediagram.module').then(m => m.TreediagramModule)  
-    }
+    },
+    {
+        path: 'usermanager',
+        loadChildren: () => import('./usermanager/usermanager.module').then(m => m.UserManagerModule)
+      }
     ]
   }, {
     path: '',
