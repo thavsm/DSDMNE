@@ -70,7 +70,15 @@ export const AppRoutes: Routes = [
       {
         path: 'formInbox',
         loadChildren: () => import('./form-inbox/form-inbox.module').then(m => m.FormInboxModule)
-      }
+      },
+      {
+        path: 'hierarchy-management',      
+        loadChildren: () => import('./hierarchy-management/hierarchy-management.module').then(m => m.HierarchyManagementModule)      
+      },
+      {
+        path: 'treediagram',  
+        loadChildren: () => import('./treediagram/treediagram.module').then(m => m.TreediagramModule)  
+    }
     ]
   }, {
     path: '',

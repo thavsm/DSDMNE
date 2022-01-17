@@ -43,6 +43,14 @@ export const ROUTES: RouteInfo[] = [{
             {path: 'user', title: 'User Page', ab:'UP'}
         ]
     },{
+
+        path: '/hierarchy-management',
+        title: 'hierarchy management',
+        type: 'link',
+        icontype: 'account_tree'
+
+    }, 
+    {
         path: '/appusers',
         title: 'Users',
         type: 'link',

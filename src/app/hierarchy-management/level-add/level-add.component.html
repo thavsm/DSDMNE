@@ -1,0 +1,96 @@
+<h1 mat-dialog-title>Level Add</h1>
+<div mat-dialog-content>
+    <div class="form-group">
+        <label style="font-size: medium;">Level Name</label>
+        <input type="text" class="form-control" value="{{levelAdd.levelName}}" [(ngModel)]="levelAdd.levelName">
+    </div>
+    <div class="form-group">
+        <label style="font-size: medium;">Level Description</label>
+        <input type="text" class="form-control" value="{{levelAdd.levelDescription}}"
+            [(ngModel)]="levelAdd.levelDescription">
+    </div>
+    <!-- <div class="form-group" style="display:none" >
+        <mat-form-field appearance="outline">
+            <mat-label>Select Roles </mat-label>
+            <mat-select [(ngModel)]="levelAdd.roleName">
+                <mat-option *ngFor="let c of Roles" [value]="c.roleID">
+                    {{c.roleName}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div> -->
+    <div class="form-group">
+        <button mat-button cdkFocusInitial  (click)="addLevel()"
+        style="background-color: crimson;color: white;font-weight: 400;">Add Level</button>
+    </div>
+    <h1 mat-dialog-title> Node Field Attributes</h1> 
+    <div class="form-group">
+        <label style="font-size: medium;">Enter field name:</label>
+        <input type="text" class="form-control" value="{{levelAdd.fieldName}}" [(ngModel)]="levelAdd.fieldName">
+    </div>
+    <div class="form-group">
+        <label style="font-size: medium;">Question Name:</label>
+        <input type="text" class="form-control" value="{{levelAdd.fieldQuestion}}"
+            [(ngModel)]="levelAdd.fieldQuestion">
+    </div>
+
+    <div class="form-group">
+        <label style="font-size: medium;">Description:</label>
+        <input type="text" class="form-control" value="{{levelAdd.fieldDescription}}" [(ngModel)]="levelAdd.fieldDescription">
+    </div>
+    <div class="form-group" style="display:none">
+        <label style="font-size: medium;">XML Name:</label>
+        <input type="text" class="form-control" value="{{levelAdd.fieldXML}}"
+            [(ngModel)]="levelAdd.fieldXML">
+    </div>
+    <div class="form-group">
+        <mat-form-field appearance="outline">
+            <mat-label>Field Type</mat-label>
+            <mat-select [(ngModel)]="levelAdd.levelfieldName"  (selectionChange)="onUserfieldTypesChange($event)">
+                <mat-option *ngFor="let c of UserfieldTypes" [value]="c.fieldName">
+                    {{c.fieldName}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="form-group"  *ngIf="divListValue"  >
+        <label style="font-size: medium;">List Value</label>
+        <input type="text" class="form-control"  placeholder="Enter the values semi-colon(;) seperated" value="{{levelAdd.listValue}}"
+        [(ngModel)]="levelAdd.listValue">
+    </div>
+    <div class="form-group"  *ngIf="divLengthValidation" >
+        <label style="font-size: medium;">Max Length</label>
+        <input type="number" class="form-control" value="{{levelAdd.lengthValidation}}"
+        [(ngModel)]="levelAdd.lengthValidation">
+    </div>
+    <div class="form-group" *ngIf="divLengthReportUrl" >
+        <label style="font-size: medium;">Report Url</label>
+        <input type="text" class="form-control" value="{{levelAdd.ReportUrl}}"
+        [(ngModel)]="levelAdd.ReportUrl">
+    </div>
+    <div class="form-group">
+        <label style="font-size: medium;">Tool Tip:</label>
+        <input type="text" class="form-control" value="{{levelAdd.Tooltip}}" [(ngModel)]="levelAdd.Tooltip">
+    </div>
+    <div class="form-group">      
+        <input type="checkbox" id="fieldCompulsory" name="fieldCompulsory" value="{{levelAdd.fieldCompulsory}}" [(ngModel)]="levelAdd.fieldCompulsory">
+        <label for="fieldCompulsory">Compulsory</label><br><br>
+        <!-- <input type="checkbox" class="form-control" value="{{levelAdd.fieldCompulsory}}"
+            [(ngModel)]="levelAdd.fieldCompulsory">
+            <label style="font-size: medium;">Compulsory:</label> -->
+    </div>
+
+    
+<div mat-dialog-actions>
+    <button mat-button cdkFocusInitial  (click)="addAttributes()"
+          style="background-color: crimson;color: white;font-weight: 400;" [disabled]="isSubmitBtnDisabled">Add Attributes</button>
+      
+      <button mat-button [mat-dialog-close]=""
+          style="background-color: crimson;color: white;font-weight: 400;">Cancel</button>
+  </div>
+  <ngx-spinner bdColor="rgba(	237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
+      <p style="font-size: 20px; color: black">Processing...</p>
+  </ngx-spinner>
+</div>
+
+
