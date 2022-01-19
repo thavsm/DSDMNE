@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, map } from "rxjs/operators";
 import { Observable, of } from 'rxjs';
 import { LevelNodeEdit } from './hierarchy-management/level-node-edit/level-node-edit.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ import { LevelNodeEdit } from './hierarchy-management/level-node-edit/level-node
 export class TreediagramService {
   
  
-  readonly API_URL ='https://localhost:44305/api/';
+  //readonly API_URL ='https://localhost:44305/api/';
+  readonly API_URL = environment.API_URL + '/';
 
   constructor(private http: HttpClient) { }
 

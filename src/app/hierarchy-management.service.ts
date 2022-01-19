@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { hierarchyManagement } from './hierarchy-management/hierarchy-management.model';
 
 
@@ -10,7 +11,8 @@ import { hierarchyManagement } from './hierarchy-management/hierarchy-management
 export class HierarchyManagementService {
 
   constructor(private http:HttpClient) { }
-  readonly APIUrl='https://localhost:44305/api/';
+  //readonly APIUrl='https://localhost:44305/api/';
+  readonly APIUrl= environment.API_URL + '/';
 
   hformData:hierarchyManagement = new hierarchyManagement();
   public hlist:hierarchyManagement[];
