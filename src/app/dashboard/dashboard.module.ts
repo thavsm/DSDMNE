@@ -10,6 +10,7 @@ import { DashboardRoutes } from './dashboard.routing';
 import { TaskDetailComponent } from './taskdetail/taskdetail.component';
 import { UserProfileComponent } from '../userprofile/userprofile.component';
 import { ChangePasswordComponent } from '../userprofile/changepassword/changepassword.component';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @NgModule({
     imports: [
@@ -24,7 +25,10 @@ import { ChangePasswordComponent } from '../userprofile/changepassword/changepas
         TaskDetailComponent,
         UserProfileComponent,
         ChangePasswordComponent
-    ]
+    ],
+    providers: [
+        { provide: MAT_DIALOG_DATA, useValue: {} }
+        ]
 })
 
 export class DashboardModule {}
