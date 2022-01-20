@@ -8,7 +8,7 @@
                 <div class= "col-md-20">
                     <table class="table">    
                             <tr>
-                                <td><button type="button" class="btn btn-success" title="Previous Page"><i class="fa fa-backward"></i><a href="/hierarchy-management" style="color: aliceblue;"> Previous page</a></button></td>
+                                <!-- <td><button type="button" class="btn btn-success" title="Previous Page"><i class="fa fa-backward" *ngIf="divDsiplay" ></i><a href="/hierarchy-management" style="color: aliceblue;"> Previous page</a></button></td> -->
                                 <td><button class="btn btn-md" style="background-color: crimson;color: white;font-weight: 400;" (click)="openDialogAdd()"><i class="fa fa-plus" aria-hidden="true"></i> Add Node</button></td>
                                 <td><button class="btn btn-md" style="background-color: crimson;color: white;font-weight: 400;" (click)="openDialogAddLevel()" ><i class="fa fa-plus" aria-hidden="true"></i> Add Level</button></td>
                                 <td><button type="button" class="btn btn-success" title="Export To PDF" (click)="pdf.saveAs('Export.pdf')"><i class="fa fa-file" aria-hidden="true" ></i> Export To PDF</button></td>
@@ -21,7 +21,7 @@
               {{ anchor.nativeElement.innerText }}      
             </ng-template>
             
-            <kendo-pdf-export #pdf paperSize="A4" margin="2cm">
+            <kendo-pdf-export #pdf paperSize="A3" [landscape] = true margin="2cm">
             
               <div kendoTooltip filter="span.k-in" [tooltipTemplate]="template">
             

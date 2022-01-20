@@ -207,8 +207,7 @@ export class LevelAddComponent implements OnInit {
 
         if (this.levelAdd.fieldName != "" && this.levelAdd.fieldQuestion != "" && this.levelAdd.levelfieldName != "") {
           this.submitted = true;
-          
-    
+
           if(this.levelAdd.fieldCompulsory == true){
             this.LevelfieldCompulsory = 1;
           }if(this.levelAdd.fieldCompulsory == false){
@@ -241,7 +240,21 @@ export class LevelAddComponent implements OnInit {
           this.service.addLevelAttributes(val).subscribe(res => {
           this.dialogRef.close();
           this.spinner.hide();
-          this.showNotification('top', 'center', 'level Attributes Added Successfully!', 'Success', 'success');   
+          this.showNotification('top', 'center', 'level Attributes Added Successfully!', 'Success', 'success');
+          
+          this.levelAdd.ReportUrl = "";
+          this.levelAdd.fieldName = "";
+          this.levelAdd.fieldDescription = "";
+          this.levelAdd.Tooltip = "";
+          this.levelAdd.lengthValidation = "";
+          this.levelAdd.fieldQuestion = "";
+          this.levelAdd.listValue = "";
+          this.levelAdd.ReportUrl = "";
+
+          this.divListValue = false;
+          this.divLengthValidation = false;
+          this.divLengthReportUrl = false;  
+
           });
         }else {
           this.showNotification('top','center','Please enter a Field Name, Question Name and Field Type before saving!','','danger');
@@ -273,8 +286,8 @@ export class LevelAddComponent implements OnInit {
         localStorage.setItem('LevelData', JSON.stringify(res));   
         this.addDefaultAttributes(); 
         this.levelID = this.levelAdd.levelID;
-        this.levelName = ' ';
-        this.levelDescription = ' ';
+        //this.levelAdd.levelName ="";
+        //this.levelAdd.levelDescription ="";
         this.isSubmitBtnDisabled = false;
       });
     }
