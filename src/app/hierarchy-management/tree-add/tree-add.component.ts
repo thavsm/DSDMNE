@@ -19,10 +19,14 @@ export class TreeAddComponent implements OnInit {
 
   submitted = false;
   treeAdd: any;
+
   
   constructor(public dialogRef: MatDialogRef<TreeAddComponent>,
     @Inject(MAT_DIALOG_DATA) data,
-    private service: HierarchyManagementService, public formBuilder: FormBuilder,private spinner: NgxSpinnerService, public datepipe: DatePipe)  { this.treeAdd = data;  }
+    private service: HierarchyManagementService, public formBuilder: FormBuilder,private spinner: NgxSpinnerService, public datepipe: DatePipe)  
+    { 
+      this.treeAdd = data;  
+    }
 
   treeID: number = 0;
   name: string = "";
@@ -40,7 +44,7 @@ export class TreeAddComponent implements OnInit {
 
   }
   addTree() {
-    if (this.treeAdd.Name != "") {
+    if (this.treeAdd.name != "") {
       //adding form
       this.submitted = true;
       this.currentDate = new Date();
@@ -51,21 +55,21 @@ export class TreeAddComponent implements OnInit {
         "dateCreated": this.datepipe.transform(this.currentDate, 'yyyy-MM-dd') + "T"+ this.datepipe.transform(this.currentDate, 'HH:mm:ss.SSS') +"Z",        
         //this.datepipe.transform((new Date), 'yyyy-mm-dd hh:mm:ss.SSS'),
         "status": "1",
-        "treeCategoryID" : 1
+        "treeCategoryID" : this.treeAdd.treeCategoryID
       };
       this.spinner.show();
       this.service.addTree(val).subscribe(res => {
         this.dialogRef.close();
         this.spinner.hide();
         this.showNotification('top', 'center', 'Tree Added Successfully!', 'Success', 'success');          
-        this.service.refreshhlist();
+        this.service.refreshhlist(this.treeAdd.treeCategoryID);
       });
       this.treeID = this.treeAdd.treeID;
       this.name = this.treeAdd.name;
       this.description = this.treeAdd.description;
       this.dateCreated = this.treeAdd.dateCreated;
       this.status = "1";
-      this.treeCategoryID = 1;
+      this.treeCategoryID = this.treeAdd.treeCategoryID;
 
     }
     else {
@@ -84,13 +88,14 @@ export class TreeAddComponent implements OnInit {
         description : this.treeAdd.description,
         dateCreated : this.treeAdd.dateCreated,
         status : "1",
-        treeCategoryID : 1
+        treeCategoryID : this.treeAdd.treeCategoryID
       };
       this.spinner.show();
       this.service.updateTreeDetails(this.treeAdd.treeID, val).subscribe(res => {
         this.dialogRef.close();
         this.spinner.hide();
         this.showNotification('top','center','Tree Updated Successfully!','Success','success');
+        this.service.refreshhlist(this.treeAdd.treeCategoryID);
       });
     }
     else {

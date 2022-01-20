@@ -14,6 +14,7 @@ export interface RouteInfo {
     role: string[];
     collapse?: string;
     children?: ChildrenItems[];
+    
 }
 
 export interface ChildrenItems {
@@ -21,6 +22,7 @@ export interface ChildrenItems {
     title: string;
     ab: string;
     type?: string;
+    TreeCategoryID?: number;
 }
 
 //Menu Items
@@ -29,7 +31,7 @@ export const ROUTES: RouteInfo[] = [{
         title: 'Dashboard',
         type: 'link',
         icontype: 'dashboard',
-        role: []
+        role: [],
     },{
         path: '/usermanager',
         title: 'user manager',
@@ -40,7 +42,7 @@ export const ROUTES: RouteInfo[] = [{
         children: [
             {path: 'appusers',title: 'Users', ab:'U'},
             {path: 'role',title: 'Roles', ab:'R'},
-            {path: 'formroles',title: 'Forms', ab:'F'}
+            {path: 'formroles',title: 'Forms', ab:'F'},
         ]
     },{
         path: '/pages',
@@ -59,34 +61,70 @@ export const ROUTES: RouteInfo[] = [{
         ]
     },
     
-    {
-
+    ,{
         path: '/hierarchy-management',
-        title: 'hierarchy management',
-        type: 'link',
+        title: 'management',
+        type: 'sub',
         icontype: 'account_tree',
-        role: []
+        role: [],
+        collapse: 'hierarchy-management',
+        children: [
+            {path: 'HierarchyManagement', title: 'hierarchy management', ab:'HM', TreeCategoryID : 1},
+            {path: 'GeographyManagement', title: 'geography management', ab:'GM' , TreeCategoryID : 2},
+            {path: 'LevelManagement', title: 'level management', ab:'LM' , TreeCategoryID : 3}
+        ]
+    },
 
-    }, 
+
+    // {
+    //     path: '/hierarchy-management',
+    //     title: 'hierarchy management',
+    //     type: 'link',
+    //     icontype: 'account_tree',
+    //     role: [],
+    //     TreeCategoryID : 1
+
+    // }, 
+
+    // {
+    //     path: '/hierarchy-management',
+    //     title: 'geography management',
+    //     type: 'link',
+    //     icontype: 'account_tree',
+    //     role: [],
+    //     TreeCategoryID : 2
+
+    // }, 
+
+    // {
+    //     path: '/hierarchy-management',
+    //     title: 'level management',
+    //     type: 'link',
+    //     icontype: 'account_tree',
+    //     role: [],
+    //     TreeCategoryID : 3
+
+    // }, 
+
     {
         path: '/appusers',
         title: 'Users',
         type: 'link',
         icontype: 'person',
-        role: []
+        role: [],
     },{
         path: '/weather',
         title: 'Weather',
         type: 'link',
         icontype: 'cloud',
-        role: ['District Manager']
+        role: ['District Manager'],
     },
     {
         path: '/process',
         title: 'process',
         type: 'link',
         icontype: 'image',
-        role: []
+        role: [],
     },
     {
         path: '',

@@ -31,6 +31,8 @@ export class TreediagramComponent implements OnInit {
   levelAdd:  any;
   NodeData: any;
   NodeLevelName: any;
+  ParentNode: any;
+  divDsiplay: boolean = false;
 
   constructor(public dialog: MatDialog,private treediagramService: TreediagramService) {
     this.treeData = JSON.parse(localStorage.getItem('treeData') || '{}');
@@ -46,10 +48,23 @@ export class TreediagramComponent implements OnInit {
   }
  
   openDialogEdit(event){
+
+    
+    
+    this.ParentNode = this.NodeLevelName.find(item => item.nodeID ===  event.dataItem.nodeParentD);
+
+    if(this.ParentNode === undefined ){
+
+      this.ParentNode = {
+        nodeName: ""
+      };
+
+    }
     
     this.NodeData = {
       nodeID: event.dataItem.nodeID,
       levelID: event.dataItem.levelID, 
+      ParentNodeName: this.ParentNode.nodeName,
       role:  "",
       levelName: event.dataItem.levelName,
       levelDescription: event.dataItem.levelDescription,
@@ -63,9 +78,12 @@ export class TreediagramComponent implements OnInit {
       levelfieldName : "",
       listValue: "",
       ReportUrl: "",
+      nodeParentD: event.dataItem.nodeParentD,
+      nodeName: event.dataItem.nodeName,
+      nodeDescription: event.dataItem.nodeDescription
     }
 
-    const dialogRef = this.dialog.open(LevelNodeEditComponent, { width: '60%', height: '70%', data: this.NodeData, disableClose: true }
+    const dialogRef = this.dialog.open(LevelNodeEditComponent, { width: '60%', height: '80%', data: this.NodeData, disableClose: true }
 
     );
 

@@ -80,11 +80,11 @@ export class NodeAddComponent implements OnInit {
         this.treediagramService.getNodes(this.treeData.treeID);
       });
 
-      this.nodeID = this.NodeAdd.nodeID;
-      this.nodeName = this.NodeAdd.nodeName;
-      this.nodeParentD = this.NodeAdd.nodeParentD;
-      this.levelID = this.NodeAdd.levelID;
-      this.nodeDescription = this.NodeAdd.nodeDescription;
+      this.NodeAdd.nodeID = 0;
+      this.NodeAdd.nodeName = " ";
+      this.NodeAdd.nodeParentD = " ";
+      this.NodeAdd.levelID = " ";
+      this.NodeAdd.nodeDescription = " ";
       this.status = "1";
     }
     else {

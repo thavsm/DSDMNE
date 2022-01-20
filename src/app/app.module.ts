@@ -40,7 +40,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 
-
+import { DatePipe } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -128,6 +128,7 @@ export class MaterialModule {}
   ],
   providers: [
     MatNativeDateModule,
+    DatePipe,
     UserService, {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
