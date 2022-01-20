@@ -21,7 +21,7 @@ export class FormListComponent implements OnInit {
   constructor(public dialog: MatDialog, private route: Router, private service: FormbuilderService, private spinner: NgxSpinnerService) { }
 
   formAdd: any;
-  public displayedColumns = ['formName', 'formDescription','formCategory', 'formDetails', 'update', 'delete'];
+  public displayedColumns = ['formName', 'formDescription', 'formCategory', 'formDetails', 'update', 'delete'];
   public formList = new MatTableDataSource<any>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -32,7 +32,7 @@ export class FormListComponent implements OnInit {
 
   ngOnInit(): void {
     this.refreshFormsList();
-    this.formList.filterPredicate = function(data, filter: string): boolean {
+    this.formList.filterPredicate = function (data, filter: string): boolean {
       return data.formName.toLowerCase().includes(filter) || data.formDescription.toLowerCase().includes(filter) || data.formCategory.toString().includes(filter) === filter;
     };
   }
@@ -55,7 +55,7 @@ export class FormListComponent implements OnInit {
         this.service.archiveDynamicForm(item.formID).subscribe(data => {
           this.spinner.hide();
           this.refreshFormsList();
-           this.showNotification('top','center','Form Deleted Successfully!','Success.','success');
+          this.showNotification('top', 'center', 'Form Deleted Successfully!', 'Success.', 'success');
         });
       }
     })
@@ -63,24 +63,31 @@ export class FormListComponent implements OnInit {
 
 
   openFormDesign(item: any): void {
-    // Create item:
-    let myObj = {
-      formID: item.formID,
-      formTypeID: item.formTypeID,
-      formCategoryID: item.formCategoryID,
-      formName: item.formName,
-      formDescription: item.formDescription,
-      dateCreated: item.dateCreated,
-      createdByUserID: item.createdByUserID,
-      isLocked: item.isLocked,
-      lockedByUserID: item.lockedByUserID,
-      isDeleted: item.isDeleted,
-      dateLocked: item.dateLocked,
-      dateLastModified: item.dateLastModified,
-      lastModifiedByUserID: item.lastModifiedByUserID
-    };
-    localStorage.setItem('formDesignInfo', JSON.stringify(myObj));
-    this.route.navigate(['formDesign']);
+    // if (item.isLocked === true) {
+    //   this.showNotification('top', 'center', 'This form is currently being edited by another user,Please try again later!', '', 'warning');
+    // }
+    // else {
+    //   this.service.lockForm(item.formID,item).subscribe(res => {
+    //     // Create item:
+        let myObj = {
+          formID: item.formID,
+          formTypeID: item.formTypeID,
+          formCategoryID: item.formCategoryID,
+          formName: item.formName,
+          formDescription: item.formDescription,
+          dateCreated: item.dateCreated,
+          createdByUserID: item.createdByUserID,
+          isLocked: item.isLocked,
+          lockedByUserID: item.lockedByUserID,
+          isDeleted: item.isDeleted,
+          dateLocked: item.dateLocked,
+          dateLastModified: item.dateLastModified,
+          lastModifiedByUserID: item.lastModifiedByUserID
+        };
+        localStorage.setItem('formDesignInfo', JSON.stringify(myObj));
+        this.route.navigate(['formDesign']);
+    //   });
+    // }
   }
 
   clickEdit(item: any) {
@@ -89,7 +96,7 @@ export class FormListComponent implements OnInit {
       width: '75%',
       height: '75%',
       data: this.formAdd,
-      disableClose:true
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -118,7 +125,7 @@ export class FormListComponent implements OnInit {
       width: '75%',
       height: '75%',
       data: this.formAdd,
-      disableClose:true
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -135,7 +142,7 @@ export class FormListComponent implements OnInit {
   }
 
   applyFilter(data: any) {
-    let filterValue:string=data.target.value;
+    let filterValue: string = data.target.value;
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.formList.filter = filterValue;
@@ -143,28 +150,28 @@ export class FormListComponent implements OnInit {
 
   showNotification(from: any, align: any, message: any, title: any, type: string) {
     $.notify({
-        icon: 'notifications',
-        title: title,
-        message: message
+      icon: 'notifications',
+      title: title,
+      message: message
     }, {
-        type: type,
-        timer: 3000,
-        placement: {
-            from: from,
-            align: align
-        },
+      type: type,
+      timer: 3000,
+      placement: {
+        from: from,
+        align: align
+      },
 
-        template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
-            '<button mat-raised-button type="button" aria-hidden="true" class="close" data-notify="dismiss">  <i class="material-icons">close</i></button>' +
-            '<i class="material-icons" data-notify="icon">notifications</i> ' +
-            '<span data-notify="title">{1}</span> ' +
-            '<span data-notify="message">{2}</span>' +
-            '<div class="progress" data-notify="progressbar">' +
-            '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
-            '</div>' +
-            '<a href="{3}" target="{4}" data-notify="url"></a>' +
-            '</div>'
+      template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
+        '<button mat-raised-button type="button" aria-hidden="true" class="close" data-notify="dismiss">  <i class="material-icons">close</i></button>' +
+        '<i class="material-icons" data-notify="icon">notifications</i> ' +
+        '<span data-notify="title">{1}</span> ' +
+        '<span data-notify="message">{2}</span>' +
+        '<div class="progress" data-notify="progressbar">' +
+        '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+        '</div>' +
+        '<a href="{3}" target="{4}" data-notify="url"></a>' +
+        '</div>'
     });
-}
+  }
 
 }

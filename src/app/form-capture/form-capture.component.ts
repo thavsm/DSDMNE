@@ -45,13 +45,14 @@ export class FormCaptureComponent implements OnInit {
   addForm(){
     if((this.formData.formID!==0) && (this.formData.formID!==undefined))
     {
+      alert(JSON.stringify(this.userDetail));
       this.spinner.show();
       let formCaptureData={
           formCaptureID: 0,
           formName:'',
           formID: this.formData.formID,
           step: "string",
-          sentBy: this.userDetail.fullName,
+          sentBy: this.userDetail.formData.fullName,
           dateSent: "string",
           timeSent: "string",
           displayableOne: "",

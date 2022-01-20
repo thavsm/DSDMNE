@@ -1,11 +1,12 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FormAddComponent } from 'src/app/form-list/form-add/form-add.component';
 import { FormbuilderService } from 'src/app/shared/formbuilder.service';
 import Swal from 'sweetalert2'
 import { merge } from 'jquery';
 import { SignaturePad } from 'angular2-signaturepad';
+import { AddSignatureComponent } from './add-signature.component';
 declare var $: any;
 
 @Component({
@@ -39,10 +40,10 @@ export class AddFormComponent implements OnInit {
   signaturePadOptions: Object = {
     'minWidth': 2,
     'canvasWidth': 760,
-    'canvasHeight': 70
+    'canvasHeight': 150
   };
 
-  constructor(private service: FormbuilderService, private spinner: NgxSpinnerService, public dialogRef: MatDialogRef<FormAddComponent>) {
+  constructor(public dialog: MatDialog, private service: FormbuilderService, private spinner: NgxSpinnerService, public dialogRef: MatDialogRef<FormAddComponent>) {
     this.formData = JSON.parse(localStorage.getItem('formCaptureDetails') || '{}');
   }
 
@@ -100,29 +101,67 @@ export class AddFormComponent implements OnInit {
   }
 
   savePage() {
+    var errorMessage = "Please fill in ";
+
     if (this.formData.state === 'add') {
+
       let obj = this.formDesign;
       obj.forEach(field => {
+
         if (field.groupGUID != "" && field.groupGUID != "string") {
           let sectionValues = field.groupGUID;
           sectionValues.forEach(element => {
             element.listValue = "";
             element.groupGUID = "";
+            if (element.fieldType.value === "lexicon data") {
+              let val = element.data;
+              let s = "";
+              val.forEach(listValue => {
+                s += s + listValue.name + ","
+              });
+              element.data = s;
+            }
+            if (element.fieldValidations[0].isRequired === true && element.data === "") {
+              errorMessage = errorMessage + element.questionName + ",";
+            }
           });
-          this.service.saveFormMetadata(this.formData.formCaptureID, sectionValues).subscribe(res => {
-            this.showNotification('top', 'center', 'Page data has been saved Successfully!', 'Success.', 'success');
-            this.getDesignPerPage(this.currentPage.pageGUID);
-          });
+          if (errorMessage === "Please fill in ") {
+            this.service.saveFormMetadata(this.formData.formCaptureID, sectionValues).subscribe(res => {
+              this.showNotification('top', 'center', 'Page data has been saved Successfully!', 'Success.', 'success');
+              errorMessage = "Please fill in ";
+              this.getDesignPerPage(this.currentPage.pageGUID);
+            });
+          }
+          else {
+            this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
+          }
         }
         else {
           field.listValue = "";
           field.groupGUID = "";
+          if (field.fieldType.value === "lexicon data") {
+            let val = field.data;
+            let s = "";
+            val.forEach(listValue => {
+              s += s + listValue.name + ","
+            });
+            field.data = s;
+          }
+          if (field.fieldValidations[0].isRequired === true && field.data === "") {
+            errorMessage = errorMessage + field.questionName + ",";
+          }
         }
       });
-      this.service.saveFormMetadata(this.formData.formCaptureID, this.formDesign).subscribe(res => {
-        this.showNotification('top', 'center', 'Page data has been saved Successfully!', 'Success.', 'success');
-        this.getDesignPerPage(this.currentPage.pageGUID);
-      });
+      if (errorMessage === "Please fill in ") {
+        this.service.saveFormMetadata(this.formData.formCaptureID, this.formDesign).subscribe(res => {
+          this.showNotification('top', 'center', 'Page data has been saved Successfully!', 'Success.', 'success');
+          this.getDesignPerPage(this.currentPage.pageGUID);
+          errorMessage = "Please fill in ";
+        });
+      }
+      else {
+        this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
+      }
     }
     else {
       let obj = this.formDesign;
@@ -132,21 +171,60 @@ export class AddFormComponent implements OnInit {
           sectionValues.forEach(element => {
             element.listValue = "";
             element.groupGUID = "";
+            if (element.fieldType.value === "lexicon data") {
+              let val = element.data;
+              let s = "";
+              if(!this.isString(val)){
+                val.forEach(listValue => {
+                  s = s + listValue.name + ","
+                });
+                field.data = s;
+              }
+            }
+            if (element.fieldValidations[0].isRequired === true && element.data === "") {
+              errorMessage = errorMessage + element.questionName + ",";
+            }
           });
-          this.service.UpdateFormMetadata(this.formData.formCaptureID, sectionValues).subscribe(res => {
-            this.showNotification('top', 'center', 'Page data has been saved Successfully!', 'Success.', 'success');
-            this.getDesignPerPage(this.currentPage.pageGUID);
-          });
+          if (errorMessage === "Please fill in ") {
+            this.service.UpdateFormMetadata(this.formData.formCaptureID, sectionValues).subscribe(res => {
+              this.showNotification('top', 'center', 'Page data has been saved Successfully!', 'Success.', 'success');
+              this.getDesignPerPage(this.currentPage.pageGUID);
+              errorMessage = "Please fill in ";
+            });
+          }
+          else {
+            this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
+          }
+
         }
         else {
           field.listValue = "";
           field.groupGUID = "";
+          if (field.fieldType.value === "lexicon data") {
+            let val = field.data;
+            let s = "";
+            if(!this.isString(val)){
+              val.forEach(listValue => {
+                s = s + listValue.name + ","
+              });
+              field.data = s;
+            }
+          }
+          if (field.fieldValidations[0].isRequired === true && field.data === "") {
+            errorMessage = errorMessage + field.questionName + ",";
+          }
         }
       });
-      this.service.UpdateFormMetadata(this.formData.formCaptureID, this.formDesign).subscribe(res => {
-        this.showNotification('top', 'center', 'Page data has been updated Successfully!', 'Success.', 'success');
-        this.getDesignPerPage(this.currentPage.pageGUID);
-      });
+      if (errorMessage === "Please fill in ") {
+        this.service.UpdateFormMetadata(this.formData.formCaptureID, this.formDesign).subscribe(res => {
+          this.showNotification('top', 'center', 'Page data has been updated Successfully!', 'Success.', 'success');
+          this.getDesignPerPage(this.currentPage.pageGUID);
+          errorMessage = "Please fill in ";
+        });
+      }
+      else {
+        this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
+      }
     }
   }
 
@@ -190,6 +268,8 @@ export class AddFormComponent implements OnInit {
 
       this.formDesign.forEach((element, index) => {
 
+        element.fieldStyles[0].height = Math.ceil(parseInt(element.fieldStyles[0].height) / 23.2); //23.2 is the size of one row in textarea 
+
         if (element.fieldType.value === "repeatgroup") {
           this.service.getGroupTableData(element.groupGUID, this.formData.formCaptureID).subscribe(resultant => {
             element["groupTableList"] = resultant;
@@ -202,6 +282,7 @@ export class AddFormComponent implements OnInit {
 
           if (element.listValue !== "") {
             this.formDesign[index].listValue = this.splitString(element.listValue);
+            alert(this.formDesign[index].listValue);
           }
 
           if (element.groupGUID !== "" && element.groupGUID !== "string" && element.parentFieldName === "") {
@@ -211,6 +292,8 @@ export class AddFormComponent implements OnInit {
               children = groupFields;
 
               children.forEach((field, i) => {
+
+                field.fieldStyles[0].height = Math.ceil(parseInt(field.fieldStyles[0].height) / 23.2);
 
                 if (field.fieldType.value === "repeatgroup") {
                   this.service.getGroupTableData(field.groupGUID, this.formData.formCaptureID).subscribe(resultant => {
@@ -231,6 +314,8 @@ export class AddFormComponent implements OnInit {
 
                     subChildren.forEach((subField, j) => {
 
+                      subField.fieldStyles[0].height = Math.ceil(parseInt(subField.fieldStyles[0].height) / 23.2);
+
                       if (subField.fieldType.value === "repeatgroup") {
                         this.service.getGroupTableData(subField.groupGUID, this.formData.formCaptureID).subscribe(resultant => {
 
@@ -245,6 +330,8 @@ export class AddFormComponent implements OnInit {
                         let groupChildren: any[] = [];
                         this.service.getFieldsInGroup(subField.groupGUID).subscribe(res => {
                           groupChildren = res;
+
+                          subField.fieldStyles[0].height = Math.ceil(parseInt(subField.fieldStyles[0].height) / 23.2);
 
                           groupChildren.forEach((groupField, k) => {
                             if (groupField.fieldType.value === "repeatgroup") {
@@ -321,6 +408,8 @@ export class AddFormComponent implements OnInit {
                   });
                 }
 
+                field.fieldStyles[0].height = Math.ceil(parseInt(field.fieldStyles[0].height) / 23.2);
+
                 if (field.fieldType.value === "repeatgroup") {
                   this.service.getGroupTableData(field.groupGUID, this.formData.formCaptureID).subscribe(resultant => {
 
@@ -349,6 +438,9 @@ export class AddFormComponent implements OnInit {
                           }
                         });
                       }
+
+                      subField.fieldStyles[0].height = Math.ceil(parseInt(subField.fieldStyles[0].height) / 23.2);
+
                       if (subField.fieldType.value === "repeatgroup") {
                         this.service.getGroupTableData(subField.groupGUID, this.formData.formCaptureID).subscribe(resultant => {
                           subField["groupTableList"] = resultant;
@@ -375,6 +467,9 @@ export class AddFormComponent implements OnInit {
                                 }
                               });
                             }
+
+                            groupField.fieldStyles[0].height = Math.ceil(parseInt(groupField.fieldStyles[0].height) / 23.2);
+
                             if (groupField.fieldType.value === "repeatgroup") {
                               this.service.getGroupTableData(groupField.groupGUID, this.formData.formCaptureID).subscribe(resultant => {
 
@@ -420,6 +515,7 @@ export class AddFormComponent implements OnInit {
       });
       this.service.saveGroupMetadata(this.formData.formCaptureID, data[0].parentFieldName, data).subscribe(res => {
         this.showNotification('top', 'center', 'Repeat data has been saved Successfully!', 'Success.', 'success');
+        localStorage.setItem('cloneNumberForEdit', "0");
         this.spinner.hide();
         this.getDesignPerPage(this.currentPage.pageGUID);
       });
@@ -430,6 +526,7 @@ export class AddFormComponent implements OnInit {
       });
       this.service.UpdateGroupMetadata(this.formData.formCaptureID, data[0].parentFieldName, localStorage.getItem('cloneNumberForEdit'), data).subscribe(res => {
         this.showNotification('top', 'center', 'Repeat data has been updated Successfully!', 'Success.', 'success');
+        localStorage.setItem('cloneNumberForEdit', "0");
         this.spinner.hide();
         this.getDesignPerPage(this.currentPage.pageGUID);
       });
@@ -483,25 +580,17 @@ export class AddFormComponent implements OnInit {
     return obj2;
   }
 
-  ngAfterViewInit() {
-    this.signaturePad.clear();
-  }
 
-  drawComplete() {
-    console.log(this.signaturePad.toDataURL());
-  }
-
-  drawStart() {
-    console.log('begin drawing');
-  }
-
-  clearSignature() {
-    this.signaturePad.clear();
-  }
-
-  savePad() {
-    const base64Data = this.signaturePad.toDataURL();
-    this.signatureImg = base64Data;
+  savePad(item: any) {
+    localStorage.setItem('imageData', item.data);
+    const dialogRef = this.dialog.open(AddSignatureComponent, {
+      width: '55%',
+      height: '55%',
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      item["data"] = localStorage.getItem('imageData');
+    });
   }
 
   showNotification(from: any, align: any, message: any, title: any, type: string) {
@@ -528,6 +617,10 @@ export class AddFormComponent implements OnInit {
         '<a href="{3}" target="{4}" data-notify="url"></a>' +
         '</div>'
     });
+  }
+
+   isString(value:any) {
+    return typeof value === 'string' || value instanceof String;
   }
 }
 

@@ -14,7 +14,7 @@
                             <!-- Header Of form types end-->
                             <!-- Form types -->
                             <div cdkDropList [cdkDropListData]="fieldTypes">
-                                <div *ngFor="let item of fieldTypes" cdkDrag
+                                <div *ngFor="let item of fieldTypes" cdkDrag 
                                     style="text-align: left;font-size: small;height: 30px;background-color: whitesmoke;border-color: rgb(207, 204, 204);border-style: outset;border-width: 0.5px;">
                                     <p style="color: black;font-weight:500;">
                                         <mat-icon style="font-size: 20px">{{item.fieldType.description}}</mat-icon>
@@ -49,8 +49,8 @@
                             <!-- Form Builder -->
                             <div cdkDropList [cdkDropListData]="formDesign" class="example-list"
                                 (cdkDropListDropped)="drop($event)" style="background: gainsboro;">
-                                <div class="example-box" *ngFor="let item of formDesign;let i= index;" cdkDrag 
-                                    style="border-color: darkgrey;border-style:dashed;border-width: 2px;" [style.background]="item.fieldStyles[0].cssClass">
+                                <div class="example-box" *ngFor="let item of formDesign;let i= index;" cdkDrag cdkDragLockAxis="y"
+                                    style="border-color: darkgrey;border-style:dashed;border-width: 2px;" [style.background]="item.fieldStyles[0].cssClass" [cdkDragDisabled]="item.fieldType.value=='PageTitle' && item.isActive===true">
 
                                     <!-- Calculation Type -->
                                     <div *ngIf="item.fieldType.value=='calculation' && item.isActive===true"

@@ -22,7 +22,7 @@ export class FormInboxComponent implements OnInit {
   constructor(public dialog: MatDialog, private route: Router, private service: FormbuilderService, private spinner: NgxSpinnerService) { }
 
   formCapture: any;
-  public displayedColumns = ['formTemplateName','formID','formcaptureID','dateSent','timeSent','displayOne','displayTwo','geography', 'sentBy','stage','step'];
+  public displayedColumns = ['formTemplateName','formID','formcaptureID','dateSent','timeSent','displayOne','displayTwo','geography', 'sentBy','stage','step','delete'];
   public formList = new MatTableDataSource<any>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -99,5 +99,29 @@ export class FormInboxComponent implements OnInit {
             '</div>'
     });
 }
+
+clickDelete(item: any) {
+  Swal.fire({
+    title: 'Are you sure you want to delete this form ?',
+    showCancelButton: true,
+    confirmButtonText: 'Yes',
+    cancelButtonText: 'No',
+    toast: true,
+    position: 'top',
+    allowOutsideClick: false,
+    confirmButtonColor: '#000000',
+    cancelButtonColor: '#000000'
+  }).then((result) => {
+    if (result.value) {
+      this.spinner.show();
+      this.service.deleteCapturedForm(item.formCaptureID).subscribe(data => {
+        this.spinner.hide();
+        this.refreshFormsList();
+         this.showNotification('top','center','Form Deleted Successfully!','Success.','success');
+      });
+    }
+  })
+}
+
 
 }

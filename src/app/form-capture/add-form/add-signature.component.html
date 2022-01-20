@@ -1,0 +1,10 @@
+<div class="signature-container">
+    <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()">
+    </signature-pad>
+</div>
+<mat-button-toggle-group name="buttons">
+    <mat-button-toggle value="Clear" (click)="clearSignature()"
+        style="font-weight: 500;background-color: whitesmoke;color: black;">Clear</mat-button-toggle>
+    <mat-button-toggle value="save" style="background-color: whitesmoke;font-weight: 500;color: black;"
+        (click)="savePad()">Save</mat-button-toggle>
+</mat-button-toggle-group>
