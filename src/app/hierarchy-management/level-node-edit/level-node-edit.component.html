@@ -1,3 +1,5 @@
+
+<h1 mat-dialog-title>Level/Node Edit</h1>
 <div mat-dialog-content>
     <mat-tab-group animationDuration="0ms">
         <mat-tab label="Level Edit">
@@ -120,22 +122,20 @@
         </mat-tab>       
         <mat-tab label="Node Edit">
             <div class="form-group">
-                <mat-form-field appearance="outline">
-                    <mat-label>Select a level </mat-label>
-                    <mat-select [(ngModel)]="NodeAdd.levelID">
-                        <mat-option *ngFor="let c of levels" [value]="c.levelID">
-                            {{c.levelName}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field appearance="outline">
-                    <mat-label>Select a parent node</mat-label>
-                    <mat-select [(ngModel)]="NodeAdd.nodeID">
-                        <mat-option *ngFor="let c of nodes" [value]="c.nodeID">
-                            {{c.nodeName}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
+                <div class="form-group">
+                    <label style="font-size: medium;">Level</label>
+                    <mat-form-field>
+                        <input matInput ngModel type="text" [(ngModel)]=NodeData.levelName value="{{NodeData.levelName}}" disabled>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group">
+                    <label style="font-size: medium;">Parent Node</label>
+                    <mat-form-field>
+                        <input matInput ngModel type="text" [(ngModel)]=NodeData.ParentNodeName value="{{NodeData.ParentNodeName}}" disabled>
+                    </mat-form-field>
+                </div>
             </div>
             <div class="form-group">
 
@@ -148,7 +148,7 @@
                             <div class="form-group">
                                 <label style="font-size: medium;">{{item.questionName}}</label>
                                 <mat-form-field appearance="outline">
-                                    <input matInput type="date" placeholder="" value="">
+                                    <input matInput type="date" [(ngModel)]=item.data placeholder="{{item.toolTip}}"  value="{{item.data}}">
                                 </mat-form-field>
                                 
                             </div>
@@ -159,7 +159,7 @@
                             <div class="form-group">
                                 <label style="font-size: medium;">{{item.questionName}}</label>
                                 <mat-form-field>
-                                    <input matInput ngModel type="text" placeholder="" value="" maxlength={{item.lengthValidation}}>
+                                    <input matInput ngModel type="text" [(ngModel)]=item.data placeholder="{{item.toolTip}}" value="{{item.data}}" maxlength={{item.lengthValidation}}>
                                 </mat-form-field>
                             </div>
                         </ng-container>
@@ -171,7 +171,7 @@
                                 <mat-form-field>
                                     <input matInput type="number" ngModel maxlength={{item.lengthValidation}}
                                         oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                        placeholder="" value="">
+                                        [(ngModel)]=item.data placeholder="{{item.toolTip}}" value="{{item.data}}" >
                                 </mat-form-field>
                                 <!-- <div style="height: 5px;"></div> -->
                             </div>
@@ -183,7 +183,7 @@
                                 <label style="font-size: medium;">{{item.questionName}}</label>
                                 <mat-form-field appearance="outline">
                                     <mat-label>Select a option</mat-label>
-                                    <mat-select>
+                                    <mat-select  [(ngModel)]=item.data>
                                         <mat-option *ngFor="let list of item.listValue" style="color: black;" [value]="list.value">
                                             {{list.name}}
                                         </mat-option>
@@ -218,7 +218,7 @@
                             <div class="form-group">
                                 <label style="font-size: medium;">{{item.questionName}}</label>
                                 <mat-form-field>
-                                    <input matInput ngModel type="text" placeholder="" value="" maxlength={{item.lengthValidation}}>
+                                    <input matInput ngModel type="text" [(ngModel)]=item.data placeholder="{{item.toolTip}}" value="{{item.data}}" maxlength={{item.lengthValidation}}>
                                 </mat-form-field>
                             </div>
                         </ng-container>

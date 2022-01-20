@@ -16,949 +16,957 @@
     <h5>{{currentPage.name}} / {{lastPage}}</h5>
 </div>
 <div style="text-align:left;width: 70%;margin-left: 15%;">
-    <!-- Form Builder -->
-    <div style="background-color: white;">
-        <mat-accordion>
-            <ng-container *ngFor="let item of formDesign;let i= index;"
-                style="background-color: white;text-align: left;height: 100px;font-weight: bold;">
+    <mat-tab-group mat-align-tabs="right" style="color: black;font-weight: 500;">
+        <mat-tab label="Data" style="background-color: black;font-weight: 500;">
+            <div style="background-color: white;">
+                <mat-accordion>
+                    <ng-container *ngFor="let item of formDesign;let i= index;"
+                        style="background-color: white;text-align: left;height: 100px;font-weight: bold;">
 
-                <!-- Time Type -->
-                <ng-container *ngIf="item.fieldType.value=='Time' && item.isActive===true && item.parentFieldName===''">
-                    <label style="color:black">{{item.questionName}}</label>
-                    <mat-form-field appearance="outline">
-                        <input matInput type="time" [(ngModel)]=item.data placeholder="{{item.toolTip}}"
-                           >
-                    </mat-form-field>
-                </ng-container>
+                        <!-- Time Type -->
+                        <ng-container
+                            *ngIf="item.fieldType.value=='Time' && item.isActive===true && item.parentFieldName===''">
+                            <label style="color:black">{{item.questionName}}</label>
+                            <mat-form-field appearance="outline">
+                                <input matInput type="time" [(ngModel)]=item.data placeholder="{{item.toolTip}}">
+                            </mat-form-field>
+                        </ng-container>
 
-                <!-- Drawing/signature Type -->
-                <ng-container
-                    *ngIf="item.fieldType.value=='signature' || item.fieldType.value=='imagearea' && item.isActive===true && item.parentFieldName===''">
-                    <label style="color:black">{{item.questionName}}</label>
-                    <div class="signature-container">
-                        <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()"
-                            (onEndEvent)="drawComplete()">
-                        </signature-pad>
-                    </div>
-                    <button (click)="clearSignature()"
-                        style="font-weight: 500;background-color: whitesmoke;color: black;">Clear signature
-                        pad</button>
-                    <button (click)="savePad()"
-                        style="font-weight: 500;background-color: whitesmoke;color: black;">Save
-                        signature</button>
-                    <div class="signature-image" *ngIf="signatureImg">
-                        <img src='{{ signatureImg }}' />
-                    </div>
-                </ng-container>
+                        <!--signature Type -->
+                        <ng-container
+                            *ngIf="item.fieldType.value=='signature' && item.isActive===true && item.parentFieldName===''">
+                            <label style="color:black">{{item.questionName}}</label>
+                            <div style="height: 5px;"></div>
+                            <div class="signature-image" *ngIf="item.data!==''">
+                                <img src={{item.data}} />
+                            </div>
+                            <mat-button-toggle-group name="buttons">
+                                <mat-button-toggle value="save"
+                                    style="background-color: whitesmoke;font-weight: 500;color: black;"
+                                    (click)="savePad(item)">Capture signature</mat-button-toggle>
+                            </mat-button-toggle-group>
+                            <div style="height: 5px;"></div>
+                        </ng-container>
 
-                <!-- Date Type -->
-                <ng-container *ngIf="item.fieldType.value=='date' && item.isActive===true && item.parentFieldName===''">
-                    <label style="color:black">{{item.questionName}}</label>
-                    <mat-form-field appearance="outline">
-                        <input matInput type="date" [(ngModel)]=item.data placeholder="{{item.toolTip}}"
-                           >
-                    </mat-form-field>
-                </ng-container>
+                        <!-- Drawing type -->
+                        <ng-container
+                            *ngIf="item.fieldType.value=='imagearea' && item.isActive===true && item.parentFieldName===''">
+                            <label style="color:black">{{item.questionName}}</label>
+                            <div style="height: 5px;"></div>
+                            <div class="signature-image" *ngIf="item.data!==''">
+                                <img src={{item.data}} />
+                            </div>
+                            <mat-button-toggle-group name="buttons">
+                                <mat-button-toggle value="save"
+                                    style="background-color: whitesmoke;font-weight: 500;color: black;"
+                                    (click)="savePad(item)">Capture Drawing</mat-button-toggle>
+                            </mat-button-toggle-group>
+                            <div style="height: 5px;"></div>
+                        </ng-container>
 
-                <!-- Text Type -->
-                <ng-container
-                    *ngIf="(item.fieldType.value=='plaintext') && item.isActive===true && item.parentFieldName===''">
-                    <label style="color:black">{{item.questionName}}</label>
-                    <mat-form-field appearance="outline">
-                        <input matInput [(ngModel)]=item.data type="text" placeholder="{{item.toolTip}}"
-                            maxlength={{item.fieldValidations[0].dataLength}}>
-                    </mat-form-field>
-                </ng-container>
+                        <!-- Date Type -->
+                        <ng-container
+                            *ngIf="item.fieldType.value=='date' && item.isActive===true && item.parentFieldName===''">
+                            <label style="color:black">{{item.questionName}}</label>
+                            <mat-form-field appearance="outline">
+                                <input matInput type="date" [(ngModel)]=item.data placeholder="{{item.toolTip}}">
+                            </mat-form-field>
+                        </ng-container>
 
-                <!-- PlainAplha Type -->
-                <ng-container
-                    *ngIf="(item.fieldType.value=='plainalpha') && item.isActive===true && item.parentFieldName===''">
-                    <label style="color:black">{{item.questionName}}</label>
-                    <mat-form-field appearance="outline">
-                        <input matInput [(ngModel)]=item.data type="text" placeholder="{{item.toolTip}}"
-                            maxlength={{item.fieldValidations[0].dataLength}}
-                            onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)">
-                    </mat-form-field>
-                </ng-container>
+                        <!-- Text Type -->
+                        <ng-container
+                            *ngIf="(item.fieldType.value=='plaintext') && item.isActive===true && item.parentFieldName===''">
+                            <label style="color:black">{{item.questionName}}</label>
+                            <mat-form-field appearance="outline">
+                                <textarea matInput [(ngModel)]=item.data
+                                    maxlength={{item.fieldValidations[0].dataLength}} placeholder="{{item.toolTip}}"
+                                    rows="{{item.fieldStyles[0].height}}"></textarea>
+                            </mat-form-field>
+                        </ng-container>
 
-                <!-- Alphanumeric Type -->
-                <ng-container
-                    *ngIf="(item.fieldType.value=='Alphanumeric') && item.isActive===true && item.parentFieldName===''">
-                    <label style="color:black">{{item.questionName}}</label>
-                    <mat-form-field appearance="outline">
-                        <input matInput [(ngModel)]=item.data type="text" placeholder="{{item.toolTip}}"
-                            maxlength={{item.fieldValidations[0].dataLength}}
-                            onkeypress="return (event.charCode > 64 && event.charCode < 91) ||  (event.charCode > 47 && event.charCode < 58) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)">
-                    </mat-form-field>
-                </ng-container>
+                        <!-- PlainAplha Type -->
+                        <ng-container
+                            *ngIf="(item.fieldType.value=='plainalpha') && item.isActive===true && item.parentFieldName===''">
+                            <label style="color:black">{{item.questionName}}</label>
+                            <mat-form-field appearance="outline">
+                                <textarea matInput [(ngModel)]=item.data
+                                    maxlength={{item.fieldValidations[0].dataLength}} placeholder="{{item.toolTip}}"
+                                    rows="{{item.fieldStyles[0].height}}"
+                                    onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"></textarea>
+                            </mat-form-field>
+                        </ng-container>
 
-                <!-- section Type -->
-                <ng-container
-                    *ngIf="(item.fieldType.value=='section') && item.isActive===true && item.parentFieldName===''">
-                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                        <mat-expansion-panel-header
-                            style="background: linear-gradient(147deg, #f1f1f1 36%, #00d9ff 74%)">
-                            <mat-panel-title>
-                                {{item.questionName}}
-                            </mat-panel-title>
-                            <mat-panel-description></mat-panel-description>
-                        </mat-expansion-panel-header>
+                        <!-- Alphanumeric Type -->
+                        <ng-container
+                            *ngIf="(item.fieldType.value=='Alphanumeric') && item.isActive===true && item.parentFieldName===''">
+                            <label style="color:black">{{item.questionName}}</label>
+                            <mat-form-field appearance="outline">
+                                <textarea matInput
+                                    onkeypress="return (event.charCode > 64 && event.charCode < 91) ||  (event.charCode > 47 && event.charCode < 58) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
+                                    [(ngModel)]=item.data maxlength={{item.fieldValidations[0].dataLength}}
+                                    placeholder="{{item.toolTip}}" rows="{{item.fieldStyles[0].height}}"></textarea>
+                            </mat-form-field>
+                        </ng-container>
 
-                        <ng-container *ngFor="let sectionItem of item.groupGUID;let i= index"
-                            style="background-color: white;text-align: left;height: 100px;font-weight: bold;">
-                            <!-- Time Type -->
-                            <ng-container *ngIf="sectionItem.fieldType.value=='Time' && sectionItem.isActive===true ">
-                                <label style="color:black">{{sectionItem.questionName}}</label>
-                                <mat-form-field appearance="outline">
-                                    <input matInput type="time" [(ngModel)]=sectionItem.data placeholder="{{sectionItem.toolTip}}"
-                                       >
-                                </mat-form-field>
-                            </ng-container>
+                        <!-- section Type -->
+                        <ng-container
+                            *ngIf="(item.fieldType.value=='section') && item.isActive===true && item.parentFieldName===''">
+                            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                                <mat-expansion-panel-header
+                                    style="background: linear-gradient(147deg, #f1f1f1 36%, #00d9ff 74%)">
+                                    <mat-panel-title>
+                                        {{item.questionName}}
+                                    </mat-panel-title>
+                                    <mat-panel-description></mat-panel-description>
+                                </mat-expansion-panel-header>
 
-                            <!-- Drawing/signature Type -->
-                            <ng-container
-                                *ngIf="sectionItem.fieldType.value=='signature' || sectionItem.fieldType.value=='imagearea' && sectionItem.isActive===true">
-                                <label style="color:black">{{sectionItem.questionName}}</label>
-                                <div class="signature-container">
-                                    <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()"
-                                        (onEndEvent)="drawComplete()">
-                                    </signature-pad>
-                                </div>
-                                <button (click)="clearSignature()"
-                                    style="font-weight: 500;background-color: whitesmoke;color: black;">Clear
-                                    signature pad</button>
-                                <button (click)="savePad()"
-                                    style="font-weight: 500;background-color: whitesmoke;color: black;">Save
-                                    signature</button>
-                                 <!-- <div class="signature-image" *ngIf="signatureImg">
-                                    <img src='{{ signatureImg }}' />
-                                </div> -->
-                            </ng-container>
+                                <ng-container *ngFor="let sectionItem of item.groupGUID;let i= index"
+                                    style="background-color: white;text-align: left;height: 100px;font-weight: bold;">
+                                    <!-- Time Type -->
+                                    <ng-container
+                                        *ngIf="sectionItem.fieldType.value=='Time' && sectionItem.isActive===true ">
+                                        <label style="color:black">{{sectionItem.questionName}}</label>
+                                        <mat-form-field appearance="outline">
+                                            <input matInput type="time" [(ngModel)]=sectionItem.data
+                                                placeholder="{{sectionItem.toolTip}}">
+                                        </mat-form-field>
+                                    </ng-container>
 
-                            <!-- Date Type -->
-                            <ng-container *ngIf="sectionItem.fieldType.value=='date' && sectionItem.isActive===true ">
-                                <label style="color:black">{{sectionItem.questionName}}</label>
-                                <mat-form-field appearance="outline">
-                                    <input matInput type="date" [(ngModel)]=sectionItem.data placeholder="{{sectionItem.toolTip}}"
-                                       >
-                                </mat-form-field>
-                            </ng-container>
+                                    <!--signature Type -->
+                                    <ng-container
+                                        *ngIf="sectionItem.fieldType.value=='signature' && sectionItem.isActive===true">
+                                        <label style="color:black">{{item.questionName}}</label>
+                                        <div style="height: 5px;"></div>
+                                        <div class="signature-image" *ngIf="item.data!==''">
+                                            <img src={{sectionItem.data}} />
+                                        </div>
+                                        <mat-button-toggle-group name="buttons">
+                                            <mat-button-toggle value="save"
+                                                style="background-color: whitesmoke;font-weight: 500;color: black;"
+                                                (click)="savePad(sectionItem)">Capture signature</mat-button-toggle>
+                                        </mat-button-toggle-group>
+                                        <div style="height: 5px;"></div>
+                                    </ng-container>
 
-                            <!-- subSection Type -->
-                            <ng-container
-                                *ngIf="(sectionItem.fieldType.value=='subSection') && sectionItem.isActive===true">
-                                <mat-expansion-panel disabled hideToggle>
-                                    <mat-expansion-panel-header
-                                        style="background:linear-gradient(147deg, #f1f1f1 36%, #9ff1ff 74%)">
-                                        <mat-panel-title style="color:black;">
-                                            {{sectionItem.questionName}}
-                                        </mat-panel-title>
-                                        <mat-panel-description></mat-panel-description>
-                                    </mat-expansion-panel-header>
-                                </mat-expansion-panel>
-                                <div style="height: 5px;"></div>
-                            </ng-container>
+                                    <!-- Drawing type -->
+                                    <ng-container
+                                        *ngIf="sectionItem.fieldType.value=='imagearea' && sectionItem.isActive===true">
+                                        <label style="color:black">{{item.questionName}}</label>
+                                        <div style="height: 5px;"></div>
+                                        <div class="signature-image" *ngIf="sectionItem.data!==''">
+                                            <img src={{sectionItem.data}} />
+                                        </div>
+                                        <mat-button-toggle-group name="buttons">
+                                            <mat-button-toggle value="save"
+                                                style="background-color: whitesmoke;font-weight: 500;color: black;"
+                                                (click)="savePad(sectionItem)">Capture Drawing</mat-button-toggle>
+                                        </mat-button-toggle-group>
+                                        <div style="height: 5px;"></div>
+                                    </ng-container>
 
-                            <!-- SectionGroup Type -->
-                            <ng-container
-                                *ngIf="(sectionItem.fieldType.value=='repeatgroup') && sectionItem.isActive===true">
-                                <div style="height: 5px;"></div>
-                                <mat-expansion-panel [expanded]="true" hideToggle>
-                                    <mat-expansion-panel-header
-                                        style="background:linear-gradient(147deg, #f1f1f1 36%, #00f7ff 74%);color: black;">
-                                        <mat-panel-title>
-                                            {{sectionItem.questionName}}
-                                        </mat-panel-title>
-                                        <mat-panel-description></mat-panel-description>
-                                    </mat-expansion-panel-header>
-                                    <div style="height: 5px;"></div>
-                                    <table class="table table-bordered">
-                                        <tr>
-                                            <th>Edit</th>
-                                            <th>Delete</th>
-                                            <th style="text-align:center">Value One</th>
-                                            <th style="text-align:center">Value Two</th>
-                                            <th>No.</th>
-                                        </tr>
-                                        <tr *ngFor="let dataItem of sectionItem.groupTableList;let i=index">
-                                            <td style="width: 10px;">
-                                                <mat-icon class="mat-18"
-                                                    (click)=editRepeat(sectionItem.groupGUID,dataItem.cloneNum,sectionItem.groupGUID[0].parentFieldName)>
-                                                    edit</mat-icon>
-                                            </td>
-                                            <td style="width: 10px;">
-                                                <mat-icon class="mat-18"
-                                                    (click)=deleteClone(dataItem.cloneNum,sectionItem.groupGUID[0].parentFieldName)>
-                                                    delete</mat-icon>
-                                            </td>
-                                            <td style="text-align:center">{{dataItem.colOne}}</td>
-                                            <td style="text-align:center">{{dataItem.colTwo}}</td>
-                                            <td style="width: 10px;">{{i+1}}</td>
-                                        </tr>
-                                    </table>
+                                    <!-- Date Type -->
+                                    <ng-container
+                                        *ngIf="sectionItem.fieldType.value=='date' && sectionItem.isActive===true ">
+                                        <label style="color:black">{{sectionItem.questionName}}</label>
+                                        <mat-form-field appearance="outline">
+                                            <input matInput type="date" [(ngModel)]=sectionItem.data
+                                                placeholder="{{sectionItem.toolTip}}">
+                                        </mat-form-field>
+                                    </ng-container>
 
-                                    <ng-container *ngFor="let subsectionItem of sectionItem.groupGUID;let i= index"
-                                        style="background-color: white;text-align: left;height: 100px;font-weight: bold;">
+                                    <!-- subSection Type -->
+                                    <ng-container
+                                        *ngIf="(sectionItem.fieldType.value=='subSection') && sectionItem.isActive===true">
+                                        <mat-expansion-panel disabled hideToggle>
+                                            <mat-expansion-panel-header
+                                                style="background:linear-gradient(147deg, #f1f1f1 36%, #9ff1ff 74%)">
+                                                <mat-panel-title style="color:black;">
+                                                    {{sectionItem.questionName}}
+                                                </mat-panel-title>
+                                                <mat-panel-description></mat-panel-description>
+                                            </mat-expansion-panel-header>
+                                        </mat-expansion-panel>
+                                        <div style="height: 5px;"></div>
+                                    </ng-container>
 
-                                        <!-- subSection Type -->
-                                        <ng-container
-                                            *ngIf="(subsectionItem.fieldType.value=='subSection') && subsectionItem.isActive===true">
-                                            <mat-expansion-panel disabled hideToggle>
-                                                <mat-expansion-panel-header
-                                                    style="background: linear-gradient(147deg, #f1f1f1 36%, #9ff1ff 74%)">
-                                                    <mat-panel-title style="color:black;">
-                                                        {{subsectionItem.questionName}}
-                                                    </mat-panel-title>
-                                                    <mat-panel-description></mat-panel-description>
-                                                </mat-expansion-panel-header>
-                                            </mat-expansion-panel>
+                                    <!-- SectionGroup Type -->
+                                    <ng-container
+                                        *ngIf="(sectionItem.fieldType.value=='repeatgroup') && sectionItem.isActive===true">
+                                        <div style="height: 5px;"></div>
+                                        <mat-expansion-panel [expanded]="true" hideToggle>
+                                            <mat-expansion-panel-header
+                                                style="background:linear-gradient(147deg, #f1f1f1 36%, #00f7ff 74%);color: black;">
+                                                <mat-panel-title>
+                                                    {{sectionItem.questionName}}
+                                                </mat-panel-title>
+                                                <mat-panel-description></mat-panel-description>
+                                            </mat-expansion-panel-header>
                                             <div style="height: 5px;"></div>
-                                        </ng-container>
+                                            <table class="table table-bordered">
+                                                <tr>
+                                                    <th>Edit</th>
+                                                    <th>Delete</th>
+                                                    <th style="text-align:center">Value One</th>
+                                                    <th style="text-align:center">Value Two</th>
+                                                    <th>No.</th>
+                                                </tr>
+                                                <tr *ngFor="let dataItem of sectionItem.groupTableList;let i=index">
+                                                    <td style="width: 10px;">
+                                                        <mat-icon class="mat-18"
+                                                            (click)=editRepeat(sectionItem.groupGUID,dataItem.cloneNum,sectionItem.groupGUID[0].parentFieldName)>
+                                                            edit</mat-icon>
+                                                    </td>
+                                                    <td style="width: 10px;">
+                                                        <mat-icon class="mat-18"
+                                                            (click)=deleteClone(dataItem.cloneNum,sectionItem.groupGUID[0].parentFieldName)>
+                                                            delete</mat-icon>
+                                                    </td>
+                                                    <td style="text-align:center">{{dataItem.colOne}}</td>
+                                                    <td style="text-align:center">{{dataItem.colTwo}}</td>
+                                                    <td style="width: 10px;">{{i+1}}</td>
+                                                </tr>
+                                            </table>
 
-                                        <!-- Time Type -->
-                                        <ng-container
-                                            *ngIf="subsectionItem.fieldType.value=='Time' && subsectionItem.isActive===true ">
-                                            <label style="color:black">{{subsectionItem.questionName}}</label>
-                                            <mat-form-field appearance="outline">
-                                                <input matInput type="time" [(ngModel)]=subsectionItem.data
-                                                    placeholder="{{subsectionItem.toolTip}}"
-                                                    value="{{subsectionItem.data}}">
-                                            </mat-form-field>
-                                        </ng-container>
+                                            <ng-container
+                                                *ngFor="let subsectionItem of sectionItem.groupGUID;let i= index"
+                                                style="background-color: white;text-align: left;height: 100px;font-weight: bold;">
 
-                                        <!-- Drawing/signature Type -->
-                                        <ng-container
-                                            *ngIf="subsectionItem.fieldType.value=='signature' || subsectionItem.fieldType.value=='imagearea' && subsectionItem.isActive===true">
-                                            <label style="color:black">{{sectionItem.questionName}}</label>
-                                            <div class="signature-container">
-                                                <signature-pad [options]="signaturePadOptions"
-                                                    (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()">
-                                                </signature-pad>
-                                            </div>
-                                            <button (click)="clearSignature()"
-                                                style="font-weight: 500;background-color: whitesmoke;color: black;">Clear
-                                                signature pad</button>
-                                            <button (click)="savePad()"
-                                                style="font-weight: 500;background-color: whitesmoke;color: black;">Save
-                                                signature</button>
-                                            <div class="signature-image" *ngIf="signatureImg">
-                                                <img src='{{ signatureImg }}' />
-                                            </div>
-                                        </ng-container>
-
-                                        <!-- Date Type -->
-                                        <ng-container
-                                            *ngIf="subsectionItem.fieldType.value=='date' && subsectionItem.isActive===true ">
-                                            <label style="color:black">{{subsectionItem.questionName}}</label>
-                                            <mat-form-field appearance="outline">
-                                                <input matInput type="date" [(ngModel)]=subsectionItem.data
-                                                    placeholder="{{subsectionItem.toolTip}}"
-                                                    value="{{subsectionItem.data}}">
-                                            </mat-form-field>
-                                        </ng-container>
-
-                                        <!-- Text Type -->
-                                        <ng-container
-                                            *ngIf="(subsectionItem.fieldType.value=='plaintext') && subsectionItem.isActive===true ">
-                                            <label style="color:black">{{subsectionItem.questionName}}</label>
-                                            <mat-form-field appearance="outline">
-                                                <input matInput [(ngModel)]=subsectionItem.data type="text"
-                                                    placeholder="{{subsectionItem.toolTip}}"
-                                                    value="{{subsectionItem.data}}"
-                                                    maxlength={{subsectionItem.fieldValidations[0].dataLength}}>
-                                            </mat-form-field>
-                                        </ng-container>
-
-                                        <!-- Alphanumeric Type -->
-                                        <ng-container
-                                            *ngIf="(subsectionItem.fieldType.value=='Alphanumeric' ) && subsectionItem.isActive===true ">
-                                            <label style="color:black">{{subsectionItem.questionName}}</label>
-                                            <mat-form-field appearance="outline">
-                                                <input matInput [(ngModel)]=subsectionItem.data type="text"
-                                                    placeholder="{{subsectionItem.toolTip}}"
-                                                    value="{{subsectionItem.data}}"
-                                                    maxlength={{subsectionItem.fieldValidations[0].dataLength}}
-                                                    onkeypress="return (event.charCode > 64 && event.charCode < 91) ||  (event.charCode > 47 && event.charCode < 58) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)">
-                                            </mat-form-field>
-                                        </ng-container>
-
-                                        <!-- PlainAlpha Type -->
-                                        <ng-container
-                                            *ngIf="(subsectionItem.fieldType.value=='plainalpha') && subsectionItem.isActive===true ">
-                                            <label style="color:black">{{subsectionItem.questionName}}</label>
-                                            <mat-form-field appearance="outline">
-                                                <input matInput [(ngModel)]=subsectionItem.data type="text"
-                                                    placeholder="{{subsectionItem.toolTip}}"
-                                                    value="{{subsectionItem.data}}"
-                                                    maxlength={{subsectionItem.fieldValidations[0].dataLength}}
-                                                    onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)">
-                                            </mat-form-field>
-                                        </ng-container>
-
-                                        <!-- Email Type -->
-                                        <ng-container
-                                            *ngIf="subsectionItem.fieldType.value=='EmailAddress' && subsectionItem.isActive===true ">
-
-                                            <label style="color:black">{{subsectionItem.questionName}}</label>
-                                            <mat-form-field appearance="outline">
-                                                <input matInput type="email" [(ngModel)]=subsectionItem.data
-                                                    placeholder="{{subsectionItem.toolTip}}"
-                                                    value="{{subsectionItem.data}}">
-                                            </mat-form-field>
-                                            <div style="height: 5px;"></div>
-                                        </ng-container>
-
-                                        <!-- Radio button Type -->
-                                        <ng-container
-                                            *ngIf="subsectionItem.fieldType.value=='field or' && subsectionItem.isActive===true ">
-                                            <label style="color:black">{{subsectionItem.questionName}}</label>
-                                            <div style="height: 5px;"></div>
-                                            <mat-radio-group [(ngModel)]=subsectionItem.data class="radio" matInput
-                                                aria-label="Select an option">
-                                                <mat-radio-button style="color: black;"
-                                                    *ngFor="let list of subsectionItem.listValue" [value]="list.value">
-                                                    {{list.name}} &nbsp;
-                                                </mat-radio-button>
-                                            </mat-radio-group>
-                                            <div style="height: 5px;"></div>
-                                        </ng-container>
-
-                                        <!-- Checkbox Type-->
-                                        <ng-container
-                                            *ngIf="subsectionItem.fieldType.value=='checkbox' && subsectionItem.isActive===true ">
-                                            <label style="color:black">{{subsectionItem.questionName}}</label>
-                                            <div style="height: 5px;"></div>
-                                            <p *ngFor="let list of subsectionItem.listValue; let i = index"
-                                                class="checkbox">
-                                                <mat-checkbox [(ngModel)]=subsectionItem.data>
-                                                    {{list.name}}
-                                                </mat-checkbox>
-                                            </p>
-                                            <div style="height: 5px;"></div>
-                                        </ng-container>
-
-                                        <!-- Number Type -->
-                                        <ng-container
-                                            *ngIf="subsectionItem.fieldType.value=='number' && subsectionItem.isActive===true ">
-                                            <label style="color:black">{{subsectionItem.questionName}}</label>
-                                            <mat-form-field appearance="outline">
-                                                <input matInput type="number" [(ngModel)]=subsectionItem.data
-                                                    [(ngModel)]=subsectionItem.data
-                                                    maxlength={{subsectionItem.fieldValidations[0].dataLength}}
-                                                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                                    placeholder="{{subsectionItem.toolTip}}"
-                                                    value="{{subsectionItem.data}}">
-                                            </mat-form-field>
-                                            <div style="height: 5px;"></div>
-                                        </ng-container>
-
-                                        <!-- Decimal Type -->
-                                        <ng-container
-                                            *ngIf="subsectionItem.fieldType.value=='decimal' && subsectionItem.isActive===true ">
-                                            <label style="color:black">{{subsectionItem.questionName}}</label>
-                                            <mat-form-field appearance="outline">
-                                                <input matInput type="number" step="any" [(ngModel)]=subsectionItem.data
-                                                    [(ngModel)]=subsectionItem.data
-                                                    maxlength={{subsectionItem.fieldValidations[0].dataLength}}
-                                                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                                    placeholder="{{subsectionItem.toolTip}}"
-                                                    value="{{subsectionItem.data}}">
-                                            </mat-form-field>
-                                            <div style="height: 5px;"></div>
-                                        </ng-container>
-
-                                        <!-- Calculation Type -->
-                                        <ng-container
-                                            *ngIf="subsectionItem.fieldType.value=='calculation' && subsectionItem.isActive===true ">
-                                            <label style="color:black">{{subsectionItem.questionName}}</label>
-                                            <mat-form-field appearance="outline">
-                                                <input matInput type="number" [(ngModel)]=subsectionItem.data readonly
-                                                    placeholder="{{subsectionItem.toolTip}}"
-                                                    value="{{subsectionItem.data}}">
-                                            </mat-form-field>
-                                            <div style="height: 5px;"></div>
-                                        </ng-container>
-
-                                        <!-- Attachment Type -->
-                                        <ng-container
-                                            *ngIf="subsectionItem.fieldType.value=='attachment' && subsectionItem.isActive===true ">
-                                            <label style="color:black">{{subsectionItem.questionName}}</label>
-                                            <mat-form-field>
-                                                <ng-container>
-                                                    <mat-toolbar>
-                                                        <input matInput readonly name="name" />
-                                                        <button mat-flat-button
-                                                            style="background-color: rgb(235, 236, 236);">
-                                                            Browse File
-                                                        </button>
-                                                    </mat-toolbar>
-                                                    <input type="file" [(ngModel)]=subsectionItem.data #fileInput
-                                                        id="uploadFile" (change)="uploadFileEvt($event)"
-                                                        name="uploadFile" multiple="single" accept="image/*" />
+                                                <!-- subSection Type -->
+                                                <ng-container
+                                                    *ngIf="(subsectionItem.fieldType.value=='subSection') && subsectionItem.isActive===true">
+                                                    <mat-expansion-panel disabled hideToggle>
+                                                        <mat-expansion-panel-header
+                                                            style="background: linear-gradient(147deg, #f1f1f1 36%, #9ff1ff 74%)">
+                                                            <mat-panel-title style="color:black;">
+                                                                {{subsectionItem.questionName}}
+                                                            </mat-panel-title>
+                                                            <mat-panel-description></mat-panel-description>
+                                                        </mat-expansion-panel-header>
+                                                    </mat-expansion-panel>
+                                                    <div style="height: 5px;"></div>
                                                 </ng-container>
-                                            </mat-form-field>
-                                            <div style="height: 5px;"></div>
-                                        </ng-container>
 
-                                        <!-- select Type -->
-                                        <ng-container
-                                            *ngIf="subsectionItem.fieldType.value=='lexicon data' && subsectionItem.isActive===true ">
-                                            <label style="color:black">{{subsectionItem.questionName}}</label>
-                                            <mat-form-field appearance="outline">
-                                                <mat-label>Select a option</mat-label>
-                                                <mat-select [(ngModel)]=subsectionItem.data panelClass="myPanelClass">
-                                                    <mat-option *ngFor="let list of subsectionItem.listValue"
-                                                        style="color: black;" [value]="list.value">
-                                                        {{list.name}}
-                                                    </mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
-                                            <div style="height: 5px;"></div>
-                                        </ng-container>
-                                    </ng-container>
-                                    <button mat-stroked-button style="background-color: whitesmoke;color: black;"
-                                        (click)=addRepeat(sectionItem.groupGUID)>
-                                        Save Repeat
-                                    </button>
-                                </mat-expansion-panel>
-                                <div style="height: 5px;"></div>
-                            </ng-container>
+                                                <!-- Time Type -->
+                                                <ng-container
+                                                    *ngIf="subsectionItem.fieldType.value=='Time' && subsectionItem.isActive===true ">
+                                                    <label style="color:black">{{subsectionItem.questionName}}</label>
+                                                    <mat-form-field appearance="outline">
+                                                        <input matInput type="time" [(ngModel)]=subsectionItem.data
+                                                            placeholder="{{subsectionItem.toolTip}}"
+                                                            value="{{subsectionItem.data}}">
+                                                    </mat-form-field>
+                                                </ng-container>
 
-                            <!-- Text Type -->
-                            <ng-container
-                                *ngIf="(sectionItem.fieldType.value=='plaintext') && sectionItem.isActive===true ">
-                                <label style="color:black">{{sectionItem.questionName}}</label>
-                                <mat-form-field appearance="outline">
-                                    <input matInput [(ngModel)]=sectionItem.data type="text" placeholder="{{sectionItem.toolTip}}"
-                                        maxlength={{sectionItem.fieldValidations[0].dataLength}}>
-                                </mat-form-field>
-                            </ng-container>
 
-                            <!-- plain alpha Type -->
-                            <ng-container
-                                *ngIf="(sectionItem.fieldType.value=='plainalpha') && sectionItem.isActive===true ">
-                                <label style="color:black">{{sectionItem.questionName}}</label>
-                                <mat-form-field appearance="outline">
-                                    <input matInput [(ngModel)]=sectionItem.data type="text" placeholder="{{sectionItem.toolTip}}"
-                                        maxlength={{sectionItem.fieldValidations[0].dataLength}}
-                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)">
-                                </mat-form-field>
-                            </ng-container>
+                                                <!--signature Type -->
+                                                <ng-container
+                                                    *ngIf="subsectionItem.fieldType.value=='signature' && subsectionItem.isActive===true">
+                                                    <label style="color:black">{{item.questionName}}</label>
+                                                    <div style="height: 5px;"></div>
+                                                    <div class="signature-image" *ngIf="item.data!==''">
+                                                        <img src={{subsectionItem.data}} />
+                                                    </div>
+                                                    <mat-button-toggle-group name="buttons">
+                                                        <mat-button-toggle value="save"
+                                                            style="background-color: whitesmoke;font-weight: 500;color: black;"
+                                                            (click)="savePad(subsectionItem)">Capture signature
+                                                        </mat-button-toggle>
+                                                    </mat-button-toggle-group>
+                                                    <div style="height: 5px;"></div>
+                                                </ng-container>
 
-                            <!-- Alphanumeric Type -->
-                            <ng-container
-                                *ngIf="(sectionItem.fieldType.value=='Alphanumeric') && sectionItem.isActive===true ">
-                                <label style="color:black">{{sectionItem.questionName}}</label>
-                                <mat-form-field appearance="outline">
-                                    <input matInput [(ngModel)]=sectionItem.data type="text" placeholder="{{sectionItem.toolTip}}"
-                                        maxlength={{sectionItem.fieldValidations[0].dataLength}}
-                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) ||  (event.charCode > 47 && event.charCode < 58) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)">
-                                </mat-form-field>
-                            </ng-container>
+                                                <!-- Drawing type -->
+                                                <ng-container
+                                                    *ngIf="subsectionItem.fieldType.value=='imagearea' && subsectionItem.isActive===true">
+                                                    <label style="color:black">{{subsectionItem.questionName}}</label>
+                                                    <div style="height: 5px;"></div>
+                                                    <div class="signature-image" *ngIf="sectionItem.data!==''">
+                                                        <img src={{subsectionItem.data}} />
+                                                    </div>
+                                                    <mat-button-toggle-group name="buttons">
+                                                        <mat-button-toggle value="save"
+                                                            style="background-color: whitesmoke;font-weight: 500;color: black;"
+                                                            (click)="savePad(subsectionItem)">Capture Drawing
+                                                        </mat-button-toggle>
+                                                    </mat-button-toggle-group>
+                                                    <div style="height: 5px;"></div>
+                                                </ng-container>
 
-                            <!-- Email Type -->
-                            <ng-container
-                                *ngIf="sectionItem.fieldType.value=='EmailAddress' && sectionItem.isActive===true ">
 
-                                <label style="color:black">{{sectionItem.questionName}}</label>
-                                <mat-form-field appearance="outline">
-                                    <input matInput type="email" [(ngModel)]=sectionItem.data placeholder="{{sectionItem.toolTip}}"
-                                       >
-                                </mat-form-field>
-                                <div style="height: 5px;"></div>
-                            </ng-container>
+                                                <!-- Date Type -->
+                                                <ng-container
+                                                    *ngIf="subsectionItem.fieldType.value=='date' && subsectionItem.isActive===true ">
+                                                    <label style="color:black">{{subsectionItem.questionName}}</label>
+                                                    <mat-form-field appearance="outline">
+                                                        <input matInput type="date" [(ngModel)]=subsectionItem.data
+                                                            placeholder="{{subsectionItem.toolTip}}"
+                                                            value="{{subsectionItem.data}}">
+                                                    </mat-form-field>
+                                                </ng-container>
 
-                            <!-- Radio button Type -->
-                            <ng-container
-                                *ngIf="sectionItem.fieldType.value=='field or' && sectionItem.isActive===true ">
-                                <label style="color:black">{{sectionItem.questionName}}</label>
-                                <div style="height: 5px;"></div>
-                                <mat-radio-group [(ngModel)]=sectionItem.data class="radio" matInput
-                                    aria-label="Select an option">
-                                    <mat-radio-button style="color: black;" *ngFor="let list of sectionItem.listValue"
-                                        [value]="list.value">
-                                        {{list.name}} &nbsp;
-                                    </mat-radio-button>
-                                </mat-radio-group>
-                                <div style="height: 5px;"></div>
-                            </ng-container>
+                                                <!-- Text Type -->
+                                                <ng-container
+                                                    *ngIf="(subsectionItem.fieldType.value=='plaintext') && subsectionItem.isActive===true ">
+                                                    <label style="color:black">{{subsectionItem.questionName}}</label>
+                                                    <mat-form-field appearance="outline">
+                                                        <textarea matInput [(ngModel)]=subsectionItem.data
+                                                            maxlength={{subsectionItem.fieldValidations[0].dataLength}}
+                                                            placeholder="{{subsectionItem.toolTip}}"
+                                                            rows="{{subsectionItem.fieldStyles[0].height}}"></textarea>
+                                                    </mat-form-field>
+                                                </ng-container>
 
-                            <!-- Checkbox Type-->
-                            <ng-container
-                                *ngIf="sectionItem.fieldType.value=='checkbox' && sectionItem.isActive===true ">
-                                <label style="color:black">{{sectionItem.questionName}}</label>
-                                <div style="height: 5px;"></div>
-                                <p *ngFor="let list of sectionItem.listValue; let i = index" class="checkbox">
-                                    <mat-checkbox [(ngModel)]=sectionItem.data>
-                                        {{list.name}}
-                                    </mat-checkbox>
-                                </p>
-                                <div style="height: 5px;"></div>
-                            </ng-container>
+                                                <!-- Alphanumeric Type -->
+                                                <ng-container
+                                                    *ngIf="(subsectionItem.fieldType.value=='Alphanumeric' ) && subsectionItem.isActive===true ">
+                                                    <label style="color:black">{{subsectionItem.questionName}}</label>
+                                                    <mat-form-field appearance="outline">
+                                                        <textarea matInput [(ngModel)]=subsectionItem.data
+                                                            onkeypress="return (event.charCode > 64 && event.charCode < 91) ||  (event.charCode > 47 && event.charCode < 58) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
+                                                            maxlength={{subsectionItem.fieldValidations[0].dataLength}}
+                                                            placeholder="{{subsectionItem.toolTip}}"
+                                                            rows="{{subsectionItem.fieldStyles[0].height}}"></textarea>
+                                                    </mat-form-field>
+                                                </ng-container>
 
-                            <!-- Number Type -->
-                            <ng-container *ngIf="sectionItem.fieldType.value=='number' && sectionItem.isActive===true ">
-                                <label style="color:black">{{sectionItem.questionName}}</label>
-                                <mat-form-field appearance="outline">
-                                    <input matInput type="number" [(ngModel)]=sectionItem.data
-                                        maxlength={{sectionItem.fieldValidations[0].dataLength}}
-                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                        placeholder="{{sectionItem.toolTip}}">
-                                </mat-form-field>
-                                <div style="height: 5px;"></div>
-                            </ng-container>
+                                                <!-- PlainAlpha Type -->
+                                                <ng-container
+                                                    *ngIf="(subsectionItem.fieldType.value=='plainalpha') && subsectionItem.isActive===true ">
+                                                    <label style="color:black">{{subsectionItem.questionName}}</label>
+                                                    <mat-form-field appearance="outline">
+                                                        <textarea matInput [(ngModel)]=subsectionItem.data
+                                                            onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
+                                                            maxlength={{subsectionItem.fieldValidations[0].dataLength}}
+                                                            placeholder="{{subsectionItem.toolTip}}"
+                                                            rows="{{subsectionItem.fieldStyles[0].height}}"></textarea>
+                                                    </mat-form-field>
+                                                </ng-container>
 
-                            <!-- Decimal Type -->
-                            <ng-container
-                                *ngIf="sectionItem.fieldType.value=='decimal' && sectionItem.isActive===true ">
-                                <label style="color:black">{{sectionItem.questionName}}</label>
-                                <mat-form-field appearance="outline">
-                                    <input matInput type="number" step="any" [(ngModel)]=sectionItem.data
-                                        maxlength={{sectionItem.fieldValidations[0].dataLength}}
-                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                        placeholder="{{sectionItem.toolTip}}">
-                                </mat-form-field>
-                                <div style="height: 5px;"></div>
-                            </ng-container>
+                                                <!-- Email Type -->
+                                                <ng-container
+                                                    *ngIf="subsectionItem.fieldType.value=='EmailAddress' && subsectionItem.isActive===true ">
 
-                            <!-- Calculation Type -->
-                            <ng-container
-                                *ngIf="sectionItem.fieldType.value=='calculation' && sectionItem.isActive===true ">
-                                <label style="color:black">{{sectionItem.questionName}}</label>
-                                <mat-form-field appearance="outline">
-                                    <input matInput type="number" [(ngModel)]=sectionItem.data readonly
-                                        placeholder="{{sectionItem.toolTip}}">
-                                </mat-form-field>
-                                <div style="height: 5px;"></div>
-                            </ng-container>
+                                                    <label style="color:black">{{subsectionItem.questionName}}</label>
+                                                    <mat-form-field appearance="outline">
+                                                        <input matInput type="email" [(ngModel)]=subsectionItem.data
+                                                            placeholder="{{subsectionItem.toolTip}}"
+                                                            value="{{subsectionItem.data}}">
+                                                    </mat-form-field>
+                                                    <div style="height: 5px;"></div>
+                                                </ng-container>
 
-                            <!-- Attachment Type -->
-                            <ng-container
-                                *ngIf="sectionItem.fieldType.value=='attachment' && sectionItem.isActive===true ">
-                                <label style="color:black">{{sectionItem.questionName}}</label>
-                                <mat-form-field>
-                                    <ng-container>
-                                        <mat-toolbar>
-                                            <input matInput readonly name="name" />
-                                            <button mat-flat-button style="background-color: rgb(235, 236, 236);">
-                                                Browse File
+                                                <!-- Radio button Type -->
+                                                <ng-container
+                                                    *ngIf="subsectionItem.fieldType.value=='field or' && subsectionItem.isActive===true ">
+                                                    <label style="color:black">{{subsectionItem.questionName}}</label>
+                                                    <div style="height: 5px;"></div>
+                                                    <mat-radio-group [(ngModel)]=subsectionItem.data class="radio"
+                                                        matInput aria-label="Select an option">
+                                                        <mat-radio-button style="color: black;"
+                                                            *ngFor="let list of subsectionItem.listValue"
+                                                            [value]="list.value">
+                                                            {{list.name}} &nbsp;
+                                                        </mat-radio-button>
+                                                    </mat-radio-group>
+                                                    <div style="height: 5px;"></div>
+                                                </ng-container>
+
+                                                <!-- Checkbox Type-->
+                                                <ng-container
+                                                    *ngIf="subsectionItem.fieldType.value=='checkbox' && subsectionItem.isActive===true ">
+                                                    <label style="color:black">{{subsectionItem.questionName}}</label>
+                                                    <div style="height: 5px;"></div>
+                                                    <p *ngFor="let list of subsectionItem.listValue; let i = index"
+                                                        class="checkbox">
+                                                        <mat-checkbox [(ngModel)]=subsectionItem.data>
+                                                            {{list.name}}
+                                                        </mat-checkbox>
+                                                    </p>
+                                                    <div style="height: 5px;"></div>
+                                                </ng-container>
+
+                                                <!-- Number Type -->
+                                                <ng-container
+                                                    *ngIf="subsectionItem.fieldType.value=='number' && subsectionItem.isActive===true ">
+                                                    <label style="color:black">{{subsectionItem.questionName}}</label>
+                                                    <mat-form-field appearance="outline">
+                                                        <input matInput type="number" [(ngModel)]=subsectionItem.data
+                                                            [(ngModel)]=subsectionItem.data
+                                                            maxlength={{subsectionItem.fieldValidations[0].dataLength}}
+                                                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                                            placeholder="{{subsectionItem.toolTip}}"
+                                                            value="{{subsectionItem.data}}">
+                                                    </mat-form-field>
+                                                    <div style="height: 5px;"></div>
+                                                </ng-container>
+
+                                                <!-- Decimal Type -->
+                                                <ng-container
+                                                    *ngIf="subsectionItem.fieldType.value=='decimal' && subsectionItem.isActive===true ">
+                                                    <label style="color:black">{{subsectionItem.questionName}}</label>
+                                                    <mat-form-field appearance="outline">
+                                                        <input matInput type="number" step="any"
+                                                            [(ngModel)]=subsectionItem.data
+                                                            [(ngModel)]=subsectionItem.data
+                                                            maxlength={{subsectionItem.fieldValidations[0].dataLength}}
+                                                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                                            placeholder="{{subsectionItem.toolTip}}"
+                                                            value="{{subsectionItem.data}}">
+                                                    </mat-form-field>
+                                                    <div style="height: 5px;"></div>
+                                                </ng-container>
+
+                                                <!-- Calculation Type -->
+                                                <ng-container
+                                                    *ngIf="subsectionItem.fieldType.value=='calculation' && subsectionItem.isActive===true ">
+                                                    <label style="color:black">{{subsectionItem.questionName}}</label>
+                                                    <mat-form-field appearance="outline">
+                                                        <input matInput type="number" [(ngModel)]=subsectionItem.data
+                                                            readonly placeholder="{{subsectionItem.toolTip}}"
+                                                            value="{{subsectionItem.data}}">
+                                                    </mat-form-field>
+                                                    <div style="height: 5px;"></div>
+                                                </ng-container>
+
+                                                <!-- select Type -->
+                                                <ng-container
+                                                    *ngIf="subsectionItem.fieldType.value=='lexicon data' && subsectionItem.isActive===true ">
+                                                    <label style="color:black">{{subsectionItem.questionName}}</label>
+                                                    <mat-form-field appearance="outline">
+                                                        <mat-label>Select a option</mat-label>
+                                                        <mat-select name="list" [(ngModel)]=subsectionItem.data
+                                                            panelClass="myPanelClass">
+                                                            <mat-option *ngFor="let list of subsectionItem.listValue"
+                                                                style="color: black;" [value]="list.value">
+                                                                {{list.name}}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                    <div style="height: 5px;"></div>
+                                                </ng-container>
+                                            </ng-container>
+                                            <button mat-stroked-button
+                                                style="background-color: whitesmoke;color: black;"
+                                                (click)=addRepeat(sectionItem.groupGUID)>
+                                                Save Repeat
                                             </button>
-                                        </mat-toolbar>
-                                        <input type="file" [(ngModel)]=sectionItem.data #fileInput id="uploadFile"
-                                            (change)="uploadFileEvt($event)" name="uploadFile" multiple="single"
-                                            accept="image/*" />
+                                        </mat-expansion-panel>
+                                        <div style="height: 5px;"></div>
                                     </ng-container>
-                                </mat-form-field>
-                                <div style="height: 5px;"></div>
-                            </ng-container>
 
-                            <!-- select Type -->
-                            <ng-container
-                                *ngIf="sectionItem.fieldType.value=='lexicon data' && sectionItem.isActive===true ">
-                                <label style="color:black">{{sectionItem.questionName}}</label>
-                                <mat-form-field appearance="outline">
-                                    <mat-label>Select a option</mat-label>
-                                    <mat-select [(ngModel)]=sectionItem.data panelClass="myPanelClass">
-                                        <mat-option *ngFor="let list of sectionItem.listValue" style="color: black;"
-                                            [value]="list.value">
-                                            {{list.name}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                                <div style="height: 5px;"></div>
-                            </ng-container>
-                        </ng-container>
-                    </mat-expansion-panel>
-                    <div style="height: 5px;"></div>
-                </ng-container>
-
-                <!-- Group Type -->
-                <ng-container
-                    *ngIf="(item.fieldType.value=='repeatgroup') && item.isActive===true && item.parentFieldName===''">
-                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                        <mat-expansion-panel-header
-                            style="background: linear-gradient(147deg, #f1f1f1 36%, #00f7ff  74%);color: black;">
-                            <mat-panel-title>
-                                {{item.questionName}}
-                            </mat-panel-title>
-                            <mat-panel-description></mat-panel-description>
-                        </mat-expansion-panel-header>
-
-                        <table class="table table-striped">
-                            <tr>
-                                <th> Edit </th>
-                                <th> Delete </th>
-                                <th> Value One </th>
-                                <th> Value Two </th>
-                                <th> No. </th>
-                            </tr>
-                            <tr *ngFor="let dataItem of item.groupTableList;let i=index">
-                                <td>
-                                    <mat-icon class="mat-18" (click)=editRepeat(item.groupGUID,dataItem.cloneNum,item.groupGUID[0].parentFieldName) >edit</mat-icon>
-                                </td>
-                                <td>
-                                    <mat-icon class="mat-18"
-                                        (click)=deleteClone(dataItem.cloneNum,item.groupGUID[0].parentFieldName)>delete
-                                    </mat-icon>
-                                </td>
-                                <td>{{dataItem.colOne}}</td>
-                                <td>{{dataItem.colTwo}}</td>
-                                <td>{{i+1}}</td>
-                            </tr>
-                        </table>
-
-                        <ng-container *ngFor="let sectionItem of item.groupGUID;let i= index"
-                            style="background-color: white;text-align: left;height: 100px;font-weight: bold;">
-                            <!-- subSection Type -->
-                            <ng-container
-                                *ngIf="(sectionItem.fieldType.value=='subSection') && sectionItem.isActive===true">
-                                <mat-expansion-panel disabled hideToggle>
-                                    <mat-expansion-panel-header
-                                        style="background: linear-gradient(147deg, #f1f1f1 36%, #9ff1ff 74%)">
-                                        <mat-panel-title style="color:black;">
-                                            {{sectionItem.questionName}}
-                                        </mat-panel-title>
-                                        <mat-panel-description></mat-panel-description>
-                                    </mat-expansion-panel-header>
-                                </mat-expansion-panel>
-                                <div style="height: 5px;"></div>
-                            </ng-container>
-
-                            <!-- Time Type -->
-                            <ng-container *ngIf="sectionItem.fieldType.value=='Time' && sectionItem.isActive===true ">
-                                <label style="color:black">{{sectionItem.questionName}}</label>
-                                <mat-form-field appearance="outline">
-                                    <input matInput type="time" [(ngModel)]=sectionItem.data
-                                        placeholder="{{sectionItem.toolTip}}">
-                                </mat-form-field>
-                            </ng-container>
-
-                            <!-- Drawing/signature Type -->
-                            <ng-container
-                                *ngIf="sectionItem.fieldType.value=='signature' || sectionItem.fieldType.value=='imagearea' && sectionItem.isActive===true">
-                                <label style="color:black">{{item.questionName}}</label>
-                                <div class="signature-container">
-                                    <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()"
-                                        (onEndEvent)="drawComplete()">
-                                    </signature-pad>
-                                </div>
-                                <button (click)="clearSignature()"
-                                    style="font-weight: 500;background-color: whitesmoke;color: black;">Clear
-                                    signature pad</button>
-                                <button (click)="savePad()"
-                                    style="font-weight: 500;background-color: whitesmoke;color: black;">Save
-                                    signature</button>
-                                <!--  <div class="signature-image" *ngIf="signatureImg">
-                                    <img src='{{ signatureImg }}' />
-                                </div> -->
-                            </ng-container>
-
-                            <!-- Date Type -->
-                            <ng-container *ngIf="sectionItem.fieldType.value=='date' && sectionItem.isActive===true ">
-                                <label style="color:black">{{sectionItem.questionName}}</label>
-                                <mat-form-field appearance="outline">
-                                    <input matInput type="date" [(ngModel)]=sectionItem.data
-                                        placeholder="{{sectionItem.toolTip}}">
-                                </mat-form-field>
-                            </ng-container>
-
-                            <!-- Text Type -->
-                            <ng-container
-                                *ngIf="(sectionItem.fieldType.value=='plaintext') && sectionItem.isActive===true ">
-                                <label style="color:black">{{sectionItem.questionName}}</label>
-                                <mat-form-field appearance="outline">
-                                    <input matInput [(ngModel)]=sectionItem.data type="text"
-                                        placeholder="{{sectionItem.toolTip}}"
-                                        maxlength={{sectionItem.fieldValidations[0].dataLength}}>
-                                </mat-form-field>
-                            </ng-container>
-
-                            <!-- alpha Type -->
-                            <ng-container
-                                *ngIf="(sectionItem.fieldType.value=='plainalpha') && sectionItem.isActive===true ">
-                                <label style="color:black">{{sectionItem.questionName}}</label>
-                                <mat-form-field appearance="outline">
-                                    <input matInput [(ngModel)]=sectionItem.data type="text"
-                                        placeholder="{{sectionItem.toolTip}}"
-                                        maxlength={{sectionItem.fieldValidations[0].dataLength}}
-                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)">
-                                </mat-form-field>
-                            </ng-container>
-
-                            <!-- Alphanumeric Type -->
-                            <ng-container
-                                *ngIf="(sectionItem.fieldType.value=='Alphanumeric') && sectionItem.isActive===true ">
-                                <label style="color:black">{{sectionItem.questionName}}</label>
-                                <mat-form-field appearance="outline">
-                                    <input matInput [(ngModel)]=sectionItem.data type="text"
-                                        placeholder="{{sectionItem.toolTip}}"
-                                        maxlength={{sectionItem.fieldValidations[0].dataLength}}
-                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) ||  (event.charCode > 47 && event.charCode < 58) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)">
-                                </mat-form-field>
-                            </ng-container>
-
-                            <!-- Email Type -->
-                            <ng-container
-                                *ngIf="sectionItem.fieldType.value=='EmailAddress' && sectionItem.isActive===true ">
-
-                                <label style="color:black">{{sectionItem.questionName}}</label>
-                                <mat-form-field appearance="outline">
-                                    <input matInput type="email" [(ngModel)]=sectionItem.data
-                                        placeholder="{{sectionItem.toolTip}}">
-                                </mat-form-field>
-                                <div style="height: 5px;"></div>
-                            </ng-container>
-
-                            <!-- Radio button Type -->
-                            <ng-container
-                                *ngIf="sectionItem.fieldType.value=='field or' && sectionItem.isActive===true ">
-                                <label style="color:black">{{sectionItem.questionName}}</label>
-                                <div style="height: 5px;"></div>
-                                <mat-radio-group [(ngModel)]=sectionItem.data class="radio" matInput
-                                    aria-label="Select an option">
-                                    <mat-radio-button style="color: black;" *ngFor="let list of sectionItem.listValue"
-                                        [value]="list.value">
-                                        {{list.name}} &nbsp;
-                                    </mat-radio-button>
-                                </mat-radio-group>
-                                <div style="height: 5px;"></div>
-                            </ng-container>
-
-                            <!-- Checkbox Type-->
-                            <ng-container
-                                *ngIf="sectionItem.fieldType.value=='checkbox' && sectionItem.isActive===true ">
-                                <label style="color:black">{{sectionItem.questionName}}</label>
-                                <div style="height: 5px;"></div>
-                                <p *ngFor="let list of sectionItem.listValue; let i = index" class="checkbox">
-                                    <mat-checkbox [(ngModel)]=sectionItem.data>
-                                        {{list.name}}
-                                    </mat-checkbox>
-                                </p>
-                                <div style="height: 5px;"></div>
-                            </ng-container>
-
-                            <!-- Number Type -->
-                            <ng-container *ngIf="sectionItem.fieldType.value=='number' && sectionItem.isActive===true ">
-                                <label style="color:black">{{sectionItem.questionName}}</label>
-                                <mat-form-field appearance="outline">
-                                    <input matInput type="number" [(ngModel)]=sectionItem.data
-                                        maxlength={{sectionItem.fieldValidations[0].dataLength}}
-                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                        placeholder="{{sectionItem.toolTip}}">
-                                </mat-form-field>
-                                <div style="height: 5px;"></div>
-                            </ng-container>
-
-                            <!-- Decimal Type -->
-                            <ng-container
-                                *ngIf="sectionItem.fieldType.value=='decimal' && sectionItem.isActive===true ">
-                                <label style="color:black">{{sectionItem.questionName}}</label>
-                                <mat-form-field appearance="outline">
-                                    <input matInput type="number" step="any" [(ngModel)]=sectionItem.data
-                                        maxlength={{sectionItem.fieldValidations[0].dataLength}}
-                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                        placeholder="{{sectionItem.toolTip}}">
-                                </mat-form-field>
-                                <div style="height: 5px;"></div>
-                            </ng-container>
-
-                            <!-- Calculation Type -->
-                            <ng-container
-                                *ngIf="sectionItem.fieldType.value=='calculation' && sectionItem.isActive===true ">
-                                <label style="color:black">{{sectionItem.questionName}}</label>
-                                <mat-form-field appearance="outline">
-                                    <input matInput type="number" [(ngModel)]=sectionItem.data readonly
-                                        placeholder="{{sectionItem.toolTip}}">
-                                </mat-form-field>
-                                <div style="height: 5px;"></div>
-                            </ng-container>
-
-                            <!-- Attachment Type -->
-                            <ng-container
-                                *ngIf="sectionItem.fieldType.value=='attachment' && sectionItem.isActive===true ">
-                                <label style="color:black">{{sectionItem.questionName}}</label>
-                                <mat-form-field>
-                                    <ng-container>
-                                        <mat-toolbar>
-                                            <input matInput readonly name="name" />
-                                            <button mat-flat-button style="background-color: rgb(235, 236, 236);">
-                                                Browse File
-                                            </button>
-                                        </mat-toolbar>
-                                        <input type="file" [(ngModel)]=sectionItem.data #fileInput id="uploadFile"
-                                            (change)="uploadFileEvt($event)" name="uploadFile" multiple="single"
-                                            accept="image/*" />
+                                    <!-- Text Type -->
+                                    <ng-container
+                                        *ngIf="(sectionItem.fieldType.value=='plaintext') && sectionItem.isActive===true ">
+                                        <label style="color:black">{{sectionItem.questionName}}</label>
+                                        <mat-form-field appearance="outline">
+                                            <textarea matInput [(ngModel)]=sectionItem.data
+                                                maxlength={{sectionItem.fieldValidations[0].dataLength}}
+                                                placeholder="{{sectionItem.toolTip}}"
+                                                rows="{{sectionItem.fieldStyles[0].height}}"></textarea>
+                                        </mat-form-field>
                                     </ng-container>
-                                </mat-form-field>
-                                <div style="height: 5px;"></div>
-                            </ng-container>
 
-                            <!-- select Type -->
-                            <ng-container
-                                *ngIf="sectionItem.fieldType.value=='lexicon data' && sectionItem.isActive===true ">
-                                <label style="color:black">{{sectionItem.questionName}}</label>
-                                <mat-form-field appearance="outline">
-                                    <mat-label>Select a option</mat-label>
-                                    <mat-select [(ngModel)]=sectionItem.data panelClass="myPanelClass">
-                                        <mat-option *ngFor="let list of sectionItem.listValue" style="color: black;"
-                                            [value]="list.value">
-                                            {{list.name}}
-                                        </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                                <div style="height: 5px;"></div>
-                            </ng-container>
+                                    <!-- plain alpha Type -->
+                                    <ng-container
+                                        *ngIf="(sectionItem.fieldType.value=='plainalpha') && sectionItem.isActive===true ">
+                                        <label style="color:black">{{sectionItem.questionName}}</label>
+                                        <mat-form-field appearance="outline">
+                                            <textarea matInput
+                                                onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
+                                                [(ngModel)]=sectionItem.data
+                                                maxlength={{sectionItem.fieldValidations[0].dataLength}}
+                                                placeholder="{{sectionItem.toolTip}}"
+                                                rows="{{sectionItem.fieldStyles[0].height}}"></textarea>
+                                        </mat-form-field>
+                                    </ng-container>
+
+                                    <!-- Alphanumeric Type -->
+                                    <ng-container
+                                        *ngIf="(sectionItem.fieldType.value=='Alphanumeric') && sectionItem.isActive===true ">
+                                        <label style="color:black">{{sectionItem.questionName}}</label>
+                                        <mat-form-field appearance="outline">
+                                            <textarea matInput [(ngModel)]=sectionItem.data
+                                                maxlength={{sectionItem.fieldValidations[0].dataLength}}
+                                                onkeypress="return (event.charCode > 64 && event.charCode < 91) ||  (event.charCode > 47 && event.charCode < 58) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
+                                                placeholder="{{sectionItem.toolTip}}"
+                                                rows="{{sectionItem.fieldStyles[0].height}}"></textarea>
+                                        </mat-form-field>
+                                    </ng-container>
+
+                                    <!-- Email Type -->
+                                    <ng-container
+                                        *ngIf="sectionItem.fieldType.value=='EmailAddress' && sectionItem.isActive===true ">
+
+                                        <label style="color:black">{{sectionItem.questionName}}</label>
+                                        <mat-form-field appearance="outline">
+                                            <input matInput type="email" [(ngModel)]=sectionItem.data
+                                                placeholder="{{sectionItem.toolTip}}">
+                                        </mat-form-field>
+                                        <div style="height: 5px;"></div>
+                                    </ng-container>
+
+                                    <!-- Radio button Type -->
+                                    <ng-container
+                                        *ngIf="sectionItem.fieldType.value=='field or' && sectionItem.isActive===true ">
+                                        <label style="color:black">{{sectionItem.questionName}}</label>
+                                        <div style="height: 5px;"></div>
+                                        <mat-radio-group [(ngModel)]=sectionItem.data class="radio" matInput
+                                            aria-label="Select an option">
+                                            <mat-radio-button style="color: black;"
+                                                *ngFor="let list of sectionItem.listValue" [value]="list.value">
+                                                {{list.name}} &nbsp;
+                                            </mat-radio-button>
+                                        </mat-radio-group>
+                                        <div style="height: 5px;"></div>
+                                    </ng-container>
+
+                                    <!-- Checkbox Type-->
+                                    <ng-container
+                                        *ngIf="sectionItem.fieldType.value=='checkbox' && sectionItem.isActive===true ">
+                                        <label style="color:black">{{sectionItem.questionName}}</label>
+                                        <div style="height: 5px;"></div>
+                                        <p *ngFor="let list of sectionItem.listValue; let i = index" class="checkbox">
+                                            <mat-checkbox [(ngModel)]=sectionItem.data>
+                                                {{list.name}}
+                                            </mat-checkbox>
+                                        </p>
+                                        <div style="height: 5px;"></div>
+                                    </ng-container>
+
+                                    <!-- Number Type -->
+                                    <ng-container
+                                        *ngIf="sectionItem.fieldType.value=='number' && sectionItem.isActive===true ">
+                                        <label style="color:black">{{sectionItem.questionName}}</label>
+                                        <mat-form-field appearance="outline">
+                                            <input matInput type="number" [(ngModel)]=sectionItem.data
+                                                maxlength={{sectionItem.fieldValidations[0].dataLength}}
+                                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                                placeholder="{{sectionItem.toolTip}}">
+                                        </mat-form-field>
+                                        <div style="height: 5px;"></div>
+                                    </ng-container>
+
+                                    <!-- Decimal Type -->
+                                    <ng-container
+                                        *ngIf="sectionItem.fieldType.value=='decimal' && sectionItem.isActive===true ">
+                                        <label style="color:black">{{sectionItem.questionName}}</label>
+                                        <mat-form-field appearance="outline">
+                                            <input matInput type="number" step="any" [(ngModel)]=sectionItem.data
+                                                maxlength={{sectionItem.fieldValidations[0].dataLength}}
+                                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                                placeholder="{{sectionItem.toolTip}}">
+                                        </mat-form-field>
+                                        <div style="height: 5px;"></div>
+                                    </ng-container>
+
+                                    <!-- Calculation Type -->
+                                    <ng-container
+                                        *ngIf="sectionItem.fieldType.value=='calculation' && sectionItem.isActive===true ">
+                                        <label style="color:black">{{sectionItem.questionName}}</label>
+                                        <mat-form-field appearance="outline">
+                                            <input matInput type="number" [(ngModel)]=sectionItem.data readonly
+                                                placeholder="{{sectionItem.toolTip}}">
+                                        </mat-form-field>
+                                        <div style="height: 5px;"></div>
+                                    </ng-container>
+
+                                    <!-- select Type -->
+                                    <ng-container
+                                        *ngIf="sectionItem.fieldType.value=='lexicon data' && sectionItem.isActive===true ">
+                                        <label style="color:black">{{sectionItem.questionName}}</label>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Select a option</mat-label>
+                                            <mat-select name="list" [(ngModel)]=sectionItem.data panelClass="myPanelClass">
+                                                <mat-option *ngFor="let list of sectionItem.listValue"
+                                                    style="color: black;" [value]="list.value">
+                                                    {{list.name}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                        <div style="height: 5px;"></div>
+                                    </ng-container>
+                                </ng-container>
+                            </mat-expansion-panel>
+                            <div style="height: 5px;"></div>
                         </ng-container>
-                        <button mat-stroked-button style="background-color: whitesmoke;color: black;"
-                            (click)=addRepeat(item.groupGUID)>
-                            Save Repeat
-                        </button>
-                    </mat-expansion-panel>
-                    <div style="height: 5px;"></div>
-                </ng-container>
 
-                <!-- Page Title Type -->
-                <ng-container
-                    *ngIf="(item.fieldType.value=='PageTitle') && item.isActive===true && item.parentFieldName===''">
-                    <mat-expansion-panel disabled hideToggle>
-                        <mat-expansion-panel-header
-                            style="background:linear-gradient(147deg, #f1f1f1 36%, #028ea7 74%)">
-                            <mat-panel-title style="color:black;font-weight: 500;">
-                                {{item.questionName}}
-                            </mat-panel-title>
-                            <mat-panel-description></mat-panel-description>
-                        </mat-expansion-panel-header>
-                    </mat-expansion-panel>
-                    <div style="height: 5px;"></div>
-                </ng-container>
+                        <!-- Group Type -->
+                        <ng-container
+                            *ngIf="(item.fieldType.value=='repeatgroup') && item.isActive===true && item.parentFieldName===''">
+                            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                                <mat-expansion-panel-header
+                                    style="background: linear-gradient(147deg, #f1f1f1 36%, #00f7ff  74%);color: black;">
+                                    <mat-panel-title>
+                                        {{item.questionName}}
+                                    </mat-panel-title>
+                                    <mat-panel-description></mat-panel-description>
+                                </mat-expansion-panel-header>
 
-                <!-- subSection Type -->
-                <ng-container
-                    *ngIf="(item.fieldType.value=='subSection') && item.isActive===true && item.parentFieldName===''">
-                    <mat-expansion-panel disabled hideToggle>
-                        <mat-expansion-panel-header
-                            style="background: linear-gradient(147deg, #f1f1f1 36%, #9ff1ff 74%)">
-                            <mat-panel-title style="color:black;">
-                                {{item.questionName}}
-                            </mat-panel-title>
-                            <mat-panel-description></mat-panel-description>
-                        </mat-expansion-panel-header>
-                    </mat-expansion-panel>
-                    <div style="height: 5px;"></div>
-                </ng-container>
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th> Edit </th>
+                                        <th> Delete </th>
+                                        <th> Value One </th>
+                                        <th> Value Two </th>
+                                        <th> No. </th>
+                                    </tr>
+                                    <tr *ngFor="let dataItem of item.groupTableList;let i=index">
+                                        <td>
+                                            <mat-icon class="mat-18"
+                                                (click)=editRepeat(item.groupGUID,dataItem.cloneNum,item.groupGUID[0].parentFieldName)>
+                                                edit</mat-icon>
+                                        </td>
+                                        <td>
+                                            <mat-icon class="mat-18"
+                                                (click)=deleteClone(dataItem.cloneNum,item.groupGUID[0].parentFieldName)>
+                                                delete
+                                            </mat-icon>
+                                        </td>
+                                        <td>{{dataItem.colOne}}</td>
+                                        <td>{{dataItem.colTwo}}</td>
+                                        <td>{{i+1}}</td>
+                                    </tr>
+                                </table>
 
-                <!-- Email Type -->
-                <ng-container
-                    *ngIf="item.fieldType.value=='EmailAddress' && item.isActive===true && item.parentFieldName===''">
+                                <ng-container *ngFor="let sectionItem of item.groupGUID;let i= index"
+                                    style="background-color: white;text-align: left;height: 100px;font-weight: bold;">
+                                    <!-- subSection Type -->
+                                    <ng-container
+                                        *ngIf="(sectionItem.fieldType.value=='subSection') && sectionItem.isActive===true">
+                                        <mat-expansion-panel disabled hideToggle>
+                                            <mat-expansion-panel-header
+                                                style="background: linear-gradient(147deg, #f1f1f1 36%, #9ff1ff 74%)">
+                                                <mat-panel-title style="color:black;">
+                                                    {{sectionItem.questionName}}
+                                                </mat-panel-title>
+                                                <mat-panel-description></mat-panel-description>
+                                            </mat-expansion-panel-header>
+                                        </mat-expansion-panel>
+                                        <div style="height: 5px;"></div>
+                                    </ng-container>
 
-                    <label style="color:black">{{item.questionName}}</label>
-                    <mat-form-field appearance="outline">
-                        <input matInput type="email" [(ngModel)]=item.data placeholder="{{item.toolTip}}"
-                           >
-                    </mat-form-field>
-                    <div style="height: 5px;"></div>
-                </ng-container>
+                                    <!-- Time Type -->
+                                    <ng-container
+                                        *ngIf="sectionItem.fieldType.value=='Time' && sectionItem.isActive===true ">
+                                        <label style="color:black">{{sectionItem.questionName}}</label>
+                                        <mat-form-field appearance="outline">
+                                            <input matInput type="time" [(ngModel)]=sectionItem.data
+                                                placeholder="{{sectionItem.toolTip}}">
+                                        </mat-form-field>
+                                    </ng-container>
 
-                <!-- Radio button Type -->
-                <ng-container
-                    *ngIf="item.fieldType.value=='field or' && item.isActive===true && item.parentFieldName===''">
-                    <label style="color:black">{{item.questionName}}</label>
-                    <div style="height: 5px;"></div>
-                    <mat-radio-group [(ngModel)]=item.data class="radio" matInput aria-label="Select an option">
-                        <mat-radio-button style="color: black;" *ngFor="let list of item.listValue"
-                            [value]="list.value">
-                            {{list.name}} &nbsp;
-                        </mat-radio-button>
-                    </mat-radio-group>
-                    <div style="height: 5px;"></div>
-                </ng-container>
+                                    <!--signature Type -->
+                                    <ng-container
+                                        *ngIf="sectionItem.fieldType.value=='signature' && sectionItem.isActive===true">
+                                        <label style="color:black">{{item.questionName}}</label>
+                                        <div style="height: 5px;"></div>
+                                        <div class="signature-image" *ngIf="item.data!==''">
+                                            <img src={{sectionItem.data}} />
+                                        </div>
+                                        <mat-button-toggle-group name="buttons">
+                                            <mat-button-toggle value="save"
+                                                style="background-color: whitesmoke;font-weight: 500;color: black;"
+                                                (click)="savePad(sectionItem)">Capture signature</mat-button-toggle>
+                                        </mat-button-toggle-group>
+                                        <div style="height: 5px;"></div>
+                                    </ng-container>
 
-                <!-- Checkbox Type-->
-                <ng-container
-                    *ngIf="item.fieldType.value=='checkbox' && item.isActive===true && item.parentFieldName===''">
-                    <label style="color:black">{{item.questionName}}</label>
-                    <div style="height: 5px;"></div>
-                    <p *ngFor="let list of item.listValue; let i = index" class="checkbox">
-                        <mat-checkbox [(ngModel)]=item.data>
-                            {{list.name}}
-                        </mat-checkbox>
-                    </p>
-                    <div style="height: 5px;"></div>
-                </ng-container>
+                                    <!-- Drawing type -->
+                                    <ng-container
+                                        *ngIf="sectionItem.fieldType.value=='imagearea' && sectionItem.isActive===true">
+                                        <label style="color:black">{{item.questionName}}</label>
+                                        <div style="height: 5px;"></div>
+                                        <div class="signature-image" *ngIf="sectionItem.data!==''">
+                                            <img src={{sectionItem.data}} />
+                                        </div>
+                                        <mat-button-toggle-group name="buttons">
+                                            <mat-button-toggle value="save"
+                                                style="background-color: whitesmoke;font-weight: 500;color: black;"
+                                                (click)="savePad(sectionItem)">Capture Drawing</mat-button-toggle>
+                                        </mat-button-toggle-group>
+                                        <div style="height: 5px;"></div>
+                                    </ng-container>
 
-                <!-- Number Type -->
-                <ng-container
-                    *ngIf="item.fieldType.value=='number' && item.isActive===true && item.parentFieldName===''">
-                    <label style="color:black">{{item.questionName}}</label>
-                    <mat-form-field appearance="outline">
-                        <input matInput type="number" [(ngModel)]=item.data
-                            maxlength={{item.fieldValidations[0].dataLength}}
-                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                            placeholder="{{item.toolTip}}">
-                    </mat-form-field>
-                    <div style="height: 5px;"></div>
-                </ng-container>
+                                    <!-- Date Type -->
+                                    <ng-container
+                                        *ngIf="sectionItem.fieldType.value=='date' && sectionItem.isActive===true ">
+                                        <label style="color:black">{{sectionItem.questionName}}</label>
+                                        <mat-form-field appearance="outline">
+                                            <input matInput type="date" [(ngModel)]=sectionItem.data
+                                                placeholder="{{sectionItem.toolTip}}">
+                                        </mat-form-field>
+                                    </ng-container>
 
-                <!-- Decimal Type -->
-                <ng-container
-                    *ngIf="item.fieldType.value=='decimal' && item.isActive===true && item.parentFieldName===''">
-                    <label style="color:black">{{item.questionName}}</label>
-                    <mat-form-field appearance="outline">
-                        <input matInput type="number" step="any" [(ngModel)]=item.data
-                            maxlength={{item.fieldValidations[0].dataLength}}
-                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                            placeholder="{{item.toolTip}}">
-                    </mat-form-field>
-                    <div style="height: 5px;"></div>
-                </ng-container>
+                                    <!-- Text Type -->
+                                    <ng-container
+                                        *ngIf="(sectionItem.fieldType.value=='plaintext') && sectionItem.isActive===true ">
+                                        <label style="color:black">{{sectionItem.questionName}}</label>
+                                        <mat-form-field appearance="outline">
+                                            <textarea matInput [(ngModel)]=sectionItem.data
+                                                maxlength={{sectionItem.fieldValidations[0].dataLength}}
+                                                placeholder="{{sectionItem.toolTip}}"
+                                                rows="{{sectionItem.fieldStyles[0].height}}"></textarea>
+                                        </mat-form-field>
+                                    </ng-container>
 
-                <!-- Calculation Type -->
-                <ng-container
-                    *ngIf="item.fieldType.value=='calculation' && item.isActive===true && item.parentFieldName===''">
-                    <label style="color:black">{{item.questionName}}</label>
-                    <mat-form-field appearance="outline">
-                        <input matInput type="number" [(ngModel)]=item.data readonly placeholder="{{item.toolTip}}"
-                           >
-                    </mat-form-field>
-                    <div style="height: 5px;"></div>
-                </ng-container>
+                                    <!-- alpha Type -->
+                                    <ng-container
+                                        *ngIf="(sectionItem.fieldType.value=='plainalpha') && sectionItem.isActive===true ">
+                                        <label style="color:black">{{sectionItem.questionName}}</label>
+                                        <mat-form-field appearance="outline">
+                                            <textarea matInput [(ngModel)]=sectionItem.data
+                                                maxlength={{sectionItem.fieldValidations[0].dataLength}}
+                                                onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
+                                                placeholder="{{sectionItem.toolTip}}"
+                                                rows="{{sectionItem.fieldStyles[0].height}}"></textarea>
+                                        </mat-form-field>
+                                    </ng-container>
 
-                <!-- Attachment Type -->
-                <ng-container
-                    *ngIf="item.fieldType.value=='attachment' && item.isActive===true && item.parentFieldName===''">
-                    <label style="color:black">{{item.questionName}}</label>
-                    <mat-form-field>
-                        <ng-container>
-                            <mat-toolbar>
-                                <input matInput readonly name="name" />
-                                <button mat-flat-button style="background-color: rgb(235, 236, 236);">
-                                    Browse File
+                                    <!-- Alphanumeric Type -->
+                                    <ng-container
+                                        *ngIf="(sectionItem.fieldType.value=='Alphanumeric') && sectionItem.isActive===true ">
+                                        <label style="color:black">{{sectionItem.questionName}}</label>
+                                        <mat-form-field appearance="outline">
+                                            <textarea matInput [(ngModel)]=sectionItem.data
+                                                maxlength={{sectionItem.fieldValidations[0].dataLength}}
+                                                onkeypress="return (event.charCode > 64 && event.charCode < 91) ||  (event.charCode > 47 && event.charCode < 58) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
+                                                placeholder="{{sectionItem.toolTip}}"
+                                                rows="{{sectionItem.fieldStyles[0].height}}"></textarea>
+                                        </mat-form-field>
+                                    </ng-container>
+
+                                    <!-- Email Type -->
+                                    <ng-container
+                                        *ngIf="sectionItem.fieldType.value=='EmailAddress' && sectionItem.isActive===true ">
+
+                                        <label style="color:black">{{sectionItem.questionName}}</label>
+                                        <mat-form-field appearance="outline">
+                                            <input matInput type="email" [(ngModel)]=sectionItem.data
+                                                placeholder="{{sectionItem.toolTip}}">
+                                        </mat-form-field>
+                                        <div style="height: 5px;"></div>
+                                    </ng-container>
+
+                                    <!-- Radio button Type -->
+                                    <ng-container
+                                        *ngIf="sectionItem.fieldType.value=='field or' && sectionItem.isActive===true ">
+                                        <label style="color:black">{{sectionItem.questionName}}</label>
+                                        <div style="height: 5px;"></div>
+                                        <mat-radio-group [(ngModel)]=sectionItem.data class="radio" matInput
+                                            aria-label="Select an option">
+                                            <mat-radio-button style="color: black;"
+                                                *ngFor="let list of sectionItem.listValue" [value]="list.value">
+                                                {{list.name}} &nbsp;
+                                            </mat-radio-button>
+                                        </mat-radio-group>
+                                        <div style="height: 5px;"></div>
+                                    </ng-container>
+
+                                    <!-- Checkbox Type-->
+                                    <ng-container
+                                        *ngIf="sectionItem.fieldType.value=='checkbox' && sectionItem.isActive===true ">
+                                        <label style="color:black">{{sectionItem.questionName}}</label>
+                                        <div style="height: 5px;"></div>
+                                        <p *ngFor="let list of sectionItem.listValue; let i = index" class="checkbox">
+                                            <mat-checkbox [(ngModel)]=sectionItem.data>
+                                                {{list.name}}
+                                            </mat-checkbox>
+                                        </p>
+                                        <div style="height: 5px;"></div>
+                                    </ng-container>
+
+                                    <!-- Number Type -->
+                                    <ng-container
+                                        *ngIf="sectionItem.fieldType.value=='number' && sectionItem.isActive===true ">
+                                        <label style="color:black">{{sectionItem.questionName}}</label>
+                                        <mat-form-field appearance="outline">
+                                            <input matInput type="number" [(ngModel)]=sectionItem.data
+                                                maxlength={{sectionItem.fieldValidations[0].dataLength}}
+                                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                                placeholder="{{sectionItem.toolTip}}">
+                                        </mat-form-field>
+                                        <div style="height: 5px;"></div>
+                                    </ng-container>
+
+                                    <!-- Decimal Type -->
+                                    <ng-container
+                                        *ngIf="sectionItem.fieldType.value=='decimal' && sectionItem.isActive===true ">
+                                        <label style="color:black">{{sectionItem.questionName}}</label>
+                                        <mat-form-field appearance="outline">
+                                            <input matInput type="number" step="any" [(ngModel)]=sectionItem.data
+                                                maxlength={{sectionItem.fieldValidations[0].dataLength}}
+                                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                                placeholder="{{sectionItem.toolTip}}">
+                                        </mat-form-field>
+                                        <div style="height: 5px;"></div>
+                                    </ng-container>
+
+                                    <!-- Calculation Type -->
+                                    <ng-container
+                                        *ngIf="sectionItem.fieldType.value=='calculation' && sectionItem.isActive===true ">
+                                        <label style="color:black">{{sectionItem.questionName}}</label>
+                                        <mat-form-field appearance="outline">
+                                            <input matInput type="number" [(ngModel)]=sectionItem.data readonly
+                                                placeholder="{{sectionItem.toolTip}}">
+                                        </mat-form-field>
+                                        <div style="height: 5px;"></div>
+                                    </ng-container>
+
+                                    <!-- select Type -->
+                                    <ng-container
+                                        *ngIf="sectionItem.fieldType.value=='lexicon data' && sectionItem.isActive===true ">
+                                        <label style="color:black">{{sectionItem.questionName}}</label>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Select a option</mat-label>
+                                            <mat-select name="list" [(ngModel)]=sectionItem.data panelClass="myPanelClass">
+                                                <mat-option *ngFor="let list of sectionItem.listValue"
+                                                    style="color: black;" [value]="list">
+                                                    {{list.name}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                        <div style="height: 5px;"></div>
+                                    </ng-container>
+                                </ng-container>
+                                <button mat-stroked-button style="background-color: whitesmoke;color: black;"
+                                    (click)=addRepeat(item.groupGUID)>
+                                    Save Repeat
                                 </button>
-                            </mat-toolbar>
-                            <input type="file" [(ngModel)]=item.data #fileInput id="uploadFile"
-                                (change)="uploadFileEvt($event)" name="uploadFile" multiple="single" accept="image/*" />
+                            </mat-expansion-panel>
+                            <div style="height: 5px;"></div>
                         </ng-container>
-                    </mat-form-field>
-                    <div style="height: 5px;"></div>
-                </ng-container>
 
-                <!-- select Type -->
-                <ng-container
-                    *ngIf="item.fieldType.value=='lexicon data' && item.isActive===true && item.parentFieldName===''">
-                    <label style="color:black">{{item.questionName}}</label>
-                    <mat-form-field appearance="outline">
-                        <mat-label>Select a option</mat-label>
-                        <mat-select [(ngModel)]=item.data panelClass="myPanelClass">
-                            <mat-option *ngFor="let list of item.listValue" style="color: black;" [value]="list.value">
-                                {{list.name}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                    <div style="height: 5px;"></div>
-                </ng-container>
-            </ng-container>
-        </mat-accordion>
-    </div>
+                        <!-- Page Title Type -->
+                        <ng-container
+                            *ngIf="(item.fieldType.value=='PageTitle') && item.isActive===true && item.parentFieldName===''">
+                            <mat-expansion-panel disabled hideToggle>
+                                <mat-expansion-panel-header
+                                    style="background:linear-gradient(147deg, #f1f1f1 36%, #028ea7 74%)">
+                                    <mat-panel-title style="color:black;font-weight: 500;">
+                                        {{item.questionName}}
+                                    </mat-panel-title>
+                                    <mat-panel-description></mat-panel-description>
+                                </mat-expansion-panel-header>
+                            </mat-expansion-panel>
+                            <div style="height: 5px;"></div>
+                        </ng-container>
+
+                        <!-- subSection Type -->
+                        <ng-container
+                            *ngIf="(item.fieldType.value=='subSection') && item.isActive===true && item.parentFieldName===''">
+                            <mat-expansion-panel disabled hideToggle>
+                                <mat-expansion-panel-header
+                                    style="background: linear-gradient(147deg, #f1f1f1 36%, #9ff1ff 74%)">
+                                    <mat-panel-title style="color:black;">
+                                        {{item.questionName}}
+                                    </mat-panel-title>
+                                    <mat-panel-description></mat-panel-description>
+                                </mat-expansion-panel-header>
+                            </mat-expansion-panel>
+                            <div style="height: 5px;"></div>
+                        </ng-container>
+
+                        <!-- Email Type -->
+                        <ng-container
+                            *ngIf="item.fieldType.value=='EmailAddress' && item.isActive===true && item.parentFieldName===''">
+
+                            <label style="color:black">{{item.questionName}}</label>
+                            <mat-form-field appearance="outline">
+                                <input matInput type="email" [(ngModel)]=item.data placeholder="{{item.toolTip}}">
+                            </mat-form-field>
+                            <div style="height: 5px;"></div>
+                        </ng-container>
+
+                        <!-- Radio button Type -->
+                        <ng-container
+                            *ngIf="item.fieldType.value=='field or' && item.isActive===true && item.parentFieldName===''">
+                            <label style="color:black">{{item.questionName}}</label>
+                            <div style="height: 5px;"></div>
+                            <mat-radio-group [(ngModel)]=item.data class="radio" matInput aria-label="Select an option">
+                                <mat-radio-button style="color: black;" *ngFor="let list of item.listValue"
+                                    [value]="list.value">
+                                    {{list.name}} &nbsp;
+                                </mat-radio-button>
+                            </mat-radio-group>
+                            <div style="height: 5px;"></div>
+                        </ng-container>
+
+                        <!-- Checkbox Type-->
+                        <ng-container
+                            *ngIf="item.fieldType.value=='checkbox' && item.isActive===true && item.parentFieldName===''">
+                            <label style="color:black">{{item.questionName}}</label>
+                            <div style="height: 5px;"></div>
+                            <p *ngFor="let list of item.listValue; let i = index" class="checkbox">
+                                <mat-checkbox [(ngModel)]=item.data>
+                                    {{list.name}}
+                                </mat-checkbox>
+                            </p>
+                            <div style="height: 5px;"></div>
+                        </ng-container>
+
+                        <!-- Number Type -->
+                        <ng-container
+                            *ngIf="item.fieldType.value=='number' && item.isActive===true && item.parentFieldName===''">
+                            <label style="color:black">{{item.questionName}}</label>
+                            <mat-form-field appearance="outline">
+                                <input matInput type="number" [(ngModel)]=item.data
+                                    maxlength={{item.fieldValidations[0].dataLength}}
+                                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                    placeholder="{{item.toolTip}}">
+                            </mat-form-field>
+                            <div style="height: 5px;"></div>
+                        </ng-container>
+
+                        <!-- Decimal Type -->
+                        <ng-container
+                            *ngIf="item.fieldType.value=='decimal' && item.isActive===true && item.parentFieldName===''">
+                            <label style="color:black">{{item.questionName}}</label>
+                            <mat-form-field appearance="outline">
+                                <input matInput type="number" step="any" [(ngModel)]=item.data
+                                    maxlength={{item.fieldValidations[0].dataLength}}
+                                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                    placeholder="{{item.toolTip}}">
+                            </mat-form-field>
+                            <div style="height: 5px;"></div>
+                        </ng-container>
+
+                        <!-- Calculation Type -->
+                        <ng-container
+                            *ngIf="item.fieldType.value=='calculation' && item.isActive===true && item.parentFieldName===''">
+                            <label style="color:black">{{item.questionName}}</label>
+                            <mat-form-field appearance="outline">
+                                <input matInput type="number" [(ngModel)]=item.data readonly
+                                    placeholder="{{item.toolTip}}">
+                            </mat-form-field>
+                            <div style="height: 5px;"></div>
+                        </ng-container>
+
+                        <!-- select Type -->
+                        <ng-container
+                            *ngIf="item.fieldType.value=='lexicon data' && item.isActive===true && item.parentFieldName===''">
+                            <label style="color:black">{{item.questionName}}</label>
+                            <mat-form-field appearance="outline">
+                                <!-- <mat-label>Select a option</mat-label> -->
+                                <mat-select [(ngModel)]=item.data panelClass="myPanelClass">
+                                    <mat-option *ngFor="let list of item.listValue" style="color: black;"
+                                        [value]="list.value">
+                                        {{list.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <div style="height: 5px;"></div>
+                        </ng-container>
+                    </ng-container>
+                </mat-accordion>
+            </div>
+        </mat-tab>
+        <mat-tab label="Photos" style="background-color: black;font-weight: 500;">
+
+        </mat-tab>
+        <mat-tab label="Files" style="background-color: black;font-weight: 500;">
+
+        </mat-tab>
+    </mat-tab-group>
 </div>
 <ngx-spinner bdColor="rgba( 237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
     <p style="font-size: 20px; color: black">Processing...</p>

@@ -1,13 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FormbuilderService {
 
-  readonly APIUrl='https://localhost:44305/1/';
+  //readonly APIUrl='https://localhost:44305/1/';
+  readonly APIUrl = environment.API_FormURL;
 
   constructor(private http:HttpClient) { }
 
@@ -125,6 +127,19 @@ export class FormbuilderService {
   UpdateGroupMetadata(formCaptureID:any,groupGUID:any,cloneNum:any,data:any){
     return this.http.put(this.APIUrl+formCaptureID+'/'+groupGUID+'/'+cloneNum+'/UpdateGroupMetadata',data,{responseType: 'text'});
   }
+
+  deleteCapturedForm(formCaptureID:any){
+    return this.http.delete(this.APIUrl+formCaptureID+'/'+'DeleteCapturedForm',{responseType: 'text'});
+  }
+
+  lockForm(formID:any,item:any){
+    return this.http.patch(this.APIUrl+'forms/'+formID+'/lock',item);
+  }
+
+  unlockForm(formID:any,item:any){
+    return this.http.patch(this.APIUrl+'Forms/'+formID+'/unlock',item);
+  }
+
 //#endregion
 
 }

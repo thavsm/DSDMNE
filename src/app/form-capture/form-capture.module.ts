@@ -16,6 +16,7 @@ import {NgxSpinnerModule} from 'ngx-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { AddFormComponent } from './add-form/add-form.component';
+import { AddSignatureComponent } from './add-form/add-signature.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {MatRadioModule} from '@angular/material/radio';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -28,7 +29,8 @@ import { SignaturePadModule } from 'angular2-signaturepad';
 @NgModule({
   declarations: [
     FormCaptureComponent,
-    AddFormComponent
+    AddFormComponent,
+    AddSignatureComponent
   ],
   imports: [
     CommonModule,

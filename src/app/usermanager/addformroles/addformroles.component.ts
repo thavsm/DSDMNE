@@ -1,8 +1,12 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { UserService } from 'src/app/shared/user.service';
+import { FormRole } from '../formrole.model';
+
+declare var $: any;
 
 export interface Role {
   id: number;
@@ -17,11 +21,19 @@ export interface Role {
 })
 export class AddformrolesComponent implements OnInit {
 
-  constructor( private service: UserService) { }
+  formAdd : any;
+  formID: number = 0;
+  frole: FormRole;
+  froles:any = [];
+
+  constructor( private service: UserService, @Inject(MAT_DIALOG_DATA) data) {
+    this.formAdd = data;
+   }
 
   public displayedColumns = ['role', 'select'];
   public roleList = new MatTableDataSource<any>();
   selection = new SelectionModel<Role>(true, []);
+  
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -30,13 +42,31 @@ export class AddformrolesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.formID = this.formAdd.formID;
     this.getRoles();    
+  }
+
+  ngDoCheck(): void{
+    this.checkAll();
   }
 
   
   getRoles() {    
-    this.service.getRoles().subscribe(data => {
+    // this.service.getRoles().subscribe(data => {
+    //   this.roleList.data = data;
+    // });
+
+    this.service.getFormRoles(this.formID).subscribe(data => {
       this.roleList.data = data;
+    });
+    
+  }
+
+  checkAll(){
+    
+    this.roleList.data.forEach(row => {
+      if(row.checked)
+      this.selection.select(row);
     });
   }
 
@@ -53,5 +83,79 @@ export class AddformrolesComponent implements OnInit {
         this.selection.clear() :
         this.roleList.data.forEach(row => this.selection.select(row));
   }
+
+  addFormRoles() {
+    //this.service.deleteFormRoles(this.formID); 
+    // this.service.deleteFormRoles(this.formID).subscribe(
+    //   (res: any) => {
+              
+    //   },
+    //   err => {
+    //     console.log(err);
+    //     if (err.status == 400) {
+        
+    //     }          
+    //   }
+    // );
+
+
+    this.froles = [];
+    this.selection.selected.forEach(row => {
+      this.frole = new FormRole();      
+      this.frole.formID = this.formID;
+      this.frole.roleID = row.id;
+      this.frole.uid = 0;
+      this.froles.push(this.frole);
+      //this.service.addFormRole(this.frole);   
+    });
+
+      this.service.addFormRoles(this.froles).subscribe(
+        (res: any) => {
+          if (res.message == 'Role added successfully') {
+          this.showNotification('top','right','Form roles added!', 'Roles successful.','success');
+          }
+          else{}
+        },
+        err => {
+          console.log(err);
+          if (err.status == 400) {
+          
+          }          
+        }
+      );
+
+    //   console.log(row.id);
+    // });
+  }
+
+  showNotification(from: any, align: any, message: any, title: any, type: string) {
+    //const type = ['', 'info', 'success', 'warning', 'danger', 'rose', 'primary'];
+    
+    //const color = Math.floor((Math.random() * 6) + 1);
+
+    $.notify({
+        icon: 'notifications',
+        title: title,
+        message: message
+    }, {
+        type: type,
+        timer: 3000,
+        placement: {
+            from: from,
+            align: align
+        },
+        template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
+          '<button mat-raised-button type="button" aria-hidden="true" class="close" data-notify="dismiss">  <i class="material-icons">close</i></button>' +
+          '<i class="material-icons" data-notify="icon">notifications</i> ' +
+          '<span data-notify="title">{1}</span> ' +
+          '<span data-notify="message">{2}</span>' +
+          '<div class="progress" data-notify="progressbar">' +
+            '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+          '</div>' +
+          '<a href="{3}" target="{4}" data-notify="url"></a>' +
+        '</div>'
+    });
+}
+
 
 }

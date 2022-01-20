@@ -6,6 +6,7 @@ import { Observable, Subscription } from "rxjs";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TreeAddComponent } from './tree-add/tree-add.component';
 import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
+import { ActivatedRoute } from '@angular/router';  
 import Swal from 'sweetalert2'
 declare var $: any;
 
@@ -31,17 +32,18 @@ export class HierarchyManagementComponent implements OnInit {
   horizontalPosition: any;
   treeID: number;
   treeAdd: any;
+  TreeCategoryID = "";
 
-  constructor(public service: HierarchyManagementService, private route: Router, public dialog: MatDialog , private spinner: NgxSpinnerService) { }
+  constructor(public service: HierarchyManagementService, private route: Router, public dialog: MatDialog, private spinner: NgxSpinnerService, private Aroute: ActivatedRoute) {
+     
+    this.Aroute.queryParamMap.subscribe(params => this.TreeCategoryID = params.get('TreeCategoryID'));
+  }
+
   p: number = 1;
 
 
   ngOnInit(): void {
-    console.log('before');
-    this.service.refreshhlist();
-
-    console.log('after');
-
+    this.service.refreshhlist(this.TreeCategoryID);
   }
 
   openTree(item: any): void {
@@ -60,15 +62,16 @@ export class HierarchyManagementComponent implements OnInit {
   @ViewChild('buttonTemplate')
   public buttonTemplate: TemplateRef<any>;
 
-  public gridData: any = this.service.refreshhlist();
+  public gridData: any = this.service.refreshhlist(this.TreeCategoryID);
 
   openDialogAdd(): void {
 
     this.treeAdd = {
       treeID : 0,
-      Name : "",
-      Description : "",
-      dateCreated : ""
+      name : "",
+      description : "",
+      dateCreated : "",
+      treeCategoryID : this.TreeCategoryID
     }
 
     const dialogRef = this.dialog.open(TreeAddComponent, { width: '40%', height: '45%', data: this.treeAdd, disableClose: true }
@@ -97,7 +100,7 @@ export class HierarchyManagementComponent implements OnInit {
         this.service.archiveTree(item.treeID).subscribe(data => {
           this.spinner.hide();
           this.showNotification('top','center','Tree Deleted Succesfully!','Success.','success');
-          this.service.refreshhlist();
+          this.service.refreshhlist(this.TreeCategoryID);
         });
       }
     })
@@ -114,7 +117,7 @@ export class HierarchyManagementComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      this.service.refreshhlist();
+      this.service.refreshhlist(this.TreeCategoryID);
     });
   }
 
