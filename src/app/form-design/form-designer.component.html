@@ -7,7 +7,7 @@
                     <div cdkDropListGroup>
                         <!-- Form type list -->
                         <div class="example-container"
-                            style="margin-left: 0%;width: 200px;height: 50px;position: fixed;">
+                            style="margin-left: 0%;width: 200px;height: 600px;position: fixed;overflow-y: scroll;">
                             <!-- Header Of form types -->
                             <h2>Field Types</h2>
                             <!-- <p>Drag field types to form design on the right</p> -->
@@ -15,7 +15,7 @@
                             <!-- Form types -->
                             <div cdkDropList [cdkDropListData]="fieldTypes">
                                 <div *ngFor="let item of fieldTypes" cdkDrag
-                                    style="text-align: left;font-size: small;height: 35px;background-color: whitesmoke;border-color: rgb(207, 204, 204);border-style: outset;border-width: 0.5px;">
+                                    style="text-align: left;font-size: small;height: 30px;background-color: whitesmoke;border-color: rgb(207, 204, 204);border-style: outset;border-width: 0.5px;">
                                     <p style="color: black;font-weight:500;">
                                         <mat-icon style="font-size: 20px">{{item.fieldType.description}}</mat-icon>
                                         {{item.fieldType.displayName}}
@@ -30,11 +30,16 @@
                             <!-- Header Of form builder -->
                             <h2>{{formData.formName}}</h2>
                             <h4>{{formData.formDescription}}</h4>
-                            <div style="margin-left: 32%;width: 250px;">
+                            <div style="margin-left: 25%;width: 350px;">
                                 <!-- <mat-icon>save</mat-icon> -->
-                                <button class="btn btn-sm"
-                                    style="background-color: crimson;color: white;font-weight: 400;width: 100px;"
+                                <button class="btn btn-sm" style="background-color: crimson;color: white;font-weight: 400;width: 100px;"
                                     (click)="savePage()">Save</button>
+                            
+                                <button class="btn btn-sm" style="background-color: crimson;color: white;font-weight: 400;width: 100px;"
+                                    (click)="publishPage()">Publish</button>
+                            
+                                <button class="btn btn-sm" style="background-color: crimson;color: white;font-weight: 400;width: 100px;"
+                                    (click)="previewPage()">Preview</button>
                             </div>
                             <div style="height: 10px;"></div>
                             <div style="margin-left: 32%;width: 250px;">
@@ -46,147 +51,6 @@
                                 (cdkDropListDropped)="drop($event)" style="background: gainsboro;">
                                 <div class="example-box" *ngFor="let item of formDesign;let i= index;" cdkDrag 
                                     style="border-color: darkgrey;border-style:dashed;border-width: 2px;" [style.background]="item.fieldStyles[0].cssClass">
-                                    <!-- Attachment Type -->
-                                    <div *ngIf="item.fieldType.value=='attachment' && item.isActive===true"
-                                        style="width: 700px;">
-                                        <div style="margin-right: 96%;">
-                                            <mat-icon>{{item.fieldType.description}}</mat-icon>
-                                        </div>
-                                        <label style="color: black;">{{item.questionName}}</label>
-                                        <!--#region attributes tab  -->
-                                        <div *ngIf="item.toggle" style="text-align: left;">
-                                            <hr>
-                                            <mat-tab-group mat-align-tabs="center" style="color: black;">
-                                                <mat-tab label="Field Attributes">
-                                                    <br>
-                                                    <table mat-table>
-                                                        <tr mat-row>
-                                                            <td mat-cell>
-                                                                <label style="color: black;">Question Name</label>
-                                                                <label style="color: red;">*</label>
-                                                                <label style="color: black;">:</label>
-                                                            </td>
-                                                            <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    [(ngModel)]="item.questionName"
-                                                                    style="width: 300px;"
-                                                                    placeholder="Enter question name here" />
-                                                            </td>
-                                                        </tr>
-                                                        <tr mat-row  style="display: none;">
-                                                            <td mat-cell>
-                                                                <label style="color: black;">Field Name</label>
-                                                                <label style="color: red;">*</label>
-                                                                <label style="color: black;">:</label>
-                                                            </td>
-                                                            <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    [(ngModel)]="item.fieldName" style="width:300px;"
-                                                                    placeholder="Enter field name here" value="ua_"  />
-                                                            </td>
-                                                        </tr>
-                                                        <tr mat-row>
-                                                            <td mat-cell>
-                                                                <label style="color: black;">Tooltip: </label>
-                                                            </td>
-                                                            <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    style="width:300px;"
-                                                                    placeholder="Enter tooltip here"
-                                                                    [(ngModel)]="item.toolTip" />
-                                                            </td>
-                                                        </tr>
-                                                        <tr mat-row>
-                                                            <td mat-cell>
-                                                                <label style="color: black;">Group/Section: </label>
-                                                            </td>
-                                                            <td mat-cell>
-                                                                <mat-form-field appearance="outline">
-                                                                    <mat-label>Select a Group/Section </mat-label>
-                                                                    <mat-select [(ngModel)]="item.parentFieldName">
-                                                                       
-                                                                        <mat-option *ngFor="let gs of groupSectionList"
-                                                                            [value]="gs.groupGUID">
-                                                                            {{gs.name}}
-                                                                        </mat-option>
-                                                                    </mat-select>
-                                                                </mat-form-field>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </mat-tab>
-                                                <mat-tab label="Field Style">
-                                                    <br>
-                                                   <table mat-table>
-                                                        <tr mat-row>
-                                                            <td mat-cell>
-                                                                <label style="color: black;">Width: </label>
-                                                            </td>
-                                                            <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    style="width:300px;" placeholder="Enter width here"
-                                                                    [(ngModel)]="item.fieldStyles[0].width" />
-                                                            </td>
-                                                        </tr>
-                                                        <tr mat-row>
-                                                            <td mat-cell>
-                                                                <label style="color: black;">Height: </label>
-                                                            </td>
-                                                            <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    style="width:300px;" placeholder="Enter width here"
-                                                                    [(ngModel)]="item.fieldStyles[0].height" />
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </mat-tab>
-                                                <mat-tab label="Field Validation">
-                                                    <br>
-                                                    <table mat-table>
-                                                        <tr mat-row>
-                                                            <td mat-cell>
-                                                                <label style="color: black;">Maximum File Size: </label>
-                                                            </td>
-                                                            <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    style="width:300px;"
-                                                                    placeholder="Enter max file size here" [(ngModel)]="item.fieldValidations[0].dataLength"/>
-                                                            </td>
-                                                        </tr>
-                                                        <tr mat-row>
-                                                           <td mat-cell>
-                                                                <label style="color: black;">Editable: </label>
-                                                            </td>
-                                                            <td mat-cell>
-                                                                <mat-checkbox class="example-margin"
-                                                                    [(ngModel)]="item.fieldValidations[0].isEditable">
-                                                                </mat-checkbox>
-                                                            </td>
-                                                        </tr>
-                                                        <tr mat-row>
-                                                            <td mat-cell>
-                                                                <label style="color: black;">Hidden: </label>
-                                                            </td>
-                                                            <td mat-cell>
-                                                                <mat-checkbox class="example-margin"
-                                                                    [(ngModel)]="item.fieldValidations[0].isHidden">
-                                                                </mat-checkbox>
-                                                            </td>
-                                                        </tr>
-                                                        <td mat-cell>
-                                                            <label style="color: black;">Required: </label>
-                                                        </td>
-                                                        <td mat-cell>
-                                                            <mat-checkbox class="example-margin"
-                                                                [(ngModel)]="item.fieldValidations[0].isRequired">
-                                                            </mat-checkbox>
-                                                        </td>
-                                                    </table>
-                                                </mat-tab>
-                                            </mat-tab-group>
-                                        </div>
-                                        <!--#endregion -->
-                                    </div>
 
                                     <!-- Calculation Type -->
                                     <div *ngIf="item.fieldType.value=='calculation' && item.isActive===true"
@@ -323,14 +187,24 @@
                                                     <table mat-table>
                                                         <tr mat-row>
                                                             <td mat-cell>
-                                                                <label style="color: black;">Maximum File Size: </label>
+                                                                <label style="color: black;">Maximum Length: </label>
                                                             </td>
                                                             <td mat-cell>
                                                                 <input class="form-control" type="text"
                                                                     style="width:300px;"
-                                                                    placeholder="Enter max file size here" [(ngModel)]="item.fieldValidations[0].dataLength"/>
+                                                                    placeholder="Enter max length here" [(ngModel)]="item.fieldValidations[0].dataLength"/>
                                                             </td>
                                                         </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                 <label style="color: black;">Displayable:</label>
+                                                             </td>
+                                                             <td mat-cell>
+                                                                 <mat-checkbox class="example-margin"
+                                                                     [(ngModel)]="item.isDisplayable">
+                                                                 </mat-checkbox>
+                                                             </td>
+                                                         </tr>
                                                         <tr mat-row>
                                                             <td mat-cell>
                                                                 <label style="color: black;">Editable: </label>
@@ -364,6 +238,187 @@
                                             </mat-tab-group>
                                         </div>
                                         <!--#endregion -->
+                                    </div>
+
+                                    <!-- Information Type -->
+                                    <div *ngIf="item.fieldType.value=='calculation' && item.isActive===true"
+                                     style="text-align: center;">
+                                     <div style="margin-right: 96%;">
+                                         <mat-icon>{{item.fieldType.description}}</mat-icon>
+                                     </div>
+                                     <label style="color: black;">{{item.questionName}}</label>
+                                     <!--#region attributes tab  -->
+                                     <div *ngIf="item.toggle" style="text-align: left;">
+                                         <hr>
+                                         <mat-tab-group mat-align-tabs="center" style="color: black;">
+                                             <mat-tab label="Field Attributes">
+                                                 <br>
+                                                 <table mat-table>
+                                                     <tr mat-row>
+                                                         <td mat-cell>
+                                                             <label style="color: black;">Question Name</label>
+                                                             <label style="color: red;">*</label>
+                                                             <label style="color: black;">:</label>
+                                                         </td>
+                                                         <td mat-cell>
+                                                             <input class="form-control" type="text"
+                                                                 [(ngModel)]="item.questionName"
+                                                                 style="width: 300px;"
+                                                                 placeholder="Enter question name here" />
+                                                         </td>
+                                                     </tr>
+                                                     <tr mat-row  style="display: none;">
+                                                         <td mat-cell>
+                                                             <label style="color: black;">Field Name</label>
+                                                             <label style="color: red;">*</label>
+                                                             <label style="color: black;">:</label>
+                                                         </td>
+                                                         <td mat-cell>
+                                                             <input class="form-control" type="text"
+                                                                 [(ngModel)]="item.fieldName" style="width:300px;"
+                                                                 placeholder="Enter field name here" value="ua_"/>
+                                                         </td>
+                                                     </tr>
+                                                     <tr mat-row>
+                                                         <td mat-cell>
+                                                             <label style="color: black;">Tooltip: </label>
+                                                         </td>
+                                                         <td mat-cell>
+                                                             <input class="form-control" type="text"
+                                                                 style="width:300px;"
+                                                                 placeholder="Enter tooltip here"
+                                                                 [(ngModel)]="item.toolTip" />
+                                                         </td>
+                                                     </tr>
+                                                     <tr mat-row>
+                                                         <td mat-cell>
+                                                             <label style="color: black;">Group/Section: </label>
+                                                         </td>
+                                                         <td mat-cell>
+                                                             <mat-form-field appearance="outline">
+                                                                 <mat-label>Select a Group/Section </mat-label>
+                                                                 <mat-select [(ngModel)]="item.parentFieldName">
+                                                                    
+                                                                     <mat-option *ngFor="let gs of groupSectionList"
+                                                                         [value]="gs.groupGUID">
+                                                                         {{gs.name}}
+                                                                     </mat-option>
+                                                                 </mat-select>
+                                                             </mat-form-field>
+                                                         </td>
+                                                     </tr>
+                                                     <tr mat-row>
+                                                         <td mat-cell>
+                                                             <label style="color: black;">Information: </label>
+                                                         </td>
+                                                         <td mat-cell>
+                                                             <textarea class="form-control" style="width:300px;"
+                                                                 readonly></textarea>
+                                                         </td>
+                                                     </tr>
+                                                     <tr mat-row>
+                                                         <td mat-cell>
+                                                             <mat-form-field appearance="outline" *ngIf="greyedOut===false">
+                                                                 <mat-label>{{operationField}}</mat-label>
+                                                                 <mat-select style="width: 150px;">
+                                                                     <mat-option> Text fields</mat-option>
+                                                                 </mat-select>
+                                                             </mat-form-field>
+                                                         </td>
+                                                         <td mat-cell>
+                                                             <button class="btn btn-sm"
+                                                                 style="background-color: crimson;color: white;font-weight: 400;width: 200px;"
+                                                                 (click)="addCalc(item)"
+                                                                 *ngIf="greyedOut===false">Add to
+                                                                 Information</button>
+                                                             <button class="btn btn-sm"
+                                                                 style="background-color: crimson;color: white;font-weight: 400;width: 200px;"
+                                                                 *ngIf="greyedOut===false">Clear Information</button>
+                                                         </td>
+                                                     </tr>
+                                                 </table>
+                                             </mat-tab>
+                                             <mat-tab label="Field Style">
+                                                 <br>
+                                                 <table mat-table>
+                                                     <tr mat-row>
+                                                         <td mat-cell>
+                                                             <label style="color: black;">Width: </label>
+                                                         </td>
+                                                         <td mat-cell>
+                                                             <input class="form-control" type="text"
+                                                                 style="width:300px;" placeholder="Enter width here"
+                                                                 [(ngModel)]="item.fieldStyles[0].width" />
+                                                         </td>
+                                                     </tr>
+                                                     <tr mat-row>
+                                                         <td mat-cell>
+                                                             <label style="color: black;">Height: </label>
+                                                         </td>
+                                                         <td mat-cell>
+                                                             <input class="form-control" type="text"
+                                                                 style="width:300px;" placeholder="Enter width here"
+                                                                 [(ngModel)]="item.fieldStyles[0].height" />
+                                                         </td>
+                                                     </tr>
+                                                 </table>
+                                             </mat-tab>
+                                             <mat-tab label="Field Validation">
+                                                 <br>
+                                                 <table mat-table>
+                                                     <tr mat-row>
+                                                         <td mat-cell>
+                                                             <label style="color: black;">Maximum Length: </label>
+                                                         </td>
+                                                         <td mat-cell>
+                                                             <input class="form-control" type="text"
+                                                                 style="width:300px;"
+                                                                 placeholder="Enter max length here" [(ngModel)]="item.fieldValidations[0].dataLength"/>
+                                                         </td>
+                                                     </tr>
+                                                     <tr mat-row>
+                                                         <td mat-cell>
+                                                              <label style="color: black;">Displayable:</label>
+                                                          </td>
+                                                          <td mat-cell>
+                                                              <mat-checkbox class="example-margin"
+                                                                  [(ngModel)]="item.isDisplayable">
+                                                              </mat-checkbox>
+                                                          </td>
+                                                      </tr>
+                                                     <tr mat-row>
+                                                         <td mat-cell>
+                                                             <label style="color: black;">Editable: </label>
+                                                         </td>
+                                                         <td mat-cell>
+                                                             <mat-checkbox class="example-margin"
+                                                                 [(ngModel)]="item.fieldValidations[0].isEditable">
+                                                             </mat-checkbox>
+                                                         </td>
+                                                     </tr>
+                                                     <tr mat-row>
+                                                         <td mat-cell>
+                                                             <label style="color: black;">Hidden: </label>
+                                                         </td>
+                                                         <td mat-cell>
+                                                             <mat-checkbox class="example-margin"
+                                                                 [(ngModel)]="item.fieldValidations[0].isHidden">
+                                                             </mat-checkbox>
+                                                         </td>
+                                                     </tr>
+                                                     <td mat-cell>
+                                                         <label style="color: black;">Required: </label>
+                                                     </td>
+                                                     <td mat-cell>
+                                                         <mat-checkbox class="example-margin"
+                                                             [(ngModel)]="item.fieldValidations[0].isRequired">
+                                                         </mat-checkbox>
+                                                     </td>
+                                                 </table>
+                                             </mat-tab>
+                                         </mat-tab-group>
+                                     </div>
+                                     <!--#endregion -->
                                     </div>
 
                                     <!-- Checkbox/field or/lexicon data Type -->
@@ -436,7 +491,7 @@
                                                         <tr mat-row>
                                                             <td mat-cell>
                                                                 <label style="color: black;">List Values(Comma
-                                                                    seperated): </label>
+                                                                    separated): </label>
                                                             </td>
                                                             <td mat-cell>
                                                                 <textarea class="form-control" style="width:300px;"
@@ -476,14 +531,24 @@
                                                     <table mat-table>
                                                         <tr mat-row>
                                                             <td mat-cell>
-                                                                <label style="color: black;">Maximum File Size: </label>
+                                                                <label style="color: black;">Maximum Length: </label>
                                                             </td>
                                                             <td mat-cell>
                                                                 <input class="form-control" type="text"
                                                                     style="width:300px;"
-                                                                    placeholder="Enter max file size here" [(ngModel)]="item.fieldValidations[0].dataLength" />
+                                                                    placeholder="Enter max length here" [(ngModel)]="item.fieldValidations[0].dataLength" />
                                                             </td>
                                                         </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                 <label style="color: black;">Displayable:</label>
+                                                             </td>
+                                                             <td mat-cell>
+                                                                 <mat-checkbox class="example-margin"
+                                                                     [(ngModel)]="item.isDisplayable">
+                                                                 </mat-checkbox>
+                                                             </td>
+                                                         </tr>
                                                         <tr mat-row>
                                                             <td mat-cell>
                                                                 <label style="color: black;">Editable: </label>
@@ -634,6 +699,16 @@
                                                     <table mat-table>
                                                         <tr mat-row>
                                                             <td mat-cell>
+                                                                 <label style="color: black;">Displayable:</label>
+                                                             </td>
+                                                             <td mat-cell>
+                                                                 <mat-checkbox class="example-margin"
+                                                                     [(ngModel)]="item.isDisplayable">
+                                                                 </mat-checkbox>
+                                                             </td>
+                                                         </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
                                                                 <label style="color: black;">Editable: </label>
                                                             </td>
                                                             <td mat-cell>
@@ -779,6 +854,16 @@
                                                 <mat-tab label="Field Validation">
                                                     <br>
                                                     <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                 <label style="color: black;">Displayable:</label>
+                                                             </td>
+                                                             <td mat-cell>
+                                                                 <mat-checkbox class="example-margin"
+                                                                     [(ngModel)]="item.isDisplayable">
+                                                                 </mat-checkbox>
+                                                             </td>
+                                                         </tr>
                                                         <tr mat-row>
                                                             <td mat-cell>
                                                                 <label style="color: black;">Editable: </label>
@@ -1023,9 +1108,9 @@
                                         <!--#endregion -->
                                     </div>
 
+                                    <!-- Added attachment here for now -->
                                     <!-- Text/Number Type -->
-                                    <div
-                                        *ngIf="(item.fieldType.value=='text' || item.fieldType.value=='number' || item.fieldType.value=='EmailAddress' || item.fieldType.value=='Alphanumeric') && item.isActive===true">
+                                    <div *ngIf="(item.fieldType.value=='plaintext' || item.fieldType.value=='information' || item.fieldType.value=='number' || item.fieldType.value=='decimal' || item.fieldType.value=='EmailAddress' || item.fieldType.value=='Alphanumeric' || item.fieldType.value=='plainalpha') || item.fieldType.value==='attachment' && item.isActive===true">
                                         <div style="margin-right: 96%;">
                                             <mat-icon>{{item.fieldType.description}}</mat-icon>
                                         </div>
@@ -1128,9 +1213,19 @@
                                                             <td mat-cell>
                                                                 <input class="form-control" type="text"
                                                                     style="width:300px;"
-                                                                    placeholder="Enter max file size here" [(ngModel)]="item.fieldValidations[0].dataLength"/>
+                                                                    placeholder="Enter max length here" [(ngModel)]="item.fieldValidations[0].dataLength"/>
                                                             </td>
                                                         </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                 <label style="color: black;">Displayable:</label>
+                                                             </td>
+                                                             <td mat-cell>
+                                                                 <mat-checkbox class="example-margin"
+                                                                     [(ngModel)]="item.isDisplayable">
+                                                                 </mat-checkbox>
+                                                             </td>
+                                                         </tr>
                                                         <tr mat-row>
                                                             <td mat-cell>
                                                                 <label style="color: black;">Editable: </label>
@@ -1168,10 +1263,73 @@
                                         <!--#endregion -->
                                     </div>
 
+                                    <!-- Signature/Drawing Type -->
+                                    <div *ngIf="(item.fieldType.value=='signature' || item.fieldType.value=='imagearea') && item.isActive===true">
+                                        <div style="margin-right: 96%;">
+                                            <mat-icon>{{item.fieldType.description}}</mat-icon>
+                                        </div>
+                                        <label style="color: black;">{{item.questionName}}</label>
+                                        <!--#region attributes tab  -->
+                                        <div *ngIf="item.toggle" style="text-align: left;">
+                                            <hr>
+                                            <mat-tab-group mat-align-tabs="center" style="color: black;">
+                                                <mat-tab label="Field Attributes">
+                                                    <br>
+                                                    <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Question Name</label>
+                                                                <label style="color: red;">*</label>
+                                                                <label style="color: black;">:</label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    [(ngModel)]="item.questionName"
+                                                                    style="width: 300px;"
+                                                                    placeholder="Enter question name here" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row  style="display: none;"> 
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Field Name</label>
+                                                                <label style="color: red;">*</label>
+                                                                <label style="color: black;">:</label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    [(ngModel)]="item.fieldName" style="width:300px;"
+                                                                    placeholder="Enter field name here" value="ua_"  />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Group/Section: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-form-field appearance="outline">
+                                                                    <mat-label>Select a Group/Section </mat-label>
+                                                                   
+                                                                    <mat-select [(ngModel)]="item.parentFieldName">
+                                                                        
+                                                                        <mat-option *ngFor="let gs of groupSectionList"
+                                                                            [value]="gs.groupGUID">
+                                                                            {{gs.name}}
+                                                                        </mat-option>
+                                                                    </mat-select>
+                                                                </mat-form-field>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </mat-tab>
+                                            </mat-tab-group>
+                                        </div>
+                                        <!--#endregion -->
+                                    </div>
+
                                     <!-- Toggle icons -->
                                     <div *ngIf="item.isActive===true">
                                         <hr>
-                                        <mat-icon title="Collaspe Attributes" *ngIf="item.toggle"
+                                        <mat-icon title="Collapse Attributes" *ngIf="item.toggle"
                                             (click)="item.toggle=false">
                                             expand_less
                                         </mat-icon>

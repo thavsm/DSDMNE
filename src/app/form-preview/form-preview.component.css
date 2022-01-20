@@ -1,4 +1,4 @@
-    .radio {
+.radio {
 
     display: inline-flex;
 
@@ -48,5 +48,5 @@
         border-style: dashed;
         border-width: 1px;
         margin-bottom: 20px;
-        background-color: rgb(236, 230, 230);
+        background-color:rgb(236, 230, 230);
     }

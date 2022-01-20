@@ -4,14 +4,14 @@
     </button>
 </div>
 <div style="text-align: center;">
-    <!-- <h2>{{this.formData.formName}}</h2> -->
+    <h2>{{this.formData.formName}} Preview</h2>
     <mat-button-toggle-group name="buttons">
         <mat-button-toggle value="Prev" (click)="prevPage()"
-            style="font-weight: 500;background-color: whitesmoke;color: black;">Prev</mat-button-toggle>
+            style="font-weight: 500;background-color: whitesmoke;width: 80px;color: black;">Prev</mat-button-toggle>
         <mat-button-toggle value="save" style="background-color: whitesmoke;font-weight: 500;width: 150px;color: black;"
-            (click)="savePage()">Save</mat-button-toggle>
+            disabled>Save</mat-button-toggle>
         <mat-button-toggle value="next" (click)="nextPage()"
-            style="font-weight: 500;background-color: whitesmoke;color: black;">Next</mat-button-toggle>
+            style="font-weight: 500;background-color: whitesmoke;width: 80px;color: black;">Next</mat-button-toggle>
     </mat-button-toggle-group>
     <h5>{{currentPage.name}} / {{lastPage}}</h5>
 </div>
@@ -26,8 +26,7 @@
                 <ng-container *ngIf="item.fieldType.value=='Time' && item.isActive===true && item.parentFieldName===''">
                     <label style="color:black">{{item.questionName}}</label>
                     <mat-form-field appearance="outline">
-                        <input matInput type="time" [(ngModel)]=item.data placeholder="{{item.toolTip}}"
-                           >
+                        <input matInput type="time" placeholder="{{item.toolTip}}" value="{{item.data}}">
                     </mat-form-field>
                 </ng-container>
 
@@ -41,22 +40,21 @@
                         </signature-pad>
                     </div>
                     <button (click)="clearSignature()"
-                        style="font-weight: 500;background-color: whitesmoke;color: black;">Clear signature
+                        style="font-weight: 500;background-color: whitesmoke;width: 80px;color: black;">Clear signature
                         pad</button>
                     <button (click)="savePad()"
-                        style="font-weight: 500;background-color: whitesmoke;color: black;">Save
+                        style="font-weight: 500;background-color: whitesmoke;width: 80px;color: black;">Save
                         signature</button>
-                    <div class="signature-image" *ngIf="signatureImg">
+                    <!-- <div class="signature-image" *ngIf="signatureImg">
                         <img src='{{ signatureImg }}' />
-                    </div>
+                    </div> -->
                 </ng-container>
 
                 <!-- Date Type -->
                 <ng-container *ngIf="item.fieldType.value=='date' && item.isActive===true && item.parentFieldName===''">
                     <label style="color:black">{{item.questionName}}</label>
                     <mat-form-field appearance="outline">
-                        <input matInput type="date" [(ngModel)]=item.data placeholder="{{item.toolTip}}"
-                           >
+                        <input matInput type="date" placeholder="{{item.toolTip}}" value="{{item.data}}">
                     </mat-form-field>
                 </ng-container>
 
@@ -65,8 +63,7 @@
                     *ngIf="(item.fieldType.value=='plaintext') && item.isActive===true && item.parentFieldName===''">
                     <label style="color:black">{{item.questionName}}</label>
                     <mat-form-field appearance="outline">
-                        <input matInput [(ngModel)]=item.data type="text" placeholder="{{item.toolTip}}"
-                            maxlength={{item.fieldValidations[0].dataLength}}>
+                        <input matInput type="text" placeholder="{{item.toolTip}}" value="{{item.data}}">
                     </mat-form-field>
                 </ng-container>
 
@@ -75,8 +72,7 @@
                     *ngIf="(item.fieldType.value=='plainalpha') && item.isActive===true && item.parentFieldName===''">
                     <label style="color:black">{{item.questionName}}</label>
                     <mat-form-field appearance="outline">
-                        <input matInput [(ngModel)]=item.data type="text" placeholder="{{item.toolTip}}"
-                            maxlength={{item.fieldValidations[0].dataLength}}
+                        <input matInput type="text" placeholder="{{item.toolTip}}" value="{{item.data}}"
                             onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)">
                     </mat-form-field>
                 </ng-container>
@@ -86,8 +82,7 @@
                     *ngIf="(item.fieldType.value=='Alphanumeric') && item.isActive===true && item.parentFieldName===''">
                     <label style="color:black">{{item.questionName}}</label>
                     <mat-form-field appearance="outline">
-                        <input matInput [(ngModel)]=item.data type="text" placeholder="{{item.toolTip}}"
-                            maxlength={{item.fieldValidations[0].dataLength}}
+                        <input matInput type="text" placeholder="{{item.toolTip}}" value="{{item.data}}"
                             onkeypress="return (event.charCode > 64 && event.charCode < 91) ||  (event.charCode > 47 && event.charCode < 58) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)">
                     </mat-form-field>
                 </ng-container>
@@ -110,37 +105,35 @@
                             <ng-container *ngIf="sectionItem.fieldType.value=='Time' && sectionItem.isActive===true ">
                                 <label style="color:black">{{sectionItem.questionName}}</label>
                                 <mat-form-field appearance="outline">
-                                    <input matInput type="time" [(ngModel)]=sectionItem.data placeholder="{{sectionItem.toolTip}}"
-                                       >
+                                    <input matInput type="time" placeholder="{{item.toolTip}}" value="{{item.data}}">
                                 </mat-form-field>
                             </ng-container>
 
                             <!-- Drawing/signature Type -->
                             <ng-container
-                                *ngIf="sectionItem.fieldType.value=='signature' || sectionItem.fieldType.value=='imagearea' && sectionItem.isActive===true">
-                                <label style="color:black">{{sectionItem.questionName}}</label>
+                                *ngIf="sectionItem.fieldType.value=='signature' || sectionItem.fieldType.value=='imagearea' && sectionItem.isActive===true ">
+                                <label style="color:black">{{item.questionName}}</label>
                                 <div class="signature-container">
                                     <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()"
                                         (onEndEvent)="drawComplete()">
                                     </signature-pad>
                                 </div>
                                 <button (click)="clearSignature()"
-                                    style="font-weight: 500;background-color: whitesmoke;color: black;">Clear
+                                    style="font-weight: 500;background-color: whitesmoke;width: 80px;color: black;">Clear
                                     signature pad</button>
                                 <button (click)="savePad()"
-                                    style="font-weight: 500;background-color: whitesmoke;color: black;">Save
+                                    style="font-weight: 500;background-color: whitesmoke;width: 80px;color: black;">Save
                                     signature</button>
-                                 <!-- <div class="signature-image" *ngIf="signatureImg">
-                                    <img src='{{ signatureImg }}' />
-                                </div> -->
+                                <!-- <div class="signature-image" *ngIf="signatureImg">
+                                                <img src='{{ signatureImg }}' />
+                                            </div> -->
                             </ng-container>
 
                             <!-- Date Type -->
                             <ng-container *ngIf="sectionItem.fieldType.value=='date' && sectionItem.isActive===true ">
                                 <label style="color:black">{{sectionItem.questionName}}</label>
                                 <mat-form-field appearance="outline">
-                                    <input matInput type="date" [(ngModel)]=sectionItem.data placeholder="{{sectionItem.toolTip}}"
-                                       >
+                                    <input matInput type="date" placeholder="{{item.toolTip}}" value="{{item.data}}">
                                 </mat-form-field>
                             </ng-container>
 
@@ -220,30 +213,29 @@
                                             *ngIf="subsectionItem.fieldType.value=='Time' && subsectionItem.isActive===true ">
                                             <label style="color:black">{{subsectionItem.questionName}}</label>
                                             <mat-form-field appearance="outline">
-                                                <input matInput type="time" [(ngModel)]=subsectionItem.data
-                                                    placeholder="{{subsectionItem.toolTip}}"
+                                                <input matInput type="time" placeholder="{{subsectionItem.toolTip}}"
                                                     value="{{subsectionItem.data}}">
                                             </mat-form-field>
                                         </ng-container>
 
                                         <!-- Drawing/signature Type -->
                                         <ng-container
-                                            *ngIf="subsectionItem.fieldType.value=='signature' || subsectionItem.fieldType.value=='imagearea' && subsectionItem.isActive===true">
-                                            <label style="color:black">{{sectionItem.questionName}}</label>
+                                            *ngIf="subsectionItem.fieldType.value=='signature' || subsectionItem.fieldType.value=='imagearea' && subsectionItem.isActive===true ">
+                                            <label style="color:black">{{item.questionName}}</label>
                                             <div class="signature-container">
                                                 <signature-pad [options]="signaturePadOptions"
                                                     (onBeginEvent)="drawStart()" (onEndEvent)="drawComplete()">
                                                 </signature-pad>
                                             </div>
                                             <button (click)="clearSignature()"
-                                                style="font-weight: 500;background-color: whitesmoke;color: black;">Clear
+                                                style="font-weight: 500;background-color: whitesmoke;width: 80px;color: black;">Clear
                                                 signature pad</button>
                                             <button (click)="savePad()"
-                                                style="font-weight: 500;background-color: whitesmoke;color: black;">Save
+                                                style="font-weight: 500;background-color: whitesmoke;width: 80px;color: black;">Save
                                                 signature</button>
-                                            <div class="signature-image" *ngIf="signatureImg">
-                                                <img src='{{ signatureImg }}' />
-                                            </div>
+                                            <!-- <div class="signature-image" *ngIf="signatureImg">
+                                            <img src='{{ signatureImg }}' />
+                                        </div> -->
                                         </ng-container>
 
                                         <!-- Date Type -->
@@ -251,8 +243,7 @@
                                             *ngIf="subsectionItem.fieldType.value=='date' && subsectionItem.isActive===true ">
                                             <label style="color:black">{{subsectionItem.questionName}}</label>
                                             <mat-form-field appearance="outline">
-                                                <input matInput type="date" [(ngModel)]=subsectionItem.data
-                                                    placeholder="{{subsectionItem.toolTip}}"
+                                                <input matInput type="date" placeholder="{{subsectionItem.toolTip}}"
                                                     value="{{subsectionItem.data}}">
                                             </mat-form-field>
                                         </ng-container>
@@ -262,10 +253,8 @@
                                             *ngIf="(subsectionItem.fieldType.value=='plaintext') && subsectionItem.isActive===true ">
                                             <label style="color:black">{{subsectionItem.questionName}}</label>
                                             <mat-form-field appearance="outline">
-                                                <input matInput [(ngModel)]=subsectionItem.data type="text"
-                                                    placeholder="{{subsectionItem.toolTip}}"
-                                                    value="{{subsectionItem.data}}"
-                                                    maxlength={{subsectionItem.fieldValidations[0].dataLength}}>
+                                                <input matInput type="text" placeholder="{{subsectionItem.toolTip}}"
+                                                    value="{{subsectionItem.data}}">
                                             </mat-form-field>
                                         </ng-container>
 
@@ -274,10 +263,8 @@
                                             *ngIf="(subsectionItem.fieldType.value=='Alphanumeric' ) && subsectionItem.isActive===true ">
                                             <label style="color:black">{{subsectionItem.questionName}}</label>
                                             <mat-form-field appearance="outline">
-                                                <input matInput [(ngModel)]=subsectionItem.data type="text"
-                                                    placeholder="{{subsectionItem.toolTip}}"
+                                                <input matInput type="text" placeholder="{{subsectionItem.toolTip}}"
                                                     value="{{subsectionItem.data}}"
-                                                    maxlength={{subsectionItem.fieldValidations[0].dataLength}}
                                                     onkeypress="return (event.charCode > 64 && event.charCode < 91) ||  (event.charCode > 47 && event.charCode < 58) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)">
                                             </mat-form-field>
                                         </ng-container>
@@ -287,10 +274,8 @@
                                             *ngIf="(subsectionItem.fieldType.value=='plainalpha') && subsectionItem.isActive===true ">
                                             <label style="color:black">{{subsectionItem.questionName}}</label>
                                             <mat-form-field appearance="outline">
-                                                <input matInput [(ngModel)]=subsectionItem.data type="text"
-                                                    placeholder="{{subsectionItem.toolTip}}"
+                                                <input matInput type="text" placeholder="{{subsectionItem.toolTip}}"
                                                     value="{{subsectionItem.data}}"
-                                                    maxlength={{subsectionItem.fieldValidations[0].dataLength}}
                                                     onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)">
                                             </mat-form-field>
                                         </ng-container>
@@ -301,8 +286,7 @@
 
                                             <label style="color:black">{{subsectionItem.questionName}}</label>
                                             <mat-form-field appearance="outline">
-                                                <input matInput type="email" [(ngModel)]=subsectionItem.data
-                                                    placeholder="{{subsectionItem.toolTip}}"
+                                                <input matInput type="email" placeholder="{{subsectionItem.toolTip}}"
                                                     value="{{subsectionItem.data}}">
                                             </mat-form-field>
                                             <div style="height: 5px;"></div>
@@ -313,8 +297,7 @@
                                             *ngIf="subsectionItem.fieldType.value=='field or' && subsectionItem.isActive===true ">
                                             <label style="color:black">{{subsectionItem.questionName}}</label>
                                             <div style="height: 5px;"></div>
-                                            <mat-radio-group [(ngModel)]=subsectionItem.data class="radio" matInput
-                                                aria-label="Select an option">
+                                            <mat-radio-group class="radio" matInput aria-label="Select an option">
                                                 <mat-radio-button style="color: black;"
                                                     *ngFor="let list of subsectionItem.listValue" [value]="list.value">
                                                     {{list.name}} &nbsp;
@@ -328,9 +311,12 @@
                                             *ngIf="subsectionItem.fieldType.value=='checkbox' && subsectionItem.isActive===true ">
                                             <label style="color:black">{{subsectionItem.questionName}}</label>
                                             <div style="height: 5px;"></div>
+                                            <label style="color:black">{{subsectionItem.questionName}}</label>
+                                            <div style="height: 5px;"></div>
                                             <p *ngFor="let list of subsectionItem.listValue; let i = index"
                                                 class="checkbox">
-                                                <mat-checkbox [(ngModel)]=subsectionItem.data>
+                                                <mat-checkbox [checked]="selected === i" (change)="selected = i"
+                                                    [value]="list.value">
                                                     {{list.name}}
                                                 </mat-checkbox>
                                             </p>
@@ -342,9 +328,7 @@
                                             *ngIf="subsectionItem.fieldType.value=='number' && subsectionItem.isActive===true ">
                                             <label style="color:black">{{subsectionItem.questionName}}</label>
                                             <mat-form-field appearance="outline">
-                                                <input matInput type="number" [(ngModel)]=subsectionItem.data
-                                                    [(ngModel)]=subsectionItem.data
-                                                    maxlength={{subsectionItem.fieldValidations[0].dataLength}}
+                                                <input matInput type="number"
                                                     oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                                                     placeholder="{{subsectionItem.toolTip}}"
                                                     value="{{subsectionItem.data}}">
@@ -357,9 +341,7 @@
                                             *ngIf="subsectionItem.fieldType.value=='decimal' && subsectionItem.isActive===true ">
                                             <label style="color:black">{{subsectionItem.questionName}}</label>
                                             <mat-form-field appearance="outline">
-                                                <input matInput type="number" step="any" [(ngModel)]=subsectionItem.data
-                                                    [(ngModel)]=subsectionItem.data
-                                                    maxlength={{subsectionItem.fieldValidations[0].dataLength}}
+                                                <input matInput type="number" step="any"
                                                     oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                                                     placeholder="{{subsectionItem.toolTip}}"
                                                     value="{{subsectionItem.data}}">
@@ -372,7 +354,7 @@
                                             *ngIf="subsectionItem.fieldType.value=='calculation' && subsectionItem.isActive===true ">
                                             <label style="color:black">{{subsectionItem.questionName}}</label>
                                             <mat-form-field appearance="outline">
-                                                <input matInput type="number" [(ngModel)]=subsectionItem.data readonly
+                                                <input matInput type="number" readonly
                                                     placeholder="{{subsectionItem.toolTip}}"
                                                     value="{{subsectionItem.data}}">
                                             </mat-form-field>
@@ -392,9 +374,9 @@
                                                             Browse File
                                                         </button>
                                                     </mat-toolbar>
-                                                    <input type="file" [(ngModel)]=subsectionItem.data #fileInput
-                                                        id="uploadFile" (change)="uploadFileEvt($event)"
-                                                        name="uploadFile" multiple="single" accept="image/*" />
+                                                    <input type="file" #fileInput id="uploadFile"
+                                                        (change)="uploadFileEvt($event)" name="uploadFile"
+                                                        multiple="single" accept="image/*" />
                                                 </ng-container>
                                             </mat-form-field>
                                             <div style="height: 5px;"></div>
@@ -406,7 +388,7 @@
                                             <label style="color:black">{{subsectionItem.questionName}}</label>
                                             <mat-form-field appearance="outline">
                                                 <mat-label>Select a option</mat-label>
-                                                <mat-select [(ngModel)]=subsectionItem.data panelClass="myPanelClass">
+                                                <mat-select panelClass="myPanelClass">
                                                     <mat-option *ngFor="let list of subsectionItem.listValue"
                                                         style="color: black;" [value]="list.value">
                                                         {{list.name}}
@@ -417,7 +399,7 @@
                                         </ng-container>
                                     </ng-container>
                                     <button mat-stroked-button style="background-color: whitesmoke;color: black;"
-                                        (click)=addRepeat(sectionItem.groupGUID)>
+                                        disabled (click)=addRepeat(sectionItem.groupGUID)>
                                         Save Repeat
                                     </button>
                                 </mat-expansion-panel>
@@ -429,8 +411,7 @@
                                 *ngIf="(sectionItem.fieldType.value=='plaintext') && sectionItem.isActive===true ">
                                 <label style="color:black">{{sectionItem.questionName}}</label>
                                 <mat-form-field appearance="outline">
-                                    <input matInput [(ngModel)]=sectionItem.data type="text" placeholder="{{sectionItem.toolTip}}"
-                                        maxlength={{sectionItem.fieldValidations[0].dataLength}}>
+                                    <input matInput type="text" placeholder="{{item.toolTip}}" value="{{item.data}}">
                                 </mat-form-field>
                             </ng-container>
 
@@ -439,8 +420,7 @@
                                 *ngIf="(sectionItem.fieldType.value=='plainalpha') && sectionItem.isActive===true ">
                                 <label style="color:black">{{sectionItem.questionName}}</label>
                                 <mat-form-field appearance="outline">
-                                    <input matInput [(ngModel)]=sectionItem.data type="text" placeholder="{{sectionItem.toolTip}}"
-                                        maxlength={{sectionItem.fieldValidations[0].dataLength}}
+                                    <input matInput type="text" placeholder="{{item.toolTip}}" value="{{item.data}}"
                                         onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)">
                                 </mat-form-field>
                             </ng-container>
@@ -450,8 +430,7 @@
                                 *ngIf="(sectionItem.fieldType.value=='Alphanumeric') && sectionItem.isActive===true ">
                                 <label style="color:black">{{sectionItem.questionName}}</label>
                                 <mat-form-field appearance="outline">
-                                    <input matInput [(ngModel)]=sectionItem.data type="text" placeholder="{{sectionItem.toolTip}}"
-                                        maxlength={{sectionItem.fieldValidations[0].dataLength}}
+                                    <input matInput type="text" placeholder="{{item.toolTip}}" value="{{item.data}}"
                                         onkeypress="return (event.charCode > 64 && event.charCode < 91) ||  (event.charCode > 47 && event.charCode < 58) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)">
                                 </mat-form-field>
                             </ng-container>
@@ -462,8 +441,7 @@
 
                                 <label style="color:black">{{sectionItem.questionName}}</label>
                                 <mat-form-field appearance="outline">
-                                    <input matInput type="email" [(ngModel)]=sectionItem.data placeholder="{{sectionItem.toolTip}}"
-                                       >
+                                    <input matInput type="email" placeholder="{{item.toolTip}}" value="{{item.data}}">
                                 </mat-form-field>
                                 <div style="height: 5px;"></div>
                             </ng-container>
@@ -473,8 +451,7 @@
                                 *ngIf="sectionItem.fieldType.value=='field or' && sectionItem.isActive===true ">
                                 <label style="color:black">{{sectionItem.questionName}}</label>
                                 <div style="height: 5px;"></div>
-                                <mat-radio-group [(ngModel)]=sectionItem.data class="radio" matInput
-                                    aria-label="Select an option">
+                                <mat-radio-group class="radio" matInput aria-label="Select an option">
                                     <mat-radio-button style="color: black;" *ngFor="let list of sectionItem.listValue"
                                         [value]="list.value">
                                         {{list.name}} &nbsp;
@@ -488,8 +465,11 @@
                                 *ngIf="sectionItem.fieldType.value=='checkbox' && sectionItem.isActive===true ">
                                 <label style="color:black">{{sectionItem.questionName}}</label>
                                 <div style="height: 5px;"></div>
-                                <p *ngFor="let list of sectionItem.listValue; let i = index" class="checkbox">
-                                    <mat-checkbox [(ngModel)]=sectionItem.data>
+                                <label style="color:black">{{item.questionName}}</label>
+                                <div style="height: 5px;"></div>
+                                <p *ngFor="let list of item.listValue; let i = index" class="checkbox">
+                                    <mat-checkbox [checked]="selected === i" (change)="selected = i"
+                                        [value]="list.value">
                                         {{list.name}}
                                     </mat-checkbox>
                                 </p>
@@ -500,23 +480,22 @@
                             <ng-container *ngIf="sectionItem.fieldType.value=='number' && sectionItem.isActive===true ">
                                 <label style="color:black">{{sectionItem.questionName}}</label>
                                 <mat-form-field appearance="outline">
-                                    <input matInput type="number" [(ngModel)]=sectionItem.data
-                                        maxlength={{sectionItem.fieldValidations[0].dataLength}}
+                                    <input matInput type="number"
                                         oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                        placeholder="{{sectionItem.toolTip}}">
+                                        placeholder="{{item.toolTip}}" value="{{item.data}}">
                                 </mat-form-field>
                                 <div style="height: 5px;"></div>
                             </ng-container>
+
 
                             <!-- Decimal Type -->
                             <ng-container
                                 *ngIf="sectionItem.fieldType.value=='decimal' && sectionItem.isActive===true ">
                                 <label style="color:black">{{sectionItem.questionName}}</label>
                                 <mat-form-field appearance="outline">
-                                    <input matInput type="number" step="any" [(ngModel)]=sectionItem.data
-                                        maxlength={{sectionItem.fieldValidations[0].dataLength}}
+                                    <input matInput type="number" step="any"
                                         oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                        placeholder="{{sectionItem.toolTip}}">
+                                        placeholder="{{item.toolTip}}" value="{{item.data}}">
                                 </mat-form-field>
                                 <div style="height: 5px;"></div>
                             </ng-container>
@@ -526,8 +505,8 @@
                                 *ngIf="sectionItem.fieldType.value=='calculation' && sectionItem.isActive===true ">
                                 <label style="color:black">{{sectionItem.questionName}}</label>
                                 <mat-form-field appearance="outline">
-                                    <input matInput type="number" [(ngModel)]=sectionItem.data readonly
-                                        placeholder="{{sectionItem.toolTip}}">
+                                    <input matInput type="number" readonly placeholder="{{item.toolTip}}"
+                                        value="{{item.data}}">
                                 </mat-form-field>
                                 <div style="height: 5px;"></div>
                             </ng-container>
@@ -544,9 +523,8 @@
                                                 Browse File
                                             </button>
                                         </mat-toolbar>
-                                        <input type="file" [(ngModel)]=sectionItem.data #fileInput id="uploadFile"
-                                            (change)="uploadFileEvt($event)" name="uploadFile" multiple="single"
-                                            accept="image/*" />
+                                        <input type="file" #fileInput id="uploadFile" (change)="uploadFileEvt($event)"
+                                            name="uploadFile" multiple="single" accept="image/*" />
                                     </ng-container>
                                 </mat-form-field>
                                 <div style="height: 5px;"></div>
@@ -558,7 +536,7 @@
                                 <label style="color:black">{{sectionItem.questionName}}</label>
                                 <mat-form-field appearance="outline">
                                     <mat-label>Select a option</mat-label>
-                                    <mat-select [(ngModel)]=sectionItem.data panelClass="myPanelClass">
+                                    <mat-select panelClass="myPanelClass">
                                         <mat-option *ngFor="let list of sectionItem.listValue" style="color: black;"
                                             [value]="list.value">
                                             {{list.name}}
@@ -594,7 +572,7 @@
                             </tr>
                             <tr *ngFor="let dataItem of item.groupTableList;let i=index">
                                 <td>
-                                    <mat-icon class="mat-18" (click)=editRepeat(item.groupGUID,dataItem.cloneNum,item.groupGUID[0].parentFieldName) >edit</mat-icon>
+                                    <mat-icon class="mat-18">edit</mat-icon>
                                 </td>
                                 <td>
                                     <mat-icon class="mat-18"
@@ -628,14 +606,13 @@
                             <ng-container *ngIf="sectionItem.fieldType.value=='Time' && sectionItem.isActive===true ">
                                 <label style="color:black">{{sectionItem.questionName}}</label>
                                 <mat-form-field appearance="outline">
-                                    <input matInput type="time" [(ngModel)]=sectionItem.data
-                                        placeholder="{{sectionItem.toolTip}}">
+                                    <input matInput type="time" placeholder="{{sectionItem.toolTip}}"
+                                        value="{{sectionItem.data}}">
                                 </mat-form-field>
                             </ng-container>
 
-                            <!-- Drawing/signature Type -->
                             <ng-container
-                                *ngIf="sectionItem.fieldType.value=='signature' || sectionItem.fieldType.value=='imagearea' && sectionItem.isActive===true">
+                                *ngIf="sectionItem.fieldType.value=='signature' || sectionItem.fieldType.value=='imagearea' && sectionItem.isActive===true ">
                                 <label style="color:black">{{item.questionName}}</label>
                                 <div class="signature-container">
                                     <signature-pad [options]="signaturePadOptions" (onBeginEvent)="drawStart()"
@@ -643,22 +620,23 @@
                                     </signature-pad>
                                 </div>
                                 <button (click)="clearSignature()"
-                                    style="font-weight: 500;background-color: whitesmoke;color: black;">Clear
+                                    style="font-weight: 500;background-color: whitesmoke;width: 80px;color: black;">Clear
                                     signature pad</button>
                                 <button (click)="savePad()"
-                                    style="font-weight: 500;background-color: whitesmoke;color: black;">Save
+                                    style="font-weight: 500;background-color: whitesmoke;width: 80px;color: black;">Save
                                     signature</button>
-                                <!--  <div class="signature-image" *ngIf="signatureImg">
-                                    <img src='{{ signatureImg }}' />
-                                </div> -->
+                                <!-- <div class="signature-image" *ngIf="signatureImg">
+                                            <img src='{{ signatureImg }}' />
+                                        </div> -->
                             </ng-container>
+
 
                             <!-- Date Type -->
                             <ng-container *ngIf="sectionItem.fieldType.value=='date' && sectionItem.isActive===true ">
                                 <label style="color:black">{{sectionItem.questionName}}</label>
                                 <mat-form-field appearance="outline">
-                                    <input matInput type="date" [(ngModel)]=sectionItem.data
-                                        placeholder="{{sectionItem.toolTip}}">
+                                    <input matInput type="date" placeholder="{{sectionItem.toolTip}}"
+                                        value="{{sectionItem.data}}">
                                 </mat-form-field>
                             </ng-container>
 
@@ -667,9 +645,8 @@
                                 *ngIf="(sectionItem.fieldType.value=='plaintext') && sectionItem.isActive===true ">
                                 <label style="color:black">{{sectionItem.questionName}}</label>
                                 <mat-form-field appearance="outline">
-                                    <input matInput [(ngModel)]=sectionItem.data type="text"
-                                        placeholder="{{sectionItem.toolTip}}"
-                                        maxlength={{sectionItem.fieldValidations[0].dataLength}}>
+                                    <input matInput type="text" placeholder="{{sectionItem.toolTip}}"
+                                        value="{{sectionItem.data}}">
                                 </mat-form-field>
                             </ng-container>
 
@@ -678,9 +655,8 @@
                                 *ngIf="(sectionItem.fieldType.value=='plainalpha') && sectionItem.isActive===true ">
                                 <label style="color:black">{{sectionItem.questionName}}</label>
                                 <mat-form-field appearance="outline">
-                                    <input matInput [(ngModel)]=sectionItem.data type="text"
-                                        placeholder="{{sectionItem.toolTip}}"
-                                        maxlength={{sectionItem.fieldValidations[0].dataLength}}
+                                    <input matInput type="text" placeholder="{{sectionItem.toolTip}}"
+                                        value="{{sectionItem.data}}"
                                         onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)">
                                 </mat-form-field>
                             </ng-container>
@@ -690,9 +666,8 @@
                                 *ngIf="(sectionItem.fieldType.value=='Alphanumeric') && sectionItem.isActive===true ">
                                 <label style="color:black">{{sectionItem.questionName}}</label>
                                 <mat-form-field appearance="outline">
-                                    <input matInput [(ngModel)]=sectionItem.data type="text"
-                                        placeholder="{{sectionItem.toolTip}}"
-                                        maxlength={{sectionItem.fieldValidations[0].dataLength}}
+                                    <input matInput type="text" placeholder="{{sectionItem.toolTip}}"
+                                        value="{{sectionItem.data}}"
                                         onkeypress="return (event.charCode > 64 && event.charCode < 91) ||  (event.charCode > 47 && event.charCode < 58) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)">
                                 </mat-form-field>
                             </ng-container>
@@ -703,8 +678,8 @@
 
                                 <label style="color:black">{{sectionItem.questionName}}</label>
                                 <mat-form-field appearance="outline">
-                                    <input matInput type="email" [(ngModel)]=sectionItem.data
-                                        placeholder="{{sectionItem.toolTip}}">
+                                    <input matInput type="email" placeholder="{{sectionItem.toolTip}}"
+                                        value="{{sectionItem.data}}">
                                 </mat-form-field>
                                 <div style="height: 5px;"></div>
                             </ng-container>
@@ -714,8 +689,7 @@
                                 *ngIf="sectionItem.fieldType.value=='field or' && sectionItem.isActive===true ">
                                 <label style="color:black">{{sectionItem.questionName}}</label>
                                 <div style="height: 5px;"></div>
-                                <mat-radio-group [(ngModel)]=sectionItem.data class="radio" matInput
-                                    aria-label="Select an option">
+                                <mat-radio-group class="radio" matInput aria-label="Select an option">
                                     <mat-radio-button style="color: black;" *ngFor="let list of sectionItem.listValue"
                                         [value]="list.value">
                                         {{list.name}} &nbsp;
@@ -730,7 +704,8 @@
                                 <label style="color:black">{{sectionItem.questionName}}</label>
                                 <div style="height: 5px;"></div>
                                 <p *ngFor="let list of sectionItem.listValue; let i = index" class="checkbox">
-                                    <mat-checkbox [(ngModel)]=sectionItem.data>
+                                    <mat-checkbox [checked]="selected === i" (change)="selected = i"
+                                        [value]="list.value">
                                         {{list.name}}
                                     </mat-checkbox>
                                 </p>
@@ -741,10 +716,9 @@
                             <ng-container *ngIf="sectionItem.fieldType.value=='number' && sectionItem.isActive===true ">
                                 <label style="color:black">{{sectionItem.questionName}}</label>
                                 <mat-form-field appearance="outline">
-                                    <input matInput type="number" [(ngModel)]=sectionItem.data
-                                        maxlength={{sectionItem.fieldValidations[0].dataLength}}
+                                    <input matInput type="number"
                                         oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                        placeholder="{{sectionItem.toolTip}}">
+                                        placeholder="{{sectionItem.toolTip}}" value="{{sectionItem.data}}">
                                 </mat-form-field>
                                 <div style="height: 5px;"></div>
                             </ng-container>
@@ -754,10 +728,9 @@
                                 *ngIf="sectionItem.fieldType.value=='decimal' && sectionItem.isActive===true ">
                                 <label style="color:black">{{sectionItem.questionName}}</label>
                                 <mat-form-field appearance="outline">
-                                    <input matInput type="number" step="any" [(ngModel)]=sectionItem.data
-                                        maxlength={{sectionItem.fieldValidations[0].dataLength}}
+                                    <input matInput type="number" step="any"
                                         oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                        placeholder="{{sectionItem.toolTip}}">
+                                        placeholder="{{sectionItem.toolTip}}" value="{{sectionItem.data}}">
                                 </mat-form-field>
                                 <div style="height: 5px;"></div>
                             </ng-container>
@@ -767,8 +740,8 @@
                                 *ngIf="sectionItem.fieldType.value=='calculation' && sectionItem.isActive===true ">
                                 <label style="color:black">{{sectionItem.questionName}}</label>
                                 <mat-form-field appearance="outline">
-                                    <input matInput type="number" [(ngModel)]=sectionItem.data readonly
-                                        placeholder="{{sectionItem.toolTip}}">
+                                    <input matInput type="number" readonly placeholder="{{sectionItem.toolTip}}"
+                                        value="{{sectionItem.data}}">
                                 </mat-form-field>
                                 <div style="height: 5px;"></div>
                             </ng-container>
@@ -785,9 +758,8 @@
                                                 Browse File
                                             </button>
                                         </mat-toolbar>
-                                        <input type="file" [(ngModel)]=sectionItem.data #fileInput id="uploadFile"
-                                            (change)="uploadFileEvt($event)" name="uploadFile" multiple="single"
-                                            accept="image/*" />
+                                        <input type="file" #fileInput id="uploadFile" (change)="uploadFileEvt($event)"
+                                            name="uploadFile" multiple="single" accept="image/*" />
                                     </ng-container>
                                 </mat-form-field>
                                 <div style="height: 5px;"></div>
@@ -799,7 +771,7 @@
                                 <label style="color:black">{{sectionItem.questionName}}</label>
                                 <mat-form-field appearance="outline">
                                     <mat-label>Select a option</mat-label>
-                                    <mat-select [(ngModel)]=sectionItem.data panelClass="myPanelClass">
+                                    <mat-select panelClass="myPanelClass">
                                         <mat-option *ngFor="let list of sectionItem.listValue" style="color: black;"
                                             [value]="list.value">
                                             {{list.name}}
@@ -810,7 +782,7 @@
                             </ng-container>
                         </ng-container>
                         <button mat-stroked-button style="background-color: whitesmoke;color: black;"
-                            (click)=addRepeat(item.groupGUID)>
+                            (click)=addRepeat(item.groupGUID) disabled>
                             Save Repeat
                         </button>
                     </mat-expansion-panel>
@@ -853,8 +825,7 @@
 
                     <label style="color:black">{{item.questionName}}</label>
                     <mat-form-field appearance="outline">
-                        <input matInput type="email" [(ngModel)]=item.data placeholder="{{item.toolTip}}"
-                           >
+                        <input matInput type="email" placeholder="{{item.toolTip}}" value="{{item.data}}">
                     </mat-form-field>
                     <div style="height: 5px;"></div>
                 </ng-container>
@@ -864,7 +835,7 @@
                     *ngIf="item.fieldType.value=='field or' && item.isActive===true && item.parentFieldName===''">
                     <label style="color:black">{{item.questionName}}</label>
                     <div style="height: 5px;"></div>
-                    <mat-radio-group [(ngModel)]=item.data class="radio" matInput aria-label="Select an option">
+                    <mat-radio-group class="radio" matInput aria-label="Select an option">
                         <mat-radio-button style="color: black;" *ngFor="let list of item.listValue"
                             [value]="list.value">
                             {{list.name}} &nbsp;
@@ -879,7 +850,7 @@
                     <label style="color:black">{{item.questionName}}</label>
                     <div style="height: 5px;"></div>
                     <p *ngFor="let list of item.listValue; let i = index" class="checkbox">
-                        <mat-checkbox [(ngModel)]=item.data>
+                        <mat-checkbox>
                             {{list.name}}
                         </mat-checkbox>
                     </p>
@@ -891,10 +862,9 @@
                     *ngIf="item.fieldType.value=='number' && item.isActive===true && item.parentFieldName===''">
                     <label style="color:black">{{item.questionName}}</label>
                     <mat-form-field appearance="outline">
-                        <input matInput type="number" [(ngModel)]=item.data
-                            maxlength={{item.fieldValidations[0].dataLength}}
+                        <input matInput type="number"
                             oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                            placeholder="{{item.toolTip}}">
+                            placeholder="{{item.toolTip}}" value="{{item.data}}">
                     </mat-form-field>
                     <div style="height: 5px;"></div>
                 </ng-container>
@@ -904,10 +874,9 @@
                     *ngIf="item.fieldType.value=='decimal' && item.isActive===true && item.parentFieldName===''">
                     <label style="color:black">{{item.questionName}}</label>
                     <mat-form-field appearance="outline">
-                        <input matInput type="number" step="any" [(ngModel)]=item.data
-                            maxlength={{item.fieldValidations[0].dataLength}}
+                        <input matInput type="number" step="any"
                             oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                            placeholder="{{item.toolTip}}">
+                            placeholder="{{item.toolTip}}" value="{{item.data}}">
                     </mat-form-field>
                     <div style="height: 5px;"></div>
                 </ng-container>
@@ -917,8 +886,7 @@
                     *ngIf="item.fieldType.value=='calculation' && item.isActive===true && item.parentFieldName===''">
                     <label style="color:black">{{item.questionName}}</label>
                     <mat-form-field appearance="outline">
-                        <input matInput type="number" [(ngModel)]=item.data readonly placeholder="{{item.toolTip}}"
-                           >
+                        <input matInput type="number" readonly placeholder="{{item.toolTip}}" value="{{item.data}}">
                     </mat-form-field>
                     <div style="height: 5px;"></div>
                 </ng-container>
@@ -935,8 +903,8 @@
                                     Browse File
                                 </button>
                             </mat-toolbar>
-                            <input type="file" [(ngModel)]=item.data #fileInput id="uploadFile"
-                                (change)="uploadFileEvt($event)" name="uploadFile" multiple="single" accept="image/*" />
+                            <input type="file" #fileInput id="uploadFile" (change)="uploadFileEvt($event)"
+                                name="uploadFile" multiple="single" accept="image/*" />
                         </ng-container>
                     </mat-form-field>
                     <div style="height: 5px;"></div>
@@ -948,7 +916,7 @@
                     <label style="color:black">{{item.questionName}}</label>
                     <mat-form-field appearance="outline">
                         <mat-label>Select a option</mat-label>
-                        <mat-select [(ngModel)]=item.data panelClass="myPanelClass">
+                        <mat-select panelClass="myPanelClass">
                             <mat-option *ngFor="let list of item.listValue" style="color: black;" [value]="list.value">
                                 {{list.name}}
                             </mat-option>

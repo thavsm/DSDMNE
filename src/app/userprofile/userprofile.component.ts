@@ -59,8 +59,8 @@ export class UserProfileComponent implements OnInit {
           this.isParent = true;
       }
       
-      if(this.isParent)
-      {
+      if(this.isParent) {
+        if(Object.keys(this.data).length ==0) {
         this.service.getUserProfile().subscribe(
           res => {
             this.formData = res['formData'];
@@ -70,6 +70,10 @@ export class UserProfileComponent implements OnInit {
           },
         );
       }
+      else{
+        this.formData = this.data;
+      }
+    }
      
     }
 

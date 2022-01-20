@@ -93,8 +93,6 @@ import {NgxSpinnerModule} from 'ngx-spinner';
     NgxSpinnerModule
   ],
   declarations: [
-  
-    
   ]
 })
 export class MaterialModule {}

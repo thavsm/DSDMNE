@@ -36,7 +36,7 @@ export const ROUTES: RouteInfo[] = [{
         path: '/usermanager',
         title: 'user manager',
         type: 'sub',
-        icontype: 'image',
+        icontype: 'person',
         role: [],
         collapse: 'usermanager',
         children: [
@@ -107,12 +107,6 @@ export const ROUTES: RouteInfo[] = [{
     // }, 
 
     {
-        path: '/appusers',
-        title: 'Users',
-        type: 'link',
-        icontype: 'person',
-        role: [],
-    },{
         path: '/weather',
         title: 'Weather',
         type: 'link',
@@ -135,7 +129,7 @@ export const ROUTES: RouteInfo[] = [{
         collapse: 'formList',
         children: [
             {path: 'formCategory',title: 'Form Category',ab: 'FC'},
-            {path: 'formList',title: 'Form Template',ab: 'FD'},   
+            {path: 'formList',title: 'Form Design',ab: 'FD'},   
             { path: 'formCapture', title: 'Form Capture', ab: 'FC' },
             { path: 'formInbox', title: 'Form Inbox', ab: 'FI' }
         ]

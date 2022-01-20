@@ -56,12 +56,8 @@ export const AppRoutes: Routes = [
         loadChildren: () => import('./form-category/form-category.module').then(m => m.FormCategoryModule)
       },
       {
-        path: 'formList',
-        loadChildren: () => import('./form-list/form-list.module').then(m => m.FormListModule)
-      },
-      {
-        path: 'formDesign',
-        loadChildren: () => import('./form-design/form-design.module').then(m => m.FormDesignModule)
+        path: 'formPreview',
+        loadChildren: () => import('./form-preview/form-preview.module').then(m => m.FormPreviewModule)
       },
       {
         path: 'formCapture',

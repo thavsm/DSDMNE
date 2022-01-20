@@ -6,7 +6,8 @@ import { Router } from '@angular/router';
 import { FormbuilderService } from '../shared/formbuilder.service';
 import {NgxSpinner, NgxSpinnerService} from 'ngx-spinner';
 import { AddFormComponent } from './add-form/add-form.component';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, JsonpClientBackend } from '@angular/common/http';
+import { UserService } from '../shared/user.service';
 declare var $: any;
 
 export interface FormData {
@@ -21,32 +22,63 @@ export interface FormData {
 })
 export class FormCaptureComponent implements OnInit {
 
-  constructor(public dialog: MatDialog, private route: Router, private service: FormbuilderService,private spinner:NgxSpinnerService) { }
+  constructor(public dialog: MatDialog, private route: Router, private service: FormbuilderService,private spinner:NgxSpinnerService,private userService:UserService) { }
   
   public formData:any=[{"formID":0,"formName":""}];
 
   public formList:any = [];
 
+  userDetail:any;
+
   ngOnInit(): void {
     this.refreshFormsList();
+    this.userService.getUserProfile().subscribe(
+      res => {
+        this.userDetail = res;
+      },
+      err => {
+        console.log(err);
+      },
+    );
   }
 
   addForm(){
-    if((this.formData.formID!==0) && (this.formData.formID!==undefined) && (this.formData.formName!=="")  && (this.formData.formName!==undefined))
+    if((this.formData.formID!==0) && (this.formData.formID!==undefined))
     {
-      let myObj = {
-        formID: this.formData.formID,
-        formName:this.formData.formName
-      };
-      localStorage.setItem('formIDCapture', JSON.stringify(myObj));
-      const dialogRef = this.dialog.open(AddFormComponent, {
-        width: '75%',
-        height: '75%',
-        disableClose:true
-      });
-      this.formData.formName="";
-      dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
+      this.spinner.show();
+      let formCaptureData={
+          formCaptureID: 0,
+          formName:'',
+          formID: this.formData.formID,
+          step: "string",
+          sentBy: this.userDetail.fullName,
+          dateSent: "string",
+          timeSent: "string",
+          displayableOne: "",
+          displayableTwo: "",
+          geography: "North West",// to change to geog once completed 
+          stage: "string",
+          formTemplateName: "string"
+      }    
+      this.service.addCapturedForms(formCaptureData).subscribe(res=>{
+        let myObj = {
+          formID: this.formData.formID,
+          formName:JSON.parse(res).formName,
+          formCaptureID:JSON.parse(res).formCaptureID,
+          state:'add'
+        };
+        this.spinner.hide();
+        this.showNotification('top','center','Form created successfully','Success','success');
+        localStorage.setItem('formCaptureDetails', JSON.stringify(myObj));
+        const dialogRef = this.dialog.open(AddFormComponent, {
+          width: '85%',
+          height: '85%',
+          disableClose:true
+        });
+        this.formData.formName="";
+        dialogRef.afterClosed().subscribe(result => {
+          console.log('The dialog was closed');
+        });
       });
     }
     else{

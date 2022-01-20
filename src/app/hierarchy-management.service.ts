@@ -15,6 +15,7 @@ export class HierarchyManagementService {
   readonly API_URL = environment.API_URL + '/'
   //readonly APIUrl='https://localhost:44305/api/';
 
+
   hformData:hierarchyManagement = new hierarchyManagement();
   public hlist:hierarchyManagement[];
   

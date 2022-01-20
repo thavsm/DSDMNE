@@ -1,10 +1,13 @@
 {
     "cSpell.words": [
+        "formcapture",
         "groupdata",
         "groupsection",
+        "progressbar",
         "removepage",
         "repeatgroup",
         "Swal",
-        "sweetalert"
+        "sweetalert",
+        "valuenow"
     ]
 }

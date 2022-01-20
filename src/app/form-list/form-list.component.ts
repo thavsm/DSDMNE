@@ -11,11 +11,6 @@ import Swal from 'sweetalert2'
 import { merge } from 'jquery';
 declare var $: any;
 
-export interface FormData {
-  name: string;
-  description: string;
-}
-
 @Component({
   selector: 'app-form-list',
   templateUrl: './form-list.component.html',
@@ -60,7 +55,7 @@ export class FormListComponent implements OnInit {
         this.service.archiveDynamicForm(item.formID).subscribe(data => {
           this.spinner.hide();
           this.refreshFormsList();
-           this.showNotification('top','center','Form Deleted Succesfully!','Success.','success');
+           this.showNotification('top','center','Form Deleted Successfully!','Success.','success');
         });
       }
     })
@@ -91,8 +86,8 @@ export class FormListComponent implements OnInit {
   clickEdit(item: any) {
     this.formAdd = item;
     const dialogRef = this.dialog.open(FormAddComponent, {
-      width: '60%',
-      height: '60%',
+      width: '75%',
+      height: '75%',
       data: this.formAdd,
       disableClose:true
     });
@@ -120,8 +115,8 @@ export class FormListComponent implements OnInit {
       lastModifiedByUserID: 0
     }
     const dialogRef = this.dialog.open(FormAddComponent, {
-      width: '60%',
-      height: '60%',
+      width: '75%',
+      height: '75%',
       data: this.formAdd,
       disableClose:true
     });
