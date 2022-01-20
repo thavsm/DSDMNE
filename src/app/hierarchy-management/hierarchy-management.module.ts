@@ -21,7 +21,9 @@ import { LevelAddComponent } from './level-add/level-add.component';
 import { LevelNodeEditComponent } from './level-node-edit/level-node-edit.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatExpansionModule} from '@angular/material/expansion';
-import { PDFExportModule } from '@progress/kendo-angular-pdf-export'
+import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
+import { TargetAddComponent } from './target-add/target-add.component';
+import { ExternaldataAddComponent } from './externaldata-add/externaldata-add.component'
 
 @NgModule({
   
@@ -46,7 +48,9 @@ import { PDFExportModule } from '@progress/kendo-angular-pdf-export'
       TreeAddComponent,
       NodeAddComponent,
       LevelAddComponent,
-      LevelNodeEditComponent]
+      LevelNodeEditComponent,
+      TargetAddComponent,
+      ExternaldataAddComponent]
 ,
 bootstrap: [HierarchyManagementComponent],
 providers: [DatePipe]

@@ -11,14 +11,16 @@ import { hierarchyManagement } from './hierarchy-management/hierarchy-management
 export class HierarchyManagementService {
 
   constructor(private http:HttpClient) { }
+
+  readonly API_URL = environment.API_URL + '/'
   //readonly APIUrl='https://localhost:44305/api/';
-  readonly APIUrl= environment.API_URL + '/';
+
 
   hformData:hierarchyManagement = new hierarchyManagement();
   public hlist:hierarchyManagement[];
   
-  refreshhlist(){
-    this.http.get(this.APIUrl + 'Trees')
+  refreshhlist(TreeCategoryID:any){
+    this.http.get(this.API_URL + 'Trees/GettreesCategoryID' + '/' + TreeCategoryID)
     .toPromise()
     .then(res=> this.hlist = res as hierarchyManagement[]);
 
@@ -26,30 +28,30 @@ export class HierarchyManagementService {
   }
 
   openDialogAdd(val:any){
-    return this.http.post(this.APIUrl+'/',val);
+    return this.http.post(this.API_URL+'/',val);
   }
   addTree(data:any){
-    return this.http.post(this.APIUrl+'Trees',data);
+    return this.http.post(this.API_URL+'Trees',data);
   }
 
   archiveTree(treeID:any){
-    return this.http.delete(this.APIUrl+'Trees' + '/' + treeID);
+    return this.http.delete(this.API_URL+'Trees' + '/' + treeID);
   }
 
   updateTreeDetails(treeID:number,data:any){
-    return this.http.put(this.APIUrl+'Trees/'+treeID,data);
+    return this.http.put(this.API_URL+'Trees/'+treeID,data);
   }
 
   getLevelsList(treeID:number){
-    return this.http.get<any>(this.APIUrl+'Levels?id='+treeID);
+    return this.http.get<any>(this.API_URL+'Levels?id='+treeID);
   }
 
   getNodes(levelID:number){
-    return this.http.get<any>(this.APIUrl+'Nodes/GetNodeByLevelID/'+levelID);
+    return this.http.get<any>(this.API_URL+'Nodes/GetNodeByLevelID/'+levelID);
   }
 
   addNode(data:any){
-    return this.http.post(this.APIUrl+'Nodes',data);
+    return this.http.post(this.API_URL+'Nodes',data);
   }
 }
 

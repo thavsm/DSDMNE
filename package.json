@@ -66,6 +66,7 @@
     "jquery": "3.6.0",
     "jquery-validation": "^1.19.3",
     "jqvmap": "1.5.1",
+    "js2xmlparser": "^4.0.2",
     "moment": "2.29.1",
     "moment-timezone": "0.5.33",
     "ng2-nouislider": "1.8.3",

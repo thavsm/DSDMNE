@@ -127,6 +127,19 @@ export class FormbuilderService {
   UpdateGroupMetadata(formCaptureID:any,groupGUID:any,cloneNum:any,data:any){
     return this.http.put(this.APIUrl+formCaptureID+'/'+groupGUID+'/'+cloneNum+'/UpdateGroupMetadata',data,{responseType: 'text'});
   }
+
+  deleteCapturedForm(formCaptureID:any){
+    return this.http.delete(this.APIUrl+formCaptureID+'/'+'DeleteCapturedForm',{responseType: 'text'});
+  }
+
+  lockForm(formID:any,item:any){
+    return this.http.patch(this.APIUrl+'forms/'+formID+'/lock',item);
+  }
+
+  unlockForm(formID:any,item:any){
+    return this.http.patch(this.APIUrl+'Forms/'+formID+'/unlock',item);
+  }
+
 //#endregion
 
 }

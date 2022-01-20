@@ -7,8 +7,17 @@ export const hierarchymanagementRoutes: Routes = [
 
       path: '',
       children: [ {
-      path: '',
+      path: 'HierarchyManagement',
+      component: HierarchyManagementComponent
+    },
+    {
+      path: 'GeographyManagement',
+      component: HierarchyManagementComponent
+    },
+    {
+      path: 'LevelManagement',
       component: HierarchyManagementComponent
     }]
 }
 ];
+
