@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { User } from './user.model';
 import { environment } from '../../environments/environment';
 import { role } from './lookup.model';
+import { FormRole } from '../usermanager/formrole.model';
 
 @Injectable({
   providedIn: 'root'
@@ -94,10 +95,30 @@ export class UserService {
     return this.http.get<role[]>(this.BaseURI + '/Lookup/GetRoles');
   }
 
+
   addRole(body: string) {
 
     return this.http.post(this.BaseURI + '/Lookup/AddRole?roleName='+body,body);
     //return this.http.post(this.BaseURI + '/Lookup/AddRole', body);
+  }
+
+  deleteFormRoles(formID: number) {
+    return this.http.delete(this.BaseURI + '/ApplicationUser/DeleteFormRoles?formID='+formID);
+  }
+
+  
+  addFormRole(formRole: any) {
+    return this.http.post(this.BaseURI + '/ApplicationUser/AddFormRole', formRole);
+  }
+
+  
+  addFormRoles(formRoles: any) {
+    return this.http.post(this.BaseURI + '/ApplicationUser/AddFormRoles', formRoles);
+  }
+
+  
+  getFormRoles(formID: number) {
+    return this.http.get<any>(this.BaseURI + '/ApplicationUser/GetFormRoles?formID='+formID);
   }
 
 }
