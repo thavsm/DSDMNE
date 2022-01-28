@@ -31,13 +31,19 @@
                     <th>#</th>
                     <th>Role</th>
                     <th>No of Users</th>
+                    <th>Menus</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let obj of data;let i = index">
                     <td>{{ i+1 }}</td>
                     <td>{{ obj['role'] }}</td>
-                    <td><span class="badge badge-primary">{{ obj['users'] }}</span></td>
+                    <td><span class="badge badge-primary" onclick="clickEdit(obj)" >{{ obj['users'] }}</span></td>
+                    <td>
+                      <button mat-icon-button (click)="clickEdit(obj)">
+                      <mat-icon class="mat-18">edit</mat-icon>
+                      </button>
+                  </td>
                   </tr>
                 </tbody>
               </table>

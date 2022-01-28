@@ -63,6 +63,9 @@
                                     <textarea matInput rows="3" [(ngModel)]="formData['address']" (input)="updateFormData()"></textarea>
                                 </mat-form-field>
                             </div>
+                              <div class="col-md-12" *ngIf="isButtonVisible">
+                                <button id="btnSave" class="btn btn-primary mr-1" (click)='updateUser()'>Update</button>
+                                </div>
                         </div>
                     </div>
                 </div>

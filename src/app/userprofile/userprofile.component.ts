@@ -4,6 +4,7 @@ import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms'
 import { UserService } from '../shared/user.service';
 import { FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog'
+import { NgxSpinnerService } from 'ngx-spinner';
 
 declare var $: any;
 
@@ -16,6 +17,7 @@ export class UserProfileComponent implements OnInit {
   @Input() formData?: any;
   @Input() isParent?: boolean;
   userDetail: any;
+  isButtonVisible = false;
   
   @Output() newItemEvent = new EventEmitter<any>();
   
@@ -49,7 +51,7 @@ export class UserProfileComponent implements OnInit {
     {value: '9', viewValue: 'Limpopo'}
   ];
   
-    constructor(private element: ElementRef, private fb: FormBuilder, private service: UserService, @Inject(MAT_DIALOG_DATA) public data: any) {
+    constructor(private element: ElementRef, private fb: FormBuilder, private service: UserService, @Inject(MAT_DIALOG_DATA) public data: any, private spinner: NgxSpinnerService) {
       //this.passData.isChild = false;
     }
 
@@ -71,7 +73,8 @@ export class UserProfileComponent implements OnInit {
         );
       }
       else{
-        this.formData = this.data;
+        this.formData = this.data.data;
+        this.isButtonVisible = true;
       }
     }
      
@@ -80,6 +83,22 @@ export class UserProfileComponent implements OnInit {
     updateFormData() {
       
       this.newItemEvent.emit(this.formData);
+
+    }
+
+    updateUser(){
+
+      this.service.UpdateUserProfile(this.formData).subscribe(
+        res => {
+          this.spinner.hide();
+          //this.data1 = res;
+          //window.location.replace("/dashboard");
+        },
+        err => {
+          this.spinner.hide();
+          console.log(err);
+        },
+      );
 
     }
 
