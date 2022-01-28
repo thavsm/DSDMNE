@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { UserService } from '../shared/user.service';
 import { Router } from '@angular/router';
+import { BehaviorSubject, Observable } from 'rxjs';
+
 
 declare const $: any;
 
@@ -34,7 +36,7 @@ export const ROUTES: RouteInfo[] = [{
         role: [],
     },{
         path: '/usermanager',
-        title: 'user manager',
+        title: 'User Manager',
         type: 'sub',
         icontype: 'person',
         role: [],
@@ -49,7 +51,7 @@ export const ROUTES: RouteInfo[] = [{
         title: 'Pages',
         type: 'sub',
         icontype: 'image',
-        role: ['District Manager'],
+        role: [],
         collapse: 'pages',
         children: [
             {path: 'pricing', title: 'Pricing', ab:'P'},
@@ -63,7 +65,7 @@ export const ROUTES: RouteInfo[] = [{
     
     ,{
         path: '/hierarchy-management',
-        title: 'management',
+        title: 'Management',
         type: 'sub',
         icontype: 'account_tree',
         role: [],
@@ -111,7 +113,7 @@ export const ROUTES: RouteInfo[] = [{
         title: 'Weather',
         type: 'link',
         icontype: 'cloud',
-        role: ['District Manager'],
+        role: [],
     },
     {
         path: '/process',
@@ -144,10 +146,12 @@ export class SidebarComponent implements OnInit {
     public menuItems: any[];
     ps: any;
     userDetail: any;
+    menus: any[];
     
-    
+    public showMenu: boolean = true;
+
     constructor(private service: UserService, private router: Router) {
-      
+        this.service.sm.subscribe(show => this.showMenu = show);
     }
 
     isMobileMenu() {
@@ -156,8 +160,10 @@ export class SidebarComponent implements OnInit {
         }
         return true;
     };
-
+   
     ngOnInit() {
+
+        this.service.sm.subscribe(show => this.showMenu = show);
        
         this.service.getUserProfile().subscribe(
             res => {
@@ -169,7 +175,32 @@ export class SidebarComponent implements OnInit {
           );
         
         let userRole= this.service.getRole();
-        this.menuItems = ROUTES.filter(menuItem => menuItem.role.length ==0 || menuItem.role.indexOf(userRole) > -1);
+
+    
+        this.menus = [];
+        this.service.getRoleMenus(userRole).subscribe(
+            res => {
+              
+            ROUTES.forEach(
+                (el) => {
+                    let a = res.find(menu => (menu.name).toLowerCase() === el.title.toLowerCase());
+                    if (typeof a !== 'undefined') {
+                        el.role=[userRole];
+                    }
+                }
+            );
+
+            this.menuItems = ROUTES.filter(menuItem => menuItem.role.indexOf(userRole) > -1 );
+
+            },
+            err => {
+                console.log(err);
+            },
+        );
+
+          
+        
+        //this.menuItems = ROUTES.filter(menuItem => menuItem.role.length ==0 ); //|| menuItem.role.indexOf(userRole) > -1);
         if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
             const elemSidebar = <HTMLElement>document.querySelector('.sidebar .sidebar-wrapper');
             this.ps = new PerfectScrollbar(elemSidebar);
