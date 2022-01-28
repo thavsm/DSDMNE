@@ -121,4 +121,13 @@ export class UserService {
     return this.http.get<any>(this.BaseURI + '/ApplicationUser/GetFormRoles?formID='+formID);
   }
 
+  getPasswordResetToken(email: string) {
+    
+    return this.http.get(this.BaseURI + '/ApplicationUser/GeneratePasswordResetToken/'+email);
+  }
+
+  resetPassword(resetModel: any) {
+    return this.http.post(this.BaseURI + '/ApplicationUser/ResetPassword', resetModel);
+  }
+
 }
