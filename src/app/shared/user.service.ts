@@ -149,10 +149,18 @@ export class UserService {
   addMenusRole(menusRole: any) {
     return this.http.post(this.BaseURI + '/ApplicationUser/AddRoleMenus', menusRole);
   }
-
   
   getRoleMenus(role: string) {
     return this.http.get<any>(this.BaseURI + '/ApplicationUser/GetRoleNameMenus?role='+role);
+  }
+
+  getPasswordResetToken(email: string) {
+    
+    return this.http.get(this.BaseURI + '/ApplicationUser/GeneratePasswordResetToken/'+email);
+  }
+
+  resetPassword(resetModel: any) {
+    return this.http.post(this.BaseURI + '/ApplicationUser/ResetPassword', resetModel);
   }
 
 }
