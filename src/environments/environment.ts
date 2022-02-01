@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  API_URL: 'https://localhost:44305/api',  
-  API_FormURL: 'https://localhost:44305/1/'
+  API_URL: 'https://app.terra.group/DSDFormWeb/api',  
+  API_FormURL: 'https://app.terra.group/DSDFormWeb/api'
 };
 
 /*

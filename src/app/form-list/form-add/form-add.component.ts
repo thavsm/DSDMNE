@@ -59,14 +59,15 @@ export class FormAddComponent implements OnInit {
   }
 
   addForm() {
-    if(this.formAdd.formName!=""){
+    if(this.formAdd.displayName!=""){
     //adding form
     this.submitted = true;
     var val = {
       "formID": 0,
       "formTypeID": 2,
       "formCategoryID": this.formAdd.formCategoryID,
-      "formName": this.formAdd.formName,
+      "formName": this.formAdd.displayName.replace(/[^a-zA-Z0-9]/g, ''),
+      "displayName":this.formAdd.displayName,
       "formDescription": this.formAdd.formDescription,
       "dateCreated": "2021-11-30T11:28:23.351Z",
       "createdByUserID": 0,
@@ -107,6 +108,8 @@ export class FormAddComponent implements OnInit {
         "dateLastModified": "2021-12-01T12:32:22.006Z",
         "lastModifiedByUserID": 0,
         "isActive": true,
+        "dataExportName": "string",
+        "xmlElementName": "string",
         "fieldType": {
             "fieldTypeID": 25,
             "displayName": "Page Title",
@@ -158,7 +161,7 @@ export class FormAddComponent implements OnInit {
       this.service.addFormPage(pageVal).subscribe(result => {
       this.service.addFieldPerPage(pageField,JSON.parse(JSON.stringify(res)).formID,JSON.parse(JSON.stringify(result)).pageGUID).subscribe(val=>{
         this.spinner.hide();
-        this.showNotification('top','center','Form Template Added Successfully!','Success','success');
+        this.showNotification('top','center','Form Design Added Successfully!','Success','success');
       }); 
       })
     });
@@ -166,6 +169,7 @@ export class FormAddComponent implements OnInit {
     this.formAdd.formTypeI = 0;
     this.formAdd.formCategoryID = 0;
     this.formAdd.formName = "";
+    this.formAdd.displayName="";
     this.formAdd.formDescription = "";
     this.formAdd.dateCreated = "";
     this.formAdd.createdByUserID = 0;
@@ -177,7 +181,7 @@ export class FormAddComponent implements OnInit {
     this.formAdd.lastModifiedByUserID = 0;
     }
     else{
-      this.showNotification('top','center','Please add a form template name before saving!','','danger');
+      this.showNotification('top','center','Please add a form Design name before saving!','','danger');
     }
   }
 
@@ -190,7 +194,8 @@ export class FormAddComponent implements OnInit {
         formID: this.formAdd.formID,
         formTypeID: this.formAdd.formTypeID,
         formCategoryID: this.formAdd.formCategoryID,
-        formName: this.formAdd.formName,
+        formName: this.formAdd.formName.replace(/[^a-zA-Z0-9]/g, ''),
+        displayName:this.formAdd.displayName,
         formDescription: this.formAdd.formDescription,
         dateCreated: this.formAdd.dateCreated,
         createdByUserID: this.formAdd.createdByUserID,
@@ -205,11 +210,11 @@ export class FormAddComponent implements OnInit {
       this.service.updateDynamicFormDetails(this.formAdd.formID, val).subscribe(res => {
         this.dialogRef.close();
         this.spinner.hide();
-        this.showNotification('top','center','Form Template Updated Successfully!','Success','success');
+        this.showNotification('top','center','Form Design Updated Successfully!','Success','success');
       });
     }
     else {
-      this.showNotification('top','center','Please add a form template name before saving!','','danger');
+      this.showNotification('top','center','Please add a form Design name before saving!','','danger');
     }
   }
 

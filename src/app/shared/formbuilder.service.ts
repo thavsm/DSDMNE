@@ -8,8 +8,9 @@ import { environment } from 'src/environments/environment';
 })
 export class FormbuilderService {
 
-  //readonly APIUrl='https://localhost:44305/1/';
-  readonly APIUrl = environment.API_FormURL;
+   readonly APIUrl='https://localhost:44305/1/';
+   //readonly APIUrl='https://app.terra.group/DSDFormWeb/1/';
+   //readonly APIUrl = environment.API_FormURL;
 
   constructor(private http:HttpClient) { }
 
@@ -138,8 +139,36 @@ export class FormbuilderService {
 
   unlockForm(formID:any,item:any){
     return this.http.patch(this.APIUrl+'Forms/'+formID+'/unlock',item);
+ }
+
+  getFormAttachments(formCaptureID:any): Observable<any[]> {
+    return this.http.get<any>(this.APIUrl + formCaptureID +'/FormAttachment')
   }
 
+  addFormAttachments(data:any){
+    return this.http.post(this.APIUrl+'FormAttachment',data,{responseType: 'text'});
+  }
+
+  getFormPhotos(formCaptureID:any): Observable<any[]> {
+    return this.http.get<any>(this.APIUrl + formCaptureID +'/FormPhoto')
+  }
+
+  addFormPhotos(data:any){
+    return this.http.post(this.APIUrl+'FormPhoto',data,{responseType: 'text'});
+  }
+
+  UpdateFormVersion(formCaptureID:any){
+    return this.http.put(this.APIUrl+formCaptureID+'/UpdateFormVersion','',{responseType: 'text'});
+  }
+
+  getPublishedListOfForms():Observable<any[]>{
+    return this.http.get<any>(this.APIUrl+'getDynamicPublishedFormList');
+  }
+
+  getGroupType(groupGUID:any){
+    return this.http.get(this.APIUrl + groupGUID +'/getGroupType',{responseType: 'text'})
+  }
 //#endregion
+
 
 }

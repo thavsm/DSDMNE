@@ -18,6 +18,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AddFormComponent } from '../form-capture/add-form/add-form.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { AddFormComponent } from '../form-capture/add-form/add-form.component';
     MatDividerModule,
     MatCheckboxModule,
     MatSelectModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    MatTooltipModule
 
   ]
 })

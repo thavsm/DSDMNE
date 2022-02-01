@@ -45,7 +45,6 @@ export class FormCaptureComponent implements OnInit {
   addForm(){
     if((this.formData.formID!==0) && (this.formData.formID!==undefined))
     {
-      alert(JSON.stringify(this.userDetail));
       this.spinner.show();
       let formCaptureData={
           formCaptureID: 0,
@@ -71,6 +70,7 @@ export class FormCaptureComponent implements OnInit {
         this.spinner.hide();
         this.showNotification('top','center','Form created successfully','Success','success');
         localStorage.setItem('formCaptureDetails', JSON.stringify(myObj));
+        localStorage.setItem('tabIndex', '0');
         const dialogRef = this.dialog.open(AddFormComponent, {
           width: '85%',
           height: '85%',
@@ -89,7 +89,7 @@ export class FormCaptureComponent implements OnInit {
 
   refreshFormsList() {
     this.spinner.show();
-    this.service.getDynamicFormList().subscribe(data => {
+    this.service.getPublishedListOfForms().subscribe(data => {
       this.formList = data;
       this.spinner.hide();
     });

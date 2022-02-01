@@ -11,11 +11,11 @@
            <input matInput type="text" [(ngModel)]="formData.formName"/>
         </mat-form-field> -->
           <mat-form-field appearance="outline" style="width: 500px;">
-            <mat-label>Form template</mat-label>
+            <mat-label>Form design</mat-label>
             <mat-select [(ngModel)]="formData.formID">
                 <mat-option *ngFor="let form of formList"
                     [value]="form.formID">
-                   {{form.formName}}
+                   {{form.displayName}}
                 </mat-option>
             </mat-select>
         </mat-form-field>

@@ -50,7 +50,6 @@ export class FormPreviewComponent implements OnInit {
   fileAttr = 'Choose File';
 
   ngAfterViewInit() { 
-    this.signaturePad.clear(); 
   }
 
   drawComplete() {

@@ -73,6 +73,8 @@ export class FormDesignerComponent implements OnInit {
             "dateLastModified": "2021-12-01T12:32:22.006Z",
             "lastModifiedByUserID": 0,
             "isActive": true,
+            "dataExportName": "",
+            "xmlElementName": "",
             "fieldType": {
                 "fieldTypeID": 22,
                 "displayName": "Alpha Numeric",
@@ -142,6 +144,8 @@ export class FormDesignerComponent implements OnInit {
             "dateLastModified": "2021-12-01T12:32:22.006Z",
             "lastModifiedByUserID": 0,
             "isActive": true,
+            "dataExportName": "",
+            "xmlElementName": "",
             "fieldType": {
                 "fieldTypeID": 15,
                 "displayName": "Calculated Value",
@@ -211,6 +215,8 @@ export class FormDesignerComponent implements OnInit {
             "dateLastModified": "2021-12-01T12:32:22.006Z",
             "lastModifiedByUserID": 0,
             "isActive": true,
+            "dataExportName": "",
+            "xmlElementName": "",
             "fieldType": {
                 "fieldTypeID": 14,
                 "displayName": "Checkbox",
@@ -281,6 +287,8 @@ export class FormDesignerComponent implements OnInit {
             "dateLastModified": "2021-12-01T12:32:22.006Z",
             "lastModifiedByUserID": 0,
             "isActive": true,
+            "dataExportName": "",
+            "xmlElementName": "",
             "fieldType": {
                 "fieldTypeID": 13,
                 "displayName": "Date",
@@ -351,6 +359,8 @@ export class FormDesignerComponent implements OnInit {
             "dateLastModified": "2021-12-01T12:32:22.006Z",
             "lastModifiedByUserID": 0,
             "isActive": true,
+            "dataExportName": "",
+            "xmlElementName": "",
             "fieldType": {
                 "fieldTypeID": 29,
                 "displayName": "Decimal",
@@ -420,6 +430,8 @@ export class FormDesignerComponent implements OnInit {
             "dateLastModified": "2021-12-01T12:32:22.006Z",
             "lastModifiedByUserID": 0,
             "isActive": true,
+            "dataExportName": "",
+            "xmlElementName": "",
             "fieldType": {
                 "fieldTypeID": 30,
                 "displayName": "Drawing Area",
@@ -489,6 +501,8 @@ export class FormDesignerComponent implements OnInit {
             "dateLastModified": "2021-12-01T12:32:22.006Z",
             "lastModifiedByUserID": 0,
             "isActive": true,
+            "dataExportName": "",
+            "xmlElementName": "",
             "fieldType": {
                 "fieldTypeID": 24,
                 "displayName": "Email Address",
@@ -558,6 +572,8 @@ export class FormDesignerComponent implements OnInit {
             "dateLastModified": "2021-12-01T12:32:22.006Z",
             "lastModifiedByUserID": 0,
             "isActive": true,
+            "dataExportName": "",
+            "xmlElementName": "",
             "fieldType": {
                 "fieldTypeID": 31,
                 "displayName": "Information",
@@ -628,6 +644,8 @@ export class FormDesignerComponent implements OnInit {
             "dateLastModified": "2021-12-01T12:32:22.006Z",
             "lastModifiedByUserID": 0,
             "isActive": true,
+            "dataExportName": "",
+            "xmlElementName": "",
             "fieldType": {
                 "fieldTypeID": 9,
                 "displayName": "Number",
@@ -698,6 +716,8 @@ export class FormDesignerComponent implements OnInit {
             "dateLastModified": "2021-12-01T12:32:22.006Z",
             "lastModifiedByUserID": 0,
             "isActive": true,
+            "dataExportName": "",
+            "xmlElementName": "",
             "fieldType": {
                 "fieldTypeID": 27,
                 "displayName": "Plain Alpha",
@@ -768,6 +788,8 @@ export class FormDesignerComponent implements OnInit {
             "dateLastModified": "2021-12-01T12:32:22.006Z",
             "lastModifiedByUserID": 0,
             "isActive": true,
+            "dataExportName": "",
+            "xmlElementName": "",
             "fieldType": {
                 "fieldTypeID": 4,
                 "displayName": "Plain Text",
@@ -819,6 +841,76 @@ export class FormDesignerComponent implements OnInit {
         },
         {
             "fieldID": 0,
+            "fieldTypeID": 32,
+            "pageGUID": "pageGUID",
+            "fieldName": "group",
+            "questionName": "group",
+            "isDisplayable": false,
+            "toolTip": "",
+            "parentFieldName": "",
+            "childFieldName": "",
+            "listValue": "",
+            "calculation": "",
+            "groupGUID": "string",
+            "isLocked": false,
+            "lockedByUserID": 0,
+            "meetAllCustomValidationConditions": true,
+            "dateCreated": "2021-12-01T12:32:22.006Z",
+            "createdByUserID": 0,
+            "dateLastModified": "2021-12-01T12:32:22.006Z",
+            "lastModifiedByUserID": 0,
+            "isActive": true,
+            "dataExportName": "",
+            "xmlElementName": "",
+            "fieldType": {
+                "fieldTypeID": 32,
+                "displayName": "Question Group",
+                "description": "view_stream",
+                "value": "group"
+            },
+            "formPage": {
+                "pageGUID": "string",
+                "name": "string",
+                "formID": 0,
+                "isActive": true
+            },
+            "group": {
+                "groupGUID": "string",
+                "name": "",
+                "isRequired": true,
+                "pageGUID": "",
+                "parentGroupID": 0,
+                "type": ""
+            },
+            "fieldCustomValidations": [
+                {
+                    "fieldCustomValidationID": 0,
+                    "displayText": "",
+                    "condition": "",
+                    "value": "",
+                    "errorMessage": ""
+                }
+            ],
+            "fieldStyles": [
+                {
+                    "fieldStyleID": 0,
+                    "width": 760,
+                    "height": 24,
+                    "cssClass": "linear-gradient(147deg, #eff3f7 72%, #00f7ff 28%)"
+                }
+            ],
+            "fieldValidations": [
+                {
+                    "fieldValidationID": 0,
+                    "dataLength": 50,
+                    "isEditable": true,
+                    "isRequired": false,
+                    "isHidden": false,
+                }
+            ]
+        },
+        {
+            "fieldID": 0,
             "fieldTypeID": 8,
             "pageGUID": "pageGUID",
             "fieldName": "",
@@ -838,6 +930,8 @@ export class FormDesignerComponent implements OnInit {
             "dateLastModified": "2021-12-01T12:32:22.006Z",
             "lastModifiedByUserID": 0,
             "isActive": true,
+            "dataExportName": "",
+            "xmlElementName": "",
             "fieldType": {
                 "fieldTypeID": 8,
                 "displayName": "Radio Button",
@@ -908,6 +1002,8 @@ export class FormDesignerComponent implements OnInit {
             "dateLastModified": "2021-12-01T12:32:22.006Z",
             "lastModifiedByUserID": 0,
             "isActive": true,
+            "dataExportName": "",
+            "xmlElementName": "",
             "fieldType": {
                 "fieldTypeID": 7,
                 "displayName": "Repeat Group",
@@ -977,6 +1073,8 @@ export class FormDesignerComponent implements OnInit {
             "dateLastModified": "2021-12-01T12:32:22.006Z",
             "lastModifiedByUserID": 0,
             "isActive": true,
+            "dataExportName": "",
+            "xmlElementName": "",
             "fieldType": {
                 "fieldTypeID": 7,
                 "displayName": "Section",
@@ -1046,6 +1144,8 @@ export class FormDesignerComponent implements OnInit {
             "dateLastModified": "2021-12-01T12:32:22.006Z",
             "lastModifiedByUserID": 0,
             "isActive": true,
+            "dataExportName": "",
+            "xmlElementName": "",
             "fieldType": {
                 "fieldTypeID": 5,
                 "displayName": "Select(one/many)",
@@ -1116,6 +1216,8 @@ export class FormDesignerComponent implements OnInit {
             "dateLastModified": "2021-12-01T12:32:22.006Z",
             "lastModifiedByUserID": 0,
             "isActive": true,
+            "dataExportName": "",
+            "xmlElementName": "",
             "fieldType": {
                 "fieldTypeID": 28,
                 "displayName": "Signature",
@@ -1185,6 +1287,8 @@ export class FormDesignerComponent implements OnInit {
             "dateLastModified": "2021-12-01T12:32:22.006Z",
             "lastModifiedByUserID": 0,
             "isActive": true,
+            "dataExportName": "",
+            "xmlElementName": "",
             "fieldType": {
                 "fieldTypeID": 7,
                 "displayName": "Sub Section",
@@ -1255,6 +1359,8 @@ export class FormDesignerComponent implements OnInit {
             "dateLastModified": "2021-12-01T12:32:22.006Z",
             "lastModifiedByUserID": 0,
             "isActive": true,
+            "dataExportName": "",
+            "xmlElementName": "",
             "fieldType": {
                 "fieldTypeID": 23,
                 "displayName": "Time",
@@ -1366,9 +1472,7 @@ export class FormDesignerComponent implements OnInit {
         this.refreshGroupSectionList();
         if (item.fieldType.value === "calculation") {
             if (item.calculation !== undefined && item.calculation !== "" && item.calculation !== "undefined") {
-                alert(item.calculation);
                 var lastChar = (item.calculation).charAt((item.calculation).length - 1);
-                alert(lastChar);
                 if (lastChar !== '+' || lastChar !== '-' || lastChar !== '/' || lastChar !== '*') {
                     this.fieldOperatorList = this.operators;
                     this.operationField = "Select an operator";
@@ -1435,13 +1539,9 @@ export class FormDesignerComponent implements OnInit {
                 errorMessage = errorMessage + (index + 1) + ",";
             }
 
-            if (fieldVal.fieldType.value === "subSection") {
-                fieldVal.fieldName = "ua_group_" + (fieldVal.questionName).split(/\s/).join('');
-            }
-            else {
-                fieldVal.fieldName = "ua_" + (fieldVal.questionName).split(/\s/).join('');
-            }
-
+            // if (fieldVal.fieldType.value === "subSection") {
+            //     fieldVal.fieldName = (fieldVal.questionName).split(/\s/).join('');
+            // }
             fieldVal.pageGUID = pageGUID;
             fieldVal.formPage.name = this.currentPage.name;
         });
@@ -1454,16 +1554,44 @@ export class FormDesignerComponent implements OnInit {
                     let groupColumns = "";
                     let groupGUID = "";
                     this.spinner.show();
+
+                    if (element.fieldType.value === "section") {
+                        groupGUID = element.groupGUID;
+                        this.formDesign.forEach(field => {
+                            if (field.parentFieldName === groupGUID && field.fieldType.value !== "subSection" && field.fieldType.value !== "repeatgroup" && field.fieldType.value !== "group") {
+                                if (field.fieldType.value === 'signature' || field.fieldType.value === 'imagearea') {
+                                    columnsNoGroups += field.fieldName + " varchar(max),";
+                                }
+                                else {
+                                    columnsNoGroups += field.fieldName + " varchar(" + field.fieldValidations[0].dataLength + "),";
+                                }
+                            }
+                        });
+                    }
+
+                    if (element.fieldType.value === "group") {
+                        groupGUID = element.groupGUID;
+                        this.formDesign.forEach(field => {
+                            if (field.parentFieldName === groupGUID && field.fieldType.value !== "subSection" && field.fieldType.value !== "repeatgroup" && field.fieldType.value !== "section") {
+                                if (field.fieldType.value === 'signature' || field.fieldType.value === 'imagearea') {
+                                    columnsNoGroups += field.fieldName + " varchar(max),";
+                                }
+                                else {
+                                    columnsNoGroups += field.fieldName + " varchar(" + field.fieldValidations[0].dataLength + "),";
+                                }
+                            }
+                        });
+                    }
+
                     if (element.fieldType.value === "repeatgroup") {
                         groupGUID = element.groupGUID;
                         this.formDesign.forEach(field => {
-                            if (field.parentFieldName === groupGUID && field.fieldType.value!=="subSection") {
-                                if(field.fieldType.value==='signature' || field.fieldType.value==='imagearea' )
-                                {
-                                    groupColumns += (field.questionName).split(/\s/).join('') + " varchar(max),";
+                            if (field.parentFieldName === groupGUID && field.fieldType.value !== "subSection") {
+                                if (field.fieldType.value === 'signature' || field.fieldType.value === 'imagearea') {
+                                    groupColumns += field.fieldName + " varchar(max),";
                                 }
-                                else{
-                                groupColumns += (field.questionName).split(/\s/).join('') + " varchar(" + field.fieldValidations[0].dataLength + "),";
+                                else {
+                                    groupColumns += field.fieldName + " varchar(" + field.fieldValidations[0].dataLength + "),";
                                 }
                             }
                         });
@@ -1479,15 +1607,14 @@ export class FormDesignerComponent implements OnInit {
                             });
                         });
                     }
-                    else if (element.fieldType.value !== "subSection" && element.fieldType.value !== "section" && element.fieldType.value !== "repeatgroup" && element.fieldType.value !== "PageTitle") {
-                       
-                        if(element.fieldType.value==='signature' || element.fieldType.value==='imagearea' )
-                                {
-                                    columnsNoGroups += (element.questionName).split(/\s/).join('') + " varchar(max),";
-                                }
-                                else{
-                                    columnsNoGroups += (element.questionName).split(/\s/).join('') + " varchar(" + element.fieldValidations[0].dataLength + "),";
-                                }
+
+                    else if (element.fieldType.value !== "subSection" && element.fieldType.value !== "section" && element.fieldType.value !== "group" &&  element.fieldType.value !== "repeatgroup" && element.fieldType.value !== "PageTitle" && element.parentFieldName === "") {
+                        if (element.fieldType.value === 'signature' || element.fieldType.value === 'imagearea') {
+                            columnsNoGroups += element.fieldName + " varchar(max),";
+                        }
+                        else {
+                            columnsNoGroups += element.fieldName + " varchar(" + element.fieldValidations[0].dataLength + "),";
+                        }
                     }
                 });
 
@@ -1497,9 +1624,11 @@ export class FormDesignerComponent implements OnInit {
                 }
 
                 this.service.createTemplateFormTable(data).subscribe(res => {
-                    this.showNotification('top', 'center', 'Page has been published successfully!', 'Success.', 'success');
-                    this.publishStatus = "Published";
-                    this.spinner.hide();
+                    this.service.UpdateFormVersion(this.formData.formID).subscribe(result => {
+                        this.showNotification('top', 'center', 'Page has been published successfully!', 'Success.', 'success');
+                        this.publishStatus = "Published";
+                        this.spinner.hide();
+                    })
                 });
             });
         }
@@ -1533,12 +1662,12 @@ export class FormDesignerComponent implements OnInit {
                         errorMessage = errorMessage + (index + 1) + ",";
                     }
 
-                    if (element.fieldType.value === "subSection") {
-                        element.fieldName = "ua_group_" + (element.questionName).split(/\s/).join('');
-                    }
-                    else {
-                        element.fieldName = "ua_" + (element.questionName).split(/\s/).join('');
-                    }
+                    // if (element.fieldType.value === "subSection") {
+                    //     element.fieldName = "ua_group_" + (element.questionName).split(/\s/).join('');
+                    // }
+                    // else {
+                    //     element.fieldName = "ua_" + (element.questionName).split(/\s/).join('');
+                    // }
 
                     element.pageGUID = this.currentPage.pageGUID;
                     element.formPage.name = this.currentPage.name;
@@ -1592,7 +1721,6 @@ export class FormDesignerComponent implements OnInit {
             "formID": this.formData.formID,
             "isActive": true
         }
-        console.log(JSON.stringify(val));
         let pageField = [{
             "fieldID": 0,
             "fieldTypeID": 25,
@@ -1614,6 +1742,8 @@ export class FormDesignerComponent implements OnInit {
             "dateLastModified": "2021-12-01T12:32:22.006Z",
             "lastModifiedByUserID": 0,
             "isActive": true,
+            "dataExportName": "",
+            "xmlElementName": "",
             "fieldType": {
                 "fieldTypeID": 25,
                 "displayName": "Page Title",
@@ -1668,7 +1798,11 @@ export class FormDesignerComponent implements OnInit {
                 this.refreshPageList();
                 this.spinner.hide();
                 this.showNotification('top', 'center', 'Page Added Successfully!', 'Success.', 'success');
-            });
+            },
+                error => {
+                    this.showNotification('top', 'center', 'Error saving page, please try again', 'Error.', 'danger');
+                    this.spinner.hide();
+                });
 
         });
     }
@@ -1707,7 +1841,11 @@ export class FormDesignerComponent implements OnInit {
                         this.spinner.hide();
                         this.refreshPageList();
                         this.showNotification('top', 'center', 'The Page and its Fields has Deleted Successfully!', 'Success.', 'success');
-                    });
+                    },
+                        error => {
+                            this.showNotification('top', 'center', 'Error deleting page and its field, please try again', 'Error.', 'danger');
+                            this.spinner.hide();
+                        });
                 }
             })
         }
@@ -1719,12 +1857,10 @@ export class FormDesignerComponent implements OnInit {
 
     drop(event: any) {
         //re-orders list
-        alert( event.currentIndex);
-        if (event.previousContainer === event.container && event.container.data !== this.fieldTypes && event.currentIndex!==0) {
+        if (event.previousContainer === event.container && event.container.data !== this.fieldTypes && event.currentIndex !== 0) {
             moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
         } else {
-            if(event.currentIndex!==0){
-                console.log(JSON.stringify(event.container.data));
+            if (event.currentIndex !== 0) {
                 transferArrayItem(
                     event.previousContainer.data,
                     event.container.data,
@@ -1755,6 +1891,8 @@ export class FormDesignerComponent implements OnInit {
                         "dateLastModified": "2021-12-01T12:32:22.006Z",
                         "lastModifiedByUserID": 0,
                         "isActive": true,
+                        "dataExportName": "",
+                        "xmlElementName": "",
                         "fieldType": {
                             "fieldTypeID": 22,
                             "displayName": "Alpha Numeric",
@@ -1824,6 +1962,8 @@ export class FormDesignerComponent implements OnInit {
                         "dateLastModified": "2021-12-01T12:32:22.006Z",
                         "lastModifiedByUserID": 0,
                         "isActive": true,
+                        "dataExportName": "",
+                        "xmlElementName": "",
                         "fieldType": {
                             "fieldTypeID": 15,
                             "displayName": "Calculated Value",
@@ -1893,13 +2033,15 @@ export class FormDesignerComponent implements OnInit {
                         "dateLastModified": "2021-12-01T12:32:22.006Z",
                         "lastModifiedByUserID": 0,
                         "isActive": true,
+                        "dataExportName": "",
+                        "xmlElementName": "",
                         "fieldType": {
                             "fieldTypeID": 14,
                             "displayName": "Checkbox",
                             "description": "check_box",
                             "value": "checkbox"
                         },
-    
+            
                         "formPage": {
                             "pageGUID": "string",
                             "name": "string",
@@ -1963,13 +2105,15 @@ export class FormDesignerComponent implements OnInit {
                         "dateLastModified": "2021-12-01T12:32:22.006Z",
                         "lastModifiedByUserID": 0,
                         "isActive": true,
+                        "dataExportName": "",
+                        "xmlElementName": "",
                         "fieldType": {
                             "fieldTypeID": 13,
                             "displayName": "Date",
                             "description": "date_range",
                             "value": "date"
                         },
-    
+            
                         "formPage": {
                             "pageGUID": "string",
                             "name": "string",
@@ -2033,6 +2177,8 @@ export class FormDesignerComponent implements OnInit {
                         "dateLastModified": "2021-12-01T12:32:22.006Z",
                         "lastModifiedByUserID": 0,
                         "isActive": true,
+                        "dataExportName": "",
+                        "xmlElementName": "",
                         "fieldType": {
                             "fieldTypeID": 29,
                             "displayName": "Decimal",
@@ -2102,6 +2248,8 @@ export class FormDesignerComponent implements OnInit {
                         "dateLastModified": "2021-12-01T12:32:22.006Z",
                         "lastModifiedByUserID": 0,
                         "isActive": true,
+                        "dataExportName": "",
+                        "xmlElementName": "",
                         "fieldType": {
                             "fieldTypeID": 30,
                             "displayName": "Drawing Area",
@@ -2171,6 +2319,8 @@ export class FormDesignerComponent implements OnInit {
                         "dateLastModified": "2021-12-01T12:32:22.006Z",
                         "lastModifiedByUserID": 0,
                         "isActive": true,
+                        "dataExportName": "",
+                        "xmlElementName": "",
                         "fieldType": {
                             "fieldTypeID": 24,
                             "displayName": "Email Address",
@@ -2240,13 +2390,15 @@ export class FormDesignerComponent implements OnInit {
                         "dateLastModified": "2021-12-01T12:32:22.006Z",
                         "lastModifiedByUserID": 0,
                         "isActive": true,
+                        "dataExportName": "",
+                        "xmlElementName": "",
                         "fieldType": {
                             "fieldTypeID": 31,
                             "displayName": "Information",
                             "description": "info",
                             "value": "information"
                         },
-    
+            
                         "formPage": {
                             "pageGUID": "string",
                             "name": "string",
@@ -2310,13 +2462,15 @@ export class FormDesignerComponent implements OnInit {
                         "dateLastModified": "2021-12-01T12:32:22.006Z",
                         "lastModifiedByUserID": 0,
                         "isActive": true,
+                        "dataExportName": "",
+                        "xmlElementName": "",
                         "fieldType": {
                             "fieldTypeID": 9,
                             "displayName": "Number",
                             "description": "numbers",
                             "value": "number"
                         },
-    
+            
                         "formPage": {
                             "pageGUID": "string",
                             "name": "string",
@@ -2380,13 +2534,15 @@ export class FormDesignerComponent implements OnInit {
                         "dateLastModified": "2021-12-01T12:32:22.006Z",
                         "lastModifiedByUserID": 0,
                         "isActive": true,
+                        "dataExportName": "",
+                        "xmlElementName": "",
                         "fieldType": {
                             "fieldTypeID": 27,
                             "displayName": "Plain Alpha",
                             "description": "title",
                             "value": "plainalpha"
                         },
-    
+            
                         "formPage": {
                             "pageGUID": "string",
                             "name": "string",
@@ -2450,13 +2606,15 @@ export class FormDesignerComponent implements OnInit {
                         "dateLastModified": "2021-12-01T12:32:22.006Z",
                         "lastModifiedByUserID": 0,
                         "isActive": true,
+                        "dataExportName": "",
+                        "xmlElementName": "",
                         "fieldType": {
                             "fieldTypeID": 4,
                             "displayName": "Plain Text",
                             "description": "text_fields",
                             "value": "plaintext"
                         },
-    
+            
                         "formPage": {
                             "pageGUID": "string",
                             "name": "string",
@@ -2501,6 +2659,76 @@ export class FormDesignerComponent implements OnInit {
                     },
                     {
                         "fieldID": 0,
+                        "fieldTypeID": 32,
+                        "pageGUID": "pageGUID",
+                        "fieldName": "group",
+                        "questionName": "group",
+                        "isDisplayable": false,
+                        "toolTip": "",
+                        "parentFieldName": "",
+                        "childFieldName": "",
+                        "listValue": "",
+                        "calculation": "",
+                        "groupGUID": "string",
+                        "isLocked": false,
+                        "lockedByUserID": 0,
+                        "meetAllCustomValidationConditions": true,
+                        "dateCreated": "2021-12-01T12:32:22.006Z",
+                        "createdByUserID": 0,
+                        "dateLastModified": "2021-12-01T12:32:22.006Z",
+                        "lastModifiedByUserID": 0,
+                        "isActive": true,
+                        "dataExportName": "",
+                        "xmlElementName": "",
+                        "fieldType": {
+                            "fieldTypeID": 32,
+                            "displayName": "Question Group",
+                            "description": "view_stream",
+                            "value": "group"
+                        },
+                        "formPage": {
+                            "pageGUID": "string",
+                            "name": "string",
+                            "formID": 0,
+                            "isActive": true
+                        },
+                        "group": {
+                            "groupGUID": "string",
+                            "name": "",
+                            "isRequired": true,
+                            "pageGUID": "",
+                            "parentGroupID": 0,
+                            "type": ""
+                        },
+                        "fieldCustomValidations": [
+                            {
+                                "fieldCustomValidationID": 0,
+                                "displayText": "",
+                                "condition": "",
+                                "value": "",
+                                "errorMessage": ""
+                            }
+                        ],
+                        "fieldStyles": [
+                            {
+                                "fieldStyleID": 0,
+                                "width": 760,
+                                "height": 24,
+                                "cssClass": "linear-gradient(147deg, #eff3f7 72%, #00f7ff 28%)"
+                            }
+                        ],
+                        "fieldValidations": [
+                            {
+                                "fieldValidationID": 0,
+                                "dataLength": 50,
+                                "isEditable": true,
+                                "isRequired": false,
+                                "isHidden": false,
+                            }
+                        ]
+                    },
+                    {
+                        "fieldID": 0,
                         "fieldTypeID": 8,
                         "pageGUID": "pageGUID",
                         "fieldName": "",
@@ -2520,13 +2748,15 @@ export class FormDesignerComponent implements OnInit {
                         "dateLastModified": "2021-12-01T12:32:22.006Z",
                         "lastModifiedByUserID": 0,
                         "isActive": true,
+                        "dataExportName": "",
+                        "xmlElementName": "",
                         "fieldType": {
                             "fieldTypeID": 8,
                             "displayName": "Radio Button",
                             "description": "radio_button_checked",
                             "value": "field or"
                         },
-    
+            
                         "formPage": {
                             "pageGUID": "string",
                             "name": "string",
@@ -2590,13 +2820,15 @@ export class FormDesignerComponent implements OnInit {
                         "dateLastModified": "2021-12-01T12:32:22.006Z",
                         "lastModifiedByUserID": 0,
                         "isActive": true,
+                        "dataExportName": "",
+                        "xmlElementName": "",
                         "fieldType": {
                             "fieldTypeID": 7,
                             "displayName": "Repeat Group",
                             "description": "repeat_on",
                             "value": "repeatgroup"
                         },
-    
+            
                         "formPage": {
                             "pageGUID": "string",
                             "name": "string",
@@ -2659,13 +2891,15 @@ export class FormDesignerComponent implements OnInit {
                         "dateLastModified": "2021-12-01T12:32:22.006Z",
                         "lastModifiedByUserID": 0,
                         "isActive": true,
+                        "dataExportName": "",
+                        "xmlElementName": "",
                         "fieldType": {
                             "fieldTypeID": 7,
                             "displayName": "Section",
                             "description": "article",
                             "value": "section"
                         },
-    
+            
                         "formPage": {
                             "pageGUID": "string",
                             "name": "string",
@@ -2728,13 +2962,15 @@ export class FormDesignerComponent implements OnInit {
                         "dateLastModified": "2021-12-01T12:32:22.006Z",
                         "lastModifiedByUserID": 0,
                         "isActive": true,
+                        "dataExportName": "",
+                        "xmlElementName": "",
                         "fieldType": {
                             "fieldTypeID": 5,
                             "displayName": "Select(one/many)",
                             "description": "unfold_more",
                             "value": "lexicon data"
                         },
-    
+            
                         "formPage": {
                             "pageGUID": "string",
                             "name": "string",
@@ -2798,6 +3034,8 @@ export class FormDesignerComponent implements OnInit {
                         "dateLastModified": "2021-12-01T12:32:22.006Z",
                         "lastModifiedByUserID": 0,
                         "isActive": true,
+                        "dataExportName": "",
+                        "xmlElementName": "",
                         "fieldType": {
                             "fieldTypeID": 28,
                             "displayName": "Signature",
@@ -2867,13 +3105,15 @@ export class FormDesignerComponent implements OnInit {
                         "dateLastModified": "2021-12-01T12:32:22.006Z",
                         "lastModifiedByUserID": 0,
                         "isActive": true,
+                        "dataExportName": "",
+                        "xmlElementName": "",
                         "fieldType": {
                             "fieldTypeID": 7,
                             "displayName": "Sub Section",
                             "description": "calendar_view_day",
                             "value": "subSection"
                         },
-    
+            
                         "formPage": {
                             "pageGUID": "string",
                             "name": "string",
@@ -2937,6 +3177,8 @@ export class FormDesignerComponent implements OnInit {
                         "dateLastModified": "2021-12-01T12:32:22.006Z",
                         "lastModifiedByUserID": 0,
                         "isActive": true,
+                        "dataExportName": "",
+                        "xmlElementName": "",
                         "fieldType": {
                             "fieldTypeID": 23,
                             "displayName": "Time",
@@ -2986,7 +3228,7 @@ export class FormDesignerComponent implements OnInit {
                         ]
                     }
                 ];
-            }    
+            }
         }
     }
 
@@ -3024,12 +3266,20 @@ export class FormDesignerComponent implements OnInit {
             ];
             var sections: any = [];
             var groups: any = [];
+            var questionGroup:any=[];
 
             sections = data.filter(item => item.type === 'section');
             groups = data.filter(item => item.type === 'repeatgroup');
+            questionGroup=data.filter(item=>item.type === 'group');
+
+            if(questionGroup.length>0){
+                merge(this.groupSectionList, questionGroup);
+            }
+
             if (groups.length > 0) {
                 merge(this.groupSectionList, groups);
             }
+
             if (sections.length > 0) {
                 merge(this.sectionList, sections);
                 merge(this.groupSectionList, sections);
@@ -3047,7 +3297,6 @@ export class FormDesignerComponent implements OnInit {
     }
 
     addCalc(item: any) {
-        alert(this.value.data);
         if (this.value.data !== "undefined" && this.value.data !== "" && this.value.data !== undefined) {
             item.calculation = item.calculation + " " + this.value.data;
             if (this.fieldOperatorList === this.operators) {
@@ -3081,30 +3330,36 @@ export class FormDesignerComponent implements OnInit {
                 count++;
             }
 
-            if (element.questionName == "") {
+            if (element.questionName === "" || element.fieldName === "" || element.questionName === (index + 1)) {
                 errorMessage = errorMessage + (index + 1) + ",";
             }
 
-            if (element.fieldType.value === "subSection") {
-                element.fieldName = "ua_group_" + (element.questionName).split(/\s/).join('');
-            }
-            else {
-                element.fieldName = "ua_" + (element.questionName).split(/\s/).join('');
-            }
+            // if (element.fieldType.value === "subSection") {
+            //     element.fieldName = "ua_group_" + (element.questionName).split(/\s/).join('');
+            // }
+            // else {
+            //     element.fieldName = "ua_" + (element.questionName).split(/\s/).join('');
+            // }
 
             element.pageGUID = pageGUID;
             element.formPage.name = this.currentPage.name;
         });
 
         if (errorMessage === "Please ensure number ") {
-            if (this.currentPage.name === "Page 1" && count === 2) {
+            //&& count === 2
+            if (this.currentPage.name === "Page 1") {
                 if (errorMessage === "Please ensure number ") {
                     this.spinner.show();
                     this.service.addFieldPerPage(this.formDesign, this.formData.formID, this.currentPage.pageGUID).subscribe(data => {
+                        this.showNotification('top', 'center', 'Page Fields Saved Successfully!', 'Success.', 'success');
                         this.spinner.hide();
                         this.getDesignPerPage(pageGUID);
                         this.refreshGroupSectionList();
-                    });
+                    },
+                        error => {
+                            this.showNotification('top', 'center', 'Error saving page fields, please try again', 'Error.', 'danger');
+                            this.spinner.hide();
+                        });
                 }
             }
             else if (this.currentPage.name !== "Page 1") {
@@ -3114,6 +3369,10 @@ export class FormDesignerComponent implements OnInit {
                         this.spinner.hide();
                         this.getDesignPerPage(pageGUID);
                         this.refreshGroupSectionList();
+                        this.showNotification('top', 'center', 'Page Fields Saved Successfully!', 'Success.', 'success');
+                    }, error => {
+                        this.showNotification('top', 'center', 'Error saving page fields, please try again', 'Error.', 'danger');
+                        this.spinner.hide();
                     });
                 }
             }
@@ -3122,13 +3381,13 @@ export class FormDesignerComponent implements OnInit {
                     errorMessage = "Please ensure two displayables are set on the form before saving"
                 }
                 else {
-                    errorMessage = errorMessage + " form fields have question names and that two displayables are set on the form before saving";
+                    errorMessage = errorMessage + " form fields have question names,database names and that two displayables are set on the form before saving";
                 }
                 this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
             }
         }
         else {
-            errorMessage = errorMessage + " form fields have question names and that two displayables are set on the form before saving";
+            errorMessage = errorMessage + " form fields have question names,database names and that two displayables are set on the form before saving";
             this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
         }
     }
@@ -3150,7 +3409,11 @@ export class FormDesignerComponent implements OnInit {
             this.refreshGroupSectionList();
             this.spinner.hide();
             this.showNotification('top', 'center', 'Section Saved Successfully!', 'Success.', 'success');
-        });
+        },
+            error => {
+                this.showNotification('top', 'center', 'Error saving section, please try again', 'Error.', 'danger');
+                this.spinner.hide();
+            });
     }
 
     addGroup(item: any, i: any) {
@@ -3167,9 +3430,38 @@ export class FormDesignerComponent implements OnInit {
         this.service.addGroupOrSection(obj, this.currentPage.pageGUID).subscribe(data => {
             this.formDesign[i].groupGUID = JSON.parse(JSON.stringify(data)).groupGUID;
             this.formDesign[i].questionName = JSON.parse(JSON.stringify(data)).name;
+            this.refreshGroupSectionList();
             this.spinner.hide();
             this.showNotification('top', 'center', 'Group Saved Successfully!', 'Success', 'success');
-        });
+        },
+            error => {
+                this.showNotification('top', 'center', 'Error saving group, please try again', 'Error.', 'danger');
+                this.spinner.hide();
+            });
+    }
+
+    addQuestionGroup(item: any, i: any) {
+        let obj = {
+            "groupGUID": "string",
+            "name": item.group.name,
+            "isRequired": true,
+            "pageGUID": this.currentPage.pageGUID,
+            "parentGroupID": 0,
+            "type": "group",
+            "isActive": true
+        }
+        this.spinner.show();
+        this.service.addGroupOrSection(obj, this.currentPage.pageGUID).subscribe(data => {
+            this.formDesign[i].groupGUID = JSON.parse(JSON.stringify(data)).groupGUID;
+            this.formDesign[i].questionName = JSON.parse(JSON.stringify(data)).name;
+            this.showNotification('top', 'center', 'Group Saved Successfully!', 'Success', 'success');
+            this.refreshGroupSectionList();
+            this.spinner.hide();
+        },
+            error => {
+                this.showNotification('top', 'center', 'Error saving group, please try again', 'Error.', 'danger');
+                this.spinner.hide();
+            });
     }
 
     previewPage() {
@@ -3196,12 +3488,12 @@ export class FormDesignerComponent implements OnInit {
                         errorMessage = errorMessage + (index + 1) + ",";
                     }
 
-                    if (element.fieldType.value === "subSection") {
-                        element.fieldName = "ua_group_" + (element.questionName).split(/\s/).join('');
-                    }
-                    else {
-                        element.fieldName = "ua_" + (element.questionName).split(/\s/).join('');
-                    }
+                    // if (element.fieldType.value === "subSection") {
+                    //     element.fieldName = "ua_group_" + (element.questionName).split(/\s/).join('');
+                    // }
+                    // else {
+                    //     element.fieldName = "ua_" + (element.questionName).split(/\s/).join('');
+                    // }
 
                     element.pageGUID = this.currentPage.pageGUID;
                     element.formPage.name = this.currentPage.name;
@@ -3215,6 +3507,7 @@ export class FormDesignerComponent implements OnInit {
                                 let myObj = {
                                     formID: this.formData.formID,
                                     formName: this.formData.formName,
+                                    displayName: this.formData.displayName,
                                     formCaptureID: 0,
                                     state: 'add'
                                 };
@@ -3228,6 +3521,9 @@ export class FormDesignerComponent implements OnInit {
                                 dialogRef.afterClosed().subscribe(result => {
                                     console.log('The dialog was closed');
                                 });
+                            }, error => {
+                                this.showNotification('top', 'center', 'Error previewing page, please try again', 'Error.', 'danger');
+                                this.spinner.hide();
                             });
                         }
                     }
@@ -3238,6 +3534,7 @@ export class FormDesignerComponent implements OnInit {
                                 let myObj = {
                                     formID: this.formData.formID,
                                     formName: this.formData.formName,
+                                    displayName: this.formData.displayName,
                                     formCaptureID: 0,
                                     state: 'add'
                                 };
@@ -3251,6 +3548,9 @@ export class FormDesignerComponent implements OnInit {
                                 dialogRef.afterClosed().subscribe(result => {
                                     console.log('The dialog was closed');
                                 });
+                            }, error => {
+                                this.showNotification('top', 'center', 'Error previewing page, please try again', 'Error.', 'danger');
+                                this.spinner.hide();
                             });
                         }
                     }

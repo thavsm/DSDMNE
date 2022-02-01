@@ -22,8 +22,11 @@ export class FormInboxComponent implements OnInit {
   constructor(public dialog: MatDialog, private route: Router, private service: FormbuilderService, private spinner: NgxSpinnerService) { }
 
   formCapture: any;
-  public displayedColumns = ['formTemplateName','formID','formcaptureID','dateSent','timeSent','displayOne','displayTwo','geography', 'sentBy','stage','step','delete'];
+  public displayedColumns = ['formTemplateName','formID','formcaptureID','formName','dateSent','timeSent','displayOne','displayTwo','geography', 'sentBy','stage','step','delete','file','photo','comments'];
   public formList = new MatTableDataSource<any>();
+  PhotoCount:number=0;
+  FileCount:number=0;
+  CommentCount:number=0;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -38,7 +41,7 @@ export class FormInboxComponent implements OnInit {
     };
   }
 
-  openFormDesign(item: any): void {
+  openFormDesign(item: any,index:any): void {
     let formCaptureObj = {
       formID: item.formID,
       formName:item.formName,
@@ -46,6 +49,7 @@ export class FormInboxComponent implements OnInit {
       state:'edit'
     };
     localStorage.setItem('formCaptureDetails', JSON.stringify(formCaptureObj));
+    localStorage.setItem('tabIndex', index);
     const dialogRef = this.dialog.open(AddFormComponent, {
       width: '85%',
       height: '85%',
@@ -122,6 +126,5 @@ clickDelete(item: any) {
     }
   })
 }
-
 
 }

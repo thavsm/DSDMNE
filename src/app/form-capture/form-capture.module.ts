@@ -24,7 +24,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { SignaturePadModule } from 'angular2-signaturepad';
-
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -47,6 +47,7 @@ import { SignaturePadModule } from 'angular2-signaturepad';
     DragDropModule,
     MatTabsModule,
     MatDividerModule,
+    MatPaginatorModule,
     MatCheckboxModule,
     MatTableModule,
     MatSelectModule,

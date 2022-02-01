@@ -21,7 +21,7 @@ export class FormListComponent implements OnInit {
   constructor(public dialog: MatDialog, private route: Router, private service: FormbuilderService, private spinner: NgxSpinnerService) { }
 
   formAdd: any;
-  public displayedColumns = ['formName', 'formDescription', 'formCategory', 'formDetails', 'update', 'delete'];
+  public displayedColumns = ['displayName', 'formDescription', 'formCategory', 'formDetails', 'update', 'delete'];
   public formList = new MatTableDataSource<any>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -74,6 +74,7 @@ export class FormListComponent implements OnInit {
           formTypeID: item.formTypeID,
           formCategoryID: item.formCategoryID,
           formName: item.formName,
+          displayName:item.displayName,
           formDescription: item.formDescription,
           dateCreated: item.dateCreated,
           createdByUserID: item.createdByUserID,
@@ -111,6 +112,7 @@ export class FormListComponent implements OnInit {
       formTypeID: 0,
       formCategoryID: 0,
       formName: "",
+      displayName:"",
       formDescription: "",
       dateCreated: "",
       createdByUserID: 0,
