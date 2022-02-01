@@ -4,45 +4,46 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { UserService } from 'src/app/shared/user.service';
-import { FormRole } from '../formrole.model';
+import { MenuRole } from '../menurole.model';
 
 declare var $: any;
 
-export interface Role {
+export interface Menu {
   id: number;
   name: string;
 }
 
-
 @Component({
-  selector: 'app-addformroles',
-  templateUrl: './addformroles.component.html',
+  selector: 'app-menuroles',
+  templateUrl: './menuroles.component.html',
   styleUrls: []
 })
-export class AddformrolesComponent implements OnInit {
+export class MenurolesComponent implements OnInit {
 
-  formAdd : any;
-  formID: number = 0;
-  frole: FormRole;
-  froles:any = [];
+  
+  roleAdd : any;
+  roleID: number = 0;
+  mrole: MenuRole;
+  mroles:any = [];
 
+  
   constructor( private service: UserService, @Inject(MAT_DIALOG_DATA) data) {
-    this.formAdd = data;
+    this.roleAdd = data;
    }
 
-  public displayedColumns = ['role', 'select'];
-  public roleList = new MatTableDataSource<any>();
-  selection = new SelectionModel<Role>(true, []);
+  public displayedColumns = ['menu', 'select'];
+  public menuList = new MatTableDataSource<any>();
+  selection = new SelectionModel<Menu>(true, []);
   
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngAfterViewInit() {
-    this.roleList.paginator = this.paginator;
+    this.menuList.paginator = this.paginator;
   }
 
   ngOnInit(): void {
-    this.formID = this.formAdd.formID;
+    this.roleID = this.roleAdd.roleID;
     this.getRoles();    
   }
 
@@ -52,19 +53,17 @@ export class AddformrolesComponent implements OnInit {
 
   
   getRoles() {    
-    // this.service.getRoles().subscribe(data => {
-    //   this.roleList.data = data;
-    // });
+    
 
-    this.service.getFormRoles(this.formID).subscribe(data => {
-      this.roleList.data = data;
+    this.service.getMenusRole(this.roleID).subscribe(data => {
+      this.menuList.data = data;
     });
     
   }
 
   checkAll(){
     
-    this.roleList.data.forEach(row => {
+    this.menuList.data.forEach(row => {
       if(row.checked)
       this.selection.select(row);
     });
@@ -73,7 +72,7 @@ export class AddformrolesComponent implements OnInit {
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.roleList.data.length;
+    const numRows = this.menuList.data.length;
     return numSelected === numRows;
   }
 
@@ -81,38 +80,24 @@ export class AddformrolesComponent implements OnInit {
   masterToggle() {
     this.isAllSelected() ?
         this.selection.clear() :
-        this.roleList.data.forEach(row => this.selection.select(row));
+        this.menuList.data.forEach(row => this.selection.select(row));
   }
 
-  addFormRoles() {
-    //this.service.deleteFormRoles(this.formID); 
-    // this.service.deleteFormRoles(this.formID).subscribe(
-    //   (res: any) => {
-              
-    //   },
-    //   err => {
-    //     console.log(err);
-    //     if (err.status == 400) {
-        
-    //     }          
-    //   }
-    // );
+  addMenusRole() {    
 
-
-    this.froles = [];
+    this.mroles = [];
     this.selection.selected.forEach(row => {
-      this.frole = new FormRole();      
-      this.frole.formID = this.formID;
-      this.frole.roleID = row.id;
-      this.frole.uid = 0;
-      this.froles.push(this.frole);
-      //this.service.addFormRole(this.frole);   
+      this.mrole = new MenuRole();      
+      this.mrole.roleID = this.roleID;
+      this.mrole.menuID = row.id;
+      this.mrole.uid = 0;
+      this.mroles.push(this.mrole);
     });
 
-      this.service.addFormRoles(this.froles).subscribe(
+      this.service.addMenusRole(this.mroles).subscribe(
         (res: any) => {
-          if (res.message == 'Role added successfully') {
-          this.showNotification('top','right','Form roles added!', 'Roles successful.','success');
+          if (res.message == 'Menu added successfully') {
+          this.showNotification('top','right','Menus role added!', 'Role successful.','success');
           }
           else{}
         },
@@ -124,14 +109,9 @@ export class AddformrolesComponent implements OnInit {
         }
       );
 
-    //   console.log(row.id);
-    // });
   }
 
   showNotification(from: any, align: any, message: any, title: any, type: string) {
-    //const type = ['', 'info', 'success', 'warning', 'danger', 'rose', 'primary'];
-    
-    //const color = Math.floor((Math.random() * 6) + 1);
 
     $.notify({
         icon: 'notifications',

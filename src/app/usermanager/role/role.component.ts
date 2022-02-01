@@ -3,6 +3,8 @@ import { Component, OnInit, ElementRef, OnDestroy, AfterViewInit, Input, Output,
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { UserService } from '../../shared/user.service';
 import { FormsModule } from '@angular/forms';
+import { MenurolesComponent } from '../menuroles/menuroles.component';
+import { MatDialog } from '@angular/material/dialog';
 
 
 
@@ -19,8 +21,9 @@ export class RoleComponent implements OnInit {
     roleName = '';
     errorMessage = '';
     isValid = false;
+    menuAdd: any;
     
-    constructor(private service: UserService) {
+    constructor(private service: UserService, public dialog: MatDialog) {
       
     }
 
@@ -92,6 +95,20 @@ export class RoleComponent implements OnInit {
           this.showNotification('top','right',err.error.message, 'Failed','danger');
         }
       );
+    }
+
+    clickEdit(item: any) {
+      this.menuAdd = item;
+      const dialogRef = this.dialog.open(MenurolesComponent, {
+        width: '60%',
+        height: '60%',
+        data: this.menuAdd,
+        disableClose:false
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The menu dialog was closed');
+      });
     }
 
 }

@@ -3,12 +3,12 @@
         <div class="card">           
               <div class="card-body">
                 <div class="col-md-12">
-                    <button id="btnSearch" class="btn btn-primary mr-1" (click)='addFormRoles()'>Save Form Roles</button>
+                    <button id="btnSearch" class="btn btn-primary mr-1" (click)='addMenusRole()'>Save Role Menus</button>
                   </div>
                 <div class="table-responsive">                            
-                    <table mat-table [dataSource]="roleList" matSort class="table">
-                        <ng-container matColumnDef="role">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Role </th>
+                    <table mat-table [dataSource]="menuList" matSort class="table">
+                        <ng-container matColumnDef="menu">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Menu </th>
                         <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                         </ng-container>
                                    

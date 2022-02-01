@@ -5,6 +5,7 @@ import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 
 import { LoginComponent } from './pages/login/login.component';
+import { ResetPasswordComponent } from './pages/resetpassword/resetpassword.component';
 
 export const AppRoutes: Routes = [
   {
@@ -89,6 +90,9 @@ export const AppRoutes: Routes = [
     }, {
       path: 'login',
       component: LoginComponent
+    }, {
+      path: 'resetpassword',
+      component: ResetPasswordComponent
     }
     ]
   }
