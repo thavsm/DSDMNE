@@ -9,6 +9,7 @@ import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
 import { MatPaginator } from '@angular/material/paginator';
 import Swal from 'sweetalert2'
 import { merge } from 'jquery';
+import { UserService } from '../shared/user.service';
 declare var $: any;
 
 @Component({
@@ -18,9 +19,10 @@ declare var $: any;
 })
 export class FormListComponent implements OnInit {
 
-  constructor(public dialog: MatDialog, private route: Router, private service: FormbuilderService, private spinner: NgxSpinnerService) { }
+  constructor(public dialog: MatDialog, private route: Router, private service: FormbuilderService, private spinner: NgxSpinnerService,public userService: UserService) { }
 
   formAdd: any;
+  userDetail:any;
   public displayedColumns = ['displayName', 'formDescription', 'formCategory', 'formDetails', 'update', 'delete'];
   public formList = new MatTableDataSource<any>();
 
@@ -35,6 +37,14 @@ export class FormListComponent implements OnInit {
     this.formList.filterPredicate = function (data, filter: string): boolean {
       return data.formName.toLowerCase().includes(filter) || data.formDescription.toLowerCase().includes(filter) || data.formCategory.toString().includes(filter) === filter;
     };
+    this.userService.getUserProfile().subscribe(
+      res => {
+        this.userDetail = res;
+      },
+      err => {
+        console.log(err);
+      },
+    );
   }
 
 
@@ -63,12 +73,14 @@ export class FormListComponent implements OnInit {
 
 
   openFormDesign(item: any): void {
-    // if (item.isLocked === true) {
-    //   this.showNotification('top', 'center', 'This form is currently being edited by another user,Please try again later!', '', 'warning');
-    // }
-    // else {
-    //   this.service.lockForm(item.formID,item).subscribe(res => {
-    //     // Create item:
+    if (item.isLocked === true) {
+      this.service.getLockedByUserName(item.lockedByUserID).subscribe(res=>{
+        this.showNotification('top', 'center', 'This form is locked and being edited by '+res, '', 'danger');
+      });
+    }
+    else {
+      item.lockedByUserID=this.userDetail.formData.userID;
+      this.service.lockForm(item.formID,item).subscribe(res => {
         let myObj = {
           formID: item.formID,
           formTypeID: item.formTypeID,
@@ -78,17 +90,18 @@ export class FormListComponent implements OnInit {
           formDescription: item.formDescription,
           dateCreated: item.dateCreated,
           createdByUserID: item.createdByUserID,
-          isLocked: item.isLocked,
-          lockedByUserID: item.lockedByUserID,
+          isLocked: true,
+          lockedByUserID: this.userDetail.formData.userID,
           isDeleted: item.isDeleted,
           dateLocked: item.dateLocked,
           dateLastModified: item.dateLastModified,
           lastModifiedByUserID: item.lastModifiedByUserID
         };
         localStorage.setItem('formDesignInfo', JSON.stringify(myObj));
+        this.userService.setMenuShow(false);
         this.route.navigate(['formDesign']);
-    //   });
-    // }
+      });
+    }
   }
 
   clickEdit(item: any) {

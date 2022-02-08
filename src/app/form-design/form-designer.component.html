@@ -3,11 +3,12 @@
         <div class="container-fluid">
             <div class="row">
                 <div>
+                    <mat-icon (click)="closeForm()" matTooltip="Close form" color="warn" style="font-size: 40px;font-weight:bold;">close</mat-icon>
                     <div cdkDropListGroup>
                         <!-- Form type list -->
                         <div class="example-container"
                             style="margin-left: 0%;width: 200px;height: 600px;position: fixed;overflow-y: scroll;">
-                            <!-- Header Of form types -->
+                            <!-- Header Of form types -->        
                             <h2>Field Types</h2>
                             <!-- <p>Drag field types to form design on the right</p> -->
                             <!-- Header Of form types end-->
@@ -27,7 +28,8 @@
                         <!-- Form Design Layout -->
                         <div class="example-container" style="width: 700px;margin-left: 35%;text-align:center;">
                             <!-- Header Of form builder -->
-                            <h2>{{formData.displayName}}</h2>
+                            <div style="background-color: rgb(255, 255, 64);"></div>
+                           <h2>{{formData.displayName}}</h2>
                             <h4>{{formData.formDescription}}</h4>
                             <div style="margin-left: 25%;width: 350px;">
                                 <!-- <mat-icon>save</mat-icon> -->

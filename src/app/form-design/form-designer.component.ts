@@ -6,6 +6,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
 import { merge } from 'jquery';
 import { FormPreviewComponent } from '../form-preview/form-preview.component';
+import { UserService } from '../shared/user.service';
+import { Router } from '@angular/router';
 declare var $: any;
 
 @Component({
@@ -1411,7 +1413,7 @@ export class FormDesignerComponent implements OnInit {
         }
     ];
 
-    publishStatus: string = "Unpublished";
+    publishStatus: number = -1;
 
     pages: any = [];
 
@@ -1457,7 +1459,7 @@ export class FormDesignerComponent implements OnInit {
 
     disableGroupAdd: boolean = false;
 
-    constructor(public dialog: MatDialog, private service: FormbuilderService, private spinner: NgxSpinnerService) {
+    constructor(public dialog: MatDialog,private route: Router, private service: FormbuilderService, private spinner: NgxSpinnerService,private userService:UserService) {
         this.formData = JSON.parse(localStorage.getItem('formDesignInfo') || '{}');
     }
 
@@ -1466,6 +1468,10 @@ export class FormDesignerComponent implements OnInit {
         this.refreshPageList();
         this.types = this.fieldTypes;
         this.spinner.hide();
+        if(this.formData.isLocked===true){
+            this.userService.setMenuShow(false);
+        }
+        this.publishStatus = 0;
     }
 
     toggleValue(item: any) {
@@ -1529,113 +1535,21 @@ export class FormDesignerComponent implements OnInit {
 
     savePage() {
         this.saveDesignPerPage(this.currentPage.pageGUID);
+        this.publishStatus = 0;
     }
 
     publishPage() {
-        let pageGUID = this.currentPage.pageGUID;
-        var errorMessage = "Please ensure number ";
-        this.formDesign.forEach((fieldVal, index) => {
-            if (fieldVal.questionName == "") {
-                errorMessage = errorMessage + (index + 1) + ",";
+        this.spinner.show();
+        this.service.PublishForm(this.formData.formID).subscribe(res =>{
+            if(res==="Form published Successfully!")
+            {
+                this.showNotification('top', 'center', res, 'Success.', 'success');
+                this.spinner.hide();
             }
-
-            // if (fieldVal.fieldType.value === "subSection") {
-            //     fieldVal.fieldName = (fieldVal.questionName).split(/\s/).join('');
-            // }
-            fieldVal.pageGUID = pageGUID;
-            fieldVal.formPage.name = this.currentPage.name;
+            else{
+                this.showNotification('top', 'center', res, 'Error.', 'danger');
+            }
         });
-        if (errorMessage === "Please ensure number ") {
-            this.spinner.show();
-            this.service.addFieldPerPage(this.formDesign, this.formData.formID, pageGUID).subscribe(ret => {
-                this.spinner.show();
-                let columnsNoGroups = "";
-                this.formDesign.forEach(element => {
-                    let groupColumns = "";
-                    let groupGUID = "";
-                    this.spinner.show();
-
-                    if (element.fieldType.value === "section") {
-                        groupGUID = element.groupGUID;
-                        this.formDesign.forEach(field => {
-                            if (field.parentFieldName === groupGUID && field.fieldType.value !== "subSection" && field.fieldType.value !== "repeatgroup" && field.fieldType.value !== "group") {
-                                if (field.fieldType.value === 'signature' || field.fieldType.value === 'imagearea') {
-                                    columnsNoGroups += field.fieldName + " varchar(max),";
-                                }
-                                else {
-                                    columnsNoGroups += field.fieldName + " varchar(" + field.fieldValidations[0].dataLength + "),";
-                                }
-                            }
-                        });
-                    }
-
-                    if (element.fieldType.value === "group") {
-                        groupGUID = element.groupGUID;
-                        this.formDesign.forEach(field => {
-                            if (field.parentFieldName === groupGUID && field.fieldType.value !== "subSection" && field.fieldType.value !== "repeatgroup" && field.fieldType.value !== "section") {
-                                if (field.fieldType.value === 'signature' || field.fieldType.value === 'imagearea') {
-                                    columnsNoGroups += field.fieldName + " varchar(max),";
-                                }
-                                else {
-                                    columnsNoGroups += field.fieldName + " varchar(" + field.fieldValidations[0].dataLength + "),";
-                                }
-                            }
-                        });
-                    }
-
-                    if (element.fieldType.value === "repeatgroup") {
-                        groupGUID = element.groupGUID;
-                        this.formDesign.forEach(field => {
-                            if (field.parentFieldName === groupGUID && field.fieldType.value !== "subSection") {
-                                if (field.fieldType.value === 'signature' || field.fieldType.value === 'imagearea') {
-                                    groupColumns += field.fieldName + " varchar(max),";
-                                }
-                                else {
-                                    groupColumns += field.fieldName + " varchar(" + field.fieldValidations[0].dataLength + "),";
-                                }
-                            }
-                        });
-                        this.service.getTableNameForGroup(groupGUID).subscribe(res => {
-                            let data = {
-                                "tableName": res,
-                                "columns": groupColumns
-                            }
-                            this.spinner.show();
-                            this.service.createGroupTable(data).subscribe(val => {
-                                this.getDesignPerPage(pageGUID);
-                                this.spinner.hide();
-                            });
-                        });
-                    }
-
-                    else if (element.fieldType.value !== "subSection" && element.fieldType.value !== "section" && element.fieldType.value !== "group" &&  element.fieldType.value !== "repeatgroup" && element.fieldType.value !== "PageTitle" && element.parentFieldName === "") {
-                        if (element.fieldType.value === 'signature' || element.fieldType.value === 'imagearea') {
-                            columnsNoGroups += element.fieldName + " varchar(max),";
-                        }
-                        else {
-                            columnsNoGroups += element.fieldName + " varchar(" + element.fieldValidations[0].dataLength + "),";
-                        }
-                    }
-                });
-
-                let data = {
-                    "tableName": (this.formData.formName).split(/\s/).join('') + "_" + (this.currentPage.name).split(/\s/).join(''),
-                    "columns": columnsNoGroups
-                }
-
-                this.service.createTemplateFormTable(data).subscribe(res => {
-                    this.service.UpdateFormVersion(this.formData.formID).subscribe(result => {
-                        this.showNotification('top', 'center', 'Page has been published successfully!', 'Success.', 'success');
-                        this.publishStatus = "Published";
-                        this.spinner.hide();
-                    })
-                });
-            });
-        }
-        else {
-            errorMessage = errorMessage + " form fields have question names before saving";
-            this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
-        }
     }
 
     viewPage(i: any, page: any) {
@@ -1673,7 +1587,7 @@ export class FormDesignerComponent implements OnInit {
                     element.formPage.name = this.currentPage.name;
                 });
                 if (errorMessage === "Please ensure number ") {
-                    if (this.currentPage.name === "Page 1" && count === 2) {
+                    if (this.currentPage.name === "Page 1") {
                         if (errorMessage === "Please ensure number ") {
                             this.spinner.show();
                             this.service.addFieldPerPage(this.formDesign, this.formData.formID, this.currentPage.pageGUID).subscribe(data => {
@@ -3566,8 +3480,30 @@ export class FormDesignerComponent implements OnInit {
                 }
                 else {
                     errorMessage = errorMessage + " form fields have question names and that two displayables are set on the form before pr";
-                    this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
+                    this.showNotification('top', 'top', errorMessage, 'Error.', 'danger');
                 }
+            }
+        })
+    }
+
+    closeForm(){
+        Swal.fire({
+            title: 'Are you sure you want to close this form?',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No',
+            toast: true,
+            position: 'top',
+            allowOutsideClick: false,
+            confirmButtonColor: '#000000',
+            cancelButtonColor: '#000000',
+            background: '#ffcccb'
+        }).then((result) => {
+            if (result.value) {
+                this.service.unlockForm(this.formData.formID,this.formData).subscribe(res=>{
+                    this.userService.setMenuShow(true);
+                    this.route.navigate(['formList']);
+                })   
             }
         })
     }

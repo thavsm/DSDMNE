@@ -12,6 +12,7 @@ import {MatTabsModule } from '@angular/material/tabs';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import {NgxSpinnerModule} from 'ngx-spinner';
 
 
@@ -33,7 +34,8 @@ import {NgxSpinnerModule} from 'ngx-spinner';
     MatDividerModule,
     MatCheckboxModule,
     MatSelectModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    MatTooltipModule
 
   ]
 })

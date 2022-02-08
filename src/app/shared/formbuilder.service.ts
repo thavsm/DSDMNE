@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { Text } from '@angular/compiler/src/i18n/i18n_ast';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -157,8 +158,8 @@ export class FormbuilderService {
     return this.http.post(this.APIUrl+'FormPhoto',data,{responseType: 'text'});
   }
 
-  UpdateFormVersion(formCaptureID:any){
-    return this.http.put(this.APIUrl+formCaptureID+'/UpdateFormVersion','',{responseType: 'text'});
+  UpdateFormVersion(formID:any){
+    return this.http.put(this.APIUrl+formID+'/UpdateFormVersion','',{responseType: 'text'});
   }
 
   getPublishedListOfForms():Observable<any[]>{
@@ -168,7 +169,38 @@ export class FormbuilderService {
   getGroupType(groupGUID:any){
     return this.http.get(this.APIUrl + groupGUID +'/getGroupType',{responseType: 'text'})
   }
+
+  getFormComments(formCaptureID:any): Observable<any[]> {
+    return this.http.get<any>(this.APIUrl + formCaptureID +'/FormComment')
+  }
+
+  addFormComment(data:any){
+    return this.http.post(this.APIUrl+'AddFormComment',data,{responseType: 'text'});
+  }
+
+  updateFormComment(data:any,commentID:any){
+    return this.http.put(this.APIUrl+commentID+'/UpdateFormComment',data,{responseType: 'text'});
+  }
+
+  getLockedByUserName(userID:any){
+    return this.http.get(this.APIUrl + userID +'/getLockedUserName',{responseType: 'text'})
+  }
+
+  DeleteFile(AttachmentID:any){
+    return this.http.delete(this.APIUrl+AttachmentID+'/'+'DeleteFile',{responseType: 'text'});
+  }
+
+  DeleteComment(AttachmentID:any){
+    return this.http.delete(this.APIUrl+AttachmentID+'/'+'DeleteComment',{responseType: 'text'});
+  }
+
+  DeletePhoto(PhotoGUID:any){
+    return this.http.delete(this.APIUrl+PhotoGUID+'/'+'DeletePhoto',{responseType: 'text'});
+  }
+
+  PublishForm(formID:any){
+    return this.http.post(this.APIUrl+'Forms/forms/'+formID+'/PublishForm','',{responseType:'text'});
+  }
+
 //#endregion
-
-
 }

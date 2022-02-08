@@ -106,6 +106,10 @@
         color: black; 
       }
 
+      .disabled-pointer {
+        pointer-events: none;
+      }
+
       /* ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
         color: navy !important;
       } */

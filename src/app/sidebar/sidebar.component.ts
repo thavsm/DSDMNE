@@ -3,6 +3,7 @@ import PerfectScrollbar from 'perfect-scrollbar';
 import { UserService } from '../shared/user.service';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { FormbuilderService } from '../shared/formbuilder.service';
 
 
 declare const $: any;
@@ -150,7 +151,7 @@ export class SidebarComponent implements OnInit {
     
     public showMenu: boolean = true;
 
-    constructor(private service: UserService, private router: Router) {
+    constructor(private service: UserService, private router: Router,private formService:FormbuilderService) {
         this.service.sm.subscribe(show => this.showMenu = show);
     }
 
@@ -223,6 +224,7 @@ export class SidebarComponent implements OnInit {
             this.ps.update();
         }
     }
+
     isMac(): boolean {
         let bool = false;
         if (navigator.platform.toUpperCase().indexOf('MAC') >= 0 || navigator.platform.toUpperCase().indexOf('IPAD') >= 0) {
@@ -230,8 +232,11 @@ export class SidebarComponent implements OnInit {
         }
         return bool;
     }
+
     logout() {
         localStorage.removeItem('token');
         this.router.navigate(['/login']);
+        let formData= JSON.parse(localStorage.getItem('formDesignInfo') || '{}');
+        this.formService.unlockForm(formData.formID,formData);
     }
 }
