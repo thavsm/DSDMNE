@@ -44,6 +44,8 @@ export class FormInboxComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.DisplayOne="Display One";
+    this.DisplayTwo="Display Two";
     this.refreshFormsList();
     this.formList.filterPredicate = function(data, filter: string): boolean {
       return data.formName.toLowerCase().includes(filter);
@@ -101,7 +103,7 @@ export class FormInboxComponent implements OnInit {
     });
   }
 
-  filterForm(input:any) {
+  filterForm(input:any,formID:any) {
     if(input==='All Forms'){
       this.spinner.show();
       this.service.getCapturedForms().subscribe(data => {
@@ -147,9 +149,11 @@ export class FormInboxComponent implements OnInit {
             }
           }).data;
           this.dataBinding.skip = 0;
-          this.DisplayOne="Num Male";
-          this.DisplayTwo="Num Female";
-          this.spinner.hide();
+          this.service.GetDisplayables(formID).subscribe(res=>{
+            this.DisplayOne=res[0].displayOne;
+            this.DisplayTwo=res[0].displayTwo;
+            this.spinner.hide();
+          })
         });
       });   
     }

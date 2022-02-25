@@ -14,6 +14,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {NgxSpinnerModule} from 'ngx-spinner';
+import { MatInputModule } from '@angular/material/input';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import {NgxSpinnerModule} from 'ngx-spinner';
     FormsModule,
     MatDialogModule,
     MatIconModule,
+    MatInputModule ,
     MatButtonModule,
     MatDialogModule,
     MatTabsModule,

@@ -3,19 +3,20 @@
         <div class="container-fluid">
             <div class="row">
                 <div>
-                    <mat-icon (click)="closeForm()" matTooltip="Close form" color="warn" style="font-size: 40px;font-weight:bold;">close</mat-icon>
+                    <mat-icon (click)="closeForm()" matTooltip="Close form" color="warn"
+                        style="font-size: 40px;font-weight:bold;">close</mat-icon>
                     <div cdkDropListGroup>
                         <!-- Form type list -->
                         <div class="example-container"
                             style="margin-left: 0%;width: 200px;height: 600px;position: fixed;overflow-y: scroll;">
-                            <!-- Header Of form types -->        
+                            <!-- Header Of form types -->
                             <h2>Field Types</h2>
                             <!-- <p>Drag field types to form design on the right</p> -->
                             <!-- Header Of form types end-->
                             <!-- Form types -->
                             <div cdkDropList [cdkDropListData]="fieldTypes">
                                 <div *ngFor="let item of fieldTypes" cdkDrag
-                                    style="text-align: left;font-size: small;height: 30px;background-color: whitesmoke;border-color: rgb(207, 204, 204);border-style: outset;border-width: 0.5px;">
+                                    style="text-align: left;font-size: small;height: 25px;background-color: whitesmoke;border-color: rgb(207, 204, 204);border-style: outset;border-width: 0.5px;">
                                     <p style="color: black;font-weight:500;">
                                         <mat-icon style="font-size: 20px">{{item.fieldType.description}}</mat-icon>
                                         {{item.fieldType.displayName}}
@@ -28,26 +29,30 @@
                         <!-- Form Design Layout -->
                         <div class="example-container" style="width: 700px;margin-left: 35%;text-align:center;">
                             <!-- Header Of form builder -->
-                            <div style="background-color: rgb(255, 255, 64);"></div>
-                           <h2>{{formData.displayName}}</h2>
+                            <h2 [style]=formStatus matTooltip="Yellow:Only Saved
+                                       Green:Saved and published"><b>{{formData.displayName}}</b></h2>
                             <h4>{{formData.formDescription}}</h4>
                             <div style="margin-left: 25%;width: 350px;">
                                 <!-- <mat-icon>save</mat-icon> -->
                                 <button class="btn btn-sm"
-                                    style="background-color: crimson;color: white;font-weight: 400;width: 100px;"
+                                    class="btn btn-md btn-primary"  
                                     (click)="savePage()">Save</button>
 
                                 <button class="btn btn-sm"
-                                    style="background-color: crimson;color: white;font-weight: 400;width: 100px;"
+                                    class="btn btn-md btn-primary"  
                                     (click)="publishPage()">Publish</button>
 
                                 <button class="btn btn-sm"
-                                    style="background-color: crimson;color: white;font-weight: 400;width: 100px;"
+                                    class="btn btn-md btn-primary"  
                                     (click)="previewPage()">Preview</button>
                             </div>
                             <div style="height: 10px;"></div>
                             <div style="margin-left: 32%;width: 250px;">
                                 <h5>{{currentPage.name}}</h5>
+                                <mat-icon style="font-size:large;" matTooltip="Copy Page" (click)="copyPage()">
+                                    content_copy</mat-icon>
+                                <mat-icon style="font-size:large;" matTooltip="Paste Page" (click)="pastePage()">
+                                    content_paste</mat-icon>
                             </div>
 
                             <!-- Form Builder -->
@@ -93,11 +98,15 @@
                                                                 <label style="color: black;">:</label>
                                                             </td>
                                                             <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    [(ngModel)]="item.xmlElementName"
-                                                                    style="width: 300px;color: black;" maxlength="100"
-                                                                    placeholder="Enter friendly name here"
-                                                                    onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" />
+                                                                <mat-form-field hintLabel="">
+                                                                    <input class="form-control" type="text" #input
+                                                                        [(ngModel)]="item.xmlElementName" matInput
+                                                                        style="width: 300px;color: black;"
+                                                                        maxlength="100" placeholder=""
+                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" />
+                                                                    <mat-hint>{{input.value?.length || 0}}/100
+                                                                    </mat-hint>
+                                                                </mat-form-field>
                                                             </td>
                                                         </tr>
                                                         <tr mat-row>
@@ -107,12 +116,16 @@
                                                                 <label style="color: black;">:</label>
                                                             </td>
                                                             <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    [(ngModel)]="item.fieldName" style="width: 300px;color: black;"
-                                                                    maxlength="100"
-                                                                    onblur="this.value=removeSpaces(this.value);"
-                                                                    placeholder="Enter database name here"
-                                                                    onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                <mat-form-field hintLabel="">
+                                                                    <input class="form-control" type="text"
+                                                                        #fieldNameinput matInput
+                                                                        [(ngModel)]="item.fieldName"
+                                                                        style="width: 300px;color: black;"
+                                                                        maxlength="100" placeholder=""
+                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                    <mat-hint>{{fieldNameinput.value?.length || 0}}/100
+                                                                    </mat-hint>
+                                                                </mat-form-field>
                                                             </td>
                                                         </tr>
                                                         <tr mat-row>
@@ -122,12 +135,17 @@
                                                                 <label style="color: black;">:</label>
                                                             </td>
                                                             <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    [(ngModel)]="item.dataExportName"
-                                                                    style="width: 300px;color: black;" maxlength="100"
-                                                                    onblur="this.value=removeSpaces(this.value);"
-                                                                    placeholder="Enter data export  name here"
-                                                                    onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                <mat-form-field hintLabel="">
+                                                                    <input class="form-control" type="text"
+                                                                        [(ngModel)]="item.dataExportName"
+                                                                        style="width: 300px;color: black;"
+                                                                        maxlength="100" matInput #dataExportNameinput
+                                                                        placeholder=""
+                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                    <mat-hint>{{dataExportNameinput.value?.length ||
+                                                                        0}}/100
+                                                                    </mat-hint>
+                                                                </mat-form-field>
                                                             </td>
                                                         </tr>
                                                         <tr mat-row>
@@ -164,10 +182,10 @@
                                                             </td>
                                                             <td mat-cell>
                                                                 <textarea class="form-control" style="width:300px;"
-                                                                    readonly [(ngModel)]="item.calculation"></textarea>
+                                                                    [(ngModel)]="item.calculation"></textarea>
                                                             </td>
                                                         </tr>
-                                                        <tr mat-row>
+                                                        <!-- <tr mat-row>
                                                             <td mat-cell>
                                                                 <mat-form-field appearance="outline"
                                                                     *ngIf="greyedOut===false">
@@ -192,6 +210,269 @@
                                                                     style="background-color: crimson;color: white;font-weight: 400;width: 200px;"
                                                                     (click)="clearCalc(i)"
                                                                     *ngIf="greyedOut===false">Clear Calculation</button>
+                                                            </td>
+                                                        </tr> -->
+                                                    </table>
+                                                </mat-tab>
+                                                <mat-tab label="Field Style">
+                                                    <br>
+                                                    <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Width: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    style="width:300px;" placeholder="Enter width here"
+                                                                    [(ngModel)]="item.fieldStyles[0].width" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Height: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    style="width:300px;" placeholder="Enter width here"
+                                                                    [(ngModel)]="item.fieldStyles[0].height" />
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </mat-tab>
+                                                <mat-tab label="Field Validation">
+                                                    <br>
+
+                                                    <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Maximum Length: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input type="number" min="1" class="form-control"
+                                                                    style="width:300px;"
+                                                                    placeholder="Enter max length here"
+                                                                    [(ngModel)]="item.fieldValidations[0].dataLength" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Displayable:</label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.isDisplayable">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Editable: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.fieldValidations[0].isEditable">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Hidden: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.fieldValidations[0].isHidden">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <td mat-cell>
+                                                            <label style="color: black;">Required: </label>
+                                                        </td>
+                                                        <td mat-cell>
+                                                            <mat-checkbox class="example-margin"
+                                                                [(ngModel)]="item.fieldValidations[0].isRequired">
+                                                            </mat-checkbox>
+                                                        </td>
+                                                    </table>
+                                                </mat-tab>
+                                                <mat-tab label="Field Attachments">
+                                                    <br>
+                                                    <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Has Photos: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.hasPhoto">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Has Files: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.hasAttachment">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <td mat-cell>
+                                                            <label style="color: black;">Has Comments: </label>
+                                                        </td>
+                                                        <td mat-cell>
+                                                            <mat-checkbox class="example-margin"
+                                                                [(ngModel)]="item.hasComment">
+                                                            </mat-checkbox>
+                                                        </td>
+                                                    </table>
+
+                                                </mat-tab>
+                                            </mat-tab-group>
+                                        </div>
+                                        <!--#endregion -->
+                                    </div>
+
+                                    <!-- Information Type -->
+                                    <div *ngIf="item.fieldType.value=='information' && item.isActive===true"
+                                        style="text-align: center;">
+                                        <div style="margin-right: 96%;">
+                                            <mat-icon>{{item.fieldType.description}}</mat-icon>
+                                        </div>
+                                        <label style="color: black;">{{i+1}} {{item.questionName}}</label>
+                                        <!--#region attributes tab  -->
+                                        <div *ngIf="item.toggle" style="text-align: left;">
+                                            <hr>
+                                            <mat-tab-group mat-align-tabs="center" style="color: black;">
+                                                <mat-tab label="Field Attributes">
+                                                    <br>
+                                                    <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Question Name</label>
+                                                                <label style="color: red;">*</label>
+                                                                <label style="color: black;">:</label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    [(ngModel)]="item.questionName"
+                                                                    style="width: 300px;color: black;"
+                                                                    placeholder="Enter question name here" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Friendly Name</label>
+                                                                <label style="color: red;">*</label>
+                                                                <label style="color: black;">:</label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-form-field hintLabel="">
+                                                                    <input class="form-control" type="text" #input
+                                                                        [(ngModel)]="item.xmlElementName" matInput
+                                                                        style="width: 300px;color: black;"
+                                                                        maxlength="100" placeholder=""
+                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" />
+                                                                    <mat-hint>{{input.value?.length || 0}}/100
+                                                                    </mat-hint>
+                                                                </mat-form-field>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Database Name</label>
+                                                                <label style="color: red;">*</label>
+                                                                <label style="color: black;">:</label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-form-field hintLabel="">
+                                                                    <input class="form-control" type="text"
+                                                                        #fieldNameinput matInput
+                                                                        [(ngModel)]="item.fieldName"
+                                                                        style="width: 300px;color: black;"
+                                                                        maxlength="100" placeholder=""
+                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                    <mat-hint>{{fieldNameinput.value?.length || 0}}/100
+                                                                    </mat-hint>
+                                                                </mat-form-field>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Data Export Name</label>
+                                                                <label style="color: red;">*</label>
+                                                                <label style="color: black;">:</label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-form-field hintLabel="">
+                                                                    <input class="form-control" type="text"
+                                                                        [(ngModel)]="item.dataExportName"
+                                                                        style="width: 300px;color: black;"
+                                                                        maxlength="100" matInput #dataExportNameinput
+                                                                        placeholder="Enter data export name here"
+                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                    <mat-hint>{{dataExportNameinput.value?.length ||
+                                                                        0}}/100
+                                                                    </mat-hint>
+                                                                </mat-form-field>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Tooltip: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    style="width:300px;"
+                                                                    placeholder="Enter tooltip here"
+                                                                    [(ngModel)]="item.toolTip" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Group/Section: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-form-field appearance="outline">
+                                                                    <mat-label>Select a Group/Section </mat-label>
+                                                                    <mat-select [(ngModel)]="item.parentFieldName">
+
+                                                                        <mat-option *ngFor="let gs of groupSectionList"
+                                                                            [value]="gs.groupGUID">
+                                                                            {{gs.name}}
+                                                                        </mat-option>
+                                                                    </mat-select>
+                                                                </mat-form-field>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Information: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <textarea class="form-control" style="width:300px;"
+                                                                    [(ngModel)]="item.calculation"></textarea>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <mat-form-field appearance="outline"
+                                                                    *ngIf="greyedOut===false">
+                                                                    <mat-label>{{operationField}}</mat-label>
+                                                                    <mat-select style="width: 150px;">
+                                                                        <mat-option> Text fields</mat-option>
+                                                                    </mat-select>
+                                                                </mat-form-field>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <button class="btn btn-sm"
+                                                                    style="background-color: crimson;color: white;font-weight: 400;width: 200px;"
+                                                                    (click)="addCalc(item)"
+                                                                    *ngIf="greyedOut===false">Add to
+                                                                    Information</button>
+                                                                <button class="btn btn-sm"
+                                                                    style="background-color: crimson;color: white;font-weight: 400;width: 200px;"
+                                                                    *ngIf="greyedOut===false">Clear Information</button>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -275,225 +556,46 @@
                                                         </td>
                                                     </table>
                                                 </mat-tab>
-                                            </mat-tab-group>
-                                        </div>
-                                        <!--#endregion -->
-                                    </div>
-
-                                    <!-- Information Type -->
-                                    <div *ngIf="item.fieldType.value=='information' && item.isActive===true"
-                                        style="text-align: center;">
-                                        <div style="margin-right: 96%;">
-                                            <mat-icon>{{item.fieldType.description}}</mat-icon>
-                                        </div>
-                                        <label style="color: black;">{{i+1}} {{item.questionName}}</label>
-                                        <!--#region attributes tab  -->
-                                        <div *ngIf="item.toggle" style="text-align: left;">
-                                            <hr>
-                                            <mat-tab-group mat-align-tabs="center" style="color: black;">
-                                                <mat-tab label="Field Attributes">
+                                                <mat-tab label="Field Attachments">
                                                     <br>
                                                     <table mat-table>
                                                         <tr mat-row>
                                                             <td mat-cell>
-                                                                <label style="color: black;">Question Name</label>
-                                                                <label style="color: red;">*</label>
-                                                                <label style="color: black;">:</label>
-                                                            </td>
-                                                            <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    [(ngModel)]="item.questionName"
-                                                                    style="width: 300px;color: black;"
-                                                                    placeholder="Enter question name here" />
-                                                            </td>
-                                                        </tr>
-                                                        <tr mat-row>
-                                                            <td mat-cell>
-                                                                <label style="color: black;">Friendly Name</label>
-                                                                <label style="color: red;">*</label>
-                                                                <label style="color: black;">:</label>
-                                                            </td>
-                                                            <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    [(ngModel)]="item.xmlElementName"
-                                                                    style="width: 300px;color: black;" maxlength="100"
-                                                                    placeholder="Enter friendly name here"
-                                                                    onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" />
-                                                            </td>
-                                                        </tr>
-                                                        <tr mat-row>
-                                                            <td mat-cell>
-                                                                <label style="color: black;">Database Name</label>
-                                                                <label style="color: red;">*</label>
-                                                                <label style="color: black;">:</label>
-                                                            </td>
-                                                            <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    [(ngModel)]="item.fieldName" style="width: 300px;color: black;"
-                                                                    maxlength="100"
-                                                                    placeholder="Enter database name here"
-                                                                    onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
-                                                            </td>
-                                                        </tr>
-                                                        <tr mat-row>
-                                                            <td mat-cell>
-                                                                <label style="color: black;">Data Export Name</label>
-                                                                <label style="color: red;">*</label>
-                                                                <label style="color: black;">:</label>
-                                                            </td>
-                                                            <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    [(ngModel)]="item.dataExportName"
-                                                                    style="width: 300px;color: black;" maxlength="100"
-                                                                    placeholder="Enter data export  name here"
-                                                                    onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
-                                                            </td>
-                                                        </tr>
-                                                        <tr mat-row>
-                                                            <td mat-cell>
-                                                                <label style="color: black;">Tooltip: </label>
-                                                            </td>
-                                                            <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    style="width:300px;"
-                                                                    placeholder="Enter tooltip here"
-                                                                    [(ngModel)]="item.toolTip" />
-                                                            </td>
-                                                        </tr>
-                                                        <tr mat-row>
-                                                            <td mat-cell>
-                                                                <label style="color: black;">Group/Section: </label>
-                                                            </td>
-                                                            <td mat-cell>
-                                                                <mat-form-field appearance="outline">
-                                                                    <mat-label>Select a Group/Section </mat-label>
-                                                                    <mat-select [(ngModel)]="item.parentFieldName">
-
-                                                                        <mat-option *ngFor="let gs of groupSectionList"
-                                                                            [value]="gs.groupGUID">
-                                                                            {{gs.name}}
-                                                                        </mat-option>
-                                                                    </mat-select>
-                                                                </mat-form-field>
-                                                            </td>
-                                                        </tr>
-                                                        <tr mat-row>
-                                                            <td mat-cell>
-                                                                <label style="color: black;">Information: </label>
-                                                            </td>
-                                                            <td mat-cell>
-                                                                <textarea class="form-control" style="width:300px;"
-                                                                    readonly></textarea>
-                                                            </td>
-                                                        </tr>
-                                                        <tr mat-row>
-                                                            <td mat-cell>
-                                                                <mat-form-field appearance="outline"
-                                                                    *ngIf="greyedOut===false">
-                                                                    <mat-label>{{operationField}}</mat-label>
-                                                                    <mat-select style="width: 150px;">
-                                                                        <mat-option> Text fields</mat-option>
-                                                                    </mat-select>
-                                                                </mat-form-field>
-                                                            </td>
-                                                            <td mat-cell>
-                                                                <button class="btn btn-sm"
-                                                                    style="background-color: crimson;color: white;font-weight: 400;width: 200px;"
-                                                                    (click)="addCalc(item)"
-                                                                    *ngIf="greyedOut===false">Add to
-                                                                    Information</button>
-                                                                <button class="btn btn-sm"
-                                                                    style="background-color: crimson;color: white;font-weight: 400;width: 200px;"
-                                                                    *ngIf="greyedOut===false">Clear Information</button>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </mat-tab>
-                                                <mat-tab label="Field Style">
-                                                    <br>
-                                                    <table mat-table>
-                                                        <tr mat-row>
-                                                            <td mat-cell>
-                                                                <label style="color: black;">Width: </label>
-                                                            </td>
-                                                            <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    style="width:300px;" placeholder="Enter width here"
-                                                                    [(ngModel)]="item.fieldStyles[0].width" />
-                                                            </td>
-                                                        </tr>
-                                                        <tr mat-row>
-                                                            <td mat-cell>
-                                                                <label style="color: black;">Height: </label>
-                                                            </td>
-                                                            <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    style="width:300px;" placeholder="Enter width here"
-                                                                    [(ngModel)]="item.fieldStyles[0].height" />
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </mat-tab>
-                                                <mat-tab label="Field Validation">
-                                                    <br>
-                                                    <table mat-table>
-                                                        <tr mat-row>
-                                                            <td mat-cell>
-                                                                <label style="color: black;">Maximum Length: </label>
-                                                            </td>
-                                                            <td mat-cell>
-                                                                <input type="number" min="1"  class="form-control"
-                                                                    style="width:300px;"
-                                                                    placeholder="Enter max length here"
-                                                                    [(ngModel)]="item.fieldValidations[0].dataLength" />
-                                                            </td>
-                                                        </tr>
-                                                        <tr mat-row>
-                                                            <td mat-cell>
-                                                                <label style="color: black;">Displayable:</label>
+                                                                <label style="color: black;">Has Photos: </label>
                                                             </td>
                                                             <td mat-cell>
                                                                 <mat-checkbox class="example-margin"
-                                                                    [(ngModel)]="item.isDisplayable">
+                                                                    [(ngModel)]="item.hasPhoto">
                                                                 </mat-checkbox>
                                                             </td>
                                                         </tr>
                                                         <tr mat-row>
                                                             <td mat-cell>
-                                                                <label style="color: black;">Editable: </label>
+                                                                <label style="color: black;">Has Files: </label>
                                                             </td>
                                                             <td mat-cell>
                                                                 <mat-checkbox class="example-margin"
-                                                                    [(ngModel)]="item.fieldValidations[0].isEditable">
-                                                                </mat-checkbox>
-                                                            </td>
-                                                        </tr>
-                                                        <tr mat-row>
-                                                            <td mat-cell>
-                                                                <label style="color: black;">Hidden: </label>
-                                                            </td>
-                                                            <td mat-cell>
-                                                                <mat-checkbox class="example-margin"
-                                                                    [(ngModel)]="item.fieldValidations[0].isHidden">
+                                                                    [(ngModel)]="item.hasAttachment">
                                                                 </mat-checkbox>
                                                             </td>
                                                         </tr>
                                                         <td mat-cell>
-                                                            <label style="color: black;">Required: </label>
+                                                            <label style="color: black;">Has Comments: </label>
                                                         </td>
                                                         <td mat-cell>
                                                             <mat-checkbox class="example-margin"
-                                                                [(ngModel)]="item.fieldValidations[0].isRequired">
+                                                                [(ngModel)]="item.hasComment">
                                                             </mat-checkbox>
                                                         </td>
                                                     </table>
+
                                                 </mat-tab>
                                             </mat-tab-group>
                                         </div>
                                         <!--#endregion -->
                                     </div>
 
-                                    <!-- Checkbox/field or/lexicon data Type -->
+                                    <!-- field or/lexicon data Type-->
                                     <div *ngIf="(item.fieldType.value=='lexicon data' || item.fieldType.value=='field or') && item.isActive===true"
                                         style="text-align: center;">
                                         <div style="margin-right: 96%;">
@@ -514,10 +616,12 @@
                                                                 <label style="color: black;">:</label>
                                                             </td>
                                                             <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    [(ngModel)]="item.questionName"
-                                                                    style="width: 300px;color: black;"
-                                                                    placeholder="Enter question name here" />
+                                                                <mat-form-field hintLabel="">
+                                                                    <input matInput type="text" #input
+                                                                        [(ngModel)]="item.questionName"
+                                                                        style="width: 300px;color: black;"
+                                                                        placeholder="Enter question name here" />
+                                                                </mat-form-field>
                                                             </td>
                                                         </tr>
                                                         <tr mat-row>
@@ -527,11 +631,15 @@
                                                                 <label style="color: black;">:</label>
                                                             </td>
                                                             <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    [(ngModel)]="item.xmlElementName"
-                                                                    style="width: 300px;color: black;" maxlength="100"
-                                                                    placeholder="Enter friendly name here"
-                                                                    onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" />
+                                                                <mat-form-field hintLabel="">
+                                                                    <input class="form-control" type="text" #input
+                                                                        [(ngModel)]="item.xmlElementName" matInput
+                                                                        style="width: 300px;color: black;"
+                                                                        maxlength="100" placeholder=""
+                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" />
+                                                                    <mat-hint>{{input.value?.length || 0}}/100
+                                                                    </mat-hint>
+                                                                </mat-form-field>
                                                             </td>
                                                         </tr>
                                                         <tr mat-row>
@@ -541,11 +649,16 @@
                                                                 <label style="color: black;">:</label>
                                                             </td>
                                                             <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    [(ngModel)]="item.fieldName" style="width: 300px;color: black;"
-                                                                    maxlength="100"
-                                                                    placeholder="Enter database name here"
-                                                                    onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                <mat-form-field hintLabel="">
+                                                                    <input class="form-control" type="text"
+                                                                        #fieldNameinput matInput
+                                                                        [(ngModel)]="item.fieldName"
+                                                                        style="width: 300px;color: black;"
+                                                                        maxlength="100" placeholder=""
+                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                    <mat-hint>{{fieldNameinput.value?.length || 0}}/100
+                                                                    </mat-hint>
+                                                                </mat-form-field>
                                                             </td>
                                                         </tr>
                                                         <tr mat-row>
@@ -555,11 +668,17 @@
                                                                 <label style="color: black;">:</label>
                                                             </td>
                                                             <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    [(ngModel)]="item.dataExportName"
-                                                                    style="width: 300px;color: black;" maxlength="100"
-                                                                    placeholder="Enter data export  name here"
-                                                                    onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                <mat-form-field hintLabel="">
+                                                                    <input class="form-control" type="text"
+                                                                        [(ngModel)]="item.dataExportName"
+                                                                        style="width: 300px;color: black;"
+                                                                        maxlength="100" matInput #dataExportNameinput
+                                                                        placeholder=""
+                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                    <mat-hint>{{dataExportNameinput.value?.length ||
+                                                                        0}}/100
+                                                                    </mat-hint>
+                                                                </mat-form-field>
                                                             </td>
                                                         </tr>
                                                         <tr mat-row>
@@ -630,6 +749,7 @@
                                                 </mat-tab>
                                                 <mat-tab label="Field Validation">
                                                     <br>
+
                                                     <table mat-table>
                                                         <tr mat-row>
                                                             <td mat-cell>
@@ -684,12 +804,46 @@
                                                         <tr>
                                                     </table>
                                                 </mat-tab>
+                                                <mat-tab label="Field Attachments">
+                                                    <br>
+                                                    <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Has Photos: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.hasPhoto">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Has Files: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.hasAttachment">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <td mat-cell>
+                                                            <label style="color: black;">Has Comments: </label>
+                                                        </td>
+                                                        <td mat-cell>
+                                                            <mat-checkbox class="example-margin"
+                                                                [(ngModel)]="item.hasComment">
+                                                            </mat-checkbox>
+                                                        </td>
+                                                    </table>
+
+                                                </mat-tab>
                                             </mat-tab-group>
                                         </div>
                                         <!--#endregion -->
                                     </div>
 
-                                    <!-- Checkbox/field or/lexicon data Type -->
+                                    <!-- Checkbox-->
                                     <div *ngIf="item.fieldType.value=='checkbox' && item.isActive===true"
                                         style="text-align: center;">
                                         <div style="margin-right: 96%;">
@@ -723,11 +877,15 @@
                                                                 <label style="color: black;">:</label>
                                                             </td>
                                                             <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    [(ngModel)]="item.xmlElementName"
-                                                                    style="width: 300px;color: black;" maxlength="100"
-                                                                    placeholder="Enter friendly name here"
-                                                                    onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" />
+                                                                <mat-form-field hintLabel="">
+                                                                    <input class="form-control" type="text" #input
+                                                                        [(ngModel)]="item.xmlElementName" matInput
+                                                                        style="width: 300px;color: black;"
+                                                                        maxlength="100" placeholder=""
+                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" />
+                                                                    <mat-hint>{{input.value?.length || 0}}/100
+                                                                    </mat-hint>
+                                                                </mat-form-field>
                                                             </td>
                                                         </tr>
                                                         <tr mat-row>
@@ -737,11 +895,16 @@
                                                                 <label style="color: black;">:</label>
                                                             </td>
                                                             <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    [(ngModel)]="item.fieldName" style="width: 300px;color: black;"
-                                                                    maxlength="100"
-                                                                    placeholder="Enter database name here"
-                                                                    onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                <mat-form-field hintLabel="">
+                                                                    <input class="form-control" type="text"
+                                                                        #fieldNameinput matInput
+                                                                        [(ngModel)]="item.fieldName"
+                                                                        style="width: 300px;color: black;"
+                                                                        maxlength="100" placeholder=""
+                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                    <mat-hint>{{fieldNameinput.value?.length || 0}}/100
+                                                                    </mat-hint>
+                                                                </mat-form-field>
                                                             </td>
                                                         </tr>
                                                         <tr mat-row>
@@ -751,11 +914,17 @@
                                                                 <label style="color: black;">:</label>
                                                             </td>
                                                             <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    [(ngModel)]="item.dataExportName"
-                                                                    style="width: 300px;color: black;" maxlength="100"
-                                                                    placeholder="Enter data export  name here"
-                                                                    onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                <mat-form-field hintLabel="">
+                                                                    <input class="form-control" type="text"
+                                                                        [(ngModel)]="item.dataExportName"
+                                                                        style="width: 300px;color: black;"
+                                                                        maxlength="100" matInput #dataExportNameinput
+                                                                        placeholder=""
+                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                    <mat-hint>{{dataExportNameinput.value?.length ||
+                                                                        0}}/100
+                                                                    </mat-hint>
+                                                                </mat-form-field>
                                                             </td>
                                                         </tr>
                                                         <tr mat-row>
@@ -824,6 +993,7 @@
                                                 </mat-tab>
                                                 <mat-tab label="Field Validation">
                                                     <br>
+
                                                     <table mat-table>
                                                         <tr mat-row>
                                                             <td mat-cell>
@@ -878,6 +1048,40 @@
                                                         <tr>
                                                     </table>
                                                 </mat-tab>
+                                                <mat-tab label="Field Attachments">
+                                                    <br>
+                                                    <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Has Photos: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.hasPhoto">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Has Files: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.hasAttachment">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <td mat-cell>
+                                                            <label style="color: black;">Has Comments: </label>
+                                                        </td>
+                                                        <td mat-cell>
+                                                            <mat-checkbox class="example-margin"
+                                                                [(ngModel)]="item.hasComment">
+                                                            </mat-checkbox>
+                                                        </td>
+                                                    </table>
+
+                                                </mat-tab>
                                             </mat-tab-group>
                                         </div>
                                         <!--#endregion -->
@@ -916,11 +1120,15 @@
                                                                 <label style="color: black;">:</label>
                                                             </td>
                                                             <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    [(ngModel)]="item.xmlElementName"
-                                                                    style="width: 300px;color: black;" maxlength="100"
-                                                                    placeholder="Enter friendly name here"
-                                                                    onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" />
+                                                                <mat-form-field hintLabel="">
+                                                                    <input class="form-control" type="text" #input
+                                                                        [(ngModel)]="item.xmlElementName" matInput
+                                                                        style="width: 300px;color: black;"
+                                                                        maxlength="100" placeholder=""
+                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" />
+                                                                    <mat-hint>{{input.value?.length || 0}}/100
+                                                                    </mat-hint>
+                                                                </mat-form-field>
                                                             </td>
                                                         </tr>
                                                         <tr mat-row>
@@ -930,11 +1138,16 @@
                                                                 <label style="color: black;">:</label>
                                                             </td>
                                                             <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    [(ngModel)]="item.fieldName" style="width: 300px;color: black;"
-                                                                    maxlength="100"
-                                                                    placeholder="Enter database name here"
-                                                                    onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                <mat-form-field hintLabel="">
+                                                                    <input class="form-control" type="text"
+                                                                        #fieldNameinput matInput
+                                                                        [(ngModel)]="item.fieldName"
+                                                                        style="width: 300px;color: black;"
+                                                                        maxlength="100" placeholder=""
+                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                    <mat-hint>{{fieldNameinput.value?.length || 0}}/100
+                                                                    </mat-hint>
+                                                                </mat-form-field>
                                                             </td>
                                                         </tr>
                                                         <tr mat-row>
@@ -944,11 +1157,17 @@
                                                                 <label style="color: black;">:</label>
                                                             </td>
                                                             <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    [(ngModel)]="item.dataExportName"
-                                                                    style="width: 300px;color: black;" maxlength="100"
-                                                                    placeholder="Enter data export  name here"
-                                                                    onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                <mat-form-field hintLabel="">
+                                                                    <input class="form-control" type="text"
+                                                                        [(ngModel)]="item.dataExportName"
+                                                                        style="width: 300px;color: black;"
+                                                                        maxlength="100" matInput #dataExportNameinput
+                                                                        placeholder=""
+                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                    <mat-hint>{{dataExportNameinput.value?.length ||
+                                                                        0}}/100
+                                                                    </mat-hint>
+                                                                </mat-form-field>
                                                             </td>
                                                         </tr>
                                                         <tr mat-row>
@@ -1023,6 +1242,7 @@
                                                 </mat-tab>
                                                 <mat-tab label="Field Validation">
                                                     <br>
+
                                                     <table mat-table>
                                                         <tr mat-row>
                                                             <td mat-cell>
@@ -1064,6 +1284,40 @@
                                                         </td>
                                                     </table>
                                                 </mat-tab>
+                                                <mat-tab label="Field Attachments">
+                                                    <br>
+                                                    <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Has Photos: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.hasPhoto">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Has Files: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.hasAttachment">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <td mat-cell>
+                                                            <label style="color: black;">Has Comments: </label>
+                                                        </td>
+                                                        <td mat-cell>
+                                                            <mat-checkbox class="example-margin"
+                                                                [(ngModel)]="item.hasComment">
+                                                            </mat-checkbox>
+                                                        </td>
+                                                    </table>
+
+                                                </mat-tab>
                                             </mat-tab-group>
                                         </div>
                                         <!--#endregion -->
@@ -1102,11 +1356,15 @@
                                                                 <label style="color: black;">:</label>
                                                             </td>
                                                             <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    [(ngModel)]="item.xmlElementName"
-                                                                    style="width: 300px;color: black;" maxlength="100"
-                                                                    placeholder="Enter friendly name here"
-                                                                    onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" />
+                                                                <mat-form-field hintLabel="">
+                                                                    <input class="form-control" type="text" #input
+                                                                        [(ngModel)]="item.xmlElementName" matInput
+                                                                        style="width: 300px;color: black;"
+                                                                        maxlength="100" placeholder=""
+                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" />
+                                                                    <mat-hint>{{input.value?.length || 0}}/100
+                                                                    </mat-hint>
+                                                                </mat-form-field>
                                                             </td>
                                                         </tr>
                                                         <tr mat-row>
@@ -1116,11 +1374,16 @@
                                                                 <label style="color: black;">:</label>
                                                             </td>
                                                             <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    [(ngModel)]="item.fieldName" style="width: 300px;color: black;"
-                                                                    maxlength="100"
-                                                                    placeholder="Enter database name here"
-                                                                    onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                <mat-form-field hintLabel="">
+                                                                    <input class="form-control" type="text"
+                                                                        #fieldNameinput matInput
+                                                                        [(ngModel)]="item.fieldName"
+                                                                        style="width: 300px;color: black;"
+                                                                        maxlength="100" placeholder=""
+                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                    <mat-hint>{{fieldNameinput.value?.length || 0}}/100
+                                                                    </mat-hint>
+                                                                </mat-form-field>
                                                             </td>
                                                         </tr>
                                                         <tr mat-row>
@@ -1130,11 +1393,17 @@
                                                                 <label style="color: black;">:</label>
                                                             </td>
                                                             <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    [(ngModel)]="item.dataExportName"
-                                                                    style="width: 300px;color: black;" maxlength="100"
-                                                                    placeholder="Enter data export  name here"
-                                                                    onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                <mat-form-field hintLabel="">
+                                                                    <input class="form-control" type="text"
+                                                                        [(ngModel)]="item.dataExportName"
+                                                                        style="width: 300px;color: black;"
+                                                                        maxlength="100" matInput #dataExportNameinput
+                                                                        placeholder=""
+                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                    <mat-hint>{{dataExportNameinput.value?.length ||
+                                                                        0}}/100
+                                                                    </mat-hint>
+                                                                </mat-form-field>
                                                             </td>
                                                         </tr>
                                                         <tr mat-row>
@@ -1210,6 +1479,7 @@
                                                 </mat-tab>
                                                 <mat-tab label="Field Validation">
                                                     <br>
+
                                                     <table mat-table>
                                                         <tr mat-row>
                                                             <td mat-cell>
@@ -1247,6 +1517,39 @@
                                                         <td mat-cell>
                                                             <mat-checkbox class="example-margin"
                                                                 [(ngModel)]="item.fieldValidations[0].isRequired">
+                                                            </mat-checkbox>
+                                                        </td>
+                                                    </table>
+                                                </mat-tab>
+                                                <mat-tab label="Field Attachments">
+                                                    <br>
+                                                    <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Has Photos: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.hasPhoto">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Has Files: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.hasAttachment">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <td mat-cell>
+                                                            <label style="color: black;">Has Comments: </label>
+                                                        </td>
+                                                        <td mat-cell>
+                                                            <mat-checkbox class="example-margin"
+                                                                [(ngModel)]="item.hasComment">
                                                             </mat-checkbox>
                                                         </td>
                                                     </table>
@@ -1299,7 +1602,7 @@
                                                             </td>
                                                             <td mat-cell>
                                                                 <button class="btn btn-sm"
-                                                                    style="background-color: crimson;color: white;font-weight: 400;width: 150px;"
+                                                                     class="btn btn-md btn-primary"   
                                                                     (click)="addGroup(item,i)"
                                                                     [disabled]="(item.groupGUID!=='string')">Add
                                                                     Group</button>
@@ -1329,8 +1632,8 @@
                                         <!--#endregion -->
                                     </div>
 
-                                     <!--Question Group Type -->
-                                     <div *ngIf="item.fieldType.value=='group' && item.isActive===true">
+                                    <!--Question Group Type -->
+                                    <div *ngIf="item.fieldType.value=='group' && item.isActive===true">
                                         <div style="margin-right: 96%;">
                                             <mat-icon>{{item.fieldType.description}}</mat-icon>
                                         </div>
@@ -1372,7 +1675,7 @@
                                                             </td>
                                                             <td mat-cell>
                                                                 <button class="btn btn-sm"
-                                                                    style="background-color: crimson;color: white;font-weight: 400;width: 150px;"
+                                                                     class="btn btn-md btn-primary"   
                                                                     (click)="addQuestionGroup(item,i)"
                                                                     [disabled]="(item.groupGUID!=='string')">Add
                                                                     Group</button>
@@ -1401,7 +1704,6 @@
                                         </div>
                                         <!--#endregion -->
                                     </div>
-
 
                                     <!-- Page Title Type -->
                                     <div *ngIf="item.fieldType.value=='PageTitle' && item.isActive===true">
@@ -1478,13 +1780,47 @@
                                                             </td>
                                                             <td mat-cell>
                                                                 <button class="btn btn-sm"
-                                                                    style="background-color: crimson;color: white;font-weight: 400;width: 150px;"
+                                                                     class="btn btn-md btn-primary"   
                                                                     (click)="addSection(item,i)"
                                                                     [disabled]="(item.groupGUID!=='string')">Add
                                                                     Section</button>
                                                             </td>
                                                         </tr>
                                                     </table>
+                                                </mat-tab>
+                                                <mat-tab label="Field Attachments">
+                                                    <br>
+                                                    <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Has Photos: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.hasPhoto">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Has Files: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.hasAttachment">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <td mat-cell>
+                                                            <label style="color: black;">Has Comments: </label>
+                                                        </td>
+                                                        <td mat-cell>
+                                                            <mat-checkbox class="example-margin"
+                                                                [(ngModel)]="item.hasComment">
+                                                            </mat-checkbox>
+                                                        </td>
+                                                    </table>
+
                                                 </mat-tab>
                                             </mat-tab-group>
                                         </div>
@@ -1524,11 +1860,15 @@
                                                                 <label style="color: black;">:</label>
                                                             </td>
                                                             <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    [(ngModel)]="item.xmlElementName"
-                                                                    style="width: 300px;color: black;" maxlength="100"
-                                                                    placeholder="Enter friendly name here"
-                                                                    onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" />
+                                                                <mat-form-field hintLabel="">
+                                                                    <input class="form-control" type="text" #input
+                                                                        [(ngModel)]="item.xmlElementName" matInput
+                                                                        style="width: 300px;color: black;"
+                                                                        maxlength="100" placeholder=""
+                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" />
+                                                                    <mat-hint>{{input.value?.length || 0}}/100
+                                                                    </mat-hint>
+                                                                </mat-form-field>
                                                             </td>
                                                         </tr>
                                                         <tr mat-row>
@@ -1538,11 +1878,16 @@
                                                                 <label style="color: black;">:</label>
                                                             </td>
                                                             <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    [(ngModel)]="item.fieldName" style="width: 300px;color: black;"
-                                                                    maxlength="100"
-                                                                    placeholder="Enter database name here"
-                                                                    onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                <mat-form-field hintLabel="">
+                                                                    <input class="form-control" type="text"
+                                                                        #fieldNameinput matInput
+                                                                        [(ngModel)]="item.fieldName"
+                                                                        style="width: 300px;color: black;"
+                                                                        maxlength="100" placeholder=""
+                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                    <mat-hint>{{fieldNameinput.value?.length || 0}}/100
+                                                                    </mat-hint>
+                                                                </mat-form-field>
                                                             </td>
                                                         </tr>
                                                         <tr mat-row>
@@ -1552,11 +1897,17 @@
                                                                 <label style="color: black;">:</label>
                                                             </td>
                                                             <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    [(ngModel)]="item.dataExportName"
-                                                                    style="width: 300px;color: black;" maxlength="100"
-                                                                    placeholder="Enter data export  name here"
-                                                                    onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                <mat-form-field hintLabel="">
+                                                                    <input class="form-control" type="text"
+                                                                        [(ngModel)]="item.dataExportName"
+                                                                        style="width: 300px;color: black;"
+                                                                        maxlength="100" matInput #dataExportNameinput
+                                                                        placeholder=""
+                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                    <mat-hint>{{dataExportNameinput.value?.length ||
+                                                                        0}}/100
+                                                                    </mat-hint>
+                                                                </mat-form-field>
                                                             </td>
                                                         </tr>
                                                         <tr mat-row>
@@ -1583,10 +1934,9 @@
                                         <!--#endregion -->
                                     </div>
 
-                                    <!-- Added attachment here for now -->
-                                    <!-- Text/Number Type -->
+                                    <!-- Text-->
                                     <div
-                                        *ngIf="(item.fieldType.value=='plaintext' || item.fieldType.value=='information' || item.fieldType.value=='number' || item.fieldType.value=='decimal' || item.fieldType.value=='EmailAddress' || item.fieldType.value=='Alphanumeric' || item.fieldType.value=='plainalpha') || item.fieldType.value==='attachment' && item.isActive===true">
+                                        *ngIf="(item.fieldType.value=='plaintext' || item.fieldType.value=='EmailAddress' || item.fieldType.value=='Alphanumeric' || item.fieldType.value=='plainalpha')&& item.isActive===true">
                                         <div style="margin-right: 96%;">
                                             <mat-icon>{{item.fieldType.description}}</mat-icon>
                                         </div>
@@ -1618,11 +1968,15 @@
                                                                 <label style="color: black;">:</label>
                                                             </td>
                                                             <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    [(ngModel)]="item.xmlElementName"
-                                                                    style="width: 300px;color: black;" maxlength="100"
-                                                                    placeholder="Enter friendly name here"
-                                                                    onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" />
+                                                                <mat-form-field hintLabel="">
+                                                                    <input class="form-control" type="text" #input
+                                                                        [(ngModel)]="item.xmlElementName" matInput
+                                                                        style="width: 300px;color: black;"
+                                                                        maxlength="100" placeholder=""
+                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" />
+                                                                    <mat-hint>{{input.value?.length || 0}}/100
+                                                                    </mat-hint>
+                                                                </mat-form-field>
                                                             </td>
                                                         </tr>
                                                         <tr mat-row>
@@ -1632,11 +1986,16 @@
                                                                 <label style="color: black;">:</label>
                                                             </td>
                                                             <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    [(ngModel)]="item.fieldName" style="width: 300px;color: black;"
-                                                                    maxlength="100"
-                                                                    placeholder="Enter database name here"
-                                                                    onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                <mat-form-field hintLabel="">
+                                                                    <input class="form-control" type="text"
+                                                                        #fieldNameinput matInput
+                                                                        [(ngModel)]="item.fieldName"
+                                                                        style="width: 300px;color: black;"
+                                                                        maxlength="100" placeholder=""
+                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                    <mat-hint>{{fieldNameinput.value?.length || 0}}/100
+                                                                    </mat-hint>
+                                                                </mat-form-field>
                                                             </td>
                                                         </tr>
                                                         <tr mat-row>
@@ -1646,11 +2005,17 @@
                                                                 <label style="color: black;">:</label>
                                                             </td>
                                                             <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    [(ngModel)]="item.dataExportName"
-                                                                    style="width: 300px;color: black;" maxlength="100"
-                                                                    placeholder="Enter data export  name here"
-                                                                    onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                <mat-form-field hintLabel="">
+                                                                    <input class="form-control" type="text"
+                                                                        [(ngModel)]="item.dataExportName"
+                                                                        style="width: 300px;color: black;"
+                                                                        maxlength="100" matInput #dataExportNameinput
+                                                                        placeholder=""
+                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                    <mat-hint>{{dataExportNameinput.value?.length ||
+                                                                        0}}/100
+                                                                    </mat-hint>
+                                                                </mat-form-field>
                                                             </td>
                                                         </tr>
                                                         <tr mat-row>
@@ -1763,7 +2128,431 @@
                                                                 </mat-checkbox>
                                                             </td>
                                                         </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+
+                                                            </td>
+                                                        </tr>
                                                     </table>
+                                                    <!-- <h3><u>Advanced Validation</u></h3>
+                                                    <h5>The response will be valid when the field is</h5>
+                                                    <mat-form-field appearance="outline">
+                                                        <mat-select placeholder="Select Condition" #validCondition
+                                                            [(ngModel)]="item.validRules.condition">
+                                                            <mat-option value="==">Equal to</mat-option>
+                                                            <mat-option value="!=">Not Equal to</mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                    <mat-form-field appearance="outline">
+                                                        <input type="text" matInput #ValidData placeholder="Enter value"
+                                                            [(ngModel)]="item.validRules.value">
+                                                    </mat-form-field>
+                                                    <mat-form-field appearance="outline">
+                                                        <label>Error message(optional):</label>
+                                                        <input type="text" matInput #ErrorMsg placeholder="Enter Error message"
+                                                            [(ngModel)]="item.validRules.errorMessage">
+                                                    </mat-form-field>
+                                                    <button class="btn btn-sm"
+                                                    class="btn btn-md btn-primary"  
+                                                    (click)="saveValidationRule(validCondition,ValidData,ErrorMsg,item)">Save
+                                                    Rule</button>
+                                                <button class="btn btn-sm"
+                                                    [disabled]="item.validRules.value==='' || item.validRules.condition===''"
+                                                     class="btn btn-md btn-primary"   
+                                                    (click)="deleteValidationRule(validCondition,ValidData,ErrorMsg,item)">Delete
+                                                    Rule</button> -->
+                                                </mat-tab>
+                                                <!-- <mat-tab>
+                                                    <ng-template mat-tab-label>
+                                                        <span>Skip Logic</span>
+                                                    </ng-template>
+                                                    <div style="height: 10px;"></div>
+                                                    <h5>This field will be</h5>
+                                                    <mat-form-field appearance="outline">
+                                                        <mat-select placeholder="Select Option" #Option
+                                                            [(ngModel)]="item.skipRules.showSkip">
+                                                            <mat-option value="skipped">Skipped if</mat-option>
+                                                            <mat-option value="shown">Shown if</mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                    <mat-form-field appearance="outline">
+                                                        <mat-select placeholder="Select Field" #Field
+                                                            [(ngModel)]="item.skipRules.field">
+                                                            <mat-option *ngFor="let gs of fieldList"
+                                                                [value]="gs.fieldName">
+                                                                {{gs.xmlElementName}}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                    <mat-form-field appearance="outline">
+                                                        <mat-select placeholder="Select Condition" #Condition
+                                                            [(ngModel)]="item.skipRules.condition">
+                                                            <mat-option value="==">Equal to</mat-option>
+                                                            <mat-option value="!=">Not Equal to</mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                    <mat-form-field appearance="outline">
+                                                        <input type="text" matInput #Data placeholder="Enter value"
+                                                            [(ngModel)]="item.skipRules.value">
+                                                    </mat-form-field>
+                                                    <button class="btn btn-sm"
+                                                        class="btn btn-md btn-primary"  
+                                                        (click)="saveSkipRule(Option,Field,Condition,Data,item)">Save
+                                                        Rule</button>
+                                                    <button class="btn btn-sm"
+                                                        [disabled]="item.skipRules.showSkip==='' || item.skipRules.field===''  || item.skipRules.condition===''  || item.skipRules.value==='' "
+                                                         class="btn btn-md btn-primary"   
+                                                        (click)="deleteSkipRule(Option,Field,Condition,Data,item)">Delete
+                                                        Rule</button>
+                                                </mat-tab> -->
+                                                <mat-tab label="Field Attachments">
+                                                    <br>
+                                                    <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Has Photos: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.hasPhoto">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Has Files: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.hasAttachment">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <td mat-cell>
+                                                            <label style="color: black;">Has Comments: </label>
+                                                        </td>
+                                                        <td mat-cell>
+                                                            <mat-checkbox class="example-margin"
+                                                                [(ngModel)]="item.hasComment">
+                                                            </mat-checkbox>
+                                                        </td>
+                                                    </table>
+
+                                                </mat-tab>
+                                            </mat-tab-group>
+                                        </div>
+                                        <!--#endregion -->
+                                    </div>
+
+                                    <!-- Number Type -->
+                                    <div
+                                        *ngIf="(item.fieldType.value=='number' || item.fieldType.value=='decimal')&& item.isActive===true">
+                                        <div style="margin-right: 96%;">
+                                            <mat-icon>{{item.fieldType.description}}</mat-icon>
+                                        </div>
+                                        <label style="color: black;">{{i+1}} {{item.questionName}}</label>
+                                        <!--#region attributes tab  -->
+                                        <div *ngIf="item.toggle" style="text-align: left;">
+                                            <hr>
+                                            <mat-tab-group mat-align-tabs="center" style="color: black;">
+                                                <mat-tab label="Field Attributes">
+                                                    <br>
+                                                    <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Question Name</label>
+                                                                <label style="color: red;">*</label>
+                                                                <label style="color: black;">:</label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    [(ngModel)]="item.questionName"
+                                                                    style="width: 300px;color: black;"
+                                                                    placeholder="Enter question name here" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Friendly Name</label>
+                                                                <label style="color: red;">*</label>
+                                                                <label style="color: black;">:</label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-form-field hintLabel="">
+                                                                    <input class="form-control" type="text" #input
+                                                                        [(ngModel)]="item.xmlElementName" matInput
+                                                                        style="width: 300px;color: black;"
+                                                                        maxlength="100" placeholder=""
+                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" />
+                                                                    <mat-hint>{{input.value?.length || 0}}/100
+                                                                    </mat-hint>
+                                                                </mat-form-field>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Database Name</label>
+                                                                <label style="color: red;">*</label>
+                                                                <label style="color: black;">:</label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-form-field hintLabel="">
+                                                                    <input class="form-control" type="text"
+                                                                        #fieldNameinput matInput
+                                                                        [(ngModel)]="item.fieldName"
+                                                                        style="width: 300px;color: black;"
+                                                                        maxlength="100" placeholder=""
+                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                    <mat-hint>{{fieldNameinput.value?.length || 0}}/100
+                                                                    </mat-hint>
+                                                                </mat-form-field>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Data Export Name</label>
+                                                                <label style="color: red;">*</label>
+                                                                <label style="color: black;">:</label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-form-field hintLabel="">
+                                                                    <input class="form-control" type="text"
+                                                                        [(ngModel)]="item.dataExportName"
+                                                                        style="width: 300px;color: black;"
+                                                                        maxlength="100" matInput #dataExportNameinput
+                                                                        placeholder=""
+                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                    <mat-hint>{{dataExportNameinput.value?.length ||
+                                                                        0}}/100
+                                                                    </mat-hint>
+                                                                </mat-form-field>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Tooltip: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    style="width:300px;"
+                                                                    placeholder="Enter tooltip here"
+                                                                    [(ngModel)]="item.toolTip" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Group/Section: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-form-field appearance="outline">
+                                                                    <mat-label>Select a Group/Section </mat-label>
+
+                                                                    <mat-select [(ngModel)]="item.parentFieldName">
+
+                                                                        <mat-option *ngFor="let gs of groupSectionList"
+                                                                            [value]="gs.groupGUID">
+                                                                            {{gs.name}}
+                                                                        </mat-option>
+                                                                    </mat-select>
+                                                                </mat-form-field>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </mat-tab>
+                                                <mat-tab label="Field Style">
+                                                    <br>
+                                                    <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Width: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    style="width:300px;" placeholder="Enter width here"
+                                                                    [(ngModel)]="item.fieldStyles[0].width" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Height: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input class="form-control" type="text"
+                                                                    style="width:300px;" placeholder="Enter width here"
+                                                                    [(ngModel)]="item.fieldStyles[0].height" />
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </mat-tab>
+                                                <mat-tab label="Field Validation">
+                                                    <br>
+
+                                                    <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Maximum Length: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <input type="number" min="1" class="form-control"
+                                                                    style="width:300px;"
+                                                                    placeholder="Enter max length here"
+                                                                    [(ngModel)]="item.fieldValidations[0].dataLength" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Displayable:</label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.isDisplayable">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Editable: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.fieldValidations[0].isEditable">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Hidden: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.fieldValidations[0].isHidden">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Required: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.fieldValidations[0].isRequired">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <!-- <h3><u>Advanced Validation</u></h3>
+                                                    <h5>The response will be valid when the field is</h5>
+                                                    <mat-form-field appearance="outline">
+                                                        <mat-select placeholder="Select Condition" #validCondition
+                                                            [(ngModel)]="item.validRules.condition">
+                                                            <mat-option value="==">Equal to</mat-option>
+                                                            <mat-option value="!=">Not Equal to</mat-option>
+                                                            <mat-option value=">">Greater than</mat-option>
+                                                            <mat-option value="<">Less than</mat-option>
+                                                            <mat-option value=">=">Greater than or Equal to</mat-option>
+                                                            <mat-option value="<=">Less than or Equal to</mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                    <mat-form-field appearance="outline">
+                                                        <input type="text" matInput #ValidData placeholder="Enter value"
+                                                            [(ngModel)]="item.validRules.value">
+                                                    </mat-form-field>
+                                                    <mat-form-field appearance="outline">
+                                                        <label>Error message(optional):</label>
+                                                        <input type="text" matInput #ErrorMsg placeholder="Enter Error message"
+                                                            [(ngModel)]="item.validRules.errorMessage">
+                                                    </mat-form-field>
+                                                    <button class="btn btn-sm"
+                                                        class="btn btn-md btn-primary"  
+                                                        (click)="saveValidationRule(validCondition,ValidData,ErrorMsg,item)">Save
+                                                        Rule</button>
+                                                    <button class="btn btn-sm"
+                                                        [disabled]="item.validRules.value==='' || item.validRules.condition===''"
+                                                         class="btn btn-md btn-primary"   
+                                                        (click)="deleteValidationRule(validCondition,ValidData,ErrorMsg,item)">Delete
+                                                        Rule</button> -->
+                                                </mat-tab>
+                                                <!-- <mat-tab>
+                                                    <ng-template mat-tab-label>
+                                                        <span>Skip Logic</span>
+                                                    </ng-template>
+                                                    <div style="height: 10px;"></div>
+                                                    <h5>This field will be</h5>
+                                                    <mat-form-field appearance="outline">
+                                                        <mat-select placeholder="Select Option" #Option
+                                                            [(ngModel)]="item.skipRules.showSkip">
+                                                            <mat-option value="skipped">Skipped if</mat-option>
+                                                            <mat-option value="shown">Shown if</mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                    <mat-form-field appearance="outline">
+                                                        <mat-select placeholder="Select Field" #Field
+                                                            [(ngModel)]="item.skipRules.field">
+                                                            <mat-option *ngFor="let gs of fieldList"
+                                                                [value]="gs.fieldName">
+                                                                {{gs.xmlElementName}}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                    <mat-form-field appearance="outline">
+                                                        <mat-select placeholder="Select Condition" #Condition
+                                                            [(ngModel)]="item.skipRules.condition">
+                                                            <mat-option value="==">Equal to</mat-option>
+                                                            <mat-option value="!=">Not Equal to</mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                    <mat-form-field appearance="outline">
+                                                        <input type="text" matInput #Data placeholder="Enter value"
+                                                            [(ngModel)]="item.skipRules.value">
+                                                    </mat-form-field>
+                                                    <button class="btn btn-sm"
+                                                        class="btn btn-md btn-primary"  
+                                                        (click)="saveSkipRule(Option,Field,Condition,Data,item)">Save
+                                                        Rule</button>
+                                                    <button class="btn btn-sm"
+                                                        [disabled]="item.skipRules.showSkip==='' || item.skipRules.field===''  || item.skipRules.condition===''  || item.skipRules.value==='' "
+                                                         class="btn btn-md btn-primary"   
+                                                        (click)="deleteSkipRule(Option,Field,Condition,Data,item)">Delete
+                                                        Rule</button>
+                                                </mat-tab> -->
+                                                <mat-tab label="Field Attachments">
+                                                    <br>
+                                                    <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Has Photos: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.hasPhoto">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Has Files: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.hasAttachment">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <td mat-cell>
+                                                            <label style="color: black;">Has Comments: </label>
+                                                        </td>
+                                                        <td mat-cell>
+                                                            <mat-checkbox class="example-margin"
+                                                                [(ngModel)]="item.hasComment">
+                                                            </mat-checkbox>
+                                                        </td>
+                                                    </table>
+
                                                 </mat-tab>
                                             </mat-tab-group>
                                         </div>
@@ -1804,11 +2593,15 @@
                                                                 <label style="color: black;">:</label>
                                                             </td>
                                                             <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    [(ngModel)]="item.xmlElementName"
-                                                                    style="width: 300px;color: black;" maxlength="100"
-                                                                    placeholder="Enter friendly name here"
-                                                                    onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" />
+                                                                <mat-form-field hintLabel="">
+                                                                    <input class="form-control" type="text" #input
+                                                                        [(ngModel)]="item.xmlElementName" matInput
+                                                                        style="width: 300px;color: black;"
+                                                                        maxlength="100" placeholder=""
+                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)" />
+                                                                    <mat-hint>{{input.value?.length || 0}}/100
+                                                                    </mat-hint>
+                                                                </mat-form-field>
                                                             </td>
                                                         </tr>
                                                         <tr mat-row>
@@ -1818,11 +2611,16 @@
                                                                 <label style="color: black;">:</label>
                                                             </td>
                                                             <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    [(ngModel)]="item.fieldName" style="width: 300px;color: black;"
-                                                                    maxlength="100"
-                                                                    placeholder="Enter database name here"
-                                                                    onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                <mat-form-field hintLabel="">
+                                                                    <input class="form-control" type="text"
+                                                                        #fieldNameinput matInput
+                                                                        [(ngModel)]="item.fieldName"
+                                                                        style="width: 300px;color: black;"
+                                                                        maxlength="100" placeholder=""
+                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                    <mat-hint>{{fieldNameinput.value?.length || 0}}/100
+                                                                    </mat-hint>
+                                                                </mat-form-field>
                                                             </td>
                                                         </tr>
                                                         <tr mat-row>
@@ -1832,11 +2630,17 @@
                                                                 <label style="color: black;">:</label>
                                                             </td>
                                                             <td mat-cell>
-                                                                <input class="form-control" type="text"
-                                                                    [(ngModel)]="item.dataExportName"
-                                                                    style="width: 300px;color: black;" maxlength="100"
-                                                                    placeholder="Enter data export  name here"
-                                                                    onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                <mat-form-field hintLabel="">
+                                                                    <input class="form-control" type="text"
+                                                                        [(ngModel)]="item.dataExportName"
+                                                                        style="width: 300px;color: black;"
+                                                                        maxlength="100" matInput #dataExportNameinput
+                                                                        placeholder=""
+                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95)" />
+                                                                    <mat-hint>{{dataExportNameinput.value?.length ||
+                                                                        0}}/100
+                                                                    </mat-hint>
+                                                                </mat-form-field>
                                                             </td>
                                                         </tr>
                                                         <tr mat-row>
@@ -1858,6 +2662,40 @@
                                                             </td>
                                                         </tr>
                                                     </table>
+                                                </mat-tab>
+                                                <mat-tab label="Field Attachments">
+                                                    <br>
+                                                    <table mat-table>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Has Photos: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.hasPhoto">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <tr mat-row>
+                                                            <td mat-cell>
+                                                                <label style="color: black;">Has Files: </label>
+                                                            </td>
+                                                            <td mat-cell>
+                                                                <mat-checkbox class="example-margin"
+                                                                    [(ngModel)]="item.hasAttachment">
+                                                                </mat-checkbox>
+                                                            </td>
+                                                        </tr>
+                                                        <td mat-cell>
+                                                            <label style="color: black;">Has Comments: </label>
+                                                        </td>
+                                                        <td mat-cell>
+                                                            <mat-checkbox class="example-margin"
+                                                                [(ngModel)]="item.hasComment">
+                                                            </mat-checkbox>
+                                                        </td>
+                                                    </table>
+
                                                 </mat-tab>
                                             </mat-tab-group>
                                         </div>
@@ -1889,7 +2727,7 @@
                 <div style="width: 200px;position: fixed;margin-left: 65%;">
                     <h2>Pages</h2>
                     <button class="btn btn-sm"
-                        style="background-color: crimson;color: white;font-weight: 400;width: 100px;"
+                        class="btn btn-md btn-primary"  
                         (click)="addPage()">Add Page</button>
                     <div style="height: 10px;"></div>
                     <div class="example-list" style="text-align:center">

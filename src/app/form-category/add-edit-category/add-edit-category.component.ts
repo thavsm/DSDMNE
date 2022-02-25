@@ -78,9 +78,7 @@ export class AddEditCategoryComponent implements OnInit {
 
   updateFormCategory() {
     if (this.formCategoryAdd.name != "") {
-      //updating form
       this.submitted = true;
-      // stop here if form is invalid
       var val = {
       formCategoryID : this.formCategoryAdd.formCategoryID,
       name : this.formCategoryAdd.name,
@@ -94,7 +92,7 @@ export class AddEditCategoryComponent implements OnInit {
       this.service.updateformCategoryDetails(this.formCategoryAdd.formCategoryID, val).subscribe(res => {
         this.dialogRef.close();
         this.spinner.hide();
-        this.showNotification('top','center','Form Category updated Succesfully!','Success','success');
+        this.showNotification('top','center','Form Category updated Successfully!','Success','success');
       });
     }
     else {

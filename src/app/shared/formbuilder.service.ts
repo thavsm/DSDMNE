@@ -9,8 +9,8 @@ import { environment } from 'src/environments/environment';
 })
 export class FormbuilderService {
 
-   readonly APIUrl='https://localhost:44305/1/';
-   //readonly APIUrl='https://app.terra.group/DSDFormWeb/1/';
+   //readonly APIUrl='https://localhost:44305/1/';
+   readonly APIUrl='https://app.terra.group/DSDFormWeb/1/';
    //readonly APIUrl = environment.API_FormURL;
 
   constructor(private http:HttpClient) { }
@@ -44,7 +44,6 @@ export class FormbuilderService {
   getFormGroupsPerPage(formID:any,pageGuID:any):Observable<any[]>{
     return this.http.get<any>(this.APIUrl+'forms/'+formID+'/pages/'+pageGuID+'/groups');
   }
-
 
   addFormPage(data:any){
     return this.http.post(this.APIUrl+'forms/'+data.formID+'/pages',data);
@@ -200,6 +199,50 @@ export class FormbuilderService {
 
   PublishForm(formID:any){
     return this.http.post(this.APIUrl+'Forms/forms/'+formID+'/PublishForm','',{responseType:'text'});
+  }
+
+  GetDisplayables(formID:any): Observable<any[]> {
+    return this.http.get<any>(this.APIUrl + formID +'/GetDisplayables')
+  }
+
+  getPageStatus(formCaptureID:any,pageGUID:any){
+    return this.http.get(this.APIUrl + formCaptureID +'/'+pageGUID+'/PageStatus',{responseType: 'text'})
+  }
+
+  modifyPageStatus(formCaptureID:any,pageGUID:any,data:any){
+    return this.http.post(this.APIUrl + formCaptureID +'/'+pageGUID+'/PageStatus',data,{responseType: 'text'});
+  }
+
+  insertSkipLogic(data:any){
+    return this.http.post(this.APIUrl + 'skipLogic',data,{responseType: 'text'});
+  }
+
+  GetSkipLogicRules(PageGUID:any,xmlElementName:any):Observable<any[]>{
+    return this.http.get<any>(this.APIUrl+PageGUID+'/'+xmlElementName+'/skipLogic');
+  }
+
+  DeleteSkipRule(PageGUID:any,xmlElementName:any){
+    return this.http.delete(this.APIUrl+PageGUID+'/'+xmlElementName+'/skipLogic',{responseType: 'text'});
+  }
+
+  insertAdvancedValidation(data:any){
+    return this.http.post(this.APIUrl + 'AdvancedValidation',data,{responseType: 'text'});
+  }
+
+  GetAdvancedValidation(PageGUID:any,xmlElementName:any):Observable<any[]>{
+    return this.http.get<any>(this.APIUrl+PageGUID+'/'+xmlElementName+'/AdvancedValidation');
+  }
+
+  DeleteAdvancedValidation(PageGUID:any,xmlElementName:any){
+    return this.http.delete(this.APIUrl+PageGUID+'/'+xmlElementName+'/AdvancedValidation',{responseType: 'text'});
+  }
+
+  getFormAttachCount(fieldName:any,formCaptureID:any){
+    return this.http.get(this.APIUrl + fieldName + '/' + formCaptureID +'/AttachCount',{responseType: 'text'})
+  }
+
+  getFormPhotoCount(fieldName:any,formCaptureID:any){
+    return this.http.get(this.APIUrl + fieldName +'/' + formCaptureID +'/PhotoCount',{responseType: 'text'})
   }
 
 //#endregion

@@ -235,7 +235,7 @@ export class SidebarComponent implements OnInit {
 
     logout() {
         localStorage.removeItem('token');
-        this.router.navigate(['/login']);
+        this.router.navigate(['/home']);
         let formData= JSON.parse(localStorage.getItem('formDesignInfo') || '{}');
         this.formService.unlockForm(formData.formID,formData);
     }

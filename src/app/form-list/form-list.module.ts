@@ -14,6 +14,11 @@ import { MatInputModule } from '@angular/material/input';
 import {NgxSpinnerModule} from 'ngx-spinner';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { GridModule } from "@progress/kendo-angular-grid";
+import { ButtonsModule } from "@progress/kendo-angular-buttons";
+import { InputsModule } from "@progress/kendo-angular-inputs";
+import {PDFModule,ExcelModule,} from "@progress/kendo-angular-grid";
 
 @NgModule({
   declarations: [
@@ -22,6 +27,12 @@ import { MatSelectModule } from '@angular/material/select';
   ],
   imports: [
     CommonModule,
+    GridModule,
+    ButtonsModule,
+    InputsModule,
+    PDFModule,
+    ExcelModule,
+    MatTooltipModule,
     RouterModule.forChild(FormListRoutes),
     FormsModule,
     MatDialogModule,

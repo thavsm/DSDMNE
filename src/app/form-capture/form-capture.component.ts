@@ -56,7 +56,7 @@ export class FormCaptureComponent implements OnInit {
           timeSent: "string",
           displayableOne: "",
           displayableTwo: "",
-          geography: "North West",// to change to geog once completed 
+          geography: this.userDetail.formData.location,
           stage: "string",
           formTemplateName: "string"
       }    
@@ -120,5 +120,4 @@ export class FormCaptureComponent implements OnInit {
         '</div>'
     });
 }
-
 }

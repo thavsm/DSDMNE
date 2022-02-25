@@ -1,10 +1,11 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup,FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormbuilderService } from 'src/app/shared/formbuilder.service';
 import {NgxSpinner, NgxSpinnerService} from 'ngx-spinner';
 import Swal from 'sweetalert2';
 import { merge } from 'jquery';
+import { GlobalConstants } from 'src/app/shared/global-constants';
 declare var $: any;
 
 @Component({
@@ -23,9 +24,9 @@ export class FormAddComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) data,
     private service: FormbuilderService, public formBuilder: FormBuilder,private spinner: NgxSpinnerService
   ) {
+
     this.formAdd = data;
   }
-
 
   formID: number = 0;
   formTypeID: string = "";
@@ -58,8 +59,12 @@ export class FormAddComponent implements OnInit {
     this.getformCategories();
   }
 
+  // group = new FormGroup({
+  //   select: new FormControl(null, Validators.required)
+  // });
+
   addForm() {
-    if(this.formAdd.displayName!=""){
+    if(this.formAdd.displayName!="" && this.formAdd.formCategoryID!==0){
     //adding form
     this.submitted = true;
     var val = {
@@ -110,6 +115,9 @@ export class FormAddComponent implements OnInit {
         "isActive": true,
         "dataExportName": "string",
         "xmlElementName": "string",
+        "hasPhoto": false,
+        "hasAttachment": false,
+        "hasComment": false,
         "fieldType": {
             "fieldTypeID": 25,
             "displayName": "Page Title",
@@ -145,7 +153,7 @@ export class FormAddComponent implements OnInit {
                 "fieldStyleID": 0,
                 "width": 760,
                 "height": 70,
-                "cssClass": "linear-gradient(147deg, #eff3f7 72%, #028ea7 28%)"
+                "cssClass": GlobalConstants.pageTitleStyle
             }
         ],
         "fieldValidations": [
@@ -165,6 +173,7 @@ export class FormAddComponent implements OnInit {
       }); 
       })
     });
+    
     this.formAdd.formID = 0;
     this.formAdd.formTypeI = 0;
     this.formAdd.formCategoryID = 0;
@@ -181,7 +190,7 @@ export class FormAddComponent implements OnInit {
     this.formAdd.lastModifiedByUserID = 0;
     }
     else{
-      this.showNotification('top','center','Please add a form Design name before saving!','','danger');
+      this.showNotification('top','center','Please fill in name and select a category field!','','danger');
     }
   }
 
@@ -252,3 +261,5 @@ export class FormAddComponent implements OnInit {
     });
 }
 }
+
+

@@ -24,19 +24,19 @@ export class FormListComponent implements OnInit {
   formAdd: any;
   userDetail:any;
   public displayedColumns = ['displayName', 'formDescription', 'formCategory', 'formDetails', 'update', 'delete'];
-  public formList = new MatTableDataSource<any>();
+  public formList :any[];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngAfterViewInit() {
-    this.formList.paginator = this.paginator;
+    //this.formList.paginator = this.paginator;
   }
 
   ngOnInit(): void {
     this.refreshFormsList();
-    this.formList.filterPredicate = function (data, filter: string): boolean {
-      return data.formName.toLowerCase().includes(filter) || data.formDescription.toLowerCase().includes(filter) || data.formCategory.toString().includes(filter) === filter;
-    };
+    // this.formList.filterPredicate = function (data, filter: string): boolean {
+    //   return data.formName.toLowerCase().includes(filter) || data.formDescription.toLowerCase().includes(filter) || data.formCategory.toString().includes(filter) === filter;
+    // };
     this.userService.getUserProfile().subscribe(
       res => {
         this.userDetail = res;
@@ -95,7 +95,8 @@ export class FormListComponent implements OnInit {
           isDeleted: item.isDeleted,
           dateLocked: item.dateLocked,
           dateLastModified: item.dateLastModified,
-          lastModifiedByUserID: item.lastModifiedByUserID
+          lastModifiedByUserID: item.lastModifiedByUserID,
+          publishStatus:item.publishStatus
         };
         localStorage.setItem('formDesignInfo', JSON.stringify(myObj));
         this.userService.setMenuShow(false);
@@ -134,7 +135,8 @@ export class FormListComponent implements OnInit {
       isDeleted: "",
       dateLocked: "",
       dateLastModified: "",
-      lastModifiedByUserID: 0
+      lastModifiedByUserID: 0,
+      publishStatus:0
     }
     const dialogRef = this.dialog.open(FormAddComponent, {
       width: '75%',
@@ -151,7 +153,7 @@ export class FormListComponent implements OnInit {
   refreshFormsList() {
     this.spinner.show();
     this.service.getDynamicFormList().subscribe(data => {
-      this.formList.data = data;
+      this.formList = data;
       this.spinner.hide();
     });
   }
@@ -160,7 +162,7 @@ export class FormListComponent implements OnInit {
     let filterValue: string = data.target.value;
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    this.formList.filter = filterValue;
+   // this.formList.filter = filterValue;
   }
 
   showNotification(from: any, align: any, message: any, title: any, type: string) {
