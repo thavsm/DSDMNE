@@ -36,10 +36,11 @@ export class NodeAddComponent implements OnInit {
 
   nodeID: number = 0;
   nodeName: string = "";
-  nodeParentD: number = 0;
+  nodeParentD: number = null;
   levelID: number = 0;
   status: string = "";
   nodeDescription: string = "";
+  SelectednodeParentD: number = null;
  
 
   ngOnInit(): void {
@@ -64,10 +65,18 @@ export class NodeAddComponent implements OnInit {
     if (this.NodeAdd.nodeName != "") {
       //adding form
       this.submitted = true;   
+
+      if(this.NodeAdd.nodeID == 0){
+        this.SelectednodeParentD = null;
+      }else{
+        this.SelectednodeParentD = this.NodeAdd.nodeID;
+      }
+
+      
       var val = {
         "nodeID": 0,
         "nodeName": this.NodeAdd.nodeName,
-        "nodeParentD": this.NodeAdd.nodeID,
+        "nodeParentD": this.SelectednodeParentD,
         "levelID": this.NodeAdd.levelID,
         "nodeDescription": this.NodeAdd.nodeDescription,
         "status": "1"
@@ -82,7 +91,7 @@ export class NodeAddComponent implements OnInit {
 
       this.NodeAdd.nodeID = 0;
       this.NodeAdd.nodeName = " ";
-      this.NodeAdd.nodeParentD = " ";
+      this.NodeAdd.nodeParentD = null;
       this.NodeAdd.levelID = " ";
       this.NodeAdd.nodeDescription = " ";
       this.status = "1";

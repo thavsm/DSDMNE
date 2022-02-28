@@ -26,7 +26,7 @@
               <div kendoTooltip filter="span.k-in" [tooltipTemplate]="template">
             
                 <kendo-treeview [nodes]="treenodes | async" textField="nodeName" kendoTreeViewFlatDataBinding [filterable]="true"
-                  kendoTreeViewExpandable idField="nodeID" (selectionChange)="openDialogEdit($event)" parentIdField="nodeParentD">
+                  kendoTreeViewExpandable idField="nodeID" (selectionChange)="openDialogEdit($event)" parentIdField="nodeParentD" >
                 </kendo-treeview>
               </div>
             

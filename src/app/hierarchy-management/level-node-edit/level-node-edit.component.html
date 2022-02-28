@@ -25,6 +25,9 @@
             <div class="form-group">
                 <button mat-button cdkFocusInitial  (click)="editLevel()"
                 style="background-color: crimson;color: white;font-weight: 400;">Edit Level</button>
+                &nbsp;
+                <button mat-button cdkFocusInitial  (click)="deleteLevel()"
+                style="background-color: crimson;color: white;font-weight: 400;">Delete Level</button>
             </div>
             <h1 mat-dialog-title>Node Field Attributes</h1> 
             <div class="form-group">
@@ -49,9 +52,11 @@
                                 <td><button type="button" *ngIf="pd.friendlyname != 'Name' && pd.description != 'Description'" class="btn btn-secondary" (click)="clickEdit(pd)"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
                                 <td><button type="button" *ngIf="pd.friendlyname != 'Name' && pd.description != 'Description'" class="btn btn-danger" (click)="clickDelete(pd)"><i class="fa fa-trash"  aria-hidden="true"></i></button></td>         
                             </tr>
-                            <pagination-controls (pageChange)="p = $event"></pagination-controls> 
+                            
                         </tbody>                        
                     </table>
+
+                    <pagination-controls (pageChange)="p = $event"></pagination-controls> 
                 </div>
             </div>
 
@@ -234,6 +239,9 @@
                     &nbsp; 
                 <button mat-button [mat-dialog-close]=""
                   style="background-color: crimson;color: white;font-weight: 400;">Cancel</button>
+                  &nbsp;
+                  <button mat-button cdkFocusInitial  (click)="deleteNode()"
+                style="background-color: crimson;color: white;font-weight: 400;">Delete Node</button>
             </div>
         <ngx-spinner bdColor="rgba(	237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
               <p style="font-size: 20px; color: black">Processing...</p>

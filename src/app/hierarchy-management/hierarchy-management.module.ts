@@ -24,6 +24,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 import { TargetAddComponent } from './target-add/target-add.component';
 import { ExternaldataAddComponent } from './externaldata-add/externaldata-add.component'
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
   
@@ -39,6 +40,7 @@ import { ExternaldataAddComponent } from './externaldata-add/externaldata-add.co
     MatIconModule,
     MatTableModule,
     MatFormFieldModule,
+    MatRadioModule,
     MatInputModule,
     MatPaginatorModule,
     MatSelectModule,

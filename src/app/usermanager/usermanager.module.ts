@@ -8,7 +8,7 @@ import { RoleComponent } from './role/role.component';
 import { AppusersComponent } from './appusers/appusers.component';
 import { FormrolesComponent } from './formroles/formroles.component';
 import { AddformrolesComponent } from './addformroles/addformroles.component';
-
+import { HierarchyManagementComponent } from '../hierarchy-management/hierarchy-management.component';
 
 @NgModule({
     imports: [
