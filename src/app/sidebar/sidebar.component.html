@@ -97,7 +97,8 @@
                 </li>
               </ul>
             </div>
-            <ul class="nav">
+
+            <ul class="nav" *ngIf="this.showMenu" >
                 <li routerLinkActive="active" *ngFor="let menuitem of menuItems" class="nav-item">
                     <!--If is a single link-->
                     <a [routerLink]="[menuitem.path]" *ngIf="menuitem.type === 'link'" class="nav-link">
@@ -127,7 +128,6 @@
               <li class="nav-item px-3">
                 <button class="btn btn-primary btn-block" (click)="logout()">Log Out</button>
               </li>
-            </ul>
-            
+            </ul>          
 
         </div>

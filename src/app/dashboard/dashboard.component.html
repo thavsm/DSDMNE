@@ -27,10 +27,10 @@
                                 <tr *ngFor="let obj of data1;let i = index">
                                   <td>{{ i+1 }}</td>
                                   <td>{{ obj['actionDescription'] }}</td>
-                                  <td><a href="./workflow?PID={{ obj['processID'] }}">{{ obj['processName'] }}</a></td>
+                                  <td><a [routerLink]="['/workflow']" [queryParams]="{ PID: obj['processID'] }">{{ obj['processName'] }}</a></td>
                                   <td>{{ obj['postedOn'] }}</td>
                                   <td>{{ obj['userName'] }}</td>
-                                  <td><a href="./taskdetail?workflowid={{ obj['workflowID'] }}&taskid={{ obj['taskID'] }}">View Task</a></td>
+                                  <td><a [routerLink]="['/taskdetail']" [queryParams]="{ workflowid: obj['workflowID'], taskid: obj['taskID'] }">View Task</a></td>
                                 </tr>
                               </tbody>
                         
@@ -126,7 +126,7 @@
           </div>
         </div>
       </div>
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="card card-stats">
             <div class="card-header card-header-warning card-header-icon">
@@ -193,6 +193,6 @@
           </div>
         </div>
       </div>
-      
+       -->
     </div>
 </div>

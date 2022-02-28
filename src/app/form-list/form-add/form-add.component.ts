@@ -1,10 +1,11 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup,FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormbuilderService } from 'src/app/shared/formbuilder.service';
 import {NgxSpinner, NgxSpinnerService} from 'ngx-spinner';
 import Swal from 'sweetalert2';
 import { merge } from 'jquery';
+import { GlobalConstants } from 'src/app/shared/global-constants';
 declare var $: any;
 
 @Component({
@@ -23,9 +24,9 @@ export class FormAddComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) data,
     private service: FormbuilderService, public formBuilder: FormBuilder,private spinner: NgxSpinnerService
   ) {
+
     this.formAdd = data;
   }
-
 
   formID: number = 0;
   formTypeID: string = "";
@@ -58,15 +59,20 @@ export class FormAddComponent implements OnInit {
     this.getformCategories();
   }
 
+  // group = new FormGroup({
+  //   select: new FormControl(null, Validators.required)
+  // });
+
   addForm() {
-    if(this.formAdd.formName!=""){
+    if(this.formAdd.displayName!="" && this.formAdd.formCategoryID!==0){
     //adding form
     this.submitted = true;
     var val = {
       "formID": 0,
       "formTypeID": 2,
       "formCategoryID": this.formAdd.formCategoryID,
-      "formName": this.formAdd.formName,
+      "formName": this.formAdd.displayName.replace(/[^a-zA-Z0-9]/g, ''),
+      "displayName":this.formAdd.displayName,
       "formDescription": this.formAdd.formDescription,
       "dateCreated": "2021-11-30T11:28:23.351Z",
       "createdByUserID": 0,
@@ -107,6 +113,11 @@ export class FormAddComponent implements OnInit {
         "dateLastModified": "2021-12-01T12:32:22.006Z",
         "lastModifiedByUserID": 0,
         "isActive": true,
+        "dataExportName": "string",
+        "xmlElementName": "string",
+        "hasPhoto": false,
+        "hasAttachment": false,
+        "hasComment": false,
         "fieldType": {
             "fieldTypeID": 25,
             "displayName": "Page Title",
@@ -142,7 +153,7 @@ export class FormAddComponent implements OnInit {
                 "fieldStyleID": 0,
                 "width": 760,
                 "height": 70,
-                "cssClass": "linear-gradient(147deg, #eff3f7 72%, #028ea7 28%)"
+                "cssClass": GlobalConstants.pageTitleStyle
             }
         ],
         "fieldValidations": [
@@ -158,14 +169,16 @@ export class FormAddComponent implements OnInit {
       this.service.addFormPage(pageVal).subscribe(result => {
       this.service.addFieldPerPage(pageField,JSON.parse(JSON.stringify(res)).formID,JSON.parse(JSON.stringify(result)).pageGUID).subscribe(val=>{
         this.spinner.hide();
-        this.showNotification('top','center','Form Template Added Successfully!','Success','success');
+        this.showNotification('top','center','Form Design Added Successfully!','Success','success');
       }); 
       })
     });
+    
     this.formAdd.formID = 0;
     this.formAdd.formTypeI = 0;
     this.formAdd.formCategoryID = 0;
     this.formAdd.formName = "";
+    this.formAdd.displayName="";
     this.formAdd.formDescription = "";
     this.formAdd.dateCreated = "";
     this.formAdd.createdByUserID = 0;
@@ -177,7 +190,7 @@ export class FormAddComponent implements OnInit {
     this.formAdd.lastModifiedByUserID = 0;
     }
     else{
-      this.showNotification('top','center','Please add a form template name before saving!','','danger');
+      this.showNotification('top','center','Please fill in name and select a category field!','','danger');
     }
   }
 
@@ -190,7 +203,8 @@ export class FormAddComponent implements OnInit {
         formID: this.formAdd.formID,
         formTypeID: this.formAdd.formTypeID,
         formCategoryID: this.formAdd.formCategoryID,
-        formName: this.formAdd.formName,
+        formName: this.formAdd.formName.replace(/[^a-zA-Z0-9]/g, ''),
+        displayName:this.formAdd.displayName,
         formDescription: this.formAdd.formDescription,
         dateCreated: this.formAdd.dateCreated,
         createdByUserID: this.formAdd.createdByUserID,
@@ -205,11 +219,11 @@ export class FormAddComponent implements OnInit {
       this.service.updateDynamicFormDetails(this.formAdd.formID, val).subscribe(res => {
         this.dialogRef.close();
         this.spinner.hide();
-        this.showNotification('top','center','Form Template Updated Successfully!','Success','success');
+        this.showNotification('top','center','Form Design Updated Successfully!','Success','success');
       });
     }
     else {
-      this.showNotification('top','center','Please add a form template name before saving!','','danger');
+      this.showNotification('top','center','Please add a form Design name before saving!','','danger');
     }
   }
 
@@ -247,3 +261,5 @@ export class FormAddComponent implements OnInit {
     });
 }
 }
+
+

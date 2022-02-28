@@ -22,6 +22,13 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { RouterModule } from '@angular/router';
 import { FormPreviewRoutes } from './form-preview.routing';
 import { SignaturePadModule } from 'angular2-signaturepad';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { DropDownsModule } from "@progress/kendo-angular-dropdowns";
+import { LabelModule } from "@progress/kendo-angular-label";
+import { InputsModule } from "@progress/kendo-angular-inputs";
+import { GridModule } from "@progress/kendo-angular-grid";
+import { ButtonsModule } from "@progress/kendo-angular-buttons";
+import {PDFModule,ExcelModule,} from "@progress/kendo-angular-grid";
 
 @NgModule({
   declarations: [
@@ -29,7 +36,15 @@ import { SignaturePadModule } from 'angular2-signaturepad';
   ],
   imports: [
     CommonModule,
+    GridModule,
+    ButtonsModule,
+    PDFModule,
+    ExcelModule,
     MatRadioModule,
+    MatPaginatorModule,
+    DropDownsModule,
+    LabelModule,
+    InputsModule,
     RouterModule.forChild(FormPreviewRoutes),
     FormsModule,
     MatDialogModule,

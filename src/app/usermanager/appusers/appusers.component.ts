@@ -7,7 +7,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UserProfileComponent } from 'src/app/userprofile/userprofile.component';
 import {MatTableModule} from '@angular/material/table';
-
 declare var $: any;
 
 
@@ -40,15 +39,17 @@ export class AppusersComponent implements OnInit {
       this.userList.data = data;
     });
     
+    this.service.setMenuShow(false);
   }
 
   clickEdit(item: any) {
     this.formAdd = item;
+    let obj = {ParentName:'Users',data:this.formAdd};
     const dialogRef = this.dialog.open(UserProfileComponent 
     , {
       width: '60%',
       height: '60%',
-      data: this.formAdd,
+      data: obj,
       disableClose:false
     });
 

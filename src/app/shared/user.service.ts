@@ -4,6 +4,8 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { User } from './user.model';
 import { environment } from '../../environments/environment';
 import { role } from './lookup.model';
+import { FormRole } from '../usermanager/formrole.model';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +17,19 @@ export class UserService {
   //readonly BaseURI = 'https://app1.terra.group/MNE_API/api';
   
   public ulist:User[];
+  private showMenu = new BehaviorSubject(true);
+  public sm = this.showMenu.asObservable();
+
+
+  setMenuShow(show: boolean)
+  {
+    this.showMenu.next(show);
+  }
+
+  getMenuShow()
+  {
+    return this.showMenu;
+  }
 
   getUsers(){
     this.http.get(this.BaseURI)
@@ -35,6 +50,7 @@ export class UserService {
   }
 
   login(formData: any) {
+    this.showMenu.next(true);
     return this.http.post(this.BaseURI + '/ApplicationUser/Login', formData);
   }
 
@@ -54,6 +70,11 @@ export class UserService {
   completeTask(formData: any) {
     return this.http.post(this.BaseURI + '/UserProfile/CompleteTask', formData);
   }
+
+  UpdateUserProfile(formData: any) {
+    return this.http.post(this.BaseURI + '/UserProfile/UpdateUserProfile', formData);
+  }
+
 
   roleMatch(allowedRoles): boolean {
     var isMatch = false;
@@ -94,10 +115,52 @@ export class UserService {
     return this.http.get<role[]>(this.BaseURI + '/Lookup/GetRoles');
   }
 
+
   addRole(body: string) {
 
     return this.http.post(this.BaseURI + '/Lookup/AddRole?roleName='+body,body);
     //return this.http.post(this.BaseURI + '/Lookup/AddRole', body);
+  }
+
+  deleteFormRoles(formID: number) {
+    return this.http.delete(this.BaseURI + '/ApplicationUser/DeleteFormRoles?formID='+formID);
+  }
+
+  
+  addFormRole(formRole: any) {
+    return this.http.post(this.BaseURI + '/ApplicationUser/AddFormRole', formRole);
+  }
+
+  
+  addFormRoles(formRoles: any) {
+    return this.http.post(this.BaseURI + '/ApplicationUser/AddFormRoles', formRoles);
+  }
+
+  
+  getFormRoles(formID: number) {
+    return this.http.get<any>(this.BaseURI + '/ApplicationUser/GetFormRoles?formID='+formID);
+  }
+
+  
+  getMenusRole(roleID: number) {
+    return this.http.get<any>(this.BaseURI + '/ApplicationUser/GetRoleMenus?roleID='+roleID);
+  }
+
+  addMenusRole(menusRole: any) {
+    return this.http.post(this.BaseURI + '/ApplicationUser/AddRoleMenus', menusRole);
+  }
+  
+  getRoleMenus(role: string) {
+    return this.http.get<any>(this.BaseURI + '/ApplicationUser/GetRoleNameMenus?role='+role);
+  }
+
+  getPasswordResetToken(email: string) {
+    
+    return this.http.get(this.BaseURI + '/ApplicationUser/GeneratePasswordResetToken/'+email);
+  }
+
+  resetPassword(resetModel: any) {
+    return this.http.post(this.BaseURI + '/ApplicationUser/ResetPassword', resetModel);
   }
 
 }

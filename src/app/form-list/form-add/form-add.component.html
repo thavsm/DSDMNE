@@ -1,34 +1,36 @@
-<h1 mat-dialog-title *ngIf="formAdd.formID==0">Form Template Add</h1>
-<h1 mat-dialog-title *ngIf="formAdd.formID!=0">Form Template Edit</h1>
-<div mat-dialog-content>
-    <div class="form-group">
-        <label style="font-size: medium;">Form Template Name</label>
-        <input type="text" class="form-control" value="{{formAdd.formName}}" [(ngModel)]="formAdd.formName">
+<h1 mat-dialog-title *ngIf="formAdd.formID==0">Form Design Add</h1>
+    <h1 mat-dialog-title *ngIf="formAdd.formID!=0">Form Design Edit</h1>
+    <div mat-dialog-content>
+        <div class="form-group">
+            <label style="font-size: medium;">Form Design Name</label>
+            <input type="text" class="form-control" value="{{formAdd.displayName}}" [(ngModel)]="formAdd.displayName">
+        </div>
+        <div class="form-group">
+            <label style="font-size: medium;">Form Design Description</label>
+            <input type="text" class="form-control" value="{{formAdd.formDescription}}"
+                [(ngModel)]="formAdd.formDescription">
+        </div>
+        <div class="form-group">
+            <mat-form-field appearance="outline">
+                <mat-label>Select a Category </mat-label>
+                <mat-select [(ngModel)]="formAdd.formCategoryID">
+                    <mat-option *ngFor="let c of formcategories" [value]="c.formCategoryID">
+                        {{c.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
     </div>
-    <div class="form-group">
-        <label style="font-size: medium;">Form Template Description</label>
-        <input type="text" class="form-control" value="{{formAdd.formDescription}}"
-            [(ngModel)]="formAdd.formDescription">
+    <div mat-dialog-actions>
+        <button mat-button cdkFocusInitial (click)="addForm()"
+            class="btn btn-md btn-primary"   *ngIf="formAdd.formID==0">Add</button>
+        <button mat-button cdkFocusInitial (click)="updateForm()"
+            class="btn btn-md btn-primary"   *ngIf="formAdd.formID!=0">Edit</button>
+        <button mat-button [mat-dialog-close]=""
+            class="btn btn-md btn-primary"   >Cancel</button>
     </div>
-    <div class="form-group">
-        <mat-form-field appearance="outline">
-            <mat-label>Select a Category </mat-label>
-            <mat-select [(ngModel)]="formAdd.formCategoryID">
-                <mat-option *ngFor="let c of formcategories" [value]="c.formCategoryID">
-                    {{c.name}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div>
-</div>
-<div mat-dialog-actions>
-    <button mat-button cdkFocusInitial (click)="addForm()"
-        style="background-color: crimson;color: white;font-weight: 400;" *ngIf="formAdd.formID==0">Add</button>
-    <button mat-button cdkFocusInitial (click)="updateForm()"
-        style="background-color: crimson;color: white;font-weight: 400;" *ngIf="formAdd.formID!=0">Edit</button>
-    <button mat-button [mat-dialog-close]=""
-        style="background-color: crimson;color: white;font-weight: 400;">Cancel</button>
-</div>
-<ngx-spinner bdColor="rgba(	237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
-    <p style="font-size: 20px; color: black">Processing...</p>
-</ngx-spinner>
+    <ngx-spinner bdColor="rgba( 237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
+        <p style="font-size: 20px; color: black">Processing...</p>
+    </ngx-spinner>
+    
+    

@@ -3,13 +3,15 @@ import { AuthGuard } from './auth/auth.guard';
 
 import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
+import { LandingComponent } from './pages/landing/landing.component';
 
 import { LoginComponent } from './pages/login/login.component';
+import { ResetPasswordComponent } from './pages/resetpassword/resetpassword.component';
 
 export const AppRoutes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'home',
     pathMatch: 'full',
   }, {
     path: '',
@@ -98,10 +100,17 @@ export const AppRoutes: Routes = [
     children: [{
       path: 'pages',
       loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule)
-    }, {
+    },
+    {
+      path: 'home',
+      component: LandingComponent
+    },
+    {
       path: 'login',
       component: LoginComponent
-    }
-    ]
+    }, {
+      path: 'resetpassword',
+      component: ResetPasswordComponent
+    }]
   }
 ];

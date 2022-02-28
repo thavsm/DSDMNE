@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -11,20 +11,20 @@ import { AddEditCategoryComponent } from './add-edit-category/add-edit-category.
 @Component({
   selector: 'app-form-category',
   templateUrl: './form-category.component.html',
-  styleUrls: ['./form-category.component.css']
+  styleUrls: ['./form-category.component.css'],
 })
 export class FormCategoryComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private route: Router, private service: FormbuilderService, private spinner: NgxSpinnerService) { }
 
   formCategory: any;
-  public displayedColumns = ['name', 'description','update'];
-  public formCategoryList = new MatTableDataSource<any>();
+  public displayedColumns = ['name', 'description', 'update'];
+  public formCategoryList: any[];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngAfterViewInit() {
-    this.formCategoryList.paginator = this.paginator;
+    // this.formCategoryList.paginator = this.paginator;
   }
 
   ngOnInit(): void {
@@ -37,7 +37,7 @@ export class FormCategoryComponent implements OnInit {
       width: '500px',
       height: '400px',
       data: this.formCategory,
-      disableClose:true
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -60,7 +60,7 @@ export class FormCategoryComponent implements OnInit {
       width: '500px',
       height: '400px',
       data: this.formCategory,
-      disableClose:true
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -71,7 +71,7 @@ export class FormCategoryComponent implements OnInit {
   refreshFormsList() {
     this.spinner.show();
     this.service.getformCategoryList().subscribe(data => {
-      this.formCategoryList.data = data;
+      this.formCategoryList = data;
       this.spinner.hide();
     });
   }

@@ -1,0 +1,11 @@
+.slick-slider {  
+    width: 90%;  
+    margin: auto;  
+    color: black;
+  }
+
+.slick-prev:before,
+.slick-next:before {
+    font-family:initial!important;
+    color:black; 
+}

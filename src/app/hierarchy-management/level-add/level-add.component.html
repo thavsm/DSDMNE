@@ -21,7 +21,7 @@
     </div> -->
     <div class="form-group">
         <button mat-button cdkFocusInitial  (click)="addLevel()"
-        style="background-color: crimson;color: white;font-weight: 400;">Add Level</button>
+        class="btn btn-md btn-primary"   >Add Level</button>
     </div>
     <h1 mat-dialog-title> Node Field Attributes</h1> 
     <div class="form-group">
@@ -83,10 +83,10 @@
     
 <div mat-dialog-actions>
     <button mat-button cdkFocusInitial  (click)="addAttributes()"
-          style="background-color: crimson;color: white;font-weight: 400;" [disabled]="isSubmitBtnDisabled">Add Attributes</button>
+          class="btn btn-md btn-primary"   [disabled]="isSubmitBtnDisabled">Add Attributes</button>
       
       <button mat-button [mat-dialog-close]=""
-          style="background-color: crimson;color: white;font-weight: 400;">Cancel</button>
+          class="btn btn-md btn-primary"   >Cancel</button>
   </div>
   <ngx-spinner bdColor="rgba(	237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
       <p style="font-size: 20px; color: black">Processing...</p>

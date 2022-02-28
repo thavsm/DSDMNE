@@ -125,11 +125,11 @@ export class NavbarComponent implements OnInit {
         const toggleButton = this.toggleButton;
         const body = document.getElementsByTagName('body')[0];
         setTimeout(function(){
-            toggleButton.classList.add('toggled');
+            // toggleButton.classList.add('toggled');
         }, 500);
         body.classList.add('nav-open');
         setTimeout(function() {
-            $toggle.classList.add('toggled');
+            // $toggle.classList.add('toggled');
         }, 430);
 
         var $layer = document.createElement('div');
@@ -154,7 +154,7 @@ export class NavbarComponent implements OnInit {
           $layer.classList.remove('visible');
           setTimeout(function() {
               $layer.remove();
-              $toggle.classList.remove('toggled');
+            //   $toggle.classList.remove('toggled');
           }, 400);
         };
 
@@ -165,7 +165,7 @@ export class NavbarComponent implements OnInit {
     sidebarClose() {
       var $toggle = document.getElementsByClassName('navbar-toggler')[0];
         const body = document.getElementsByTagName('body')[0];
-        this.toggleButton.classList.remove('toggled');
+        //this.toggleButton.classList.remove('toggled');
         var $layer = document.createElement('div');
         $layer.setAttribute('class', 'close-layer');
 
@@ -178,7 +178,7 @@ export class NavbarComponent implements OnInit {
         }
 
         setTimeout(function() {
-            $toggle.classList.remove('toggled');
+            //$toggle.classList.remove('toggled');
         }, 400);
 
         this.mobile_menu_visible = 0;
