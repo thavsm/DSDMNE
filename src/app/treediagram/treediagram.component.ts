@@ -34,6 +34,7 @@ export class TreediagramComponent implements OnInit {
   ParentNode: any;
   divDsiplay: boolean = false;
 
+
   constructor(public dialog: MatDialog,private treediagramService: TreediagramService) {
     this.treeData = JSON.parse(localStorage.getItem('treeData') || '{}');
   }
@@ -83,11 +84,12 @@ export class TreediagramComponent implements OnInit {
       nodeDescription: event.dataItem.nodeDescription
     }
 
-    const dialogRef = this.dialog.open(LevelNodeEditComponent, { width: '60%', height: '80%', data: this.NodeData, disableClose: true }
+    const dialogRef = this.dialog.open(LevelNodeEditComponent, { width: '70%', height: '80%', data: this.NodeData, disableClose: true }
 
     );
 
     dialogRef.afterClosed().subscribe(result => {
+      this.treenodes = this.treediagramService.getNodes(this.treeData.treeID);
       console.log('The dialog was closed');
     });
 
@@ -110,6 +112,7 @@ export class TreediagramComponent implements OnInit {
     );
 
     dialogRef.afterClosed().subscribe(result => {
+      this.treenodes = this.treediagramService.getNodes(this.treeData.treeID);
       console.log('The dialog was closed');
     });
   }
@@ -139,6 +142,7 @@ export class TreediagramComponent implements OnInit {
     );
 
     dialogRef.afterClosed().subscribe(result => {
+      this.treenodes = this.treediagramService.getNodes(this.treeData.treeID);
       console.log('The dialog was closed');
     });
   }

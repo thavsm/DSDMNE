@@ -14,11 +14,11 @@
 </div>
 <div mat-dialog-actions>
     <button mat-button cdkFocusInitial (click)="addTree()"
-        style="background-color: crimson;color: white;font-weight: 400;" *ngIf="treeAdd.treeID==0">Add</button>
+        class="btn btn-md btn-primary"   *ngIf="treeAdd.treeID==0">Add</button>
     <button mat-button cdkFocusInitial (click)="updateTree()"
-        style="background-color: crimson;color: white;font-weight: 400;" *ngIf="treeAdd.treeID!=0">Edit</button> 
+        class="btn btn-md btn-primary"   *ngIf="treeAdd.treeID!=0">Edit</button> 
     <button mat-button [mat-dialog-close]=""
-        style="background-color: crimson;color: white;font-weight: 400;">Cancel</button>
+        class="btn btn-md btn-primary"   >Cancel</button>
 </div>
 <ngx-spinner bdColor="rgba(	237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
     <p style="font-size: 20px; color: black">Processing...</p>

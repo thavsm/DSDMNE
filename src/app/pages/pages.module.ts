@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../app.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SlickCarouselModule } from 'ngx-slick-carousel'; 
 // import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { PagesRoutes } from './pages.routing';
@@ -12,6 +13,7 @@ import { PricingComponent } from './pricing/pricing.component';
 import { LockComponent } from './lock/lock.component';
 import { LoginComponent } from './login/login.component';
 import { ResetPasswordComponent } from './resetpassword/resetpassword.component';
+import { LandingComponent } from './landing/landing.component';
 
 @NgModule({
   imports: [
@@ -19,14 +21,16 @@ import { ResetPasswordComponent } from './resetpassword/resetpassword.component'
     RouterModule.forChild(PagesRoutes),
     FormsModule,
     MaterialModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SlickCarouselModule
   ],
   declarations: [
     LoginComponent,
     RegisterComponent,
     PricingComponent,
     LockComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    LandingComponent
   ]
 })
 

@@ -3,6 +3,7 @@ import { AuthGuard } from './auth/auth.guard';
 
 import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
+import { LandingComponent } from './pages/landing/landing.component';
 
 import { LoginComponent } from './pages/login/login.component';
 import { ResetPasswordComponent } from './pages/resetpassword/resetpassword.component';
@@ -10,7 +11,7 @@ import { ResetPasswordComponent } from './pages/resetpassword/resetpassword.comp
 export const AppRoutes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'home',
     pathMatch: 'full',
   }, {
     path: '',
@@ -73,13 +74,25 @@ export const AppRoutes: Routes = [
         loadChildren: () => import('./hierarchy-management/hierarchy-management.module').then(m => m.HierarchyManagementModule)      
       },
       {
+        path: 'location',      
+        loadChildren: () => import('./hierarchy-management/hierarchy-management.module').then(m => m.HierarchyManagementModule)      
+      },
+      {
+        path: 'level',      
+        loadChildren: () => import('./hierarchy-management/hierarchy-management.module').then(m => m.HierarchyManagementModule)      
+      },
+      {
         path: 'treediagram',  
         loadChildren: () => import('./treediagram/treediagram.module').then(m => m.TreediagramModule)  
     },
     {
         path: 'usermanager',
         loadChildren: () => import('./usermanager/usermanager.module').then(m => m.UserManagerModule)
-      }
+    },
+    {
+      path: 'externalDI',
+      loadChildren: () => import('./data-management/external-data-import/external-data-import.module').then(m => m.ExternalDataImportModule)
+    },
     ]
   }, {
     path: '',
@@ -87,13 +100,17 @@ export const AppRoutes: Routes = [
     children: [{
       path: 'pages',
       loadChildren: () => import('./pages/pages.module').then(m => m.PagesModule)
-    }, {
+    },
+    {
+      path: 'home',
+      component: LandingComponent
+    },
+    {
       path: 'login',
       component: LoginComponent
     }, {
       path: 'resetpassword',
       component: ResetPasswordComponent
-    }
-    ]
+    }]
   }
 ];

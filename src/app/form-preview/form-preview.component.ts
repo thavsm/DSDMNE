@@ -21,6 +21,8 @@ export class FormPreviewComponent implements OnInit {
 
   pages: any = [];
 
+  tabIndex=0;
+
   currentPage: any = [];
 
   firstPage: any = [];
@@ -44,13 +46,15 @@ export class FormPreviewComponent implements OnInit {
 
   constructor(private service: FormbuilderService, private spinner: NgxSpinnerService, public dialogRef: MatDialogRef<FormDesignerComponent>) {
     this.formData = JSON.parse(localStorage.getItem('formPreviewDetails') || '{}');
+    alert(JSON.stringify(this.formData));
+    this.tabIndex=0;
   }
 
   @ViewChild('fileInput') fileInput: ElementRef;
   fileAttr = 'Choose File';
 
   ngAfterViewInit() { 
-    this.signaturePad.clear(); 
+   // this.signaturePad.clear(); 
   }
 
   drawComplete() {
@@ -62,7 +66,7 @@ export class FormPreviewComponent implements OnInit {
   }
 
   clearSignature() {
-    this.signaturePad.clear();
+    //this.signaturePad.clear();
   }
 
   savePad() {
@@ -121,29 +125,7 @@ export class FormPreviewComponent implements OnInit {
   }
 
   savePage() {
-    if (this.formData.state === 'add') {
-      let data=this.formDesign;
-      data.forEach(field => {
-        field.listValue="";
-        field.groupGUID="";
-      });
-      this.service.saveFormMetadata(this.formData.formCaptureID, this.formDesign).subscribe(res => {
-        this.showNotification('top', 'center', 'Page data has been saved Successfully!', 'Success.', 'success');
-        this.getDesignPerPage(this.currentPage.pageGUID);
-      });
-    }
-    else {
-      let data=this.formDesign;
-      data.forEach(field => {
-        field.listValue="";
-        field.groupGUID="";
-      });
-      console.log(JSON.stringify(this.formDesign));
-        this.service.UpdateFormMetadata(this.formData.formCaptureID, this.formDesign).subscribe(res => {
-          this.showNotification('top', 'center', 'Page data has been updated Successfully!', 'Success.', 'success');
-          this.getDesignPerPage(this.currentPage.pageGUID);
-        });
-    }
+
   }
 
   closePopup() {
@@ -164,7 +146,7 @@ export class FormPreviewComponent implements OnInit {
       this.getDesignPerPage(this.currentPage.pageGUID);
     }
     else {
-      this.showNotification('top', 'center', 'There are no more pages for this form!', 'Error', 'warning');
+      this.showNotification('top', 'center', 'There are no more pages for this form!', '', 'warning');
     }
   }
 
@@ -191,8 +173,6 @@ export class FormPreviewComponent implements OnInit {
             element["groupTableList"]=resultant;
            });
         }
-    
-        if (this.formData.state === 'add') {
 
           element["data"] = "";
 
@@ -258,7 +238,7 @@ export class FormPreviewComponent implements OnInit {
                               });
                             }
                           });
-                          subChildren[j].groupGUID = groupChildren;                 
+                         subChildren[j].groupGUID = groupChildren;                 
                         });
                       }
                     });
@@ -269,95 +249,6 @@ export class FormPreviewComponent implements OnInit {
               this.formDesign[index].groupGUID = children;       
             });
           }
-        }
-
-        if (this.formData.state === 'edit') {
-          if (element.fieldType.value !== "subSection" && element.fieldType.value !== "section" && element.fieldType.value !== "repeatgroup" && element.fieldType.value !== "attachment" && element.fieldType.value !== "PageTitle" && element.parentFieldName==="") {
-            this.service.getMetadataValue(pageGUID, (element.questionName).split(/\s/).join(''), this.formData.formCaptureID).subscribe(res => {
-              if(element.fieldType.value==="checkbox")
-              {
-                element["data"] = Boolean(JSON.parse(res)); 
-              }
-              else{
-                element["data"] = res;   
-              }   
-            });     
-          } 
-          if (element.listValue !== "") {
-            this.formDesign[index].listValue = this.splitString(element.listValue);
-          }
-  
-          if (element.groupGUID !== "" && element.groupGUID !== "string" && element.parentFieldName==="") {
-            let children: any[] = [];
-  
-            this.service.getFieldsInGroup(element.groupGUID).subscribe(kids => {
-              children = kids;
-              
-  
-              children.forEach((field, i) => {
-
-                if (field.fieldType.value === "repeatgroup"){
-                  this.service.getGroupTableData(field.groupGUID,this.formData.formCaptureID).subscribe(resultant=>{
-                    
-                    field["groupTableList"]=resultant;
-                  });
-                }
-  
-                if (field.listValue !== "") {
-                  children[i].listValue = this.splitString(field.listValue);
-                }
-  
-                if (field.groupGUID !== "" && field.groupGUID !== "string") {
-                  let subChildren: any[] = [];
-  
-                  this.service.getFieldsInGroup(field.groupGUID).subscribe(result => {
-                    subChildren = result;
-  
-                    subChildren.forEach((subField, j) => {     
-
-                      if (subField.fieldType.value === "repeatgroup"){
-                        this.service.getGroupTableData(subField.groupGUID,this.formData.formCaptureID).subscribe(resultant=>{
-                          subField["groupTableList"]=resultant;
-                        });
-                      }
-
-                      if (subField.listValue !== "") {
-                        subChildren[j].listValue = this.splitString(subField.listValue);
-                      }
-                      if (subField.groupGUID !== "" && subField.groupGUID !== "string") {
-                        let groupChildren: any[] = [];
-                        this.service.getFieldsInGroup(subField.groupGUID).subscribe(res => {
-                          groupChildren = res;
-  
-                          groupChildren.forEach((groupField, k) => {       
-                            if (groupField.fieldType.value === "repeatgroup"){
-                              this.service.getGroupTableData(groupField.groupGUID,this.formData.formCaptureID).subscribe(resultant=>{
-                                
-                                groupField["groupTableList"]=resultant;
-                              });           
-                            }
-                            if (subField.listValue !== "") {
-                              subChildren[k].listValue = this.splitString(groupField.listValue);
-                            }
-                            if (groupField.groupGUID !== "" && groupField.groupGUID !== "string") {
-                              this.service.getFieldsInGroup(groupField.groupGUID).subscribe(groupdata => {
-                                groupChildren[k].groupGUID = groupdata;
-                              });
-                            }
-                          });
-                          subChildren[j].groupGUID = groupChildren;                 
-                        });
-                      }
-                    });
-                    children[i].groupGUID = subChildren;                 
-                  });
-                }
-              });
-              this.formDesign[index].groupGUID = children;       
-            });
-          }
-        }
-
         
       });   
       console.log(JSON.stringify(this.formDesign));
@@ -368,59 +259,15 @@ export class FormPreviewComponent implements OnInit {
 
   //#region group methods
   addRepeat(data:any){
-    this.spinner.show();
-    if(localStorage.getItem('cloneNumberForEdit')==="0")
-    {
-      data.forEach(field => {
-        field.listValue="";
-      });
-      this.service.saveGroupMetadata(this.formData.formCaptureID,data[0].parentFieldName, data).subscribe(res => {
-        this.showNotification('top', 'center', 'Repeat data has been saved Successfully!', 'Success.', 'success');
-        this.spinner.hide();
-        this.getDesignPerPage(this.currentPage.pageGUID);
-      });
-    }
-    else{
-      data.forEach(field => {
-        field.listValue="";
-      });
-      this.service.UpdateGroupMetadata(this.formData.formCaptureID,data[0].parentFieldName,localStorage.getItem('cloneNumberForEdit'), data).subscribe(res => {
-        this.showNotification('top', 'center', 'Repeat data has been updated Successfully!', 'Success.', 'success');
-        this.spinner.hide();
-        this.getDesignPerPage(this.currentPage.pageGUID);
-      });
-    }
+    
   }
 
   editRepeat(data:any,cloneNum:any,groupGUID:any){
-    localStorage.setItem('cloneNumberForEdit', cloneNum);
-    data.forEach(field => {
-      this.service.getMetadataValuePerGroup(groupGUID, (field.questionName).split(/\s/).join(''), this.formData.formCaptureID,cloneNum).subscribe(res => {
-        field["data"] = res;       
-      });  
-    });
+    
   }
 
   deleteClone(cloneNum: any, groupGUID: any) {
-    Swal.fire({
-      title: 'Are you sure want to remove this repeat data?',
-      showCancelButton: true,
-      confirmButtonText: 'Yes',
-      cancelButtonText: 'No',
-      toast: true,
-      position: 'top',
-      allowOutsideClick: false,
-      confirmButtonColor: '#000000',
-      cancelButtonColor: '#000000',
-      background: '#ffcccb'
-    }).then((result) => {
-      if (result.value) {
-        this.service.deleteClone(groupGUID, this.formData.formCaptureID, cloneNum).subscribe(res => {
-          this.showNotification('top', 'center', 'Repeat data has been deleted successfully!', 'Success.', 'success');
-          this.getDesignPerPage(this.currentPage.pageGUID);
-        });
-      }
-    })
+   
   }
   //#endregion
 
@@ -464,6 +311,5 @@ export class FormPreviewComponent implements OnInit {
     });
   }
 }
-
 
 

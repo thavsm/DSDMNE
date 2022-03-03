@@ -9,8 +9,8 @@
                     <table class="table">    
                             <tr>
                                 <!-- <td><button type="button" class="btn btn-success" title="Previous Page"><i class="fa fa-backward" *ngIf="divDsiplay" ></i><a href="/hierarchy-management" style="color: aliceblue;"> Previous page</a></button></td> -->
-                                <td><button class="btn btn-md" style="background-color: crimson;color: white;font-weight: 400;" (click)="openDialogAdd()"><i class="fa fa-plus" aria-hidden="true"></i> Add Node</button></td>
-                                <td><button class="btn btn-md" style="background-color: crimson;color: white;font-weight: 400;" (click)="openDialogAddLevel()" ><i class="fa fa-plus" aria-hidden="true"></i> Add Level</button></td>
+                                <td><button class="btn btn-md" class="btn btn-md btn-primary"   (click)="openDialogAdd()"><i class="fa fa-plus" aria-hidden="true"></i> Add Node</button></td>
+                                <td><button class="btn btn-md" class="btn btn-md btn-primary"   (click)="openDialogAddLevel()" ><i class="fa fa-plus" aria-hidden="true"></i> Add Level</button></td>
                                 <td><button type="button" class="btn btn-success" title="Export To PDF" (click)="pdf.saveAs('Export.pdf')"><i class="fa fa-file" aria-hidden="true" ></i> Export To PDF</button></td>
                             </tr>
                     </table>
@@ -26,7 +26,7 @@
               <div kendoTooltip filter="span.k-in" [tooltipTemplate]="template">
             
                 <kendo-treeview [nodes]="treenodes | async" textField="nodeName" kendoTreeViewFlatDataBinding [filterable]="true"
-                  kendoTreeViewExpandable idField="nodeID" (selectionChange)="openDialogEdit($event)" parentIdField="nodeParentD">
+                  kendoTreeViewExpandable idField="nodeID" (selectionChange)="openDialogEdit($event)" parentIdField="nodeParentD" >
                 </kendo-treeview>
               </div>
             

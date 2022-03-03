@@ -1,10 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map } from "rxjs/operators";
 import { Observable, of } from 'rxjs';
 import { LevelNodeEdit } from './hierarchy-management/level-node-edit/level-node-edit.model';
 import { Targets } from './hierarchy-management/target-add/target-add.model';
 import { environment } from 'src/environments/environment';
+import { ExternalEdit } from './hierarchy-management/externaldata-add/externaldata-add.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ export class TreediagramService {
   //readonly API_URL ='https://localhost:44305/api/';
 
   readonly API_URL = environment.API_URL + '/'
+  readonly APIUrl = environment.API_FormURL;
 
   constructor(private http: HttpClient) { }
 
@@ -24,6 +26,9 @@ export class TreediagramService {
 
   TargetsData:Targets = new Targets();
   public TargetsMetadata:Targets[];
+
+  External:ExternalEdit = new ExternalEdit();
+  public ExternalMetadata:ExternalEdit[];
   
   addLevel(data:any){
     return this.http.post<any>(this.API_URL+'Levels',data)
@@ -55,7 +60,6 @@ export class TreediagramService {
     return this.http.put(this.API_URL+'Levels/'+LevelD,data);
   }
 
-  
     
   getLevelMetadata(LevelD:number){
     this.http.get(this.API_URL+'MetadataLevels/'+LevelD)
@@ -96,6 +100,14 @@ export class TreediagramService {
     return this.http.get<any>(this.API_URL+'MetadataNodeForms/'+NodeID);    
   }
 
+  DeleteLevel(LevelD:any){
+    return this.http.post<any>(this.API_URL+'Levels/DeleteLevelByLevelID/'+LevelD,"")
+  } 
+
+  DeleteNode(NodeID:any){
+    return this.http.post<any>(this.API_URL+'Nodes/DeleteNodeByNodeID/'+NodeID,"")
+  } 
+
   updateNodeDetails(nodeID:number,data:any){
     return this.http.put(this.API_URL+'Nodes/'+nodeID,data);
   }
@@ -134,4 +146,101 @@ export class TreediagramService {
     return this.http.put(this.API_URL+'Targets/'+targetID,data);
   }
 
+
+  public getExternalDataType():Observable<any[]>{
+
+    return this.http.get<any>(this.API_URL+'ExternalDataTypes');
+
+  }
+
+  getformCategoryList(){
+    return this.http.get<any>(this.APIUrl+'formcategories');
+  }
+
+  GetFormCategoryId(CategoryID:number){
+    return this.http.get<any>(this.APIUrl+'Forms/GetFormCategoryId/'+CategoryID);
+  }
+
+  GetFormFieldsById(FormID:number){
+    return this.http.get<any>(this.APIUrl+'Forms/'+FormID+'/pages/FieldsByFormID');
+  }
+
+
+  GetFormFieldsByFieldID(FieldID:number){
+    return this.http.get<any>(this.APIUrl+'Forms/'+FieldID+'/pages/FieldsByFieldID');
+  }
+
+  CountColumnData(columnName :any,dataValue :any,tableName :any){
+    return this.http.get<any>(this.API_URL+'Trees/CountColumnData/'+columnName+'/'+dataValue+'/'+tableName);
+  }
+
+  ExtrenalCountColumnData(columnName :any,dataValue :any,tableName :any, Connstring: any){
+    return this.http.get<any>(this.API_URL+'Trees/ExtrenalCountColumnData/'+columnName+'/'+dataValue+'/'+tableName+'/'+Connstring);
+  }
+
+  insertExternalCalculation(NodeID :number,ExternalDataName :any,ExternalDataTypeID :number,CriteriaCol :any,CriteriaRow :any,calcField :any,value :number){
+    return this.http.post<any>(this.API_URL+'Trees/insertExternalCalculation/'+NodeID+'/'+ExternalDataName+'/'+ExternalDataTypeID+'/'+CriteriaCol+'/'+CriteriaRow+'/'+calcField+'/'+value, "");
+  }
+
+  UpdateExternalCalculation(CalculationID :number,NodeID :number,ExternalDataName :any,ExternalDataTypeID :number,CriteriaCol :any,value :number){
+    return this.http.post<any>(this.API_URL+'Trees/UpdateExternalCalculation/'+CalculationID+'/'+NodeID+'/'+ExternalDataName+'/'+ExternalDataTypeID+'/'+CriteriaCol+'/'+value, "");
+  }
+  addNodeVal(NodeID :number,ExternalDataName :any,CriteriaCol :any,CriteriaRow :any,calcField :any,value :number,ExternalDataTypeID :number, calcFieldCommas: any){
+
+    return this.http.post<any>(this.API_URL+'Trees/addNodeVal/'+NodeID+'/'+ExternalDataName+'/'+CriteriaCol+'/'+CriteriaRow+'/'+calcField+'/'+value+'/'+ExternalDataTypeID+'/'+calcFieldCommas, "");
+  }
+
+  getExternalTotalCalculationByNodeID(NodeID :number){
+    return this.http.get<any>(this.API_URL+'Trees/getExternalTotalCalculationByNodeID/'+NodeID);
+  }
+
+
+  getExternalCalculationByNodeID(NodeID:number){
+    this.http.get(this.API_URL+'Trees/getExternalCalculationByNodeID/'+NodeID)
+    .toPromise()
+    .then(res=> this.ExternalMetadata = res as ExternalEdit[]);
+    console.log(this.ExternalMetadata);
+    
+  }
+
+  getTreeUpload(){
+    return this.http.get<any>(this.API_URL+'Trees/getTreeUpload');
+  }
+
+  getTableColumns(Table :any){
+    return this.http.get<any>(this.API_URL+'Trees/getTableColumns/'+Table);
+  }
+
+  
+  getDataService(){
+    return this.http.get<any>(this.API_URL+'Trees/getDataService')
+  }
+
+
+  CreateProcs(Connstring :any,Database :any){
+    return this.http.post<any>(this.API_URL+'Trees/CreateProcs/'+Connstring+'/'+Database, "");
+  }
+
+  DeleteExternalCalculation(CalculationID :number){
+    return this.http.post<any>(this.API_URL+'Trees/DeleteExternalCalculation/'+CalculationID, "");
+  }
+
+  getExternalTables(Connstring :any){
+    return this.http.get<any>(this.API_URL+'Trees/getExternalTables/'+Connstring);
+  }
+
+  getExternalTableColumns(Connstring :any, Table : any){
+    return this.http.get<any>(this.API_URL+'Trees/getExternalTableColumns/'+Connstring+'/'+Table);
+  }
+
+  insertExternalConnection(dataServiceID :any){
+    return this.http.post<any>(this.API_URL+'Trees/insertExternalConnection/'+dataServiceID, "");
+  }
+
+  RefreshExternalFormCalculation(formData :any,tableName :any,CalculationID :any, Connstring:any, externalDataTypeID:any){
+    return this.http.post<any>(this.API_URL+'Trees/RefreshExternalCalculation/'+formData+'/'+tableName+'/'+CalculationID+'/'+Connstring+'/'+externalDataTypeID, "");
+  }
+
+
+  
 }

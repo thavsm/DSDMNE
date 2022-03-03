@@ -2,25 +2,21 @@
   <div class="container-fluid">
     <div class="container-fluid">
       <div>
-        <h3 class="title">Capture Form</h3>
+        <h3 class="title" style="font-weight: bold;">Capture Form</h3>
       </div>
       <div class="row">
         <div>
-          <!-- <mat-form-field appearance="outline" style="width: 500px;">
-            <mat-label>Form Name</mat-label>
-           <input matInput type="text" [(ngModel)]="formData.formName"/>
-        </mat-form-field> -->
           <mat-form-field appearance="outline" style="width: 500px;">
-            <mat-label>Form template</mat-label>
+            <mat-label>Form design</mat-label>
             <mat-select [(ngModel)]="formData.formID">
                 <mat-option *ngFor="let form of formList"
                     [value]="form.formID">
-                   {{form.formName}}
+                   {{form.displayName}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
         <button class="btn btn-md"
-        style="background-color: crimson;color: white;font-weight: 400;width: 150px;"
+         class="btn btn-md btn-primary"   
         (click)="addForm()">Create Form</button>
         </div>
       </div>

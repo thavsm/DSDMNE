@@ -53,4 +53,13 @@
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
   }
   
+  .my-tooltip {
+    white-space: pre-line;
+}
   
+::ng-deep .mat-tooltip {
+  white-space: pre-line;
+  color: black;
+  font-size: medium;
+}
+

@@ -3,6 +3,7 @@ import PerfectScrollbar from 'perfect-scrollbar';
 import { UserService } from '../shared/user.service';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { FormbuilderService } from '../shared/formbuilder.service';
 
 
 declare const $: any;
@@ -72,41 +73,10 @@ export const ROUTES: RouteInfo[] = [{
         collapse: 'hierarchy-management',
         children: [
             {path: 'HierarchyManagement', title: 'hierarchy management', ab:'HM', TreeCategoryID : 1},
-            {path: 'GeographyManagement', title: 'geography management', ab:'GM' , TreeCategoryID : 2},
+            {path: 'GeographyManagement', title: 'location management', ab:'LM' , TreeCategoryID : 2},
             {path: 'LevelManagement', title: 'level management', ab:'LM' , TreeCategoryID : 3}
         ]
     },
-
-
-    // {
-    //     path: '/hierarchy-management',
-    //     title: 'hierarchy management',
-    //     type: 'link',
-    //     icontype: 'account_tree',
-    //     role: [],
-    //     TreeCategoryID : 1
-
-    // }, 
-
-    // {
-    //     path: '/hierarchy-management',
-    //     title: 'geography management',
-    //     type: 'link',
-    //     icontype: 'account_tree',
-    //     role: [],
-    //     TreeCategoryID : 2
-
-    // }, 
-
-    // {
-    //     path: '/hierarchy-management',
-    //     title: 'level management',
-    //     type: 'link',
-    //     icontype: 'account_tree',
-    //     role: [],
-    //     TreeCategoryID : 3
-
-    // }, 
 
     {
         path: '/weather',
@@ -133,8 +103,22 @@ export const ROUTES: RouteInfo[] = [{
             {path: 'formCategory',title: 'Form Category',ab: 'FC'},
             {path: 'formList',title: 'Form Design',ab: 'FD'},   
             { path: 'formCapture', title: 'Form Capture', ab: 'FC' },
-            { path: 'formInbox', title: 'Form Inbox', ab: 'FI' }
+            { path: 'formInbox', title: 'Form Inbox', ab: 'FI' },
         ]
+    },{
+
+        path: '',
+        title: 'Data Management',
+        type: 'sub',
+        icontype: 'dns',
+        role: [],
+        collapse: 'DataMangementList',
+        children: [
+
+            {path: 'externalDI',title: 'External Data Import',ab: 'EDI'}
+
+        ]
+
     }
 ];
 @Component({
@@ -150,7 +134,7 @@ export class SidebarComponent implements OnInit {
     
     public showMenu: boolean = true;
 
-    constructor(private service: UserService, private router: Router) {
+    constructor(private service: UserService, private router: Router,private formService:FormbuilderService) {
         this.service.sm.subscribe(show => this.showMenu = show);
     }
 
@@ -231,6 +215,7 @@ export class SidebarComponent implements OnInit {
             this.ps.update();
         }
     }
+
     isMac(): boolean {
         let bool = false;
         if (navigator.platform.toUpperCase().indexOf('MAC') >= 0 || navigator.platform.toUpperCase().indexOf('IPAD') >= 0) {
@@ -238,8 +223,11 @@ export class SidebarComponent implements OnInit {
         }
         return bool;
     }
+
     logout() {
         localStorage.removeItem('token');
-        this.router.navigate(['/login']);
+        this.router.navigate(['/home']);
+        let formData= JSON.parse(localStorage.getItem('formDesignInfo') || '{}');
+        this.formService.unlockForm(formData.formID,formData);
     }
 }

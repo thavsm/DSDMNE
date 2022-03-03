@@ -17,7 +17,21 @@ export const hierarchymanagementRoutes: Routes = [
     {
       path: 'LevelManagement',
       component: HierarchyManagementComponent
-    }]
+    }
+
+    ,
+    {
+      path: 'location',
+      component: HierarchyManagementComponent
+    }
+
+    ,
+    {
+      path: 'level',
+      component: HierarchyManagementComponent
+    }
+  
+  ]
 }
 ];
 

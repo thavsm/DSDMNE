@@ -9,6 +9,7 @@ import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
 import { MatPaginator } from '@angular/material/paginator';
 import Swal from 'sweetalert2'
 import { merge } from 'jquery';
+import { UserService } from '../shared/user.service';
 declare var $: any;
 
 @Component({
@@ -18,23 +19,32 @@ declare var $: any;
 })
 export class FormListComponent implements OnInit {
 
-  constructor(public dialog: MatDialog, private route: Router, private service: FormbuilderService, private spinner: NgxSpinnerService) { }
+  constructor(public dialog: MatDialog, private route: Router, private service: FormbuilderService, private spinner: NgxSpinnerService,public userService: UserService) { }
 
   formAdd: any;
-  public displayedColumns = ['formName', 'formDescription', 'formCategory', 'formDetails', 'update', 'delete'];
-  public formList = new MatTableDataSource<any>();
+  userDetail:any;
+  public displayedColumns = ['displayName', 'formDescription', 'formCategory', 'formDetails', 'update', 'delete'];
+  public formList :any[];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngAfterViewInit() {
-    this.formList.paginator = this.paginator;
+    //this.formList.paginator = this.paginator;
   }
 
   ngOnInit(): void {
     this.refreshFormsList();
-    this.formList.filterPredicate = function (data, filter: string): boolean {
-      return data.formName.toLowerCase().includes(filter) || data.formDescription.toLowerCase().includes(filter) || data.formCategory.toString().includes(filter) === filter;
-    };
+    // this.formList.filterPredicate = function (data, filter: string): boolean {
+    //   return data.formName.toLowerCase().includes(filter) || data.formDescription.toLowerCase().includes(filter) || data.formCategory.toString().includes(filter) === filter;
+    // };
+    this.userService.getUserProfile().subscribe(
+      res => {
+        this.userDetail = res;
+      },
+      err => {
+        console.log(err);
+      },
+    );
   }
 
 
@@ -55,7 +65,7 @@ export class FormListComponent implements OnInit {
         this.service.archiveDynamicForm(item.formID).subscribe(data => {
           this.spinner.hide();
           this.refreshFormsList();
-          this.showNotification('top', 'center', 'Form Deleted Successfully!', 'Success.', 'success');
+          this.showNotification('top', 'center', 'Form Deleted Successfully!', '', 'success');
         });
       }
     })
@@ -63,31 +73,36 @@ export class FormListComponent implements OnInit {
 
 
   openFormDesign(item: any): void {
-    // if (item.isLocked === true) {
-    //   this.showNotification('top', 'center', 'This form is currently being edited by another user,Please try again later!', '', 'warning');
-    // }
-    // else {
-    //   this.service.lockForm(item.formID,item).subscribe(res => {
-    //     // Create item:
+    if (item.isLocked === true) {
+      this.service.getLockedByUserName(item.lockedByUserID).subscribe(res=>{
+        this.showNotification('top', 'center', 'This form is locked and being edited by '+res, '', 'danger');
+      });
+    }
+    else {
+      item.lockedByUserID=this.userDetail.formData.userID;
+      this.service.lockForm(item.formID,item).subscribe(res => {
         let myObj = {
           formID: item.formID,
           formTypeID: item.formTypeID,
           formCategoryID: item.formCategoryID,
           formName: item.formName,
+          displayName:item.displayName,
           formDescription: item.formDescription,
           dateCreated: item.dateCreated,
           createdByUserID: item.createdByUserID,
-          isLocked: item.isLocked,
-          lockedByUserID: item.lockedByUserID,
+          isLocked: true,
+          lockedByUserID: this.userDetail.formData.userID,
           isDeleted: item.isDeleted,
           dateLocked: item.dateLocked,
           dateLastModified: item.dateLastModified,
-          lastModifiedByUserID: item.lastModifiedByUserID
+          lastModifiedByUserID: item.lastModifiedByUserID,
+          publishStatus:item.publishStatus
         };
         localStorage.setItem('formDesignInfo', JSON.stringify(myObj));
+        this.userService.setMenuShow(false);
         this.route.navigate(['formDesign']);
-    //   });
-    // }
+      });
+    }
   }
 
   clickEdit(item: any) {
@@ -111,6 +126,7 @@ export class FormListComponent implements OnInit {
       formTypeID: 0,
       formCategoryID: 0,
       formName: "",
+      displayName:"",
       formDescription: "",
       dateCreated: "",
       createdByUserID: 0,
@@ -119,7 +135,8 @@ export class FormListComponent implements OnInit {
       isDeleted: "",
       dateLocked: "",
       dateLastModified: "",
-      lastModifiedByUserID: 0
+      lastModifiedByUserID: 0,
+      publishStatus:0
     }
     const dialogRef = this.dialog.open(FormAddComponent, {
       width: '75%',
@@ -136,7 +153,7 @@ export class FormListComponent implements OnInit {
   refreshFormsList() {
     this.spinner.show();
     this.service.getDynamicFormList().subscribe(data => {
-      this.formList.data = data;
+      this.formList = data;
       this.spinner.hide();
     });
   }
@@ -145,7 +162,7 @@ export class FormListComponent implements OnInit {
     let filterValue: string = data.target.value;
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    this.formList.filter = filterValue;
+   // this.formList.filter = filterValue;
   }
 
   showNotification(from: any, align: any, message: any, title: any, type: string) {

@@ -1,0 +1,60 @@
+<h1 mat-dialog-title *ngIf="externalDataAdd.dataServiceID==0">Add external Data</h1>
+<h1 mat-dialog-title *ngIf="externalDataAdd.dataServiceID!=0">Edit external Data</h1>
+<div mat-dialog-content >
+    <form [formGroup]="exForm">
+        <div class="form-group" >
+            <label style="font-size: medium;">Connection Name:</label>
+            <input  type="text" class="form-control" value="{{externalDataAdd.connectionName}}" [(ngModel)]="externalDataAdd.connectionName" formControlName="connectionName" >
+        </div>
+    <div class="form-group">
+        <mat-form-field appearance="outline">
+            <mat-label>Select a connection type </mat-label>
+            <mat-select [disabled]="externalDataAdd.externalDataServiceTypeID" [(ngModel)]="externalDataAdd.externalDataServiceTypeID"  formControlName="externalDataServiceTypeID" required (selectionChange)="toggle($event)">
+                <mat-option *ngFor="let c of externalDataDRD" [value]="c.externalDataServiceTypeID">
+                    {{c.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    
+    <div class="form-group"  *ngIf="divServer">
+        <label style="font-size: medium;">Server Name:</label>
+        <input  type="text" class="form-control" value="{{externalDataAdd.dataSource}}" [(ngModel)]="externalDataAdd.dataSource" formControlName="dataSource" >
+    </div>
+    <div class="form-group" *ngIf="divDatabase">
+        <label style="font-size: medium;">Database Name:</label>
+        <input type="text" class="form-control" value="{{externalDataAdd.initialCatalog}}"
+            [(ngModel)]="externalDataAdd.initialCatalog" formControlName="initialCatalog" >
+    </div>
+    <div class="form-group" *ngIf="divUrl" >
+        <label style="font-size: medium;">URL:</label>
+        <input type="url" class="form-control" value="{{externalDataAdd.dataSUrl}}"
+        [(ngModel)]="externalDataAdd.dataSUrl" formControlName="dataSUrl">
+    </div>
+    <div class="form-group">
+        <label style="font-size: medium;">Username:</label>
+        <input type="text" class="form-control" value="{{externalDataAdd.userID}}"
+            [(ngModel)]="externalDataAdd.userID" formControlName="userID" required>
+    </div>
+    <div class="form-group">
+        <label style="font-size: medium;">Password:</label>
+        <input type="password" class="form-control" value="{{externalDataAdd.password}}" 
+            [(ngModel)]="externalDataAdd.password" formControlName="password" required>
+    </div>
+</form>
+</div>
+<div mat-dialog-actions>
+    <div *ngIf="divTestConn" style="padding: 2%;">
+        <button mat-button  (click)="TestConn()" 
+        style="background-color: crimson;color: white;font-weight: 400;">Test Connection</button>
+    </div>
+        <button mat-button  (click)="addExternalData()"
+        style="background-color: crimson;color: white;font-weight: 400;" *ngIf="externalDataAdd.dataServiceID==0"  [disabled]="!exForm.valid">Add</button>
+    <button mat-button cdkFocusInitial (click)=" updateExternalData()"
+        style="background-color: crimson;color: white;font-weight: 400;" *ngIf="externalDataAdd.dataServiceID!=0" [disabled]="!exForm.valid">Edit</button>
+    <button mat-button [mat-dialog-close]=""
+        style="background-color: crimson;color: white;font-weight: 400;">Cancel</button>
+</div>
+<ngx-spinner bdColor="rgba(	237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: black">Processing...</p>
+</ngx-spinner>

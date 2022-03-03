@@ -25,6 +25,9 @@
             <div class="form-group">
                 <button mat-button cdkFocusInitial  (click)="editLevel()"
                 style="background-color: crimson;color: white;font-weight: 400;">Edit Level</button>
+                &nbsp;
+                <button mat-button cdkFocusInitial  (click)="deleteLevel()"
+                style="background-color: crimson;color: white;font-weight: 400;">Delete Level</button>
             </div>
             <h1 mat-dialog-title>Node Field Attributes</h1> 
             <div class="form-group">
@@ -49,9 +52,11 @@
                                 <td><button type="button" *ngIf="pd.friendlyname != 'Name' && pd.description != 'Description'" class="btn btn-secondary" (click)="clickEdit(pd)"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
                                 <td><button type="button" *ngIf="pd.friendlyname != 'Name' && pd.description != 'Description'" class="btn btn-danger" (click)="clickDelete(pd)"><i class="fa fa-trash"  aria-hidden="true"></i></button></td>         
                             </tr>
-                            <pagination-controls (pageChange)="p = $event"></pagination-controls> 
+                            
                         </tbody>                        
                     </table>
+
+                    <pagination-controls (pageChange)="p = $event"></pagination-controls> 
                 </div>
             </div>
 
@@ -109,12 +114,12 @@
             </div>           
             <div class="form-group" >
                 <button mat-button cdkFocusInitial  (click)="addAttributes()" *ngIf="divAddAtrributes" 
-                    style="background-color: crimson;color: white;font-weight: 400;" >Add Attributes</button>
+                    class="btn btn-md btn-primary"   >Add Attributes</button>
                 <button mat-button cdkFocusInitial  (click)="saveAttributes()" *ngIf="divEditAtrributes" 
-                  style="background-color: crimson;color: white;font-weight: 400;" >Edit Attributes</button>      
+                  class="btn btn-md btn-primary"   >Edit Attributes</button>      
                   &nbsp; 
                 <button mat-button [mat-dialog-close]=""
-                  style="background-color: crimson;color: white;font-weight: 400;">Cancel</button>
+                  class="btn btn-md btn-primary"   >Cancel</button>
             </div>
         <ngx-spinner bdColor="rgba(	237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
               <p style="font-size: 20px; color: black">Processing...</p>
@@ -198,7 +203,7 @@
                             <div class="form-group">
                                 <label style="font-size: medium;">{{item.questionName}}</label> <br>
                                 <button mat-button cdkFocusInitial (click)="OpenTargets()"
-                                    style="background-color: crimson;color: white;font-weight: 400;">Add/View Targets</button>
+                                    class="btn btn-md btn-primary"   >Add/View Targets</button>
                                 <!-- <div style="height: 5px;"></div> -->
                             </div>
                         </ng-container>
@@ -208,7 +213,7 @@
                             <div class="form-group">
                                 <label style="font-size: medium;">{{item.questionName}}</label> <br>
                                 <button mat-button cdkFocusInitial (click)="OpenExternalData()"
-                                    style="background-color: crimson;color: white;font-weight: 400;">Configure External Data</button>
+                                    class="btn btn-md btn-primary"   >Configure External Data</button>
                                 <!-- <div style="height: 5px;"></div> -->
                             </div>
                         </ng-container>
@@ -230,10 +235,13 @@
 
             <div class="form-group" >
                 <button mat-button cdkFocusInitial  (click)="addForm()" 
-                    style="background-color: crimson;color: white;font-weight: 400;" >Save</button>
+                    class="btn btn-md btn-primary"   >Save</button>
                     &nbsp; 
                 <button mat-button [mat-dialog-close]=""
                   style="background-color: crimson;color: white;font-weight: 400;">Cancel</button>
+                  &nbsp;
+                  <button mat-button cdkFocusInitial  (click)="deleteNode()"
+                style="background-color: crimson;color: white;font-weight: 400;">Delete Node</button>
             </div>
         <ngx-spinner bdColor="rgba(	237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
               <p style="font-size: 20px; color: black">Processing...</p>

@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { Text } from '@angular/compiler/src/i18n/i18n_ast';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -8,8 +9,9 @@ import { environment } from 'src/environments/environment';
 })
 export class FormbuilderService {
 
-  //readonly APIUrl='https://localhost:44305/1/';
-  readonly APIUrl = environment.API_FormURL;
+   //readonly APIUrl='https://localhost:44305/1/';
+   readonly APIUrl='https://app.terra.group/DSDFormWeb/1/';
+   //readonly APIUrl = environment.API_FormURL;
 
   constructor(private http:HttpClient) { }
 
@@ -42,7 +44,6 @@ export class FormbuilderService {
   getFormGroupsPerPage(formID:any,pageGuID:any):Observable<any[]>{
     return this.http.get<any>(this.APIUrl+'forms/'+formID+'/pages/'+pageGuID+'/groups');
   }
-
 
   addFormPage(data:any){
     return this.http.post(this.APIUrl+'forms/'+data.formID+'/pages',data);
@@ -138,8 +139,111 @@ export class FormbuilderService {
 
   unlockForm(formID:any,item:any){
     return this.http.patch(this.APIUrl+'Forms/'+formID+'/unlock',item);
+ }
+
+  getFormAttachments(formCaptureID:any): Observable<any[]> {
+    return this.http.get<any>(this.APIUrl + formCaptureID +'/FormAttachment')
+  }
+
+  addFormAttachments(data:any){
+    return this.http.post(this.APIUrl+'FormAttachment',data,{responseType: 'text'});
+  }
+
+  getFormPhotos(formCaptureID:any): Observable<any[]> {
+    return this.http.get<any>(this.APIUrl + formCaptureID +'/FormPhoto')
+  }
+
+  addFormPhotos(data:any){
+    return this.http.post(this.APIUrl+'FormPhoto',data,{responseType: 'text'});
+  }
+
+  UpdateFormVersion(formID:any){
+    return this.http.put(this.APIUrl+formID+'/UpdateFormVersion','',{responseType: 'text'});
+  }
+
+  getPublishedListOfForms():Observable<any[]>{
+    return this.http.get<any>(this.APIUrl+'getDynamicPublishedFormList');
+  }
+
+  getGroupType(groupGUID:any){
+    return this.http.get(this.APIUrl + groupGUID +'/getGroupType',{responseType: 'text'})
+  }
+
+  getFormComments(formCaptureID:any): Observable<any[]> {
+    return this.http.get<any>(this.APIUrl + formCaptureID +'/FormComment')
+  }
+
+  addFormComment(data:any){
+    return this.http.post(this.APIUrl+'AddFormComment',data,{responseType: 'text'});
+  }
+
+  updateFormComment(data:any,commentID:any){
+    return this.http.put(this.APIUrl+commentID+'/UpdateFormComment',data,{responseType: 'text'});
+  }
+
+  getLockedByUserName(userID:any){
+    return this.http.get(this.APIUrl + userID +'/getLockedUserName',{responseType: 'text'})
+  }
+
+  DeleteFile(AttachmentID:any){
+    return this.http.delete(this.APIUrl+AttachmentID+'/'+'DeleteFile',{responseType: 'text'});
+  }
+
+  DeleteComment(AttachmentID:any){
+    return this.http.delete(this.APIUrl+AttachmentID+'/'+'DeleteComment',{responseType: 'text'});
+  }
+
+  DeletePhoto(PhotoGUID:any){
+    return this.http.delete(this.APIUrl+PhotoGUID+'/'+'DeletePhoto',{responseType: 'text'});
+  }
+
+  PublishForm(formID:any){
+    return this.http.post(this.APIUrl+'Forms/forms/'+formID+'/PublishForm','',{responseType:'text'});
+  }
+
+  GetDisplayables(formID:any): Observable<any[]> {
+    return this.http.get<any>(this.APIUrl + formID +'/GetDisplayables')
+  }
+
+  getPageStatus(formCaptureID:any,pageGUID:any){
+    return this.http.get(this.APIUrl + formCaptureID +'/'+pageGUID+'/PageStatus',{responseType: 'text'})
+  }
+
+  modifyPageStatus(formCaptureID:any,pageGUID:any,data:any){
+    return this.http.post(this.APIUrl + formCaptureID +'/'+pageGUID+'/PageStatus',data,{responseType: 'text'});
+  }
+
+  insertSkipLogic(data:any){
+    return this.http.post(this.APIUrl + 'skipLogic',data,{responseType: 'text'});
+  }
+
+  GetSkipLogicRules(PageGUID:any,xmlElementName:any):Observable<any[]>{
+    return this.http.get<any>(this.APIUrl+PageGUID+'/'+xmlElementName+'/skipLogic');
+  }
+
+  DeleteSkipRule(PageGUID:any,xmlElementName:any){
+    return this.http.delete(this.APIUrl+PageGUID+'/'+xmlElementName+'/skipLogic',{responseType: 'text'});
+  }
+
+  insertAdvancedValidation(data:any){
+    return this.http.post(this.APIUrl + 'AdvancedValidation',data,{responseType: 'text'});
+  }
+
+  GetAdvancedValidation(PageGUID:any,xmlElementName:any):Observable<any[]>{
+    return this.http.get<any>(this.APIUrl+PageGUID+'/'+xmlElementName+'/AdvancedValidation');
+  }
+
+  DeleteAdvancedValidation(PageGUID:any,xmlElementName:any){
+    return this.http.delete(this.APIUrl+PageGUID+'/'+xmlElementName+'/AdvancedValidation',{responseType: 'text'});
+  }
+
+  getFormAttachCount(fieldName:any,formCaptureID:any){
+    return this.http.get(this.APIUrl + fieldName + '/' + formCaptureID +'/AttachCount',{responseType: 'text'})
+  }
+
+  getFormPhotoCount(fieldName:any,formCaptureID:any){
+    return this.http.get(this.APIUrl + fieldName +'/' + formCaptureID +'/PhotoCount',{responseType: 'text'})
   }
 
 //#endregion
-
 }
