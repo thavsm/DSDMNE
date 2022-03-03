@@ -46,6 +46,8 @@ export const ROUTES: RouteInfo[] = [{
             {path: 'appusers',title: 'Users', ab:'U'},
             {path: 'role',title: 'Roles', ab:'R'},
             {path: 'formroles',title: 'Forms', ab:'F'},
+            {path: 'location', title: 'location management', ab:'LM' , TreeCategoryID : 2},
+            {path: 'level', title: 'level management', ab:'LM' , TreeCategoryID : 3}
         ]
     },{
         path: '/pages',
@@ -62,8 +64,7 @@ export const ROUTES: RouteInfo[] = [{
             {path: 'lock', title: 'Lock Screen Page', ab:'LSP'},
             {path: 'user', title: 'User Page', ab:'UP'}
         ]
-    },
-    
+    },  
     ,{
         path: '/hierarchy-management',
         title: 'Management',
@@ -73,8 +74,8 @@ export const ROUTES: RouteInfo[] = [{
         collapse: 'hierarchy-management',
         children: [
             {path: 'HierarchyManagement', title: 'hierarchy management', ab:'HM', TreeCategoryID : 1},
-            {path: 'GeographyManagement', title: 'location management', ab:'LM' , TreeCategoryID : 2},
-            {path: 'LevelManagement', title: 'level management', ab:'LM' , TreeCategoryID : 3}
+            // {path: 'GeographyManagement', title: 'location management', ab:'LM' , TreeCategoryID : 2},
+            // {path: 'LevelManagement', title: 'level management', ab:'LM' , TreeCategoryID : 3}
         ]
     },
 
@@ -83,14 +84,20 @@ export const ROUTES: RouteInfo[] = [{
         title: 'Weather',
         type: 'link',
         icontype: 'cloud',
-        role: [],
+        role: []
     },
     {
         path: '/process',
         title: 'process',
         type: 'link',
         icontype: 'image',
-        role: [],
+        role: []
+    },{
+        path: '/indicator-report',
+        title: 'Indicator Approval',
+        type: 'link',
+        icontype: 'image',
+        role: []
     },
     {
         path: '',
@@ -105,8 +112,8 @@ export const ROUTES: RouteInfo[] = [{
             { path: 'formCapture', title: 'Form Capture', ab: 'FC' },
             { path: 'formInbox', title: 'Form Inbox', ab: 'FI' }
         ]
-    },{
-
+    },
+    {
         path: '',
         title: 'Data Management',
         type: 'sub',
@@ -115,10 +122,10 @@ export const ROUTES: RouteInfo[] = [{
         collapse: 'DataMangementList',
         children: [
 
-            {path: 'externalDI',title: 'External Data Import',ab: 'EDI'}
+            {path: 'externalDI',title: 'External Data Import',ab: 'EDI'},
+            {path: 'internalDI',title: 'Internal Data Import',ab: 'IDI'}
 
         ]
-
     }
 ];
 @Component({

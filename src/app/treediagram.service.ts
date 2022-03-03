@@ -13,10 +13,11 @@ import { ExternalEdit } from './hierarchy-management/externaldata-add/externalda
 export class TreediagramService {
   
  
-  //readonly API_URL ='https://localhost:44305/api/';
+  readonly API_URL ='https://localhost:44305/api/';
+  readonly APIUrl ='https://localhost:44305/api/';
 
-  readonly API_URL = environment.API_URL + '/'
-  readonly APIUrl = environment.API_FormURL;
+  //readonly API_URL = environment.API_URL + '/'
+  //readonly APIUrl = environment.API_FormURL;
 
   constructor(private http: HttpClient) { }
 
@@ -227,6 +228,10 @@ export class TreediagramService {
 
   getExternalTables(Connstring :any){
     return this.http.get<any>(this.API_URL+'Trees/getExternalTables/'+Connstring);
+  }
+
+  getCalculationsReport(){
+    return this.http.get<any>(this.API_URL+'Trees/getCalculationsReport')
   }
 
   getExternalTableColumns(Connstring :any, Table : any){

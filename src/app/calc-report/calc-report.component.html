@@ -1,0 +1,109 @@
+<div class="main-content">
+    <div class="container-fluid">
+      <div class="container-fluid">
+        <div class="header text-center">
+          <h3 class="title" style="font-weight: bold;">Indicator Approval</h3>
+          <kendo-grid [kendoGridBinding]="gridView" [pageSize]="10" [pageable]="true" [height]="700" 
+           [filterable]="true" [sortable]="true" [groupable]="true">
+
+            <kendo-grid-column field="provincialProgram" title="Program" [width]="130">
+            </kendo-grid-column>
+  
+            <kendo-grid-column field="provincialSubProgram" title="Sub-Program" [width]="130">
+            </kendo-grid-column>
+  
+            <kendo-grid-column field="indicatorNr" title="Indicator" [width]="120">
+            </kendo-grid-column>
+  
+            <kendo-grid-column field="january" title="Jan">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.january}}</u></a>
+              </ng-template>
+            </kendo-grid-column>
+            <kendo-grid-column field="february" title="Feb">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.february}}</u></a>
+              </ng-template>
+            </kendo-grid-column>
+  
+            <kendo-grid-column field="march" title="March">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.march}}</u></a>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column field="april" title="April">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.april}}</u></a>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column field="may" title="May">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.may}}</u></a>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column field="june" title="June">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.june}}</u></a>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column field="july" title="July">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.july}}</u></a>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column field="august" title="Aug">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.august}}</u></a>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column field="september" title="Sept">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.september}}</u></a>
+              </ng-template>
+            </kendo-grid-column>
+
+         
+            <kendo-grid-column field="october" title="Oct">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.october}}</u></a>
+              </ng-template>
+            </kendo-grid-column>
+            
+            <kendo-grid-column field="november" title="Nov">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.november}}</u></a>
+              </ng-template>
+            </kendo-grid-column>
+
+            <kendo-grid-column field="december" title="Dec">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.december}}</u></a>
+              </ng-template>
+            </kendo-grid-column>
+          </kendo-grid>
+        </div>
+      </div>
+      <div mat-dialog-actions>
+        <mat-form-field  appearance="fill">
+          <mat-label>Comment</mat-label>
+          <textarea matInput
+                    cdkTextareaAutosize
+                    #autosize="cdkTextareaAutosize"
+                    cdkAutosizeMinRows="1"
+                    cdkAutosizeMaxRows="5"></textarea>
+        </mat-form-field>      
+      </div>        
+      <div mat-dialog-actions>
+        <button mat-button cdkFocusInitial class="btn btn-md btn-primary">Approve</button>
+    </div>
+    </div>
+
+    <ngx-spinner bdColor="rgba(	237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
+      <p style="font-size: 20px; color: black">Processing...</p>
+    </ngx-spinner>

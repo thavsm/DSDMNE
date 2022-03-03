@@ -70,6 +70,10 @@ export const AppRoutes: Routes = [
         loadChildren: () => import('./form-inbox/form-inbox.module').then(m => m.FormInboxModule)
       },
       {
+        path: 'indicator-report',
+        loadChildren: () => import('./calc-report/calc-report.module').then(m => m.CalcReportModule)
+      },
+      {
         path: 'hierarchy-management',      
         loadChildren: () => import('./hierarchy-management/hierarchy-management.module').then(m => m.HierarchyManagementModule)      
       },
@@ -88,6 +92,10 @@ export const AppRoutes: Routes = [
     {
         path: 'usermanager',
         loadChildren: () => import('./usermanager/usermanager.module').then(m => m.UserManagerModule)
+    },{
+
+      path: 'internalDI',
+      loadChildren: () => import('./data-management/internal-data-import/internal-data-import.module').then(m => m.InternalDataImportModule)
     },
     {
       path: 'externalDI',

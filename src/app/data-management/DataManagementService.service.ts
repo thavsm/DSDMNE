@@ -28,7 +28,7 @@ export class DataManagementService {
   }
 
 
-  updateExternalDatas(dataServiceID:number,data:any){
+  updateExternalDatas(dataServiceID:number ,data:any){
     return this.http.put(this.API_URL+'DataServices/'+dataServiceID,data);
   }
   public getintlDataList():Observable<any[]>{
@@ -41,4 +41,21 @@ export class DataManagementService {
   public getextlDataList(){
     return this.http.get<any>(this.API_URL+'DataServices/');
   }
+
+  public getDataImportTypes(){
+    return this.http.get<any>(this.API_URL+'InternalData/getDataImportTypes');
+  }
+
+  public getDataUploadType(){
+    return this.http.get<any>(this.API_URL+'InternalData/getDataUploadType');
+  }
+
+  public getDatatableStructure(){
+    return this.http.get<any>(this.API_URL+'InternalData/getDatatableStructure');
+  }
+
+  public getLookupFieldNameByUploadId(UploadID:number){
+    return this.http.get<any>(this.API_URL+'InternalData/getLookupFieldNameByUploadId/' +UploadID);
+  }
+
 }

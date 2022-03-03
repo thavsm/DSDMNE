@@ -144,9 +144,9 @@
     
     <div class="form-group">
         <button mat-button  (click)="addCalculation()" 
-          style="background-color: crimson;color: white;font-weight: 400;">Add Calculation</button>&nbsp;
+          class="btn btn-md btn-primary">Add Calculation</button>&nbsp;
           <button mat-button   (click)="Clear()" 
-          style="background-color: crimson;color: white;font-weight: 400;">Clear</button>
+          class="btn btn-md btn-primary">Clear</button>
     </div>
       
     <ng-container>
@@ -172,15 +172,15 @@
     
     <div class="form-group" *ngIf="divAdd">
         <button mat-button  
-          style="background-color: crimson;color: white;font-weight: 400;" (click)="addCompCalculation()"  [disabled]="isAddDisabled">Add</button>
+        class="btn btn-md btn-primary" (click)="addCompCalculation()"  [disabled]="isAddDisabled">Add</button>
     </div>
       
     <div class="form-group" *ngIf="divEdit">
         <button mat-button  
-          style="background-color: crimson;color: white;font-weight: 400;" (click)="EditCompCalculation()">Edit</button>
+        class="btn btn-md btn-primary" (click)="EditCompCalculation()">Edit</button>
           <!-- &nbsp;
         <button mat-button  
-          style="background-color: crimson;color: white;font-weight: 400;" (click)="RefreshCalculation()">Refresh Calculation</button> -->
+           class="btn btn-md btn-primary" (click)="RefreshCalculation()">Refresh Calculation</button> -->
     </div>
 
     <div class="form-group">
@@ -221,7 +221,7 @@
 
     <div class="form-group">
         <button mat-button  [mat-dialog-close]=""
-          style="background-color: crimson;color: white;font-weight: 400;">Cancel</button>
+        class="btn btn-md btn-primary">Cancel</button>
     </div>
 
 </div>

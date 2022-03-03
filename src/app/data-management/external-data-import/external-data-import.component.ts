@@ -51,7 +51,7 @@ export class ExternalDataImportComponent implements OnInit {
 
       const dialogRef = this.dialog.open(AddEditExternalDataComponent, {
         width: '500px',
-        height: '700px',
+        height: '720px',
         data: this.formExternal,
         disableClose:true
       });
@@ -76,7 +76,7 @@ export class ExternalDataImportComponent implements OnInit {
       }
       const dialogRef = this.dialog.open(AddEditExternalDataComponent, {
         width: '500px',
-        height: '700px',
+        height: '720px',
         data: this.formExternal,
         disableClose:true
       });
