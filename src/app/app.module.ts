@@ -117,43 +117,41 @@ export class MaterialModule {}
 
 
 @NgModule({
-declarations: [
-AppComponent,
-AdminLayoutComponent,
-AuthLayoutComponent
-],
-imports: [
-BrowserModule,
-AppRoutingModule,
-CommonModule,
-BrowserAnimationsModule,
-FormsModule,
-ReactiveFormsModule,
-RouterModule.forRoot(AppRoutes,{
-useHash: false
-}),
-HttpClientModule,
+  declarations: [
+    AppComponent,
+        AdminLayoutComponent,
+        AuthLayoutComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    CommonModule,
+    BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule.forRoot(AppRoutes,{
+      useHash: true
+    }),
+    HttpClientModule,
 
-
-
-MaterialModule,
-SidebarModule,
-NavbarModule,
-FooterModule,
-FixedpluginModule,
-MatProgressSpinnerModule,
-],
-providers: [
-MatNativeDateModule,
-DatePipe,
-PaginationService,
-UserService, {
-provide: HTTP_INTERCEPTORS,
-useClass: AuthInterceptor,
-multi: true
-}
-],
-bootstrap: [AppComponent]
+    MaterialModule,
+    SidebarModule,
+    NavbarModule,
+    FooterModule,
+    FixedpluginModule,
+    MatProgressSpinnerModule,
+  ],
+  providers: [
+    MatNativeDateModule,
+    DatePipe,
+    PaginationService,
+    UserService, {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
 

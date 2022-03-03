@@ -35,12 +35,12 @@ export class NavbarComponent implements OnInit {
       const body = document.getElementsByTagName('body')[0];
 
       if (misc.sidebar_mini_active === true) {
-          body.classList.remove('sidebar-mini');
+         // body.classList.remove('sidebar-mini');
           misc.sidebar_mini_active = false;
 
       } else {
           setTimeout(function() {
-              body.classList.add('sidebar-mini');
+            //  body.classList.add('sidebar-mini');
 
               misc.sidebar_mini_active = true;
           }, 300);
@@ -62,17 +62,17 @@ export class NavbarComponent implements OnInit {
 
       if (misc.hide_sidebar_active === true) {
           setTimeout(function() {
-              body.classList.remove('hide-sidebar');
+              //body.classList.remove('hide-sidebar');
               misc.hide_sidebar_active = false;
           }, 300);
           setTimeout(function () {
-              sidebar.classList.remove('animation');
+              //sidebar.classList.remove('animation');
           }, 600);
           sidebar.classList.add('animation');
 
       } else {
           setTimeout(function() {
-            body.classList.add('hide-sidebar');
+            //body.classList.add('hide-sidebar');
               // $('.sidebar').addClass('animation');
               misc.hide_sidebar_active = true;
           }, 300);
@@ -127,7 +127,7 @@ export class NavbarComponent implements OnInit {
         setTimeout(function(){
             // toggleButton.classList.add('toggled');
         }, 500);
-        body.classList.add('nav-open');
+       // body.classList.add('nav-open');
         setTimeout(function() {
             // $toggle.classList.add('toggled');
         }, 430);
@@ -143,22 +143,22 @@ export class NavbarComponent implements OnInit {
         }
 
         setTimeout(function() {
-            $layer.classList.add('visible');
+            //$layer.classList.add('visible');
         }, 100);
 
         $layer.onclick = () => { //asign a function
-          body.classList.remove('nav-open');
+          //body.classList.remove('nav-open');
           this.mobile_menu_visible = 0;
           this.sidebarVisible = false;
 
-          $layer.classList.remove('visible');
+        //  $layer.classList.remove('visible');
           setTimeout(function() {
               $layer.remove();
             //   $toggle.classList.remove('toggled');
           }, 400);
         };
 
-        body.classList.add('nav-open');
+        //body.classList.add('nav-open');
         this.mobile_menu_visible = 1;
         this.sidebarVisible = true;
     };
@@ -170,9 +170,9 @@ export class NavbarComponent implements OnInit {
         $layer.setAttribute('class', 'close-layer');
 
         this.sidebarVisible = false;
-        body.classList.remove('nav-open');
-        // $('html').removeClass('nav-open');
-        body.classList.remove('nav-open');
+        // body.classList.remove('nav-open');
+        // // $('html').removeClass('nav-open');
+        // body.classList.remove('nav-open');
         if ($layer) {
             $layer.remove();
         }

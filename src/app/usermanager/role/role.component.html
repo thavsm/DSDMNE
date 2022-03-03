@@ -7,11 +7,11 @@
               <div class="card-icon">
                 <i class="material-icons">assignment</i>
               </div>
-              <h4 class="card-title">Roles</h4>
+              <h4 class="card-title">Designations</h4>
             </div>
             <div class="card-body p-2">
               <div class="row">
-                <div class="col-md-8">
+                <!-- <div class="col-md-8">
                     <mat-form-field appearance="standard">
                         <mat-label>Add New Role</mat-label>
                         <input matInput type="text" [(ngModel)]="roleName" (input)="validateControl()">
@@ -22,16 +22,16 @@
                 <div class="col-md-4">
                   <button id="btnSearch" class="btn btn-primary mr-1" (click)='addRole()' [disabled]="!isValid">Add Role</button>
           
-                </div>
+                </div> -->
               </div>
               <p *ngIf="!data"><em>Loading...</em></p>
               <table id="tblProcess" class="table table-striped">
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>Role</th>
+                    <th>Designation</th>
                     <th>No of Users</th>
-                    <th>Menus</th>
+                    <th>Access</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -40,7 +40,7 @@
                     <td>{{ obj['role'] }}</td>
                     <td><span class="badge badge-primary" onclick="clickEdit(obj)" >{{ obj['users'] }}</span></td>
                     <td>
-                      <button mat-icon-button (click)="clickEdit(obj)">
+                      <button mat-icon-button (click)="clickEditAccess(obj)">
                       <mat-icon class="mat-18">edit</mat-icon>
                       </button>
                   </td>

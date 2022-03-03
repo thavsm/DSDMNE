@@ -9,6 +9,7 @@ import { FormPreviewComponent } from '../form-preview/form-preview.component';
 import { UserService } from '../shared/user.service';
 import { Router } from '@angular/router';
 import{ GlobalConstants } from '../shared/global-constants';
+import { FormControl } from '@angular/forms';
 declare var $: any;
 
 @Component({
@@ -1583,7 +1584,7 @@ export class FormDesignerComponent implements OnInit {
 
     removeField(i: any) {
         Swal.fire({
-            title: 'Are you sure want to remove this field?',
+            title: 'Are you sure want to delete this field?',
             showCancelButton: true,
             confirmButtonText: 'Yes',
             cancelButtonText: 'No',
@@ -1599,11 +1600,11 @@ export class FormDesignerComponent implements OnInit {
                     if (this.formDesign[i].pageGUID === "pageGUID") {
                         this.formDesign.splice(i, 1);
                         this.fields = this.updateCalculationFieldList();
-                        this.showNotification('top', 'center', 'The fields has been deleted Successfully!', 'Success.', 'success');
+                        this.showNotification('top', 'center', 'The field has been deleted Successfully!', '', 'success');
                     }
                     else {
                         this.formDesign[i].isActive = 'false';
-                        this.showNotification('top', 'center', 'The fields has been deleted Successfully!', 'Success.', 'success');
+                        this.showNotification('top', 'center', 'The field has been deleted Successfully!', '', 'success');
                     }
                 }
             }
@@ -1623,11 +1624,11 @@ export class FormDesignerComponent implements OnInit {
                 this.formData = result;
                 this.checkStatus();
                 if (res === "Form published Successfully!") {
-                    this.showNotification('top', 'center', res, 'Success.', 'success');
+                    this.showNotification('top', 'center', res, '', 'success');
                     this.spinner.hide();
                 }
                 else {
-                    this.showNotification('top', 'center', res, 'Error.', 'danger');
+                    this.showNotification('top', 'center', res, '', 'danger');
                 }
             })
         });
@@ -1679,7 +1680,7 @@ export class FormDesignerComponent implements OnInit {
                                     this.formData.publishStatus = 0;
                                     this.service.updateDynamicFormDetails(this.formData.formID, this.formData).subscribe(result => {
                                         this.formData = result;
-                                        this.checkStatus();
+                                        //this.checkStatus();
                                         this.formDesign = [];
                                         this.getDesignPerPage(page.pageGUID);
                                         this.currentPage = page;
@@ -1688,20 +1689,21 @@ export class FormDesignerComponent implements OnInit {
                                     });
                                 },
                                     error => {
-                                        this.showNotification('top', 'center', 'Error saving page fields, please try again', 'Error.', 'danger');
+                                        this.showNotification('top', 'center', 'Error saving page fields, please try again', '', 'danger');
                                         this.spinner.hide();
                                     });
                             }
                         }
                         else {
                             errorMessage = "Database names must be unique";
-                            this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
+                            this.showNotification('top', 'center', errorMessage, '', 'danger');
                             this.formDesign.forEach((element, index) => {
                                 element.pageGUID = "pageGUID";
                             });
                         }
                     }
                     else if (this.currentPage.name !== "Page 1") {
+                        
                         if (count1 == 0) {
                             if (errorMessage === "Please ensure number ") {
                                 this.spinner.show();
@@ -1709,7 +1711,7 @@ export class FormDesignerComponent implements OnInit {
                                     this.formData.publishStatus = 0;
                                     this.service.updateDynamicFormDetails(this.formData.formID, this.formData).subscribe(result => {
                                         this.formData = result;
-                                        this.checkStatus();
+                                        //this.checkStatus();
                                         this.formDesign = [];
                                         this.getDesignPerPage(page.pageGUID);
                                         this.currentPage = page;
@@ -1717,7 +1719,7 @@ export class FormDesignerComponent implements OnInit {
                                         this.spinner.hide();
                                     });
                                 }, error => {
-                                    this.showNotification('top', 'center', 'Error saving page fields, please try again', 'Error.', 'danger');
+                                    this.showNotification('top', 'center', 'Error saving page fields, please try again', '', 'danger');
                                     this.spinner.hide();
                                 });
                             }
@@ -1727,7 +1729,7 @@ export class FormDesignerComponent implements OnInit {
                             this.formDesign.forEach((element, index) => {
                                 element.pageGUID = "pageGUID";
                             });
-                            this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
+                            this.showNotification('top', 'center', errorMessage, '', 'danger');
                         }
                     }
                     else {
@@ -1736,7 +1738,7 @@ export class FormDesignerComponent implements OnInit {
                             this.formDesign.forEach((element, index) => {
                                 element.pageGUID = "pageGUID";
                             });
-                            this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
+                            this.showNotification('top', 'center', errorMessage, '', 'danger');
                         }
                     }
                 }
@@ -1745,7 +1747,7 @@ export class FormDesignerComponent implements OnInit {
                     this.formDesign.forEach((element, index) => {
                         element.pageGUID = "pageGUID";
                     });
-                    this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
+                    this.showNotification('top', 'center', errorMessage, '', 'danger');
                 }
             }
             else {
@@ -1883,19 +1885,18 @@ export class FormDesignerComponent implements OnInit {
                     this.service.deleteFormPage(page.pageGUID, page).subscribe(data => {
                         this.spinner.hide();
                         this.refreshPageList();
-                        this.showNotification('top', 'center', 'The Page and its Fields has Deleted Successfully!', 'Success.', 'success');
+                        this.showNotification('top', 'center', 'The Page and its Fields has been Deleted Successfully!', '', 'success');
                     },
                         error => {
-                            this.showNotification('top', 'center', 'Error deleting page and its field, please try again', 'Error.', 'danger');
+                            this.showNotification('top', 'center', 'Error deleting page and its field, please try again', '', 'danger');
                             this.spinner.hide();
                         });
                 }
             })
         }
         else {
-            this.showNotification('top', 'center', 'You cannot delete the first page of the form', 'Error.', 'danger');
+            this.showNotification('top', 'center', 'You cannot delete the first page of the form', '', 'danger');
         }
-
     }
 
     drop(event: any) {
@@ -3475,7 +3476,7 @@ export class FormDesignerComponent implements OnInit {
             }
         }
         else {
-            this.showNotification('top', 'center', 'Please select a field/operation before adding to calculation!', 'Error.', 'danger');
+            this.showNotification('top', 'center', 'Please select a field/operation before adding to calculation!', '', 'danger');
         }
     }
 
@@ -3518,21 +3519,21 @@ export class FormDesignerComponent implements OnInit {
                             this.service.updateDynamicFormDetails(this.formData.formID, this.formData).subscribe(result => {
                                 this.formData = result;
                                 this.checkStatus();
-                                this.showNotification('top', 'center', 'Page Fields Saved Successfully!', 'Success.', 'success');
+                                this.showNotification('top', 'center', 'Page Fields Saved Successfully!', '', 'success');
                                 this.spinner.hide();
                                 this.getDesignPerPage(pageGUID);
                                 this.refreshGroupSectionList();
                             });
                         },
                             error => {
-                                this.showNotification('top', 'center', 'Error saving page fields, please try again', 'Error.', 'danger');
+                                this.showNotification('top', 'center', 'Error saving page fields, please try again', '', 'danger');
                                 this.spinner.hide();
                             });
                     }
                 }
                 else {
                     errorMessage = "Database names must be unique";
-                    this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
+                    this.showNotification('top', 'center', errorMessage, '', 'danger');
                     this.formDesign.forEach((element, index) => {
                         element.pageGUID = "pageGUID";
                     });
@@ -3550,10 +3551,10 @@ export class FormDesignerComponent implements OnInit {
                                 this.spinner.hide();
                                 this.getDesignPerPage(pageGUID);
                                 this.refreshGroupSectionList();
-                                this.showNotification('top', 'center', 'Page Fields Saved Successfully!', 'Success.', 'success');
+                                this.showNotification('top', 'center', 'Page Fields Saved Successfully!', '', 'success');
                             });
                         }, error => {
-                            this.showNotification('top', 'center', 'Error saving page fields, please try again', 'Error.', 'danger');
+                            this.showNotification('top', 'center', 'Error saving page fields, please try again', '', 'danger');
                             this.spinner.hide();
                         });
                     }
@@ -3563,7 +3564,7 @@ export class FormDesignerComponent implements OnInit {
                     this.formDesign.forEach((element, index) => {
                         element.pageGUID = "pageGUID";
                     });
-                    this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
+                    this.showNotification('top', 'center', errorMessage, '', 'danger');
                 }
             }
             else {
@@ -3572,7 +3573,7 @@ export class FormDesignerComponent implements OnInit {
                     this.formDesign.forEach((element, index) => {
                         element.pageGUID = "pageGUID";
                     });
-                    this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
+                    this.showNotification('top', 'center', errorMessage, '', 'danger');
                 }
             }
         }
@@ -3581,7 +3582,7 @@ export class FormDesignerComponent implements OnInit {
             this.formDesign.forEach((element, index) => {
                 element.pageGUID = "pageGUID";
             });
-            this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
+            this.showNotification('top', 'center', errorMessage, '', 'danger');
         }
     }
 
@@ -3601,10 +3602,10 @@ export class FormDesignerComponent implements OnInit {
             this.formDesign[i].questionName = JSON.parse(JSON.stringify(data)).name;
             this.refreshGroupSectionList();
             this.spinner.hide();
-            this.showNotification('top', 'center', 'Section Saved Successfully!', 'Success.', 'success');
+            this.showNotification('top', 'center', 'Section Saved Successfully!', '', 'success');
         },
             error => {
-                this.showNotification('top', 'center', 'Error saving section, please try again', 'Error.', 'danger');
+                this.showNotification('top', 'center', 'Error saving section, please try again', '', 'danger');
                 this.spinner.hide();
             });
     }
@@ -3625,10 +3626,10 @@ export class FormDesignerComponent implements OnInit {
             this.formDesign[i].questionName = JSON.parse(JSON.stringify(data)).name;
             this.refreshGroupSectionList();
             this.spinner.hide();
-            this.showNotification('top', 'center', 'Group Saved Successfully!', 'Success', 'success');
+            this.showNotification('top', 'center', 'Group Saved Successfully!', '', 'success');
         },
             error => {
-                this.showNotification('top', 'center', 'Error saving group, please try again', 'Error.', 'danger');
+                this.showNotification('top', 'center', 'Error saving group, please try again', '', 'danger');
                 this.spinner.hide();
             });
     }
@@ -3647,12 +3648,12 @@ export class FormDesignerComponent implements OnInit {
         this.service.addGroupOrSection(obj, this.currentPage.pageGUID).subscribe(data => {
             this.formDesign[i].groupGUID = JSON.parse(JSON.stringify(data)).groupGUID;
             this.formDesign[i].questionName = JSON.parse(JSON.stringify(data)).name;
-            this.showNotification('top', 'center', 'Group Saved Successfully!', 'Success', 'success');
+            this.showNotification('top', 'center', 'Group Saved Successfully!', '', 'success');
             this.refreshGroupSectionList();
             this.spinner.hide();
         },
             error => {
-                this.showNotification('top', 'center', 'Error saving group, please try again', 'Error.', 'danger');
+                this.showNotification('top', 'center', 'Error saving group, please try again', '', 'danger');
                 this.spinner.hide();
             });
     }
@@ -3703,6 +3704,7 @@ export class FormDesignerComponent implements OnInit {
                                         this.formData = result;
                                         this.checkStatus();
                                         this.spinner.hide();
+                                        localStorage.setItem('formPreviewDetails',JSON.stringify(this.formData));
                                         const dialogRef = this.dialog.open(FormPreviewComponent, {
                                             width: '85%',
                                             height: '85%',
@@ -3714,14 +3716,14 @@ export class FormDesignerComponent implements OnInit {
                                     });
                                 },
                                     error => {
-                                        this.showNotification('top', 'center', 'Error saving page fields, please try again before previewing', 'Error.', 'danger');
+                                        this.showNotification('top', 'center', 'Error saving page fields, please try again before previewing', '', 'danger');
                                         this.spinner.hide();
                                     });
                             }
                         }
                         else {
                             errorMessage = "Database names must be unique";
-                            this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
+                            this.showNotification('top', 'center', errorMessage, '', 'danger');
                             this.formDesign.forEach((element, index) => {
                                 element.pageGUID = "pageGUID";
                             });
@@ -3737,6 +3739,7 @@ export class FormDesignerComponent implements OnInit {
                                         this.formData = result;
                                         this.checkStatus();
                                         this.spinner.hide();
+                                        localStorage.setItem('formPreviewDetails', JSON.stringify(this.formData));
                                         const dialogRef = this.dialog.open(FormPreviewComponent, {
                                             width: '85%',
                                             height: '85%',
@@ -3747,7 +3750,7 @@ export class FormDesignerComponent implements OnInit {
                                         });
                                     });
                                 }, error => {
-                                    this.showNotification('top', 'center', 'Error saving page fields, please try again', 'Error.', 'danger');
+                                    this.showNotification('top', 'center', 'Error saving page fields, please try again', '', 'danger');
                                     this.spinner.hide();
                                 });
                             }
@@ -3757,7 +3760,7 @@ export class FormDesignerComponent implements OnInit {
                             this.formDesign.forEach((element, index) => {
                                 element.pageGUID = "pageGUID";
                             });
-                            this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
+                            this.showNotification('top', 'center', errorMessage, '', 'danger');
                         }
                     }
                     else {
@@ -3766,7 +3769,7 @@ export class FormDesignerComponent implements OnInit {
                             this.formDesign.forEach((element, index) => {
                                 element.pageGUID = "pageGUID";
                             });
-                            this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
+                            this.showNotification('top', 'center', errorMessage, '', 'danger');
                         }
                     }
                 }
@@ -3775,7 +3778,7 @@ export class FormDesignerComponent implements OnInit {
                     this.formDesign.forEach((element, index) => {
                         element.pageGUID = "pageGUID";
                     });
-                    this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
+                    this.showNotification('top', 'center', errorMessage, '', 'danger');
                 }
             }
         })
@@ -3825,13 +3828,13 @@ export class FormDesignerComponent implements OnInit {
             return el.fieldType.value !== "PageTitle";
         });
         localStorage.setItem('copiedPage', JSON.stringify(data));
-        this.showNotification('top', 'center', 'Page Fields Copied!', 'Success.', 'success');
+        this.showNotification('top', 'center', 'Page Fields Copied!', '', 'success');
     }
 
     pastePage() {
         let data: any[] = JSON.parse(localStorage.getItem('copiedPage') || '{}');
         merge(this.formDesign, data);
-        this.showNotification('top', 'center', 'Page Fields Copied!', 'Success.', 'success');
+        this.showNotification('top', 'center', 'Page Fields Pasted!', '', 'success');
     }
 
     saveSkipRule(Option: any, Field: any, Condition: any, Value: any, item: any) {
@@ -3848,12 +3851,12 @@ export class FormDesignerComponent implements OnInit {
                 "xmlElementName": item.fieldName
             }
             this.service.insertSkipLogic(obj).subscribe(res => {
-                this.showNotification('top', 'center', 'Skip ruled saved successfully!', 'Success.', 'success');
+                this.showNotification('top', 'center', 'Skip ruled saved successfully!', '', 'success');
                 this.spinner.hide();
             });
         }
         else {
-            this.showNotification('top', 'center', 'Error saving skip rule, please choose a skip option,field and enter a value before saving', 'Error.', 'danger');
+            this.showNotification('top', 'center', 'Error saving skip rule, please choose a skip option,field and enter a value before saving', '', 'danger');
             this.spinner.hide();
         }
     }
@@ -3871,7 +3874,7 @@ export class FormDesignerComponent implements OnInit {
             "xmlElementName": ""
         }
         this.service.DeleteSkipRule(this.currentPage.pageGUID, item.fieldName).subscribe(res => {
-            this.showNotification('top', 'center', 'Skip ruled deleted successfully!', 'Success.', 'success');
+            this.showNotification('top', 'center', 'Skip ruled deleted successfully!', '', 'success');
             item.skipRules = obj;
             this.spinner.hide();
         });
@@ -3909,12 +3912,12 @@ export class FormDesignerComponent implements OnInit {
                 "field": item.fieldName
             }
             this.service.insertAdvancedValidation(obj).subscribe(res => {
-                this.showNotification('top', 'center', 'Validation ruled saved successfully!', 'Success.', 'success');
+                this.showNotification('top', 'center', 'Validation ruled saved successfully!', '', 'success');
                 this.spinner.hide();
             });
         }
         else {
-            this.showNotification('top', 'center', 'Error saving skip rule, please choose a validation option enter a value before saving', 'Error.', 'danger');
+            this.showNotification('top', 'center', 'Error saving skip rule, please choose a validation option enter a value before saving', '', 'danger');
             this.spinner.hide();
         }
     }
@@ -3943,5 +3946,58 @@ export class FormDesignerComponent implements OnInit {
                 '<a href="{3}" target="{4}" data-notify="url"></a>' +
                 '</div>'
         });
+    }
+
+    //Remove blank space when pasting field name and and data export name
+    removeBlankSpaceFieldName(atom:any){
+        atom.fieldName=atom.fieldName.replace(/\s/g, "");
+    }
+
+    removeBlankSpaceDataExportName(item:any){
+        item.dataExportName=item.dataExportName.replace(/\s/g, "");
+    }
+
+    //Date validation
+    validateDateFriendlyName(item:any){
+        // if(item.xmlElementName.toLowerCase()==="date"){
+        //     item.xmlElementName=item.xmlElementName.replace(item.xmlElementName, "");
+        //     this.showNotification('top', 'center', 'Friendly name cannot be date', '', 'danger');
+        // }
+    }
+
+    validateDateFieldName(item:any){
+        if(item.fieldName.toLowerCase()==="date"){
+            item.fieldName=item.fieldName.replace(item.fieldName, "");
+            this.showNotification('top', 'center', 'Database name cannot be date', '', 'danger');
+        }
+    }
+
+    validateDateDataExportName(item:any){
+        if(item.dataExportName.toLowerCase()==="date"){
+            item.dataExportName=item.dataExportName.replace(item.dataExportName, "");
+            this.showNotification('top', 'center', 'Data Export Name cannot be date', '', 'danger');
+        }
+    }
+
+    //Time validation
+    validateTimeFriendlyName(item: any) {
+        // if(item.xmlElementName.toLowerCase()==="time"){
+        //     item.xmlElementName=item.xmlElementName.replace(item.xmlElementName, "");
+        //     this.showNotification('top', 'center', 'Friendly name cannot be time', '', 'danger');
+        // }
+    }
+    
+    validateTimeFieldName(item:any){
+        if(item.fieldName.toLowerCase()==="time"){
+            item.fieldName=item.fieldName.replace(item.fieldName, "");
+            this.showNotification('top', 'center', 'Database name cannot be time', '', 'danger');
+        }
+    }
+
+    validateTimeDataExportName(item:any){
+        if(item.dataExportName.toLowerCase()==="time"){
+            item.dataExportName=item.dataExportName.replace(item.dataExportName, "");
+            this.showNotification('top', 'center', 'Data Export Name cannot be time', '', 'danger');
+        }
     }
 }

@@ -205,7 +205,7 @@ export class AddFormComponent implements OnInit {
           "pageGUID": this.currentPage.pageGUID
         }
         this.service.modifyPageStatus(this.formData.formCaptureID,this.currentPage.pageGUID,pageStatus).subscribe(result=>{
-          this.showNotification('top', 'center', 'Page data has been saved Successfully!', 'Success.', 'success');
+          this.showNotification('top', 'center', 'Page data has been saved Successfully!', '', 'success');
           this.currentPage.color="green";
           this.formData.state='edit';
           var index = -1;
@@ -238,7 +238,7 @@ export class AddFormComponent implements OnInit {
           "pageGUID": this.currentPage.pageGUID
         }
         this.service.modifyPageStatus(this.formData.formCaptureID,this.currentPage.pageGUID,pageStatus).subscribe(result=>{
-          this.showNotification('top', 'center', 'Page data has been saved Successfully!', 'Success.', 'success');
+          this.showNotification('top', 'center', 'Page data has been saved Successfully!', '', 'success');
           this.currentPage.color="green";
           this.formData.state='edit';
           var index = -1;
@@ -252,7 +252,6 @@ export class AddFormComponent implements OnInit {
           if ((index !== -1) && ((index - 1) !== -1)) {
             this.currentPage = this.pages[index - 1];
             this.pageStatus=this.currentPage.name;
-            alert(this.currentPage.name);
             this.getDesignPerPage(this.currentPage.pageGUID);
           }
           else {
@@ -262,10 +261,11 @@ export class AddFormComponent implements OnInit {
       });
     }
   }
-
+  
   savePage() {
     let obj = [];
     //var errorMessage = "Please fill in ";
+    
     this.formDesign.forEach(field => {
       if (field.groupGUID !== "" && field.groupGUID !== "string" && field.fieldType.value !== "repeatgroup" && field.fieldType.value === "section" && field.fieldType.value !== "subSection" && field.fieldType.value !== "PageTitle") {
         let sectionValues = field.groupGUID;
@@ -360,7 +360,7 @@ export class AddFormComponent implements OnInit {
             "pageGUID": this.currentPage.pageGUID
           }
           this.service.modifyPageStatus(this.formData.formCaptureID,this.currentPage.pageGUID,pageStatus).subscribe(result=>{
-            this.showNotification('top', 'center', 'Page data has been saved Successfully!', 'Success.', 'success');
+            this.showNotification('top', 'center', 'Page data has been saved Successfully!', '', 'success');
             this.getDesignPerPage(this.currentPage.pageGUID);
             this.currentPage.color="green";
             this.formData.state='edit';
@@ -377,7 +377,7 @@ export class AddFormComponent implements OnInit {
             "pageGUID": this.currentPage.pageGUID
           }
           this.service.modifyPageStatus(this.formData.formCaptureID,this.currentPage.pageGUID,pageStatus).subscribe(result=>{
-            this.showNotification('top', 'center', 'Page data has been saved Successfully!', 'Success.', 'success');
+            this.showNotification('top', 'center', 'Page data has been saved Successfully!', '', 'success');
             this.getDesignPerPage(this.currentPage.pageGUID);
             this.currentPage.color="green";
             this.formData.state='edit';
@@ -389,9 +389,7 @@ export class AddFormComponent implements OnInit {
     //   this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
     //   errorMessage = "Please fill in ";
     // }
-    
   }
-
 
   goToPage(page:any){
     this.currentPage = page;
@@ -489,7 +487,7 @@ export class AddFormComponent implements OnInit {
           "pageGUID": this.currentPage.pageGUID
         }
         this.service.modifyPageStatus(this.formData.formCaptureID,this.currentPage.pageGUID,pageStatus).subscribe(result=>{
-          this.showNotification('top', 'center', 'Page data has been saved Successfully!', 'Success.', 'success');
+          this.showNotification('top', 'center', 'Page data has been saved Successfully!', '', 'success');
           this.currentPage.color="green";
           this.formData.state='edit';
           var index = -1;
@@ -514,7 +512,7 @@ export class AddFormComponent implements OnInit {
     }
     else {
       this.service.UpdateFormMetadata(this.formData.formCaptureID, obj).subscribe(res => {
-        this.showNotification('top', 'center', 'Page data has been saved Successfully!', 'Success.', 'success');
+        this.showNotification('top', 'center', 'Page data has been saved Successfully!', '', 'success');
         let pg=this.currentPage.pageNumber;
         let pageStatus={
           "userID": this.userDetail.formData.userID,
@@ -675,7 +673,8 @@ export class AddFormComponent implements OnInit {
           if (element.fieldType.value !== "subSection" && element.fieldType.value !== "section" && element.fieldType.value !== "group" && element.fieldType.value !== "repeatgroup" && element.fieldType.value !== "attachment" && element.fieldType.value !== "PageTitle" && element.parentFieldName === "") {
             this.service.getMetadataValue(pageGUID, element.fieldName, this.formData.formCaptureID).subscribe(res => {
               if (element.fieldType.value === "checkbox") {
-                element["data"] = Boolean(JSON.parse(res));
+                alert(Boolean(res));
+                element["data"] = Boolean(res);
               }
               else if(element.fieldType.value === "lexicon data"){
                 element["data"] = this.splitString(res) as Array<string>;
@@ -777,8 +776,6 @@ export class AddFormComponent implements OnInit {
     });
   }
 
-
-
   //#endregion
 
   //#region group methods
@@ -786,32 +783,48 @@ export class AddFormComponent implements OnInit {
     this.spinner.show();
     if (localStorage.getItem('cloneNumberForEdit') === "0") {
       data.forEach(field => {
-        field.listValue = "";
+        field.listValue = "";   
+        if (field.fieldType.value === "lexicon data") {
+          let val = field.data;
+          let s = "";
+          val.forEach(listValue => {
+            s += listValue.name + ","
+          });
+          field.data = s;
+        }
       });
       this.service.saveGroupMetadata(this.formData.formCaptureID, data[0].parentFieldName, data).subscribe(res => {
-        this.showNotification('top', 'center', 'Repeat data has been saved Successfully!', 'Success.', 'success');
+        this.showNotification('top', 'center', 'Repeat data has been saved Successfully!', '', 'success');
         localStorage.setItem('cloneNumberForEdit', "0");
         this.spinner.hide();
         this.getDesignPerPage(this.currentPage.pageGUID);
       },
         error => {
-          this.showNotification('top', 'center', 'Error saving repeat data, please try again', 'Error.', 'danger');
+          this.showNotification('top', 'center', 'Error saving repeat data, please try again', '', 'danger');
           this.spinner.hide();
         });
     }
     else {
       data.forEach(field => {
         field.listValue = "";
+        if (field.fieldType.value === "lexicon data") {
+          let val = field.data;
+          let s = "";
+          val.forEach(listValue => {
+            s += listValue.name + ","
+          });
+          field.data = s;
+        }
       });
       this.service.UpdateGroupMetadata(this.formData.formCaptureID, data[0].parentFieldName, localStorage.getItem('cloneNumberForEdit'), data).subscribe(res => {
-        this.showNotification('top', 'center', 'Repeat data has been updated Successfully!', 'Success.', 'success');
+        this.showNotification('top', 'center', 'Repeat data has been updated Successfully!', '', 'success');
         localStorage.setItem('cloneNumberForEdit', "0");
         this.HighlightRow = -1;
         this.spinner.hide();
         this.getDesignPerPage(this.currentPage.pageGUID);
       },
         error => {
-          this.showNotification('top', 'center', 'Error updating repeat data, please try again', 'Error.', 'danger');
+          this.showNotification('top', 'center', 'Error updating repeat data, please try again', '', 'danger');
           this.spinner.hide();
         });
     }
@@ -822,7 +835,12 @@ export class AddFormComponent implements OnInit {
     data.forEach(field => {
       if (field.fieldType.value !== "subSection") {
         this.service.getMetadataValuePerGroup(groupGUID, field.fieldName, this.formData.formCaptureID, cloneNum).subscribe(res => {
-          field["data"] = res;
+          if (field.listValue !== "") {
+            field["data"] = this.splitString(field["data"]);
+          }
+          else{
+            field["data"] = res;
+          }
         });
       }
     });
@@ -843,7 +861,7 @@ export class AddFormComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.service.deleteClone(groupGUID, this.formData.formCaptureID, cloneNum).subscribe(res => {
-          this.showNotification('top', 'center', 'Repeat data has been deleted successfully!', 'Success.', 'success');
+          this.showNotification('top', 'center', 'Repeat data has been deleted successfully!', '', 'success');
           this.getDesignPerPage(this.currentPage.pageGUID);
         });
       }
@@ -950,7 +968,7 @@ export class AddFormComponent implements OnInit {
       reader.readAsDataURL(this.file);
     }
     else {
-      this.showNotification('top', 'center', 'File exceeds maximum size of 4mb,Please upload a file of 4mb or less', 'Error.', 'danger');
+      this.showNotification('top', 'center', 'File exceeds maximum size of 4mb,Please upload a file of 4mb or less', '', 'danger');
       this.file = null;
     }
   }
@@ -976,7 +994,7 @@ export class AddFormComponent implements OnInit {
           "formCaptureID": this.formData.formCaptureID
         }
         this.service.addFormAttachments(obj).subscribe(res => {
-          this.showNotification('top', 'center', 'Attachment has been saved Successfully!', 'Success.', 'success');
+          this.showNotification('top', 'center', 'Attachment has been saved Successfully!', '', 'success');
           this.file = null;
           this.fileAttr = 'Choose File(Max Size:4MB)';
           //this.fileInput = ElementRef;
@@ -987,7 +1005,7 @@ export class AddFormComponent implements OnInit {
       });
       }
       else {
-        this.showNotification('top', 'center', 'Select a file before uploading!', 'Error.', 'danger');
+        this.showNotification('top', 'center', 'Select a file before uploading!', '', 'danger');
       }
     }
     else{
@@ -1008,7 +1026,7 @@ export class AddFormComponent implements OnInit {
           "formCaptureID": this.formData.formCaptureID
         }
         this.service.addFormAttachments(obj).subscribe(res => {
-          this.showNotification('top', 'center', 'Attachment has been saved Successfully!', 'Success.', 'success');
+          this.showNotification('top', 'center', 'Attachment has been saved Successfully!', '', 'success');
           this.file = null;
           this.fileAttr = 'Choose File(Max Size:4MB)';
          // this.fileInput = null;
@@ -1018,7 +1036,7 @@ export class AddFormComponent implements OnInit {
         });
       }
       else {
-        this.showNotification('top', 'center', 'Select a file before uploading!', 'Error.', 'danger');
+        this.showNotification('top', 'center', 'Select a file before uploading!', '', 'danger');
       }
     }
   
@@ -1043,7 +1061,7 @@ export class AddFormComponent implements OnInit {
       reader.readAsDataURL(this.photoFile);
     }
     else {
-      this.showNotification('top', 'center', 'Photo exceeds maximum size of 4mb,Please upload a photo of 4mb or less', 'Error.', 'danger');
+      this.showNotification('top', 'center', 'Photo exceeds maximum size of 4mb,Please upload a photo of 4mb or less', '', 'danger');
       this.photoFile = null;
     }
   }
@@ -1070,7 +1088,7 @@ export class AddFormComponent implements OnInit {
             "formCaptureID": this.formData.formCaptureID
           }
           this.service.addFormPhotos(obj).subscribe(res => {
-            this.showNotification('top', 'center', 'Photo has been saved Successfully!', 'Success.', 'success');
+            this.showNotification('top', 'center', 'Photo has been saved Successfully!', '', 'success');
             this.photoFile = null;
             this.photoFileAttr = 'Choose Photo(Max Size:4MB)';
             //this.photoInput = null;
@@ -1081,7 +1099,7 @@ export class AddFormComponent implements OnInit {
         })
       }
       else {
-        this.showNotification('top', 'center', 'Select a photo before uploading', 'Error.', 'danger');
+        this.showNotification('top', 'center', 'Select a photo before uploading', '', 'danger');
       }
     }
     else{
@@ -1102,7 +1120,7 @@ export class AddFormComponent implements OnInit {
           "formCaptureID": this.formData.formCaptureID
         }
         this.service.addFormPhotos(obj).subscribe(res => {
-          this.showNotification('top', 'center', 'Photo has been saved Successfully!', 'Success.', 'success');
+          this.showNotification('top', 'center', 'Photo has been saved Successfully!', '', 'success');
           this.photoFile = null;
           this.photoFileAttr = 'Choose Photo(Max Size:4MB)';
           //this.photoInput = null;
@@ -1112,7 +1130,7 @@ export class AddFormComponent implements OnInit {
         });
       }
       else {
-        this.showNotification('top', 'center', 'Select a photo before uploading', 'Error.', 'danger');
+        this.showNotification('top', 'center', 'Select a photo before uploading', '', 'danger');
       }
     }
    
@@ -1138,7 +1156,7 @@ export class AddFormComponent implements OnInit {
             element["data"] = "";
           }
         });
-        this.showNotification('top', 'center', 'Email is invalid, please enter valid email address', 'Error.', 'danger');
+        this.showNotification('top', 'center', 'Email is invalid, please enter valid email address', '', 'danger');
       }
     }
   }
@@ -1161,7 +1179,7 @@ export class AddFormComponent implements OnInit {
           "LinkedTo":commentName
         }
         this.service.addFormComment(obj).subscribe(res => {
-          this.showNotification('top', 'center', 'Form comment has been saved Successfully!', 'Success.', 'success');
+          this.showNotification('top', 'center', 'Form comment has been saved Successfully!', '', 'success');
           this.formComment = '';
           this.refreshCommentList();
           localStorage.setItem('fieldNameComment', "");
@@ -1183,7 +1201,7 @@ export class AddFormComponent implements OnInit {
           "LinkedTo":commentName
         }
         this.service.updateFormComment(obj,this.commentID).subscribe(res => {
-          this.showNotification('top', 'center', 'Form comment has been updated Successfully!', 'Success.', 'success');
+          this.showNotification('top', 'center', 'Form comment has been updated Successfully!', '', 'success');
           this.formComment = '';
           this.refreshCommentList();
           localStorage.setItem('fieldNameComment', "");
@@ -1209,7 +1227,7 @@ export class AddFormComponent implements OnInit {
           "LinkedTo":""
         }
         this.service.addFormComment(obj).subscribe(res => {
-          this.showNotification('top', 'center', 'Form comment has been saved Successfully!', 'Success.', 'success');
+          this.showNotification('top', 'center', 'Form comment has been saved Successfully!', '', 'success');
           this.formComment = '';
           this.refreshCommentList();
           this.addEditComment='Add';
@@ -1231,7 +1249,7 @@ export class AddFormComponent implements OnInit {
           "LinkedTo":""
         }
         this.service.updateFormComment(obj,this.commentID).subscribe(res => {
-          this.showNotification('top', 'center', 'Form comment has been updated Successfully!', 'Success.', 'success');
+          this.showNotification('top', 'center', 'Form comment has been updated Successfully!', '', 'success');
           this.formComment = '';
           this.refreshCommentList();
           this.addEditComment='Add';
@@ -1241,8 +1259,6 @@ export class AddFormComponent implements OnInit {
         });
       }
     }
-    
-    
     
   }
 
@@ -1276,7 +1292,7 @@ export class AddFormComponent implements OnInit {
         this.service.DeleteFile(item.attachmentID).subscribe(data => {
           this.spinner.hide();
           this.refreshAttachmentList();
-          this.showNotification('top', 'center', 'File Deleted Successfully!', 'Success.', 'success');
+          this.showNotification('top', 'center', 'File Deleted Successfully!', '', 'success');
         });
       }
     })
@@ -1300,7 +1316,7 @@ export class AddFormComponent implements OnInit {
         this.service.DeleteComment(item.commentID).subscribe(data => {
           this.spinner.hide();
           this.refreshCommentList();
-          this.showNotification('top', 'center', 'Comment Deleted Successfully!', 'Success.', 'success');
+          this.showNotification('top', 'center', 'Comment Deleted Successfully!', '', 'success');
         });
       }
     })
@@ -1325,7 +1341,7 @@ export class AddFormComponent implements OnInit {
         this.service.DeletePhoto(item.photoGUID).subscribe(data => {
           this.spinner.hide();
           this.refreshPhotoList();
-          this.showNotification('top', 'center', 'Photo Deleted Successfully!', 'Success.', 'success');
+          this.showNotification('top', 'center', 'Photo Deleted Successfully!', '', 'success');
         });
       }
     })

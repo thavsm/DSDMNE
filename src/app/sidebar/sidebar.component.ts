@@ -45,9 +45,9 @@ export const ROUTES: RouteInfo[] = [{
         children: [
             {path: 'appusers',title: 'Users', ab:'U'},
             {path: 'role',title: 'Roles', ab:'R'},
-            {path: 'formroles',title: 'Forms', ab:'F'},
             {path: 'location', title: 'location management', ab:'LM' , TreeCategoryID : 2},
             {path: 'level', title: 'level management', ab:'LM' , TreeCategoryID : 3}
+           // {path: 'formroles',title: 'Forms', ab:'F'},
         ]
     },{
         path: '/pages',
@@ -110,7 +110,7 @@ export const ROUTES: RouteInfo[] = [{
             {path: 'formCategory',title: 'Form Category',ab: 'FC'},
             {path: 'formList',title: 'Form Design',ab: 'FD'},   
             { path: 'formCapture', title: 'Form Capture', ab: 'FC' },
-            { path: 'formInbox', title: 'Form Inbox', ab: 'FI' }
+            { path: 'formInbox', title: 'Form Inbox', ab: 'FI' },
         ]
     },
     {
@@ -207,8 +207,16 @@ export class SidebarComponent implements OnInit {
               $sidebar.attr('data-background-color', new_color);
           }
 
+          const active_color = 'green';
+
+          if ($sidebar.length !== 0) {
+              $sidebar.attr('data-color', active_color);
+          }
+
          
         }
+
+        
     updatePS(): void  {
         if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
             this.ps.update();

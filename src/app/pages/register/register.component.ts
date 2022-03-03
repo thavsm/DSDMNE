@@ -20,18 +20,48 @@ export class RegisterComponent implements OnInit, OnDestroy {
     currentCity: string[];
 
     selectTheme = 'primary';
-    cities = [
-      {value: '7', viewValue: 'Western Cape'},
-      {value: '1', viewValue: 'Eastern Cape'},
-      {value: '2', viewValue: 'Northern Cape'},
-      {value: '3', viewValue: 'Kwa-ZuluNatal'},
-      {value: '4', viewValue: 'Free State'},
-      {value: '5', viewValue: 'Gauteng'},
-      {value: '6', viewValue: 'North West'},
-      {value: '8', viewValue: 'Mphumulanga'},
-      {value: '9', viewValue: 'Limpopo'},
-    ];
-    
+    // cities = [
+    //   {value: '7', viewValue: 'Western Cape'},
+    //   {value: '1', viewValue: 'Eastern Cape'},
+    //   {value: '2', viewValue: 'Northern Cape'},
+    //   {value: '3', viewValue: 'Kwa-ZuluNatal'},
+    //   {value: '4', viewValue: 'Free State'},
+    //   {value: '5', viewValue: 'Gauteng'},
+    //   {value: '6', viewValue: 'North West'},
+    //   {value: '8', viewValue: 'Mphumulanga'},
+    //   {value: '9', viewValue: 'Limpopo'},
+    // ];
+
+    // locationType = [
+    //   {value: '1', viewValue: 'National'},
+    //   {value: '2', viewValue: 'Provincial'},    
+    //   {value: '3', viewValue: 'District'},
+    //   {value: '4', viewValue: 'Service Point'},
+    //   {value: '5', viewValue: 'NPO/Facility'},
+    // ];
+
+    // roles = [
+    //   {value: 'Data Capturer', viewValue: 'Data Capturer'},
+    //   {value: 'Verifier/Approver', viewValue: 'Verifier/Approver'},    
+    //   {value: 'Viewer', viewValue: 'Viewer'},
+    //   {value: 'System Admin', viewValue: 'System Admin'},
+    // ];
+  
+    // branch = [
+    //   {value: '1', viewValue: 'Community Development'},
+    //   {value: '2', viewValue: 'Social Welfare Services'},    
+    //   {value: '3', viewValue: 'Strategy Organization Transformation'},
+    //   {value: '4', viewValue: 'Social Security'},
+    //   {value: '5', viewValue: 'National'},
+    // ];
+
+  
+
+  
+    locationType: any[];
+    roleTypes: any[];
+    cities: any[];
+    branch: any[];
     roles: role[];
     
     formModel = this.fb.group({
@@ -44,7 +74,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
       PhoneNumber: ['',Validators.required],
       EmployeeNo: [''],
       ServicePoint: [''],
-      Address: ['']
+      Address: [''],
+      Surname: [''],
+      LocationType: [''],
+      Designation: [''],
+      Branch: [''],
     }, { validators: this.comparePasswords 
     });
 
@@ -67,7 +101,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     ngOnInit() {
       const body = document.getElementsByTagName('body')[0];
       body.classList.add('register-page');
-      body.classList.add('off-canvas-sidebar');
+      body.classList.add('off-canvas-sidebar');      
 
       this.service.getRoles().subscribe(
         res => {
@@ -77,7 +111,33 @@ export class RegisterComponent implements OnInit, OnDestroy {
           console.log(err);
         },
       );
+
+      this.service.getLevels(4082).subscribe(
+        res => {
+          this.locationType = res;
+        },
+        err => {
+          console.log(err);
+        },
+      );
       
+      this.service.getBranches().subscribe(
+        res => {
+          this.branch = res;
+        },
+        err => {
+          console.log(err);
+        },
+      );
+
+      this.service.getRoleTypes().subscribe(
+        res => {
+          this.roleTypes = res;
+        },
+        err => {
+          console.log(err);
+        },
+      );
     }
 
     ngOnDestroy(){
@@ -128,6 +188,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
         EmployeeNo: this.formModel.value.EmployeeNo,
         ServicePoint: this.formModel.value.ServicePoint,
         Address: this.formModel.value.Address,
+        Branch: this.formModel.value.Branch,
+        Surname: this.formModel.value.Surname,
+        LocationType: this.formModel.value.LocationType,
+        RoleType: this.formModel.value.RoleType
+        
       };
       //let bd ={Email: this.formModel.Email, Password: this.formModel.Password, FullName: this.formModel.FullName};
       this.service.register(body).subscribe(
@@ -157,6 +222,19 @@ export class RegisterComponent implements OnInit, OnDestroy {
         }
       );
 
+  }
+
+  loadLocation(loctype:any)
+  {
+     console.log(loctype.value);
+     this.service.getNodes(loctype.value).subscribe(
+      res => {
+        this.cities = res;
+      },
+      err => {
+        console.log(err);
+      },
+    );
   }
 
 }

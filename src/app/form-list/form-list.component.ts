@@ -65,7 +65,7 @@ export class FormListComponent implements OnInit {
         this.service.archiveDynamicForm(item.formID).subscribe(data => {
           this.spinner.hide();
           this.refreshFormsList();
-          this.showNotification('top', 'center', 'Form Deleted Successfully!', 'Success.', 'success');
+          this.showNotification('top', 'center', 'Form Deleted Successfully!', '', 'success');
         });
       }
     })

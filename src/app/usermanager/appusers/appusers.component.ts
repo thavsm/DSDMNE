@@ -21,7 +21,7 @@ export class AppusersComponent implements OnInit {
 
   
   formAdd: any;
-  public displayedColumns = ['userid', 'userName', 'email', 'update' ];
+  public displayedColumns = ['userName', 'email', 'role', 'update' ];
   public userList = new MatTableDataSource<any>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -38,8 +38,7 @@ export class AppusersComponent implements OnInit {
     this.service.getAllUsers().subscribe(data => {
       this.userList.data = data;
     });
-    
-    this.service.setMenuShow(false);
+        
   }
 
   clickEdit(item: any) {

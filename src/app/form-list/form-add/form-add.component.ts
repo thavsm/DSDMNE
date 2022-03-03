@@ -169,7 +169,7 @@ export class FormAddComponent implements OnInit {
       this.service.addFormPage(pageVal).subscribe(result => {
       this.service.addFieldPerPage(pageField,JSON.parse(JSON.stringify(res)).formID,JSON.parse(JSON.stringify(result)).pageGUID).subscribe(val=>{
         this.spinner.hide();
-        this.showNotification('top','center','Form Design Added Successfully!','Success','success');
+        this.showNotification('top','center','Form Design Added Successfully!','','success');
       }); 
       })
     });
@@ -219,7 +219,7 @@ export class FormAddComponent implements OnInit {
       this.service.updateDynamicFormDetails(this.formAdd.formID, val).subscribe(res => {
         this.dialogRef.close();
         this.spinner.hide();
-        this.showNotification('top','center','Form Design Updated Successfully!','Success','success');
+        this.showNotification('top','center','Form Design Updated Successfully!','','success');
       });
     }
     else {
