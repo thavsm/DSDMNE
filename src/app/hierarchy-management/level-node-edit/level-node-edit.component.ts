@@ -9,6 +9,7 @@ import { TreediagramService } from 'src/app/treediagram.service';
 import Swal from 'sweetalert2'
 import * as JsonToXML from "js2xmlparser";
 import { TargetAddComponent } from '../target-add/target-add.component';
+import { ExternaldataAddComponent } from '../externaldata-add/externaldata-add.component';
 
 declare var $: any;
 
@@ -51,6 +52,7 @@ export class LevelNodeEditComponent implements OnInit {
   formDesignAddDataXML: any;
   GetMetadataNodeFormID: any;
   tgAdd: any;
+  OpnExternalData: any;
 
 
   constructor(public dialog: MatDialog ,public dialogRef: MatDialogRef<LevelNodeEditComponent>,
@@ -183,6 +185,21 @@ export class LevelNodeEditComponent implements OnInit {
   }
 
   OpenExternalData() {
+
+
+    this.OpnExternalData = {
+      nodeID : this.NodeData.nodeID,
+    }
+
+
+    const dialogRef = this.dialog.open(ExternaldataAddComponent, { width: '65%', height: '85%', data: this.OpnExternalData, disableClose: true }
+    );
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      console.log('The dialog was closed');
+
+    });
 
   }
 
@@ -428,6 +445,57 @@ export class LevelNodeEditComponent implements OnInit {
     });
   }
 
+  deleteLevel(){
+
+    Swal.fire({
+      title: 'Are you sure you want to delete Level?',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      toast: true,
+      position: 'top',
+      allowOutsideClick: false,
+      confirmButtonColor: '#000000',
+      cancelButtonColor: '#000000'
+    }).then((result) => {
+      if (result.value) {
+        this.spinner.show();
+        this.service.DeleteLevel(this.NodeData.levelID).subscribe(data => {
+          this.spinner.hide();
+          this.showNotification('top', 'center', 'Level Deleted Succesfully!', 'Success.', 'success');
+        });
+      }
+    })
+
+  }
+
+  
+  deleteNode(){
+
+    Swal.fire({
+      title: 'Are you sure you want to delete Node?',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      toast: true,
+      position: 'top',
+      allowOutsideClick: false,
+      confirmButtonColor: '#000000',
+      cancelButtonColor: '#000000'
+    }).then((result) => {
+      if (result.value) {
+        this.spinner.show();
+        this.service.DeleteNode(this.NodeData.nodeID).subscribe(data => {
+          this.spinner.hide();
+          this.showNotification('top', 'center', 'Node Deleted Succesfully!', 'Success.', 'success');
+        });
+      }
+    })
+
+    
+  }
+  
+
   clickDelete(item: any) {
     Swal.fire({
       title: 'Are you sure you want to delete ' + item.friendlyname + ' tree?',
@@ -460,6 +528,7 @@ export class LevelNodeEditComponent implements OnInit {
     this.divEditAtrributes = true;
   }
 
+  
   addAttributes() {
 
     this.service.getAttributesDataExportName(this.NodeAttributesData.friendlyname.replace(/\s/g, ""), this.NodeData.levelID).subscribe(data => {

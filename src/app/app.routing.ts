@@ -74,13 +74,25 @@ export const AppRoutes: Routes = [
         loadChildren: () => import('./hierarchy-management/hierarchy-management.module').then(m => m.HierarchyManagementModule)      
       },
       {
+        path: 'location',      
+        loadChildren: () => import('./hierarchy-management/hierarchy-management.module').then(m => m.HierarchyManagementModule)      
+      },
+      {
+        path: 'level',      
+        loadChildren: () => import('./hierarchy-management/hierarchy-management.module').then(m => m.HierarchyManagementModule)      
+      },
+      {
         path: 'treediagram',  
         loadChildren: () => import('./treediagram/treediagram.module').then(m => m.TreediagramModule)  
     },
     {
         path: 'usermanager',
         loadChildren: () => import('./usermanager/usermanager.module').then(m => m.UserManagerModule)
-      }
+    },
+    {
+      path: 'externalDI',
+      loadChildren: () => import('./data-management/external-data-import/external-data-import.module').then(m => m.ExternalDataImportModule)
+    },
     ]
   }, {
     path: '',

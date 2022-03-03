@@ -73,41 +73,10 @@ export const ROUTES: RouteInfo[] = [{
         collapse: 'hierarchy-management',
         children: [
             {path: 'HierarchyManagement', title: 'hierarchy management', ab:'HM', TreeCategoryID : 1},
-            {path: 'GeographyManagement', title: 'geography management', ab:'GM' , TreeCategoryID : 2},
+            {path: 'GeographyManagement', title: 'location management', ab:'LM' , TreeCategoryID : 2},
             {path: 'LevelManagement', title: 'level management', ab:'LM' , TreeCategoryID : 3}
         ]
     },
-
-
-    // {
-    //     path: '/hierarchy-management',
-    //     title: 'hierarchy management',
-    //     type: 'link',
-    //     icontype: 'account_tree',
-    //     role: [],
-    //     TreeCategoryID : 1
-
-    // }, 
-
-    // {
-    //     path: '/hierarchy-management',
-    //     title: 'geography management',
-    //     type: 'link',
-    //     icontype: 'account_tree',
-    //     role: [],
-    //     TreeCategoryID : 2
-
-    // }, 
-
-    // {
-    //     path: '/hierarchy-management',
-    //     title: 'level management',
-    //     type: 'link',
-    //     icontype: 'account_tree',
-    //     role: [],
-    //     TreeCategoryID : 3
-
-    // }, 
 
     {
         path: '/weather',
@@ -136,6 +105,20 @@ export const ROUTES: RouteInfo[] = [{
             { path: 'formCapture', title: 'Form Capture', ab: 'FC' },
             { path: 'formInbox', title: 'Form Inbox', ab: 'FI' },
         ]
+    },{
+
+        path: '',
+        title: 'Data Management',
+        type: 'sub',
+        icontype: 'dns',
+        role: [],
+        collapse: 'DataMangementList',
+        children: [
+
+            {path: 'externalDI',title: 'External Data Import',ab: 'EDI'}
+
+        ]
+
     }
 ];
 @Component({

@@ -32,7 +32,7 @@ export class HierarchyManagementComponent implements OnInit {
   horizontalPosition: any;
   treeID: number;
   treeAdd: any;
-  TreeCategoryID = "";
+  TreeCategoryID = "0";
 
   constructor(public service: HierarchyManagementService, private route: Router, public dialog: MatDialog, private spinner: NgxSpinnerService, private Aroute: ActivatedRoute) {
      
