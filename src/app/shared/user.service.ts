@@ -146,6 +146,16 @@ export class UserService {
     return this.http.get<any>(this.BaseURI + '/ApplicationUser/GetRoleMenus?roleID='+roleID);
   }
 
+  
+  getFormsRole(roleID: number) {
+    return this.http.get<any>(this.BaseURI + '/ApplicationUser/GetRoleForms?roleID='+roleID);
+  }
+
+  
+  getTypeRoles(roleID: number) {
+    return this.http.get<any>(this.BaseURI + '/ApplicationUser/GetTypeRoles?roleID='+roleID);
+  }
+
   addMenusRole(menusRole: any) {
     return this.http.post(this.BaseURI + '/ApplicationUser/AddRoleMenus', menusRole);
   }
@@ -163,4 +173,33 @@ export class UserService {
     return this.http.post(this.BaseURI + '/ApplicationUser/ResetPassword', resetModel);
   }
 
+  
+  getLocations(treeID: number) {
+    return this.http.get<any>(this.BaseURI + '/ApplicationUser/GetLocations?treeID='+treeID);
+  }
+  
+  getLevels(treeID: number) {
+    return this.http.get<any>(this.BaseURI + '/ApplicationUser/GetLevels?treeID='+treeID);
+  }
+
+  getLevelsList(treeID:number){
+    return this.http.get<any>(this.BaseURI+'/Levels?id='+treeID);
+  }
+
+  getNodes(levelID:number){
+    return this.http.get<any>(this.BaseURI+'/Nodes/GetNodeByLevelID/'+levelID);
+  }
+
+  getBranches() {
+
+    return this.http.get<any>(this.BaseURI + '/ApplicationUser/GetBranches');
+  }
+
+  getRoleTypes() {
+    return this.http.get<any>(this.BaseURI + '/ApplicationUser/GetRoleTypes');
+  }
+
+  addTypeRoles(typeRoles: any) {
+    return this.http.post(this.BaseURI + '/ApplicationUser/AddTypeRoles', typeRoles);
+  }
 }

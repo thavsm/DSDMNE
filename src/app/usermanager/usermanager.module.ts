@@ -9,6 +9,7 @@ import { AppusersComponent } from './appusers/appusers.component';
 import { FormrolesComponent } from './formroles/formroles.component';
 import { AddformrolesComponent } from './addformroles/addformroles.component';
 import { MenurolesComponent } from './menuroles/menuroles.component';
+import { RoleaccessComponent } from './roleaccess/roleaccess.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { MenurolesComponent } from './menuroles/menuroles.component';
         AppusersComponent,
         FormrolesComponent,
         AddformrolesComponent,
-        MenurolesComponent
+        MenurolesComponent,
+        RoleaccessComponent
     ]
 })
 

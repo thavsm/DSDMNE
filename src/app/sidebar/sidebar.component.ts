@@ -44,7 +44,7 @@ export const ROUTES: RouteInfo[] = [{
         children: [
             {path: 'appusers',title: 'Users', ab:'U'},
             {path: 'role',title: 'Roles', ab:'R'},
-            {path: 'formroles',title: 'Forms', ab:'F'},
+           // {path: 'formroles',title: 'Forms', ab:'F'},
         ]
     },{
         path: '/pages',
@@ -210,14 +210,22 @@ export class SidebarComponent implements OnInit {
       const $sidebar = $('.sidebar');
       
 
-      const new_color = 'black';
+      const new_color = 'white';
 
           if ($sidebar.length !== 0) {
               $sidebar.attr('data-background-color', new_color);
           }
 
+          const active_color = 'green';
+
+          if ($sidebar.length !== 0) {
+              $sidebar.attr('data-color', active_color);
+          }
+
          
         }
+
+        
     updatePS(): void  {
         if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {
             this.ps.update();

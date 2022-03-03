@@ -5,7 +5,7 @@
     <div class="container">    
       <div class="row">
         <div class="col-lg-4 col-md-6 col-sm-6 ml-auto mr-auto">
-          <form class="form" [formGroup]="formModel" method="" action="" (submit)="onSubmit()">
+          <form class="form" [formGroup]="formModel" method="" action="" (submit)="onSubmit()"> 
             <div class="card card-login">
               <div class="card-header card-header-rose text-center">
                 <h4 class="card-title">Log in</h4>
@@ -22,7 +22,7 @@
                 </div>
               </div>
               <div class="card-body ">
-                <p class="card-description text-center">Or Be Classical</p>
+                <p class="card-description text-center">Enter credentials</p>
                 <span class="bmd-form-group">
                   <div class="input-group">
                     <div class="input-group-prepend">
@@ -48,7 +48,7 @@
                 <button type="submit" class="btn btn-primary btn-round mt-4" [disabled]="!formModel.valid">Login</button>
                 <p><a [routerLink]="['/resetpassword']">Forgot Password?</a></p>
               </div>
-            </div>
+            </div>                     
           </form>
         </div>
       </div>
