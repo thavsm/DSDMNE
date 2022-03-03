@@ -45,6 +45,8 @@ export const ROUTES: RouteInfo[] = [{
         children: [
             {path: 'appusers',title: 'Users', ab:'U'},
             {path: 'role',title: 'Roles', ab:'R'},
+            // {path: 'location', title: 'location management', ab:'LM' , TreeCategoryID : 2},
+            // {path: 'level', title: 'level management', ab:'LM' , TreeCategoryID : 3}
            // {path: 'formroles',title: 'Forms', ab:'F'},
         ]
     },{
@@ -194,7 +196,7 @@ export class SidebarComponent implements OnInit {
       const $sidebar = $('.sidebar');
       
 
-      const new_color = 'white';
+      const new_color = 'black';
 
           if ($sidebar.length !== 0) {
               $sidebar.attr('data-background-color', new_color);
