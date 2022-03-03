@@ -13,14 +13,7 @@
           <hr>
           <kendo-grid [kendoGridBinding]="formList" [pageSize]="10" [pageable]="true" [height]="700" [filterable]="true"
             [sortable]="true" [groupable]="true">
-            <ng-template kendoGridToolbarTemplate>
-              <kendo-grid-spacer></kendo-grid-spacer>
-              <!-- <button kendoGridExcelCommand type="button" icon="file-excel">
-              Export to Excel
-            </button> -->
-              <button kendoGridPDFCommand icon="file-pdf">Export to PDF</button>
-            </ng-template>
-
+          
             <kendo-grid-column field="displayName" title="Design Name" [width]="8">
             </kendo-grid-column>
 

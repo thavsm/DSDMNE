@@ -61,7 +61,7 @@ export class AddEditCategoryComponent implements OnInit {
     this.service.addformcategories(val).subscribe(res => {  
       this.dialogRef.close();
       this.spinner.hide();
-      this.showNotification('top','center','Form Category Added Succesfully!','Success','success');
+      this.showNotification('top','center','Form Category Added Succesfully!','','success');
     });
     this.formCategoryAdd.formCategoryID=0;
     this.formCategoryAdd.name="";
@@ -92,7 +92,7 @@ export class AddEditCategoryComponent implements OnInit {
       this.service.updateformCategoryDetails(this.formCategoryAdd.formCategoryID, val).subscribe(res => {
         this.dialogRef.close();
         this.spinner.hide();
-        this.showNotification('top','center','Form Category updated Successfully!','Success','success');
+        this.showNotification('top','center','Form Category updated Successfully!','','success');
       });
     }
     else {

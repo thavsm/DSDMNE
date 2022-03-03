@@ -203,7 +203,7 @@ clickDelete(item: any) {
       this.service.deleteCapturedForm(item.formCaptureID).subscribe(data => {
         this.spinner.hide();
         this.refreshFormsList();
-         this.showNotification('top','center','Form Deleted Successfully!','Success.','success');
+         this.showNotification('top','center','Form Deleted Successfully!','','success');
       });
     }
   })

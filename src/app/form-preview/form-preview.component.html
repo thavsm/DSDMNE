@@ -1,15 +1,15 @@
 <div style="margin-left: 0%;">
-    <button mat-icon-button color="warn" (click)="closePopup()">
+    <button mat-icon-button color="warn" (click)="closePopup()"> 
         <mat-icon>close</mat-icon>
     </button>
 </div>
 <div style="text-align: center;">
-    <h2>{{formData.displayName}} Preview</h2>
+    <h2>Preview</h2>
     <mat-button-toggle-group name="buttons">
         <mat-button-toggle value="Prev" (click)="prevPage()"
             style="font-weight: 500;background-color: whitesmoke;width: 80px;color: black;">Prev</mat-button-toggle>
         <mat-button-toggle value="save" style="background-color: whitesmoke;font-weight: 500;width: 150px;color: black;"
-            disabled>Save</mat-button-toggle>
+            disabled>Save</mat-button-toggle> 
         <mat-button-toggle value="next" (click)="nextPage()"
             style="font-weight: 500;background-color: whitesmoke;width: 80px;color: black;">Next</mat-button-toggle>
     </mat-button-toggle-group>
@@ -29,7 +29,7 @@
                             *ngIf="item.fieldType.value=='Time' && item.isActive===true && item.parentFieldName===''">
                             <label style="color:black">{{item.questionName}}</label>
                             <mat-form-field appearance="outline">
-                                <input matInput type="time" [(ngModel)]=item.data placeholder="{{item.toolTip}}" (blur)="checkInfo()">
+                                <input matInput type="time" [(ngModel)]=item.data placeholder="{{item.toolTip}}" >
                             </mat-form-field>
                         </ng-container>
 
@@ -70,7 +70,7 @@
                             *ngIf="item.fieldType.value=='date' && item.isActive===true && item.parentFieldName===''">
                             <label style="color:black">{{item.questionName}}</label>
                             <mat-form-field appearance="outline">
-                                <input matInput type="date" [(ngModel)]=item.data placeholder="{{item.toolTip}}" (blur)="checkInfo()">
+                                <input matInput type="date" [(ngModel)]=item.data placeholder="{{item.toolTip}}" >
                             </mat-form-field>
                         </ng-container>
 
@@ -80,7 +80,7 @@
                             <label style="color:black">{{item.questionName}}</label>
                             <mat-form-field appearance="outline">
                                 <textarea matInput [(ngModel)]=item.data
-                                    maxlength={{item.fieldValidations[0].dataLength}} placeholder="{{item.toolTip}}" (blur)="checkInfo()"
+                                    maxlength={{item.fieldValidations[0].dataLength}} placeholder="{{item.toolTip}}" 
                                     rows="{{item.fieldStyles[0].height}}"></textarea>
                             </mat-form-field>
                         </ng-container>
@@ -91,7 +91,7 @@
                             <label style="color:black">{{item.questionName}}</label>
                             <mat-form-field appearance="outline">
                                 <textarea matInput [(ngModel)]=item.data 
-                                    maxlength={{item.fieldValidations[0].dataLength}} placeholder="{{item.toolTip}}" (blur)="checkInfo()"
+                                    maxlength={{item.fieldValidations[0].dataLength}} placeholder="{{item.toolTip}}" 
                                     rows="{{item.fieldStyles[0].height}}"
                                     onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"></textarea>
                             </mat-form-field>
@@ -102,7 +102,7 @@
                             *ngIf="(item.fieldType.value=='Alphanumeric') && item.isActive===true && item.parentFieldName===''">
                             <label style="color:black">{{item.questionName}}</label>
                             <mat-form-field appearance="outline">
-                                <textarea matInput (blur)="checkInfo()"
+                                <textarea matInput 
                                     onkeypress="return (event.charCode > 64 && event.charCode < 91) ||  (event.charCode > 47 && event.charCode < 58) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
                                     [(ngModel)]=item.data maxlength={{item.fieldValidations[0].dataLength}}
                                     placeholder="{{item.toolTip}}" rows="{{item.fieldStyles[0].height}}"></textarea>
@@ -145,7 +145,7 @@
                                         <mat-button-toggle-group name="buttons">
                                             <mat-button-toggle value="save"
                                                 style="background-color: whitesmoke;font-weight: 500;color: black;"
-                                                (click)="savePad(sectionItem)">Capture signature</mat-button-toggle>
+                                              >Capture signature</mat-button-toggle>
                                         </mat-button-toggle-group>
                                         <div style="height: 5px;"></div>
                                     </ng-container>
@@ -213,7 +213,7 @@
                                                     <th style="text-align:center">Value Two</th>
                                                     <th>No.</th>
                                                 </tr>
-                                                <tr *ngFor="let dataItem of sectionItem.groupTableList;let i=index" [class.active]="i == HighlightRow">
+                                                <tr *ngFor="let dataItem of sectionItem.groupTableList;let i=index" >
                                                     <td style="width: 10px;">
                                                         <mat-icon class="mat-18">
                                                             edit</mat-icon>
@@ -349,7 +349,7 @@
                                                     <mat-form-field appearance="outline">
                                                         <input matInput type="email" [(ngModel)]=subsectionItem.data
                                                             placeholder="{{subsectionItem.toolTip}}"
-                                                            value="{{subsectionItem.data}}" (blur)="validateEmail(subsectionItem.fieldName,subsectionItem.data)">
+                                                            value="{{subsectionItem.data}}" >
                                                     </mat-form-field>
                                                     <div style="height: 5px;"></div>
                                                 </ng-container>
@@ -394,7 +394,7 @@
                                                             maxlength={{subsectionItem.fieldValidations[0].dataLength}}
                                                             oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                                                             placeholder="{{subsectionItem.toolTip}}"
-                                                            value="{{subsectionItem.data}}" (blur)="checkForCalc()">
+                                                            value="{{subsectionItem.data}}" >
                                                     </mat-form-field>
                                                     <div style="height: 5px;"></div>
                                                 </ng-container>
@@ -475,7 +475,6 @@
                                                     <label style="color:black">{{subSectionItem.questionName}}</label>
                                                     <mat-form-field appearance="outline">
                                                         <input
-                                                            (change)="setSubSectionValue(subSectionItem.fieldName,subSectionItem.data)"
                                                             matInput type="time" [(ngModel)]=subSectionItem.data
                                                             placeholder="{{subSectionItem.toolTip}}">
                                                     </mat-form-field>
@@ -519,7 +518,6 @@
                                                     <label style="color:black">{{subSectionItem.questionName}}</label>
                                                     <mat-form-field appearance="outline">
                                                         <input
-                                                            (change)="setSubSectionValue(subSectionItem.fieldName,subSectionItem.data)"
                                                             matInput type="date" [(ngModel)]=subSectionItem.data
                                                             placeholder="{{subSectionItem.toolTip}}">
                                                     </mat-form-field>
@@ -546,8 +544,7 @@
                                                     <label style="color:black">{{subSectionItem.questionName}}</label>
                                                     <mat-form-field appearance="outline">
                                                         <textarea
-                                                            (change)="setSubSectionValue(subSectionItem.fieldName,subSectionItem.data)"
-                                                            matInput [(ngModel)]=subSectionItem.data
+                                                             matInput [(ngModel)]=subSectionItem.data
                                                             maxlength={{subSectionItem.fieldValidations[0].dataLength}}
                                                             placeholder="{{subSectionItem.toolTip}}"
                                                             rows="{{subSectionItem.fieldStyles[0].height}}"></textarea>
@@ -560,8 +557,7 @@
                                                     <label style="color:black">{{subSectionItem.questionName}}</label>
                                                     <mat-form-field appearance="outline">
                                                         <textarea
-                                                            (change)="setSubSectionValue(subSectionItem.fieldName,subSectionItem.data)"
-                                                            matInput
+                                                              matInput
                                                             onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
                                                             [(ngModel)]=subSectionItem.data
                                                             maxlength={{subSectionItem.fieldValidations[0].dataLength}}
@@ -576,7 +572,6 @@
                                                     <label style="color:black">{{subSectionItem.questionName}}</label>
                                                     <mat-form-field appearance="outline">
                                                         <textarea
-                                                            (change)="setSubSectionValue(subSectionItem.fieldName,subSectionItem.data)"
                                                             matInput [(ngModel)]=subSectionItem.data
                                                             maxlength={{subSectionItem.fieldValidations[0].dataLength}}
                                                             onkeypress="return (event.charCode > 64 && event.charCode < 91) ||  (event.charCode > 47 && event.charCode < 58) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
@@ -592,8 +587,7 @@
                                                     <label style="color:black">{{subSectionItem.questionName}}</label>
                                                     <mat-form-field appearance="outline">
                                                         <input
-                                                            (change)="setSubSectionValue(subSectionItem.fieldName,subSectionItem.data)"
-                                                            matInput type="email" [(ngModel)]=subSectionItem.data (blur)="validateEmail(subSectionItem.fieldName,subSectionItem.data)"
+                                                            matInput type="email" [(ngModel)]=subSectionItem.data 
                                                             placeholder="{{subSectionItem.toolTip}}">
                                                     </mat-form-field>
                                                     <div style="height: 5px;"></div>
@@ -605,7 +599,6 @@
                                                     <label style="color:black">{{subSectionItem.questionName}}</label>
                                                     <div style="height: 5px;"></div>
                                                     <mat-radio-group [(ngModel)]=subSectionItem.data class="radio"
-                                                        (change)="setSubSectionValue(subSectionItem.fieldName,subSectionItem.data)"
                                                         matInput aria-label="Select an option">
                                                         <mat-radio-button style="color: black;"
                                                             *ngFor="let list of subSectionItem.listValue"
@@ -624,8 +617,7 @@
                                                     <p *ngFor="let list of subSectionItem.listValue; let i = index"
                                                         class="checkbox">
                                                         <mat-checkbox [(ngModel)]=subSectionItem.data
-                                                            (change)="setSubSectionValue(subSectionItem.fieldName,subSectionItem.data)">
-                                                            {{list.name}}
+                                                             {{list.name}}>
                                                         </mat-checkbox>
                                                     </p>
                                                     <div style="height: 5px;"></div>
@@ -637,10 +629,9 @@
                                                     <label style="color:black">{{subSectionItem.questionName}}</label>
                                                     <mat-form-field appearance="outline">
                                                         <input matInput type="number" [(ngModel)]=subSectionItem.data
-                                                            (change)="setSubSectionValue(subSectionItem.fieldName,subSectionItem.data)"
-                                                            maxlength={{subSectionItem.fieldValidations[0].dataLength}}
+                                                           maxlength={{subSectionItem.fieldValidations[0].dataLength}}
                                                             oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                                            placeholder="{{subSectionItem.toolTip}}" (blur)="checkForCalc()">
+                                                            placeholder="{{subSectionItem.toolTip}}" >
                                                     </mat-form-field>
                                                     <div style="height: 5px;"></div>
                                                 </ng-container>
@@ -652,7 +643,6 @@
                                                     <mat-form-field appearance="outline">
                                                         <input matInput type="number" step="any"
                                                             [(ngModel)]=subSectionItem.data
-                                                            (change)="setSubSectionValue(subSectionItem.fieldName,subSectionItem.data)"
                                                             maxlength={{subSectionItem.fieldValidations[0].dataLength}}
                                                             oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                                                             placeholder="{{subSectionItem.toolTip}}">
@@ -666,7 +656,6 @@
                                                     <label style="color:black">{{subSectionItem.questionName}}</label>
                                                     <mat-form-field appearance="outline">
                                                         <input matInput type="number" [(ngModel)]=subSectionItem.data
-                                                            (change)="setSubSectionValue(subSectionItem.fieldName,subSectionItem.data)"
                                                             readonly placeholder="{{subSectionItem.toolTip}}">
                                                     </mat-form-field>
                                                     <div style="height: 5px;"></div>
@@ -738,7 +727,7 @@
 
                                         <label style="color:black">{{sectionItem.questionName}}</label>
                                         <mat-form-field appearance="outline">
-                                            <input matInput type="email" [(ngModel)]=sectionItem.data (blur)="validateEmail(sectionItem.fieldName,sectionItem.data)"
+                                            <input matInput type="email" [(ngModel)]=sectionItem.data
                                                 placeholder="{{sectionItem.toolTip}}">
                                         </mat-form-field>
                                         <div style="height: 5px;"></div>
@@ -780,7 +769,7 @@
                                             <input matInput type="number" [(ngModel)]=sectionItem.data
                                                 maxlength={{sectionItem.fieldValidations[0].dataLength}}
                                                 oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                                placeholder="{{sectionItem.toolTip}}" (blur)="checkForCalc()">
+                                                placeholder="{{sectionItem.toolTip}}" >
                                         </mat-form-field>
                                         <div style="height: 5px;"></div>
                                     </ng-container>
@@ -851,7 +840,7 @@
                                         <th> Value Two </th>
                                         <th> No. </th>
                                     </tr>
-                                    <tr *ngFor="let dataItem of item.groupTableList;let i=index" [class.active]="i == HighlightRow">
+                                    <tr *ngFor="let dataItem of item.groupTableList;let i=index" >
                                         <td>
                                             <mat-icon class="mat-18">
                                                 edit</mat-icon>
@@ -980,7 +969,7 @@
 
                                         <label style="color:black">{{sectionItem.questionName}}</label>
                                         <mat-form-field appearance="outline">
-                                            <input matInput type="email" [(ngModel)]=sectionItem.data (blur)="validateEmail(sectionItem.fieldName,sectionItem.data)"
+                                            <input matInput type="email" [(ngModel)]=sectionItem.data
                                                 placeholder="{{sectionItem.toolTip}}">
                                         </mat-form-field>
                                         <div style="height: 5px;"></div>
@@ -1022,7 +1011,7 @@
                                             <input matInput type="number" [(ngModel)]=sectionItem.data
                                                 maxlength={{sectionItem.fieldValidations[0].dataLength}}
                                                 oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                                placeholder="{{sectionItem.toolTip}}" (blur)="checkForCalc()">
+                                                placeholder="{{sectionItem.toolTip}}" >
                                         </mat-form-field>
                                         <div style="height: 5px;"></div>
                                     </ng-container>
@@ -1203,7 +1192,7 @@
 
                                         <label style="color:black">{{sectionItem.questionName}}</label>
                                         <mat-form-field appearance="outline">
-                                            <input matInput type="email" [(ngModel)]=sectionItem.data (blur)="validateEmail(sectionItem.fieldName,sectionItem.data)"
+                                            <input matInput type="email" [(ngModel)]=sectionItem.data
                                                 placeholder="{{sectionItem.toolTip}}">
                                         </mat-form-field>
                                         <div style="height: 5px;"></div>
@@ -1245,7 +1234,7 @@
                                             <input matInput type="number" [(ngModel)]=sectionItem.data
                                                 maxlength={{sectionItem.fieldValidations[0].dataLength}}
                                                 oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                                placeholder="{{sectionItem.toolTip}}" (blur)="checkForCalc()">
+                                                placeholder="{{sectionItem.toolTip}}" >
                                         </mat-form-field>
                                         <div style="height: 5px;"></div>
                                     </ng-container>
@@ -1331,7 +1320,7 @@
 
                             <label style="color:black">{{item.questionName}}</label>
                             <mat-form-field appearance="outline">
-                                <input matInput type="email" [(ngModel)]=item.data (blur)="checkInfo()" placeholder="{{item.toolTip}}" (blur)="validateEmail(item.fieldName,item.data)"> 
+                                <input matInput type="email" [(ngModel)]=item.data  placeholder="{{item.toolTip}}" > 
                             </mat-form-field>
                             <div style="height: 5px;"></div>
                         </ng-container>
@@ -1341,7 +1330,7 @@
                             *ngIf="item.fieldType.value=='field or' && item.isActive===true && item.parentFieldName===''">
                             <label style="color:black">{{item.questionName}}</label>
                             <div style="height: 5px;"></div>
-                            <mat-radio-group [(ngModel)]=item.data class="radio" (focusout)="checkInfo()" matInput aria-label="Select an option">
+                            <mat-radio-group [(ngModel)]=item.data class="radio"  matInput aria-label="Select an option">
                                 <mat-radio-button style="color: black;" *ngFor="let list of item.listValue"
                                     [value]="list.value">
                                     {{list.name}} &nbsp;
@@ -1356,7 +1345,7 @@
                             <label style="color:black">{{item.questionName}}</label>
                             <div style="height: 5px;"></div>
                             <p *ngFor="let list of item.listValue; let i = index" class="checkbox">
-                                <mat-checkbox [(ngModel)]=item.data (blur)="checkInfo()">
+                                <mat-checkbox [(ngModel)]=item.data >
                                     {{list.name}}
                                 </mat-checkbox>
                             </p>
@@ -1371,7 +1360,7 @@
                                 <input matInput type="number" [(ngModel)]=item.data
                                     maxlength={{item.fieldValidations[0].dataLength}}
                                     oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                    placeholder="{{item.toolTip}}" (blur)="checkForCalc()" (blur)="checkInfo()">
+                                    placeholder="{{item.toolTip}}"  >
                             </mat-form-field>
                             <div style="height: 5px;"></div>
                         </ng-container>
@@ -1384,7 +1373,7 @@
                                 <input matInput type="number" step="any" [(ngModel)]=item.data
                                     maxlength={{item.fieldValidations[0].dataLength}}
                                     oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                    placeholder="{{item.toolTip}}" (blur)="checkInfo()">
+                                    placeholder="{{item.toolTip}}" >
                             </mat-form-field>
                             <div style="height: 5px;"></div>
                         </ng-container>
@@ -1395,7 +1384,7 @@
                             <label style="color:black">{{item.questionName}}</label>
                             <mat-form-field appearance="outline">
                                 <input matInput type="number" [(ngModel)]=item.data readonly
-                                    placeholder="{{item.toolTip}}" (blur)="checkInfo()">
+                                    placeholder="{{item.toolTip}}" >
                             </mat-form-field>
                             <div style="height: 5px;"></div>
                         </ng-container>
@@ -1435,14 +1424,14 @@
         </mat-tab>
 
           <!-- Photo Tab -->
-          <mat-tab label="Photos({{totalNumPhotos}})" style="background-color: black;font-weight: 500;">
+          <mat-tab label="Photos()" style="background-color: black;font-weight: 500;">
             <div style="height: 10px;"></div>
             <div class="parent">
                 <h4>Upload/Download Photo</h4>
                 <mat-form-field style="width: 30%;">
                     <div style="text-align: center;">
                         <mat-toolbar>
-                            <input matInput [(ngModel)]="photoFileAttr" readonly name="Photoname"
+                            <input matInput readonly name="Photoname"
                                 style="font-size: small;" />
                             <!-- Browse Button -->
                             <button mat-flat-button
@@ -1451,12 +1440,12 @@
                             </button>
                         </mat-toolbar>
                         <!-- Fetch selected file on change -->
-                        <input type="file" #photoInput id="uploadPhoto" (change)="onChangePhoto($event)"
+                        <input type="file" #photoInput id="uploadPhoto"
                             name="uploadPhoto" accept="image/*" />
                         <div id="hidden_upload_itemPhoto2" style="display: none;"></div>
                     </div>
                 </mat-form-field>
-                <button mat-flat-button (click)="onUploadPhoto()"
+                <button mat-flat-button
                     class="btn btn-md btn-primary"   >
                     Upload
                 </button>
@@ -1464,7 +1453,7 @@
             </div>
             <div class="parent">
                 <div class="col-md-12">
-                    <kendo-grid [kendoGridBinding]="photoList" [pageSize]="2" [pageable]="true" [height]="500" 
+                    <kendo-grid [kendoGridBinding]="" [pageSize]="2" [pageable]="true" [height]="500" 
                     [filterable]="true" [sortable]="true" [groupable]="true">
                      <ng-template kendoGridToolbarTemplate>
                        <kendo-grid-spacer></kendo-grid-spacer>
@@ -1473,7 +1462,7 @@
            
                      <kendo-grid-column field="photo" title="Preview" [width]="12">
                         <ng-template kendoGridCellTemplate let-dataItem>
-                            <img (click)="viewPhoto(dataItem)" height="150px"
+                            <img  height="150px"
                             width="200px" src="data:image/png;base64,{{dataItem.photo}}">
                           </ng-template>
                      </kendo-grid-column>
@@ -1489,7 +1478,7 @@
            
                      <kendo-grid-column [width]="5" title="Download">
                        <ng-template kendoGridCellTemplate let-dataItem>
-                        <button mat-icon-button (click)="clickDownloadPhoto(dataItem)">
+                        <button mat-icon-button>
                             <mat-icon class="mat-18">file_download</mat-icon>
                         </button>
                        </ng-template>
@@ -1497,7 +1486,7 @@
                  
                      <kendo-grid-column [width]="5">
                         <ng-template kendoGridCellTemplate let-dataItem>
-                            <button mat-icon-button (click)="deletePhoto(dataItem)">
+                            <button mat-icon-button>
                                 <mat-icon class="mat-18">delete</mat-icon>
                             </button>
                         </ng-template>
@@ -1511,7 +1500,7 @@
         </mat-tab>
 
         <!-- File tab -->
-        <mat-tab label="Files({{totalNumAttachments}})" style="background-color: black;font-weight: 500;">
+        <mat-tab label="Files()" style="background-color: black;font-weight: 500;">
             <div style="height: 10px;"></div>
             <div class="parent">
                 <h4>Upload/Download Files</h4>
@@ -1526,12 +1515,12 @@
                             </button>
                         </mat-toolbar>
                         <!-- Fetch selected file on change -->
-                        <input type="file" #fileInput id="uploadFile" (change)="onChange($event)" name="uploadFile"
+                        <input type="file" #fileInput id="uploadFile"  name="uploadFile"
                             accept=".doc,.docx,.pdf,.txt,.rtf,.csv,.ppsx,.pptx,.xlsx" max-file-size="4194304" />
                         <div id="hidden_upload_item" style="display: none;"></div>
                     </div>
                 </mat-form-field>
-                <button mat-flat-button (click)="onUpload()"
+                <button mat-flat-button
                     class="btn btn-md btn-primary"   >
                     Upload
                 </button>
@@ -1539,7 +1528,7 @@
             </div>
             <div class="parent">
                 <div class="col-md-12">
-                    <kendo-grid [kendoGridBinding]="attachmentList" [pageSize]="2" [pageable]="true" [height]="400" 
+                    <kendo-grid [kendoGridBinding]="" [pageSize]="2" [pageable]="true" [height]="400" 
                     [filterable]="true" [sortable]="true" [groupable]="true">
                      <ng-template kendoGridToolbarTemplate>
                        <kendo-grid-spacer></kendo-grid-spacer>
@@ -1563,7 +1552,7 @@
           
                     <kendo-grid-column [width]="5" title="Download">
                         <ng-template kendoGridCellTemplate let-dataItem>
-                            <button mat-icon-button (click)="clickDownload(dataItem)">
+                            <button mat-icon-button>
                                 <mat-icon class="mat-18">file_download</mat-icon>
                             </button>
                         </ng-template>
@@ -1571,7 +1560,7 @@
                  
                      <kendo-grid-column [width]="5">
                         <ng-template kendoGridCellTemplate let-dataItem>
-                            <button mat-icon-button (click)="deleteFile(dataItem)">
+                            <button mat-icon-button>
                                 <mat-icon class="mat-18">delete</mat-icon>
                             </button>
                         </ng-template>
@@ -1585,21 +1574,21 @@
         </mat-tab>
 
         <!-- Comments tab -->
-        <mat-tab label="Comments({{totalNumComments}})" style="background-color: black;font-weight: 500;">
+        <mat-tab label="Commentss" style="background-color: black;font-weight: 500;">
             <div style="height: 10px;"></div>
             <div class="parent">
                 <h4>Comments</h4>
                 <mat-form-field class="example-full-width" appearance="outline">
                     <mat-label>Leave a comment</mat-label>
-                    <textarea matInput [(ngModel)]=formComment placeholder="Type comment here..."></textarea>
+                    <textarea matInput placeholder="Type comment here..."></textarea>
                 </mat-form-field>
-                <button mat-flat-button (click)="addComment()" class="btn btn-md btn-primary"   >
-                    {{addEditComment}} Comment
+                <button mat-flat-button  class="btn btn-md btn-primary"   >
+                 Comment
                 </button>
                 <div style="height: 10px;"></div>
             </div>
             <div class="parent">
-                <kendo-grid [kendoGridBinding]="commentList" [pageSize]="2" [pageable]="true" [height]="400" [filterable]="true"
+                <kendo-grid [kendoGridBinding]="" [pageSize]="2" [pageable]="true" [height]="400" [filterable]="true"
                     [sortable]="true" [groupable]="true">
                     <ng-template kendoGridToolbarTemplate>
                         <kendo-grid-spacer></kendo-grid-spacer>
@@ -1623,7 +1612,7 @@
             
                     <kendo-grid-column [width]="5">
                         <ng-template kendoGridCellTemplate let-dataItem>
-                            <button mat-icon-button (click)="showComment(dataItem)">
+                            <button mat-icon-button>
                                 <mat-icon class="mat-18">edit</mat-icon>
                             </button>
                         </ng-template>
@@ -1631,7 +1620,7 @@
             
                     <kendo-grid-column [width]="5">
                         <ng-template kendoGridCellTemplate let-dataItem>
-                            <button mat-icon-button (click)="deleteComment(dataItem)">
+                            <button mat-icon-button>
                                 <mat-icon class="mat-18">delete</mat-icon>
                             </button>
                         </ng-template>

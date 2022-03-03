@@ -3,8 +3,9 @@
     <div class="container-fluid">
       <div class="header text-center">
         <h3 class="title" style="font-weight: bold;">Form Inbox</h3>
-        <kendo-grid [kendoGridBinding]="gridView" [pageSize]="10" [pageable]="true" [height]="700" 
-         [filterable]="true" [sortable]="true" [groupable]="true">
+        <kendo-grid [kendoGridBinding]="gridView" [pageSize]="10" [pageable]="true" [height]="700" [filterable]="true"
+          [sortable]="true" [groupable]="true">
+
           <ng-template kendoGridToolbarTemplate>
             <mat-form-field appearance="outline" style="width: 500px;">
               <mat-label>Select a form</mat-label>
@@ -15,10 +16,6 @@
               </mat-select>
           </mat-form-field>
             <kendo-grid-spacer></kendo-grid-spacer>
-            <!-- <button kendoGridExcelCommand type="button" icon="file-excel">
-              Export to Excel
-            </button> -->
-            <button kendoGridPDFCommand icon="file-pdf">Export to PDF</button>
           </ng-template>
 
           <kendo-grid-column field="dateSent" title="Date Sent" [width]="12">
@@ -48,10 +45,10 @@
             </ng-template>
           </kendo-grid-column>
 
-          
+
           <kendo-grid-column field="formTemplateName" title="Form Name" [hidden]="true">
             <ng-template kendoGridGroupHeaderTemplate let-value="value">
-              {{ value }} 
+              {{ value }}
               <!-- ({{aggregates.formTemplateName.count}}) -->
             </ng-template>
           </kendo-grid-column>
@@ -59,15 +56,18 @@
           <kendo-grid-column [width]="12" title="Attachments">
             <ng-template kendoGridCellTemplate let-dataItem>
               <button mat-icon-button *ngIf="dataItem.commentCount!==0" (click)="openFormDesign(dataItem,'3')">
-                <mat-icon class="mat-14" style="color: #016000;" matTooltip="{{dataItem.commentCount}}">comment</mat-icon>
+                <mat-icon class="mat-14" style="color: #016000;" matTooltip="{{dataItem.commentCount}}">comment
+                </mat-icon>
               </button>
 
               <button mat-icon-button *ngIf="dataItem.attachCount!==0" (click)="openFormDesign(dataItem,'2')">
-                <mat-icon class="mat-14" style="color: #016000;" matTooltip="{{dataItem.attachCount}}">attach_file</mat-icon>
+                <mat-icon class="mat-14" style="color: #016000;" matTooltip="{{dataItem.attachCount}}">attach_file
+                </mat-icon>
               </button>
 
               <button mat-icon-button *ngIf="dataItem.photoCount!==0" (click)="openFormDesign(dataItem,'1')">
-                <mat-icon class="mat-14" style="color: #016000;" matTooltip="{{dataItem.photoCount}}">photo_camera</mat-icon>
+                <mat-icon class="mat-14" style="color: #016000;" matTooltip="{{dataItem.photoCount}}">photo_camera
+                </mat-icon>
               </button>
             </ng-template>
           </kendo-grid-column>

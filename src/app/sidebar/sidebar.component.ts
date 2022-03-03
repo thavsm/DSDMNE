@@ -134,7 +134,7 @@ export const ROUTES: RouteInfo[] = [{
             {path: 'formCategory',title: 'Form Category',ab: 'FC'},
             {path: 'formList',title: 'Form Design',ab: 'FD'},   
             { path: 'formCapture', title: 'Form Capture', ab: 'FC' },
-            { path: 'formInbox', title: 'Form Inbox', ab: 'FI' }
+            { path: 'formInbox', title: 'Form Inbox', ab: 'FI' },
         ]
     }
 ];

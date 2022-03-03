@@ -68,7 +68,7 @@ export class FormCaptureComponent implements OnInit {
           state:'add'
         };
         this.spinner.hide();
-        this.showNotification('top','center','Form created successfully','Success','success');
+        this.showNotification('top','center','Form created successfully','','success');
         localStorage.setItem('formCaptureDetails', JSON.stringify(myObj));
         localStorage.setItem('tabIndex', '0');
         const dialogRef = this.dialog.open(AddFormComponent, {
@@ -83,7 +83,7 @@ export class FormCaptureComponent implements OnInit {
       });
     }
     else{
-      this.showNotification('top','center','Please select add a form name and choose a form template','Form Creation failed.','danger');
+      this.showNotification('top','center','Please select add a form name and choose a form template','','danger');
     }
   }
 
