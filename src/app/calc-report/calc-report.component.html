@@ -3,7 +3,8 @@
       <div class="container-fluid">
         <div class="header text-center">
           <h3 class="title" style="font-weight: bold;">Indicator Approval</h3>
-          <kendo-grid [kendoGridBinding]="gridView" [pageSize]="10" [pageable]="true" [height]="700" 
+          <kendo-grid [kendoGridBinding]="gridView" [pageSize]="pageSize" [pageable]="true"
+          [height]="700"   (pageChange)="onPageChange($event)"
            [filterable]="true" [sortable]="true" [groupable]="true">
 
             <kendo-grid-column field="provincialProgram" title="Program" [width]="130">
@@ -86,6 +87,22 @@
                 <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.december}}</u></a>
               </ng-template>
             </kendo-grid-column>
+
+            <ng-template kendoPagerTemplate let-totalPages="totalPages" let-currentPage="currentPage">
+              <kendo-pager-prev-buttons></kendo-pager-prev-buttons>             
+              <kendo-pager-numeric-buttons [buttonCount]="10"></kendo-pager-numeric-buttons>
+              <kendo-pager-next-buttons></kendo-pager-next-buttons>
+              <kendo-pager-page-sizes [pageSizes]="pageSizes"></kendo-pager-page-sizes>
+              <kendo-pager-info></kendo-pager-info>
+              Current page: {{currentPage}}
+           </ng-template>
+
+            <!-- <ng-template kendoPagerTemplate PagerNextButtonsComponent >
+              <kendo-pager-prev-buttons></kendo-pager-prev-buttons>
+              <kendo-pager-info></kendo-pager-info>
+              <kendo-pager-next-buttons></kendo-pager-next-buttons>
+              <kendo-pager-page-sizes [pageSizes]="pageSizes"></kendo-pager-page-sizes>
+            </ng-template> -->
           </kendo-grid>
         </div>
       </div>

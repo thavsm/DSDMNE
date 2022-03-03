@@ -6,7 +6,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { DataBindingDirective } from '@progress/kendo-angular-grid';
 import { TreediagramService } from 'src/app/treediagram.service';
 import { AddFormComponent } from '../form-capture/add-form/add-form.component';
-
+import { PageSizeItem } from "@progress/kendo-angular-grid";
 declare var $: any;
 
 @Component({
@@ -19,6 +19,12 @@ export class CalcReportComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(public dialog: MatDialog, private route: Router, private service: TreediagramService, private spinner: NgxSpinnerService) { }
 
+  public pageSize = 10;
+  public pageSizes: Array<number | PageSizeItem> = [5, 10, 20, {
+    text: 'All',
+    value: 'all'
+     }];
+
   public gridView: any[];
 
   ngOnInit(): void {
@@ -26,6 +32,10 @@ export class CalcReportComponent implements OnInit {
     this.refreshFormsList();
   }
 
+  public onPageChange(state: any): void {
+    this.pageSize = state.take;
+  }
+  
   refreshFormsList() {
     this.spinner.show();
     this.service.getCalculationsReport().subscribe(data => {
