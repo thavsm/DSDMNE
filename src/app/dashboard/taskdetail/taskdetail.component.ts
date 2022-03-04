@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { UserService } from 'src/app/shared/user.service';
 import {NgxSpinner, NgxSpinnerService} from 'ngx-spinner';
+import { Router } from '@angular/router';
 
 declare const $: any;
 
@@ -49,7 +50,7 @@ export class TaskDetailComponent implements OnInit {
     {value: '9', viewValue: 'Limpopo'}
   ];
   
-  constructor(private service: UserService, private spinner: NgxSpinnerService) {
+  constructor(private service: UserService, private spinner: NgxSpinnerService, private router: Router) {
     
      
   }
@@ -139,7 +140,8 @@ export class TaskDetailComponent implements OnInit {
       res => {
         this.spinner.hide();
         //this.data1 = res;
-        window.location.replace("/dashboard");
+        //window.location.replace("/dsd_demo/dashboard");
+        this.router.navigate(['/dashboard']);
       },
       err => {
         this.spinner.hide();
