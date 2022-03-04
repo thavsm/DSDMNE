@@ -62,7 +62,8 @@ export class RoleaccessComponent implements OnInit {
   }
   
   ngOnInit(): void {
-    this.roleID = this.roleAdd.roleID;
+    //this.roleID = this.roleAdd.roleID;
+    this.roleID = this.roleAdd;
     this.getRoles();
     console.log(this.roleList);
   }
@@ -154,53 +155,53 @@ export class RoleaccessComponent implements OnInit {
   addRoleAccess()
   {
 
-    // this.froles = [];
-    // this.selectionForms.selected.forEach(row => {
-    //   this.frole = new FormRole();      
-    //   this.frole.formID = this.formID;
-    //   this.frole.roleID = row.id;
-    //   this.frole.uid = 0;
-    //   this.froles.push(this.frole);
-    // });
+    this.froles = [];
+    this.selectionForms.selected.forEach(row => {
+      this.frole = new FormRole();      
+      this.frole.formID = row.id;
+      this.frole.roleID = this.roleID;
+      this.frole.uid = 0;
+      this.froles.push(this.frole);
+    });
 
-    // this.service.addFormRoles(this.froles).subscribe(
-    //   (res: any) => {
-    //     if (res.message == 'Role added successfully') {
-    //     this.showNotification('top','right','Form roles added!', 'Roles successful.','success');
-    //     }
-    //     else{}
-    //   },
-    //   err => {
-    //     console.log(err);
-    //     if (err.status == 400) {
+    this.service.addFormRoles(this.froles).subscribe(
+      (res: any) => {
+        if (res.message == 'Role added successfully') {
+        this.showNotification('top','right','Form roles added!', 'Roles successful.','success');
+        }
+        else{}
+      },
+      err => {
+        console.log(err);
+        if (err.status == 400) {
         
-    //     }          
-    //   }
-    // );
+        }          
+      }
+    );
 
-    // this.mroles = [];
-    // this.selection.selected.forEach(row => {
-    //   this.mrole = new MenuRole();      
-    //   this.mrole.roleID = this.roleID;
-    //   this.mrole.menuID = row.id;
-    //   this.mrole.uid = 0;
-    //   this.mroles.push(this.mrole);
-    // });
+    this.mroles = [];
+    this.selection.selected.forEach(row => {
+      this.mrole = new MenuRole();      
+      this.mrole.roleID = this.roleID;
+      this.mrole.menuID = row.id;
+      this.mrole.uid = 0;
+      this.mroles.push(this.mrole);
+    });
 
-    // this.service.addMenusRole(this.mroles).subscribe(
-    //   (res: any) => {
-    //     if (res.message == 'Menu added successfully') {
-    //     this.showNotification('top','right','Menus role added!', 'Role successful.','success');
-    //     }
-    //     else{}
-    //   },
-    //   err => {
-    //     console.log(err);
-    //     if (err.status == 400) {
+    this.service.addMenusRole(this.mroles).subscribe(
+      (res: any) => {
+        if (res.message == 'Menu added successfully') {
+        this.showNotification('top','right','Menus role added!', 'Role successful.','success');
+        }
+        else{}
+      },
+      err => {
+        console.log(err);
+        if (err.status == 400) {
         
-    //     }          
-    //   }
-    // );
+        }          
+      }
+    );
 
     this.typeroles = [];
     this.selectionRole.selected.forEach(row => {

@@ -130,7 +130,7 @@ export class MaterialModule {}
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot(AppRoutes,{
-      useHash: false
+      useHash: true
     }),
     HttpClientModule,
 

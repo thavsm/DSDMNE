@@ -22,12 +22,13 @@ export class AppusersComponent implements OnInit {
   
   formAdd: any;
   public displayedColumns = ['userName', 'email', 'role', 'update' ];
-  public userList = new MatTableDataSource<any>();
+  //public userList = new MatTableDataSource<any>();
+  public userList: any[];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngAfterViewInit() {
-    this.userList.paginator = this.paginator;
+    //this.userList.paginator = this.paginator;
   }
 
 
@@ -36,18 +37,19 @@ export class AppusersComponent implements OnInit {
     this.service.getUsers(); 
     
     this.service.getAllUsers().subscribe(data => {
-      this.userList.data = data;
+      //this.userList.data = data;
+      this.userList = data;
     });
         
   }
 
-  clickEdit(item: any) {
+  clickEdit(item: any) {    
     this.formAdd = item;
     let obj = {ParentName:'Users',data:this.formAdd};
     const dialogRef = this.dialog.open(UserProfileComponent 
     , {
       width: '60%',
-      height: '60%',
+      height: '90%',
       data: obj,
       disableClose:false
     });
@@ -55,6 +57,10 @@ export class AppusersComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');      
     });
+  }
+
+  public doFilter = (event: any) => {
+    this.userList.filter = event.target.value.trim();
   }
 
 }

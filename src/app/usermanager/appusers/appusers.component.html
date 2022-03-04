@@ -2,7 +2,7 @@
     <div class="container-fluid">
       <div class="container-fluid">
         <div class="header text-center">
-          <h3 class="title">All users</h3>
+          <!-- <h3 class="title">All users</h3> -->
           
         </div>
         <div class="row">
@@ -15,7 +15,34 @@
                     <h4 class="card-title">List of users</h4>
                   </div>
                     <div class="card-body">
-                      <div class="table-responsive">
+
+                      <div class="row">
+                        <kendo-grid [kendoGridBinding]="userList" [pageSize]="10" [pageable]="true" [height]="700" 
+                          [filterable]="true" [sortable]="true" [groupable]="false">
+              
+                        <kendo-grid-column field="fullName" title="Full Name" [width]="6">
+                        </kendo-grid-column>
+              
+                        <kendo-grid-column field="email" title="Email" [width]="8">
+                        </kendo-grid-column>
+                        
+                        <kendo-grid-column field="roleName" title="Role Name" [width]="6">
+                        </kendo-grid-column>
+              
+                        <kendo-grid-column [width]="1">
+                          <ng-template kendoGridCellTemplate let-dataItem>
+                            <button mat-icon-button (click)="clickEdit(dataItem)">
+                                <mat-icon matTooltip="Update" class="mat-18" style="color: #016000;">edit</mat-icon>
+                            </button>
+                          </ng-template>
+                        </kendo-grid-column>
+              
+                        <!-- <kendo-grid-pdf fileName="formCategory.pdf" [repeatHeaders]="true"></kendo-grid-pdf> -->
+                        <!-- <kendo-grid-excel fileName="FormInbox.xlsx"></kendo-grid-excel> -->
+                      </kendo-grid>
+                      </div>
+
+                      <!-- <div class="table-responsive">
                           
                         <table mat-table [dataSource]="userList" matSort class="table">                          
               
@@ -82,7 +109,7 @@
                             </table>
   
                         </div>
-  
+   -->
                     </div>
                 </div>
             </div>

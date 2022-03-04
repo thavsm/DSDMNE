@@ -1,10 +1,7 @@
 <div class="row">
     <!-- <div class="col-md-12">-
         <div class="card"> -->          
-              <div class="card-body">
-                <div class="row">
-                    <button id="btnSave" class="btn btn-primary mr-1" (click)='addRoleAccess()'>Save Access</button>
-                  </div>
+              <div class="card-body">                
                   <div class="row">
                     <div class="col-md-8 ml-auto mr-auto">
                       <div class="page-categories">
@@ -27,6 +24,17 @@
                             </a>
                           </li>
                         </ul>
+                        <div class="row">
+                            <div class="col-md-5 ml-auto">
+                              <button mat-button [mat-dialog-close]="" class="btn btn-md btn-primary"  >Cancel</button>
+                            </div>
+                            <div class="col-md-3 mr-auto"></div>
+                            <div class="col-md-4 mr-auto">
+                              
+                              <button id="btnSave" class="btn btn-primary mr-1" (click)='addRoleAccess()'>Save Access</button>
+                            </div>
+                        </div>
+                        
                         <div class="tab-content tab-space tab-subcategories">
                           <div class="tab-pane" id="link7">
                               <div class="card">
@@ -139,7 +147,9 @@
                       </div>
                     </div>
                 </div>
-                
+                <div class="row">
+                  <!-- <button id="btnSave" class="btn btn-primary mr-1" (click)='addRoleAccess()'>Save Access</button> -->
+                </div>
               </div>
        <!-- </div>
     </div> -->
