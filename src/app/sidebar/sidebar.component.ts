@@ -67,7 +67,7 @@ export const ROUTES: RouteInfo[] = [{
     },  
     ,{
         path: '/hierarchy-management',
-        title: 'Management',
+        title: 'hierarchy management',
         type: 'sub',
         icontype: 'account_tree',
         role: [],

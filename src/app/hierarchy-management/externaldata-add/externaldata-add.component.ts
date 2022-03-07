@@ -60,6 +60,11 @@ export class ExternaldataAddComponent implements OnInit {
   ItemCalID: any;
   divAdd: boolean  = true;
   divEdit: boolean  = false;
+  divContorls : boolean  = true;
+
+  thEdit: boolean  = true;
+  thDelete: boolean  = true;
+
   constructor(public dialogRef: MatDialogRef<ExternaldataAddComponent>,
     @Inject(MAT_DIALOG_DATA) data,
     public service: TreediagramService, public formBuilder: FormBuilder,private spinner: NgxSpinnerService, public datepipe: DatePipe) {
@@ -110,9 +115,29 @@ export class ExternaldataAddComponent implements OnInit {
     this.service.getDataService().subscribe(data => {
       this.Dataservice = data;         
     });
+
+    this.hideEditButtons();
    
   }
 
+
+  hideEditButtons(){
+
+
+    if(this.CalcAdd.ViewEdit == 1){
+
+      this.divContorls = true;
+      this.thEdit= true;  
+      this.thDelete= true;  
+
+    }else if(this.CalcAdd.ViewEdit == 0){
+
+      this.divContorls = false;
+      this.thEdit= false;  
+      this.thDelete= false;  
+    }
+
+  }
   public gridData: any = this.service.getExternalCalculationByNodeID(this.nodeID);
 
   onType(ob) {  

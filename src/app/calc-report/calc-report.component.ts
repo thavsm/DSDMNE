@@ -7,6 +7,7 @@ import { DataBindingDirective } from '@progress/kendo-angular-grid';
 import { TreediagramService } from 'src/app/treediagram.service';
 import { AddFormComponent } from '../form-capture/add-form/add-form.component';
 import { PageSizeItem } from "@progress/kendo-angular-grid";
+import { GroupDescriptor } from '@progress/kendo-data-query';
 declare var $: any;
 
 @Component({
@@ -27,6 +28,8 @@ export class CalcReportComponent implements OnInit {
 
   public gridView: any[];
 
+  public groups: GroupDescriptor[] = [{ field: "provincialProgram" }, {field: "provincialSubProgram"}];
+  
   ngOnInit(): void {
 
     this.refreshFormsList();
@@ -35,7 +38,7 @@ export class CalcReportComponent implements OnInit {
   public onPageChange(state: any): void {
     this.pageSize = state.take;
   }
-  
+
   refreshFormsList() {
     this.spinner.show();
     this.service.getCalculationsReport().subscribe(data => {
@@ -44,7 +47,6 @@ export class CalcReportComponent implements OnInit {
     });
   }
 
-  
   openFormDesign(item: any,index:any): void {
     let formCaptureObj = {
       formID: 6,
@@ -52,6 +54,7 @@ export class CalcReportComponent implements OnInit {
       formCaptureID:10,
       state:'edit'
     };
+    
     localStorage.setItem('formCaptureDetails', JSON.stringify(formCaptureObj));
     localStorage.setItem('tabIndex', index);
     const dialogRef = this.dialog.open(AddFormComponent, {

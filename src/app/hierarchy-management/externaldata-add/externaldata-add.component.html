@@ -1,188 +1,190 @@
 <h1 mat-dialog-title>Form Value Configuration</h1>
 <div mat-dialog-content>
 
-    <div class="form-group">
-        <mat-form-field appearance="outline">
-            <mat-label>*Field Type</mat-label>
-            <mat-select [(ngModel)]="ExternalData.name" (selectionChange)="onType($event)"  [disabled]="isDisabled">
-                <mat-option *ngFor="let c of ExternalDataType" [value]="c.externalDataTypeID">
-                    {{c.name}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div>
-
-
-    <div class="form-group" *ngIf="divFormCat">
-        <mat-form-field appearance="outline">
-            <mat-label>*Form Category</mat-label>
-            <mat-select [(ngModel)]="ExternalData.FormCategory" (selectionChange)="onformCategoryChange($event)">
-                <mat-option *ngFor="let c of FormCategory" [value]="c.formCategoryID">
-                    {{c.name}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div>
-
-    <div class="form-group" *ngIf="divImportTableName">
-        <mat-form-field appearance="outline">
-            <mat-label>*Import Table Name</mat-label>
-            <mat-select [(ngModel)]="ExternalData.uploadName" (selectionChange)="onUploadNameChange($event)">
-                <mat-option *ngFor="let c of DataImportUpload" [value]="c.uploadName">
-                    {{c.uploadName}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div>
-
-    <div class="form-group" *ngIf="divExternalDataName">
-        <mat-form-field appearance="outline">
-            <mat-label>*External Data Connection Name</mat-label>
-            <mat-select [(ngModel)]="ExternalData.connectString" (selectionChange)="onDataservice($event)">
-                <mat-option *ngFor="let c of Dataservice" [value]="c.connectString">
-                    {{c.initialCatalog}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div>
-
-    <div class="form-group" *ngIf="divExternalTableDataName">
-        <mat-form-field appearance="outline">
-            <mat-label>*External Data Table Name</mat-label>
-            <mat-select [(ngModel)]="ExternalData.tablE_NAME" (selectionChange)="onExternalDataTableName($event)">
-                <mat-option *ngFor="let c of ExternalDataTableName" [value]="c.tablE_NAME">
-                    {{c.tablE_NAME}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div>
-
-    
-    <div class="form-group" *ngIf="divColName">
-        <mat-form-field appearance="outline">
-            <mat-label>*Table Column Name</mat-label>
-            <mat-select [(ngModel)]="ExternalData.column_name"  (selectionChange)="onColName($event)">
-                <mat-option *ngFor="let c of TableColumns" [value]="c.column_name">
-                    {{c.column_name}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div>
-
-    
-
-    <div class="form-group"  *ngIf="divForm" >
-        <mat-form-field appearance="outline">
-            <mat-label>*Form Name</mat-label>
-            <mat-select [(ngModel)]="ExternalData.FormName" (selectionChange)="onformChange($event)">
-                <mat-option *ngFor="let c of Form" [value]="c.formID">
-                    {{c.formName}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div>
-    
-    <div class="form-group"  *ngIf="divFormField" >
-        <mat-form-field appearance="outline">
-            <mat-label>*Form Field</mat-label>
-            <mat-select [(ngModel)]="ExternalData.fName" (selectionChange)="onformfieldChange($event)">
-                <mat-option *ngFor="let c of FormFields" [value]="c.fieldID">
-                    {{c.dataExportName}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div>
-
-    <div class="form-group"  *ngIf="divSearchCriteriaCmb" >
-        <mat-form-field appearance="outline">
-            <mat-label>*Search Criteria</mat-label>
-            <mat-select  [(ngModel)]="ExternalData.ArraySearchCriteria" multiple>
-                <mat-option *ngFor="let list of listCategory" style="color: black;" [value]="list.value">
-                    {{list.name}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div>
-
-    <div class="form-group"  *ngIf="divSearchCriteriaTxt" >
+    <div class="form-group" *ngIf="divContorls">
         <div class="form-group">
-            <label style="font-size: medium;">*Search Criteria</label>
             <mat-form-field appearance="outline">
-                <input matInput ngModel type="text" [(ngModel)]="ExternalData.SearchCriteria">
+                <mat-label>*Field Type</mat-label>
+                <mat-select [(ngModel)]="ExternalData.name" (selectionChange)="onType($event)"  [disabled]="isDisabled">
+                    <mat-option *ngFor="let c of ExternalDataType" [value]="c.externalDataTypeID">
+                        {{c.name}}
+                    </mat-option>
+                </mat-select>
             </mat-form-field>
         </div>
-    </div>
-
-    <div class="form-group"  *ngIf="divSearchCriteriaNmb" >
-        <div class="form-group">
-            <label style="font-size: medium;">*Search Criteria</label>
-            <mat-form-field appearance="outline">
-                <input matInput ngModel type="number" [(ngModel)]="ExternalData.SearchCriteria">
-            </mat-form-field>
-        </div>
-    </div>
-
-    <div class="form-group"  *ngIf="divSearchCriteriaDate" >
-        <div class="form-group">
-            <label style="font-size: medium;">*Search Criteria</label>
-            <mat-form-field appearance="outline">
-                <input matInput type="date" [(ngModel)]="ExternalData.SearchCriteria">
-            </mat-form-field>
-        </div>
-    </div>
     
-    <div class="form-group"  *ngIf="divOperator" >
-        <div class="form-group">
-            <mat-radio-group aria-label="Operator" [(ngModel)]="ExternalData.selection">
-                <mat-radio-button value="+">Add</mat-radio-button>
-                <mat-radio-button value="-">Subtract</mat-radio-button>
-                <mat-radio-button value="*">Multiply</mat-radio-button>
-                <mat-radio-button value="/">Divide</mat-radio-button>
-            </mat-radio-group>
-        </div>
-    </div>
     
-    <div class="form-group">
-        <button mat-button  (click)="addCalculation()" 
-          class="btn btn-md btn-primary">Add Calculation</button>&nbsp;
-          <button mat-button   (click)="Clear()" 
-          class="btn btn-md btn-primary">Clear</button>
-    </div>
-      
-    <ng-container>
-        <div class="form-group">
-            <label style="font-size: medium;">*Calculation</label>
+        <div class="form-group" *ngIf="divFormCat">
             <mat-form-field appearance="outline">
-                <input matInput ngModel type="text"  value="{{ExternalData.calculation}}"
-                [(ngModel)]="ExternalData.calculation" disabled>
+                <mat-label>*Form Category</mat-label>
+                <mat-select [(ngModel)]="ExternalData.FormCategory" (selectionChange)="onformCategoryChange($event)">
+                    <mat-option *ngFor="let c of FormCategory" [value]="c.formCategoryID">
+                        {{c.name}}
+                    </mat-option>
+                </mat-select>
             </mat-form-field>
         </div>
-    </ng-container>
-
-
-    <ng-container>
-        <div class="form-group">
-            <label style="font-size: medium;">*Value</label>
-            <mat-form-field appearance="outline" >
-                <input matInput ngModel type="text" value="{ExternalData.calcVal}"  [(ngModel)]="ExternalData.calcVal" disabled>
-            </mat-form-field>
-        </div>
-    </ng-container>
-
     
-    <div class="form-group" *ngIf="divAdd">
-        <button mat-button  
-        class="btn btn-md btn-primary" (click)="addCompCalculation()"  [disabled]="isAddDisabled">Add</button>
+        <div class="form-group" *ngIf="divImportTableName">
+            <mat-form-field appearance="outline">
+                <mat-label>*Import Table Name</mat-label>
+                <mat-select [(ngModel)]="ExternalData.uploadName" (selectionChange)="onUploadNameChange($event)">
+                    <mat-option *ngFor="let c of DataImportUpload" [value]="c.uploadName">
+                        {{c.uploadName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    
+        <div class="form-group" *ngIf="divExternalDataName">
+            <mat-form-field appearance="outline">
+                <mat-label>*External Data Connection Name</mat-label>
+                <mat-select [(ngModel)]="ExternalData.connectString" (selectionChange)="onDataservice($event)">
+                    <mat-option *ngFor="let c of Dataservice" [value]="c.connectString">
+                        {{c.initialCatalog}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    
+        <div class="form-group" *ngIf="divExternalTableDataName">
+            <mat-form-field appearance="outline">
+                <mat-label>*External Data Table Name</mat-label>
+                <mat-select [(ngModel)]="ExternalData.tablE_NAME" (selectionChange)="onExternalDataTableName($event)">
+                    <mat-option *ngFor="let c of ExternalDataTableName" [value]="c.tablE_NAME">
+                        {{c.tablE_NAME}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    
+        
+        <div class="form-group" *ngIf="divColName">
+            <mat-form-field appearance="outline">
+                <mat-label>*Table Column Name</mat-label>
+                <mat-select [(ngModel)]="ExternalData.column_name"  (selectionChange)="onColName($event)">
+                    <mat-option *ngFor="let c of TableColumns" [value]="c.column_name">
+                        {{c.column_name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    
+        
+    
+        <div class="form-group"  *ngIf="divForm" >
+            <mat-form-field appearance="outline">
+                <mat-label>*Form Name</mat-label>
+                <mat-select [(ngModel)]="ExternalData.FormName" (selectionChange)="onformChange($event)">
+                    <mat-option *ngFor="let c of Form" [value]="c.formID">
+                        {{c.formName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        
+        <div class="form-group"  *ngIf="divFormField" >
+            <mat-form-field appearance="outline">
+                <mat-label>*Form Field</mat-label>
+                <mat-select [(ngModel)]="ExternalData.fName" (selectionChange)="onformfieldChange($event)">
+                    <mat-option *ngFor="let c of FormFields" [value]="c.fieldID">
+                        {{c.dataExportName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    
+        <div class="form-group"  *ngIf="divSearchCriteriaCmb" >
+            <mat-form-field appearance="outline">
+                <mat-label>*Search Criteria</mat-label>
+                <mat-select  [(ngModel)]="ExternalData.ArraySearchCriteria" multiple>
+                    <mat-option *ngFor="let list of listCategory" style="color: black;" [value]="list.value">
+                        {{list.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    
+        <div class="form-group"  *ngIf="divSearchCriteriaTxt" >
+            <div class="form-group">
+                <label style="font-size: medium;">*Search Criteria</label>
+                <mat-form-field appearance="outline">
+                    <input matInput ngModel type="text" [(ngModel)]="ExternalData.SearchCriteria">
+                </mat-form-field>
+            </div>
+        </div>
+    
+        <div class="form-group"  *ngIf="divSearchCriteriaNmb" >
+            <div class="form-group">
+                <label style="font-size: medium;">*Search Criteria</label>
+                <mat-form-field appearance="outline">
+                    <input matInput ngModel type="number" [(ngModel)]="ExternalData.SearchCriteria">
+                </mat-form-field>
+            </div>
+        </div>
+    
+        <div class="form-group"  *ngIf="divSearchCriteriaDate" >
+            <div class="form-group">
+                <label style="font-size: medium;">*Search Criteria</label>
+                <mat-form-field appearance="outline">
+                    <input matInput type="date" [(ngModel)]="ExternalData.SearchCriteria">
+                </mat-form-field>
+            </div>
+        </div>
+        
+        <div class="form-group"  *ngIf="divOperator" >
+            <div class="form-group">
+                <mat-radio-group aria-label="Operator" [(ngModel)]="ExternalData.selection">
+                    <mat-radio-button value="+">Add</mat-radio-button>
+                    <mat-radio-button value="-">Subtract</mat-radio-button>
+                    <mat-radio-button value="*">Multiply</mat-radio-button>
+                    <mat-radio-button value="/">Divide</mat-radio-button>
+                </mat-radio-group>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <button mat-button  (click)="addCalculation()" 
+              class="btn btn-md btn-primary">Add Calculation</button>&nbsp;
+              <button mat-button   (click)="Clear()" 
+              class="btn btn-md btn-primary">Clear</button>
+        </div>
+          
+        <ng-container>
+            <div class="form-group">
+                <label style="font-size: medium;">*Calculation</label>
+                <mat-form-field appearance="outline">
+                    <input matInput ngModel type="text"  value="{{ExternalData.calculation}}"
+                    [(ngModel)]="ExternalData.calculation" disabled>
+                </mat-form-field>
+            </div>
+        </ng-container>
+    
+    
+        <ng-container>
+            <div class="form-group">
+                <label style="font-size: medium;">*Value</label>
+                <mat-form-field appearance="outline" >
+                    <input matInput ngModel type="text" value="{ExternalData.calcVal}"  [(ngModel)]="ExternalData.calcVal" disabled>
+                </mat-form-field>
+            </div>
+        </ng-container>
+    
+        
+        <div class="form-group" *ngIf="divAdd">
+            <button mat-button  
+            class="btn btn-md btn-primary" (click)="addCompCalculation()"  [disabled]="isAddDisabled">Add</button>
+        </div>
+          
+        <div class="form-group" *ngIf="divEdit">
+            <button mat-button  
+            class="btn btn-md btn-primary" (click)="EditCompCalculation()">Edit</button>
+              <!-- &nbsp;
+            <button mat-button  
+               class="btn btn-md btn-primary" (click)="RefreshCalculation()">Refresh Calculation</button> -->
+        </div>    
     </div>
-      
-    <div class="form-group" *ngIf="divEdit">
-        <button mat-button  
-        class="btn btn-md btn-primary" (click)="EditCompCalculation()">Edit</button>
-          <!-- &nbsp;
-        <button mat-button  
-           class="btn btn-md btn-primary" (click)="RefreshCalculation()">Refresh Calculation</button> -->
-    </div>
-
+  
     <div class="form-group">
         <div class="col-md-12">          
             <table class="table">
@@ -193,8 +195,8 @@
                         <th class="th">Calculation</th>
                         <th class="th">Value</th>
                         <th class="th">Refresh</th>
-                        <th class="th">Edit</th>
-                        <th class="th">Delete</th>
+                        <th class="th" *ngIf="thEdit">Edit</th>
+                        <th class="th" *ngIf="thDelete">Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -204,8 +206,8 @@
                         <td >{{pd.calculationField}}</td>
                         <td >{{pd.value}}</td>                      
                         <td><button type="button" class="btn btn-secondary" (click)="clickRefresh(pd)"><i class="fa fa-refresh" aria-hidden="true"></i></button></td>       
-                        <td><button type="button" class="btn btn-secondary" (click)="clickEdit(pd)"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
-                        <td><button type="button" class="btn btn-danger" (click)="clickDelete(pd)"><i class="fa fa-trash"  aria-hidden="true"></i></button></td>         
+                        <td *ngIf="thEdit"><button type="button" class="btn btn-secondary" (click)="clickEdit(pd)"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
+                        <td *ngIf="thDelete"><button type="button" class="btn btn-danger" (click)="clickDelete(pd)"><i class="fa fa-trash"  aria-hidden="true"></i></button></td>         
                     </tr>                  
                 </tbody>                       
             </table>

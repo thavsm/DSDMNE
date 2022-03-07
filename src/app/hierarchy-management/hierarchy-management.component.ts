@@ -49,12 +49,23 @@ export class HierarchyManagementComponent implements OnInit {
     this.service.refreshhlist(this.TreeCategoryID);
   }
 
-  openTree(item: any): void {
+  openViewTree(item: any): void {
     // Create item:
     // alert(item.treeID)
     let myObj = {
-      treeID: item.treeID
+      treeID: item.treeID,
+      ViewEdit: 0
+    };
+    localStorage.setItem('treeData', JSON.stringify(myObj));
+    this.route.navigate(['treediagram']);
+  }
 
+  openEditTree(item: any): void {
+    // Create item:
+    // alert(item.treeID)
+    let myObj = {
+      treeID: item.treeID,
+      ViewEdit: 1
     };
     localStorage.setItem('treeData', JSON.stringify(myObj));
     this.route.navigate(['treediagram']);
