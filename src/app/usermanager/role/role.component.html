@@ -11,27 +11,39 @@
             </div>
             <div class="card-body p-2">
               <div class="row">
-                <div class="col-md-8">
-                    <mat-form-field appearance="standard">
-                        <mat-label>Add New Role</mat-label>
-                        <input matInput type="text" [(ngModel)]="roleName" (input)="validateControl()">
-                    </mat-form-field>
-                    <span class="text-danger">{{ errorMessage }}</span>
-                </div>
+                <kendo-grid [kendoGridBinding]="data" [pageSize]="10" [pageable]="true" [height]="700" 
+                  [filterable]="true" [sortable]="true" [groupable]="false">
+      
+                <kendo-grid-column field="role" title="Role" [width]="8">
+                </kendo-grid-column>
+      
+                <kendo-grid-column field="users" title="Users" [width]="6">
+                </kendo-grid-column>
                 
-                <div class="col-md-4">
-                  <button id="btnSearch" class="btn btn-primary mr-1" (click)='addRole()' [disabled]="!isValid">Add Role</button>
-          
-                </div>
+                <kendo-grid-column [width]="1">
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    <button mat-icon-button (click)="clickEditAccess(dataItem)">
+                        <mat-icon matTooltip="Update" class="mat-18" style="color: #016000;">edit</mat-icon>
+                    </button>
+                  </ng-template>
+                </kendo-grid-column>
+      
+                <!-- <kendo-grid-pdf fileName="formCategory.pdf" [repeatHeaders]="true"></kendo-grid-pdf> -->
+                <!-- <kendo-grid-excel fileName="FormInbox.xlsx"></kendo-grid-excel> -->
+              </kendo-grid>
               </div>
+
+              <div class="row">
+                
+              <!-- </div>
               <p *ngIf="!data"><em>Loading...</em></p>
               <table id="tblProcess" class="table table-striped">
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>Role</th>
+                    <th>Designation</th>
                     <th>No of Users</th>
-                    <th>Menus</th>
+                    <th>Access</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -40,13 +52,13 @@
                     <td>{{ obj['role'] }}</td>
                     <td><span class="badge badge-primary" onclick="clickEdit(obj)" >{{ obj['users'] }}</span></td>
                     <td>
-                      <button mat-icon-button (click)="clickEdit(obj)">
+                      <button mat-icon-button (click)="clickEditAccess(obj)">
                       <mat-icon class="mat-18">edit</mat-icon>
                       </button>
                   </td>
                   </tr>
                 </tbody>
-              </table>
+              </table> -->
             </div>
           </div>
         </div>

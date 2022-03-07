@@ -16,7 +16,9 @@ export const UserManagerRoutes: Routes = [
         }, {
             path: 'formroles',
             component: FormrolesComponent
-        }, {
+        }
+        
+        , {
             path: 'location',
             component: HierarchyManagementComponent
         }, {

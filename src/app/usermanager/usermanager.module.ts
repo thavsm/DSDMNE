@@ -10,7 +10,11 @@ import { FormrolesComponent } from './formroles/formroles.component';
 import { AddformrolesComponent } from './addformroles/addformroles.component';
 import { HierarchyManagementComponent } from '../hierarchy-management/hierarchy-management.component';
 import { MenurolesComponent } from './menuroles/menuroles.component';
-
+import { RoleaccessComponent } from './roleaccess/roleaccess.component';
+import { GridModule } from "@progress/kendo-angular-grid";
+import { ButtonsModule } from "@progress/kendo-angular-buttons";
+import { InputsModule } from "@progress/kendo-angular-inputs";
+import {PDFModule,ExcelModule,} from "@progress/kendo-angular-grid";
 
 @NgModule({
     imports: [
@@ -18,7 +22,12 @@ import { MenurolesComponent } from './menuroles/menuroles.component';
         RouterModule.forChild(UserManagerRoutes),
         FormsModule,
         ReactiveFormsModule,
-        MaterialModule
+        MaterialModule,
+        GridModule,
+    ButtonsModule,
+    InputsModule,
+    PDFModule,
+    ExcelModule,
     ],
 
     declarations: [
@@ -26,7 +35,8 @@ import { MenurolesComponent } from './menuroles/menuroles.component';
         AppusersComponent,
         FormrolesComponent,
         AddformrolesComponent,
-        MenurolesComponent
+        MenurolesComponent,
+        RoleaccessComponent
     ]
 })
 

@@ -8,6 +8,8 @@ import { TreeAddComponent } from './tree-add/tree-add.component';
 import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
 import { ActivatedRoute } from '@angular/router';  
 import Swal from 'sweetalert2'
+
+
 declare var $: any;
 
 export interface FormData {
@@ -15,12 +17,13 @@ export interface FormData {
   description: string;
 }
 
-
 @Component({
   selector: 'app-hierarchy-management',
   templateUrl: './hierarchy-management.component.html',
   styleUrls: ['./hierarchy-management.component.css']
 })
+
+
 export class HierarchyManagementComponent implements OnInit {
 
   dataSaved = false;

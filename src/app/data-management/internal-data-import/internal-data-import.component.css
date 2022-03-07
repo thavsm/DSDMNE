@@ -1,0 +1,41 @@
+.collapsible {
+    background-color: #777;
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+  }
+  
+  .active, .collapsible:hover {
+    background-color: #555;
+  }
+  
+  .content {
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-out;
+    background-color: #f1f1f1;
+  }
+
+  table {
+    width: 100%;
+  }
+
+  button { 
+    display: inline;
+    margin: 4px;
+  }
+
+  .mat-form-field {
+    width: 100%;
+  }
+
+  .containerlist {
+    margin-top: 30px;
+  }
+  

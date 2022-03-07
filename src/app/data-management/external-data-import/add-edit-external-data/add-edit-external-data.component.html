@@ -46,14 +46,14 @@
 <div mat-dialog-actions>
     <div *ngIf="divTestConn" style="padding: 2%;">
         <button mat-button  (click)="TestConn()" 
-        style="background-color: crimson;color: white;font-weight: 400;">Test Connection</button>
+        class="btn btn-md btn-primary" >Test Connection</button>
     </div>
         <button mat-button  (click)="addExternalData()"
-        style="background-color: crimson;color: white;font-weight: 400;" *ngIf="externalDataAdd.dataServiceID==0"  [disabled]="!exForm.valid">Add</button>
+        class="btn btn-md btn-primary"  *ngIf="externalDataAdd.dataServiceID==0"  [disabled]="!exForm.valid">Add</button>
     <button mat-button cdkFocusInitial (click)=" updateExternalData()"
-        style="background-color: crimson;color: white;font-weight: 400;" *ngIf="externalDataAdd.dataServiceID!=0" [disabled]="!exForm.valid">Edit</button>
+        class="btn btn-md btn-primary"  *ngIf="externalDataAdd.dataServiceID!=0" [disabled]="!exForm.valid">Edit</button>
     <button mat-button [mat-dialog-close]=""
-        style="background-color: crimson;color: white;font-weight: 400;">Cancel</button>
+        class="btn btn-md btn-primary" >Cancel</button>
 </div>
 <ngx-spinner bdColor="rgba(	237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
     <p style="font-size: 20px; color: black">Processing...</p>

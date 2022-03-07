@@ -9,8 +9,14 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <mat-form-field appearance="standard">
-                                    <mat-label>Full Name</mat-label>
-                                    <input matInput [value]="formData['fullName']" [disabled]="!isParent">
+                                    <mat-label>First Name</mat-label>
+                                    <input matInput [value]="formData['fullName']" (input)="updateFormData()">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-6">
+                                <mat-form-field appearance="standard">
+                                    <mat-label>Surname</mat-label>
+                                    <input matInput [value]="formData['surname']" (input)="updateFormData()">
                                 </mat-form-field>
                             </div>
                             <div class="col-md-6">
@@ -21,14 +27,20 @@
                             </div>
                             <div class="col-md-6">
                                 <mat-form-field appearance="standard">
-                                    <mat-label>Role</mat-label>
-                                    <mat-select [(ngModel)]="formData['role']" (selectionChange)="updateFormData()">
-                                        <mat-option *ngFor="let rol of roles" [value]="rol.value">
-                                            {{ rol.viewValue }}
-                                          </mat-option>  
-                                    </mat-select>
+                                    <mat-label>Cell Number</mat-label>
+                                    <input matInput [(ngModel)]="formData['phoneNumber']" (input)="updateFormData()">
                                 </mat-form-field>
                             </div>
+                            <div class="col-md-6">
+                                <mat-form-field appearance="standard">
+                                    <mat-label>Location Type</mat-label>
+                                    <mat-select [(ngModel)]="formData['locationType']" (selectionChange)="updateFormData()">
+                                        <mat-option *ngFor="let loc of locationType" [value]="loc.value">
+                                            {{ loc.viewValue }}
+                                          </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div> 
                             <div class="col-md-6">
                                 <mat-form-field appearance="standard">
                                     <mat-label>Location</mat-label>
@@ -38,14 +50,39 @@
                                           </mat-option>
                                     </mat-select>
                                 </mat-form-field>
-                            </div>
+                            </div> 
                             <div class="col-md-6">
                                 <mat-form-field appearance="standard">
-                                    <mat-label>Cell Number</mat-label>
-                                    <input matInput [(ngModel)]="formData['phoneNumber']" (input)="updateFormData()">
+                                    <mat-label>Role Designation</mat-label>
+                                    <mat-select [(ngModel)]="formData['role']" (selectionChange)="updateFormData()">
+                                        <mat-option *ngFor="let rol of roles" [value]="rol.value">
+                                            {{ rol.viewValue }}
+                                          </mat-option>  
+                                    </mat-select>
                                 </mat-form-field>
-                            </div>
+                            </div>   
                             <div class="col-md-6">
+                                <mat-form-field appearance="standard">
+                                    <mat-label>Role Type</mat-label>
+                                    <mat-select [(ngModel)]="formData['roleType']" (selectionChange)="updateFormData()">
+                                        <mat-option *ngFor="let type of roleTypes" [value]="type.value">
+                                            {{ type.viewValue }}
+                                          </mat-option>  
+                                    </mat-select>
+                                </mat-form-field>
+                            </div> 
+                            <div class="col-md-6">
+                                <mat-form-field appearance="standard">
+                                    <mat-label>Branch</mat-label>
+                                    <mat-select [(ngModel)]="formData['branch']" (selectionChange)="updateFormData()">
+                                        <mat-option *ngFor="let b of branch" [value]="b.value">
+                                            {{ b.viewValue }}
+                                          </mat-option>  
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>     
+                            <div class="col-md-6"></div>                                              
+                            <!-- <div class="col-md-6">
                                 <mat-form-field appearance="standard">
                                     <mat-label>Employee Number</mat-label>
                                     <input matInput [(ngModel)]="formData['employeeNo']" (input)="updateFormData()">
@@ -62,10 +99,16 @@
                                     <mat-label>Address</mat-label>
                                     <textarea matInput rows="3" [(ngModel)]="formData['address']" (input)="updateFormData()"></textarea>
                                 </mat-form-field>
-                            </div>
-                              <div class="col-md-12" *ngIf="isButtonVisible">
-                                <button id="btnSave" class="btn btn-primary mr-1" (click)='updateUser()'>Update</button>
+                            </div> -->
+                            <div class="row">
+                                <div class="col-md-6 ml-auto  " *ngIf="isButtonVisible">
+                                    <button id="btnSave" class="btn btn-primary ml-1" (click)='updateUser()'>Update</button>
                                 </div>
+                                <div class="col-md-6 mr-auto" *ngIf="isButtonVisible">
+                                    <button id="btnAccess" class="btn btn-primary mr-1" (click)="clickEditAccess(formData)">Access</button>
+                                </div>
+                            </div>
+                              
                         </div>
                     </div>
                 </div>

@@ -1,12 +1,16 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { APP_BASE_HREF } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+
+
 
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatButtonModule} from '@angular/material/button';
@@ -40,11 +44,17 @@ import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 
+
+
 import { DatePipe } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+
+
 import { AppRoutes } from './app.routing';
+
+
 
 import { SidebarModule } from './sidebar/sidebar.module';
 import { FooterModule } from './shared/footer/footer.module';
@@ -55,48 +65,54 @@ import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 import { UserService } from './shared/user.service';
 import { AuthInterceptor } from './auth/auth.interceptor';
 
+
+
 import {NgxSpinnerModule} from 'ngx-spinner';
+import { PaginationService } from 'ngx-pagination';
+
 
 
 
 @NgModule({
-  exports: [
-    MatAutocompleteModule,
-    MatButtonToggleModule,
-    MatCardModule,
-    MatChipsModule,
-    MatCheckboxModule,
-    MatStepperModule,
-    MatDialogModule,
-    MatExpansionModule,
-    MatGridListModule,
-    MatIconModule,
-    MatInputModule,
-    MatListModule,
-    MatMenuModule,
-    MatPaginatorModule,
-    MatProgressBarModule,
-    MatProgressSpinnerModule,
-    MatRadioModule,
-    MatSelectModule,
-    MatDatepickerModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatSliderModule,
-    MatSlideToggleModule,
-    MatSnackBarModule,
-    MatSortModule,
-    MatTableModule,
-    MatTabsModule,
-    MatToolbarModule,
-    MatTooltipModule,
-    MatNativeDateModule,
-    NgxSpinnerModule
-  ],
-  declarations: [
-  ]
+exports: [
+MatAutocompleteModule,
+MatButtonToggleModule,
+MatCardModule,
+MatChipsModule,
+MatCheckboxModule,
+MatStepperModule,
+MatDialogModule,
+MatExpansionModule,
+MatGridListModule,
+MatIconModule,
+MatInputModule,
+MatListModule,
+MatMenuModule,
+MatPaginatorModule,
+MatProgressBarModule,
+MatProgressSpinnerModule,
+MatRadioModule,
+MatSelectModule,
+MatDatepickerModule,
+MatButtonModule,
+MatSidenavModule,
+MatSliderModule,
+MatSlideToggleModule,
+MatSnackBarModule,
+MatSortModule,
+MatTableModule,
+MatTabsModule,
+MatToolbarModule,
+MatTooltipModule,
+MatNativeDateModule,
+NgxSpinnerModule
+],
+declarations: [
+]
 })
 export class MaterialModule {}
+
+
 
 
 
@@ -114,7 +130,7 @@ export class MaterialModule {}
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot(AppRoutes,{
-      useHash: false
+      useHash: true
     }),
     HttpClientModule,
 
@@ -128,6 +144,7 @@ export class MaterialModule {}
   providers: [
     MatNativeDateModule,
     DatePipe,
+    PaginationService,
     UserService, {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
@@ -137,3 +154,4 @@ export class MaterialModule {}
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

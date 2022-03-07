@@ -22,8 +22,8 @@
                             <th class="th">Name </th>
                             <th class="th">Description</th>
                             <th class="th">Date Created</th>
-                            <th class="th">View</th>
-                            <th class="th">Edit</th>
+                            <th class="th">Configure Tree</th>
+                            <th class="th">Edit Name</th>
                             <th class="th">Delete</th>
                         </tr>
                     </thead>
@@ -32,7 +32,7 @@
                             <td >{{pd.name}}</td>
                             <td >{{pd.description}}</td>
                             <td >{{pd.dateCreated | date:'yyyy-MM-dd'}}</td>
-                            <td><button type="button"  (click)="openTree(pd)" class="btn btn-secondary"><i class="fa fa-eye" aria-hidden="true"></i></button></td>
+                            <td><button type="button"  (click)="openTree(pd)" class="btn btn-secondary"><i class="fa fa-cog" aria-hidden="true"></i></button></td>
                             <td><button type="button" class="btn btn-secondary" (click)="clickEdit(pd)"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
                             <td><button type="button" class="btn btn-danger" (click)="clickDelete(pd)"><i class="fa fa-trash"  aria-hidden="true"></i></button></td>         
                         </tr>

@@ -27,19 +27,20 @@ export class FormrolesComponent implements OnInit {
 
   formAdd: any;
   public displayedColumns = ['formName', 'formDescription','formCategory', 'roles'];
-  public formList = new MatTableDataSource<any>();
+  //public formList = new MatTableDataSource<any>();
+  public formList: any[];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngAfterViewInit() {
-    this.formList.paginator = this.paginator;
+    //this.formList.paginator = this.paginator;
   }
 
   ngOnInit(): void {
     this.refreshFormsList();
-    this.formList.filterPredicate = function(data, filter: string): boolean {
-      return data.formName.toLowerCase().includes(filter) || data.formDescription.toLowerCase().includes(filter) || data.formCategory.toString().includes(filter) === filter;
-    };
+    // this.formList.filterPredicate = function(data, filter: string): boolean {
+    //   return data.formName.toLowerCase().includes(filter) || data.formDescription.toLowerCase().includes(filter) || data.formCategory.toString().includes(filter) === filter;
+    // };
   }
 
 
@@ -83,17 +84,21 @@ export class FormrolesComponent implements OnInit {
   refreshFormsList() {
     this.spinner.show();
     this.service.getDynamicFormList().subscribe(data => {
-      this.formList.data = data;
+      //this.formList.data = data;
+      this.formList = data;
       this.spinner.hide();
     });
   }
 
-  applyFilter(data: any) {
-    let filterValue:string=data.target.value;
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    this.formList.filter = filterValue;
-  }
+  // applyFilter(data: any) {
+  //   let filterValue:string=data.target.value;
+  //   filterValue = filterValue.trim(); // Remove whitespace
+  //   filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+  //   this.formList.filter = filterValue;
+  // }
 
+  public doFilter = (event: any) => {
+    this.formList.filter = event.target.value.trim();
+  }
  
 }

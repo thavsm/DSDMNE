@@ -25,6 +25,10 @@ import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 import { TargetAddComponent } from './target-add/target-add.component';
 import { ExternaldataAddComponent } from './externaldata-add/externaldata-add.component'
 import {MatRadioModule} from '@angular/material/radio';
+import { UserProfileComponent } from '../userprofile/userprofile.component';
+import { Injectable } from '@angular/core';
+@Injectable({ providedIn: 'root' })
+
 
 @NgModule({
   
@@ -45,8 +49,7 @@ import {MatRadioModule} from '@angular/material/radio';
     MatPaginatorModule,
     MatSelectModule,
     MatButtonModule],
-    declarations: [HierarchyManagementComponent,
-     
+    declarations: [HierarchyManagementComponent,  
       TreeAddComponent,
       NodeAddComponent,
       LevelAddComponent,

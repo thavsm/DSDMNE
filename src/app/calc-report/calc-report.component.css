@@ -1,0 +1,25 @@
+table {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+th.mat-header-cell {
+    text-align: center;
+    font-weight: 500;
+    font-size: medium;
+    color: black;
+}
+
+td.mat-cell{
+    white-space: normal;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+    text-align: center;
+}
+
+::ng-deep .mat-tooltip {
+    color: black !important;
+    font-weight: bold !important;
+    font-size: medium !important;
+}

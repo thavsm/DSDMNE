@@ -5,6 +5,7 @@ import { UserService } from '../../shared/user.service';
 import { FormsModule } from '@angular/forms';
 import { MenurolesComponent } from '../menuroles/menuroles.component';
 import { MatDialog } from '@angular/material/dialog';
+import { RoleaccessComponent } from '../roleaccess/roleaccess.component';
 
 
 
@@ -17,7 +18,9 @@ declare var $: any;
 
 export class RoleComponent implements OnInit {
   
-    data: any;
+
+    //data: any;
+    public data: any[];
     roleName = '';
     errorMessage = '';
     isValid = false;
@@ -103,6 +106,21 @@ export class RoleComponent implements OnInit {
         width: '60%',
         height: '60%',
         data: this.menuAdd,
+        disableClose:false
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The menu dialog was closed');
+      });
+    }
+
+    clickEditAccess(item: any) {
+      this.menuAdd = item;
+      const dialogRef = this.dialog.open(RoleaccessComponent, {
+        width: '60%',
+        height: '85%',
+        //data: this.menuAdd,
+        data: item.roleID,
         disableClose:false
       });
   
