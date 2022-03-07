@@ -10,8 +10,8 @@ import { environment } from 'src/environments/environment';
 })
 export class DataManagementService {
   
+ 
   //readonly API_URL ='https://localhost:44305/api/';
-
   readonly API_URL = environment.API_URL + '/'
 
   constructor(private http: HttpClient) { }

@@ -18,7 +18,9 @@ declare var $: any;
 
 export class RoleComponent implements OnInit {
   
-    data: any;
+
+    //data: any;
+    public data: any[];
     roleName = '';
     errorMessage = '';
     isValid = false;
@@ -115,9 +117,10 @@ export class RoleComponent implements OnInit {
     clickEditAccess(item: any) {
       this.menuAdd = item;
       const dialogRef = this.dialog.open(RoleaccessComponent, {
-        width: '80%',
-        height: '80%',
-        data: this.menuAdd,
+        width: '60%',
+        height: '85%',
+        //data: this.menuAdd,
+        data: item.roleID,
         disableClose:false
       });
   

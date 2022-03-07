@@ -51,7 +51,6 @@ export class HierarchyManagementComponent implements OnInit {
 
   openViewTree(item: any): void {
     // Create item:
-    // alert(item.treeID)
     let myObj = {
       treeID: item.treeID,
       ViewEdit: 0

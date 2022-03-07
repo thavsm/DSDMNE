@@ -4,6 +4,7 @@
         <div class="header text-center">
           <h3 class="title">Form Roles</h3>
         </div>
+               
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -14,7 +15,32 @@
                       <h4 class="card-title">Forms</h4>
                     </div>
                       <div class="card-body">
-                        <div class="table-responsive">                            
+                        <div class="row">
+                          <kendo-grid [kendoGridBinding]="formList" [pageSize]="10" [pageable]="true" [height]="700" 
+                            [filterable]="true" [sortable]="true" [groupable]="true">
+                
+                          <kendo-grid-column field="formName" title="Form Name" [width]="10">
+                          </kendo-grid-column>
+                
+                          <kendo-grid-column field="formDescription" title="Description" [width]="12">
+                          </kendo-grid-column>
+                          
+                          <kendo-grid-column field="formCategory.name" title="Category" [width]="8">
+                          </kendo-grid-column>
+                
+                          <kendo-grid-column [width]="1">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                              <button mat-icon-button (click)="clickEdit(dataItem)">
+                                  <mat-icon matTooltip="Update" class="mat-18" style="color: #016000;">edit</mat-icon>
+                              </button>
+                            </ng-template>
+                          </kendo-grid-column>
+                
+                          <kendo-grid-pdf fileName="formCategory.pdf" [repeatHeaders]="true"></kendo-grid-pdf>
+                          <!-- <kendo-grid-excel fileName="FormInbox.xlsx"></kendo-grid-excel> -->
+                        </kendo-grid>
+                        </div>
+                        <!-- <div class="table-responsive">                            
                             <table mat-table [dataSource]="formList" matSort class="table">
                                 <ng-container matColumnDef="formName">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Template Name </th>
@@ -47,10 +73,11 @@
                             aria-label="Select page of forms">
                             </mat-paginator>
                         </div>
+                         -->
                       </div>
                 </div>
             </div>
-          </div>
+          </div> 
       </div>
     </div>
 </div>       

@@ -217,14 +217,14 @@ export class UserProfileComponent implements OnInit {
 
   clickEditAccess(item: any) {
     var body = {
-      roleID: item.roleID
+      roleID: item.role
       
     };
     this.menuAdd = body;
     const dialogRef = this.dialog.open(RoleaccessComponent, {
       width: '80%',
       height: '80%',
-      data: this.menuAdd,
+      data: item.role,
       disableClose:false
     });
 
