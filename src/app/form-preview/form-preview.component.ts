@@ -21,7 +21,7 @@ export class FormPreviewComponent implements OnInit {
 
   pages: any = [];
 
-  tabIndex=0;
+  tabIndex = 0;
 
   currentPage: any = [];
 
@@ -34,11 +34,11 @@ export class FormPreviewComponent implements OnInit {
   selected = -1;
 
   dataToSave: any = [];
-  
+
   signatureImg: string;
   @ViewChild(SignaturePad) signaturePad: SignaturePad;
 
-  signaturePadOptions: Object = { 
+  signaturePadOptions: Object = {
     'minWidth': 2,
     'canvasWidth': 760,
     'canvasHeight': 70
@@ -46,15 +46,14 @@ export class FormPreviewComponent implements OnInit {
 
   constructor(private service: FormbuilderService, private spinner: NgxSpinnerService, public dialogRef: MatDialogRef<FormDesignerComponent>) {
     this.formData = JSON.parse(localStorage.getItem('formPreviewDetails') || '{}');
-    alert(JSON.stringify(this.formData));
-    this.tabIndex=0;
+    this.tabIndex = 0;
   }
 
   @ViewChild('fileInput') fileInput: ElementRef;
   fileAttr = 'Choose File';
 
-  ngAfterViewInit() { 
-   // this.signaturePad.clear(); 
+  ngAfterViewInit() {
+    // this.signaturePad.clear(); 
   }
 
   drawComplete() {
@@ -162,95 +161,95 @@ export class FormPreviewComponent implements OnInit {
 
   getDesignPerPage(pageGUID: any) {
     this.spinner.show();
-
     this.service.getFormFieldsPerPage(this.formData.formID, pageGUID).subscribe(formFields => {
       this.formDesign = formFields;
 
       this.formDesign.forEach((element, index) => {
-
-       if (element.fieldType.value === "repeatgroup"){
-           this.service.getGroupTableData(element.groupGUID,this.formData.formCaptureID).subscribe(resultant=>{
-            element["groupTableList"]=resultant;
-           });
+        element.fieldStyles[0].height = Math.ceil(parseInt(element.fieldStyles[0].height) / 23.2);
+        if (element.fieldType.value === "repeatgroup") {
+          this.service.getGroupTableData(element.groupGUID, this.formData.formCaptureID).subscribe(resultant => {
+            element["groupTableList"] = resultant;
+          });
         }
 
-          element["data"] = "";
+        element["data"] = "";
 
-          if (element.listValue !== "") {
-            this.formDesign[index].listValue = this.splitString(element.listValue);
-          }
-  
-          if (element.groupGUID !== "" && element.groupGUID !== "string" && element.parentFieldName==="") {
-            let children: any[] = [];
-  
-            this.service.getFieldsInGroup(element.groupGUID).subscribe(groupFields => {
-              children = groupFields;
-  
-              children.forEach((field, i) => {
-  
-                if (field.fieldType.value === "repeatgroup"){
-                  this.service.getGroupTableData(field.groupGUID,this.formData.formCaptureID).subscribe(resultant=>{
-                    
-                    field["groupTableList"]=resultant;
-                  });
-               }
+        if (element.listValue !== "") {
+          this.formDesign[index].listValue = this.splitString(element.listValue);
+        }
 
-                if (field.listValue !== "") {
-                  children[i].listValue = this.splitString(field.listValue);
-                }
-  
-                if (field.groupGUID !== "" && field.groupGUID !== "string") {
-                  let subChildren: any[] = [];
-  
-                  this.service.getFieldsInGroup(field.groupGUID).subscribe(result => {
-                    subChildren = result;
-  
-                    subChildren.forEach((subField, j) => { 
-                      
-                      if (subField.fieldType.value === "repeatgroup"){
-                        this.service.getGroupTableData(subField.groupGUID,this.formData.formCaptureID).subscribe(resultant=>{
-                          
-                          subField["groupTableList"]=resultant;
+        if (element.groupGUID !== "" && element.groupGUID !== "string" && element.parentFieldName === "") {
+          let children: any[] = [];
+
+          this.service.getFieldsInGroup(element.groupGUID).subscribe(groupFields => {
+            children = groupFields;
+
+            children.forEach((field, i) => {
+              field.fieldStyles[0].height = Math.ceil(parseInt(element.fieldStyles[0].height) / 23.2);
+              if (field.fieldType.value === "repeatgroup") {
+                this.service.getGroupTableData(field.groupGUID, this.formData.formCaptureID).subscribe(resultant => {
+
+                  field["groupTableList"] = resultant;
+                });
+              }
+
+              if (field.listValue !== "") {
+                children[i].listValue = this.splitString(field.listValue);
+              }
+
+              if (field.groupGUID !== "" && field.groupGUID !== "string") {
+                let subChildren: any[] = [];
+
+                this.service.getFieldsInGroup(field.groupGUID).subscribe(result => {
+                  subChildren = result;
+
+                  subChildren.forEach((subField, j) => {
+                    subField.fieldStyles[0].height = Math.ceil(parseInt(element.fieldStyles[0].height) / 23.2);
+                    if (subField.fieldType.value === "repeatgroup") {
+                      this.service.getGroupTableData(subField.groupGUID, this.formData.formCaptureID).subscribe(resultant => {
+
+                        subField["groupTableList"] = resultant;
+                      });
+                    }
+
+                    if (subField.listValue !== "") {
+                      subChildren[j].listValue = this.splitString(subField.listValue);
+                    }
+                    if (subField.groupGUID !== "" && subField.groupGUID !== "string") {
+                      let groupChildren: any[] = [];
+                      this.service.getFieldsInGroup(subField.groupGUID).subscribe(res => {
+                        groupChildren = res;
+
+                        groupChildren.forEach((groupField, k) => {
+                          groupField.fieldStyles[0].height = Math.ceil(parseInt(element.fieldStyles[0].height) / 23.2);
+                          if (groupField.fieldType.value === "repeatgroup") {
+                            this.service.getGroupTableData(groupField.groupGUID, this.formData.formCaptureID).subscribe(resultant => {
+
+                              groupField["groupTableList"] = resultant;
+                            });
+                          }
+                          if (subField.listValue !== "") {
+                            subChildren[k].listValue = this.splitString(groupField.listValue);
+                          }
+                          if (groupField.groupGUID !== "" && groupField.groupGUID !== "string") {
+                            this.service.getFieldsInGroup(groupField.groupGUID).subscribe(groupdata => {
+                              groupChildren[k].groupGUID = groupdata;
+                            });
+                          }
                         });
-                     }
-
-                      if (subField.listValue !== "") {
-                        subChildren[j].listValue = this.splitString(subField.listValue);
-                      }
-                      if (subField.groupGUID !== "" && subField.groupGUID !== "string") {
-                        let groupChildren: any[] = [];
-                        this.service.getFieldsInGroup(subField.groupGUID).subscribe(res => {
-                          groupChildren = res;
-  
-                          groupChildren.forEach((groupField, k) => {   
-                            if (groupField.fieldType.value === "repeatgroup"){
-                              this.service.getGroupTableData(groupField.groupGUID,this.formData.formCaptureID).subscribe(resultant=>{
-                                
-                                groupField["groupTableList"]=resultant;
-                              });
-                           }             
-                            if (subField.listValue !== "") {
-                              subChildren[k].listValue = this.splitString(groupField.listValue);
-                            }
-                            if (groupField.groupGUID !== "" && groupField.groupGUID !== "string") {
-                              this.service.getFieldsInGroup(groupField.groupGUID).subscribe(groupdata => {
-                                groupChildren[k].groupGUID = groupdata;
-                              });
-                            }
-                          });
-                         subChildren[j].groupGUID = groupChildren;                 
-                        });
-                      }
-                    });
-                    children[i].groupGUID = subChildren;                 
+                        subChildren[j].groupGUID = groupChildren;
+                      });
+                    }
                   });
-                }
-              });
-              this.formDesign[index].groupGUID = children;       
+                  children[i].groupGUID = subChildren;
+                });
+              }
             });
-          }
-        
-      });   
+            this.formDesign[index].groupGUID = children;
+          });
+        }
+
+      });
       console.log(JSON.stringify(this.formDesign));
       this.spinner.hide();
     });
@@ -258,21 +257,20 @@ export class FormPreviewComponent implements OnInit {
   //#endregion
 
   //#region group methods
-  addRepeat(data:any){
-    
+  addRepeat(data: any) {
+
   }
 
-  editRepeat(data:any,cloneNum:any,groupGUID:any){
-    
+  editRepeat(data: any, cloneNum: any, groupGUID: any) {
+
   }
 
   deleteClone(cloneNum: any, groupGUID: any) {
-   
+
   }
   //#endregion
 
-  splitString(text:string):any[]
-  {
+  splitString(text: string): any[] {
     let values = text.split(",");
     let obj2: any = [];
     values.forEach(listV => {
@@ -284,7 +282,7 @@ export class FormPreviewComponent implements OnInit {
     });
     return obj2;
   }
-  
+
   showNotification(from: any, align: any, message: any, title: any, type: string) {
     $.notify({
       icon: 'notifications',

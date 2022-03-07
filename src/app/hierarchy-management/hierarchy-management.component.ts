@@ -48,7 +48,6 @@ export class HierarchyManagementComponent implements OnInit {
 
   openTree(item: any): void {
     // Create item:
-    // alert(item.treeID)
     let myObj = {
       treeID: item.treeID
 

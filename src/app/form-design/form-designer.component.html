@@ -34,16 +34,13 @@
                             <h4>{{formData.formDescription}}</h4>
                             <div style="margin-left: 25%;width: 350px;">
                                 <!-- <mat-icon>save</mat-icon> -->
-                                <button class="btn btn-sm"
-                                    class="btn btn-md btn-primary"  
+                                <button class="btn btn-sm" class="btn btn-md btn-primary"
                                     (click)="savePage()">Save</button>
 
-                                <button class="btn btn-sm"
-                                    class="btn btn-md btn-primary"  
+                                <button class="btn btn-sm" class="btn btn-md btn-primary"
                                     (click)="publishPage()">Publish</button>
 
-                                <button class="btn btn-sm"
-                                    class="btn btn-md btn-primary"  
+                                <button class="btn btn-sm" class="btn btn-md btn-primary"
                                     (click)="previewPage()">Preview</button>
                             </div>
                             <div style="height: 10px;"></div>
@@ -102,8 +99,7 @@
                                                                     <input class="form-control" type="text" #input
                                                                         [(ngModel)]="item.xmlElementName" matInput
                                                                         style="width: 300px;color: black;"
-                                                                        maxlength="100" placeholder=""
-                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32) || (event.charCode >= 48 && event.charCode <= 57)" />
+                                                                        maxlength="100" placeholder="" />
                                                                     <mat-hint>{{input.value?.length || 0}}/100
                                                                     </mat-hint>
                                                                 </mat-form-field>
@@ -121,8 +117,8 @@
                                                                         #fieldNameinput matInput
                                                                         [(ngModel)]="item.fieldName"
                                                                         style="width: 300px;color: black;"
-                                                                        maxlength="100" placeholder="" (blur)="removeBlankSpaceFieldName(item)"
-                                                                       onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95) || (event.charCode >= 48 && event.charCode <= 57)" />
+                                                                        maxlength="100" placeholder=""
+                                                                        (blur)="removeBlankSpaceFieldName(item)" />
                                                                     <mat-hint>{{fieldNameinput.value?.length || 0}}/100
                                                                     </mat-hint>
                                                                 </mat-form-field>
@@ -140,14 +136,15 @@
                                                                         [(ngModel)]="item.dataExportName"
                                                                         style="width: 300px;color: black;"
                                                                         maxlength="100" matInput #dataExportNameinput
-                                                                        placeholder="" (blur)="removeBlankSpaceDataExportName(item)"
-                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95) || (event.charCode >= 48 && event.charCode <= 57)" />
+                                                                        placeholder=""
+                                                                        (blur)="removeBlankSpaceDataExportName(item)" />
                                                                     <mat-hint>{{dataExportNameinput.value?.length ||
                                                                         0}}/100
                                                                     </mat-hint>
                                                                 </mat-form-field>
                                                             </td>
-                                                        </tr> <tr mat-row>
+                                                        </tr>
+                                                        <tr mat-row>
                                                             <td mat-cell>
                                                                 <label style="color: black;">Tooltip: </label>
                                                             </td>
@@ -370,8 +367,7 @@
                                                                     <input class="form-control" type="text" #input
                                                                         [(ngModel)]="item.xmlElementName" matInput
                                                                         style="width: 300px;color: black;"
-                                                                        maxlength="100" placeholder=""
-                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32) || (event.charCode >= 48 && event.charCode <= 57)" />
+                                                                        maxlength="100" placeholder="" />
                                                                     <mat-hint>{{input.value?.length || 0}}/100
                                                                     </mat-hint>
                                                                 </mat-form-field>
@@ -389,8 +385,8 @@
                                                                         #fieldNameinput matInput
                                                                         [(ngModel)]="item.fieldName"
                                                                         style="width: 300px;color: black;"
-                                                                        maxlength="100" placeholder="" (blur)="removeBlankSpaceFieldName(item)"
-                                                                       onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95) || (event.charCode >= 48 && event.charCode <= 57)" />
+                                                                        maxlength="100" placeholder=""
+                                                                        (blur)="removeBlankSpaceFieldName(item)" />
                                                                     <mat-hint>{{fieldNameinput.value?.length || 0}}/100
                                                                     </mat-hint>
                                                                 </mat-form-field>
@@ -408,14 +404,15 @@
                                                                         [(ngModel)]="item.dataExportName"
                                                                         style="width: 300px;color: black;"
                                                                         maxlength="100" matInput #dataExportNameinput
-                                                                        placeholder="" (blur)="removeBlankSpaceDataExportName(item)"
-                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95) || (event.charCode >= 48 && event.charCode <= 57)" />
+                                                                        placeholder=""
+                                                                        (blur)="removeBlankSpaceDataExportName(item)" />
                                                                     <mat-hint>{{dataExportNameinput.value?.length ||
                                                                         0}}/100
                                                                     </mat-hint>
                                                                 </mat-form-field>
                                                             </td>
-                                                        </tr>  <tr mat-row>
+                                                        </tr>
+                                                        <tr mat-row>
                                                             <td mat-cell>
                                                                 <label style="color: black;">Tooltip: </label>
                                                             </td>
@@ -633,8 +630,7 @@
                                                                     <input class="form-control" type="text" #input
                                                                         [(ngModel)]="item.xmlElementName" matInput
                                                                         style="width: 300px;color: black;"
-                                                                        maxlength="100" placeholder=""
-                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32) || (event.charCode >= 48 && event.charCode <= 57)" />
+                                                                        maxlength="100" placeholder="" />
                                                                     <mat-hint>{{input.value?.length || 0}}/100
                                                                     </mat-hint>
                                                                 </mat-form-field>
@@ -652,8 +648,8 @@
                                                                         #fieldNameinput matInput
                                                                         [(ngModel)]="item.fieldName"
                                                                         style="width: 300px;color: black;"
-                                                                        maxlength="100" placeholder="" (blur)="removeBlankSpaceFieldName(item)"
-                                                                       onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95) || (event.charCode >= 48 && event.charCode <= 57)" />
+                                                                        maxlength="100" placeholder=""
+                                                                        (blur)="removeBlankSpaceFieldName(item)" />
                                                                     <mat-hint>{{fieldNameinput.value?.length || 0}}/100
                                                                     </mat-hint>
                                                                 </mat-form-field>
@@ -671,14 +667,15 @@
                                                                         [(ngModel)]="item.dataExportName"
                                                                         style="width: 300px;color: black;"
                                                                         maxlength="100" matInput #dataExportNameinput
-                                                                        placeholder="" (blur)="removeBlankSpaceDataExportName(item)"
-                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95) || (event.charCode >= 48 && event.charCode <= 57)" />
+                                                                        placeholder=""
+                                                                        (blur)="removeBlankSpaceDataExportName(item)" />
                                                                     <mat-hint>{{dataExportNameinput.value?.length ||
                                                                         0}}/100
                                                                     </mat-hint>
                                                                 </mat-form-field>
                                                             </td>
-                                                        </tr>  <tr mat-row>
+                                                        </tr>
+                                                        <tr mat-row>
                                                             <td mat-cell>
                                                                 <label style="color: black;">Tooltip: </label>
                                                             </td>
@@ -708,10 +705,10 @@
                                                         </tr>
                                                         <tr mat-row>
                                                             <td mat-cell>
-                                                         
-                                                                <label style="color: black;">List Values <br/>
+
+                                                                <label style="color: black;">List Values <br />
                                                                     (Comma separated): </label>
-                                                                   
+
                                                             </td>
                                                             <td mat-cell>
                                                                 <textarea class="form-control" style="width:300px;"
@@ -880,8 +877,7 @@
                                                                     <input class="form-control" type="text" #input
                                                                         [(ngModel)]="item.xmlElementName" matInput
                                                                         style="width: 300px;color: black;"
-                                                                        maxlength="100" placeholder=""
-                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32) || (event.charCode >= 48 && event.charCode <= 57)" />
+                                                                        maxlength="100" placeholder="" />
                                                                     <mat-hint>{{input.value?.length || 0}}/100
                                                                     </mat-hint>
                                                                 </mat-form-field>
@@ -899,8 +895,8 @@
                                                                         #fieldNameinput matInput
                                                                         [(ngModel)]="item.fieldName"
                                                                         style="width: 300px;color: black;"
-                                                                        maxlength="100" placeholder="" (blur)="removeBlankSpaceFieldName(item)"
-                                                                       onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95) || (event.charCode >= 48 && event.charCode <= 57)" />
+                                                                        maxlength="100" placeholder=""
+                                                                        (blur)="removeBlankSpaceFieldName(item)" />
                                                                     <mat-hint>{{fieldNameinput.value?.length || 0}}/100
                                                                     </mat-hint>
                                                                 </mat-form-field>
@@ -918,15 +914,15 @@
                                                                         [(ngModel)]="item.dataExportName"
                                                                         style="width: 300px;color: black;"
                                                                         maxlength="100" matInput #dataExportNameinput
-                                                                        placeholder="" (blur)="removeBlankSpaceDataExportName(item)"
-                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95) || (event.charCode >= 48 && event.charCode <= 57)" />
+                                                                        placeholder=""
+                                                                        (blur)="removeBlankSpaceDataExportName(item)" />
                                                                     <mat-hint>{{dataExportNameinput.value?.length ||
                                                                         0}}/100
                                                                     </mat-hint>
                                                                 </mat-form-field>
                                                             </td>
                                                         </tr>
-                                                          <tr mat-row>
+                                                        <tr mat-row>
                                                             <td mat-cell>
                                                                 <label style="color: black;">Tooltip: </label>
                                                             </td>
@@ -950,7 +946,7 @@
                                                                             [value]="gs.groupGUID">
                                                                             {{gs.name}}
                                                                         </mat-option>
-                                                                        
+
                                                                     </mat-select>
                                                                 </mat-form-field>
                                                             </td>
@@ -1124,8 +1120,8 @@
                                                                     <input class="form-control" type="text" #input
                                                                         [(ngModel)]="item.xmlElementName" matInput
                                                                         style="width: 300px;color: black;"
-                                                                        maxlength="100" placeholder=""   (blur)="validateDateFriendlyName(item)"
-                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32) || (event.charCode >= 48 && event.charCode <= 57)" />
+                                                                        maxlength="100" placeholder=""
+                                                                        (blur)="validateDateFriendlyName(item)" />
                                                                     <mat-hint>{{input.value?.length || 0}}/100
                                                                     </mat-hint>
                                                                 </mat-form-field>
@@ -1143,8 +1139,9 @@
                                                                         #fieldNameinput matInput
                                                                         [(ngModel)]="item.fieldName"
                                                                         style="width: 300px;color: black;"
-                                                                        maxlength="100" placeholder="" (blur)="removeBlankSpaceFieldName(item)" (blur)="validateDateFieldName(item)"
-                                                                       onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95) || (event.charCode >= 48 && event.charCode <= 57)" />
+                                                                        maxlength="100" placeholder=""
+                                                                        (blur)="removeBlankSpaceFieldName(item)"
+                                                                        (blur)="validateDateFieldName(item)" />
                                                                     <mat-hint>{{fieldNameinput.value?.length || 0}}/100
                                                                     </mat-hint>
                                                                 </mat-form-field>
@@ -1162,15 +1159,16 @@
                                                                         [(ngModel)]="item.dataExportName"
                                                                         style="width: 300px;color: black;"
                                                                         maxlength="100" matInput #dataExportNameinput
-                                                                        placeholder="" (blur)="removeBlankSpaceDataExportName(item)" (blur)="validateDateDataExportName(item)" 
-                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95) || (event.charCode >= 48 && event.charCode <= 57)" />
+                                                                        placeholder=""
+                                                                        (blur)="removeBlankSpaceDataExportName(item)"
+                                                                        (blur)="validateDateDataExportName(item)" />
                                                                     <mat-hint>{{dataExportNameinput.value?.length ||
                                                                         0}}/100
                                                                     </mat-hint>
                                                                 </mat-form-field>
                                                             </td>
                                                         </tr>
-                                                         <tr mat-row>
+                                                        <tr mat-row>
                                                             <td mat-cell>
                                                                 <label style="color: black;">Tooltip: </label>
                                                             </td>
@@ -1360,8 +1358,8 @@
                                                                     <input class="form-control" type="text" #input
                                                                         [(ngModel)]="item.xmlElementName" matInput
                                                                         style="width: 300px;color: black;"
-                                                                        maxlength="100" placeholder="" (blur)="validateTimeFriendlyName(item)" 
-                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32) || (event.charCode >= 48 && event.charCode <= 57)" />
+                                                                        maxlength="100" placeholder=""
+                                                                        (blur)="validateTimeFriendlyName(item)" />
                                                                     <mat-hint>{{input.value?.length || 0}}/100
                                                                     </mat-hint>
                                                                 </mat-form-field>
@@ -1379,8 +1377,9 @@
                                                                         #fieldNameinput matInput
                                                                         [(ngModel)]="item.fieldName"
                                                                         style="width: 300px;color: black;"
-                                                                        maxlength="100" placeholder="" (blur)="removeBlankSpaceFieldName(item)" (blur)="validateTimeFieldName(item)"
-                                                                       onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95) || (event.charCode >= 48 && event.charCode <= 57)" />
+                                                                        maxlength="100" placeholder=""
+                                                                        (blur)="removeBlankSpaceFieldName(item)"
+                                                                        (blur)="validateTimeFieldName(item)" />
                                                                     <mat-hint>{{fieldNameinput.value?.length || 0}}/100
                                                                     </mat-hint>
                                                                 </mat-form-field>
@@ -1398,15 +1397,16 @@
                                                                         [(ngModel)]="item.dataExportName"
                                                                         style="width: 300px;color: black;"
                                                                         maxlength="100" matInput #dataExportNameinput
-                                                                        placeholder="" (blur)="removeBlankSpaceDataExportName(item)" (blur)="validateTimeDataExportName(item)"
-                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95) || (event.charCode >= 48 && event.charCode <= 57)" />
+                                                                        placeholder=""
+                                                                        (blur)="removeBlankSpaceDataExportName(item)"
+                                                                        (blur)="validateTimeDataExportName(item)" />
                                                                     <mat-hint>{{dataExportNameinput.value?.length ||
                                                                         0}}/100
                                                                     </mat-hint>
                                                                 </mat-form-field>
                                                             </td>
                                                         </tr>
-                                                         <tr mat-row>
+                                                        <tr mat-row>
                                                             <td mat-cell>
                                                                 <label style="color: black;">Tooltip: </label>
                                                             </td>
@@ -1617,7 +1617,7 @@
                                                             </td>
                                                             <td mat-cell>
                                                                 <button class="btn btn-sm"
-                                                                     class="btn btn-md btn-primary"   
+                                                                    class="btn btn-md btn-primary"
                                                                     (click)="addGroup(item,i)"
                                                                     [disabled]="(item.groupGUID!=='string')">Add
                                                                     Group</button>
@@ -1690,7 +1690,7 @@
                                                             </td>
                                                             <td mat-cell>
                                                                 <button class="btn btn-sm"
-                                                                     class="btn btn-md btn-primary"   
+                                                                    class="btn btn-md btn-primary"
                                                                     (click)="addQuestionGroup(item,i)"
                                                                     [disabled]="(item.groupGUID!=='string')">Add
                                                                     Group</button>
@@ -1778,7 +1778,7 @@
                                                             </td>
                                                             <td mat-cell>
                                                                 <button class="btn btn-sm"
-                                                                     class="btn btn-md btn-primary"   
+                                                                    class="btn btn-md btn-primary"
                                                                     (click)="addSection(item,i)"
                                                                     [disabled]="(item.groupGUID!=='string')">Add
                                                                     Section</button>
@@ -1862,8 +1862,7 @@
                                                                     <input class="form-control" type="text" #input
                                                                         [(ngModel)]="item.xmlElementName" matInput
                                                                         style="width: 300px;color: black;"
-                                                                        maxlength="100" placeholder=""
-                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32) || (event.charCode >= 48 && event.charCode <= 57)" />
+                                                                        maxlength="100" placeholder="" />
                                                                     <mat-hint>{{input.value?.length || 0}}/100
                                                                     </mat-hint>
                                                                 </mat-form-field>
@@ -1881,8 +1880,8 @@
                                                                         #fieldNameinput matInput
                                                                         [(ngModel)]="item.fieldName"
                                                                         style="width: 300px;color: black;"
-                                                                        maxlength="100" placeholder="" (blur)="removeBlankSpaceFieldName(item)"
-                                                                       onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95) || (event.charCode >= 48 && event.charCode <= 57)" />
+                                                                        maxlength="100" placeholder=""
+                                                                        (blur)="removeBlankSpaceFieldName(item)" />
                                                                     <mat-hint>{{fieldNameinput.value?.length || 0}}/100
                                                                     </mat-hint>
                                                                 </mat-form-field>
@@ -1900,15 +1899,15 @@
                                                                         [(ngModel)]="item.dataExportName"
                                                                         style="width: 300px;color: black;"
                                                                         maxlength="100" matInput #dataExportNameinput
-                                                                        placeholder="" (blur)="removeBlankSpaceDataExportName(item)"
-                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95) || (event.charCode >= 48 && event.charCode <= 57)" />
+                                                                        placeholder=""
+                                                                        (blur)="removeBlankSpaceDataExportName(item)" />
                                                                     <mat-hint>{{dataExportNameinput.value?.length ||
                                                                         0}}/100
                                                                     </mat-hint>
                                                                 </mat-form-field>
                                                             </td>
                                                         </tr>
-                                                          <tr mat-row>
+                                                        <tr mat-row>
                                                             <td mat-cell>
                                                                 <label style="color: black;">Section:</label>
                                                             </td>
@@ -1956,7 +1955,7 @@
                                                                 <input class="form-control" type="text"
                                                                     [(ngModel)]="item.questionName"
                                                                     style="width: 300px;color: black;"
-                                                                    placeholder="Enter question name here"/>
+                                                                    placeholder="Enter question name here" />
                                                             </td>
                                                         </tr>
                                                         <tr mat-row>
@@ -1970,8 +1969,7 @@
                                                                     <input class="form-control" type="text" #input
                                                                         [(ngModel)]="item.xmlElementName" matInput
                                                                         style="width: 300px;color: black;"
-                                                                        maxlength="100" placeholder=""
-                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32) || (event.charCode >= 48 && event.charCode <= 57)" />
+                                                                        maxlength="100" placeholder="" />
                                                                     <mat-hint>{{input.value?.length || 0}}/100
                                                                     </mat-hint>
                                                                 </mat-form-field>
@@ -1989,8 +1987,8 @@
                                                                         #fieldNameinput matInput
                                                                         [(ngModel)]="item.fieldName"
                                                                         style="width: 300px;color: black;"
-                                                                        maxlength="100" placeholder="" (blur)="removeBlankSpaceFieldName(item)"
-                                                                       onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95) || (event.charCode >= 48 && event.charCode <= 57)" />
+                                                                        maxlength="100" placeholder=""
+                                                                        (blur)="removeBlankSpaceFieldName(item)" />
                                                                     <mat-hint>{{fieldNameinput.value?.length || 0}}/100
                                                                     </mat-hint>
                                                                 </mat-form-field>
@@ -2008,8 +2006,8 @@
                                                                         [(ngModel)]="item.dataExportName"
                                                                         style="width: 300px;color: black;"
                                                                         maxlength="100" matInput #dataExportNameinput
-                                                                        placeholder="" (blur)="removeBlankSpaceDataExportName(item)"
-                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95) || (event.charCode >= 48 && event.charCode <= 57)" />
+                                                                        placeholder=""
+                                                                        (blur)="removeBlankSpaceDataExportName(item)" />
                                                                     <mat-hint>{{dataExportNameinput.value?.length ||
                                                                         0}}/100
                                                                     </mat-hint>
@@ -2280,8 +2278,7 @@
                                                                     <input class="form-control" type="text" #input
                                                                         [(ngModel)]="item.xmlElementName" matInput
                                                                         style="width: 300px;color: black;"
-                                                                        maxlength="100" placeholder=""
-                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32) || (event.charCode >= 48 && event.charCode <= 57)" />
+                                                                        maxlength="100" placeholder="" />
                                                                     <mat-hint>{{input.value?.length || 0}}/100
                                                                     </mat-hint>
                                                                 </mat-form-field>
@@ -2299,8 +2296,8 @@
                                                                         #fieldNameinput matInput
                                                                         [(ngModel)]="item.fieldName"
                                                                         style="width: 300px;color: black;"
-                                                                        maxlength="100" placeholder="" (blur)="removeBlankSpaceFieldName(item)"
-                                                                       onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95) || (event.charCode >= 48 && event.charCode <= 57)" />
+                                                                        maxlength="100" placeholder=""
+                                                                        (blur)="removeBlankSpaceFieldName(item)" />
                                                                     <mat-hint>{{fieldNameinput.value?.length || 0}}/100
                                                                     </mat-hint>
                                                                 </mat-form-field>
@@ -2318,15 +2315,15 @@
                                                                         [(ngModel)]="item.dataExportName"
                                                                         style="width: 300px;color: black;"
                                                                         maxlength="100" matInput #dataExportNameinput
-                                                                        placeholder="" (blur)="removeBlankSpaceDataExportName(item)"
-                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95) || (event.charCode >= 48 && event.charCode <= 57)" />
+                                                                        placeholder=""
+                                                                        (blur)="removeBlankSpaceDataExportName(item)" />
                                                                     <mat-hint>{{dataExportNameinput.value?.length ||
                                                                         0}}/100
                                                                     </mat-hint>
                                                                 </mat-form-field>
                                                             </td>
                                                         </tr>
-                                                         <tr mat-row>
+                                                        <tr mat-row>
                                                             <td mat-cell>
                                                                 <label style="color: black;">Tooltip: </label>
                                                             </td>
@@ -2595,8 +2592,7 @@
                                                                     <input class="form-control" type="text" #input
                                                                         [(ngModel)]="item.xmlElementName" matInput
                                                                         style="width: 300px;color: black;"
-                                                                        maxlength="100" placeholder=""
-                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32) || (event.charCode >= 48 && event.charCode <= 57)" />
+                                                                        maxlength="100" placeholder="" />
                                                                     <mat-hint>{{input.value?.length || 0}}/100
                                                                     </mat-hint>
                                                                 </mat-form-field>
@@ -2614,8 +2610,8 @@
                                                                         #fieldNameinput matInput
                                                                         [(ngModel)]="item.fieldName"
                                                                         style="width: 300px;color: black;"
-                                                                        maxlength="100" placeholder="" (blur)="removeBlankSpaceFieldName(item)"
-                                                                       onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95) || (event.charCode >= 48 && event.charCode <= 57)" />
+                                                                        maxlength="100" placeholder=""
+                                                                        (blur)="removeBlankSpaceFieldName(item)" />
                                                                     <mat-hint>{{fieldNameinput.value?.length || 0}}/100
                                                                     </mat-hint>
                                                                 </mat-form-field>
@@ -2633,14 +2629,15 @@
                                                                         [(ngModel)]="item.dataExportName"
                                                                         style="width: 300px;color: black;"
                                                                         maxlength="100" matInput #dataExportNameinput
-                                                                        placeholder="" (blur)="removeBlankSpaceDataExportName(item)"
-                                                                        onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95) || (event.charCode >= 48 && event.charCode <= 57)" />
+                                                                        placeholder=""
+                                                                        (blur)="removeBlankSpaceDataExportName(item)" />
                                                                     <mat-hint>{{dataExportNameinput.value?.length ||
                                                                         0}}/100
                                                                     </mat-hint>
                                                                 </mat-form-field>
                                                             </td>
-                                                        </tr> <tr mat-row>
+                                                        </tr>
+                                                        <tr mat-row>
                                                             <td mat-cell>
                                                                 <label style="color: black;">Group/Section: </label>
                                                             </td>
@@ -2719,13 +2716,11 @@
                         </div>
                     </div>
                 </div>
-
                 <!-- Page List -->
                 <div style="width: 200px;position: fixed;margin-left: 65%;">
                     <h2>Pages</h2>
-                    <button class="btn btn-sm"
-                        class="btn btn-md btn-primary"  
-                        (click)="addPage()">Add Page</button>
+                    <button class="btn btn-sm" class="btn btn-md btn-primary" (click)="addPage()">Add
+                        Page</button>
                     <div style="height: 10px;"></div>
                     <div class="example-list" style="text-align:center">
                         <div class="example-box" *ngFor="let page of pages;let i=index;"

@@ -500,7 +500,6 @@ export class AddFormComponent implements OnInit {
           });
           if ((index !== -1) && ((index + 1) !== Object.keys(this.pages).length)) {
             this.currentPage = this.pages[index + 1];
-            alert(this.currentPage.name);
             this.pageStatus=this.currentPage.name;
             this.getDesignPerPage(this.currentPage.pageGUID);
           }
@@ -673,7 +672,6 @@ export class AddFormComponent implements OnInit {
           if (element.fieldType.value !== "subSection" && element.fieldType.value !== "section" && element.fieldType.value !== "group" && element.fieldType.value !== "repeatgroup" && element.fieldType.value !== "attachment" && element.fieldType.value !== "PageTitle" && element.parentFieldName === "") {
             this.service.getMetadataValue(pageGUID, element.fieldName, this.formData.formCaptureID).subscribe(res => {
               if (element.fieldType.value === "checkbox") {
-                alert(Boolean(res));
                 element["data"] = Boolean(res);
               }
               else if(element.fieldType.value === "lexicon data"){
@@ -974,7 +972,10 @@ export class AddFormComponent implements OnInit {
   }
 
   onUpload() {
-    let fileName=localStorage.getItem('fieldNameAttach').toString();
+    let fileName="";
+    if(localStorage.getItem('fieldNameAttach')!==null || localStorage.getItem('fieldNameAttach') !== undefined){
+      fileName=localStorage.getItem('fieldNameAttach').toString();
+    }
     if(fileName!==""){
       if (this.file !== null) {
         this.spinner.show();
@@ -1067,7 +1068,10 @@ export class AddFormComponent implements OnInit {
   }
 
   onUploadPhoto() {
-    let photoName=localStorage.getItem('fieldNamePhoto').toString();
+    let photoName="";
+    if(localStorage.getItem('fieldNamePhoto') !==null || localStorage.getItem('fieldNamePhoto') !== undefined){
+      photoName=localStorage.getItem('fieldNamePhoto').toString();
+    }
     if(photoName!=="")
     {
       if (this.photoFile !== null) {
@@ -1162,7 +1166,10 @@ export class AddFormComponent implements OnInit {
   }
 
   addComment() {
-    let commentName=localStorage.getItem('fieldNameComment').toString();
+    let commentName="";
+    if(localStorage.getItem('fieldNameComment')!==null || localStorage.getItem('fieldNameComment') !== undefined){
+       commentName=localStorage.getItem('fieldNameComment').toString();
+    }
     if(commentName!=="")
     {
       if(this.addEditComment==='Add'){
@@ -1337,7 +1344,6 @@ export class AddFormComponent implements OnInit {
     }).then((result) => {
       if (result.value) {
         this.spinner.show();
-        alert(item.photoGUID);
         this.service.DeletePhoto(item.photoGUID).subscribe(data => {
           this.spinner.hide();
           this.refreshPhotoList();

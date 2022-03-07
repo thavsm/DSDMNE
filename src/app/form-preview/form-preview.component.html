@@ -93,7 +93,7 @@
                                 <textarea matInput [(ngModel)]=item.data 
                                     maxlength={{item.fieldValidations[0].dataLength}} placeholder="{{item.toolTip}}" 
                                     rows="{{item.fieldStyles[0].height}}"
-                                    onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"></textarea>
+                                   ></textarea>
                             </mat-form-field>
                         </ng-container>
 
@@ -103,7 +103,7 @@
                             <label style="color:black">{{item.questionName}}</label>
                             <mat-form-field appearance="outline">
                                 <textarea matInput 
-                                    onkeypress="return (event.charCode > 64 && event.charCode < 91) ||  (event.charCode > 47 && event.charCode < 58) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
+                                    
                                     [(ngModel)]=item.data maxlength={{item.fieldValidations[0].dataLength}}
                                     placeholder="{{item.toolTip}}" rows="{{item.fieldStyles[0].height}}"></textarea>
                             </mat-form-field>
@@ -321,7 +321,7 @@
                                                     <label style="color:black">{{subsectionItem.questionName}}</label>
                                                     <mat-form-field appearance="outline">
                                                         <textarea matInput [(ngModel)]=subsectionItem.data
-                                                            onkeypress="return (event.charCode > 64 && event.charCode < 91) ||  (event.charCode > 47 && event.charCode < 58) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
+                                                            
                                                             maxlength={{subsectionItem.fieldValidations[0].dataLength}}
                                                             placeholder="{{subsectionItem.toolTip}}"
                                                             rows="{{subsectionItem.fieldStyles[0].height}}"></textarea>
@@ -334,7 +334,7 @@
                                                     <label style="color:black">{{subsectionItem.questionName}}</label>
                                                     <mat-form-field appearance="outline">
                                                         <textarea matInput [(ngModel)]=subsectionItem.data
-                                                            onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
+                                                           
                                                             maxlength={{subsectionItem.fieldValidations[0].dataLength}}
                                                             placeholder="{{subsectionItem.toolTip}}"
                                                             rows="{{subsectionItem.fieldStyles[0].height}}"></textarea>
@@ -558,7 +558,7 @@
                                                     <mat-form-field appearance="outline">
                                                         <textarea
                                                               matInput
-                                                            onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
+                                                           
                                                             [(ngModel)]=subSectionItem.data
                                                             maxlength={{subSectionItem.fieldValidations[0].dataLength}}
                                                             placeholder="{{subSectionItem.toolTip}}"
@@ -574,7 +574,7 @@
                                                         <textarea
                                                             matInput [(ngModel)]=subSectionItem.data
                                                             maxlength={{subSectionItem.fieldValidations[0].dataLength}}
-                                                            onkeypress="return (event.charCode > 64 && event.charCode < 91) ||  (event.charCode > 47 && event.charCode < 58) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
+                                                            
                                                             placeholder="{{subSectionItem.toolTip}}"
                                                             rows="{{subSectionItem.fieldStyles[0].height}}"></textarea>
                                                     </mat-form-field>
@@ -700,7 +700,7 @@
                                         <label style="color:black">{{sectionItem.questionName}}</label>
                                         <mat-form-field appearance="outline">
                                             <textarea matInput
-                                                onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
+                                               
                                                 [(ngModel)]=sectionItem.data
                                                 maxlength={{sectionItem.fieldValidations[0].dataLength}}
                                                 placeholder="{{sectionItem.toolTip}}"
@@ -715,7 +715,7 @@
                                         <mat-form-field appearance="outline">
                                             <textarea matInput [(ngModel)]=sectionItem.data
                                                 maxlength={{sectionItem.fieldValidations[0].dataLength}}
-                                                onkeypress="return (event.charCode > 64 && event.charCode < 91) ||  (event.charCode > 47 && event.charCode < 58) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
+                                                
                                                 placeholder="{{sectionItem.toolTip}}"
                                                 rows="{{sectionItem.fieldStyles[0].height}}"></textarea>
                                         </mat-form-field>
@@ -944,7 +944,7 @@
                                         <mat-form-field appearance="outline">
                                             <textarea matInput [(ngModel)]=sectionItem.data
                                                 maxlength={{sectionItem.fieldValidations[0].dataLength}}
-                                                onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
+                                               
                                                 placeholder="{{sectionItem.toolTip}}"
                                                 rows="{{sectionItem.fieldStyles[0].height}}"></textarea>
                                         </mat-form-field>
@@ -957,7 +957,7 @@
                                         <mat-form-field appearance="outline">
                                             <textarea matInput [(ngModel)]=sectionItem.data
                                                 maxlength={{sectionItem.fieldValidations[0].dataLength}}
-                                                onkeypress="return (event.charCode > 64 && event.charCode < 91) ||  (event.charCode > 47 && event.charCode < 58) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
+                                                
                                                 placeholder="{{sectionItem.toolTip}}"
                                                 rows="{{sectionItem.fieldStyles[0].height}}"></textarea>
                                         </mat-form-field>
@@ -1165,7 +1165,6 @@
                                         <label style="color:black">{{sectionItem.questionName}}</label>
                                         <mat-form-field appearance="outline">
                                             <textarea matInput
-                                                onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
                                                 [(ngModel)]=sectionItem.data
                                                 maxlength={{sectionItem.fieldValidations[0].dataLength}}
                                                 placeholder="{{sectionItem.toolTip}}"
@@ -1180,7 +1179,7 @@
                                         <mat-form-field appearance="outline">
                                             <textarea matInput [(ngModel)]=sectionItem.data
                                                 maxlength={{sectionItem.fieldValidations[0].dataLength}}
-                                                onkeypress="return (event.charCode > 64 && event.charCode < 91) ||  (event.charCode > 47 && event.charCode < 58) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==32)"
+                                                
                                                 placeholder="{{sectionItem.toolTip}}"
                                                 rows="{{sectionItem.fieldStyles[0].height}}"></textarea>
                                         </mat-form-field>
@@ -1457,7 +1456,7 @@
                     [filterable]="true" [sortable]="true" [groupable]="true">
                      <ng-template kendoGridToolbarTemplate>
                        <kendo-grid-spacer></kendo-grid-spacer>
-                       <button kendoGridPDFCommand icon="file-pdf">Export to PDF</button>
+                      
                      </ng-template>
            
                      <kendo-grid-column field="photo" title="Preview" [width]="12">
@@ -1532,7 +1531,7 @@
                     [filterable]="true" [sortable]="true" [groupable]="true">
                      <ng-template kendoGridToolbarTemplate>
                        <kendo-grid-spacer></kendo-grid-spacer>
-                       <button kendoGridPDFCommand icon="file-pdf">Export to PDF</button>
+                      
                      </ng-template>
            
                      <kendo-grid-column field="createdTS" title="Uploaded On" [width]="12">
@@ -1574,7 +1573,7 @@
         </mat-tab>
 
         <!-- Comments tab -->
-        <mat-tab label="Commentss" style="background-color: black;font-weight: 500;">
+        <mat-tab label="Comments()" style="background-color: black;font-weight: 500;">
             <div style="height: 10px;"></div>
             <div class="parent">
                 <h4>Comments</h4>
@@ -1592,7 +1591,7 @@
                     [sortable]="true" [groupable]="true">
                     <ng-template kendoGridToolbarTemplate>
                         <kendo-grid-spacer></kendo-grid-spacer>
-                        <button kendoGridPDFCommand icon="file-pdf">Export to PDF</button>
+                       
                     </ng-template>
             
                     <kendo-grid-column field="timeStamp" title="Date Added" [width]="12">

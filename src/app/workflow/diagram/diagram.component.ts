@@ -544,7 +544,6 @@ export class DiagramComponent implements AfterContentInit, OnChanges, OnDestroy,
 
     if (node !== undefined) {
       if (node['Locations'] !== 'undefined' && node['Locations'] !== null) {
-        //alert(node['Locations'].length);
         for (let i = 0; i < node['Locations'].length; i++) {
 
           this.addGroupLocation(mtbody, 1, node['Locations'][i]);
@@ -562,8 +561,6 @@ export class DiagramComponent implements AfterContentInit, OnChanges, OnDestroy,
   }
 
   addGroupLocation(mtbody, btype, objLocation) {
-
-    //alert("#" + mtbody + "  > tbody");
     //var a = $('<select class="form-control form-control-sm" id="LocationID"><option value="436">Location1</option><option value="304">All</option></select>');
     var a = $('<select>').attr({ id: 'LocationID', class: 'form-control form-control-sm' });
 
@@ -664,7 +661,6 @@ export class DiagramComponent implements AfterContentInit, OnChanges, OnDestroy,
         }
         else {
           $(this).val(node[eleid]);
-          //alert(process.Node[i][eleid]);
         }
       }
       //else if (typeof node['Location'][eleid] !== 'undefined') {
