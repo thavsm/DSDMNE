@@ -117,8 +117,8 @@ export class RoleComponent implements OnInit {
     clickEditAccess(item: any) {
       this.menuAdd = item;
       const dialogRef = this.dialog.open(RoleaccessComponent, {
-        width: '60%',
-        height: '85%',
+        width: '50%',
+        height: '70%',
         //data: this.menuAdd,
         data: item.roleID,
         disableClose:false

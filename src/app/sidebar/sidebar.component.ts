@@ -46,7 +46,7 @@ export const ROUTES: RouteInfo[] = [{
             {path: 'appusers',title: 'Users', ab:'U'},
             {path: 'role',title: 'Roles', ab:'R'},
             {path: 'location', title: 'location management', ab:'LM' , TreeCategoryID : 2},
-            {path: 'level', title: 'level management', ab:'LM' , TreeCategoryID : 3},
+            //{path: 'level', title: 'level management', ab:'LM' , TreeCategoryID : 3},
             //{path: 'formroles',title: 'Forms', ab:'F'},
         ]
     },{
@@ -90,13 +90,13 @@ export const ROUTES: RouteInfo[] = [{
         path: '/process',
         title: 'process',
         type: 'link',
-        icontype: 'image',
+        icontype: 'schema',
         role: []
     },{
         path: '/indicator-report',
         title: 'Indicator Approval',
         type: 'link',
-        icontype: 'image',
+        icontype: 'fact_check',
         role: []
     },
     {

@@ -479,7 +479,7 @@ export class ExternaldataAddComponent implements OnInit {
   
         if(this.ExternalData.SearchCriteria != "" ){
   
-          this.DataVal = this.listValues.trim()
+          this.DataVal = this.listValues;
   
           this.service.ExtrenalCountColumnData(this.ExternalData.column_name, this.DataVal, TableName, this.ExternalData.connectString).subscribe(data => {
             this.DBCalc = data;
@@ -521,7 +521,7 @@ export class ExternaldataAddComponent implements OnInit {
         
         if(this.ExternalData.SearchCriteria != "" ){
   
-          this.DataVal = this.listValues.trim()
+          this.DataVal = this.listValues;
   
           this.service.CountColumnData(this.ExternalData.column_name, this.DataVal, TableName).subscribe(data => {
             this.DBCalc = data;
@@ -657,7 +657,7 @@ export class ExternaldataAddComponent implements OnInit {
 
           if (this.ExternalData.SearchCriteria != "") {
 
-            this.DataVal = this.listValues.trim()
+            this.DataVal = this.listValues;
 
             this.service.CountColumnData(this.selectedFieldName, this.DataVal, this.FormName).subscribe(data => {
               this.DBCalc = data;

@@ -57,7 +57,7 @@ export class LevelNodeEditComponent implements OnInit {
   divAtrributes: boolean  = true;
   thEdit: boolean  = true;
   thDelete: boolean  = true;
-  tabIndex: number = 0;
+  tabIndex: number = 1;
   TabNodeEdit: string = "Node Edit";
   TabLevelEdit: string = "Level Edit";
   btnSave : boolean  = true;
@@ -156,7 +156,7 @@ export class LevelNodeEditComponent implements OnInit {
       this.thDelete= true;  
       this.TabNodeEdit = "Node Edit";
       this.TabLevelEdit = "Level Edit";
-      this.tabIndex = 0;
+      this.tabIndex = 1;
       this.btnSave= true;  
       this.btnDelete= true;  
 
