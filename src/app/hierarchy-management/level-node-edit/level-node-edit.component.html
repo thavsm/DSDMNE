@@ -1,8 +1,8 @@
 
 <h1 mat-dialog-title>Level/Node Edit</h1>
 <div mat-dialog-content>
-    <mat-tab-group animationDuration="0ms">
-        <mat-tab label="Level Edit">
+    <mat-tab-group animationDuration="0ms" [selectedIndex]="tabIndex">
+        <mat-tab label={{TabLevelEdit}}>
             <div class="form-group">
                 <label style="font-size: medium;">Level Name</label>
                 <input type="text" class="form-control" value="{{NodeData.levelName}}" [(ngModel)]="NodeData.levelName">
@@ -14,7 +14,7 @@
             </div>
             <!-- <div class="form-group" style="display:none" >
                 <mat-form-field appearance="outline">
-                    <mat-label>Select Roles </mat-label>
+                    <mat-label>Select Roles </mat-label> 
                     <mat-select [(ngModel)]="NodeData.roleName">
                         <mat-option *ngFor="let c of Roles" [value]="c.roleID">
                             {{c.roleName}}
@@ -22,7 +22,7 @@
                     </mat-select>
                 </mat-form-field>
             </div> -->
-            <div class="form-group">
+            <div class="form-group" *ngIf="divLevelButtons">
                 <button mat-button cdkFocusInitial  (click)="editLevel()"
                 class="btn btn-md btn-primary"  >Edit Level</button>
                 &nbsp;
@@ -39,8 +39,8 @@
                                 <th class="th">Question Name</th>
                                 <th class="th">Description</th>
                                 <th class="th">Field Type</th>
-                                <th class="th">Edit</th>
-                                <th class="th">Delete</th>
+                                <th class="th" *ngIf="thEdit">Edit</th>
+                                <th class="th" *ngIf="thDelete">Delete</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -49,8 +49,8 @@
                                 <td >{{pd.questionName}}</td>
                                 <td >{{pd.description}}</td>
                                 <td >{{pd.recognitionType}}</td>                             
-                                <td><button type="button" *ngIf="pd.friendlyname != 'Name' && pd.description != 'Description'" class="btn btn-secondary" (click)="clickEdit(pd)"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
-                                <td><button type="button" *ngIf="pd.friendlyname != 'Name' && pd.description != 'Description'" class="btn btn-danger" (click)="clickDelete(pd)"><i class="fa fa-trash"  aria-hidden="true"></i></button></td>         
+                                <td *ngIf="thEdit"><button type="button" *ngIf="pd.friendlyname != 'Name' && pd.description != 'Description'" class="btn btn-secondary" (click)="clickEdit(pd)"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
+                                <td *ngIf="thDelete"><button type="button" *ngIf="pd.friendlyname != 'Name' && pd.description != 'Description'" class="btn btn-danger" (click)="clickDelete(pd)"><i class="fa fa-trash"  aria-hidden="true"></i></button></td>         
                             </tr>
                             
                         </tbody>                        
@@ -60,58 +60,61 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                <label style="font-size: medium;">Enter field name:</label>
-                <input type="text" class="form-control" value="{{NodeAttributesData.friendlyname}}" [(ngModel)]="NodeAttributesData.friendlyname">
+            <div class="form-group" *ngIf="divAtrributes" >
+                <div class="form-group">
+                    <label style="font-size: medium;">Enter field name:</label>
+                    <input type="text" class="form-control" value="{{NodeAttributesData.friendlyname}}" [(ngModel)]="NodeAttributesData.friendlyname">
+                </div>
+                <div class="form-group">
+                    <label style="font-size: medium;">Question Name:</label>
+                    <input type="text" class="form-control" value="{{NodeAttributesData.questionName}}"
+                        [(ngModel)]="NodeAttributesData.questionName">
+                </div>
+            
+                <div class="form-group">
+                    <label style="font-size: medium;">Description:</label>
+                    <input type="text" class="form-control" value="{{NodeAttributesData.description}}" [(ngModel)]="NodeAttributesData.description">
+                </div>
+                <div class="form-group" style="display:none">
+                    <label style="font-size: medium;">XML Name:</label>
+                    <input type="text" class="form-control" value="{{NodeAttributesData.friendlyname}}"
+                        [(ngModel)]="NodeAttributesData.friendlyname">
+                </div>
+                <div class="form-group">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Field Type</mat-label>
+                        <mat-select [(ngModel)]="NodeAttributesData.recognitionType"  (selectionChange)="onUserfieldTypesChange($event)">
+                            <mat-option *ngFor="let c of UserfieldTypes" [value]="c.fieldName">
+                                {{c.fieldName}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="form-group"  *ngIf="divListValue"  >
+                    <label style="font-size: medium;">List Value</label>
+                    <input type="text" class="form-control"  placeholder="Enter the values semi-colon(;) seperated" value="{{NodeAttributesData.listValue}}"
+                    [(ngModel)]="NodeAttributesData.listValue">
+                </div>
+                <div class="form-group"  *ngIf="divLengthValidation" >
+                    <label style="font-size: medium;">Max Length</label>
+                    <input type="number" class="form-control" value="{{NodeAttributesData.lengthValidation}}"
+                    [(ngModel)]="NodeAttributesData.lengthValidation">
+                </div>
+                <div class="form-group" *ngIf="divLengthReportUrl" >
+                    <label style="font-size: medium;">Report Url</label>
+                    <input type="text" class="form-control" value="{{NodeAttributesData.reportUrl}}"
+                    [(ngModel)]="NodeAttributesData.reportUrl">
+                </div>
+                <div class="form-group">
+                    <label style="font-size: medium;">Tool Tip:</label>
+                    <input type="text" class="form-control" value="{{NodeAttributesData.tooltip}}" [(ngModel)]="NodeAttributesData.tooltip">
+                </div>
+                <div class="form-group">      
+                    <input type="checkbox" id="fieldCompulsory" name="fieldCompulsory" value="{{NodeAttributesData.compulsory}}" [(ngModel)]="NodeAttributesData.compulsory">
+                    <label for="fieldCompulsory">Compulsory</label><br><br>
+                </div>  
             </div>
-            <div class="form-group">
-                <label style="font-size: medium;">Question Name:</label>
-                <input type="text" class="form-control" value="{{NodeAttributesData.questionName}}"
-                    [(ngModel)]="NodeAttributesData.questionName">
-            </div>
-        
-            <div class="form-group">
-                <label style="font-size: medium;">Description:</label>
-                <input type="text" class="form-control" value="{{NodeAttributesData.description}}" [(ngModel)]="NodeAttributesData.description">
-            </div>
-            <div class="form-group" style="display:none">
-                <label style="font-size: medium;">XML Name:</label>
-                <input type="text" class="form-control" value="{{NodeAttributesData.friendlyname}}"
-                    [(ngModel)]="NodeAttributesData.friendlyname">
-            </div>
-            <div class="form-group">
-                <mat-form-field appearance="outline">
-                    <mat-label>Field Type</mat-label>
-                    <mat-select [(ngModel)]="NodeAttributesData.recognitionType"  (selectionChange)="onUserfieldTypesChange($event)">
-                        <mat-option *ngFor="let c of UserfieldTypes" [value]="c.fieldName">
-                            {{c.fieldName}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="form-group"  *ngIf="divListValue"  >
-                <label style="font-size: medium;">List Value</label>
-                <input type="text" class="form-control"  placeholder="Enter the values semi-colon(;) seperated" value="{{NodeAttributesData.listValue}}"
-                [(ngModel)]="NodeAttributesData.listValue">
-            </div>
-            <div class="form-group"  *ngIf="divLengthValidation" >
-                <label style="font-size: medium;">Max Length</label>
-                <input type="number" class="form-control" value="{{NodeAttributesData.lengthValidation}}"
-                [(ngModel)]="NodeAttributesData.lengthValidation">
-            </div>
-            <div class="form-group" *ngIf="divLengthReportUrl" >
-                <label style="font-size: medium;">Report Url</label>
-                <input type="text" class="form-control" value="{{NodeAttributesData.reportUrl}}"
-                [(ngModel)]="NodeAttributesData.reportUrl">
-            </div>
-            <div class="form-group">
-                <label style="font-size: medium;">Tool Tip:</label>
-                <input type="text" class="form-control" value="{{NodeAttributesData.tooltip}}" [(ngModel)]="NodeAttributesData.tooltip">
-            </div>
-            <div class="form-group">      
-                <input type="checkbox" id="fieldCompulsory" name="fieldCompulsory" value="{{NodeAttributesData.compulsory}}" [(ngModel)]="NodeAttributesData.compulsory">
-                <label for="fieldCompulsory">Compulsory</label><br><br>
-            </div>           
+         
             <div class="form-group" >
                 <button mat-button cdkFocusInitial  (click)="addAttributes()" *ngIf="divAddAtrributes" 
                     class="btn btn-md btn-primary"   >Add Attributes</button>
@@ -125,7 +128,7 @@
               <p style="font-size: 20px; color: black">Processing...</p>
         </ngx-spinner>
         </mat-tab>       
-        <mat-tab label="Node Edit">
+        <mat-tab label="{{TabNodeEdit}}">
             <div class="form-group">
                 <div class="form-group">
                     <label style="font-size: medium;">Level</label>
@@ -235,13 +238,13 @@
 
             <div class="form-group" >
                 <button mat-button cdkFocusInitial  (click)="addForm()" 
-                    class="btn btn-md btn-primary"   >Save</button>
+                    class="btn btn-md btn-primary"  *ngIf="btnSave">Save</button>
                     &nbsp; 
                 <button mat-button [mat-dialog-close]=""
                 class="btn btn-md btn-primary"  >Cancel</button>
                   &nbsp;
                   <button mat-button cdkFocusInitial  (click)="deleteNode()"
-                  class="btn btn-md btn-primary"  >Delete Node</button>
+                  class="btn btn-md btn-primary"  *ngIf="btnDelete">Delete Node</button>
             </div>
         <ngx-spinner bdColor="rgba(	237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
               <p style="font-size: 20px; color: black">Processing...</p>

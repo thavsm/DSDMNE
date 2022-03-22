@@ -53,7 +53,15 @@ export class LevelNodeEditComponent implements OnInit {
   GetMetadataNodeFormID: any;
   tgAdd: any;
   OpnExternalData: any;
-
+  divLevelButtons : boolean  = true;
+  divAtrributes: boolean  = true;
+  thEdit: boolean  = true;
+  thDelete: boolean  = true;
+  tabIndex: number = 1;
+  TabNodeEdit: string = "Node Edit";
+  TabLevelEdit: string = "Level Edit";
+  btnSave : boolean  = true;
+  btnDelete: boolean  = true;
 
   constructor(public dialog: MatDialog ,public dialogRef: MatDialogRef<LevelNodeEditComponent>,
     @Inject(MAT_DIALOG_DATA) data,
@@ -133,8 +141,40 @@ export class LevelNodeEditComponent implements OnInit {
     this.getNodes();
     this.getNodeAttributes(this.NodeData.levelID);
     this.service.getLevelMetadata(this.NodeData.levelID);
+    this.hideEditButtons();
   }
 
+  hideEditButtons(){
+
+
+    if(this.NodeData.ViewEdit == 1){
+
+      this.divLevelButtons = true;  
+      this.divAddAtrributes = true;  
+      this.divAtrributes = true;  
+      this.thEdit= true;  
+      this.thDelete= true;  
+      this.TabNodeEdit = "Node Edit";
+      this.TabLevelEdit = "Level Edit";
+      this.tabIndex = 1;
+      this.btnSave= true;  
+      this.btnDelete= true;  
+
+    }else if(this.NodeData.ViewEdit == 0){
+
+      this.divLevelButtons = false;  
+      this.divAddAtrributes = false; 
+      this.divAtrributes = false;  
+      this.thEdit= false;  
+      this.thDelete= false;  
+      this.TabNodeEdit = "Node";
+      this.TabLevelEdit = "Level"; 
+      this.tabIndex = 1;
+      this.btnSave= false;  
+      this.btnDelete= false;  
+    }
+
+  }
   public gridData: any = this.service.getLevelMetadata(this.levelID);
 
   // getRoles(){
@@ -172,9 +212,14 @@ export class LevelNodeEditComponent implements OnInit {
       nodeID: this.NodeData.nodeID,
       financialYear: "",
       financialStartDate: "",
+      ViewEdit:this.NodeData.ViewEdit
 
     }
-    const dialogRef = this.dialog.open(TargetAddComponent, { width: '55%', height: '85%', data: this.tgAdd, disableClose: true }
+
+     let WinHeight = '75%';
+     let WinWidth = '55%';
+
+    const dialogRef = this.dialog.open(TargetAddComponent, { width: WinWidth, data: this.tgAdd, disableClose: true }
     );
 
     dialogRef.afterClosed().subscribe(result => {
@@ -186,13 +231,17 @@ export class LevelNodeEditComponent implements OnInit {
 
   OpenExternalData() {
 
-
     this.OpnExternalData = {
       nodeID : this.NodeData.nodeID,
+      ViewEdit:this.NodeData.ViewEdit
     }
 
 
-    const dialogRef = this.dialog.open(ExternaldataAddComponent, { width: '65%', height: '85%', data: this.OpnExternalData, disableClose: true }
+    // let WinHeight = '85%';
+    let WinWidth = '65%';
+
+
+    const dialogRef = this.dialog.open(ExternaldataAddComponent, { width: WinWidth, data: this.OpnExternalData, disableClose: true }
     );
 
     dialogRef.afterClosed().subscribe(result => {

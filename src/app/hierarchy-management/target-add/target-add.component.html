@@ -12,7 +12,7 @@
                             <th class="th">Q3</th>
                             <th class="th">Q4</th>
                             <th class="th">Annual</th>
-                            <th class="th">Edit</th>
+                            <th class="th" *ngIf="thEdit">Edit</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -23,67 +23,73 @@
                             <td >{{pd.quaterThree}}</td> 
                             <td >{{pd.quaterFour}}</td> 
                             <td >{{pd.annualTarget}}</td>                             
-                            <td><button type="button" class="btn btn-secondary" (click)="clickEdit(pd)"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
+                            <td *ngIf="thEdit"><button type="button" class="btn btn-secondary" (click)="clickEdit(pd)"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
                             <!-- <td><button type="button" class="btn btn-danger" (click)="clickDelete(pd)"><i class="fa fa-trash"  aria-hidden="true"></i></button></td>          -->
                         </tr>
-                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                        
                     </tbody>                        
                 </table>
+
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
             </div>
         </div>
 
-        <div class="form-group">
-            <label style="font-size: medium;">Financial Year Start:</label>
-            <input type="date" class="form-control" value="{{tgAdd.financialStartDate}}"
-            [(ngModel)]=tgAdd.financialStartDate (change)="onDateChange($event)" [disabled]="isDisabled">
-        </div>
-        <div class="form-group" *ngIf="divPeriod">
-          <label style="font-size: medium;">Select a Period:</label>
-           <mat-form-field appearance="outline">
-                <mat-select [(ngModel)]=tgAdd.financialYear (selectionChange)="onTargetChange($event)" [disabled]="isDisabled">
-                    <mat-option *ngFor="let c of Period" [value]="c.financialYear">
-                        {{c.financialYear}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field> 
-        </div>    
-        <div class="form-group" *ngIf="divQ1">
-            <label style="font-size: medium;">Quater one:</label>
-            <input type="number" class="form-control" value="{{tgAdd.quaterOne}}" (change)="onValueChange($event)"
-            [(ngModel)]="tgAdd.quaterOne">
-        </div>
+        <div class="form-group" *ngIf="divContorls">
         
-        <div class="form-group" *ngIf="divQ2">
-            <label style="font-size: medium;">Quater two:</label>
-            <input type="number" class="form-control" value="{{tgAdd.quaterTwo}}"  (change)="onValueChange($event)"
-            [(ngModel)]="tgAdd.quaterTwo">
-        </div>
+            <div class="form-group">
+                <label style="font-size: medium;">Financial Year Start:</label>
+                <input type="date" class="form-control" value="{{tgAdd.financialStartDate}}"
+                    [(ngModel)]=tgAdd.financialStartDate (change)="onDateChange($event)" [disabled]="isDisabled">
+            </div>
+            <div class="form-group" *ngIf="divPeriod">
+                <label style="font-size: medium;">Select a Period:</label>
+                <mat-form-field appearance="outline">
+                    <mat-select [(ngModel)]=tgAdd.financialYear (selectionChange)="onTargetChange($event)"
+                        [disabled]="isDisabled">
+                        <mat-option *ngFor="let c of Period" [value]="c.financialYear">
+                            {{c.financialYear}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="form-group" *ngIf="divQ1">
+                <label style="font-size: medium;">Quater one:</label>
+                <input type="number" class="form-control" value="{{tgAdd.quaterOne}}" (change)="onValueChange($event)"
+                    [(ngModel)]="tgAdd.quaterOne">
+            </div>
         
-        <div class="form-group" *ngIf="divQ3">
-            <label style="font-size: medium;">Quater three:</label>
-            <input type="number" class="form-control" value="{{tgAdd.quaterThree}}"  (change)="onValueChange($event)"
-            [(ngModel)]="tgAdd.quaterThree">
-        </div>
-    
+            <div class="form-group" *ngIf="divQ2">
+                <label style="font-size: medium;">Quater two:</label>
+                <input type="number" class="form-control" value="{{tgAdd.quaterTwo}}" (change)="onValueChange($event)"
+                    [(ngModel)]="tgAdd.quaterTwo">
+            </div>
         
-        <div class="form-group" *ngIf="divQ4">
-            <label style="font-size: medium;">Quater four:</label>
-            <input type="number" class="form-control" value="{{tgAdd.quaterFour}}"  (change)="onValueChange($event)"
-            [(ngModel)]="tgAdd.quaterFour">
-        </div>
-    
+            <div class="form-group" *ngIf="divQ3">
+                <label style="font-size: medium;">Quater three:</label>
+                <input type="number" class="form-control" value="{{tgAdd.quaterThree}}" (change)="onValueChange($event)"
+                    [(ngModel)]="tgAdd.quaterThree">
+            </div>
+        
+        
+            <div class="form-group" *ngIf="divQ4">
+                <label style="font-size: medium;">Quater four:</label>
+                <input type="number" class="form-control" value="{{tgAdd.quaterFour}}" (change)="onValueChange($event)"
+                    [(ngModel)]="tgAdd.quaterFour">
+            </div>
+        
+        
+            <div class="form-group" *ngIf="divAT">
+                <label style="font-size: medium;">Annual Target:</label>
+                <input type="number" aria-multiline="true" class="form-control" value="{{tgAdd.annualTarget}}"
+                    [(ngModel)]="tgAdd.annualTarget" disabled>
+            </div>
 
-        <div class="form-group" *ngIf="divAT">
-            <label style="font-size: medium;">Annual Target:</label>
-            <input type="number" aria-multiline="true" class="form-control" value="{{tgAdd.annualTarget}}"
-            [(ngModel)]="tgAdd.annualTarget" disabled>
         </div>
-      
-       
-    <div mat-dialog-actions>
-        <button mat-button cdkFocusInitial (click)="addTarget()" [disabled]="isBtnDisabled"
-        class="btn btn-md btn-primary"   >{{btnText}}</button>
-        <button mat-button [mat-dialog-close]=""
-            class="btn btn-md btn-primary"   >Cancel</button>
-    </div>
+
+        <div mat-dialog-actions>
+            <button mat-button cdkFocusInitial (click)="addTarget()" [disabled]="isBtnDisabled" *ngif="BtnAddTarget"
+                class="btn btn-md btn-primary">{{btnText}}</button>
+            <button mat-button [mat-dialog-close]="" class="btn btn-md btn-primary">Cancel</button>
+        </div>
+        
     </div>

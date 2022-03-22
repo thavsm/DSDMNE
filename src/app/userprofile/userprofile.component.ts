@@ -222,8 +222,8 @@ export class UserProfileComponent implements OnInit {
     };
     this.menuAdd = body;
     const dialogRef = this.dialog.open(RoleaccessComponent, {
-      width: '80%',
-      height: '80%',
+      width: '50%',
+      height: '70%',
       data: item.role,
       disableClose:false
     });

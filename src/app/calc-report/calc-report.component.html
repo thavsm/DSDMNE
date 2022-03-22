@@ -5,13 +5,26 @@
           <h3 class="title" style="font-weight: bold;">Indicator Approval</h3>
           <kendo-grid [kendoGridBinding]="gridView" [pageSize]="pageSize" [pageable]="true"
           [height]="700"   (pageChange)="onPageChange($event)"
-           [filterable]="true" [sortable]="true" [groupable]="true">
+           [filterable]="true" [sortable]="true" [groupable]="true" [group]="groups">
 
-            <kendo-grid-column field="provincialProgram" title="Program" [width]="130">
-            </kendo-grid-column>
+
+           <kendo-grid-column field="provincialProgram" title="Program">
+            <ng-template kendoGridGroupHeaderTemplate let-value="value">
+              {{ value }}
+            </ng-template>
+          </kendo-grid-column>
+
+            <!-- <kendo-grid-column field="provincialProgram" title="Program" [width]="130">
+            </kendo-grid-column> -->
   
-            <kendo-grid-column field="provincialSubProgram" title="Sub-Program" [width]="130">
+            <kendo-grid-column field="provincialSubProgram" title="Sub-Program">
+              <ng-template kendoGridGroupHeaderTemplate let-value="value">
+                {{ value }}
+              </ng-template>
             </kendo-grid-column>
+
+            <!-- <kendo-grid-column field="provincialSubProgram" title="Sub-Program" [width]="130">
+            </kendo-grid-column> -->
   
             <kendo-grid-column field="indicatorNr" title="Indicator" [width]="120">
             </kendo-grid-column>

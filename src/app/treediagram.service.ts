@@ -14,7 +14,7 @@ export class TreediagramService {
   
  
   // readonly API_URL ='https://localhost:44305/api/';
-  // readonly APIUrl ='https://localhost:44305/api/';
+  // readonly APIUrl ='https://localhost:44305/1/';
 
   readonly API_URL = environment.API_URL + '/'
   readonly APIUrl = environment.API_FormURL;

@@ -48,8 +48,8 @@ export class AppusersComponent implements OnInit {
     let obj = {ParentName:'Users',data:this.formAdd};
     const dialogRef = this.dialog.open(UserProfileComponent 
     , {
-      width: '60%',
-      height: '90%',
+      width: '50%',
+      height: '75%',
       data: obj,
       disableClose:false
     });
