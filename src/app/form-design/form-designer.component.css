@@ -8,7 +8,7 @@
   
   .example-list {
     border: solid 1px #ccc;
-    min-height: 60px;
+    min-height: 40px;
     background: white;
     border-radius: 4px;
     overflow: hidden;
@@ -61,5 +61,37 @@
   white-space: pre-line;
   color: black;
   font-size: medium;
+  font-size: small;
 }
 
+::ng-deep.mat-tab-label, ::ng-deep.mat-tab-label-active{
+  min-width: 0!important;
+  padding: 3px!important;
+  margin: 3px!important;
+ }
+
+ ::ng-deep.mat-list-base .mat-list-item .mat-list-item-content, .mat-list-base .mat-list-option .mat-list-item-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0px !important;
+  position: relative;
+  height: inherit;
+}
+
+::ng-deep.mat-nav-list .mat-list-item:focus,
+.mat-action-list .mat-list-item:focus,
+.mat-list-option:focus {
+  background: rgba(0, 128, 0, 0.377) !important;
+}
+
+ .example-handle {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: #ccc;
+  cursor: move;
+  width: 24px;
+  height: 24px;
+}

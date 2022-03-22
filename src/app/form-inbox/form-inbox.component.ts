@@ -11,7 +11,7 @@ import { merge } from 'jquery';
 import { AddFormComponent } from '../form-capture/add-form/add-form.component';
 import { DataResult, process, State } from "@progress/kendo-data-query";
 import { groupBy } from '@progress/kendo-data-query';
-import { DataBindingDirective } from '@progress/kendo-angular-grid';
+import { DataBindingDirective, PageSizeItem } from '@progress/kendo-angular-grid';
 
 declare var $: any;
 
@@ -25,6 +25,12 @@ export class FormInboxComponent implements OnInit {
   @ViewChild(DataBindingDirective) dataBinding: DataBindingDirective;
   
   constructor(public dialog: MatDialog, private route: Router, private service: FormbuilderService, private spinner: NgxSpinnerService) { }
+
+  public pageSize = 10;
+  public pageSizes: Array<number | PageSizeItem> = [5, 10, 20, {
+    text: 'All',
+    value: 'all'
+     }];
 
   formCapture: any;
   PhotoCount:number=0;
@@ -41,6 +47,10 @@ export class FormInboxComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngAfterViewInit() {
+  }
+
+  public onPageChange(state: any): void {
+    this.pageSize = state.take;
   }
 
   ngOnInit(): void {

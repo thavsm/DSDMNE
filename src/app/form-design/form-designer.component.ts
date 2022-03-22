@@ -8,7 +8,7 @@ import { merge } from 'jquery';
 import { FormPreviewComponent } from '../form-preview/form-preview.component';
 import { UserService } from '../shared/user.service';
 import { Router } from '@angular/router';
-import{ GlobalConstants } from '../shared/global-constants';
+import { GlobalConstants } from '../shared/global-constants';
 import { FormControl } from '@angular/forms';
 declare var $: any;
 
@@ -48,6 +48,8 @@ export class FormDesignerComponent implements OnInit {
             "displayName": "12 HR Time"
         }
     ]
+
+    field: Array<any> = null;
 
     types: any[];
 
@@ -1202,11 +1204,84 @@ export class FormDesignerComponent implements OnInit {
             "hasComment": false,
             "fieldType": {
                 "fieldTypeID": 5,
-                "displayName": "Select(one/many)",
-                "description": "unfold_more",
+                "displayName": "Select - Single",
+                "description": "arrow_drop_down",
                 "value": "lexicon data"
             },
-
+            "formPage": {
+                "pageGUID": "string",
+                "name": "string",
+                "formID": 0,
+                "isActive": true
+            },
+            "group": {
+                "groupGUID": "string",
+                "name": "string",
+                "isRequired": true,
+                "pageGUID": "string",
+                "parentGroupID": 0,
+                "type": "string",
+                "dataTableGroup": "string"
+            },
+            "fieldCustomValidations": [
+                {
+                    "fieldCustomValidationID": 0,
+                    "displayText": "",
+                    "condition": "",
+                    "value": "",
+                    "errorMessage": ""
+                }
+            ],
+            "fieldStyles": [
+                {
+                    "fieldStyleID": 0,
+                    "width": 760,
+                    "height": 24,
+                    "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
+                }
+            ],
+            "fieldValidations": [
+                {
+                    "fieldValidationID": 0,
+                    "dataLength": 50,
+                    "isEditable": true,
+                    "isRequired": false,
+                    "isHidden": false,
+                }
+            ]
+        },
+        {
+            "fieldID": 0,
+            "fieldTypeID": 33,
+            "pageGUID": "pageGUID",
+            "fieldName": "",
+            "questionName": "",
+            "isDisplayable": false,
+            "toolTip": "",
+            "parentFieldName": "",
+            "childFieldName": "",
+            "listValue": "",
+            "calculation": "",
+            "groupGUID": "string",
+            "isLocked": false,
+            "lockedByUserID": 0,
+            "meetAllCustomValidationConditions": true,
+            "dateCreated": "2021-12-01T12:32:22.006Z",
+            "createdByUserID": 0,
+            "dateLastModified": "2021-12-01T12:32:22.006Z",
+            "lastModifiedByUserID": 0,
+            "isActive": true,
+            "dataExportName": "",
+            "xmlElementName": "",
+            "hasPhoto": false,
+            "hasAttachment": false,
+            "hasComment": false,
+            "fieldType": {
+                "fieldTypeID": 5,
+                "displayName": "Select - Multiple",
+                "description": "unfold_more",
+                "value": "link multi select"
+            },
             "formPage": {
                 "pageGUID": "string",
                 "name": "string",
@@ -1617,21 +1692,40 @@ export class FormDesignerComponent implements OnInit {
     }
 
     publishPage() {
-        this.spinner.show();
-        this.service.PublishForm(this.formData.formID).subscribe(res => {
-            this.formData.publishStatus = 1;
-            this.service.updateDynamicFormDetails(this.formData.formID, this.formData).subscribe(result => {
-                this.formData = result;
-                this.checkStatus();
-                if (res === "Form published Successfully!") {
-                    this.showNotification('top', 'center', res, '', 'success');
-                    this.spinner.hide();
+        if(this.currentPage.name=="Page 1"){
+            var count = 0;
+            this.formDesign.forEach((element, index) => {
+                if (element.isDisplayable !== false && this.currentPage.name == "Page 1") {
+                    count++;
                 }
-                else {
-                    this.showNotification('top', 'center', res, '', 'danger');
-                }
-            })
-        });
+            });
+            this.spinner.show();
+            if(count==2)
+            {
+                this.service.PublishForm(this.formData.formID).subscribe(res => {
+                    this.formData.publishStatus = 1;
+                    this.service.updateDynamicFormDetails(this.formData.formID, this.formData).subscribe(result => {
+                        this.formData = result;
+                        this.checkStatus();
+                        if (res === "Form published Successfully!") {
+                            this.showNotification('top', 'center', res, '', 'success');
+                            this.spinner.hide();
+                        }
+                        else {
+                            this.showNotification('top', 'center', res, '', 'danger');
+                        }
+                    })
+                });
+            }
+            else{
+                this.showNotification('top', 'center', 'Please set two displayables before publishing the form', '', 'danger');
+                this.spinner.hide();
+            }
+        }
+        else{
+            this.showNotification('top', 'center', "The form can only be published from page 1", '', 'danger');
+            this.spinner.hide();
+        }
     }
 
     viewPage(i: any, page: any) {
@@ -1703,7 +1797,7 @@ export class FormDesignerComponent implements OnInit {
                         }
                     }
                     else if (this.currentPage.name !== "Page 1") {
-                        
+
                         if (count1 == 0) {
                             if (errorMessage === "Please ensure number ") {
                                 this.spinner.show();
@@ -2095,7 +2189,7 @@ export class FormDesignerComponent implements OnInit {
                             "description": "check_box",
                             "value": "checkbox"
                         },
-
+            
                         "formPage": {
                             "pageGUID": "string",
                             "name": "string",
@@ -2170,7 +2264,7 @@ export class FormDesignerComponent implements OnInit {
                             "description": "date_range",
                             "value": "date"
                         },
-
+            
                         "formPage": {
                             "pageGUID": "string",
                             "name": "string",
@@ -2467,7 +2561,7 @@ export class FormDesignerComponent implements OnInit {
                             "description": "info",
                             "value": "information"
                         },
-
+            
                         "formPage": {
                             "pageGUID": "string",
                             "name": "string",
@@ -2542,7 +2636,7 @@ export class FormDesignerComponent implements OnInit {
                             "description": "numbers",
                             "value": "number"
                         },
-
+            
                         "formPage": {
                             "pageGUID": "string",
                             "name": "string",
@@ -2617,7 +2711,7 @@ export class FormDesignerComponent implements OnInit {
                             "description": "title",
                             "value": "plainalpha"
                         },
-
+            
                         "formPage": {
                             "pageGUID": "string",
                             "name": "string",
@@ -2692,7 +2786,7 @@ export class FormDesignerComponent implements OnInit {
                             "description": "text_fields",
                             "value": "plaintext"
                         },
-
+            
                         "formPage": {
                             "pageGUID": "string",
                             "name": "string",
@@ -2840,7 +2934,7 @@ export class FormDesignerComponent implements OnInit {
                             "description": "radio_button_checked",
                             "value": "field or"
                         },
-
+            
                         "formPage": {
                             "pageGUID": "string",
                             "name": "string",
@@ -2915,7 +3009,7 @@ export class FormDesignerComponent implements OnInit {
                             "description": "repeat_on",
                             "value": "repeatgroup"
                         },
-
+            
                         "formPage": {
                             "pageGUID": "string",
                             "name": "string",
@@ -2989,7 +3083,7 @@ export class FormDesignerComponent implements OnInit {
                             "description": "article",
                             "value": "section"
                         },
-
+            
                         "formPage": {
                             "pageGUID": "string",
                             "name": "string",
@@ -3059,11 +3153,84 @@ export class FormDesignerComponent implements OnInit {
                         "hasComment": false,
                         "fieldType": {
                             "fieldTypeID": 5,
-                            "displayName": "Select(one/many)",
-                            "description": "unfold_more",
+                            "displayName": "Select - Single",
+                            "description": "arrow_drop_down",
                             "value": "lexicon data"
                         },
-
+                        "formPage": {
+                            "pageGUID": "string",
+                            "name": "string",
+                            "formID": 0,
+                            "isActive": true
+                        },
+                        "group": {
+                            "groupGUID": "string",
+                            "name": "string",
+                            "isRequired": true,
+                            "pageGUID": "string",
+                            "parentGroupID": 0,
+                            "type": "string",
+                            "dataTableGroup": "string"
+                        },
+                        "fieldCustomValidations": [
+                            {
+                                "fieldCustomValidationID": 0,
+                                "displayText": "",
+                                "condition": "",
+                                "value": "",
+                                "errorMessage": ""
+                            }
+                        ],
+                        "fieldStyles": [
+                            {
+                                "fieldStyleID": 0,
+                                "width": 760,
+                                "height": 24,
+                                "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
+                            }
+                        ],
+                        "fieldValidations": [
+                            {
+                                "fieldValidationID": 0,
+                                "dataLength": 50,
+                                "isEditable": true,
+                                "isRequired": false,
+                                "isHidden": false,
+                            }
+                        ]
+                    },
+                    {
+                        "fieldID": 0,
+                        "fieldTypeID": 33,
+                        "pageGUID": "pageGUID",
+                        "fieldName": "",
+                        "questionName": "",
+                        "isDisplayable": false,
+                        "toolTip": "",
+                        "parentFieldName": "",
+                        "childFieldName": "",
+                        "listValue": "",
+                        "calculation": "",
+                        "groupGUID": "string",
+                        "isLocked": false,
+                        "lockedByUserID": 0,
+                        "meetAllCustomValidationConditions": true,
+                        "dateCreated": "2021-12-01T12:32:22.006Z",
+                        "createdByUserID": 0,
+                        "dateLastModified": "2021-12-01T12:32:22.006Z",
+                        "lastModifiedByUserID": 0,
+                        "isActive": true,
+                        "dataExportName": "",
+                        "xmlElementName": "",
+                        "hasPhoto": false,
+                        "hasAttachment": false,
+                        "hasComment": false,
+                        "fieldType": {
+                            "fieldTypeID": 5,
+                            "displayName": "Select - Multiple",
+                            "description": "unfold_more",
+                            "value": "link multi select"
+                        },
                         "formPage": {
                             "pageGUID": "string",
                             "name": "string",
@@ -3212,7 +3379,7 @@ export class FormDesignerComponent implements OnInit {
                             "description": "calendar_view_day",
                             "value": "subSection"
                         },
-
+            
                         "formPage": {
                             "pageGUID": "string",
                             "name": "string",
@@ -3331,6 +3498,16 @@ export class FormDesignerComponent implements OnInit {
                     }
                 ];
             }
+        }
+    }
+
+    addField() {
+        if (this.field !== null) {
+            this.formDesign.push(this.field.pop());
+            this.field = null;
+        }
+        else {
+            alert("choose a field first")
         }
     }
 
@@ -3492,7 +3669,6 @@ export class FormDesignerComponent implements OnInit {
         var count1 = 0;
         let hasDuplicates: Boolean = false;
         this.formDesign.forEach((element, index) => {
-
             if (element.isDisplayable !== false && this.currentPage.name == "Page 1") {
                 count++;
             }
@@ -3510,36 +3686,6 @@ export class FormDesignerComponent implements OnInit {
         });
 
         if (errorMessage === "Please ensure number ") {
-            if (this.currentPage.name === "Page 1" && count == 2) {
-                if (count1 == 0) {
-                    if (errorMessage === "Please ensure number ") {
-                        this.spinner.show();
-                        this.service.addFieldPerPage(this.formDesign, this.formData.formID, this.currentPage.pageGUID).subscribe(data => {
-                            this.formData.publishStatus = 0;
-                            this.service.updateDynamicFormDetails(this.formData.formID, this.formData).subscribe(result => {
-                                this.formData = result;
-                                this.checkStatus();
-                                this.showNotification('top', 'center', 'Page Fields Saved Successfully!', '', 'success');
-                                this.spinner.hide();
-                                this.getDesignPerPage(pageGUID);
-                                this.refreshGroupSectionList();
-                            });
-                        },
-                            error => {
-                                this.showNotification('top', 'center', 'Error saving page fields, please try again', '', 'danger');
-                                this.spinner.hide();
-                            });
-                    }
-                }
-                else {
-                    errorMessage = "Database names must be unique";
-                    this.showNotification('top', 'center', errorMessage, '', 'danger');
-                    this.formDesign.forEach((element, index) => {
-                        element.pageGUID = "pageGUID";
-                    });
-                }
-            }
-            else if (this.currentPage.name !== "Page 1") {
                 if (count1 == 0) {
                     if (errorMessage === "Please ensure number ") {
                         this.spinner.show();
@@ -3566,16 +3712,6 @@ export class FormDesignerComponent implements OnInit {
                     });
                     this.showNotification('top', 'center', errorMessage, '', 'danger');
                 }
-            }
-            else {
-                if (errorMessage === "Please ensure number ") {
-                    errorMessage = "Two displayables must be set";
-                    this.formDesign.forEach((element, index) => {
-                        element.pageGUID = "pageGUID";
-                    });
-                    this.showNotification('top', 'center', errorMessage, '', 'danger');
-                }
-            }
         }
         else {
             errorMessage = errorMessage + " form fields have question names,database names on the form before saving";
@@ -3704,7 +3840,7 @@ export class FormDesignerComponent implements OnInit {
                                         this.formData = result;
                                         this.checkStatus();
                                         this.spinner.hide();
-                                        localStorage.setItem('formPreviewDetails',JSON.stringify(this.formData));
+                                        localStorage.setItem('formPreviewDetails', JSON.stringify(this.formData));
                                         const dialogRef = this.dialog.open(FormPreviewComponent, {
                                             width: '85%',
                                             height: '85%',
@@ -3948,33 +4084,40 @@ export class FormDesignerComponent implements OnInit {
         });
     }
 
-    //Remove blank space when pasting field name and and data export name
-    removeBlankSpaceFieldName(atom:any){
-        atom.fieldName=atom.fieldName.replace(/\s/g, "");
+    //auto populate other fields
+    populateNames(item: any) {
+        item.fieldName = item.xmlElementName.replace(/\s/g, "").replace(/[^a-zA-Z0-9]/g, "_").substring(0, 100);
+        item.dataExportName = item.xmlElementName.replace(/\s/g, "").replace(/[^a-zA-Z0-9]/g, "_").substring(0, 100);
+        // item.xmlElementName=item.questionName.replace(/[^a-zA-Z0-9]\s/g, "_").substring(0,100);
     }
 
-    removeBlankSpaceDataExportName(item:any){
-        item.dataExportName=item.dataExportName.replace(/\s/g, "");
+    //Remove blank space when pasting field name and and data export name
+    removeBlankSpaceFieldName(atom: any) {
+        atom.fieldName = atom.fieldName.replace(/\s/g, "");
+    }
+
+    removeBlankSpaceDataExportName(item: any) {
+        item.dataExportName = item.dataExportName.replace(/\s/g, "");
     }
 
     //Date validation
-    validateDateFriendlyName(item:any){
+    validateDateFriendlyName(item: any) {
         // if(item.xmlElementName.toLowerCase()==="date"){
         //     item.xmlElementName=item.xmlElementName.replace(item.xmlElementName, "");
         //     this.showNotification('top', 'center', 'Friendly name cannot be date', '', 'danger');
         // }
     }
 
-    validateDateFieldName(item:any){
-        if(item.fieldName.toLowerCase()==="date"){
-            item.fieldName=item.fieldName.replace(item.fieldName, "");
+    validateDateFieldName(item: any) {
+        if (item.fieldName.toLowerCase() === "date") {
+            item.fieldName = item.fieldName.replace(item.fieldName, "");
             this.showNotification('top', 'center', 'Database name cannot be date', '', 'danger');
         }
     }
 
-    validateDateDataExportName(item:any){
-        if(item.dataExportName.toLowerCase()==="date"){
-            item.dataExportName=item.dataExportName.replace(item.dataExportName, "");
+    validateDateDataExportName(item: any) {
+        if (item.dataExportName.toLowerCase() === "date") {
+            item.dataExportName = item.dataExportName.replace(item.dataExportName, "");
             this.showNotification('top', 'center', 'Data Export Name cannot be date', '', 'danger');
         }
     }
@@ -3986,17 +4129,17 @@ export class FormDesignerComponent implements OnInit {
         //     this.showNotification('top', 'center', 'Friendly name cannot be time', '', 'danger');
         // }
     }
-    
-    validateTimeFieldName(item:any){
-        if(item.fieldName.toLowerCase()==="time"){
-            item.fieldName=item.fieldName.replace(item.fieldName, "");
+
+    validateTimeFieldName(item: any) {
+        if (item.fieldName.toLowerCase() === "time") {
+            item.fieldName = item.fieldName.replace(item.fieldName, "");
             this.showNotification('top', 'center', 'Database name cannot be time', '', 'danger');
         }
     }
 
-    validateTimeDataExportName(item:any){
-        if(item.dataExportName.toLowerCase()==="time"){
-            item.dataExportName=item.dataExportName.replace(item.dataExportName, "");
+    validateTimeDataExportName(item: any) {
+        if (item.dataExportName.toLowerCase() === "time") {
+            item.dataExportName = item.dataExportName.replace(item.dataExportName, "");
             this.showNotification('top', 'center', 'Data Export Name cannot be time', '', 'danger');
         }
     }

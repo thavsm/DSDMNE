@@ -120,6 +120,7 @@ export class AddFormComponent implements OnInit {
 
   //#region Page Methods
   prevPage() {
+    var errorMessage = "Please fill in ";
     let obj = [];
     this.formDesign.forEach(field => {
       if (field.groupGUID !== "" && field.groupGUID !== "string" && field.fieldType.value !== "repeatgroup" && field.fieldType.value === "section" && field.fieldType.value !== "subSection" && field.fieldType.value !== "PageTitle") {
@@ -137,6 +138,9 @@ export class AddFormComponent implements OnInit {
           if (element.groupGUID !== "" && element.groupGUID !== "string" && element.fieldType.value !== "repeatgroup" && element.fieldType.value === "group" && element.fieldType.value !== "subSection" && element.fieldType.value !== "PageTitle") {
             let groupValues = element.groupGUID;
             groupValues.forEach(e => {
+              if(e.fieldValidations[0].isRequired===true && e.data===" "){
+                errorMessage= errorMessage+ e.questionName +",";
+              }
               if (e.parentFieldName === element.groupGUID) {  
                 e.groupGUID = "";      
               }
@@ -148,7 +152,7 @@ export class AddFormComponent implements OnInit {
                   s += listValue.name + ","
                 });
                 e.data = s;
-              }
+              }    
               obj.push(e);
               element.groupGUID = "";
               element.listValue = "";
@@ -156,6 +160,9 @@ export class AddFormComponent implements OnInit {
           }
           else{
             element.groupGUID = "";
+            if(element.fieldValidations[0].isRequired===true && element.data===" "){
+              errorMessage= errorMessage+ element.questionName +",";
+            }  
           }
           obj.push(element);
         });
@@ -163,7 +170,6 @@ export class AddFormComponent implements OnInit {
       else if (field.groupGUID !== "" && field.groupGUID !== "string" && field.fieldType.value !== "repeatgroup" && field.fieldType.value === "group" && field.fieldType.value !== "subSection" && field.fieldType.value !== "PageTitle" && field.parentFieldName==="") {
         let groupValues = field.groupGUID;
         groupValues.forEach(e => {
-          if (e.parentFieldName === field.groupGUID) {
             e.listValue = "";
             if (e.fieldType.value === "lexicon data") {
               let val = e.data;
@@ -174,12 +180,14 @@ export class AddFormComponent implements OnInit {
               e.data = s;
             }
             e.groupGUID = "";
+            if(e.fieldValidations[0].isRequired===true && e.data===" "){
+              errorMessage= errorMessage+ e.questionName +",";
+            }  
             obj.push(e);
-          }
         });
       }
       else {
-        if (field.parentFieldName === "" && field.groupGUID === "string") {
+        if(field.parentFieldName === "" && field.groupGUID === "string") {
           field.listValue = "";
           field.groupGUID = "";
           if (field.fieldType.value === "lexicon data") {
@@ -189,12 +197,16 @@ export class AddFormComponent implements OnInit {
               s += listValue.name + ","
             });
             field.data = s;
-          }
+          }    
           obj.push(field);
         }
+        if(field.fieldValidations[0].isRequired===true && field.data===" "){
+          errorMessage= errorMessage+ field.questionName +","
+       } 
       }
+      
     });
-
+    if(errorMessage === "Please fill in "){
     if (this.formData.state === 'add') {
       this.service.saveFormMetadata(this.formData.formCaptureID, obj).subscribe(res => {
         let pg=this.currentPage.pageNumber;
@@ -259,13 +271,17 @@ export class AddFormComponent implements OnInit {
           }
         });
       });
+    }}
+    else{
+      this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
+      errorMessage = "Please fill in ";
     }
   }
-  
+
   savePage() {
+    var errorMessage = "Please fill in ";
     let obj = [];
-    //var errorMessage = "Please fill in ";
-    
+
     this.formDesign.forEach(field => {
       if (field.groupGUID !== "" && field.groupGUID !== "string" && field.fieldType.value !== "repeatgroup" && field.fieldType.value === "section" && field.fieldType.value !== "subSection" && field.fieldType.value !== "PageTitle") {
         let sectionValues = field.groupGUID;
@@ -282,6 +298,9 @@ export class AddFormComponent implements OnInit {
           if (element.groupGUID !== "" && element.groupGUID !== "string" && element.fieldType.value !== "repeatgroup" && element.fieldType.value === "group" && element.fieldType.value !== "subSection" && element.fieldType.value !== "PageTitle") {
             let groupValues = element.groupGUID;
             groupValues.forEach(e => {
+              if(e.fieldValidations[0].isRequired===true && e.data===" "){
+                errorMessage= errorMessage+ e.questionName +",";
+              }
               if (e.parentFieldName === element.groupGUID) {  
                 e.groupGUID = "";      
               }
@@ -293,10 +312,7 @@ export class AddFormComponent implements OnInit {
                   s += listValue.name + ","
                 });
                 e.data = s;
-              }
-              // if(e.fieldValidations[0].isRequired===true && e.data===""){
-              //   errorMessage= errorMessage+ e.questionName +",";
-              // }      
+              }    
               obj.push(e);
               element.groupGUID = "";
               element.listValue = "";
@@ -304,10 +320,10 @@ export class AddFormComponent implements OnInit {
           }
           else{
             element.groupGUID = "";
+            if(element.fieldValidations[0].isRequired===true && element.data===" "){
+              errorMessage= errorMessage+ element.questionName +",";
+            }  
           }
-          // if(element.fieldValidations[0].isRequired===true && element.data===""){
-          //   errorMessage= errorMessage+ element.questionName +",";
-          // }  
           obj.push(element);
         });
       }
@@ -324,14 +340,14 @@ export class AddFormComponent implements OnInit {
               e.data = s;
             }
             e.groupGUID = "";
-            // if(e.fieldValidations[0].isRequired===true && e.data===""){
-            //   errorMessage= errorMessage+ e.questionName +",";
-            // }  
+            if(e.fieldValidations[0].isRequired===true && e.data===" "){
+              errorMessage= errorMessage+ e.questionName +",";
+            }  
             obj.push(e);
         });
       }
       else {
-        if (field.parentFieldName === "" && field.groupGUID === "string") {
+        if(field.parentFieldName === "" && field.groupGUID === "string") {
           field.listValue = "";
           field.groupGUID = "";
           if (field.fieldType.value === "lexicon data") {
@@ -341,15 +357,17 @@ export class AddFormComponent implements OnInit {
               s += listValue.name + ","
             });
             field.data = s;
-          }
-        //   if(field.fieldValidations[0].isRequired===true && field.data===""){
-        //     errorMessage= errorMessage+ field.questionName +",";
-        //  }     
+          }    
           obj.push(field);
         }
+        if(field.fieldValidations[0].isRequired===true && field.data===" "){
+          errorMessage= errorMessage+ field.questionName +","
+       } 
       }
+      
     });
-    // if(errorMessage === "Please fill in "){
+    
+    if(errorMessage === "Please fill in "){
       if (this.formData.state === 'add') {
         this.service.saveFormMetadata(this.formData.formCaptureID, obj).subscribe(res => {
           let pg=this.currentPage.pageNumber;
@@ -384,11 +402,11 @@ export class AddFormComponent implements OnInit {
           });
         });
       }
-    // }
-    // else{
-    //   this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
-    //   errorMessage = "Please fill in ";
-    // }
+    }
+    else{
+      this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
+      errorMessage = "Please fill in ";
+    }
   }
 
   goToPage(page:any){
@@ -402,6 +420,7 @@ export class AddFormComponent implements OnInit {
   }
 
   nextPage() {
+    var errorMessage = "Please fill in ";
     let obj = [];
     this.formDesign.forEach(field => {
       if (field.groupGUID !== "" && field.groupGUID !== "string" && field.fieldType.value !== "repeatgroup" && field.fieldType.value === "section" && field.fieldType.value !== "subSection" && field.fieldType.value !== "PageTitle") {
@@ -419,6 +438,9 @@ export class AddFormComponent implements OnInit {
           if (element.groupGUID !== "" && element.groupGUID !== "string" && element.fieldType.value !== "repeatgroup" && element.fieldType.value === "group" && element.fieldType.value !== "subSection" && element.fieldType.value !== "PageTitle") {
             let groupValues = element.groupGUID;
             groupValues.forEach(e => {
+              if(e.fieldValidations[0].isRequired===true && e.data===" "){
+                errorMessage= errorMessage+ e.questionName +",";
+              }
               if (e.parentFieldName === element.groupGUID) {  
                 e.groupGUID = "";      
               }
@@ -430,7 +452,7 @@ export class AddFormComponent implements OnInit {
                   s += listValue.name + ","
                 });
                 e.data = s;
-              }
+              }    
               obj.push(e);
               element.groupGUID = "";
               element.listValue = "";
@@ -438,6 +460,9 @@ export class AddFormComponent implements OnInit {
           }
           else{
             element.groupGUID = "";
+            if(element.fieldValidations[0].isRequired===true && element.data===" "){
+              errorMessage= errorMessage+ element.questionName +",";
+            }  
           }
           obj.push(element);
         });
@@ -445,7 +470,6 @@ export class AddFormComponent implements OnInit {
       else if (field.groupGUID !== "" && field.groupGUID !== "string" && field.fieldType.value !== "repeatgroup" && field.fieldType.value === "group" && field.fieldType.value !== "subSection" && field.fieldType.value !== "PageTitle" && field.parentFieldName==="") {
         let groupValues = field.groupGUID;
         groupValues.forEach(e => {
-          if (e.parentFieldName === field.groupGUID) {
             e.listValue = "";
             if (e.fieldType.value === "lexicon data") {
               let val = e.data;
@@ -456,12 +480,14 @@ export class AddFormComponent implements OnInit {
               e.data = s;
             }
             e.groupGUID = "";
+            if(e.fieldValidations[0].isRequired===true && e.data===" "){
+              errorMessage= errorMessage+ e.questionName +",";
+            }  
             obj.push(e);
-          }
         });
       }
       else {
-        if (field.parentFieldName === "" && field.groupGUID === "string") {
+        if(field.parentFieldName === "" && field.groupGUID === "string") {
           field.listValue = "";
           field.groupGUID = "";
           if (field.fieldType.value === "lexicon data") {
@@ -471,12 +497,16 @@ export class AddFormComponent implements OnInit {
               s += listValue.name + ","
             });
             field.data = s;
-          }
+          }    
           obj.push(field);
         }
+        if(field.fieldValidations[0].isRequired===true && field.data===" "){
+          errorMessage= errorMessage+ field.questionName +","
+       } 
       }
+      
     });
-    
+    if(errorMessage === "Please fill in "){
     if (this.formData.state === 'add') {
       this.service.saveFormMetadata(this.formData.formCaptureID, obj).subscribe(res => {
         let pg=this.currentPage.pageNumber;
@@ -500,6 +530,7 @@ export class AddFormComponent implements OnInit {
           });
           if ((index !== -1) && ((index + 1) !== Object.keys(this.pages).length)) {
             this.currentPage = this.pages[index + 1];
+            alert(this.currentPage.name);
             this.pageStatus=this.currentPage.name;
             this.getDesignPerPage(this.currentPage.pageGUID);
           }
@@ -540,6 +571,10 @@ export class AddFormComponent implements OnInit {
           }
         });
       });
+    }}
+    else{
+      this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
+      errorMessage = "Please fill in ";
     }
   }
 
@@ -674,7 +709,7 @@ export class AddFormComponent implements OnInit {
               if (element.fieldType.value === "checkbox") {
                 element["data"] = Boolean(res);
               }
-              else if(element.fieldType.value === "lexicon data"){
+              else if(element.fieldType.value === "link multi select"){
                 element["data"] = this.splitString(res) as Array<string>;
               }
               else{
@@ -706,7 +741,7 @@ export class AddFormComponent implements OnInit {
                         if (field.fieldType.value === "checkbox") {
                           field["data"] = Boolean(JSON.parse(res));
                         }
-                        else if(field.fieldType.value === "lexicon data"){
+                        else if(field.fieldType.value === "link multi select"){
                           field["data"] = this.splitString(res) as Array<string>;
                         }
                         else{
@@ -741,7 +776,7 @@ export class AddFormComponent implements OnInit {
                               if (subField.fieldType.value === "checkbox") {
                                 subField["data"] = Boolean(JSON.parse(res));
                               }
-                              else if(subField.fieldType.value === "lexicon data"){
+                              else if(subField.fieldType.value === "link multi select"){
                                 subField["data"] = this.splitString(res) as Array<string>;
                               }
                               else{
@@ -782,7 +817,7 @@ export class AddFormComponent implements OnInit {
     if (localStorage.getItem('cloneNumberForEdit') === "0") {
       data.forEach(field => {
         field.listValue = "";   
-        if (field.fieldType.value === "lexicon data") {
+        if (field.fieldType.value === "link multi select") {
           let val = field.data;
           let s = "";
           val.forEach(listValue => {
@@ -805,7 +840,7 @@ export class AddFormComponent implements OnInit {
     else {
       data.forEach(field => {
         field.listValue = "";
-        if (field.fieldType.value === "lexicon data") {
+        if (field.fieldType.value === "link multi select") {
           let val = field.data;
           let s = "";
           val.forEach(listValue => {
@@ -1455,7 +1490,7 @@ export class AddFormComponent implements OnInit {
         if (info !== "") {
           var stringArray = info.split(/(\s+)/);
           stringArray.forEach(s => {
-            this.formDesign.forEach(res => {
+            this.formDesign.forEach(res => { 
                 if (('#' + res.fieldName) === s && (res.data !== undefined)) {
                   var re = new RegExp(s, "gi");
                   info = info.replace(re, res.data.toString());

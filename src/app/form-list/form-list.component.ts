@@ -10,6 +10,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import Swal from 'sweetalert2'
 import { merge } from 'jquery';
 import { UserService } from '../shared/user.service';
+import { PageSizeItem } from '@progress/kendo-angular-grid';
 declare var $: any;
 
 @Component({
@@ -21,6 +22,11 @@ export class FormListComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private route: Router, private service: FormbuilderService, private spinner: NgxSpinnerService,public userService: UserService) { }
 
+  public pageSize = 10;
+  public pageSizes: Array<number | PageSizeItem> = [5, 10, 20, {
+    text: 'All',
+    value: 'all'
+     }];
   formAdd: any;
   userDetail:any;
   public displayedColumns = ['displayName', 'formDescription', 'formCategory', 'formDetails', 'update', 'delete'];
@@ -31,6 +37,12 @@ export class FormListComponent implements OnInit {
   ngAfterViewInit() {
     //this.formList.paginator = this.paginator;
   }
+
+
+  public onPageChange(state: any): void {
+    this.pageSize = state.take;
+  }
+
 
   ngOnInit(): void {
     this.refreshFormsList();
@@ -110,10 +122,10 @@ export class FormListComponent implements OnInit {
     const dialogRef = this.dialog.open(FormAddComponent, {
       width: '75%',
       height: '75%',
-      data: this.formAdd,
+      data: [this.formAdd,this.formList],
       disableClose: true
     });
-
+    
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       this.refreshFormsList();
@@ -141,7 +153,7 @@ export class FormListComponent implements OnInit {
     const dialogRef = this.dialog.open(FormAddComponent, {
       width: '75%',
       height: '75%',
-      data: this.formAdd,
+      data: [this.formAdd,this.formList],
       disableClose: true
     });
 

@@ -1,18 +1,25 @@
 <div class="main-content">
     <div class="container-fluid">
-        <div class="container-fluid">
-            <div class="header text-center">
-                <h3 class="title" style="font-weight: bold;">Form Categories</h3>
+      <div class="row">
+        <div class="col-md-12 ml-auto mr-auto">
+          <div class="card">
+            <div class="card-header card-header-rose card-header-icon">
+              <div class="card-icon">
+                <i class="material-icons">category</i>
+              </div>
+              <h4 class="card-title">Form Categories</h4>
             </div>
-            <div class="row">
-                <div class="col-md-12">
+            <div class="card-body p-2">
+              <div class="row">
+                <div class="col">
                     <div style="text-align: left;">
+                        <hr>
                         <button class="btn btn-md btn-primary"   
                             (click)="openDialogAdd()">Add New Category</button>
                     </div>
                     <hr>              
                     <kendo-grid [kendoGridBinding]="formCategoryList" [pageSize]="10" [pageable]="true" [height]="700" 
-                    [filterable]="true" [sortable]="true" [groupable]="true">
+                    [filterable]="true" [sortable]="true" [groupable]="true" (pageChange)="onPageChange($event)">
            
                      <kendo-grid-column field="name" title="Form Category Name" [width]="12">
                      </kendo-grid-column>
@@ -30,12 +37,22 @@
            
                      <kendo-grid-pdf fileName="formCategory.pdf" [repeatHeaders]="true"></kendo-grid-pdf>
                      <!-- <kendo-grid-excel fileName="FormInbox.xlsx"></kendo-grid-excel> -->
+                     <ng-template kendoPagerTemplate let-totalPages="totalPages" let-currentPage="currentPage">
+                      <kendo-pager-prev-buttons></kendo-pager-prev-buttons>             
+                      <kendo-pager-numeric-buttons [buttonCount]="10"></kendo-pager-numeric-buttons>
+                      <kendo-pager-next-buttons></kendo-pager-next-buttons>
+                      <kendo-pager-page-sizes [pageSizes]="pageSizes"></kendo-pager-page-sizes>
+                      <kendo-pager-info></kendo-pager-info>
+                      Current page: {{currentPage}}
+                   </ng-template>
                    </kendo-grid>
                 </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
+  </div>
 <ngx-spinner bdColor="rgba(	237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
     <p style="font-size: 20px; color: black">Processing...</p>
 </ngx-spinner>

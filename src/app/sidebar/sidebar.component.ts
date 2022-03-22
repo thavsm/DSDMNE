@@ -90,13 +90,13 @@ export const ROUTES: RouteInfo[] = [{
         path: '/process',
         title: 'process',
         type: 'link',
-        icontype: 'image',
+        icontype: 'schema',
         role: []
     },{
         path: '/indicator-report',
         title: 'Indicator Approval',
         type: 'link',
-        icontype: 'image',
+        icontype: 'fact_check',
         role: []
     },
     {
@@ -111,6 +111,7 @@ export const ROUTES: RouteInfo[] = [{
             {path: 'formList',title: 'Form Design',ab: 'FD'},   
             { path: 'formCapture', title: 'Form Capture', ab: 'FC' },
             { path: 'formInbox', title: 'Form Inbox', ab: 'FI' },
+            { path: '', title: 'Form Tasks', ab: 'FT' },
         ]
     },
     {

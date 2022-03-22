@@ -9,12 +9,11 @@ import { environment } from 'src/environments/environment';
 })
 export class FormbuilderService {
 
-   readonly APIUrl='https://localhost:44305/1/';
+   //readonly APIUrl='https://localhost:44305/1/';
    //readonly APIUrl='https://app.terra.group/DSDFormWeb/1/';
-   //readonly APIUrl = environment.API_FormURL;
+   readonly APIUrl = environment.API_FormURL;
 
   constructor(private http:HttpClient) { }
-
 //#region Forms
 
   getDynamicFormList():Observable<any[]>{

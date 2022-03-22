@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { PageSizeItem } from '@progress/kendo-angular-grid';
 import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
 import { FormbuilderService } from '../shared/formbuilder.service';
@@ -17,6 +18,13 @@ export class FormCategoryComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private route: Router, private service: FormbuilderService, private spinner: NgxSpinnerService) { }
 
+  public pageSize = 10;
+  public pageSizes: Array<number | PageSizeItem> = [5, 10, 20, {
+    text: 'All',
+    value: 'all'
+     }];
+     
+
   formCategory: any;
   public displayedColumns = ['name', 'description', 'update'];
   public formCategoryList: any[];
@@ -26,6 +34,11 @@ export class FormCategoryComponent implements OnInit {
   ngAfterViewInit() {
     // this.formCategoryList.paginator = this.paginator;
   }
+
+  public onPageChange(state: any): void {
+    this.pageSize = state.take;
+  }
+
 
   ngOnInit(): void {
     this.refreshFormsList();
