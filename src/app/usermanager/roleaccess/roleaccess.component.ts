@@ -31,17 +31,22 @@ export class RoleaccessComponent implements OnInit {
 
   formID: number = 0;
   frole: FormRole;
+  fvrole: FormRole;
+  fcrole: FormRole;
   froles:any = [];
+  cvrole: roleItem;
 
   trole: TypeRole;
   typeroles:any = [];
+
+  checksloaded = false;
 
   constructor(private service: UserService, @Inject(MAT_DIALOG_DATA) data) { 
     this.roleAdd = data;
   }
 
   public displayedColumns = ['menu', 'select'];
-  public displayedFormColumns = ['form', 'select'];
+  public displayedFormColumns = ['form', 'capture', 'view'];
   public displayedRoleColumns = ['role', 'select'];
   public menuList = new MatTableDataSource<any>();
   public formList = new MatTableDataSource<any>();
@@ -49,6 +54,9 @@ export class RoleaccessComponent implements OnInit {
   selection = new SelectionModel<roleItem>(true, []);
   selectionForms = new SelectionModel<roleItem>(true, []);
   selectionRole = new SelectionModel<roleItem>(true, []);
+
+  selectionCaptureForms = new SelectionModel<roleItem>(true, []);
+  selectionViewForms = new SelectionModel<roleItem>(true, []);
   
 
   @ViewChild('menuPaginator', {read:MatPaginator}) paginator: MatPaginator;
@@ -69,7 +77,10 @@ export class RoleaccessComponent implements OnInit {
   }
 
   ngDoCheck(): void{
-    this.checkAll();
+    if(!this.checksloaded)
+      this.checkAll();
+    else
+      this.checksloaded = true;
   }
 
   
@@ -88,6 +99,8 @@ export class RoleaccessComponent implements OnInit {
     this.service.getTypeRoles(this.roleID).subscribe(data => {
       this.roleList.data = data;
     });
+
+    //this.checkAll();
     
   }
 
@@ -99,8 +112,13 @@ export class RoleaccessComponent implements OnInit {
     });
 
     this.formList.data.forEach(row => {
-      if(row.checked)
-      this.selectionForms.select(row);
+      // if(row.checked)
+      // this.selectionForms.select(row);
+      if(row.capture)
+      this.selectionCaptureForms.select(row);
+
+      if(row.view)
+      this.selectionViewForms.select(row);
     });
 
     
@@ -191,13 +209,42 @@ export class RoleaccessComponent implements OnInit {
   addRoleAccess()
   {
 
+    // this.froles = [];
+    // this.selectionForms.selected.forEach(row => {
+    //   this.frole = new FormRole();      
+    //   this.frole.formID = row.id;
+    //   this.frole.roleID = this.roleID;
+    //   this.frole.uid = 0;
+    //   this.froles.push(this.frole);
+    // });
+
     this.froles = [];
-    this.selectionForms.selected.forEach(row => {
+    this.selectionCaptureForms.selected.forEach(row => {
       this.frole = new FormRole();      
       this.frole.formID = row.id;
       this.frole.roleID = this.roleID;
       this.frole.uid = 0;
+      this.frole.capture = true;
+      this.frole.view = false;
       this.froles.push(this.frole);
+    });
+
+    this.selectionViewForms.selected.forEach(row => {
+      this.fcrole = new FormRole();
+      this.fcrole = this.froles.find(element => element.formID == row.id);
+          
+      if(this.fcrole != null){
+        this.froles.find(element => element.formID == row.id).view = true;
+      }
+      else{
+        this.fvrole = new FormRole();
+        this.fvrole.formID = row.id;
+        this.fvrole.roleID = this.roleID;
+        this.fvrole.uid = 0;
+        this.fvrole.view = true;
+        this.fvrole.capture = false;
+        this.froles.push(this.fvrole);
+      }      
     });
 
     this.service.addFormRoles(this.froles).subscribe(
