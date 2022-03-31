@@ -16,7 +16,7 @@
                             <div class="col-md-6">
                                 <mat-form-field appearance="standard">
                                     <mat-label>Surname</mat-label>
-                                    <input matInput [value]="formData['surname']" (input)="updateFormData()">
+                                    <input matInput [(ngModel)]="formData['surname']" (input)="updateFormData()">
                                 </mat-form-field>
                             </div>
                             <div class="col-md-6">
@@ -81,7 +81,14 @@
                                     </mat-select>
                                 </mat-form-field>
                             </div>     
-                            <div class="col-md-6"></div>                                              
+                            <div class="col-md-6">
+                                <mat-form-field appearance="standard">
+                                    <mat-label>Active</mat-label>                                                                        
+                                    <!-- <input matInput type="checkbox" [value]="formData['active']" (input)="updateFormData()"> -->
+                                    <input matInput [hidden]="true" [(ngModel)]="formData['active']">
+                                    <mat-checkbox class="ml-3" [(ngModel)]="formData['active']"  (input)="updateFormData()"></mat-checkbox>
+                                </mat-form-field>
+                            </div>                                              
                             <!-- <div class="col-md-6">
                                 <mat-form-field appearance="standard">
                                     <mat-label>Employee Number</mat-label>

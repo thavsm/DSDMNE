@@ -72,11 +72,11 @@
                                                 
                                       <!-- Checkbox Column -->
                                       <ng-container matColumnDef="select">
-                                          <th mat-header-cell *matHeaderCellDef>
-                                          <mat-checkbox (change)="$event ? masterToggle() : null"
-                                                          [checked]="selectionForms.hasValue() && isAllSelected()"
-                                                          [indeterminate]="selectionForms.hasValue() && !isAllSelected()">
-                                          </mat-checkbox>
+                                          <th mat-header-cell *matHeaderCellDef>                                        
+                                          <mat-checkbox (change)="$event ? masterToggleForms() : null"
+                                                          [checked]="selectionForms.hasValue() && isAllFormsSelected()"
+                                                          [indeterminate]="selectionForms.hasValue() && !isAllFormsSelected()">
+                                          </mat-checkbox>                                          
                                           </th>
                                           <td mat-cell *matCellDef="let row">
                                           <mat-checkbox (click)="$event.stopPropagation()"
@@ -109,9 +109,9 @@
                                       <!-- Checkbox Column -->
                                       <ng-container matColumnDef="select">
                                           <th mat-header-cell *matHeaderCellDef>
-                                          <mat-checkbox (change)="$event ? masterToggle() : null"
-                                                          [checked]="selectionRole.hasValue() && isAllSelected()"
-                                                          [indeterminate]="selectionRole.hasValue() && !isAllSelected()">
+                                          <mat-checkbox (change)="$event ? masterToggleRoles2() : null"
+                                                          [checked]="selectionRole.hasValue() && isAllRoleTypesSelected()"
+                                                          [indeterminate]="selectionRole.hasValue() && !isAllRoleTypesSelected()">
                                           </mat-checkbox>
                                           </th>
                                           <td mat-cell *matCellDef="let row">

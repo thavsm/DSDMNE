@@ -117,12 +117,48 @@ export class RoleaccessComponent implements OnInit {
     return numSelected === numRows;
   }
 
+  isAllFormsSelected() {
+    const numSelected = this.selectionForms.selected.length;
+    const numRows = this.formList.data.length;
+    return numSelected === numRows;
+  }
+
+  isAllRoleTypesSelected() {
+    const numSelected = this.selectionRole.selected.length;
+    const numRows = this.roleList.data.length;
+    return numSelected === numRows;
+  }
+
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     this.isAllSelected() ?
         this.selection.clear() :
         this.menuList.data.forEach(row => this.selection.select(row));
   }
+
+  masterToggleForms() {
+    this.isAllFormsSelected() ?
+        this.selectionForms.clear() :
+        this.formList.data.forEach(row => this.selectionForms.select(row));
+  }
+
+  masterToggleRoles() {
+    this.isAllRoleTypesSelected() ?
+        this.selectionRole.clear():
+        this.roleList.data.forEach(row => this.selectionRole.select(row));
+  }
+
+  masterToggleRoles2() {
+    if(this.isAllRoleTypesSelected()) {
+        this.selectionRole.clear();
+        this.roleList.data.forEach(row => row.checked = false);
+      }
+        else
+        {
+        this.roleList.data.forEach(row => this.selectionRole.select(row));
+        }
+      }
+      
 
   showNotification(from: any, align: any, message: any, title: any, type: string) {
 
