@@ -14,7 +14,6 @@ export class FormbuilderService {
    readonly APIUrl = environment.API_FormURL;
 
   constructor(private http:HttpClient) { }
-
 //#region Forms
 
   getDynamicFormList():Observable<any[]>{

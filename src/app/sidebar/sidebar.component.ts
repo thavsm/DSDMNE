@@ -111,6 +111,7 @@ export const ROUTES: RouteInfo[] = [{
             {path: 'formList',title: 'Form Design',ab: 'FD'},   
             { path: 'formCapture', title: 'Form Capture', ab: 'FC' },
             { path: 'formInbox', title: 'Form Inbox', ab: 'FI' },
+            { path: '', title: 'Form Tasks', ab: 'FT' },
         ]
     },
     {

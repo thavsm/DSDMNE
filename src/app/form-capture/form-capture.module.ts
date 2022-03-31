@@ -31,6 +31,7 @@ import { InputsModule } from "@progress/kendo-angular-inputs";
 import { GridModule } from "@progress/kendo-angular-grid";
 import { ButtonsModule } from "@progress/kendo-angular-buttons";
 import {PDFModule,ExcelModule,} from "@progress/kendo-angular-grid";
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import {PDFModule,ExcelModule,} from "@progress/kendo-angular-grid";
     MatDatepickerModule,
     MatFormFieldModule,
     MatButtonToggleModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatTooltipModule
 
   ], exports: [ MatFormFieldModule, MatInputModule ]
 })
