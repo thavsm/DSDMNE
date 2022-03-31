@@ -4,12 +4,8 @@
 
 export const environment = {
   production: false,
-<<<<<<< HEAD
   API_URL: 'https://localhost:44305/api',
-=======
-  API_URL: 'https://app.terra.group/MNE_Demo_API/api',
   //API_FormURL: 'https://app.terra.group/MNE_Demo_API/api/1'
->>>>>>> 131ed6d8dbe2b4f64ed351f7bfb210fc0f4784cf
   API_FormURL: 'https://localhost:44305/1/'
 };
 
