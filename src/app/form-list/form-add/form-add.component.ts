@@ -6,6 +6,7 @@ import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
 import { merge } from 'jquery';
 import { GlobalConstants } from 'src/app/shared/global-constants';
+import { UserService } from 'src/app/shared/user.service';
 declare var $: any;
 
 @Component({
@@ -23,8 +24,7 @@ export class FormAddComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<FormAddComponent>,
     @Inject(MAT_DIALOG_DATA) data,
-    private service: FormbuilderService, public formBuilder: FormBuilder, private spinner: NgxSpinnerService
-  ) {
+    private service: FormbuilderService, public formBuilder: FormBuilder, private spinner: NgxSpinnerService,private userService: UserService) {
     this.formAdd = data[0];
     this.formlist = data[1];
   }
@@ -42,6 +42,9 @@ export class FormAddComponent implements OnInit {
   dateLocked: string = "";
   dateLastModified: string = "";
   lastModifiedByUserID: string = "";
+  userDetail: any;
+  DateArchived: string = "";
+  ArchivedByUserID: string = "";
 
   ngOnInit(): void {
     this.formID = this.formAdd.formID;
@@ -57,7 +60,18 @@ export class FormAddComponent implements OnInit {
     this.dateLocked = this.formAdd.dateLocked;
     this.dateLastModified = this.formAdd.dateLastModified;
     this.lastModifiedByUserID = this.formAdd.lastModifiedByUserID;
-    this.getformCategories();
+    this.DateArchived=this.formAdd.DateArchived;
+    this.ArchivedByUserID=this.formAdd.ArchivedByUserID;
+    this.userService.getUserProfile().subscribe(
+      res => {
+        this.userDetail = res;
+        this.getformCategories();
+      },
+      err => {
+        console.log(err);
+        this.getformCategories();
+      },
+    );
   }
 
   // group = new FormGroup({
@@ -80,7 +94,7 @@ export class FormAddComponent implements OnInit {
           "displayName": this.formAdd.displayName,
           "formDescription": this.formAdd.formDescription,
           "dateCreated": "2021-11-30T11:28:23.351Z",
-          "createdByUserID": 0,
+          "createdByUserID": this.userDetail.formData.userID,
           "isLocked": false,
           "lockedByUserID": 0,
           "isDeleted": false,
@@ -169,7 +183,8 @@ export class FormAddComponent implements OnInit {
                 "isRequired": false,
                 "isHidden": false,
               }
-            ]
+            ],
+            "isPublished":-1
           }]
           this.service.addFormPage(pageVal).subscribe(result => {
             this.service.addFieldPerPage(pageField, JSON.parse(JSON.stringify(res)).formID, JSON.parse(JSON.stringify(result)).pageGUID).subscribe(val => {
@@ -223,7 +238,7 @@ export class FormAddComponent implements OnInit {
         isDeleted: this.formAdd.isDeleted,
         dateLocked: this.formAdd.dateLocked,
         dateLastModified: this.formAdd.dateLastModified,
-        lastModifiedByUserID: this.formAdd.lastModifiedByUserID
+        lastModifiedByUserID: this.userDetail.formData.userID
       };
       this.spinner.show();
       this.service.updateDynamicFormDetails(this.formAdd.formID, val).subscribe(res => {
@@ -247,13 +262,13 @@ export class FormAddComponent implements OnInit {
   }
 
   checkForDuplicate(name: any): boolean {
-    let isDuplicate: boolean = false;
+    let count=0;
     this.formlist.forEach(element => {
-      if (element.displayName === name) {
-        isDuplicate = true;
+      if (element.formName === name.replace(/[^a-zA-Z0-9]/g, '')) {
+        count++;
       }
     });
-    return isDuplicate;
+    return (count>=1?true:false);
   }
 
   showNotification(from: any, align: any, message: any, title: any, type: string) {

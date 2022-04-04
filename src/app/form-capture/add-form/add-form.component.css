@@ -114,6 +114,13 @@
         height: 58px !important;
         border-radius: 5px !important;
       }
+
+      ::ng-deep .mat-tab-body-content {
+        height: 100% !important;
+       overflow-x: hidden !important;
+       overflow-y: auto !important;
+      }
+
 /* 
       ::ng-deep .mat-select-panel .custom_hover.mat-option.mat-selected:not(.mat-option-multiple) {
         background: #fff;

@@ -16,6 +16,8 @@
                   [sortable]="true" [groupable]="true" [resizable]="true"  (pageChange)="onPageChange($event)">
         
                   <ng-template kendoGridToolbarTemplate>
+                    <h5>Select a form to filter by:</h5>
+                    <br>
                     <mat-form-field appearance="outline" style="width: 500px;">
                       <mat-label>Select a form</mat-label>
                       <mat-select>

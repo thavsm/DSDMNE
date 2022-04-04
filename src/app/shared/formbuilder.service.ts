@@ -9,9 +9,9 @@ import { environment } from 'src/environments/environment';
 })
 export class FormbuilderService {
 
-   //readonly APIUrl='https://localhost:44305/1/';
-   //readonly APIUrl='https://app.terra.group/DSDFormWeb/1/';
-   readonly APIUrl = environment.API_FormURL;
+   readonly APIUrl='https://localhost:44305/1/';
+  //readonly APIUrl='https://app.terra.group/DSDFormWeb/1/';
+  // readonly APIUrl = environment.API_FormURL;
 
   constructor(private http:HttpClient) { }
 //#region Forms
@@ -28,8 +28,8 @@ export class FormbuilderService {
     return this.http.put(this.APIUrl+'forms/'+formID,data);
   }
 
-  archiveDynamicForm(formID:any){
-    return this.http.delete(this.APIUrl+'forms/'+formID+'/archive');
+  archiveDynamicForm(formID:any,userID:any){
+    return this.http.delete(this.APIUrl+'forms/'+formID+'/'+userID+'/archive');
   }
 
   getFormPages(formID:any):Observable<any[]>{
@@ -244,5 +244,12 @@ export class FormbuilderService {
     return this.http.get(this.APIUrl + fieldName +'/' + formCaptureID +'/PhotoCount',{responseType: 'text'})
   }
 
+  getFormCommentCount(fieldName:any,formCaptureID:any){
+    return this.http.get(this.APIUrl + fieldName +'/' + formCaptureID +'/CommentCount',{responseType: 'text'})
+  }
+
+  DeleteFormCategory(formCategoryID:any){
+    return this.http.delete(this.APIUrl+formCategoryID+'/FormCategory',{responseType: 'text'});
+  }
 //#endregion
 }

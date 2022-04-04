@@ -86,6 +86,7 @@ export class FormDesignerComponent implements OnInit {
             "hasPhoto": false,
             "hasAttachment": false,
             "hasComment": false,
+            "isPublished": -1,
             "fieldType": {
                 "fieldTypeID": 22,
                 "displayName": "Alpha Numeric",
@@ -160,6 +161,7 @@ export class FormDesignerComponent implements OnInit {
             "hasPhoto": false,
             "hasAttachment": false,
             "hasComment": false,
+            "isPublished": -1,
             "fieldType": {
                 "fieldTypeID": 15,
                 "displayName": "Calculated Value",
@@ -234,6 +236,7 @@ export class FormDesignerComponent implements OnInit {
             "hasPhoto": false,
             "hasAttachment": false,
             "hasComment": false,
+            "isPublished": -1,
             "fieldType": {
                 "fieldTypeID": 14,
                 "displayName": "Checkbox",
@@ -309,6 +312,7 @@ export class FormDesignerComponent implements OnInit {
             "hasPhoto": false,
             "hasAttachment": false,
             "hasComment": false,
+            "isPublished": -1,
             "fieldType": {
                 "fieldTypeID": 13,
                 "displayName": "Date",
@@ -384,6 +388,7 @@ export class FormDesignerComponent implements OnInit {
             "hasPhoto": false,
             "hasAttachment": false,
             "hasComment": false,
+            "isPublished": -1,
             "fieldType": {
                 "fieldTypeID": 29,
                 "displayName": "Decimal",
@@ -458,6 +463,7 @@ export class FormDesignerComponent implements OnInit {
             "hasPhoto": false,
             "hasAttachment": false,
             "hasComment": false,
+            "isPublished": -1,
             "fieldType": {
                 "fieldTypeID": 30,
                 "displayName": "Drawing Area",
@@ -532,6 +538,7 @@ export class FormDesignerComponent implements OnInit {
             "hasPhoto": false,
             "hasAttachment": false,
             "hasComment": false,
+            "isPublished": -1,
             "fieldType": {
                 "fieldTypeID": 24,
                 "displayName": "Email Address",
@@ -606,6 +613,7 @@ export class FormDesignerComponent implements OnInit {
             "hasPhoto": false,
             "hasAttachment": false,
             "hasComment": false,
+            "isPublished": -1,
             "fieldType": {
                 "fieldTypeID": 31,
                 "displayName": "Information",
@@ -681,6 +689,7 @@ export class FormDesignerComponent implements OnInit {
             "hasPhoto": false,
             "hasAttachment": false,
             "hasComment": false,
+            "isPublished": -1,
             "fieldType": {
                 "fieldTypeID": 9,
                 "displayName": "Number",
@@ -756,6 +765,7 @@ export class FormDesignerComponent implements OnInit {
             "hasPhoto": false,
             "hasAttachment": false,
             "hasComment": false,
+            "isPublished": -1,
             "fieldType": {
                 "fieldTypeID": 27,
                 "displayName": "Plain Alpha",
@@ -831,6 +841,7 @@ export class FormDesignerComponent implements OnInit {
             "hasPhoto": false,
             "hasAttachment": false,
             "hasComment": false,
+            "isPublished": -1,
             "fieldType": {
                 "fieldTypeID": 4,
                 "displayName": "Plain Text",
@@ -906,6 +917,7 @@ export class FormDesignerComponent implements OnInit {
             "hasPhoto": false,
             "hasAttachment": false,
             "hasComment": false,
+            "isPublished": -1,
             "fieldType": {
                 "fieldTypeID": 32,
                 "displayName": "Question Group",
@@ -979,6 +991,7 @@ export class FormDesignerComponent implements OnInit {
             "hasPhoto": false,
             "hasAttachment": false,
             "hasComment": false,
+            "isPublished": -1,
             "fieldType": {
                 "fieldTypeID": 8,
                 "displayName": "Radio Button",
@@ -1054,6 +1067,7 @@ export class FormDesignerComponent implements OnInit {
             "hasPhoto": false,
             "hasAttachment": false,
             "hasComment": false,
+            "isPublished": -1,
             "fieldType": {
                 "fieldTypeID": 7,
                 "displayName": "Repeat Group",
@@ -1128,6 +1142,7 @@ export class FormDesignerComponent implements OnInit {
             "hasPhoto": false,
             "hasAttachment": false,
             "hasComment": false,
+            "isPublished": -1,
             "fieldType": {
                 "fieldTypeID": 7,
                 "displayName": "Section",
@@ -1202,6 +1217,7 @@ export class FormDesignerComponent implements OnInit {
             "hasPhoto": false,
             "hasAttachment": false,
             "hasComment": false,
+            "isPublished": -1,
             "fieldType": {
                 "fieldTypeID": 5,
                 "displayName": "Select - Single",
@@ -1276,6 +1292,7 @@ export class FormDesignerComponent implements OnInit {
             "hasPhoto": false,
             "hasAttachment": false,
             "hasComment": false,
+            "isPublished": -1,
             "fieldType": {
                 "fieldTypeID": 5,
                 "displayName": "Select - Multiple",
@@ -1350,6 +1367,7 @@ export class FormDesignerComponent implements OnInit {
             "hasPhoto": false,
             "hasAttachment": false,
             "hasComment": false,
+            "isPublished": -1,
             "fieldType": {
                 "fieldTypeID": 28,
                 "displayName": "Signature",
@@ -1424,6 +1442,7 @@ export class FormDesignerComponent implements OnInit {
             "hasPhoto": false,
             "hasAttachment": false,
             "hasComment": false,
+            "isPublished": -1,
             "fieldType": {
                 "fieldTypeID": 7,
                 "displayName": "Sub Section",
@@ -1499,6 +1518,7 @@ export class FormDesignerComponent implements OnInit {
             "hasPhoto": false,
             "hasAttachment": false,
             "hasComment": false,
+            "isPublished": -1,
             "fieldType": {
                 "fieldTypeID": 23,
                 "displayName": "Time",
@@ -1659,7 +1679,7 @@ export class FormDesignerComponent implements OnInit {
 
     removeField(i: any) {
         Swal.fire({
-            title: 'Are you sure want to delete this field?',
+            title: "<h5 style='color:white;font-weight:400'> Are you sure want to remove this field? </h5>",
             showCancelButton: true,
             confirmButtonText: 'Yes',
             cancelButtonText: 'No',
@@ -1668,7 +1688,7 @@ export class FormDesignerComponent implements OnInit {
             allowOutsideClick: false,
             confirmButtonColor: '#000000',
             cancelButtonColor: '#000000',
-            background: '#ffcccb'
+            background: '#CA0B00'
         }).then((result) => {
             if (result.value) {
                 if (i > -1) {
@@ -1692,7 +1712,7 @@ export class FormDesignerComponent implements OnInit {
     }
 
     publishPage() {
-        if(this.currentPage.name=="Page 1"){
+        if (this.currentPage.name == "Page 1") {
             var count = 0;
             this.formDesign.forEach((element, index) => {
                 if (element.isDisplayable !== false && this.currentPage.name == "Page 1") {
@@ -1700,29 +1720,80 @@ export class FormDesignerComponent implements OnInit {
                 }
             });
             this.spinner.show();
-            if(count==2)
-            {
-                this.service.PublishForm(this.formData.formID).subscribe(res => {
-                    this.formData.publishStatus = 1;
-                    this.service.updateDynamicFormDetails(this.formData.formID, this.formData).subscribe(result => {
-                        this.formData = result;
-                        this.checkStatus();
-                        if (res === "Form published Successfully!") {
-                            this.showNotification('top', 'center', res, '', 'success');
-                            this.spinner.hide();
-                        }
-                        else {
-                            this.showNotification('top', 'center', res, '', 'danger');
-                        }
-                    })
+            if (count == 2) {
+                var errorMessage = "Please ensure number ";
+                var count2 = 0;
+                var count1 = 0;
+                let hasDuplicates: Boolean = false;
+                this.formDesign.forEach((element, index) => {
+                    element.isPublished = 1;
+                    if (element.isDisplayable !== false && this.currentPage.name == "Page 1") {
+                        count2++;
+                    }
+
+                    if (element.questionName === "" || element.fieldName === "" || element.questionName === (index + 1)) {
+                        errorMessage = errorMessage + (index + 1) + ",";
+                    }
+
+                    hasDuplicates = this.checkForDuplicates(element.fieldName);
+                    if (hasDuplicates == true) {
+                        count1++
+                    }
+                    element.pageGUID = this.currentPage.pageGUID;
+                    element.formPage.name = this.currentPage.name;
                 });
+
+                if (errorMessage === "Please ensure number ") {
+                    if (count1 == 0) {
+                        if (errorMessage === "Please ensure number ") {
+                            this.spinner.show();
+                            this.service.addFieldPerPage(this.formDesign, this.formData.formID, this.currentPage.pageGUID).subscribe(data => {
+                                this.service.updateDynamicFormDetails(this.formData.formID, this.formData).subscribe(result => {
+                                    this.service.PublishForm(this.formData.formID).subscribe(res => {
+                                        this.formData.publishStatus = 1;
+                                        this.service.updateDynamicFormDetails(this.formData.formID, this.formData).subscribe(result => {
+                                            this.formData = result;
+                                            this.checkStatus();
+                                            if (res === "Form published Successfully!") {
+                                                this.getDesignPerPage(this.currentPage.pageGUID);
+                                                this.refreshGroupSectionList();
+                                                this.showNotification('top', 'center', res, '', 'success');
+                                                this.spinner.hide();
+                                            }
+                                            else {
+                                                this.showNotification('top', 'center', res, '', 'danger');
+                                            }
+                                        })
+                                    });
+                                });
+                            }, error => {
+                                this.showNotification('top', 'center', 'Error publishing form, please try again', '', 'danger');
+                                this.spinner.hide();
+                            });
+                        }
+                    }
+                    else {
+                        errorMessage = "Database name must be unique";
+                        this.formDesign.forEach((element, index) => {
+                            element.pageGUID = "pageGUID";
+                        });
+                        this.showNotification('top', 'center', errorMessage, '', 'danger');
+                    }
+                }
+                else {
+                    errorMessage = errorMessage + " form fields have question names,database names on the form before saving";
+                    this.formDesign.forEach((element, index) => {
+                        element.pageGUID = "pageGUID";
+                    });
+                    this.showNotification('top', 'center', errorMessage, '', 'danger');
+                }
             }
-            else{
+            else {
                 this.showNotification('top', 'center', 'Please set two displayables before publishing the form', '', 'danger');
                 this.spinner.hide();
             }
         }
-        else{
+        else {
             this.showNotification('top', 'center', "The form can only be published from page 1", '', 'danger');
             this.spinner.hide();
         }
@@ -1805,7 +1876,7 @@ export class FormDesignerComponent implements OnInit {
                                     this.formData.publishStatus = 0;
                                     this.service.updateDynamicFormDetails(this.formData.formID, this.formData).subscribe(result => {
                                         this.formData = result;
-                                        //this.checkStatus();
+                                        this.checkStatus();
                                         this.formDesign = [];
                                         this.getDesignPerPage(page.pageGUID);
                                         this.currentPage = page;
@@ -1962,7 +2033,7 @@ export class FormDesignerComponent implements OnInit {
     removePage(i: any, page: any) {
         if (i + 1 !== 1) {
             Swal.fire({
-                title: 'Are you sure you want to delete ' + page.name + ' and its fields?',
+                title: "<h5 style='color:white;font-weight:400'> Are you sure you want to delete " + page.name + " and its fields?</h5>",
                 showCancelButton: true,
                 confirmButtonText: 'Yes',
                 cancelButtonText: 'No',
@@ -1971,7 +2042,7 @@ export class FormDesignerComponent implements OnInit {
                 allowOutsideClick: false,
                 confirmButtonColor: '#000000',
                 cancelButtonColor: '#000000',
-                background: '#ffcccb'
+                background: '#CA0B00'
             }).then((result) => {
                 if (result.value) {
                     this.spinner.show();
@@ -2035,6 +2106,7 @@ export class FormDesignerComponent implements OnInit {
                         "hasPhoto": false,
                         "hasAttachment": false,
                         "hasComment": false,
+                        "isPublished": -1,
                         "fieldType": {
                             "fieldTypeID": 22,
                             "displayName": "Alpha Numeric",
@@ -2109,6 +2181,7 @@ export class FormDesignerComponent implements OnInit {
                         "hasPhoto": false,
                         "hasAttachment": false,
                         "hasComment": false,
+                        "isPublished": -1,
                         "fieldType": {
                             "fieldTypeID": 15,
                             "displayName": "Calculated Value",
@@ -2183,13 +2256,14 @@ export class FormDesignerComponent implements OnInit {
                         "hasPhoto": false,
                         "hasAttachment": false,
                         "hasComment": false,
+                        "isPublished": -1,
                         "fieldType": {
                             "fieldTypeID": 14,
                             "displayName": "Checkbox",
                             "description": "check_box",
                             "value": "checkbox"
                         },
-            
+
                         "formPage": {
                             "pageGUID": "string",
                             "name": "string",
@@ -2258,13 +2332,14 @@ export class FormDesignerComponent implements OnInit {
                         "hasPhoto": false,
                         "hasAttachment": false,
                         "hasComment": false,
+                        "isPublished": -1,
                         "fieldType": {
                             "fieldTypeID": 13,
                             "displayName": "Date",
                             "description": "date_range",
                             "value": "date"
                         },
-            
+
                         "formPage": {
                             "pageGUID": "string",
                             "name": "string",
@@ -2333,6 +2408,7 @@ export class FormDesignerComponent implements OnInit {
                         "hasPhoto": false,
                         "hasAttachment": false,
                         "hasComment": false,
+                        "isPublished": -1,
                         "fieldType": {
                             "fieldTypeID": 29,
                             "displayName": "Decimal",
@@ -2407,6 +2483,7 @@ export class FormDesignerComponent implements OnInit {
                         "hasPhoto": false,
                         "hasAttachment": false,
                         "hasComment": false,
+                        "isPublished": -1,
                         "fieldType": {
                             "fieldTypeID": 30,
                             "displayName": "Drawing Area",
@@ -2481,6 +2558,7 @@ export class FormDesignerComponent implements OnInit {
                         "hasPhoto": false,
                         "hasAttachment": false,
                         "hasComment": false,
+                        "isPublished": -1,
                         "fieldType": {
                             "fieldTypeID": 24,
                             "displayName": "Email Address",
@@ -2555,13 +2633,14 @@ export class FormDesignerComponent implements OnInit {
                         "hasPhoto": false,
                         "hasAttachment": false,
                         "hasComment": false,
+                        "isPublished": -1,
                         "fieldType": {
                             "fieldTypeID": 31,
                             "displayName": "Information",
                             "description": "info",
                             "value": "information"
                         },
-            
+
                         "formPage": {
                             "pageGUID": "string",
                             "name": "string",
@@ -2630,13 +2709,14 @@ export class FormDesignerComponent implements OnInit {
                         "hasPhoto": false,
                         "hasAttachment": false,
                         "hasComment": false,
+                        "isPublished": -1,
                         "fieldType": {
                             "fieldTypeID": 9,
                             "displayName": "Number",
                             "description": "numbers",
                             "value": "number"
                         },
-            
+
                         "formPage": {
                             "pageGUID": "string",
                             "name": "string",
@@ -2705,13 +2785,14 @@ export class FormDesignerComponent implements OnInit {
                         "hasPhoto": false,
                         "hasAttachment": false,
                         "hasComment": false,
+                        "isPublished": -1,
                         "fieldType": {
                             "fieldTypeID": 27,
                             "displayName": "Plain Alpha",
                             "description": "title",
                             "value": "plainalpha"
                         },
-            
+
                         "formPage": {
                             "pageGUID": "string",
                             "name": "string",
@@ -2780,13 +2861,14 @@ export class FormDesignerComponent implements OnInit {
                         "hasPhoto": false,
                         "hasAttachment": false,
                         "hasComment": false,
+                        "isPublished": -1,
                         "fieldType": {
                             "fieldTypeID": 4,
                             "displayName": "Plain Text",
                             "description": "text_fields",
                             "value": "plaintext"
                         },
-            
+
                         "formPage": {
                             "pageGUID": "string",
                             "name": "string",
@@ -2855,6 +2937,7 @@ export class FormDesignerComponent implements OnInit {
                         "hasPhoto": false,
                         "hasAttachment": false,
                         "hasComment": false,
+                        "isPublished": -1,
                         "fieldType": {
                             "fieldTypeID": 32,
                             "displayName": "Question Group",
@@ -2928,13 +3011,14 @@ export class FormDesignerComponent implements OnInit {
                         "hasPhoto": false,
                         "hasAttachment": false,
                         "hasComment": false,
+                        "isPublished": -1,
                         "fieldType": {
                             "fieldTypeID": 8,
                             "displayName": "Radio Button",
                             "description": "radio_button_checked",
                             "value": "field or"
                         },
-            
+
                         "formPage": {
                             "pageGUID": "string",
                             "name": "string",
@@ -3003,13 +3087,14 @@ export class FormDesignerComponent implements OnInit {
                         "hasPhoto": false,
                         "hasAttachment": false,
                         "hasComment": false,
+                        "isPublished": -1,
                         "fieldType": {
                             "fieldTypeID": 7,
                             "displayName": "Repeat Group",
                             "description": "repeat_on",
                             "value": "repeatgroup"
                         },
-            
+
                         "formPage": {
                             "pageGUID": "string",
                             "name": "string",
@@ -3077,13 +3162,14 @@ export class FormDesignerComponent implements OnInit {
                         "hasPhoto": false,
                         "hasAttachment": false,
                         "hasComment": false,
+                        "isPublished": -1,
                         "fieldType": {
                             "fieldTypeID": 7,
                             "displayName": "Section",
                             "description": "article",
                             "value": "section"
                         },
-            
+
                         "formPage": {
                             "pageGUID": "string",
                             "name": "string",
@@ -3151,6 +3237,7 @@ export class FormDesignerComponent implements OnInit {
                         "hasPhoto": false,
                         "hasAttachment": false,
                         "hasComment": false,
+                        "isPublished": -1,
                         "fieldType": {
                             "fieldTypeID": 5,
                             "displayName": "Select - Single",
@@ -3225,6 +3312,7 @@ export class FormDesignerComponent implements OnInit {
                         "hasPhoto": false,
                         "hasAttachment": false,
                         "hasComment": false,
+                        "isPublished": -1,
                         "fieldType": {
                             "fieldTypeID": 5,
                             "displayName": "Select - Multiple",
@@ -3299,6 +3387,7 @@ export class FormDesignerComponent implements OnInit {
                         "hasPhoto": false,
                         "hasAttachment": false,
                         "hasComment": false,
+                        "isPublished": -1,
                         "fieldType": {
                             "fieldTypeID": 28,
                             "displayName": "Signature",
@@ -3373,13 +3462,14 @@ export class FormDesignerComponent implements OnInit {
                         "hasPhoto": false,
                         "hasAttachment": false,
                         "hasComment": false,
+                        "isPublished": -1,
                         "fieldType": {
                             "fieldTypeID": 7,
                             "displayName": "Sub Section",
                             "description": "calendar_view_day",
                             "value": "subSection"
                         },
-            
+
                         "formPage": {
                             "pageGUID": "string",
                             "name": "string",
@@ -3448,6 +3538,7 @@ export class FormDesignerComponent implements OnInit {
                         "hasPhoto": false,
                         "hasAttachment": false,
                         "hasComment": false,
+                        "isPublished": -1,
                         "fieldType": {
                             "fieldTypeID": 23,
                             "displayName": "Time",
@@ -3505,6 +3596,1515 @@ export class FormDesignerComponent implements OnInit {
         if (this.field !== null) {
             this.formDesign.push(this.field.pop());
             this.field = null;
+            this.fieldTypes = [
+                {
+                    "fieldID": 0,
+                    "fieldTypeID": 22,
+                    "pageGUID": "pageGUID",
+                    "fieldName": "",
+                    "questionName": "",
+                    "isDisplayable": false,
+                    "toolTip": "",
+                    "parentFieldName": "",
+                    "childFieldName": "",
+                    "listValue": "",
+                    "calculation": "",
+                    "groupGUID": "string",
+                    "isLocked": false,
+                    "lockedByUserID": 0,
+                    "meetAllCustomValidationConditions": true,
+                    "dateCreated": "2021-12-01T12:32:22.006Z",
+                    "createdByUserID": 0,
+                    "dateLastModified": "2021-12-01T12:32:22.006Z",
+                    "lastModifiedByUserID": 0,
+                    "isActive": true,
+                    "dataExportName": "",
+                    "xmlElementName": "",
+                    "hasPhoto": false,
+                    "hasAttachment": false,
+                    "hasComment": false,
+                    "isPublished": -1,
+                    "fieldType": {
+                        "fieldTypeID": 22,
+                        "displayName": "Alpha Numeric",
+                        "description": "rtt",
+                        "value": "Alphanumeric"
+                    },
+                    "formPage": {
+                        "pageGUID": "string",
+                        "name": "string",
+                        "formID": 0,
+                        "isActive": true
+                    },
+                    "group": {
+                        "groupGUID": "string",
+                        "name": "string",
+                        "isRequired": true,
+                        "pageGUID": "",
+                        "parentGroupID": 0,
+                        "type": "",
+                        "dataTableGroup": "string"
+                    },
+                    "fieldCustomValidations": [
+                        {
+                            "fieldCustomValidationID": 0,
+                            "displayText": "",
+                            "condition": "",
+                            "value": "",
+                            "errorMessage": ""
+                        }
+                    ],
+                    "fieldStyles": [
+                        {
+                            "fieldStyleID": 0,
+                            "width": 760,
+                            "height": 24,
+                            "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
+                        }
+                    ],
+                    "fieldValidations": [
+                        {
+                            "fieldValidationID": 0,
+                            "dataLength": 50,
+                            "isEditable": true,
+                            "isRequired": false,
+                            "isHidden": false,
+                        }
+                    ]
+                },
+                {
+                    "fieldID": 0,
+                    "fieldTypeID": 15,
+                    "pageGUID": "pageGUID",
+                    "fieldName": "",
+                    "questionName": "",
+                    "isDisplayable": false,
+                    "toolTip": "",
+                    "parentFieldName": "",
+                    "childFieldName": "",
+                    "listValue": "",
+                    "calculation": "",
+                    "groupGUID": "string",
+                    "isLocked": false,
+                    "lockedByUserID": 0,
+                    "meetAllCustomValidationConditions": true,
+                    "dateCreated": "2021-12-01T12:32:22.006Z",
+                    "createdByUserID": 0,
+                    "dateLastModified": "2021-12-01T12:32:22.006Z",
+                    "lastModifiedByUserID": 0,
+                    "isActive": true,
+                    "dataExportName": "",
+                    "xmlElementName": "",
+                    "hasPhoto": false,
+                    "hasAttachment": false,
+                    "hasComment": false,
+                    "isPublished": -1,
+                    "fieldType": {
+                        "fieldTypeID": 15,
+                        "displayName": "Calculated Value",
+                        "description": "calculate",
+                        "value": "calculation"
+                    },
+                    "formPage": {
+                        "pageGUID": "string",
+                        "name": "string",
+                        "formID": 0,
+                        "isActive": true
+                    },
+                    "group": {
+                        "groupGUID": "string",
+                        "name": "string",
+                        "isRequired": true,
+                        "pageGUID": "string",
+                        "parentGroupID": 0,
+                        "type": "string",
+                        "dataTableGroup": "string"
+                    },
+                    "fieldCustomValidations": [
+                        {
+                            "fieldCustomValidationID": 0,
+                            "displayText": "",
+                            "condition": "",
+                            "value": "",
+                            "errorMessage": ""
+                        }
+                    ],
+                    "fieldStyles": [
+                        {
+                            "fieldStyleID": 0,
+                            "width": 760,
+                            "height": 24,
+                            "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
+                        }
+                    ],
+                    "fieldValidations": [
+                        {
+                            "fieldValidationID": 0,
+                            "dataLength": 50,
+                            "isEditable": true,
+                            "isRequired": false,
+                            "isHidden": false,
+                        }
+                    ]
+                },
+                {
+                    "fieldID": 0,
+                    "fieldTypeID": 14,
+                    "pageGUID": "pageGUID",
+                    "fieldName": "",
+                    "questionName": "",
+                    "isDisplayable": false,
+                    "toolTip": "",
+                    "parentFieldName": "",
+                    "childFieldName": "",
+                    "listValue": "",
+                    "calculation": "",
+                    "groupGUID": "string",
+                    "isLocked": false,
+                    "lockedByUserID": 0,
+                    "meetAllCustomValidationConditions": true,
+                    "dateCreated": "2021-12-01T12:32:22.006Z",
+                    "createdByUserID": 0,
+                    "dateLastModified": "2021-12-01T12:32:22.006Z",
+                    "lastModifiedByUserID": 0,
+                    "isActive": true,
+                    "dataExportName": "",
+                    "xmlElementName": "",
+                    "hasPhoto": false,
+                    "hasAttachment": false,
+                    "hasComment": false,
+                    "isPublished": -1,
+                    "fieldType": {
+                        "fieldTypeID": 14,
+                        "displayName": "Checkbox",
+                        "description": "check_box",
+                        "value": "checkbox"
+                    },
+
+                    "formPage": {
+                        "pageGUID": "string",
+                        "name": "string",
+                        "formID": 0,
+                        "isActive": true
+                    },
+                    "group": {
+                        "groupGUID": "string",
+                        "name": "string",
+                        "isRequired": true,
+                        "pageGUID": "string",
+                        "parentGroupID": 0,
+                        "type": "string",
+                        "dataTableGroup": "string"
+                    },
+                    "fieldCustomValidations": [
+                        {
+                            "fieldCustomValidationID": 0,
+                            "displayText": "",
+                            "condition": "",
+                            "value": "",
+                            "errorMessage": ""
+                        }
+                    ],
+                    "fieldStyles": [
+                        {
+                            "fieldStyleID": 0,
+                            "width": 760,
+                            "height": 24,
+                            "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
+                        }
+                    ],
+                    "fieldValidations": [
+                        {
+                            "fieldValidationID": 0,
+                            "dataLength": 50,
+                            "isEditable": true,
+                            "isRequired": false,
+                            "isHidden": false,
+                        }
+                    ]
+                },
+                {
+                    "fieldID": 0,
+                    "fieldTypeID": 13,
+                    "pageGUID": "pageGUID",
+                    "fieldName": "",
+                    "questionName": "",
+                    "isDisplayable": false,
+                    "toolTip": "",
+                    "parentFieldName": "",
+                    "childFieldName": "",
+                    "listValue": "",
+                    "calculation": "",
+                    "groupGUID": "string",
+                    "isLocked": false,
+                    "lockedByUserID": 0,
+                    "meetAllCustomValidationConditions": true,
+                    "dateCreated": "2021-12-01T12:32:22.006Z",
+                    "createdByUserID": 0,
+                    "dateLastModified": "2021-12-01T12:32:22.006Z",
+                    "lastModifiedByUserID": 0,
+                    "isActive": true,
+                    "dataExportName": "",
+                    "xmlElementName": "",
+                    "hasPhoto": false,
+                    "hasAttachment": false,
+                    "hasComment": false,
+                    "isPublished": -1,
+                    "fieldType": {
+                        "fieldTypeID": 13,
+                        "displayName": "Date",
+                        "description": "date_range",
+                        "value": "date"
+                    },
+
+                    "formPage": {
+                        "pageGUID": "string",
+                        "name": "string",
+                        "formID": 0,
+                        "isActive": true
+                    },
+                    "group": {
+                        "groupGUID": "string",
+                        "name": "string",
+                        "isRequired": true,
+                        "pageGUID": "string",
+                        "parentGroupID": 0,
+                        "type": "string",
+                        "dataTableGroup": "string"
+                    },
+                    "fieldCustomValidations": [
+                        {
+                            "fieldCustomValidationID": 0,
+                            "displayText": "",
+                            "condition": "",
+                            "value": "",
+                            "errorMessage": ""
+                        }
+                    ],
+                    "fieldStyles": [
+                        {
+                            "fieldStyleID": 0,
+                            "width": 760,
+                            "height": 24,
+                            "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
+                        }
+                    ],
+                    "fieldValidations": [
+                        {
+                            "fieldValidationID": 0,
+                            "dataLength": 50,
+                            "isEditable": true,
+                            "isRequired": false,
+                            "isHidden": false,
+                        }
+                    ]
+                },
+                {
+                    "fieldID": 0,
+                    "fieldTypeID": 29,
+                    "pageGUID": "pageGUID",
+                    "fieldName": "",
+                    "questionName": "",
+                    "isDisplayable": false,
+                    "toolTip": "",
+                    "parentFieldName": "",
+                    "childFieldName": "",
+                    "listValue": "",
+                    "calculation": "",
+                    "groupGUID": "string",
+                    "isLocked": false,
+                    "lockedByUserID": 0,
+                    "meetAllCustomValidationConditions": true,
+                    "dateCreated": "2021-12-01T12:32:22.006Z",
+                    "createdByUserID": 0,
+                    "dateLastModified": "2021-12-01T12:32:22.006Z",
+                    "lastModifiedByUserID": 0,
+                    "isActive": true,
+                    "dataExportName": "",
+                    "xmlElementName": "",
+                    "hasPhoto": false,
+                    "hasAttachment": false,
+                    "hasComment": false,
+                    "isPublished": -1,
+                    "fieldType": {
+                        "fieldTypeID": 29,
+                        "displayName": "Decimal",
+                        "description": "fiber_manual_record",
+                        "value": "decimal"
+                    },
+                    "formPage": {
+                        "pageGUID": "string",
+                        "name": "string",
+                        "formID": 0,
+                        "isActive": true
+                    },
+                    "group": {
+                        "groupGUID": "string",
+                        "name": "string",
+                        "isRequired": true,
+                        "pageGUID": "",
+                        "parentGroupID": 0,
+                        "type": "",
+                        "dataTableGroup": "string"
+                    },
+                    "fieldCustomValidations": [
+                        {
+                            "fieldCustomValidationID": 0,
+                            "displayText": "",
+                            "condition": "",
+                            "value": "",
+                            "errorMessage": ""
+                        }
+                    ],
+                    "fieldStyles": [
+                        {
+                            "fieldStyleID": 0,
+                            "width": 760,
+                            "height": 24,
+                            "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
+                        }
+                    ],
+                    "fieldValidations": [
+                        {
+                            "fieldValidationID": 0,
+                            "dataLength": 50,
+                            "isEditable": true,
+                            "isRequired": false,
+                            "isHidden": false,
+                        }
+                    ]
+                },
+                {
+                    "fieldID": 0,
+                    "fieldTypeID": 30,
+                    "pageGUID": "pageGUID",
+                    "fieldName": "",
+                    "questionName": "",
+                    "isDisplayable": false,
+                    "toolTip": "",
+                    "parentFieldName": "",
+                    "childFieldName": "",
+                    "listValue": "",
+                    "calculation": "",
+                    "groupGUID": "string",
+                    "isLocked": false,
+                    "lockedByUserID": 0,
+                    "meetAllCustomValidationConditions": true,
+                    "dateCreated": "2021-12-01T12:32:22.006Z",
+                    "createdByUserID": 0,
+                    "dateLastModified": "2021-12-01T12:32:22.006Z",
+                    "lastModifiedByUserID": 0,
+                    "isActive": true,
+                    "dataExportName": "",
+                    "xmlElementName": "",
+                    "hasPhoto": false,
+                    "hasAttachment": false,
+                    "hasComment": false,
+                    "isPublished": -1,
+                    "fieldType": {
+                        "fieldTypeID": 30,
+                        "displayName": "Drawing Area",
+                        "description": "brush",
+                        "value": "imagearea"
+                    },
+                    "formPage": {
+                        "pageGUID": "string",
+                        "name": "string",
+                        "formID": 0,
+                        "isActive": true
+                    },
+                    "group": {
+                        "groupGUID": "string",
+                        "name": "string",
+                        "isRequired": true,
+                        "pageGUID": "",
+                        "parentGroupID": 0,
+                        "type": "",
+                        "dataTableGroup": "string"
+                    },
+                    "fieldCustomValidations": [
+                        {
+                            "fieldCustomValidationID": 0,
+                            "displayText": "",
+                            "condition": "",
+                            "value": "",
+                            "errorMessage": ""
+                        }
+                    ],
+                    "fieldStyles": [
+                        {
+                            "fieldStyleID": 0,
+                            "width": 760,
+                            "height": 24,
+                            "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
+                        }
+                    ],
+                    "fieldValidations": [
+                        {
+                            "fieldValidationID": 0,
+                            "dataLength": 50,
+                            "isEditable": true,
+                            "isRequired": false,
+                            "isHidden": false,
+                        }
+                    ]
+                },
+                {
+                    "fieldID": 0,
+                    "fieldTypeID": 24,
+                    "pageGUID": "pageGUID",
+                    "fieldName": "",
+                    "questionName": "",
+                    "isDisplayable": false,
+                    "toolTip": "",
+                    "parentFieldName": "",
+                    "childFieldName": "",
+                    "listValue": "",
+                    "calculation": "",
+                    "groupGUID": "string",
+                    "isLocked": false,
+                    "lockedByUserID": 0,
+                    "meetAllCustomValidationConditions": true,
+                    "dateCreated": "2021-12-01T12:32:22.006Z",
+                    "createdByUserID": 0,
+                    "dateLastModified": "2021-12-01T12:32:22.006Z",
+                    "lastModifiedByUserID": 0,
+                    "isActive": true,
+                    "dataExportName": "",
+                    "xmlElementName": "",
+                    "hasPhoto": false,
+                    "hasAttachment": false,
+                    "hasComment": false,
+                    "isPublished": -1,
+                    "fieldType": {
+                        "fieldTypeID": 24,
+                        "displayName": "Email Address",
+                        "description": "alternate_email",
+                        "value": "EmailAddress"
+                    },
+                    "formPage": {
+                        "pageGUID": "string",
+                        "name": "string",
+                        "formID": 0,
+                        "isActive": true
+                    },
+                    "group": {
+                        "groupGUID": "string",
+                        "name": "string",
+                        "isRequired": true,
+                        "pageGUID": "",
+                        "parentGroupID": 0,
+                        "type": "",
+                        "dataTableGroup": "string"
+                    },
+                    "fieldCustomValidations": [
+                        {
+                            "fieldCustomValidationID": 0,
+                            "displayText": "",
+                            "condition": "",
+                            "value": "",
+                            "errorMessage": ""
+                        }
+                    ],
+                    "fieldStyles": [
+                        {
+                            "fieldStyleID": 0,
+                            "width": 760,
+                            "height": 24,
+                            "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
+                        }
+                    ],
+                    "fieldValidations": [
+                        {
+                            "fieldValidationID": 0,
+                            "dataLength": 50,
+                            "isEditable": true,
+                            "isRequired": false,
+                            "isHidden": false,
+                        }
+                    ]
+                },
+                {
+                    "fieldID": 0,
+                    "fieldTypeID": 31,
+                    "pageGUID": "pageGUID",
+                    "fieldName": "",
+                    "questionName": "",
+                    "isDisplayable": false,
+                    "toolTip": "",
+                    "parentFieldName": "",
+                    "childFieldName": "",
+                    "listValue": "",
+                    "calculation": "",
+                    "groupGUID": "string",
+                    "isLocked": false,
+                    "lockedByUserID": 0,
+                    "meetAllCustomValidationConditions": true,
+                    "dateCreated": "2021-12-01T12:32:22.006Z",
+                    "createdByUserID": 0,
+                    "dateLastModified": "2021-12-01T12:32:22.006Z",
+                    "lastModifiedByUserID": 0,
+                    "isActive": true,
+                    "dataExportName": "",
+                    "xmlElementName": "",
+                    "hasPhoto": false,
+                    "hasAttachment": false,
+                    "hasComment": false,
+                    "isPublished": -1,
+                    "fieldType": {
+                        "fieldTypeID": 31,
+                        "displayName": "Information",
+                        "description": "info",
+                        "value": "information"
+                    },
+
+                    "formPage": {
+                        "pageGUID": "string",
+                        "name": "string",
+                        "formID": 0,
+                        "isActive": true
+                    },
+                    "group": {
+                        "groupGUID": "string",
+                        "name": "string",
+                        "isRequired": true,
+                        "pageGUID": "string",
+                        "parentGroupID": 0,
+                        "type": "string",
+                        "dataTableGroup": "string"
+                    },
+                    "fieldCustomValidations": [
+                        {
+                            "fieldCustomValidationID": 0,
+                            "displayText": "",
+                            "condition": "",
+                            "value": "",
+                            "errorMessage": ""
+                        }
+                    ],
+                    "fieldStyles": [
+                        {
+                            "fieldStyleID": 0,
+                            "width": 760,
+                            "height": 24,
+                            "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
+                        }
+                    ],
+                    "fieldValidations": [
+                        {
+                            "fieldValidationID": 0,
+                            "dataLength": 500,
+                            "isEditable": true,
+                            "isRequired": false,
+                            "isHidden": false,
+                        }
+                    ]
+                },
+                {
+                    "fieldID": 0,
+                    "fieldTypeID": 9,
+                    "pageGUID": "pageGUID",
+                    "fieldName": "",
+                    "questionName": "",
+                    "isDisplayable": false,
+                    "toolTip": "",
+                    "parentFieldName": "",
+                    "childFieldName": "",
+                    "listValue": "",
+                    "calculation": "",
+                    "groupGUID": "string",
+                    "isLocked": false,
+                    "lockedByUserID": 0,
+                    "meetAllCustomValidationConditions": true,
+                    "dateCreated": "2021-12-01T12:32:22.006Z",
+                    "createdByUserID": 0,
+                    "dateLastModified": "2021-12-01T12:32:22.006Z",
+                    "lastModifiedByUserID": 0,
+                    "isActive": true,
+                    "dataExportName": "",
+                    "xmlElementName": "",
+                    "hasPhoto": false,
+                    "hasAttachment": false,
+                    "hasComment": false,
+                    "isPublished": -1,
+                    "fieldType": {
+                        "fieldTypeID": 9,
+                        "displayName": "Number",
+                        "description": "numbers",
+                        "value": "number"
+                    },
+
+                    "formPage": {
+                        "pageGUID": "string",
+                        "name": "string",
+                        "formID": 0,
+                        "isActive": true
+                    },
+                    "group": {
+                        "groupGUID": "string",
+                        "name": "string",
+                        "isRequired": true,
+                        "pageGUID": "string",
+                        "parentGroupID": 0,
+                        "type": "string",
+                        "dataTableGroup": "string"
+                    },
+                    "fieldCustomValidations": [
+                        {
+                            "fieldCustomValidationID": 0,
+                            "displayText": "",
+                            "condition": "",
+                            "value": "",
+                            "errorMessage": ""
+                        }
+                    ],
+                    "fieldStyles": [
+                        {
+                            "fieldStyleID": 0,
+                            "width": 760,
+                            "height": 24,
+                            "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
+                        }
+                    ],
+                    "fieldValidations": [
+                        {
+                            "fieldValidationID": 0,
+                            "dataLength": 50,
+                            "isEditable": true,
+                            "isRequired": false,
+                            "isHidden": false,
+                        }
+                    ]
+                },
+                {
+                    "fieldID": 0,
+                    "fieldTypeID": 27,
+                    "pageGUID": "pageGUID",
+                    "fieldName": "",
+                    "questionName": "",
+                    "isDisplayable": false,
+                    "toolTip": "",
+                    "parentFieldName": "",
+                    "childFieldName": "",
+                    "listValue": "",
+                    "calculation": "",
+                    "groupGUID": "string",
+                    "isLocked": false,
+                    "lockedByUserID": 0,
+                    "meetAllCustomValidationConditions": true,
+                    "dateCreated": "2021-12-01T12:32:22.006Z",
+                    "createdByUserID": 0,
+                    "dateLastModified": "2021-12-01T12:32:22.006Z",
+                    "lastModifiedByUserID": 0,
+                    "isActive": true,
+                    "dataExportName": "",
+                    "xmlElementName": "",
+                    "hasPhoto": false,
+                    "hasAttachment": false,
+                    "hasComment": false,
+                    "isPublished": -1,
+                    "fieldType": {
+                        "fieldTypeID": 27,
+                        "displayName": "Plain Alpha",
+                        "description": "title",
+                        "value": "plainalpha"
+                    },
+
+                    "formPage": {
+                        "pageGUID": "string",
+                        "name": "string",
+                        "formID": 0,
+                        "isActive": true
+                    },
+                    "group": {
+                        "groupGUID": "string",
+                        "name": "string",
+                        "isRequired": true,
+                        "pageGUID": "string",
+                        "parentGroupID": 0,
+                        "type": "string",
+                        "dataTableGroup": "string"
+                    },
+                    "fieldCustomValidations": [
+                        {
+                            "fieldCustomValidationID": 0,
+                            "displayText": "",
+                            "condition": "",
+                            "value": "",
+                            "errorMessage": ""
+                        }
+                    ],
+                    "fieldStyles": [
+                        {
+                            "fieldStyleID": 0,
+                            "width": 760,
+                            "height": 24,
+                            "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
+                        }
+                    ],
+                    "fieldValidations": [
+                        {
+                            "fieldValidationID": 0,
+                            "dataLength": 50,
+                            "isEditable": true,
+                            "isRequired": false,
+                            "isHidden": false,
+                        }
+                    ]
+                },
+                {
+                    "fieldID": 0,
+                    "fieldTypeID": 4,
+                    "pageGUID": "pageGUID",
+                    "fieldName": "",
+                    "questionName": "",
+                    "isDisplayable": false,
+                    "toolTip": "",
+                    "parentFieldName": "",
+                    "childFieldName": "",
+                    "listValue": "",
+                    "calculation": "",
+                    "groupGUID": "string",
+                    "isLocked": false,
+                    "lockedByUserID": 0,
+                    "meetAllCustomValidationConditions": true,
+                    "dateCreated": "2021-12-01T12:32:22.006Z",
+                    "createdByUserID": 0,
+                    "dateLastModified": "2021-12-01T12:32:22.006Z",
+                    "lastModifiedByUserID": 0,
+                    "isActive": true,
+                    "dataExportName": "",
+                    "xmlElementName": "",
+                    "hasPhoto": false,
+                    "hasAttachment": false,
+                    "hasComment": false,
+                    "isPublished": -1,
+                    "fieldType": {
+                        "fieldTypeID": 4,
+                        "displayName": "Plain Text",
+                        "description": "text_fields",
+                        "value": "plaintext"
+                    },
+
+                    "formPage": {
+                        "pageGUID": "string",
+                        "name": "string",
+                        "formID": 0,
+                        "isActive": true
+                    },
+                    "group": {
+                        "groupGUID": "string",
+                        "name": "string",
+                        "isRequired": true,
+                        "pageGUID": "string",
+                        "parentGroupID": 0,
+                        "type": "string",
+                        "dataTableGroup": "string"
+                    },
+                    "fieldCustomValidations": [
+                        {
+                            "fieldCustomValidationID": 0,
+                            "displayText": "",
+                            "condition": "",
+                            "value": "",
+                            "errorMessage": ""
+                        }
+                    ],
+                    "fieldStyles": [
+                        {
+                            "fieldStyleID": 0,
+                            "width": 760,
+                            "height": 24,
+                            "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
+                        }
+                    ],
+                    "fieldValidations": [
+                        {
+                            "fieldValidationID": 0,
+                            "dataLength": 50,
+                            "isEditable": true,
+                            "isRequired": false,
+                            "isHidden": false,
+                        }
+                    ]
+                },
+                {
+                    "fieldID": 0,
+                    "fieldTypeID": 32,
+                    "pageGUID": "pageGUID",
+                    "fieldName": "group",
+                    "questionName": "group",
+                    "isDisplayable": false,
+                    "toolTip": "",
+                    "parentFieldName": "",
+                    "childFieldName": "",
+                    "listValue": "",
+                    "calculation": "",
+                    "groupGUID": "string",
+                    "isLocked": false,
+                    "lockedByUserID": 0,
+                    "meetAllCustomValidationConditions": true,
+                    "dateCreated": "2021-12-01T12:32:22.006Z",
+                    "createdByUserID": 0,
+                    "dateLastModified": "2021-12-01T12:32:22.006Z",
+                    "lastModifiedByUserID": 0,
+                    "isActive": true,
+                    "dataExportName": "",
+                    "xmlElementName": "",
+                    "hasPhoto": false,
+                    "hasAttachment": false,
+                    "hasComment": false,
+                    "isPublished": -1,
+                    "fieldType": {
+                        "fieldTypeID": 32,
+                        "displayName": "Question Group",
+                        "description": "view_stream",
+                        "value": "group"
+                    },
+                    "formPage": {
+                        "pageGUID": "string",
+                        "name": "string",
+                        "formID": 0,
+                        "isActive": true
+                    },
+                    "group": {
+                        "groupGUID": "string",
+                        "name": "",
+                        "isRequired": true,
+                        "pageGUID": "",
+                        "parentGroupID": 0,
+                        "type": ""
+                    },
+                    "fieldCustomValidations": [
+                        {
+                            "fieldCustomValidationID": 0,
+                            "displayText": "",
+                            "condition": "",
+                            "value": "",
+                            "errorMessage": ""
+                        }
+                    ],
+                    "fieldStyles": [
+                        {
+                            "fieldStyleID": 0,
+                            "width": 760,
+                            "height": 24,
+                            "cssClass": GlobalConstants.groupStyle
+                        }
+                    ],
+                    "fieldValidations": [
+                        {
+                            "fieldValidationID": 0,
+                            "dataLength": 50,
+                            "isEditable": true,
+                            "isRequired": false,
+                            "isHidden": false,
+                        }
+                    ]
+                },
+                {
+                    "fieldID": 0,
+                    "fieldTypeID": 8,
+                    "pageGUID": "pageGUID",
+                    "fieldName": "",
+                    "questionName": "",
+                    "isDisplayable": false,
+                    "toolTip": "",
+                    "parentFieldName": "",
+                    "childFieldName": "",
+                    "listValue": "",
+                    "calculation": "",
+                    "groupGUID": "string",
+                    "isLocked": false,
+                    "lockedByUserID": 0,
+                    "meetAllCustomValidationConditions": true,
+                    "dateCreated": "2021-12-01T12:32:22.006Z",
+                    "createdByUserID": 0,
+                    "dateLastModified": "2021-12-01T12:32:22.006Z",
+                    "lastModifiedByUserID": 0,
+                    "isActive": true,
+                    "dataExportName": "",
+                    "xmlElementName": "",
+                    "hasPhoto": false,
+                    "hasAttachment": false,
+                    "hasComment": false,
+                    "isPublished": -1,
+                    "fieldType": {
+                        "fieldTypeID": 8,
+                        "displayName": "Radio Button",
+                        "description": "radio_button_checked",
+                        "value": "field or"
+                    },
+
+                    "formPage": {
+                        "pageGUID": "string",
+                        "name": "string",
+                        "formID": 0,
+                        "isActive": true
+                    },
+                    "group": {
+                        "groupGUID": "string",
+                        "name": "string",
+                        "isRequired": true,
+                        "pageGUID": "string",
+                        "parentGroupID": 0,
+                        "type": "string",
+                        "dataTableGroup": "string"
+                    },
+                    "fieldCustomValidations": [
+                        {
+                            "fieldCustomValidationID": 0,
+                            "displayText": "",
+                            "condition": "",
+                            "value": "",
+                            "errorMessage": ""
+                        }
+                    ],
+                    "fieldStyles": [
+                        {
+                            "fieldStyleID": 0,
+                            "width": 760,
+                            "height": 24,
+                            "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
+                        }
+                    ],
+                    "fieldValidations": [
+                        {
+                            "fieldValidationID": 0,
+                            "dataLength": 50,
+                            "isEditable": true,
+                            "isRequired": false,
+                            "isHidden": false,
+                        }
+                    ]
+                },
+                {
+                    "fieldID": 0,
+                    "fieldTypeID": 7,
+                    "pageGUID": "pageGUID",
+                    "fieldName": "repeatgroup",
+                    "questionName": "repeatgroup",
+                    "isDisplayable": false,
+                    "toolTip": "",
+                    "parentFieldName": "",
+                    "childFieldName": "",
+                    "listValue": "",
+                    "calculation": "",
+                    "groupGUID": "string",
+                    "isLocked": false,
+                    "lockedByUserID": 0,
+                    "meetAllCustomValidationConditions": true,
+                    "dateCreated": "2021-12-01T12:32:22.006Z",
+                    "createdByUserID": 0,
+                    "dateLastModified": "2021-12-01T12:32:22.006Z",
+                    "lastModifiedByUserID": 0,
+                    "isActive": true,
+                    "dataExportName": "",
+                    "xmlElementName": "",
+                    "hasPhoto": false,
+                    "hasAttachment": false,
+                    "hasComment": false,
+                    "isPublished": -1,
+                    "fieldType": {
+                        "fieldTypeID": 7,
+                        "displayName": "Repeat Group",
+                        "description": "repeat_on",
+                        "value": "repeatgroup"
+                    },
+
+                    "formPage": {
+                        "pageGUID": "string",
+                        "name": "string",
+                        "formID": 0,
+                        "isActive": true
+                    },
+                    "group": {
+                        "groupGUID": "string",
+                        "name": "",
+                        "isRequired": true,
+                        "pageGUID": "",
+                        "parentGroupID": 0,
+                        "type": ""
+                    },
+                    "fieldCustomValidations": [
+                        {
+                            "fieldCustomValidationID": 0,
+                            "displayText": "",
+                            "condition": "",
+                            "value": "",
+                            "errorMessage": ""
+                        }
+                    ],
+                    "fieldStyles": [
+                        {
+                            "fieldStyleID": 0,
+                            "width": 760,
+                            "height": 24,
+                            "cssClass": GlobalConstants.groupStyle
+                        }
+                    ],
+                    "fieldValidations": [
+                        {
+                            "fieldValidationID": 0,
+                            "dataLength": 50,
+                            "isEditable": true,
+                            "isRequired": false,
+                            "isHidden": false,
+                        }
+                    ]
+                },
+                {
+                    "fieldID": 0,
+                    "fieldTypeID": 6,
+                    "pageGUID": "pageGUID",
+                    "fieldName": "section",
+                    "questionName": "section",
+                    "isDisplayable": false,
+                    "toolTip": "",
+                    "parentFieldName": "",
+                    "childFieldName": "",
+                    "listValue": "",
+                    "calculation": "",
+                    "groupGUID": "string",
+                    "isLocked": false,
+                    "lockedByUserID": 0,
+                    "meetAllCustomValidationConditions": true,
+                    "dateCreated": "2021-12-01T12:32:22.006Z",
+                    "createdByUserID": 0,
+                    "dateLastModified": "2021-12-01T12:32:22.006Z",
+                    "lastModifiedByUserID": 0,
+                    "isActive": true,
+                    "dataExportName": "",
+                    "xmlElementName": "",
+                    "hasPhoto": false,
+                    "hasAttachment": false,
+                    "hasComment": false,
+                    "isPublished": -1,
+                    "fieldType": {
+                        "fieldTypeID": 7,
+                        "displayName": "Section",
+                        "description": "article",
+                        "value": "section"
+                    },
+
+                    "formPage": {
+                        "pageGUID": "string",
+                        "name": "string",
+                        "formID": 0,
+                        "isActive": true
+                    },
+                    "group": {
+                        "groupGUID": "string",
+                        "name": "",
+                        "isRequired": true,
+                        "pageGUID": "",
+                        "parentGroupID": 0,
+                        "type": ""
+                    },
+                    "fieldCustomValidations": [
+                        {
+                            "fieldCustomValidationID": 0,
+                            "displayText": "",
+                            "condition": "",
+                            "value": "",
+                            "errorMessage": ""
+                        }
+                    ],
+                    "fieldStyles": [
+                        {
+                            "fieldStyleID": 0,
+                            "width": 760,
+                            "height": 24,
+                            "cssClass": GlobalConstants.SectionStyle
+                        }
+                    ],
+                    "fieldValidations": [
+                        {
+                            "fieldValidationID": 0,
+                            "dataLength": 50,
+                            "isEditable": true,
+                            "isRequired": false,
+                            "isHidden": false,
+                        }
+                    ]
+                },
+                {
+                    "fieldID": 0,
+                    "fieldTypeID": 5,
+                    "pageGUID": "pageGUID",
+                    "fieldName": "",
+                    "questionName": "",
+                    "isDisplayable": false,
+                    "toolTip": "",
+                    "parentFieldName": "",
+                    "childFieldName": "",
+                    "listValue": "",
+                    "calculation": "",
+                    "groupGUID": "string",
+                    "isLocked": false,
+                    "lockedByUserID": 0,
+                    "meetAllCustomValidationConditions": true,
+                    "dateCreated": "2021-12-01T12:32:22.006Z",
+                    "createdByUserID": 0,
+                    "dateLastModified": "2021-12-01T12:32:22.006Z",
+                    "lastModifiedByUserID": 0,
+                    "isActive": true,
+                    "dataExportName": "",
+                    "xmlElementName": "",
+                    "hasPhoto": false,
+                    "hasAttachment": false,
+                    "hasComment": false,
+                    "isPublished": -1,
+                    "fieldType": {
+                        "fieldTypeID": 5,
+                        "displayName": "Select - Single",
+                        "description": "arrow_drop_down",
+                        "value": "lexicon data"
+                    },
+                    "formPage": {
+                        "pageGUID": "string",
+                        "name": "string",
+                        "formID": 0,
+                        "isActive": true
+                    },
+                    "group": {
+                        "groupGUID": "string",
+                        "name": "string",
+                        "isRequired": true,
+                        "pageGUID": "string",
+                        "parentGroupID": 0,
+                        "type": "string",
+                        "dataTableGroup": "string"
+                    },
+                    "fieldCustomValidations": [
+                        {
+                            "fieldCustomValidationID": 0,
+                            "displayText": "",
+                            "condition": "",
+                            "value": "",
+                            "errorMessage": ""
+                        }
+                    ],
+                    "fieldStyles": [
+                        {
+                            "fieldStyleID": 0,
+                            "width": 760,
+                            "height": 24,
+                            "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
+                        }
+                    ],
+                    "fieldValidations": [
+                        {
+                            "fieldValidationID": 0,
+                            "dataLength": 50,
+                            "isEditable": true,
+                            "isRequired": false,
+                            "isHidden": false,
+                        }
+                    ]
+                },
+                {
+                    "fieldID": 0,
+                    "fieldTypeID": 33,
+                    "pageGUID": "pageGUID",
+                    "fieldName": "",
+                    "questionName": "",
+                    "isDisplayable": false,
+                    "toolTip": "",
+                    "parentFieldName": "",
+                    "childFieldName": "",
+                    "listValue": "",
+                    "calculation": "",
+                    "groupGUID": "string",
+                    "isLocked": false,
+                    "lockedByUserID": 0,
+                    "meetAllCustomValidationConditions": true,
+                    "dateCreated": "2021-12-01T12:32:22.006Z",
+                    "createdByUserID": 0,
+                    "dateLastModified": "2021-12-01T12:32:22.006Z",
+                    "lastModifiedByUserID": 0,
+                    "isActive": true,
+                    "dataExportName": "",
+                    "xmlElementName": "",
+                    "hasPhoto": false,
+                    "hasAttachment": false,
+                    "hasComment": false,
+                    "isPublished": -1,
+                    "fieldType": {
+                        "fieldTypeID": 5,
+                        "displayName": "Select - Multiple",
+                        "description": "unfold_more",
+                        "value": "link multi select"
+                    },
+                    "formPage": {
+                        "pageGUID": "string",
+                        "name": "string",
+                        "formID": 0,
+                        "isActive": true
+                    },
+                    "group": {
+                        "groupGUID": "string",
+                        "name": "string",
+                        "isRequired": true,
+                        "pageGUID": "string",
+                        "parentGroupID": 0,
+                        "type": "string",
+                        "dataTableGroup": "string"
+                    },
+                    "fieldCustomValidations": [
+                        {
+                            "fieldCustomValidationID": 0,
+                            "displayText": "",
+                            "condition": "",
+                            "value": "",
+                            "errorMessage": ""
+                        }
+                    ],
+                    "fieldStyles": [
+                        {
+                            "fieldStyleID": 0,
+                            "width": 760,
+                            "height": 24,
+                            "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
+                        }
+                    ],
+                    "fieldValidations": [
+                        {
+                            "fieldValidationID": 0,
+                            "dataLength": 50,
+                            "isEditable": true,
+                            "isRequired": false,
+                            "isHidden": false,
+                        }
+                    ]
+                },
+                {
+                    "fieldID": 0,
+                    "fieldTypeID": 28,
+                    "pageGUID": "pageGUID",
+                    "fieldName": "",
+                    "questionName": "",
+                    "isDisplayable": false,
+                    "toolTip": "",
+                    "parentFieldName": "",
+                    "childFieldName": "",
+                    "listValue": "",
+                    "calculation": "",
+                    "groupGUID": "string",
+                    "isLocked": false,
+                    "lockedByUserID": 0,
+                    "meetAllCustomValidationConditions": true,
+                    "dateCreated": "2021-12-01T12:32:22.006Z",
+                    "createdByUserID": 0,
+                    "dateLastModified": "2021-12-01T12:32:22.006Z",
+                    "lastModifiedByUserID": 0,
+                    "isActive": true,
+                    "dataExportName": "",
+                    "xmlElementName": "",
+                    "hasPhoto": false,
+                    "hasAttachment": false,
+                    "hasComment": false,
+                    "isPublished": -1,
+                    "fieldType": {
+                        "fieldTypeID": 28,
+                        "displayName": "Signature",
+                        "description": "border_color",
+                        "value": "signature"
+                    },
+                    "formPage": {
+                        "pageGUID": "string",
+                        "name": "string",
+                        "formID": 0,
+                        "isActive": true
+                    },
+                    "group": {
+                        "groupGUID": "string",
+                        "name": "string",
+                        "isRequired": true,
+                        "pageGUID": "",
+                        "parentGroupID": 0,
+                        "type": "",
+                        "dataTableGroup": "string"
+                    },
+                    "fieldCustomValidations": [
+                        {
+                            "fieldCustomValidationID": 0,
+                            "displayText": "",
+                            "condition": "",
+                            "value": "",
+                            "errorMessage": ""
+                        }
+                    ],
+                    "fieldStyles": [
+                        {
+                            "fieldStyleID": 0,
+                            "width": 760,
+                            "height": 24,
+                            "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
+                        }
+                    ],
+                    "fieldValidations": [
+                        {
+                            "fieldValidationID": 0,
+                            "dataLength": 50,
+                            "isEditable": true,
+                            "isRequired": false,
+                            "isHidden": false,
+                        }
+                    ]
+                },
+                {
+                    "fieldID": 0,
+                    "fieldTypeID": 26,
+                    "pageGUID": "pageGUID",
+                    "fieldName": "",
+                    "questionName": "",
+                    "isDisplayable": false,
+                    "toolTip": "",
+                    "parentFieldName": "",
+                    "childFieldName": "",
+                    "listValue": "",
+                    "calculation": "",
+                    "groupGUID": "string",
+                    "isLocked": false,
+                    "lockedByUserID": 0,
+                    "meetAllCustomValidationConditions": true,
+                    "dateCreated": "2021-12-01T12:32:22.006Z",
+                    "createdByUserID": 0,
+                    "dateLastModified": "2021-12-01T12:32:22.006Z",
+                    "lastModifiedByUserID": 0,
+                    "isActive": true,
+                    "dataExportName": "",
+                    "xmlElementName": "",
+                    "hasPhoto": false,
+                    "hasAttachment": false,
+                    "hasComment": false,
+                    "isPublished": -1,
+                    "fieldType": {
+                        "fieldTypeID": 7,
+                        "displayName": "Sub Section",
+                        "description": "calendar_view_day",
+                        "value": "subSection"
+                    },
+
+                    "formPage": {
+                        "pageGUID": "string",
+                        "name": "string",
+                        "formID": 0,
+                        "isActive": true
+                    },
+                    "group": {
+                        "groupGUID": "string",
+                        "name": "string",
+                        "isRequired": true,
+                        "pageGUID": "string",
+                        "parentGroupID": 0,
+                        "type": "string",
+                        "dataTableGroup": "string"
+                    },
+                    "fieldCustomValidations": [
+                        {
+                            "fieldCustomValidationID": 0,
+                            "displayText": "",
+                            "condition": "",
+                            "value": "",
+                            "errorMessage": ""
+                        }
+                    ],
+                    "fieldStyles": [
+                        {
+                            "fieldStyleID": 0,
+                            "width": 760,
+                            "height": 24,
+                            "cssClass": GlobalConstants.SubsectionStyle
+                        }
+                    ],
+                    "fieldValidations": [
+                        {
+                            "fieldValidationID": 0,
+                            "dataLength": 50,
+                            "isEditable": true,
+                            "isRequired": false,
+                            "isHidden": false,
+                        }
+                    ]
+                },
+                {
+                    "fieldID": 0,
+                    "fieldTypeID": 23,
+                    "pageGUID": "pageGUID",
+                    "fieldName": "",
+                    "questionName": "",
+                    "isDisplayable": false,
+                    "toolTip": "",
+                    "parentFieldName": "",
+                    "childFieldName": "",
+                    "listValue": "",
+                    "calculation": "",
+                    "groupGUID": "string",
+                    "isLocked": false,
+                    "lockedByUserID": 0,
+                    "meetAllCustomValidationConditions": true,
+                    "dateCreated": "2021-12-01T12:32:22.006Z",
+                    "createdByUserID": 0,
+                    "dateLastModified": "2021-12-01T12:32:22.006Z",
+                    "lastModifiedByUserID": 0,
+                    "isActive": true,
+                    "dataExportName": "",
+                    "xmlElementName": "",
+                    "hasPhoto": false,
+                    "hasAttachment": false,
+                    "hasComment": false,
+                    "isPublished": -1,
+                    "fieldType": {
+                        "fieldTypeID": 23,
+                        "displayName": "Time",
+                        "description": "timer",
+                        "value": "Time"
+                    },
+                    "formPage": {
+                        "pageGUID": "string",
+                        "name": "string",
+                        "formID": 0,
+                        "isActive": true
+                    },
+                    "group": {
+                        "groupGUID": "string",
+                        "name": "string",
+                        "isRequired": true,
+                        "pageGUID": "",
+                        "parentGroupID": 0,
+                        "type": "",
+                        "dataTableGroup": "string"
+                    },
+                    "fieldCustomValidations": [
+                        {
+                            "fieldCustomValidationID": 0,
+                            "displayText": "",
+                            "condition": "",
+                            "value": "",
+                            "errorMessage": ""
+                        }
+                    ],
+                    "fieldStyles": [
+                        {
+                            "fieldStyleID": 0,
+                            "width": 760,
+                            "height": 24,
+                            "cssClass": "linear-gradient(147deg, #f9fcff 0%, #dee4ea 74%)"
+                        }
+                    ],
+                    "fieldValidations": [
+                        {
+                            "fieldValidationID": 0,
+                            "dataLength": 50,
+                            "isEditable": true,
+                            "isRequired": false,
+                            "isHidden": false,
+                        }
+                    ]
+                }
+            ];
         }
         else {
             alert("choose a field first")
@@ -3686,32 +5286,32 @@ export class FormDesignerComponent implements OnInit {
         });
 
         if (errorMessage === "Please ensure number ") {
-                if (count1 == 0) {
-                    if (errorMessage === "Please ensure number ") {
-                        this.spinner.show();
-                        this.service.addFieldPerPage(this.formDesign, this.formData.formID, this.currentPage.pageGUID).subscribe(data => {
-                            this.formData.publishStatus = 0;
-                            this.service.updateDynamicFormDetails(this.formData.formID, this.formData).subscribe(result => {
-                                this.formData = result;
-                                this.checkStatus();
-                                this.spinner.hide();
-                                this.getDesignPerPage(pageGUID);
-                                this.refreshGroupSectionList();
-                                this.showNotification('top', 'center', 'Page Fields Saved Successfully!', '', 'success');
-                            });
-                        }, error => {
-                            this.showNotification('top', 'center', 'Error saving page fields, please try again', '', 'danger');
+            if (count1 == 0) {
+                if (errorMessage === "Please ensure number ") {
+                    this.spinner.show();
+                    this.service.addFieldPerPage(this.formDesign, this.formData.formID, this.currentPage.pageGUID).subscribe(data => {
+                        this.formData.publishStatus = 0;
+                        this.service.updateDynamicFormDetails(this.formData.formID, this.formData).subscribe(result => {
+                            this.formData = result;
+                            this.checkStatus();
                             this.spinner.hide();
+                            this.getDesignPerPage(pageGUID);
+                            this.refreshGroupSectionList();
+                            this.showNotification('top', 'center', 'Page Fields Saved Successfully!', '', 'success');
                         });
-                    }
-                }
-                else {
-                    errorMessage = "Database name must be unique";
-                    this.formDesign.forEach((element, index) => {
-                        element.pageGUID = "pageGUID";
+                    }, error => {
+                        this.showNotification('top', 'center', 'Error saving page fields, please try again', '', 'danger');
+                        this.spinner.hide();
                     });
-                    this.showNotification('top', 'center', errorMessage, '', 'danger');
                 }
+            }
+            else {
+                errorMessage = "Database name must be unique";
+                this.formDesign.forEach((element, index) => {
+                    element.pageGUID = "pageGUID";
+                });
+                this.showNotification('top', 'center', errorMessage, '', 'danger');
+            }
         }
         else {
             errorMessage = errorMessage + " form fields have question names,database names on the form before saving";
@@ -3922,7 +5522,7 @@ export class FormDesignerComponent implements OnInit {
 
     closeForm() {
         Swal.fire({
-            title: 'Are you sure you want to close this form?',
+            title: "<h5 style='color:white;font-weight:400'> Are you sure want to close this form? </h5>",
             showCancelButton: true,
             confirmButtonText: 'Yes',
             cancelButtonText: 'No',
@@ -3931,7 +5531,7 @@ export class FormDesignerComponent implements OnInit {
             allowOutsideClick: false,
             confirmButtonColor: '#000000',
             cancelButtonColor: '#000000',
-            background: '#ffcccb'
+            background: '#CA0B00'
         }).then((result) => {
             if (result.value) {
                 this.service.unlockForm(this.formData.formID, this.formData).subscribe(res => {

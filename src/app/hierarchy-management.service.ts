@@ -12,8 +12,8 @@ export class HierarchyManagementService {
 
   constructor(private http:HttpClient) { }
 
-  readonly API_URL = environment.API_URL + '/'
-  //readonly API_URL='https://localhost:44305/api/';
+  //readonly API_URL = environment.API_URL + '/'
+  readonly API_URL='https://localhost:44305/api/';
 
 
   hformData:hierarchyManagement = new hierarchyManagement();
@@ -25,6 +25,10 @@ export class HierarchyManagementService {
     .then(res=> this.hlist = res as hierarchyManagement[]);
 
     console.log(this.hlist);
+  }
+
+  getTreeByCatergory(TreeCategoryID:any):Observable<any[]>{
+    return this.http.get<any>(this.API_URL + 'Trees/GettreesCategoryID' + '/' + TreeCategoryID);
   }
 
   openDialogAdd(val:any){
@@ -53,5 +57,23 @@ export class HierarchyManagementService {
   addNode(data:any){
     return this.http.post(this.API_URL+'Nodes',data);
   }
+
+  //#region Indicator Nodes
+  getIndicatorNodes():Observable<any[]>{
+    return this.http.get<any>(this.API_URL+'Trees/indicatorNodes');
+  }
+
+  getAssignedIndicatorNodesByTreeRoleID(RoleID :any ,treeID):Observable<any[]>{
+    return this.http.get<any>(this.API_URL+'Trees/'+RoleID+'/'+treeID+'/AssignedIndicatorNodesByRole');
+  }
+
+  getUnassignedIndicatorNodesByTreeRoleID(RoleID :any ,treeID):Observable<any[]>{
+    return this.http.get<any>(this.API_URL+'Trees/'+RoleID+'/'+treeID+'/UnassignedIndicatorNodesByRole');
+  }
+
+  assignIndicators(data:any,roleID:any,treeID:any){
+    return this.http.post(this.API_URL+'Trees/'+roleID+'/'+treeID+'/AssignIndicatorRole',data,{responseType: 'text'});
+  }
+  //#endregion
 }
 

@@ -14,7 +14,8 @@ import { RoleaccessComponent } from './roleaccess/roleaccess.component';
 import { GridModule } from "@progress/kendo-angular-grid";
 import { ButtonsModule } from "@progress/kendo-angular-buttons";
 import { InputsModule } from "@progress/kendo-angular-inputs";
-import {PDFModule,ExcelModule,} from "@progress/kendo-angular-grid";
+import { PDFModule, ExcelModule, } from "@progress/kendo-angular-grid";
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
     imports: [
@@ -24,10 +25,11 @@ import {PDFModule,ExcelModule,} from "@progress/kendo-angular-grid";
         ReactiveFormsModule,
         MaterialModule,
         GridModule,
-    ButtonsModule,
-    InputsModule,
-    PDFModule,
-    ExcelModule,
+        ButtonsModule,
+        InputsModule,
+        PDFModule,
+        ExcelModule,
+        NgxSpinnerModule
     ],
 
     declarations: [

@@ -34,6 +34,14 @@
                         </button>
                        </ng-template>
                      </kendo-grid-column>
+
+                     <kendo-grid-column [width]="1">
+                      <ng-template kendoGridCellTemplate let-dataItem>
+                       <button mat-icon-button (click)="clickDelete(dataItem)">
+                           <mat-icon matTooltip="Delete" class="mat-18" style="color: #016000;">delete</mat-icon>
+                       </button>
+                      </ng-template>
+                    </kendo-grid-column>
            
                      <kendo-grid-pdf fileName="formCategory.pdf" [repeatHeaders]="true"></kendo-grid-pdf>
                      <!-- <kendo-grid-excel fileName="FormInbox.xlsx"></kendo-grid-excel> -->
