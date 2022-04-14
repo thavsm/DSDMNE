@@ -63,7 +63,6 @@ export class HierarchyManagementComponent implements OnInit {
 
   openEditTree(item: any): void {
     // Create item:
-    // alert(item.treeID)
     let myObj = {
       treeID: item.treeID,
       ViewEdit: 1

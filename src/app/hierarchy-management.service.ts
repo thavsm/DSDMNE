@@ -26,6 +26,10 @@ export class HierarchyManagementService {
     console.log(this.hlist);
   }
 
+  getTreeByCatergory(TreeCategoryID:any):Observable<any[]>{
+    return this.http.get<any>(this.API_URL + 'Trees/GettreesCategoryID' + '/' + TreeCategoryID);
+  }
+
   openDialogAdd(val:any){
     return this.http.post(this.API_URL+'/',val);
   }
@@ -53,6 +57,7 @@ export class HierarchyManagementService {
     return this.http.post(this.API_URL+'Nodes',data);
   }
 
+<<<<<<< HEAD
   getIsIndicatorLevelbyLevelID(levelID:number){
     return this.http.get<any>(this.API_URL+'Levels/SelectIsIndicatorLevelbyLevelID/'+levelID);
   }
@@ -61,5 +66,24 @@ export class HierarchyManagementService {
     return this.http.get<any>(this.API_URL+'Trees/indicatorNodes');
   }
   
+=======
+  //#region Indicator Nodes
+  getIndicatorNodes():Observable<any[]>{
+    return this.http.get<any>(this.API_URL+'Trees/indicatorNodes');
+  }
+
+  getAssignedIndicatorNodesByTreeRoleID(RoleID :any ,treeID):Observable<any[]>{
+    return this.http.get<any>(this.API_URL+'Trees/'+RoleID+'/'+treeID+'/AssignedIndicatorNodesByRole');
+  }
+
+  getUnassignedIndicatorNodesByTreeRoleID(RoleID :any ,treeID):Observable<any[]>{
+    return this.http.get<any>(this.API_URL+'Trees/'+RoleID+'/'+treeID+'/UnassignedIndicatorNodesByRole');
+  }
+
+  assignIndicators(data:any,roleID:any,treeID:any){
+    return this.http.post(this.API_URL+'Trees/'+roleID+'/'+treeID+'/AssignIndicatorRole',data,{responseType: 'text'});
+  }
+  //#endregion
+>>>>>>> 6c09d2d3b3e414c142985e7e6e7ce7750baf73c8
 }
 
