@@ -12,8 +12,8 @@ export class HierarchyManagementService {
 
   constructor(private http:HttpClient) { }
 
-  readonly API_URL = environment.API_URL + '/'
-  //readonly API_URL='https://localhost:44305/api/';
+  //readonly API_URL = environment.API_URL + '/'
+  readonly API_URL='https://localhost:44305/api/';
 
 
   hformData:hierarchyManagement = new hierarchyManagement();
@@ -23,7 +23,6 @@ export class HierarchyManagementService {
     this.http.get(this.API_URL + 'Trees/GettreesCategoryID' + '/' + TreeCategoryID)
     .toPromise()
     .then(res=> this.hlist = res as hierarchyManagement[]);
-
     console.log(this.hlist);
   }
 
@@ -53,5 +52,14 @@ export class HierarchyManagementService {
   addNode(data:any){
     return this.http.post(this.API_URL+'Nodes',data);
   }
+
+  getIsIndicatorLevelbyLevelID(levelID:number){
+    return this.http.get<any>(this.API_URL+'Levels/SelectIsIndicatorLevelbyLevelID/'+levelID);
+  }
+
+  getIndicatorNodes():Observable<any[]>{
+    return this.http.get<any>(this.API_URL+'Trees/indicatorNodes');
+  }
+  
 }
 

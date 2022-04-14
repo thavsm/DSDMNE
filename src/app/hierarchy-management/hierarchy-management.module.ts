@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { hierarchymanagementRoutes } from './hierarchy-management.routing';
 import { HierarchyManagementComponent } from './hierarchy-management.component';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -25,6 +25,9 @@ import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 import { TargetAddComponent } from './target-add/target-add.component';
 import { ExternaldataAddComponent } from './externaldata-add/externaldata-add.component'
 import {MatRadioModule} from '@angular/material/radio';
+import { ButtonsModule } from "@progress/kendo-angular-buttons";
+import { InputsModule } from "@progress/kendo-angular-inputs";
+import {PDFModule,ExcelModule,GridModule} from "@progress/kendo-angular-grid";
 import { UserProfileComponent } from '../userprofile/userprofile.component';
 import { Injectable } from '@angular/core';
 @Injectable({ providedIn: 'root' })
@@ -40,13 +43,18 @@ import { Injectable } from '@angular/core';
     MatExpansionModule,
     PDFExportModule,
     RouterModule.forChild(hierarchymanagementRoutes),
-    FormsModule,  MatDialogModule,
+    FormsModule,  ReactiveFormsModule,  MatDialogModule,
     MatIconModule,
     MatTableModule,
     MatFormFieldModule,
     MatRadioModule,
     MatInputModule,
     MatPaginatorModule,
+    GridModule,
+    ButtonsModule,
+    InputsModule,
+    PDFModule,
+    ExcelModule,
     MatSelectModule,
     MatButtonModule],
     declarations: [HierarchyManagementComponent,  

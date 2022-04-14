@@ -57,7 +57,7 @@ export class LevelNodeEditComponent implements OnInit {
   divAtrributes: boolean  = true;
   thEdit: boolean  = true;
   thDelete: boolean  = true;
-  tabIndex: number = 0;
+  tabIndex: number = 1;
   TabNodeEdit: string = "Node Edit";
   TabLevelEdit: string = "Level Edit";
   btnSave : boolean  = true;
@@ -144,6 +144,11 @@ export class LevelNodeEditComponent implements OnInit {
     this.hideEditButtons();
   }
 
+
+  closePopup() {
+    this.dialogRef.close();
+  }
+
   hideEditButtons(){
 
 
@@ -156,7 +161,7 @@ export class LevelNodeEditComponent implements OnInit {
       this.thDelete= true;  
       this.TabNodeEdit = "Node Edit";
       this.TabLevelEdit = "Level Edit";
-      this.tabIndex = 0;
+      this.tabIndex = 1;
       this.btnSave= true;  
       this.btnDelete= true;  
 
@@ -191,8 +196,8 @@ export class LevelNodeEditComponent implements OnInit {
     let obj2: any = [];
     values.forEach(listV => {
       let obj = {
-        name: listV,
-        value: listV
+        name: listV.trim(),
+        value: listV.trim()
       }
       obj2.push(obj);
     });
@@ -261,7 +266,10 @@ export class LevelNodeEditComponent implements OnInit {
   getNodeAttributesData(NodeID: any) {
 
     this.service.getNodeAttributesData(NodeID).subscribe(data => {
+      this.spinner.show();
       this.formDesignData = data;
+      this.getNodeAttributes(this.NodeData.levelID);
+      this.spinner.hide();
     });
   }
 
@@ -272,7 +280,7 @@ export class LevelNodeEditComponent implements OnInit {
     this.service.getNodeAttributes(NodelevelID).subscribe(data => {
       this.formDesign = data;
 
-      this.getNodeAttributesData(this.NodeData.nodeID);
+      //  this.getNodeAttributesData(this.NodeData.nodeID);
 
       this.formDesign.forEach((element, index) => {
 
@@ -492,6 +500,16 @@ export class LevelNodeEditComponent implements OnInit {
       this.UserfieldTypes = data;
       this.spinner.hide();
     });
+  }
+
+  DisableEditandDelete(item: any): Boolean {
+
+    if (item.friendlyname == "Name" || item.friendlyname == "Description") {
+      return false
+    }
+    else {
+      return true
+    }
   }
 
   deleteLevel(){

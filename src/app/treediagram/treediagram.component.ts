@@ -4,9 +4,9 @@ import { Observable } from 'rxjs';
 import { LevelAddComponent } from '../hierarchy-management/level-add/level-add.component';
 import { LevelNodeEditComponent } from '../hierarchy-management/level-node-edit/level-node-edit.component';
 import { NodeAddComponent } from '../hierarchy-management/node-add/node-add.component';
-
+import { TreeItemDropEvent, DropPosition, TreeItemLookup, DropAction } from '@progress/kendo-angular-treeview';
 import { TreediagramService } from '../treediagram.service';
-
+const isFile = (name: string) => name.split('.').length > 1;
 
 export interface FormDataLevel {
   levelName: string;
@@ -26,6 +26,8 @@ export class TreediagramComponent implements OnInit {
 
 
   public treenodes: Observable<any[]> | any;
+  public allParentNodes = [];
+  public expandedKeys: any[] = this.allParentNodes.slice();
   treeData: any;
   NodeAdd: any;
   levelAdd:  any;
@@ -43,8 +45,8 @@ export class TreediagramComponent implements OnInit {
 
   public ngOnInit(): void {
     // this.treenodes = this.treediagramService.fetchNodes();
-    this.treenodes = this.treediagramService.getNodes(this.treeData.treeID);
-
+    this.treenodes = this.treediagramService.getNodes(this.treeData.treeID); 
+    this.getAllParentTextProperties(this.treenodes);
     this.treediagramService.getNodes(this.treeData.treeID).subscribe(data => {
       this.NodeLevelName  = data;
    });
@@ -52,6 +54,7 @@ export class TreediagramComponent implements OnInit {
    this.hideEditButtons();
   }
  
+
   hideEditButtons(){
 
     if(this.treeData.ViewEdit == 1){
@@ -111,7 +114,6 @@ export class TreediagramComponent implements OnInit {
       console.log('The dialog was closed');
     });
 
-    //console.log(event.dataItem.nodeID);
   }
 
   openDialogAdd(): void {
@@ -125,13 +127,34 @@ export class TreediagramComponent implements OnInit {
       nodeDescription: ""    
     }
 
-    const dialogRef = this.dialog.open(NodeAddComponent, { width: '60%', height: '70%', data: this.NodeAdd, disableClose: true }
+    const dialogRef = this.dialog.open(NodeAddComponent, { width: '60%',  data: this.NodeAdd, disableClose: true }
 
     );
 
     dialogRef.afterClosed().subscribe(result => {
       this.treenodes = this.treediagramService.getNodes(this.treeData.treeID);
       console.log('The dialog was closed');
+    });
+  }
+
+  public expandNodes() {
+    this.expandedKeys = this.allParentNodes.slice();
+  }
+
+  public collapseNodes() {
+    this.expandedKeys = [];
+    // this.treenodes = this.treediagramService.getNodes(this.treeData.treeID);
+  }
+
+
+  public getAllParentTextProperties(items: Array<any>) {
+    items.forEach((data) => {
+      if (data) {
+        data.forEach((i) => {
+          this.allParentNodes.push(i.nodeName);
+        });
+        this.getAllParentTextProperties(data);
+      }
     });
   }
 
@@ -155,7 +178,7 @@ export class TreediagramComponent implements OnInit {
       ReportUrl: "",
     }
 
-    const dialogRef = this.dialog.open(LevelAddComponent, { width: '60%', height: '90%', data: this.levelAdd, disableClose: true }
+    const dialogRef = this.dialog.open(LevelAddComponent, { width: '60%',  data: this.levelAdd, disableClose: true }
 
     );
 

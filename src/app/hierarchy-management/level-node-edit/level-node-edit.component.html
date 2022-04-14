@@ -1,5 +1,9 @@
-
-<h1 mat-dialog-title>Level/Node Edit</h1>
+<div style="margin-left: -1%;">
+    <button mat-icon-button color="warn" (click)="closePopup()">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+<!-- <h1 mat-dialog-title>Level/Node Edit</h1> -->
 <div mat-dialog-content>
     <mat-tab-group animationDuration="0ms" [selectedIndex]="tabIndex">
         <mat-tab label={{TabLevelEdit}}>
@@ -29,6 +33,59 @@
                 <button mat-button cdkFocusInitial  (click)="deleteLevel()"
                 class="btn btn-md btn-primary"  >Delete Level</button>
             </div>
+
+            <h1 mat-dialog-title>Node Field Attributes</h1> 
+
+            <div class="form-group">
+                <kendo-grid [kendoGridBinding]="service.LevelMetadata" [pageSize]="5" [pageable]="true"
+                    [filterable]="true" [sortable]="true" [groupable]="false" [resizable]="true">
+
+                    <kendo-grid-column field="friendlyname" title="Field Name" [width]="6">
+                    </kendo-grid-column>
+
+                    <kendo-grid-column field="questionName" title="Question Name" [width]="6">
+                    </kendo-grid-column>
+
+                    <!-- <kendo-grid-column field="description" title="Description" [width]="6">
+                    </kendo-grid-column> -->
+
+                    <kendo-grid-column field="recognitionType" title="Field Type" [width]="6">
+                    </kendo-grid-column>
+
+                    <kendo-grid-column [width]="1" *ngIf="thEdit">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <button mat-icon-button (click)="clickEdit(dataItem)" *ngIf="DisableEditandDelete(dataItem)">
+                                <mat-icon matTooltip="Edit" class="mat-18" style="color: #016000;">edit
+                                </mat-icon>
+                            </button>
+                        </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column [width]="1" *ngIf="thDelete">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <button mat-icon-button (click)="clickDelete(dataItem)" *ngIf="DisableEditandDelete(dataItem)">
+                                <mat-icon matTooltip="Delete" class="mat-18" style="color: #ff0000;">delete
+                                </mat-icon>
+                            </button>
+                        </ng-template>
+                    </kendo-grid-column>
+
+                </kendo-grid>
+            </div>
+            <!-- <div class="form-group">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header card-header-rose card-header-icon">
+                            <h4 class="card-title">List of Node Field Attributes</h4>
+                        </div>
+                        <div class="card-body">
+            
+
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+<!-- 
             <h1 mat-dialog-title>Node Field Attributes</h1> 
             <div class="form-group">
                 <div class="col-md-12">          
@@ -58,7 +115,7 @@
 
                     <pagination-controls (pageChange)="p = $event"></pagination-controls> 
                 </div>
-            </div>
+            </div> -->
 
             <div class="form-group" *ngIf="divAtrributes" >
                 <div class="form-group">

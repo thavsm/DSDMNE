@@ -8,6 +8,7 @@ import { TreediagramService } from 'src/app/treediagram.service';
 import { AddFormComponent } from '../form-capture/add-form/add-form.component';
 import { PageSizeItem } from "@progress/kendo-angular-grid";
 import { GroupDescriptor } from '@progress/kendo-data-query';
+
 declare var $: any;
 
 @Component({
