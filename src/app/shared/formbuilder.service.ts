@@ -80,8 +80,8 @@ export class FormbuilderService {
     return this.http.post(this.APIUrl+'FormTables',data,{responseType: 'text'});
   }
 
-  getCapturedForms(){
-    return this.http.get<any>(this.APIUrl+'CapturedForms');
+  getCapturedForms(LocationID:any,RoleID:any){
+    return this.http.get<any>(this.APIUrl+LocationID+'/'+RoleID+'/CapturedForms');
   }
 
   addCapturedForms(data:any){
@@ -250,6 +250,29 @@ export class FormbuilderService {
 
   DeleteFormCategory(formCategoryID:any){
     return this.http.delete(this.APIUrl+formCategoryID+'/FormCategory',{responseType: 'text'});
+  }
+
+  GetFieldsForCapturePerPage(RoleID:any,pageGuID:any):Observable<any[]>{
+    return this.http.get<any>(this.APIUrl+'forms/'+RoleID+'/pages/'+pageGuID+'/fieldsForCapture');
+  }
+
+  checkIfFieldAssignedToRole(FieldID:any,RoleID:any){
+    return this.http.get(this.APIUrl + FieldID + '/' + RoleID +'/AssignedField',{responseType: 'text'})
+  }
+
+
+  checkIfParentToAssignedField(FieldID:any,RoleID:any){
+    return this.http.get(this.APIUrl + FieldID  +'/' + RoleID +'/ParentToAssignedField',{responseType: 'text'})
+  }
+
+  
+  checkIfFieldAssignedByIndicator(FieldID:any,IndicatorID:any){
+    return this.http.get(this.APIUrl + FieldID + '/' + IndicatorID +'/AssignedFieldIndicators',{responseType: 'text'})
+  }
+
+
+  checkIfParentToAssignedByIndicator(FieldID:any,IndicatorID:any){
+    return this.http.get(this.APIUrl + FieldID  +'/' + IndicatorID +'/ParentToAssignedFieldIndicator',{responseType: 'text'})
   }
 //#endregion
 }

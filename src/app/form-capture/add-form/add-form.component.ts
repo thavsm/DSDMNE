@@ -90,8 +90,14 @@ export class AddFormComponent implements OnInit {
 
   pageStatus: any;
 
+  IndicatorData: any;
+
+  isViewOnly:boolean=false;
+
   constructor(public dialog: MatDialog, private service: FormbuilderService, private spinner: NgxSpinnerService, public dialogRef: MatDialogRef<FormAddComponent>, private userService: UserService) {
     this.formData = JSON.parse(localStorage.getItem('formCaptureDetails') || '{}');
+    this.IndicatorData = localStorage.getItem('IndicatorData') || '';
+    //this.IndicatorData='80';
     this.tabIndex = parseInt(localStorage.getItem('tabIndex'));
     this.ClickedRow = function (index) {
       this.HighlightRow = index;
@@ -99,21 +105,35 @@ export class AddFormComponent implements OnInit {
     this.ClickedRowComment = function (i) {
       this.HighlightRowComment = i;
     }
+    localStorage.setItem('fieldNameAttach', "");
+    localStorage.setItem('fieldNamePhoto', "");
   }
 
   ngOnInit(): void {
     this.spinner.show();
     localStorage.setItem('cloneNumberForEdit', "0");
-    this.refreshPageList();
-    this.refreshAttachmentList();
-    this.refreshPhotoList();
-    this.refreshCommentList();
     this.userService.getUserProfile().subscribe(
       res => {
         this.userDetail = res;
+        let userRoleID = this.userDetail.formData.role;
+        this.userService.getFormsRole(userRoleID).subscribe(formRole => {
+          formRole.forEach(role => {
+            if (role.id===this.formData.formID && role.capture == false) {
+              this.isViewOnly=true;
+            }
+          });
+        });
+        this.refreshPageList();
+        this.refreshAttachmentList();
+        this.refreshPhotoList();
+        this.refreshCommentList();
       },
       err => {
         console.log(err);
+        this.refreshPageList();
+        this.refreshAttachmentList();
+        this.refreshPhotoList();
+        this.refreshCommentList();
       },
     );
   }
@@ -138,7 +158,7 @@ export class AddFormComponent implements OnInit {
           if (element.groupGUID !== "" && element.groupGUID !== "string" && element.fieldType.value !== "repeatgroup" && element.fieldType.value === "group" && element.fieldType.value !== "subSection" && element.fieldType.value !== "PageTitle") {
             let groupValues = element.groupGUID;
             groupValues.forEach(e => {
-              if (e.fieldValidations[0].isRequired === true && e.data === " ") {
+              if (e.fieldValidations[0].isRequired === true && e.isAssigned===1 && e.data === " ") {
                 errorMessage = errorMessage + e.questionName + ",";
               }
               if (e.parentFieldName === element.groupGUID) {
@@ -151,7 +171,7 @@ export class AddFormComponent implements OnInit {
                 val.forEach(listValue => {
                   s += listValue.name + ","
                 });
-                e.data = s;
+               e.data = s;
               }
               obj.push(e);
               element.groupGUID = "";
@@ -160,7 +180,7 @@ export class AddFormComponent implements OnInit {
           }
           else {
             element.groupGUID = "";
-            if (element.fieldValidations[0].isRequired === true && element.data === " ") {
+            if (element.fieldValidations[0].isRequired === true && element.isAssigned===1 && element.data === " ") {
               errorMessage = errorMessage + element.questionName + ",";
             }
           }
@@ -180,7 +200,7 @@ export class AddFormComponent implements OnInit {
             e.data = s;
           }
           e.groupGUID = "";
-          if (e.fieldValidations[0].isRequired === true && e.data === " ") {
+          if (e.fieldValidations[0].isRequired === true && e.isAssigned===1 && e.data === " ") {
             errorMessage = errorMessage + e.questionName + ",";
           }
           obj.push(e);
@@ -200,7 +220,7 @@ export class AddFormComponent implements OnInit {
           }
           obj.push(field);
         }
-        if (field.fieldValidations[0].isRequired === true && field.data === " ") {
+        if (field.fieldValidations[0].isRequired === true && field.isAssigned===1 && field.data === " ") {
           errorMessage = errorMessage + field.questionName + ","
         }
       }
@@ -227,7 +247,7 @@ export class AddFormComponent implements OnInit {
                 index = i;
                 return i;
               }
-            });
+           });
             if ((index !== -1) && ((index - 1) !== -1)) {
               this.currentPage = this.pages[index - 1];
               this.pageStatus = this.currentPage.name;
@@ -299,7 +319,7 @@ export class AddFormComponent implements OnInit {
           if (element.groupGUID !== "" && element.groupGUID !== "string" && element.fieldType.value !== "repeatgroup" && element.fieldType.value === "group" && element.fieldType.value !== "subSection" && element.fieldType.value !== "PageTitle") {
             let groupValues = element.groupGUID;
             groupValues.forEach(e => {
-              if (e.fieldValidations[0].isRequired === true && e.data === " ") {
+              if (e.fieldValidations[0].isRequired === true && element.isAssigned===1 && e.data === " ") {
                 errorMessage = errorMessage + e.questionName + ",";
               }
               if (e.parentFieldName === element.groupGUID) {
@@ -321,7 +341,7 @@ export class AddFormComponent implements OnInit {
           }
           else {
             element.groupGUID = "";
-            if (element.fieldValidations[0].isRequired === true && element.data === " ") {
+            if (element.fieldValidations[0].isRequired === true && element.isAssigned===1 && element.data === " ") {
               errorMessage = errorMessage + element.questionName + ",";
             }
           }
@@ -341,7 +361,7 @@ export class AddFormComponent implements OnInit {
             e.data = s;
           }
           e.groupGUID = "";
-          if (e.fieldValidations[0].isRequired === true && e.data === " ") {
+          if (e.fieldValidations[0].isRequired === true && e.isAssigned===1  && e.data === " ") {
             errorMessage = errorMessage + e.questionName + ",";
           }
           obj.push(e);
@@ -361,7 +381,7 @@ export class AddFormComponent implements OnInit {
           }
           obj.push(field);
         }
-        if (field.fieldValidations[0].isRequired === true && field.data === " ") {
+        if (field.fieldValidations[0].isRequired === true && field.isAssigned===1 && field.data === " ") {
           errorMessage = errorMessage + field.questionName + ","
         }
       }
@@ -439,7 +459,7 @@ export class AddFormComponent implements OnInit {
           if (element.groupGUID !== "" && element.groupGUID !== "string" && element.fieldType.value !== "repeatgroup" && element.fieldType.value === "group" && element.fieldType.value !== "subSection" && element.fieldType.value !== "PageTitle") {
             let groupValues = element.groupGUID;
             groupValues.forEach(e => {
-              if (e.fieldValidations[0].isRequired === true && e.data === " ") {
+              if (e.fieldValidations[0].isRequired === true && e.isAssigned===1 && e.data === " ") {
                 errorMessage = errorMessage + e.questionName + ",";
               }
               if (e.parentFieldName === element.groupGUID) {
@@ -461,7 +481,7 @@ export class AddFormComponent implements OnInit {
           }
           else {
             element.groupGUID = "";
-            if (element.fieldValidations[0].isRequired === true && element.data === " ") {
+            if (element.fieldValidations[0].isRequired === true && element.isAssigned===1 && element.data === " ") {
               errorMessage = errorMessage + element.questionName + ",";
             }
           }
@@ -481,7 +501,7 @@ export class AddFormComponent implements OnInit {
             e.data = s;
           }
           e.groupGUID = "";
-          if (e.fieldValidations[0].isRequired === true && e.data === " ") {
+          if (e.fieldValidations[0].isRequired === true && e.isAssigned===1 && e.data === " ") {
             errorMessage = errorMessage + e.questionName + ",";
           }
           obj.push(e);
@@ -501,7 +521,7 @@ export class AddFormComponent implements OnInit {
           }
           obj.push(field);
         }
-        if (field.fieldValidations[0].isRequired === true && field.data === " ") {
+        if (field.fieldValidations[0].isRequired === true && field.isAssigned===1&& field.data === " ") {
           errorMessage = errorMessage + field.questionName + ","
         }
       }
@@ -598,29 +618,23 @@ export class AddFormComponent implements OnInit {
   }
 
   refreshAttachmentList() {
-    this.spinner.show();
     this.service.getFormAttachments(this.formData.formCaptureID).subscribe(data => {
       this.attachmentList = data;
       this.totalNumAttachments = Object.keys(this.attachmentList).length;
-      this.spinner.hide();
     });
   }
 
   refreshPhotoList() {
-    this.spinner.show();
     this.service.getFormPhotos(this.formData.formCaptureID).subscribe(data => {
       this.photoList = data;
       this.totalNumPhotos = Object.keys(this.photoList).length
-      this.spinner.hide();
     });
   }
 
   refreshCommentList() {
-    this.spinner.show();
     this.service.getFormComments(this.formData.formCaptureID).subscribe(data => {
       this.commentList = data;
       this.totalNumComments = Object.keys(this.commentList).length
-      this.spinner.hide();
     });
   }
 
@@ -639,7 +653,7 @@ export class AddFormComponent implements OnInit {
   getDesignPerPage(pageGUID: any) {
     this.spinner.show();
     localStorage.setItem('cloneNumberForEdit', "0");
-    this.service.getFormFieldsPerPage(this.formData.formID, pageGUID).subscribe(formFields => {
+    this.service.GetFieldsForCapturePerPage(this.userDetail.formData.role, pageGUID).subscribe(formFields => {
       this.formDesign = formFields;
 
       this.formDesign.forEach((element, index) => {
@@ -705,37 +719,22 @@ export class AddFormComponent implements OnInit {
         }
 
         if (this.formData.state === 'edit') {
-          element["isAssigned"] = 1;
           if (element.fieldType.value !== "subSection" && element.fieldType.value !== "section" && element.fieldType.value !== "group" && element.fieldType.value !== "repeatgroup" && element.fieldType.value !== "attachment" && element.fieldType.value !== "PageTitle" && element.parentFieldName === "") {
-            this.service.getFormAttachCount(element.fieldName, this.formData.formCaptureID).subscribe(attachCount => {
-              element["attachCount"] = Number(attachCount);
-              this.service.getFormPhotoCount(element.fieldName, this.formData.formCaptureID).subscribe(photoCount => {
-                element["photoCount"] = Number(photoCount);
-                this.service.getFormCommentCount(element.fieldName, this.formData.formCaptureID).subscribe(commentCount => {
-                  element["commentCount"] = Number(commentCount);
-                  if (element.isPublished === 1) {
-                    this.service.getMetadataValue(pageGUID, element.fieldName, this.formData.formCaptureID).subscribe(res => {
-                      if (element.fieldType.value === "checkbox") {
-                        element["data"] = Boolean(res);
-                      }
-                      else if (element.fieldType.value === "link multi select") {
-                        element["data"] = this.splitString(res) as Array<string>;
-                      }
-                      else {
-                        element["data"] = res;
-                      }
-                    });
-                  }
-                  else {
-                    element["data"] = "";
-                  }
-                });
-              });
+            this.service.getMetadataValue(pageGUID, element.fieldName, this.formData.formCaptureID).subscribe(res => {
+              if (element.fieldType.value === "checkbox") {
+                element["data"] = Boolean(res);
+              }
+              else if(element.fieldType.value === "link multi select"){
+                element["data"] = this.splitString(res) as Array<string>;
+              }
+              else{
+                element["data"] = res;
+              }
             });
           }
 
           if (element.listValue !== "") {
-            this.formDesign[index].listValue = this.splitString(element.listValue);
+              this.formDesign[index].listValue = this.splitString(element.listValue);
           }
 
           if (element.fieldType.value === "repeatgroup") {
@@ -750,38 +749,24 @@ export class AddFormComponent implements OnInit {
             this.service.getFieldsInGroup(element.groupGUID).subscribe(kids => {
               children = kids;
               children.forEach((field, i) => {
-                field["isAssigned"] = 1;
                 if (field.fieldType.value !== "subSection" && field.fieldType.value !== "section" && field.fieldType.value !== "group" && field.fieldType.value !== "repeatgroup" && field.fieldType.value !== "attachment" && field.fieldType.value !== "PageTitle") {
                   this.service.getGroupType(field.parentFieldName).subscribe(name => {
                     if (name === "group" || name === "section") {
-                      this.service.getFormAttachCount(field.fieldName, this.formData.formCaptureID).subscribe(sectionattachCount => {
-                        field["attachCount"] = Number(sectionattachCount);
-                        this.service.getFormPhotoCount(field.fieldName, this.formData.formCaptureID).subscribe(sectionphotoCount => {
-                          field["photoCount"] = Number(sectionphotoCount);
-                          this.service.getFormCommentCount(field.fieldName, this.formData.formCaptureID).subscribe(sectioncommentCount => {
-                            field["commentCount"] = Number(sectioncommentCount);
-                            if (field.isPublished === 1) {
-                              this.service.getMetadataValue(pageGUID, field.fieldName, this.formData.formCaptureID).subscribe(res => {
-                                if (field.fieldType.value === "checkbox") {
-                                  field["data"] = Boolean(res);
-                                }
-                                else if (field.fieldType.value === "link multi select") {
-                                  field["data"] = this.splitString(res) as Array<string>;
-                                }
-                                else {
-                                  field["data"] = res;
-                                }
-                              });
-                            }
-                            else {
-                              field["data"] = "";
-                            }
-                          });
-                        });
+                      this.service.getMetadataValue(pageGUID, field.fieldName, this.formData.formCaptureID).subscribe(res => {
+                        if (field.fieldType.value === "checkbox") {
+                          field["data"] = Boolean(JSON.parse(res));
+                        }
+                        else if(field.fieldType.value === "link multi select"){
+                          field["data"] = this.splitString(res) as Array<string>;
+                        }
+                        else{
+                          field["data"] = res;
+                        }
                       });
                     }
-                  });
+                  });        
                 }
+
                 field.fieldStyles[0].height = Math.ceil(parseInt(field.fieldStyles[0].height) / 23.2);
 
                 if (field.fieldType.value === "repeatgroup") {
@@ -799,34 +784,19 @@ export class AddFormComponent implements OnInit {
                   this.service.getFieldsInGroup(field.groupGUID).subscribe(result => {
                     subChildren = result;
                     subChildren.forEach((subField, j) => {
-                      subField["isAssigned"] = 1;
                       if (subField.fieldType.value !== "subSection" && subField.fieldType.value !== "section" && subField.fieldType.value !== "group" && subField.fieldType.value !== "repeatgroup" && subField.fieldType.value !== "attachment" && subField.fieldType.value !== "PageTitle") {
                         this.service.getGroupType(subField.parentFieldName).subscribe(name => {
                           if (name === "group" || name === "section") {
-                            this.service.getFormAttachCount(subField.fieldName, this.formData.formCaptureID).subscribe(subattachCount => {
-                              subField["attachCount"] = Number(subattachCount);
-                              this.service.getFormPhotoCount(subField.fieldName, this.formData.formCaptureID).subscribe(subphotoCount => {
-                                subField["photoCount"] = Number(subphotoCount);
-                                this.service.getFormCommentCount(subField.fieldName, this.formData.formCaptureID).subscribe(subcommentCount => {
-                                  subField["commentCount"] = Number(subcommentCount);
-                                  if(subField.isPublished===1){
-                                    this.service.getMetadataValue(pageGUID, subField.fieldName, this.formData.formCaptureID).subscribe(res => {
-                                      if (subField.fieldType.value === "checkbox") {
-                                        subField["data"] = Boolean(res);
-                                      }
-                                      else if (subField.fieldType.value === "link multi select") {
-                                        subField["data"] = this.splitString(res) as Array<string>;
-                                      }
-                                      else {
-                                        subField["data"] = res;
-                                      }
-                                    });
-                                  }
-                                  else{
-                                    subField["data"]="";
-                                  }
-                                });
-                              });
+                            this.service.getMetadataValue(pageGUID, subField.fieldName, this.formData.formCaptureID).subscribe(res => {
+                              if (subField.fieldType.value === "checkbox") {
+                                subField["data"] = Boolean(JSON.parse(res));
+                              }
+                              else if(subField.fieldType.value === "link multi select"){
+                                subField["data"] = this.splitString(res) as Array<string>;
+                              }
+                              else{
+                                subField["data"] = res;
+                              }
                             });
                           }
                         });
@@ -862,7 +832,7 @@ export class AddFormComponent implements OnInit {
     if (localStorage.getItem('cloneNumberForEdit') === "0") {
       data.forEach(field => {
         field.listValue = "";
-        if (field.fieldType.value === "link multi select") {
+       if (field.fieldType.value === "link multi select") {
           let val = field.data;
           let s = "";
           val.forEach(listValue => {
@@ -1041,7 +1011,7 @@ export class AddFormComponent implements OnInit {
       reader.onload = function (readerEvt: any) {
         var arrayBuffer = readerEvt.target.result.toString().split('base64,')[1];
         document.querySelector('#hidden_upload_item').innerHTML = arrayBuffer;
-        this.Proceed();
+        //this.Proceed();
       }.bind(this);
       reader.readAsDataURL(this.file);
     }
@@ -1081,6 +1051,7 @@ export class AddFormComponent implements OnInit {
             //this.fileInput = ElementRef;
             this.refreshAttachmentList();
             localStorage.setItem('fieldNameAttach', "");
+            localStorage.setItem('fieldNamePhoto', "");
             this.getDesignPerPage(this.currentPage.pageGUID);
             this.spinner.hide();
           });
@@ -1114,6 +1085,7 @@ export class AddFormComponent implements OnInit {
           // this.fileInput = null;
           this.refreshAttachmentList();
           localStorage.setItem('fieldNameAttach', "");
+          localStorage.setItem('fieldNamePhoto', "");
           this.getDesignPerPage(this.currentPage.pageGUID);
           this.spinner.hide();
         });
@@ -1126,8 +1098,9 @@ export class AddFormComponent implements OnInit {
   }
 
   clickDownloadPhoto(data: any) {
-
-    const file = new Blob([this.base64toBlob(data.photo, 'image/' + data.postedFileName.split('.').pop())], { type: 'image/' + data.postedFileName.split('.').pop() });
+    console.log(data)
+    alert(data.photoDesc.split('.').pop());
+    const file = new Blob([this.base64toBlob(data.photo, 'image/' + data.photoDesc.split('.').pop())], { type: 'image/' + data.photoDesc.split('.').pop()});
     FileSaver.saveAs(file, data.postedFileName);
   }
 
@@ -1139,7 +1112,7 @@ export class AddFormComponent implements OnInit {
       reader.onload = function (readerEvt: any) {
         var arrayBuffer = readerEvt.target.result.toString().split('base64,')[1];
         document.querySelector('#hidden_upload_itemPhoto2').innerHTML = arrayBuffer;
-        this.Proceed();
+        //this.Proceed();
       }.bind(this);
       reader.readAsDataURL(this.photoFile);
     }
@@ -1155,6 +1128,10 @@ export class AddFormComponent implements OnInit {
       photoName = localStorage.getItem('fieldNamePhoto').toString();
     }
     if (photoName !== "") {
+      var fileType=this.photoFile.name.split('.').pop();
+     if(fileType=='jpg'){
+        fileType='jpeg';
+      }
       if (this.photoFile !== null) {
         this.spinner.show();
         var item = document.querySelector('#hidden_upload_itemPhoto2').innerHTML;
@@ -1168,7 +1145,7 @@ export class AddFormComponent implements OnInit {
             "fileName": "",
             "postedFileName": photoName + '_' + res,
             "createDate": "string",
-            "photoDesc": this.photoFile.name.substring(0, this.photoFile.name.indexOf('.')),
+            "photoDesc": "."+fileType,
             "userID": this.userDetail.formData.userID,
             "formCaptureID": this.formData.formCaptureID
           }
@@ -1178,6 +1155,7 @@ export class AddFormComponent implements OnInit {
             this.photoFileAttr = 'Choose Photo(Max Size:4MB)';
             //this.photoInput = null;
             this.refreshPhotoList();
+            localStorage.setItem('fieldNameAttach', "");
             localStorage.setItem('fieldNamePhoto', "");
             this.getDesignPerPage(this.currentPage.pageGUID);
             this.spinner.hide();
@@ -1190,6 +1168,10 @@ export class AddFormComponent implements OnInit {
     }
     else {
       if (this.photoFile !== null) {
+        var fileType=this.photoFile.name.split('.').pop();
+        if(fileType=='jpg'){
+          fileType='jpeg';
+        }
         this.spinner.show();
         var item = document.querySelector('#hidden_upload_itemPhoto2').innerHTML;
         let obj = {
@@ -1201,7 +1183,7 @@ export class AddFormComponent implements OnInit {
           "fileName": "",
           "postedFileName": this.photoFile.name.substring(0, this.photoFile.name.indexOf('.')),
           "createDate": "string",
-          "photoDesc": this.photoFile.name.substring(0, this.photoFile.name.indexOf('.')),
+          "photoDesc": "."+fileType,
           "userID": this.userDetail.formData.userID,
           "formCaptureID": this.formData.formCaptureID
         }
@@ -1211,6 +1193,7 @@ export class AddFormComponent implements OnInit {
           this.photoFileAttr = 'Choose Photo(Max Size:4MB)';
           //this.photoInput = null;
           this.refreshPhotoList();
+          localStorage.setItem('fieldNameAttach', "");
           localStorage.setItem('fieldNamePhoto', "");
           this.getDesignPerPage(this.currentPage.pageGUID);
           this.spinner.hide();

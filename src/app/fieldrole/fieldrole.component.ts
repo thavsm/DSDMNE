@@ -70,6 +70,7 @@ export class FieldroleComponent implements OnInit {
       this.treeService.assignIndicators(this.assigned,this.roleID,this.treeID).subscribe(res=>{
         this.showNotification('top', 'center', 'Assigned Indicators Successfully!', '', 'success');
         this.myStepper.previous();
+        this.myStepper.previous();
       });
     }
   }

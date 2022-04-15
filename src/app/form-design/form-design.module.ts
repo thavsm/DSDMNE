@@ -16,8 +16,6 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import {NgxSpinnerModule} from 'ngx-spinner';
 import { MatInputModule } from '@angular/material/input';
 import {MatListModule} from '@angular/material/list'
-
-
 @NgModule({
   declarations: [
     FormDesignerComponent

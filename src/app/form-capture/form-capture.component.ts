@@ -91,19 +91,19 @@ export class FormCaptureComponent implements OnInit {
     this.spinner.show();
     this.service.getPublishedListOfForms().subscribe(data => {
       let allPublishedForms = data;
-      this.formList = data;
+      //this.formList = data;
       let formsLinkedToUser = [];
       let userRoleID = this.userDetail.formData.role;
       allPublishedForms.forEach(form => {
-        this.userService.getFormRoles(form.formID).subscribe(formRole => {
+        this.userService.getFormsRole(userRoleID).subscribe(formRole => {
           formRole.forEach(role => {
-            if (role.id === userRoleID && role.checked === 1) {
+            if (role.id===form.formID && role.capture == true) {
               formsLinkedToUser.push(form);
             }
           });
         });
       });
-      //this.formList = formsLinkedToUser;
+      this.formList = formsLinkedToUser;
       this.spinner.hide();
     });
   }

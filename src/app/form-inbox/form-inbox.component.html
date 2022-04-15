@@ -50,7 +50,7 @@
                   <kendo-grid-column field="sentBy" title="Sent By" [width]="18">
                   </kendo-grid-column>
         
-                  <kendo-grid-column field="step" title="Step" [width]="10">
+                  <kendo-grid-column field="step" title="" [width]="10">
                     <ng-template kendoGridCellTemplate let-dataItem>
                       <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.step}}</u></a>
                     </ng-template>
@@ -108,5 +108,5 @@
     </div>
   </div>
   <ngx-spinner bdColor="rgba(	237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
-    <p style="font-size: 20px; color: black">Processing...</p>
+    <p style="font-size: 20px; color: black">Loading Form...</p>
   </ngx-spinner>

@@ -106,7 +106,6 @@ MatNativeDateModule,
 NgxSpinnerModule
 ],
 declarations: [
-
   ]
 })
 export class MaterialModule {}

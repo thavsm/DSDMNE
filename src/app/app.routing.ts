@@ -66,6 +66,10 @@ export const AppRoutes: Routes = [
         loadChildren: () => import('./form-capture/form-capture.module').then(m => m.FormCaptureModule)
       },
       {
+        path: 'formExport',
+        loadChildren: () => import('./form-export/form-export.module').then(m => m.FormExportModule)
+      },
+      {
         path: 'formInbox',
         loadChildren: () => import('./form-inbox/form-inbox.module').then(m => m.FormInboxModule)
       },
