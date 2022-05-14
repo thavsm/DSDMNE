@@ -1,0 +1,96 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 ml-auto mr-auto">
+                <div class="card">
+                    <div class="card-header card-header-rose card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">send_to_mobile</i>
+                        </div>
+                        <h4 class="card-title">Form Template Export</h4>
+                    </div>
+                    <div class="card-body p-2">
+                        <div class="col">
+                            <div>
+                                <hr>
+                                <mat-stepper orientation="vertical" [linear]="true" #stepper>
+                                    <mat-step [stepControl]="firstFormGroup">
+                                        <form [formGroup]="firstFormGroup">
+                                            <ng-template matStepLabel>Select a Form Category</ng-template>
+                                            <mat-form-field appearance="outline" style="width: 500px;">
+                                                <mat-label>Form Category</mat-label>
+                                                <mat-select [(ngModel)]="categoryID" matInput formControlName="category"
+                                                    required>
+                                                    <mat-option *ngFor="let category of formCategoryList"
+                                                        [value]="category.formCategoryID">
+                                                        {{category.name}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                            <div>
+                                                <button class="btn btn-md btn-primary" mat-button matStepperNext
+                                                    (click)="filterForms()">Next</button>
+                                            </div>
+                                        </form>
+                                    </mat-step>
+                                    <mat-step [stepControl]="secondFormGroup">
+                                        <form [formGroup]="secondFormGroup">
+                                            <ng-template matStepLabel>Select a Form</ng-template>
+                                            <mat-form-field appearance="outline" style="width: 500px;">
+                                                <mat-label>Form</mat-label>
+                                                <mat-select [(ngModel)]="formID" matInput formControlName="form"
+                                                    required>
+                                                    <mat-option *ngFor="let form of formList" [value]="form.formID">
+                                                        {{form.displayName}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                            <div>
+                                                <button class="btn btn-md btn-primary" mat-button
+                                                    matStepperPrevious>Back</button>
+                                                <button class="btn btn-md btn-primary" mat-button
+                                                    matStepperNext (click)="filterFormQuestions()">Next</button>
+                                            </div>
+                                        </form>
+                                    </mat-step>
+                                    <mat-step>
+                                        <ng-template matStepLabel>Select Questions</ng-template>
+                                        <hr>
+                                        <div>
+                                            <dual-list [source]="source" [(destination)]="assigned" height="300px"
+                                                key="fieldID" display="questionName" [filter]="true"
+                                                [format]="format">
+                                            </dual-list>
+                                            <hr>
+                                            <button class="btn btn-md btn-primary" mat-button
+                                                matStepperPrevious>Back</button>
+                                            <button class="btn btn-md btn-primary" mat-button
+                                                matStepperNext>Next</button>
+                                            <!-- <button mat-button (click)="stepper.reset()">Reset</button> -->
+                                        </div>
+                                    </mat-step>
+                                    <mat-step>
+                                        <ng-template matStepLabel>Export Questions to Excel</ng-template>
+                                        <h5>Are you sure you want to export these Questions to an Excel sheet?</h5>
+                                        <mat-list>
+                                            <mat-list-item *ngFor="let assign of assigned">
+                                                -> {{assign.questionName}}
+                                            </mat-list-item>
+                                        </mat-list>
+                                        <button class="btn btn-md" class="btn btn-md btn-primary" (click)="assign()">Yes</button>
+                                        <button class="btn btn-md btn-primary" mat-button
+                                            matStepperPrevious>Back</button>
+                                        <hr>
+                                    </mat-step>
+                                </mat-stepper>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ngx-spinner bdColor="rgba(	237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: black">Processing...</p>
+</ngx-spinner>

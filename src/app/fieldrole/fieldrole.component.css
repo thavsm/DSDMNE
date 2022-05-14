@@ -1,0 +1,12 @@
+::ng-deep .form-check, label {
+    color: black !important;
+}
+
+::ng-deep .mat-vertical-stepper-header{
+    pointer-events: none !important;
+  }
+
+::ng-deep .mat-list-item{
+    font-size: small !important;
+}
+

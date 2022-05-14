@@ -1,4 +1,4 @@
-    .radio {
+.radio {
 
     display: inline-flex;
 
@@ -120,17 +120,3 @@
        overflow-x: hidden !important;
        overflow-y: auto !important;
       }
-
-/* 
-      ::ng-deep .mat-select-panel .custom_hover.mat-option.mat-selected:not(.mat-option-multiple) {
-        background: #fff;
-      }
-      
-      ::ng-deep .mat-select-panel .custom_hover.mat-option.mat-selected:not(.mat-option-multiple):hover {
-        background: rgba(0, 0, 0, 0.04);
-      } */
-
-      /* ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
-        color: navy !important;
-      } */
-

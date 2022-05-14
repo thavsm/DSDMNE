@@ -71,8 +71,6 @@ import {NgxSpinnerModule} from 'ngx-spinner';
 import { PaginationService } from 'ngx-pagination';
 
 
-
-
 @NgModule({
 exports: [
 MatAutocompleteModule,
@@ -108,7 +106,7 @@ MatNativeDateModule,
 NgxSpinnerModule
 ],
 declarations: [
-]
+  ]
 })
 export class MaterialModule {}
 

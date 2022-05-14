@@ -62,7 +62,7 @@ export class FormListComponent implements OnInit {
 
   clickDelete(item: any) {
     Swal.fire({
-      title: 'Are you sure you want to delete ' + item.formName + ' form?',
+      title: "<h5 style='color:white;font-weight:400'> Are you sure you want to delete " + item.displayName + " form? </h5>",
       showCancelButton: true,
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
@@ -70,11 +70,12 @@ export class FormListComponent implements OnInit {
       position: 'top',
       allowOutsideClick: false,
       confirmButtonColor: '#000000',
-      cancelButtonColor: '#000000'
+      cancelButtonColor: '#000000',
+      background:'#CA0B00',
     }).then((result) => {
       if (result.value) {
         this.spinner.show();
-        this.service.archiveDynamicForm(item.formID).subscribe(data => {
+        this.service.archiveDynamicForm(item.formID,this.userDetail.formData.userID).subscribe(data => {
           this.spinner.hide();
           this.refreshFormsList();
           this.showNotification('top', 'center', 'Form Deleted Successfully!', '', 'success');
@@ -85,7 +86,7 @@ export class FormListComponent implements OnInit {
 
 
   openFormDesign(item: any): void {
-    if (item.isLocked === true) {
+    if (item.isLocked === true && this.userDetail.formData.userID!==item.lockedByUserID) {
       this.service.getLockedByUserName(item.lockedByUserID).subscribe(res=>{
         this.showNotification('top', 'center', 'This form is locked and being edited by '+res, '', 'danger');
       });
@@ -108,7 +109,9 @@ export class FormListComponent implements OnInit {
           dateLocked: item.dateLocked,
           dateLastModified: item.dateLastModified,
           lastModifiedByUserID: item.lastModifiedByUserID,
-          publishStatus:item.publishStatus
+          publishStatus:item.publishStatus,
+          DateArchived:item.DateArchived,
+          ArchivedByUserID:item.ArchivedByUserID
         };
         localStorage.setItem('formDesignInfo', JSON.stringify(myObj));
         this.userService.setMenuShow(false);
@@ -148,7 +151,9 @@ export class FormListComponent implements OnInit {
       dateLocked: "",
       dateLastModified: "",
       lastModifiedByUserID: 0,
-      publishStatus:0
+      publishStatus:0,
+      DateArchived:"",
+      ArchivedByUserID:""
     }
     const dialogRef = this.dialog.open(FormAddComponent, {
       width: '75%',

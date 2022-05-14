@@ -39,15 +39,15 @@
 
                         <button class="btn btn-sm btn-primary" (click)="publishPage()">Publish</button>
 
-                        <button class="btn btn-sm btn-primary" (click)="previewPage()">Preview</button>
+                        <!-- <button class="btn btn-sm btn-primary" (click)="previewPage()">Preview</button> -->
                     </div>
                     <div style="height: 10px;"></div>
                     <div style="width:500px;">
                         <h5>{{currentPage.name}}</h5>
-                        <mat-icon style="font-size:large;" matTooltip="Copy Page" (click)="copyPage()">
+                        <!-- <mat-icon style="font-size:large;" matTooltip="Copy Page" (click)="copyPage()">
                             content_copy</mat-icon>
                         <mat-icon style="font-size:large;" matTooltip="Paste Page" (click)="pastePage()">
-                            content_paste</mat-icon>
+                            content_paste</mat-icon> -->
                     </div>
 
                     <!-- Form Builder -->
@@ -81,7 +81,7 @@
                                                     </td>
                                                     <td mat-cell>
                                                         <div style="font-size: 12px;">
-                                                            <mat-form-field appearance="outline">
+                                                            <mat-form-field appearance="standard">
                                                                 <input class="form-control" matInput type="text"
                                                                     [(ngModel)]="item.questionName"
                                                                     style="width: 300px;color: black;"
@@ -1699,7 +1699,7 @@
                                                     </td>
                                                     <td mat-cell>
                                                         <div style="font-size: 12px;">
-                                                            <mat-form-field appearance="outline">
+                                                            <mat-form-field appearance="standard">
                                                                 <input class="form-control" matInput type="text"
                                                                     [(ngModel)]="item.questionName"
                                                                     style="width: 300px;color: black;"
@@ -2627,7 +2627,7 @@
                                                 </tr>
                                             </table>
                                         </mat-tab>
-                                        <mat-tab label="Attachments">
+                                        <!-- <mat-tab label="Attachments">
                                             <br>
                                             <table mat-table>
                                                 <tr mat-row>
@@ -2659,7 +2659,7 @@
                                                 </td>
                                             </table>
 
-                                        </mat-tab>
+                                        </mat-tab> -->
                                     </mat-tab-group>
                                 </div>
                                 <!--#endregion -->
@@ -2686,10 +2686,10 @@
                 <div style="position: fixed;">
                     <h5 matTooltip="1.To view a page: Click on the eye icon
                     2.To delete a page: Click on the bin icon"><b>Form Pages</b></h5>
-                    <div class="example-list" style="text-align:center;width: 170px;background-color:rgb(249, 241, 230);" [style.overflow-y]="'auto'"
+                    <div class="example-list" style="text-align:center;width: 170px;background-color:rgb(238, 238, 238);" [style.overflow-y]="'auto'"
                     [style.height.px]="'400'">
                         <div class="example-box" *ngFor="let page of pages;let i=index;"
-                            style="text-align: center;font-size: small;background-color:rgb(249, 241, 230);color: black;font-weight:500;height: 1px;">
+                            style="text-align: center;font-size: small;background-color:rgb(238, 238, 238);color: black;font-weight:500;height: 1px;">
                             {{page.name}}
                             <div>
                                 <div class="row">

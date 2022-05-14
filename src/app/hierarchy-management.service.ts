@@ -1,3 +1,8 @@
+//* <summary>
+//* Methods for sending HTTP requests to Hierarchy Controllers 
+//* </summary>
+//* <author>Mpilo Msomi,Katelyn Govender</author>
+//* <dateLastModified>May 2022</dateLastModified>
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -27,6 +32,10 @@ export class HierarchyManagementService {
     console.log(this.hlist);
   }
 
+  getTreeByCatergory(TreeCategoryID:any):Observable<any[]>{
+    return this.http.get<any>(this.API_URL + 'Trees/GettreesCategoryID' + '/' + TreeCategoryID);
+  }
+
   openDialogAdd(val:any){
     return this.http.post(this.API_URL+'/',val);
   }
@@ -53,5 +62,31 @@ export class HierarchyManagementService {
   addNode(data:any){
     return this.http.post(this.API_URL+'Nodes',data);
   }
+
+  //#region Indicator Nodes
+  getIndicatorNodes():Observable<any[]>{
+    return this.http.get<any>(this.API_URL+'Trees/indicatorNodes');
+  }
+
+  getAssignedIndicatorNodesByTreeRoleID(RoleID :any ,treeID):Observable<any[]>{
+    return this.http.get<any>(this.API_URL+'Trees/'+RoleID+'/'+treeID+'/AssignedIndicatorNodesByRole');
+  }
+
+  getUnassignedIndicatorNodesByTreeRoleID(RoleID :any ,treeID):Observable<any[]>{
+    return this.http.get<any>(this.API_URL+'Trees/'+RoleID+'/'+treeID+'/UnassignedIndicatorNodesByRole');
+  }
+
+  assignIndicators(data:any,roleID:any,treeID:any){
+    return this.http.post(this.API_URL+'Trees/'+roleID+'/'+treeID+'/AssignIndicatorRole',data,{responseType: 'text'});
+  }
+
+  AssignRoles(indicatorID:any,data:any,treeID:any){
+    return this.http.post(this.API_URL+'Trees/'+indicatorID+'/'+treeID+'/AssignRole',data,{responseType: 'text'});
+  }
+
+  getAssignedRolesNodesByTreeIndicatorID(indicatorID :any ,treeID):Observable<any[]>{
+    return this.http.get<any>(this.API_URL+'Trees/'+indicatorID+'/'+treeID+'/AssignedRolesNodesByIndicator');
+  }
+  //#endregion
 }
 

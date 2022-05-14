@@ -64,6 +64,18 @@
   font-size: small;
 }
 
+::ng-deep .mat-option-text{
+   font-size: small !important;
+}
+
+::ng-deep .mat-option {
+  white-space: normal !important;
+  line-height: normal !important;
+  height: unset !important;
+  padding-top: 0.9em !important;
+  padding-bottom: 0.9em !important;
+}
+
 ::ng-deep.mat-tab-label, ::ng-deep.mat-tab-label-active{
   min-width: 0!important;
   padding: 3px!important;

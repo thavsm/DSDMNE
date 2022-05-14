@@ -1,0 +1,150 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 ml-auto mr-auto">
+                <div class="card">
+                    <div class="card-header card-header-rose card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">manage_accounts</i>
+                        </div>
+                        <h4 class="card-title">Indicator Role Management</h4>
+                    </div>
+                    <div class="card-body p-2">
+                        <div class="col d-flex justify-content-center">
+                            <div style="width: 1300px;">
+                                <hr>
+                                <mat-tab-group>
+                                    <mat-tab label="Assign Roles to Indicators"
+                                        style="background-color: black;font-weight: 500;">
+                                        <ng-template matTabContent>
+                                            <mat-stepper orientation="vertical" [linear]="true" #stepper>
+                                                <mat-step [stepControl]="firstFormGroup">
+                                                    <form [formGroup]="firstFormGroup">
+                                                        <ng-template matStepLabel>Select a Tree</ng-template>
+                                                        <mat-form-field appearance="outline" style="width: 700px;">
+                                                            <mat-label>Select a Tree</mat-label>
+                                                            <mat-select [(ngModel)]="treeID" matInput
+                                                                formControlName="tree" required>
+                                                                <mat-option *ngFor="let tree of treeList"
+                                                                    [value]="tree.treeID">
+                                                                    {{tree.name}}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                        <div>
+                                                            <button class="btn btn-md btn-primary" mat-button
+                                                                matStepperNext>Next</button>
+                                                        </div>
+                                                    </form>
+                                                </mat-step>
+                                                <mat-step [stepControl]="secondFormGroup">
+                                                    <form [formGroup]="secondFormGroup">
+                                                        <ng-template matStepLabel>Select a Capture Role</ng-template>
+                                                        <mat-form-field appearance="outline" style="width: 700px;">
+                                                            <mat-label>Select a Capture Role</mat-label>
+                                                            <mat-select [(ngModel)]="roleID" matInput
+                                                                formControlName="roleName" required>
+                                                                <mat-option *ngFor="let role of userRoles"
+                                                                    [value]="role.id">
+                                                                    {{role.name}}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                        <div>
+                                                            <button class="btn btn-md btn-primary" mat-button
+                                                                matStepperPrevious>Back</button>
+                                                            <button class="btn btn-md btn-primary" mat-button
+                                                                matStepperNext
+                                                                (click)=getAllIndicators()>Next</button>
+                                                        </div>
+                                                    </form>
+                                                </mat-step>
+                                                <mat-step>
+                                                    <ng-template matStepLabel>Select Indicators</ng-template>
+                                                    <dual-list [source]="source" [(destination)]="assigned"
+                                                        height="300px" key="indicatorID" display="indicatorName"
+                                                        [filter]="true" [format]="format">
+                                                    </dual-list>
+                                                    <hr>
+                                                    <div>
+                                                        <button class="btn btn-md btn-primary" mat-button
+                                                            matStepperPrevious>Back</button>
+                                                        <button class="btn btn-md btn-primary" mat-button
+                                                            matStepperNext>Next</button>
+                                                        <!-- <button mat-button (click)="stepper.reset()">Reset</button> -->
+                                                    </div>
+                                                </mat-step>
+                                                <mat-step>
+                                                    <ng-template matStepLabel>Assign Indicators to role</ng-template>
+                                                    <h6>The Capture Role will be assigned to these indicators:</h6>
+                                                    <mat-list>
+                                                        <mat-list-item *ngFor="let assign of assigned">
+                                                            -> {{assign.indicatorName}}
+                                                        </mat-list-item>
+                                                    </mat-list>
+                                                    <button class="btn btn-md" class="btn btn-md btn-primary"
+                                                        (click)=assign()>Assign</button>
+                                                    <button class="btn btn-md btn-primary" mat-button
+                                                        matStepperPrevious>Back</button>
+                                                    <hr>
+                                                </mat-step>
+                                            </mat-stepper>
+                                        </ng-template>
+                                    </mat-tab>
+                                    <mat-tab label="Indicator Capture Role Report"
+                                        style="background-color: black;font-weight: 500;">
+                                        <ng-template matTabContent>
+                                            <h5>Select a tree</h5>
+                                            <ng-template matStepLabel>Select a Tree</ng-template>
+                                            <mat-form-field appearance="outline" style="width: 700px;">
+                                                <mat-label>Select a Tree</mat-label>
+                                                <mat-select [(ngModel)]="searchTreeID" matInput required>
+                                                    <mat-option *ngFor="let tree of treeList"
+                                                        [value]="tree.treeID">
+                                                        {{tree.name}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                            <div>
+                                                <button class="btn btn-md btn-primary" mat-button (click)=Search()>Search</button>
+                                            </div>
+                                            <br>
+                                            <kendo-grid [kendoGridBinding]="IndicatorRoleList" [pageSize]="15" [pageable]="true" [height]="700" 
+                                            [filterable]="true" [sortable]="true" (pageChange)="onPageChange($event)">
+                                   
+                                             <kendo-grid-column field="indicatorName" title="Indicator Name" [width]="10">
+                                             </kendo-grid-column>
+                                   
+                                             <kendo-grid-column field="name" title="Capture Roles Assigned To" [width]="5">
+                                             </kendo-grid-column>
+
+                                             <kendo-grid-column [width]="2" title="Add/Edit Roles">
+                                                <ng-template kendoGridCellTemplate let-dataItem>
+                                                  <button mat-icon-button (click)="assignRoles(dataItem)">
+                                                    <mat-icon matTooltip="Add/Edit roles" class="mat-18" style="color: #016000;">edit</mat-icon>
+                                                  </button>
+                                                </ng-template>
+                                              </kendo-grid-column>
+                                                                 
+                                             <ng-template kendoPagerTemplate let-totalPages="totalPages" let-currentPage="currentPage">
+                                              <kendo-pager-prev-buttons></kendo-pager-prev-buttons>             
+                                              <kendo-pager-numeric-buttons [buttonCount]="10"></kendo-pager-numeric-buttons>
+                                              <kendo-pager-next-buttons></kendo-pager-next-buttons>
+                                              <kendo-pager-page-sizes [pageSizes]="pageSizes"></kendo-pager-page-sizes>
+                                              <kendo-pager-info></kendo-pager-info>
+                                              Current page: {{currentPage}}
+                                           </ng-template>
+                                           </kendo-grid>
+                                        </ng-template>
+                                    </mat-tab>
+                                </mat-tab-group>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ngx-spinner bdColor="rgba(	237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
+        <p style="font-size: 20px; color: black">Processing...</p>
+    </ngx-spinner>
