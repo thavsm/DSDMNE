@@ -18,6 +18,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
     
     selectedValue: string;
     currentCity: string[];
+    programVisible: boolean;
+    roleSelected:number;
+    isNational:boolean;
+    isProvince:boolean;
+    isDistrict:boolean;
+    isSP:boolean;
+    isFac:boolean;
+    isBranch:boolean;
 
     selectTheme = 'primary';
     // cities = [
@@ -55,6 +63,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
     //   {value: '5', viewValue: 'National'},
     // ];
 
+    // programmes = [
+    //   {value: '1', viewValue: 'Programme 1: Administration'},
+    //   {value: '2', viewValue: 'Programme 2: Social Welfare Services'},
+    //   {value: '3', viewValue: 'Programme 3: Children and Failies'},
+    //   {value: '4', viewValue: 'Programme 4: Restorative Services'},
+    //   {value: '5', viewValue: 'Programme 5: Development and Research'}
+    // ];
+
   
 
   
@@ -63,12 +79,16 @@ export class RegisterComponent implements OnInit, OnDestroy {
     cities: any[];
     branch: any[];
     roles: role[];
+    provinces: any[];
+    districts: any[];
+    servicePoints: any[];
+    facilities: any[];
     
     formModel = this.fb.group({
       Email: ['',[Validators.required,Validators.email]],
       FullName: ['', Validators.required],
-      Password: ['', [Validators.required, Validators.minLength(4)]],
-      ConfirmPassword: ['',Validators.required],
+      Password: [''],
+      ConfirmPassword: [''],
       Location: ['',Validators.required],
       Role: ['',Validators.required],
       PhoneNumber: ['',Validators.required],
@@ -79,23 +99,37 @@ export class RegisterComponent implements OnInit, OnDestroy {
       LocationType: [''],
       Designation: [''],
       Branch: [''],
-    }, { validators: this.comparePasswords 
+      RoleType:[''],
+      ProvinceID:[''],
+      DistrictID:[''],
+      ServicePointID:[''],
+      FacilityID:[''],
+      //,     Programme:['']
+    }, 
+    { validators: this.comparePasswords 
     });
 
     constructor(private fb: FormBuilder, private service: UserService, private spinner: NgxSpinnerService) {
-        
+        this.programVisible=false;
+        this.isBranch=false;
+        this.isProvince=false;
+        this.isDistrict=false;
+        this.isSP=false;
+        this.isFac=false;
     }
 
     comparePasswords(fb: FormGroup) {
       let confirmPswrdCtrl = fb.get('ConfirmPassword');
-      //passwordMismatch
-      //confirmPswrdCtrl.errors={passwordMismatch:true}
-      if (confirmPswrdCtrl.errors == null || 'passwordMismatch' in confirmPswrdCtrl.errors) {
-        if (fb.get('Password').value != confirmPswrdCtrl.value)
-          confirmPswrdCtrl.setErrors({ passwordMismatch: true });
-        else
-          confirmPswrdCtrl.setErrors(null);
-      }
+
+      confirmPswrdCtrl.setErrors(null);
+      // //passwordMismatch
+      // //confirmPswrdCtrl.errors={passwordMismatch:true}
+      // if (confirmPswrdCtrl.errors == null || 'passwordMismatch' in confirmPswrdCtrl.errors) {
+      //   if (fb.get('Password').value != confirmPswrdCtrl.value)
+      //     confirmPswrdCtrl.setErrors({ passwordMismatch: true });
+      //   else
+      //     confirmPswrdCtrl.setErrors(null);
+      // }
     }
 
     ngOnInit() {
@@ -178,6 +212,27 @@ export class RegisterComponent implements OnInit, OnDestroy {
     onSubmit() {
       //this.saving = true;
       this.spinner.show();
+      var locBranch = 0;
+      var locProvince = 0;
+      var locDistrict = 0;
+      var locSPoint = 0;
+      var locFacility = 0;
+      if(this.formModel.value.Branch!='') {
+        locBranch = this.formModel.value.Branch;
+      }
+      if(this.formModel.value.ProvinceID!='') {
+        locProvince = this.formModel.value.ProvinceID;
+      }
+      if(this.formModel.value.DistrictID!='') {
+        locDistrict = this.formModel.value.DistrictID;
+      }
+      if(this.formModel.value.ServicePointID!='') {
+        locSPoint = this.formModel.value.ServicePointID;
+      }
+      if(this.formModel.value.FacilityID!='') {
+        locFacility = this.formModel.value.FacilityID;
+      }
+
       var body = {
         Email: this.formModel.value.Email,
         FullName: this.formModel.value.FullName,
@@ -188,11 +243,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
         EmployeeNo: this.formModel.value.EmployeeNo,
         ServicePoint: this.formModel.value.ServicePoint,
         Address: this.formModel.value.Address,
-        Branch: this.formModel.value.Branch,
+        Branch: locBranch,
         Surname: this.formModel.value.Surname,
         LocationType: this.formModel.value.LocationType,
-        RoleType: this.formModel.value.RoleType
-        
+        RoleType: this.formModel.value.RoleType,
+        ProvinceID: locProvince,
+        DistrictID: locDistrict,
+        ServicePointID: locSPoint,
+        FacilityID: locFacility
       };
       //let bd ={Email: this.formModel.Email, Password: this.formModel.Password, FullName: this.formModel.FullName};
       this.service.register(body).subscribe(
@@ -227,14 +285,155 @@ export class RegisterComponent implements OnInit, OnDestroy {
   loadLocation(loctype:any)
   {
      console.log(loctype.value);
-     this.service.getNodes(loctype.value).subscribe(
+     this.provinces =[];
+     this.districts = [];
+     this.servicePoints = [];
+     this.facilities = [];
+
+     switch(loctype.value)
+     {
+       case 4260:
+        this.isBranch=true;
+        this.isProvince=false;
+        this.isDistrict=false;
+        this.isSP=false;
+        this.isFac=false;
+        break;
+        case 4261:
+        this.isBranch=false;
+        this.isProvince=true;
+        this.isDistrict=false;
+        this.isSP=false;
+        this.isFac=false;
+        this.loadProvince();
+        break;
+        case 4262:
+        this.isBranch=false;
+        this.isProvince=true;
+        this.isDistrict=true;
+        this.isSP=false;
+        this.isFac=false;
+        this.loadProvince();
+        break;
+        case 4263:
+        this.isBranch=false;
+        this.isProvince=true;
+        this.isDistrict=true;
+        this.isSP=true;
+        this.isFac=false;
+        this.loadProvince();
+        break;
+        case 4264:
+        this.isBranch=false;
+        this.isProvince=true;
+        this.isDistrict=true;
+        this.isSP=true;
+        this.isFac=true;
+        this.loadProvince();
+        break;        
+     }
+     
+    //  this.service.getNodes(loctype.value).subscribe(
+    //   res => {
+    //     this.cities = res;
+    //   },
+    //   err => {
+    //     console.log(err);
+    //   },
+    // );
+  }
+
+  loadProvince()
+  {
+     console.log('LoadProvinces');
+     this.service.getNodes(4261).subscribe(
       res => {
-        this.cities = res;
+        this.provinces = res;
       },
       err => {
         console.log(err);
       },
     );
   }
+
+  loadDistricts(province:any)
+  {
+     console.log(province.nodeID);
+     this.service.getNodesByParent(province.nodeID).subscribe(
+      res => {
+        this.districts = res;
+      },
+      err => {
+        console.log(err);
+      },
+    );
+  }
+
+  loadServicePoints(district:any)
+  {
+     console.log(district.nodeID);
+     this.service.getNodesByParent(district.nodeID).subscribe(
+      res => {
+        this.servicePoints = res;
+      },
+      err => {
+        console.log(err);
+      },
+    );
+  }
+
+  loadFacilities(sp:any)
+  {
+     console.log(sp.nodeID);
+     this.service.getNodesByParent(sp.nodeID).subscribe(
+      res => {
+        this.facilities = res;
+      },
+      err => {
+        console.log(err);
+      },
+    );
+  }
+
+
+  onLocChange(e)
+  {
+    let selectedLoc = e.value;
+
+    
+    this.isNational = false; 
+    this.isProvince = false; 
+    this.isDistrict = false; 
+    this.isSP = false; 
+    this.isFac = false;
+
+    switch(selectedLoc)
+    {
+      case "National": this.isNational = true; break;
+      case "Province": this.isProvince = true; break;
+      case "District": this.isDistrict = true; break;
+      case "Service Point": this.isSP = true; break;
+      case "Facility": this.isFac = true; break;
+    }
+
+  }
+
+  // onRoleChange(e)
+  // {
+  //   let selectedRole = e.value;
+
+  //   if(selectedRole == 'Programme Manager')
+  //   this.programVisible = true;
+  //   else
+  //   this.programVisible = false;
+
+  // }
+
+
+  // onProgChange(e)
+  // {
+  //   let selectedProg = e.value;
+  //   console.log(selectedProg[0]);
+  // }
 
 }
