@@ -9,22 +9,20 @@
             </div>
             <h4 class="card-title">Form Capture</h4>
           </div>
-          <div class="card-body p-2">
-            <div class="col">
-              <div>
-                <hr>
-                <h6>Select a form below to capture:</h6>
-                <mat-form-field appearance="outline" style="width: 500px;">
-                  <mat-label>Form</mat-label>
-                  <mat-select [(ngModel)]="formData.formID">
-                    <mat-option *ngFor="let form of formList" [value]="form.formID">
-                      {{form.displayName}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-                <button class="btn btn-md" class="btn btn-md btn-primary" (click)="addForm()">Create Form</button>
-              </div>
-            </div>
+          <div class="card-body p-2" style="text-align:center;">
+            <kendo-treelist [kendoTreeListFlatBinding]="data" [height]="700"  kendoTreeListExpandable idField="nodeID"
+              parentIdField="nodeParentD" [filterable]="true" style="width: 100%">
+              <kendo-treelist-column filter="text" [expandable]="true" field="nodeName" title="Location" [width]="50">
+              </kendo-treelist-column>
+              <kendo-treelist-column title="" [width]="20" [filterable]="false">
+                <ng-template kendoTreeListCellTemplate  let-dataItem let-rowIndex="rowIndex">
+                  <button *ngIf="dataItem.levelID==4264 && dataItem.completedForms>=1 " class="btn btn-sm" (click)="addForm(dataItem.nodeID)" style="background-color: green;">Create Form</button>
+                  <button *ngIf="dataItem.levelID==4264 && dataItem.completedForms==0 " class="btn btn-sm" (click)="addForm(dataItem.nodeID)" style="background-color: red;">Create Form</button>
+                  <label *ngIf="dataItem.levelID==4264" > ({{dataItem.completedForms}}) Captured</label>
+                  <label *ngIf="dataItem.levelID!=4264">({{dataItem.completedForms}}) Captured</label>
+                </ng-template>
+              </kendo-treelist-column>
+            </kendo-treelist>
           </div>
         </div>
       </div>
@@ -32,5 +30,5 @@
   </div>
 </div>
 <ngx-spinner bdColor="rgba(	237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
-  <p style="font-size: 20px; color: black">Loading Form...</p>
+  <p style="font-size: 20px; color: black">Loading...</p>
 </ngx-spinner>

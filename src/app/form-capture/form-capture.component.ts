@@ -8,6 +8,9 @@ import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
 import { AddFormComponent } from './add-form/add-form.component';
 import { HttpClient, JsonpClientBackend } from '@angular/common/http';
 import { UserService } from '../shared/user.service';
+import { HierarchyManagementService } from '../hierarchy-management.service';
+import { TreediagramService } from '../treediagram.service';
+import { toInteger } from '@ng-bootstrap/ng-bootstrap/util/util';
 declare var $: any;
 
 export interface FormData {
@@ -15,14 +18,25 @@ export interface FormData {
   description: string;
 }
 
+export interface Node {
+  nodeID: number,
+  nodeName: string,
+  nodeParentD: number,
+  levelID: number,
+  nodeDescription: string,
+  status: string,
+  color?: string
+}
+
 @Component({
   selector: 'app-form-capture',
   templateUrl: './form-capture.component.html',
   styleUrls: ['./form-capture.component.css']
 })
+
 export class FormCaptureComponent implements OnInit {
 
-  constructor(public dialog: MatDialog, private route: Router, private service: FormbuilderService, private spinner: NgxSpinnerService, private userService: UserService) { }
+  constructor(public treeService: TreediagramService, public dialog: MatDialog, private route: Router, private service: FormbuilderService, private spinner: NgxSpinnerService, private userService: UserService) { }
 
   public formData: any = [{ "formID": 0, "formName": "" }];
 
@@ -30,7 +44,12 @@ export class FormCaptureComponent implements OnInit {
 
   userDetail: any;
 
+  data: any = [];
+
+  userLocation:any;
+
   ngOnInit(): void {
+    this.spinner.show();
     this.userService.getUserProfile().subscribe(
       res => {
         this.userDetail = res;
@@ -40,51 +59,49 @@ export class FormCaptureComponent implements OnInit {
         console.log(err);
         this.refreshFormsList();
       },
+      () => {
+        this.refreshLocationList();
+      }
     );
   }
 
-  addForm() {
-    if ((this.formData.formID !== 0) && (this.formData.formID !== undefined)) {
-      this.spinner.show();
-      let formCaptureData = {
-        formCaptureID: 0,
-        formName: '',
-        formID: this.formData.formID,
-        step: "string",
-        sentBy: this.userDetail.formData.userID,
-        dateSent: "string",
-        timeSent: "string",
-        displayableOne: "",
-        displayableTwo: "",
-        geography: this.userDetail.formData.location,
-        stage: "string",
-        formTemplateName: "string"
-      }
-      this.service.addCapturedForms(formCaptureData).subscribe(res => {
-        let myObj = {
-          formID: this.formData.formID,
-          formName: JSON.parse(res).formName,
-          formCaptureID: JSON.parse(res).formCaptureID,
-          state: 'add'
-        };
-        this.spinner.hide();
-        this.showNotification('top', 'center', 'Form created successfully', '', 'success');
-        localStorage.setItem('formCaptureDetails', JSON.stringify(myObj));
-        localStorage.setItem('tabIndex', '0');
-        const dialogRef = this.dialog.open(AddFormComponent, {
-          width: '85%',
-          height: '85%',
-          disableClose: true
-        });
-        this.formData.formName = "";
-        dialogRef.afterClosed().subscribe(result => {
-          console.log('The dialog was closed');
-        });
+  addForm(nodeID:any) {
+    this.spinner.show();
+    let formCaptureData = {
+      formCaptureID: 0,
+      formName: '',
+      formID: 6,
+      step: "string",
+      sentBy: this.userDetail.formData.userID,
+      dateSent: "string",
+      timeSent: "string",
+      displayableOne: "",
+      displayableTwo: "",
+      geography: nodeID,
+      stage: "string",
+      formTemplateName: "string"
+    }
+    this.service.addCapturedForms(formCaptureData).subscribe(res => {
+      let myObj = {
+        formID: 6,
+        formName: JSON.parse(res).formName,
+        formCaptureID: JSON.parse(res).formCaptureID,
+        state: 'add'
+      };
+      this.spinner.hide();
+      this.showNotification('top', 'center', 'Form created successfully', '', 'success');
+      localStorage.setItem('formCaptureDetails', JSON.stringify(myObj));
+      localStorage.setItem('tabIndex', '0');
+      const dialogRef = this.dialog.open(AddFormComponent, {
+        width: '85%',
+        height: '85%',
+        disableClose: true
       });
-    }
-    else {
-      this.showNotification('top', 'center', 'Please select a form first', '', 'danger');
-    }
+      this.formData.formName = "";
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+      });
+    });
   }
 
   refreshFormsList() {
@@ -97,7 +114,7 @@ export class FormCaptureComponent implements OnInit {
       allPublishedForms.forEach(form => {
         this.userService.getFormsRole(userRoleID).subscribe(formRole => {
           formRole.forEach(role => {
-            if (role.id===form.formID && role.capture == true) {
+            if (role.id === form.formID && role.capture == true) {
               formsLinkedToUser.push(form);
             }
           });
@@ -106,6 +123,15 @@ export class FormCaptureComponent implements OnInit {
       this.formList = formsLinkedToUser;
       this.spinner.hide();
     });
+  }
+
+  refreshLocationList() {
+      this.service.GetUserLocationHierachy(this.userDetail.formData.userID).subscribe(location => {
+        this.service.getFormCaptureCountPerLocation(location).subscribe(result => {
+          this.data =  result;
+          this.spinner.hide();
+        });
+      });
   }
 
   showNotification(from: any, align: any, message: any, title: any, type: string) {

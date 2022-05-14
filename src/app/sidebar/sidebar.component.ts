@@ -138,7 +138,7 @@ export const ROUTES: RouteInfo[] = [{
 export class SidebarComponent implements OnInit {
     public menuItems: any[];
     ps: any;
-    userDetail: any;
+    public userDetail: any;
     menus: any[];
     
     public showMenu: boolean = true;

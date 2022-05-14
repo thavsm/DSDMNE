@@ -78,6 +78,7 @@ export class FormExportComponent implements OnInit {
   filterFormQuestions() {
     let ID = this.formID;
     this.spinner.show();
+    this.source=[];
     this.service.getFormPages(ID).subscribe(data => {
       this.formPages = data;
       this.service.getFormFieldsPerPage(ID, this.formPages[0].pageGUID).subscribe(data => {
