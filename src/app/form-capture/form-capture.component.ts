@@ -54,13 +54,11 @@ export class FormCaptureComponent implements OnInit {
       res => {
         this.userDetail = res;
         this.refreshFormsList();
+        this.refreshLocationList();
       },
       err => {
         console.log(err);
         this.refreshFormsList();
-      },
-      () => {
-        this.refreshLocationList();
       }
     );
   }
@@ -100,6 +98,7 @@ export class FormCaptureComponent implements OnInit {
       this.formData.formName = "";
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
+        this.refreshLocationList();
       });
     });
   }
@@ -127,6 +126,7 @@ export class FormCaptureComponent implements OnInit {
 
   refreshLocationList() {
       this.service.GetUserLocationHierachy(this.userDetail.formData.userID).subscribe(location => {
+        this.spinner.show();
         this.service.getFormCaptureCountPerLocation(location).subscribe(result => {
           this.data =  result;
           this.spinner.hide();

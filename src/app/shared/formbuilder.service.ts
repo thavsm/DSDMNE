@@ -15,7 +15,7 @@ import { environment } from 'src/environments/environment';
 })
 export class FormbuilderService {
 
-  //readonly APIUrl = 'https://localhost:44305/1/';                   //test URL
+  //readonly APIUrl = 'https://app.terra.group/MNE_Demo_API/api/1';                   //test URL
   //readonly APIUrl = 'https://app.terra.group/DSDFormWeb/1/';          //test deployed URL
   readonly APIUrl = environment.API_FormURL;                       //production URL
 

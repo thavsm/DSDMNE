@@ -668,7 +668,6 @@ export class AddFormComponent implements OnInit {
         }
 
         if (this.formData.state === 'add') {
-
           element["data"] = "";
 
           if (element.listValue !== "") {
@@ -678,9 +677,8 @@ export class AddFormComponent implements OnInit {
           if (element.groupGUID !== "" && element.groupGUID !== "string" && element.parentFieldName === "") {
             let children: any[] = [];
 
-            this.service.getFieldsInGroup(element.groupGUID).subscribe(groupFields => {
-              children = groupFields;
-
+            this.service.getFieldsInGroup(element.groupGUID).subscribe(kids => {
+              children = kids.filter(item1 => this.formDesign.some(item2 => item1.fieldID === item2.fieldID));
               children.forEach((field, i) => {
 
                 field.fieldStyles[0].height = Math.ceil(parseInt(field.fieldStyles[0].height) / 23.2);
