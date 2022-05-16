@@ -13,8 +13,8 @@ import { BehaviorSubject } from 'rxjs';
 export class UserService {
 
   constructor(private fb: FormBuilder, private http: HttpClient) { }
-  //readonly BaseURI = environment.API_URL;
-  readonly BaseURI = 'https://app.terra.group/DSDFormWeb/api';
+  readonly BaseURI = environment.API_URL;
+  //readonly BaseURI = 'https://app.terra.group/DSDFormWeb/api';
   
   public ulist:User[];
   private showMenu = new BehaviorSubject(true);
