@@ -51,6 +51,17 @@ export const ROUTES: RouteInfo[] = [{
             //{path: 'formroles',title: 'Forms', ab:'F'},
         ]
     },{
+        path: '/administration',
+        title: 'Administration',
+        type: 'sub',
+        icontype: 'person',
+        role: [],
+        collapse: 'administration',
+        children: [
+            {path: 'holiday',title: 'Holidays', ab:'U'},
+            {path: 'scheduler',title: 'Scheduler', ab:'R'},
+        ]
+    },{
         path: '/pages',
         title: 'Pages',
         type: 'sub',
@@ -89,7 +100,7 @@ export const ROUTES: RouteInfo[] = [{
     },
     {
         path: '/process',
-        title: 'process',
+        title: 'User Workflow',
         type: 'link',
         icontype: 'schema',
         role: []
@@ -187,7 +198,7 @@ export class SidebarComponent implements OnInit {
 
             },
             err => {
-                console.log(err);
+                console.log(err); 
             },
         );
 

@@ -109,6 +109,10 @@ export const AppRoutes: Routes = [
       path: 'externalDI',
       loadChildren: () => import('./data-management/external-data-import/external-data-import.module').then(m => m.ExternalDataImportModule)
     },
+    {
+      path: 'administration',
+      loadChildren: () => import('./administration/administration.module').then(m => m.AdministrationModule)
+  },
     ]
   }, {
     path: '',
