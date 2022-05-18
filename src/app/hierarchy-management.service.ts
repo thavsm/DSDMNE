@@ -37,6 +37,10 @@ export class HierarchyManagementService {
     return this.http.post(this.API_URL+'Trees',data);
   }
 
+  addIndicator(data:any){
+    return this.http.post(this.API_URL+'Nodes/AddIndicatorNode',data);
+  }
+
   archiveTree(treeID:any){
     return this.http.delete(this.API_URL+'Trees' + '/' + treeID);
   }
@@ -57,21 +61,31 @@ export class HierarchyManagementService {
     return this.http.post(this.API_URL+'Nodes',data);
   }
 
-<<<<<<< HEAD
   getIsIndicatorLevelbyLevelID(levelID:number){
     return this.http.get<any>(this.API_URL+'Levels/SelectIsIndicatorLevelbyLevelID/'+levelID);
   }
 
-  getIndicatorNodes():Observable<any[]>{
-    return this.http.get<any>(this.API_URL+'Trees/indicatorNodes');
-  }
-  
-=======
   //#region Indicator Nodes
   getIndicatorNodes():Observable<any[]>{
     return this.http.get<any>(this.API_URL+'Trees/indicatorNodes');
   }
 
+  getAllIndicatorNodes(){
+    return this.http.get<any>(this.API_URL+'nodes/getAllIndicatorNodes');
+  }
+
+  getIndicatorAttributesDataByIndicatorID(IndicatorID:number){
+    //console.log(this.API_URL+'MetadataNodeForms/'+NodeID);
+    return this.http.get<any>(this.API_URL+'MetadataNodeForms/getIndicatorAttributesDataByIndicatorID/'+IndicatorID);    
+  }
+
+  getMetadataIndicatorLevel(){
+    return this.http.get<any>(this.API_URL+'nodes/getMetadataIndicatorLevel');
+  }
+
+  DeleteIndiactorByID(IndicatorID :number){
+    return this.http.post<any>(this.API_URL+'nodes/DeleteIndiactorByID/'+IndicatorID, "");
+  }
   getAssignedIndicatorNodesByTreeRoleID(RoleID :any ,treeID):Observable<any[]>{
     return this.http.get<any>(this.API_URL+'Trees/'+RoleID+'/'+treeID+'/AssignedIndicatorNodesByRole');
   }
@@ -84,6 +98,5 @@ export class HierarchyManagementService {
     return this.http.post(this.API_URL+'Trees/'+roleID+'/'+treeID+'/AssignIndicatorRole',data,{responseType: 'text'});
   }
   //#endregion
->>>>>>> 6c09d2d3b3e414c142985e7e6e7ce7750baf73c8
 }
 

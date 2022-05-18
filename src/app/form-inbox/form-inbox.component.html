@@ -1,88 +1,109 @@
-<div class="main-content">
-  <div class="container-fluid">
+  <div class="main-content">
     <div class="container-fluid">
-      <div class="header text-center">
-        <h3 class="title" style="font-weight: bold;">Form Inbox</h3>
-        <kendo-grid [kendoGridBinding]="gridView" [pageSize]="10" [pageable]="true" [height]="700" [filterable]="true"
-          [sortable]="true" [groupable]="true">
-
-          <ng-template kendoGridToolbarTemplate>
-            <mat-form-field appearance="outline" style="width: 500px;">
-              <mat-label>Select a form</mat-label>
-              <mat-select>
-                <mat-option *ngFor="let form of formList" (click)=filterForm(form.displayName,form.formID) value="form.displayName">
-                     {{form.displayName}}
-                </mat-option>
-              </mat-select>
-          </mat-form-field>
-            <kendo-grid-spacer></kendo-grid-spacer>
-          </ng-template>
-
-          <kendo-grid-column field="dateSent" title="Date Sent" [width]="12">
-          </kendo-grid-column>
-
-          <kendo-grid-column field="timeSent" title="Time Sent" [width]="12">
-          </kendo-grid-column>
-
-          <kendo-grid-column field="formName" title="Form Name" [width]="15">
-          </kendo-grid-column>
-
-          <kendo-grid-column field="displayableOne" title="{{DisplayOne}}" [width]="15">
-          </kendo-grid-column>
-
-          <kendo-grid-column field="displayableTwo" title="{{DisplayTwo}}" [width]="15">
-          </kendo-grid-column>
-
-          <kendo-grid-column field="geography" title="Geography" [width]="10">
-          </kendo-grid-column>
-
-          <kendo-grid-column field="sentBy" title="Sent By" [width]="18">
-          </kendo-grid-column>
-
-          <kendo-grid-column field="step" title="Step" [width]="10">
-            <ng-template kendoGridCellTemplate let-dataItem>
-              <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.step}}</u></a>
-            </ng-template>
-          </kendo-grid-column>
-
-
-          <kendo-grid-column field="formTemplateName" title="Form Name" [hidden]="true">
-            <ng-template kendoGridGroupHeaderTemplate let-value="value">
-              {{ value }}
-              <!-- ({{aggregates.formTemplateName.count}}) -->
-            </ng-template>
-          </kendo-grid-column>
-
-          <kendo-grid-column [width]="12" title="Attachments">
-            <ng-template kendoGridCellTemplate let-dataItem>
-              <button mat-icon-button *ngIf="dataItem.commentCount!==0" (click)="openFormDesign(dataItem,'3')">
-                <mat-icon class="mat-14" style="color: #016000;" matTooltip="{{dataItem.commentCount}}">comment
-                </mat-icon>
-              </button>
-
-              <button mat-icon-button *ngIf="dataItem.attachCount!==0" (click)="openFormDesign(dataItem,'2')">
-                <mat-icon class="mat-14" style="color: #016000;" matTooltip="{{dataItem.attachCount}}">attach_file
-                </mat-icon>
-              </button>
-
-              <button mat-icon-button *ngIf="dataItem.photoCount!==0" (click)="openFormDesign(dataItem,'1')">
-                <mat-icon class="mat-14" style="color: #016000;" matTooltip="{{dataItem.photoCount}}">photo_camera
-                </mat-icon>
-              </button>
-            </ng-template>
-          </kendo-grid-column>
-
-          <kendo-grid-column [width]="5">
-            <ng-template kendoGridCellTemplate let-dataItem>
-              <button mat-icon-button (click)="clickDelete(dataItem)">
-                <mat-icon class="mat-14" style="color: #016000;">delete</mat-icon>
-              </button>
-            </ng-template>
-          </kendo-grid-column>
-
-          <kendo-grid-pdf fileName="FormInbox.pdf" [repeatHeaders]="true"></kendo-grid-pdf>
-          <!-- <kendo-grid-excel fileName="FormInbox.xlsx"></kendo-grid-excel> -->
-        </kendo-grid>
+      <div class="row">
+        <div class="col-md-12 ml-auto mr-auto">
+          <div class="card">
+            <div class="card-header card-header-rose card-header-icon">
+              <div class="card-icon">
+                <i class="material-icons">move_to_inbox</i>
+              </div>
+              <h4 class="card-title">Form Inbox</h4>
+            </div>
+            <div class="card-body p-2">
+              <div class="row">
+                <div class="col">
+                  <kendo-grid [kendoGridBinding]="gridView" [pageSize]="pageSize" [pageable]="true" [height]="700" [filterable]="true"
+                  [sortable]="true" [groupable]="true" [resizable]="true"  (pageChange)="onPageChange($event)">
+        
+                  <ng-template kendoGridToolbarTemplate>
+                    <h5>Select a form to filter by:</h5>
+                    <br>
+                    <mat-form-field appearance="outline" style="width: 500px;">
+                      <mat-label>Select a form</mat-label>
+                      <mat-select>
+                        <mat-option *ngFor="let form of formList" (click)=filterForm(form.displayName,form.formID) value="form.displayName">
+                             {{form.displayName}}
+                        </mat-option>
+                      </mat-select>
+                  </mat-form-field>
+                    <kendo-grid-spacer></kendo-grid-spacer>
+                  </ng-template>
+        
+                  <kendo-grid-column field="dateSent" title="Date Sent" [width]="12">
+                  </kendo-grid-column>
+        
+                  <kendo-grid-column field="timeSent" title="Time Sent" [width]="12">
+                  </kendo-grid-column>
+        
+                  <kendo-grid-column field="formName" title="Form Name" [width]="15">
+                  </kendo-grid-column>
+        
+                  <kendo-grid-column field="displayableOne" title="{{DisplayOne}}" [width]="15">
+                  </kendo-grid-column>
+        
+                  <kendo-grid-column field="displayableTwo" title="{{DisplayTwo}}" [width]="15">
+                  </kendo-grid-column>
+        
+                  <kendo-grid-column field="geography" title="Geography" [width]="10">
+                  </kendo-grid-column>
+        
+                  <kendo-grid-column field="sentBy" title="Sent By" [width]="18">
+                  </kendo-grid-column>
+        
+                  <kendo-grid-column field="step" title="Step" [width]="10">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.step}}</u></a>
+                    </ng-template>
+                  </kendo-grid-column>
+        
+        
+                  <kendo-grid-column field="formTemplateName" title="Form Name" [hidden]="true">
+                    <ng-template kendoGridGroupHeaderTemplate let-value="value">
+                      {{ value }}
+                      <!-- ({{aggregates.formTemplateName.count}}) -->
+                    </ng-template>
+                  </kendo-grid-column>
+        
+                  <kendo-grid-column [width]="12" title="Attachments">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <button mat-icon-button *ngIf="dataItem.commentCount!==0" (click)="openFormDesign(dataItem,'3')">
+                        <mat-icon class="mat-14" style="color: #016000;" matTooltip="{{dataItem.commentCount}}">comment
+                        </mat-icon>
+                      </button>
+        
+                      <button mat-icon-button *ngIf="dataItem.attachCount!==0" (click)="openFormDesign(dataItem,'2')">
+                        <mat-icon class="mat-14" style="color: #016000;" matTooltip="{{dataItem.attachCount}}">attach_file
+                        </mat-icon>
+                      </button>
+        
+                      <button mat-icon-button *ngIf="dataItem.photoCount!==0" (click)="openFormDesign(dataItem,'1')">
+                        <mat-icon class="mat-14" style="color: #016000;" matTooltip="{{dataItem.photoCount}}">photo_camera
+                        </mat-icon>
+                      </button>
+                    </ng-template>
+                  </kendo-grid-column>
+        
+                  <kendo-grid-column [width]="5">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <button mat-icon-button (click)="clickDelete(dataItem)">
+                        <mat-icon class="mat-14" style="color: #016000;">delete</mat-icon>
+                      </button>
+                    </ng-template>
+                  </kendo-grid-column>
+        
+                  <ng-template kendoPagerTemplate let-totalPages="totalPages" let-currentPage="currentPage">
+                    <kendo-pager-prev-buttons></kendo-pager-prev-buttons>             
+                    <kendo-pager-numeric-buttons [buttonCount]="10"></kendo-pager-numeric-buttons>
+                    <kendo-pager-next-buttons></kendo-pager-next-buttons>
+                    <kendo-pager-page-sizes [pageSizes]="pageSizes"></kendo-pager-page-sizes>
+                    <kendo-pager-info></kendo-pager-info>
+                    Current page: {{currentPage}}
+                 </ng-template>
+                </kendo-grid>
+                </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

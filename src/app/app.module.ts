@@ -71,8 +71,6 @@ import {NgxSpinnerModule} from 'ngx-spinner';
 import { PaginationService } from 'ngx-pagination';
 
 
-
-
 @NgModule({
 exports: [
 MatAutocompleteModule,
@@ -106,9 +104,11 @@ MatToolbarModule,
 MatTooltipModule,
 MatNativeDateModule,
 NgxSpinnerModule
-],
-declarations: [
 ]
+// ,
+// declarations: [ 
+//     IndicatorManagementComponent
+//   ]
 })
 export class MaterialModule {}
 
@@ -130,7 +130,7 @@ export class MaterialModule {}
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot(AppRoutes,{
-      useHash: true
+      useHash: false
     }),
     HttpClientModule,
 

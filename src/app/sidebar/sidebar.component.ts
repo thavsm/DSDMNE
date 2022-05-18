@@ -46,7 +46,8 @@ export const ROUTES: RouteInfo[] = [{
             {path: 'appusers',title: 'Users', ab:'U'},
             {path: 'role',title: 'Roles', ab:'R'},
             {path: 'location', title: 'location management', ab:'LM' , TreeCategoryID : 2},
-            {path: 'level', title: 'level management', ab:'LM' , TreeCategoryID : 3},
+            {path: 'indicatorrole',title: 'Indicator Role Management', ab:'F'},
+            //{path: 'level', title: 'level management', ab:'LM' , TreeCategoryID : 3},
             //{path: 'formroles',title: 'Forms', ab:'F'},
         ]
     },{
@@ -74,11 +75,20 @@ export const ROUTES: RouteInfo[] = [{
         collapse: 'hierarchy-management',
         children: [
             {path: 'HierarchyManagement', title: 'hierarchy management', ab:'HM', TreeCategoryID : 1},
-            // {path: 'GeographyManagement', title: 'location management', ab:'LM' , TreeCategoryID : 2},
-            // {path: 'LevelManagement', title: 'level management', ab:'LM' , TreeCategoryID : 3}
+            {path: 'indicator-management', title: 'indicator management', ab:'IM' }
         ]
     },
-
+    // ,{
+    //     path: '/indicator-management',
+    //     title: 'indicator management',
+    //     type: 'sub',
+    //     icontype: 'account_tree',
+    //     role: [],
+    //     collapse: 'indicator-management',
+    //     children: [
+    //         {path: 'IndicatorManagement', title: 'indicator management', ab:'IM'}
+    //     ]
+    // },
     {
         path: '/weather',
         title: 'Weather',
@@ -88,15 +98,15 @@ export const ROUTES: RouteInfo[] = [{
     },
     {
         path: '/process',
-        title: 'process',
+        title: 'User Workflow',
         type: 'link',
-        icontype: 'image',
+        icontype: 'schema',
         role: []
     },{
         path: '/indicator-report',
         title: 'Indicator Approval',
         type: 'link',
-        icontype: 'image',
+        icontype: 'fact_check',
         role: []
     },
     {
@@ -111,6 +121,7 @@ export const ROUTES: RouteInfo[] = [{
             {path: 'formList',title: 'Form Design',ab: 'FD'},   
             { path: 'formCapture', title: 'Form Capture', ab: 'FC' },
             { path: 'formInbox', title: 'Form Inbox', ab: 'FI' },
+            { path: '', title: 'Form Tasks', ab: 'FT' },
         ]
     },
     {

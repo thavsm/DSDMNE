@@ -45,6 +45,10 @@ export class TreediagramService {
     return this.http.post(this.API_URL+'nodes/IndicatorNode/',data)
   }
 
+  addupdateIndicatorNode(data:any){
+    return this.http.post(this.API_URL+'nodes/AddUpdateIndicatorNode/',data)
+  }
+
  
   public getRoles():Observable<any[]>{
 
@@ -124,6 +128,14 @@ export class TreediagramService {
     return this.http.put(this.API_URL+'Nodes/'+nodeID,data);
   }
 
+  UpdateIndicatorNodeByID(data:any){
+    return this.http.post<any>(this.API_URL+'Nodes/UpdateIndicatorNodeByID',data)
+  } 
+
+  UpdateMetadataIndicatorForm(data:any){
+    return this.http.post<any>(this.API_URL+'MetadataNodeForms/UpdateMetadataIndicatorForm',data)
+  } 
+
   addNodeXMLForm(data:any){
     return this.http.post<any>(this.API_URL+'MetadataNodeForms',data)
   } 
@@ -177,11 +189,21 @@ export class TreediagramService {
     return this.http.get<any>(this.APIUrl+'Forms/'+FormID+'/pages/FieldsByFormID');
   }
 
+  GetFormFieldsByFormId(FormID:number){
+    return this.http.get<any>(this.APIUrl+'Forms/'+FormID+'/pages/FormFieldsByFormID');
+  }
+
 
   GetFormFieldsByFieldID(FieldID:number){
     return this.http.get<any>(this.APIUrl+'Forms/'+FieldID+'/pages/FieldsByFieldID');
   }
 
+  getIndicatorNode(NodeID:number){
+    console.log(this.API_URL+'nodes/'+NodeID);
+    return this.http.get<any>(this.API_URL+'nodes/getIndicatorNode/'+NodeID);
+
+  }
+  
   CountColumnData(columnName :any,dataValue :any,tableName :any){
     return this.http.get<any>(this.API_URL+'Trees/CountColumnData/'+columnName+'/'+dataValue+'/'+tableName);
   }

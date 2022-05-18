@@ -66,7 +66,7 @@
                 <mat-label>Form Name</mat-label>
                 <mat-select [(ngModel)]="NodeAdd.FormName" (selectionChange)="onformChange($event)">
                     <mat-option *ngFor="let c of Form" [value]="c.formID">
-                        {{c.formName}}
+                        {{c.displayName}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -78,7 +78,7 @@
                 <mat-label>Form Field</mat-label>
                 <mat-select [(ngModel)]="NodeAdd.fName" (selectionChange)="onformfieldChange($event)">
                     <mat-option *ngFor="let c of FormFields" [value]="c.fieldID">
-                        {{c.dataExportName}}
+                        {{c.questionName}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>

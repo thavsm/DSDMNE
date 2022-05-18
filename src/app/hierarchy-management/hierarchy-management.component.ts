@@ -88,7 +88,7 @@ export class HierarchyManagementComponent implements OnInit {
       treeCategoryID : this.TreeCategoryID
     }
 
-    const dialogRef = this.dialog.open(TreeAddComponent, { width: '40%', height: '50%', data: this.treeAdd, disableClose: true }
+    const dialogRef = this.dialog.open(TreeAddComponent, { width: '40%', height: '55%', data: this.treeAdd, disableClose: true }
 
     );
 

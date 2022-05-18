@@ -58,7 +58,6 @@ export class NodeAddComponent implements OnInit {
 
   ngOnInit(): void {
     
-
     this.nodeID = this.NodeAdd.nodeID;
     this.nodeName = this.NodeAdd.nodeName;
     this.nodeParentD = this.NodeAdd.nodeParentD;
@@ -95,7 +94,7 @@ export class NodeAddComponent implements OnInit {
   }
 
   onformCategoryChange(ob) {
-
+    this.spinner.show();  
     this.Treeservice.GetFormCategoryId(ob.value).subscribe(data => {
       this.Form = data;     
       this.spinner.hide();
@@ -104,7 +103,8 @@ export class NodeAddComponent implements OnInit {
   }
 
   onformChange(ob) {  
-    this.Treeservice.GetFormFieldsById(ob.value).subscribe(data => {
+    this.spinner.show();  
+    this.Treeservice.GetFormFieldsByFormId(ob.value).subscribe(data => {
       this.FormFields = data;
       this.spinner.hide();
       this.divFormField = true;
@@ -114,6 +114,7 @@ export class NodeAddComponent implements OnInit {
   }
 
   onLevelChange(ob) {    
+    this.spinner.show();
     this.getNodes(ob.value, ob.index);
 
     this.service.getIsIndicatorLevelbyLevelID(ob.value).subscribe(data => {
@@ -124,13 +125,15 @@ export class NodeAddComponent implements OnInit {
         this.divIsNotIndicator = true;
         this.divIsIndicator = false;
       }
+      this.spinner.hide();
     });
-
   }
 
   onformfieldChange(ob) {  
+    this.spinner.show();
     this.Treeservice.GetFormFieldsByFieldID(ob.value).subscribe(data => {
       this.FormFieldsByFieldID = data;
+      this.spinner.hide();
     });
   }
 
@@ -248,9 +251,10 @@ export class NodeAddComponent implements OnInit {
     if (this.index > 0) {
       this.service.getNodes(this.level.levelID).subscribe(data => {
         this.nodes = data;       
+        this.spinner.hide();
     });   
   }
-     this.spinner.hide();
+
   }
 
   showNotification(from: any, align: any, message: any, title: any, type: string) {

@@ -1,23 +1,31 @@
 <div class="main-content">
   <div class="container-fluid">
-    <div class="container-fluid">
-      <div>
-        <h3 class="title" style="font-weight: bold;">Capture Form</h3>
-      </div>
-      <div class="row">
-        <div>
-          <mat-form-field appearance="outline" style="width: 500px;">
-            <mat-label>Form design</mat-label>
-            <mat-select [(ngModel)]="formData.formID">
-                <mat-option *ngFor="let form of formList"
-                    [value]="form.formID">
-                   {{form.displayName}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-        <button class="btn btn-md"
-         class="btn btn-md btn-primary"   
-        (click)="addForm()">Create Form</button>
+    <div class="row">
+      <div class="col-md-12 ml-auto mr-auto">
+        <div class="card">
+          <div class="card-header card-header-rose card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">note_add</i>
+            </div>
+            <h4 class="card-title">Form Capture</h4>
+          </div>
+          <div class="card-body p-2">
+            <div class="col">
+              <div>
+                <hr>
+                <h6>Select a form below to capture:</h6>
+                <mat-form-field appearance="outline" style="width: 500px;">
+                  <mat-label>Form</mat-label>
+                  <mat-select [(ngModel)]="formData.formID">
+                    <mat-option *ngFor="let form of formList" [value]="form.formID">
+                      {{form.displayName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <button class="btn btn-md" class="btn btn-md btn-primary" (click)="addForm()">Create Form</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

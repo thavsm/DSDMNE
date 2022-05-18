@@ -137,65 +137,65 @@ export class LevelAddComponent implements OnInit {
 
   saveAttributes() {
 
-    // if (this.NodeAttributesData.friendlyname != "" && this.NodeAttributesData.questionName != "" && this.NodeAttributesData.recognitionType != "") {
-    //   this.submitted = true;
+    if (this.levelAdd.fieldName != "" && this.levelAdd.fieldQuestion != "" && this.levelAdd.levelfieldName != "") {
+      this.submitted = true;
 
-    //   if (this.NodeAttributesData.compulsory == true) {
-    //     this.LevelfieldCompulsory = 1;
-    //   } if (this.NodeAttributesData.compulsory == false) {
-    //     this.LevelfieldCompulsory = 0;
-    //   }
+      if(this.levelAdd.fieldCompulsory == true){
+        this.LevelfieldCompulsory = 1;
+      }if(this.levelAdd.fieldCompulsory == false){
+        this.LevelfieldCompulsory = 0;
+      }
 
-    //   var val = {
-    //     "MetadataLevelID": this.NodeAttributesData.metadataLevelID,
-    //     "Friendlyname": this.NodeAttributesData.friendlyname,
-    //     "Description": this.NodeAttributesData.description,
-    //     "DataExportName": this.varDataExportName,
-    //     "RecognitionType": this.NodeAttributesData.recognitionType,
-    //     "Tooltip": this.NodeAttributesData.tooltip,
-    //     "alert": "",
-    //     "Compulsory": this.LevelfieldCompulsory,
-    //     "LengthValidation": this.NodeAttributesData.lengthValidation,
-    //     "LevelID": this.NodeData.levelID,
-    //     "QuestionName": this.NodeAttributesData.questionName,
-    //     "HasChildren": "0",
-    //     "ListValue": this.NodeAttributesData.listValue,
-    //     "WarehouseName": "",
-    //     "Value": 0,
-    //     "CalculationText": "",
-    //     "CriteriaColumn": "",
-    //     "CriteriaRow": "",
-    //     "Status": 1,
-    //     "ReportUrl": this.NodeAttributesData.reportUrl
-    //   };
-    //   this.spinner.show();
-    //   this.service.updateLevelAttributes(this.NodeAttributesData.metadataLevelID, val).subscribe(res => {
-    //     this.spinner.hide();
-    //     this.showNotification('top', 'center', 'level Attributes Updated Successfully!', 'Success', 'success');
-    //     this.service.getLevelMetadata(this.NodeData.levelID);
-    //     this.getNodeAttributes(this.NodeData.levelID);
+      var val = {
+        "MetadataLevelID": this.levelAdd.metadataLevelID,
+        "Friendlyname": this.levelAdd.fieldName,
+        "Description": this.levelAdd.fieldDescription,
+        "DataExportName": this.levelAdd.fieldName.replace(/\s/g, ""),
+        "RecognitionType": this.levelAdd.levelfieldName,
+        "Tooltip": this.levelAdd.Tooltip,
+        "alert": "",
+        "Compulsory": this.LevelfieldCompulsory,
+        "LengthValidation": this.levelAdd.lengthValidation,
+        "LevelID": this.levelAdd.levelID,
+        "QuestionName": this.levelAdd.fieldQuestion,
+        "HasChildren": "0",
+        "ListValue": this.levelAdd.listValue,
+        "WarehouseName": "",
+        "Value": 0,
+        "CalculationText": "",
+        "CriteriaColumn": "",
+        "CriteriaRow": "",
+        "Status": 1,
+        "ReportUrl": this.levelAdd.ReportUrl
+      };
+      this.spinner.show();
+      this.service.updateLevelAttributes(this.levelAdd.metadataLevelID, val).subscribe(res => {
+        this.spinner.hide();
+        this.showNotification('top', 'center', 'level Attributes Updated Successfully!', 'Success', 'success');
+        this.service.getLevelMetadata(this.levelAdd.levelID);
+        //this.getNodeAttributes(this.NodeData.levelID);
 
-    //     this.NodeAttributesData.MetadataLevelID = 0;
-    //     this.NodeAttributesData.friendlyname = " ";
-    //     this.NodeAttributesData.description = " ";
-    //     this.NodeAttributesData.recognitionType = " ";
-    //     this.NodeAttributesData.tooltip = " ";
-    //     this.NodeAttributesData.compulsory = 0;
-    //     this.NodeAttributesData.lengthValidation = " ";
-    //     this.NodeAttributesData.questionName = " ";
-    //     this.NodeAttributesData.listValue = " ";
-    //     this.NodeAttributesData.reportUrl = " ";
-    //     this.divListValue = false;
-    //     this.divLengthValidation = false;
-    //     this.divLengthReportUrl = false;
-    //     this.divAddAtrributes = true;
-    //     this.divEditAtrributes = false;
-
-    //   });
-    // } else {
-    //   this.showNotification('top', 'center', 'Please enter a Field Name, Question Name and Field Type before saving!', '', 'danger');
-    // }
+        this.levelAdd.ReportUrl = "";
+        this.levelAdd.fieldName = "";
+        this.levelAdd.fieldDescription = "";
+        this.levelAdd.Tooltip = "";
+        this.levelAdd.lengthValidation = "";
+        this.levelAdd.fieldQuestion = "";
+        this.levelAdd.listValue = "";
+        this.levelAdd.ReportUrl = "";
+        this.levelAdd.levelfieldName = "";
+        this.divListValue = false;
+        this.divLengthValidation = false;
+        this.divLengthReportUrl = false;  
+        this.divAddAtrributes = true;
+        this.divEditAtrributes = false; 
+      });
+    } else {
+      this.showNotification('top', 'center', 'Please enter a Field Name, Question Name and Field Type before saving!', '', 'danger');
+    }
   }
+
+
 
   clickEditAttritubes(item: any) {
     // this.NodeAttributesData = item;
@@ -211,7 +211,7 @@ export class LevelAddComponent implements OnInit {
     this.levelAdd.ReportUrl = item.reportUrl;
     this.levelAdd.Tooltip = item.tooltip;
     this.levelAdd.fieldCompulsory = item.compulsory;
-
+    this.levelAdd.metadataLevelID = item.metadataLevelID;
     this.ShowHide(item.recognitionType);
 
     this.divAddAtrributes = false;
@@ -299,6 +299,8 @@ export class LevelAddComponent implements OnInit {
         this.isSubmitBtnDisabled = false;
         this.divLevelAdd = true;
         this.divLevelEdit = false;
+        this.divGridAttr = false;
+        this.divAttr = false;
         this.showNotification('top', 'center', 'Level Updated Successfully!', 'Success', 'success');
       });
 

@@ -12,6 +12,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TreeAddComponent } from './tree-add/tree-add.component';
+import { IndicatorManagementComponent } from './indicator-management/indicator-management.component';
 import {NgxSpinnerModule} from 'ngx-spinner';
 import { DatePipe } from '@angular/common';
 import { NodeAddComponent } from './node-add/node-add.component';
@@ -30,6 +31,8 @@ import { InputsModule } from "@progress/kendo-angular-inputs";
 import {PDFModule,ExcelModule,GridModule} from "@progress/kendo-angular-grid";
 import { UserProfileComponent } from '../userprofile/userprofile.component';
 import { Injectable } from '@angular/core';
+import { IndicatorAddComponent } from './indicator-management/indicator-add/indicator-add.component';
+import { IndicatorEditComponent } from './indicator-management/indicator-edit/indicator-edit.component';
 @Injectable({ providedIn: 'root' })
 
 
@@ -63,7 +66,11 @@ import { Injectable } from '@angular/core';
       LevelAddComponent,
       LevelNodeEditComponent,
       TargetAddComponent,
-      ExternaldataAddComponent]
+      ExternaldataAddComponent,
+      IndicatorManagementComponent,
+      IndicatorAddComponent,
+      IndicatorEditComponent
+      ]
 ,
 bootstrap: [HierarchyManagementComponent],
 providers: [DatePipe]

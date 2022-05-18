@@ -78,8 +78,16 @@ export const AppRoutes: Routes = [
         loadChildren: () => import('./hierarchy-management/hierarchy-management.module').then(m => m.HierarchyManagementModule)      
       },
       {
+        path: 'hierarchy-management/indicator-management',      
+        loadChildren: () => import('./hierarchy-management/indicator-management/indicator-management.module').then(m => m.IndicatorManagementModule)      
+      },
+      {
         path: 'location',      
         loadChildren: () => import('./hierarchy-management/hierarchy-management.module').then(m => m.HierarchyManagementModule)      
+      },
+      {
+        path: 'usermanager/indicatorrole',      
+        loadChildren: () => import('./fieldrole/fieldrole.module').then(m => m.FieldRoleModule)      
       },
       {
         path: 'level',      

@@ -48,10 +48,15 @@ a{
 
 .form-check,
 label{
-    font-size: 14px;
-    line-height: 1.42857;
-    color: $checkboxes-text-color;
+    font-size: small;
+    color: black;
     font-weight: 400;
+    white-space: normal !important;
+    line-height: normal !important;
+    height: unset !important;
+    width: fit-content !important;
+    padding-top: 0.9em !important;
+    padding-bottom: 0.9em !important;
 }
 
 .main-raised{

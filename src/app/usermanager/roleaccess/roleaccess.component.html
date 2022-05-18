@@ -6,7 +6,7 @@
                     <div class="col-md-8 ml-auto mr-auto">
                       <div class="page-categories">
                         <!-- <h3 class="title text-center">Role Access</h3>
-                        <br /> -->
+                        <br /> -->                        
                         <ul class="nav nav-pills nav-pills-warning nav-pills-icons justify-content-center" role="tablist">
                           <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#link7" role="tablist">
@@ -20,21 +20,10 @@
                           </li>
                           <li class="nav-item">
                             <a class="nav-link" data-toggle="tab" href="#link9" role="tablist">
-                              <i class="material-icons">accessibility</i> Roles
+                              <i class="material-icons">accessibility</i> Types
                             </a>
                           </li>
-                        </ul>
-                        <div class="row">
-                            <div class="col-md-5 ml-auto">
-                              <button mat-button [mat-dialog-close]="" class="btn btn-md btn-primary"  >Cancel</button>
-                            </div>
-                            <div class="col-md-3 mr-auto"></div>
-                            <div class="col-md-4 mr-auto">
-                              
-                              <button id="btnSave" class="btn btn-primary mr-1" (click)='addRoleAccess()'>Save Access</button>
-                            </div>
-                        </div>
-                        
+                        </ul>                                                
                         <div class="tab-content tab-space tab-subcategories">
                           <div class="tab-pane" id="link7">
                               <div class="card">
@@ -80,14 +69,36 @@
                                       <th mat-header-cell *matHeaderCellDef mat-sort-header width="70%">Form </th>
                                       <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                                       </ng-container>
-                                                
+
                                       <!-- Checkbox Column -->
+                                      <ng-container matColumnDef="capture">
+                                        <th mat-header-cell *matHeaderCellDef>Capture</th>
+                                        <td mat-cell *matCellDef="let row">
+                                        <mat-checkbox (click)="$event.stopPropagation()"
+                                                        (change)="$event ? selectionCaptureForms.toggle(row) : null"
+                                                        [checked]="selectionCaptureForms.isSelected(row)">
+                                        </mat-checkbox>
+                                        </td>
+                                    </ng-container>
+
+                                    <!-- Checkbox Column -->
+                                    <ng-container matColumnDef="view">
+                                      <th mat-header-cell *matHeaderCellDef>View</th>
+                                      <td mat-cell *matCellDef="let row">
+                                      <mat-checkbox (click)="$event.stopPropagation()"
+                                                      (change)="$event ? selectionViewForms.toggle(row) : null"
+                                                      [checked]="selectionViewForms.isSelected(row)">
+                                      </mat-checkbox>
+                                      </td>
+                                    </ng-container>
+                                                
+                                      <!-- Checkbox Column
                                       <ng-container matColumnDef="select">
-                                          <th mat-header-cell *matHeaderCellDef>
-                                          <mat-checkbox (change)="$event ? masterToggle() : null"
-                                                          [checked]="selectionForms.hasValue() && isAllSelected()"
-                                                          [indeterminate]="selectionForms.hasValue() && !isAllSelected()">
-                                          </mat-checkbox>
+                                          <th mat-header-cell *matHeaderCellDef>                                        
+                                          <mat-checkbox (change)="$event ? masterToggleForms() : null"
+                                                          [checked]="selectionForms.hasValue() && isAllFormsSelected()"
+                                                          [indeterminate]="selectionForms.hasValue() && !isAllFormsSelected()">
+                                          </mat-checkbox>                                          
                                           </th>
                                           <td mat-cell *matCellDef="let row">
                                           <mat-checkbox (click)="$event.stopPropagation()"
@@ -95,7 +106,7 @@
                                                           [checked]="selectionForms.isSelected(row)">
                                           </mat-checkbox>
                                           </td>
-                                      </ng-container>
+                                      </ng-container> -->
               
                                       <tr mat-header-row *matHeaderRowDef="displayedFormColumns"></tr>
                                       <tr mat-row *matRowDef="let row; columns: displayedFormColumns;"></tr>     
@@ -113,16 +124,16 @@
                                 <div class="table-responsive">                            
                                   <table mat-table [dataSource]="roleList" matSort class="table">
                                       <ng-container matColumnDef="role">
-                                      <th mat-header-cell *matHeaderCellDef mat-sort-header width="70%">Roles </th>
+                                      <th mat-header-cell *matHeaderCellDef mat-sort-header width="70%">Role Type </th>
                                       <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                                       </ng-container>
                                                 
                                       <!-- Checkbox Column -->
                                       <ng-container matColumnDef="select">
                                           <th mat-header-cell *matHeaderCellDef>
-                                          <mat-checkbox (change)="$event ? masterToggle() : null"
-                                                          [checked]="selectionRole.hasValue() && isAllSelected()"
-                                                          [indeterminate]="selectionRole.hasValue() && !isAllSelected()">
+                                          <mat-checkbox (change)="$event ? masterToggleRoles2() : null"
+                                                          [checked]="selectionRole.hasValue() && isAllRoleTypesSelected()"
+                                                          [indeterminate]="selectionRole.hasValue() && !isAllRoleTypesSelected()">
                                           </mat-checkbox>
                                           </th>
                                           <td mat-cell *matCellDef="let row">
@@ -142,6 +153,16 @@
                                 </div>
                             </div>
                             </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-5 ml-auto">
+                            <button mat-button [mat-dialog-close]="" class="btn btn-md btn-primary"  >Cancel</button>
+                          </div>
+                          <div class="col-md-4 mr-auto"></div>
+                          <div class="col-md-3 mr-auto">
+                            
+                            <button id="btnSave" class="btn btn-primary mr-1" (click)='addRoleAccess()'>Save </button>
                           </div>
                         </div>
                       </div>

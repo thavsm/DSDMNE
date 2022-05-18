@@ -102,7 +102,8 @@ export class TreediagramComponent implements OnInit {
       nodeParentD: event.dataItem.nodeParentD,
       nodeName: event.dataItem.nodeName,
       nodeDescription: event.dataItem.nodeDescription,
-      ViewEdit:this.treeData.ViewEdit
+      ViewEdit:this.treeData.ViewEdit,
+      IsIndicatorLevel:event.dataItem.isIndicatorLevel
     }
 
     const dialogRef = this.dialog.open(LevelNodeEditComponent, { width: '70%', height: '80%', data: this.NodeData, disableClose: true }
@@ -151,7 +152,7 @@ export class TreediagramComponent implements OnInit {
     items.forEach((data) => {
       if (data) {
         data.forEach((i) => {
-          this.allParentNodes.push(i.nodeName);
+          this.allParentNodes.push(i.levelNameNodeName);
         });
         this.getAllParentTextProperties(data);
       }
