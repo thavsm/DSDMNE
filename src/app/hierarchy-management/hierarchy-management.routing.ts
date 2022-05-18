@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 
 import { HierarchyManagementComponent } from './hierarchy-management.component';
+import { IndicatorManagementComponent } from './indicator-management/indicator-management.component';
 
 export const hierarchymanagementRoutes: Routes = [
     {
@@ -29,6 +30,12 @@ export const hierarchymanagementRoutes: Routes = [
     {
       path: 'level',
       component: HierarchyManagementComponent
+    }
+  
+  ,
+    {
+      path: 'indicator-management',
+      component: IndicatorManagementComponent
     }
   
   ]

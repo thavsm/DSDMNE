@@ -1,0 +1,85 @@
+<div style="margin-left: -1%;">
+    <button mat-icon-button color="warn" (click)="closePopup()">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<h1 mat-dialog-title>Indicator Edit</h1>
+<div class="form-group">
+
+    <mat-accordion>
+        <ng-container *ngFor="let item of formDesign;let i= index;"
+            style="background-color: white;text-align: left;height: 100px;font-weight: bold;">
+        
+            <!-- Date Type -->
+            <ng-container *ngIf="item.recognitionType == 'Date' && item.status==='1'">
+                <div class="form-group">
+                    <label style="font-size: medium;">{{item.questionName}}</label>
+                    <mat-form-field appearance="outline">
+                        <input matInput type="date" [(ngModel)]=item.data placeholder="{{item.toolTip}}"  value="{{item.data}}">
+                    </mat-form-field>
+                    
+                </div>
+            </ng-container>
+        
+            <!-- Text Type -->
+            <ng-container *ngIf="item.recognitionType == 'Text' && item.status=='1' ">
+                <div class="form-group">
+                    <label style="font-size: medium;">{{item.questionName}}</label>
+                    <mat-form-field>
+                        <input matInput ngModel type="text" [(ngModel)]=item.data placeholder="{{item.toolTip}}" value="{{item.data}}" maxlength={{item.lengthValidation}}>
+                    </mat-form-field>
+                </div>
+            </ng-container>
+        
+            <!-- Number Type -->
+            <ng-container *ngIf="item.recognitionType=='Number' && item.status=='1' ">
+                <div class="form-group">
+                    <label style="font-size: medium;">{{item.questionName}}</label>
+                    <mat-form-field>
+                        <input matInput type="number" ngModel maxlength={{item.lengthValidation}}
+                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                            [(ngModel)]=item.data placeholder="{{item.toolTip}}" value="{{item.data}}" >
+                    </mat-form-field>
+                    <!-- <div style="height: 5px;"></div> -->
+                </div>
+            </ng-container>
+
+            <!-- select Type -->
+            <ng-container *ngIf="item.recognitionType=='List' && item.status=='1' ">
+                <div class="form-group">
+                    <label style="font-size: medium;">{{item.questionName}}</label>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Select a option</mat-label>
+                        <mat-select  [(ngModel)]=item.data>
+                            <mat-option *ngFor="let list of item.listValue" style="color: black;" [value]="list.value">
+                                {{list.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <!-- <div style="height: 5px;"></div> -->
+                </div>
+            </ng-container>
+                     
+            <!-- URL-->
+            <ng-container *ngIf="item.recognitionType == 'URL' && item.status=='1' ">
+                <div class="form-group">
+                    <label style="font-size: medium;">{{item.questionName}}</label>
+                    <mat-form-field>
+                        <input matInput ngModel type="text" [(ngModel)]=item.data placeholder="{{item.toolTip}}" value="{{item.data}}" maxlength={{item.lengthValidation}}>
+                    </mat-form-field>
+                </div>
+            </ng-container>
+
+        </ng-container>
+    
+    </mat-accordion>
+    <div class="form-group">
+        <button mat-button cdkFocusInitial (click)="addForm()" class="btn btn-md btn-primary">Save</button>
+        &nbsp;
+        <button mat-button [mat-dialog-close]="" class="btn btn-md btn-primary">Cancel</button>
+    </div>
+<ngx-spinner bdColor="rgba(	237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
+      <p style="font-size: 20px; color: black">Processing...</p>
+</ngx-spinner>
+</div>

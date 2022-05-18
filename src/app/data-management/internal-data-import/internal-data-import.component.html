@@ -100,10 +100,12 @@
                         <input type="text" class="form-control" value="{{ImportAdd.password}}" [(ngModel)]="ImportAdd.password">
                     </div>
 
-                    <div class="container">
-                        <dual-list [source]="source" [(destination)]="target" height="150px"  [key]="fieldNameId" [display]="fieldName"></dual-list>
+                    <div class="container-fluid">
+                        <dual-list [sort]="keepSorted" [source]="source" [key]="key" [display]="display" [filter]="filter"
+                        [(destination)]="target" height="265px" (click)="Click($event)"></dual-list>
                     </div>
 
+                    
                 </div>
 
                 <!-- <div style="margin-top: 20px;">

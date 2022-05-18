@@ -1,14 +1,19 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {FormControl} from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-  
 import {NgxSpinner, NgxSpinnerService} from 'ngx-spinner';
 import { merge } from 'jquery';
 import * as moment from 'moment';
+import Swal from 'sweetalert2'
 import { TreediagramService } from 'src/app/treediagram.service';
 declare var $: any;
 
 
+interface Options {
+  value: string;
+  text: string;
+}
 
 @Component({
   selector: 'app-level-add',
@@ -27,14 +32,28 @@ export class LevelAddComponent implements OnInit {
   divListValue: boolean  = false;
   divLengthValidation: boolean  = false;
   divLengthReportUrl : boolean  = false;
+  divAddAtrributes: boolean = true;
+  divEditAtrributes: boolean = false;
   LevelData: any;
   isSubmitBtnDisabled: boolean= true;
   LevelfieldCompulsory: any;
+  divAttr: boolean= false;
+  divLevelAdd: boolean= true;
+  divLevelEdit: boolean= false;
+  divGridAttr: boolean= false;
   AttributesDataExportName: any=[];
+  LevelsList: any=[];
+  thEdit: boolean  = true;
+  thDelete: boolean  = true;
+
+  Option: Options[] = [
+    {value: '1', text: 'True'},
+    {value: '0', text: 'False'}
+  ];
 
   constructor(public dialogRef: MatDialogRef<LevelAddComponent>,
     @Inject(MAT_DIALOG_DATA) data,
-    private service: TreediagramService, public formBuilder: FormBuilder,private spinner: NgxSpinnerService) 
+    public service: TreediagramService, public formBuilder: FormBuilder,private spinner: NgxSpinnerService ) 
     { 
       this.levelAdd = data;    
       this.treeData = JSON.parse(localStorage.getItem('treeData') || '{}');      
@@ -71,8 +90,10 @@ export class LevelAddComponent implements OnInit {
     this.levelfieldName = this.levelAdd.levelfieldName;
     this.listValue = this.levelAdd.listValue;
     this.ReportUrl = this.levelAdd.ReportUrl;
+    this.levelAdd.isIndicator = "";
     // this.getRoles();
     this.getUserfieldTypes();
+    this.getLevels();
   }
 
   // getRoles(){
@@ -89,6 +110,230 @@ export class LevelAddComponent implements OnInit {
          this.UserfieldTypes = data;
          this.spinner.hide();
     });
+  }
+
+  DisableEditandDelete(item: any): Boolean {
+
+    if (item.friendlyname == "Name" || item.friendlyname == "Description") {
+      return false
+    }
+    else {
+      return true
+    }
+  }
+
+
+  clickEdit(item: any) {
+    this.levelAdd.levelName = item.levelName;
+    this.levelAdd.levelDescription = item.levelDescription;
+    this.levelAdd.isIndicator = item.isIndicatorLevel;
+    this.levelAdd.levelID = item.levelID;
+    this.divLevelAdd = false;
+    this.divLevelEdit = true;
+    this.divGridAttr = true;
+    this.divAttr= true;
+    this.service.getLevelMetadata(item.levelID);    
+  }
+
+  saveAttributes() {
+
+    if (this.levelAdd.fieldName != "" && this.levelAdd.fieldQuestion != "" && this.levelAdd.levelfieldName != "") {
+      this.submitted = true;
+
+      if(this.levelAdd.fieldCompulsory == true){
+        this.LevelfieldCompulsory = 1;
+      }if(this.levelAdd.fieldCompulsory == false){
+        this.LevelfieldCompulsory = 0;
+      }
+
+      var val = {
+        "MetadataLevelID": this.levelAdd.metadataLevelID,
+        "Friendlyname": this.levelAdd.fieldName,
+        "Description": this.levelAdd.fieldDescription,
+        "DataExportName": this.levelAdd.fieldName.replace(/\s/g, ""),
+        "RecognitionType": this.levelAdd.levelfieldName,
+        "Tooltip": this.levelAdd.Tooltip,
+        "alert": "",
+        "Compulsory": this.LevelfieldCompulsory,
+        "LengthValidation": this.levelAdd.lengthValidation,
+        "LevelID": this.levelAdd.levelID,
+        "QuestionName": this.levelAdd.fieldQuestion,
+        "HasChildren": "0",
+        "ListValue": this.levelAdd.listValue,
+        "WarehouseName": "",
+        "Value": 0,
+        "CalculationText": "",
+        "CriteriaColumn": "",
+        "CriteriaRow": "",
+        "Status": 1,
+        "ReportUrl": this.levelAdd.ReportUrl
+      };
+      this.spinner.show();
+      this.service.updateLevelAttributes(this.levelAdd.metadataLevelID, val).subscribe(res => {
+        this.spinner.hide();
+        this.showNotification('top', 'center', 'level Attributes Updated Successfully!', 'Success', 'success');
+        this.service.getLevelMetadata(this.levelAdd.levelID);
+        //this.getNodeAttributes(this.NodeData.levelID);
+
+        this.levelAdd.ReportUrl = "";
+        this.levelAdd.fieldName = "";
+        this.levelAdd.fieldDescription = "";
+        this.levelAdd.Tooltip = "";
+        this.levelAdd.lengthValidation = "";
+        this.levelAdd.fieldQuestion = "";
+        this.levelAdd.listValue = "";
+        this.levelAdd.ReportUrl = "";
+        this.levelAdd.levelfieldName = "";
+        this.divListValue = false;
+        this.divLengthValidation = false;
+        this.divLengthReportUrl = false;  
+        this.divAddAtrributes = true;
+        this.divEditAtrributes = false; 
+      });
+    } else {
+      this.showNotification('top', 'center', 'Please enter a Field Name, Question Name and Field Type before saving!', '', 'danger');
+    }
+  }
+
+
+
+  clickEditAttritubes(item: any) {
+    // this.NodeAttributesData = item;
+    // this.varDataExportName = item.dataExportName;
+
+    this.levelAdd.fieldName = item.friendlyname;
+    this.levelAdd.fieldQuestion = item.questionName;
+    this.levelAdd.fieldDescription = item.description;
+    this.levelAdd.fieldXML = item.friendlyname;
+    this.levelAdd.levelfieldName = item.recognitionType;
+    this.levelAdd.listValue = item.listValue;
+    this.levelAdd.lengthValidation = item.lengthValidation;
+    this.levelAdd.ReportUrl = item.reportUrl;
+    this.levelAdd.Tooltip = item.tooltip;
+    this.levelAdd.fieldCompulsory = item.compulsory;
+    this.levelAdd.metadataLevelID = item.metadataLevelID;
+    this.ShowHide(item.recognitionType);
+
+    this.divAddAtrributes = false;
+    this.divEditAtrributes = true;
+  }
+
+  ShowHide(Type: any) {
+
+    if (Type == "Date") {
+
+      this.divListValue = false;
+      this.divLengthValidation = false;
+      this.divLengthReportUrl = false;
+
+    } else if (Type == "List") {
+
+      this.divListValue = true;
+      this.divLengthValidation = false;
+      this.divLengthReportUrl = false;
+
+    } else if (Type == "Number") {
+
+      this.divListValue = false;
+      this.divLengthValidation = true;
+      this.divLengthReportUrl = false;
+
+    } else if (Type == "Text") {
+
+      this.divListValue = false;
+      this.divLengthValidation = true;
+      this.divLengthReportUrl = false;
+
+    } else if (Type == "External Data") {
+
+      this.divListValue = false;
+      this.divLengthValidation = false;
+      this.divLengthReportUrl = true;
+
+    } else if (Type == "Attachment") {
+
+      this.divListValue = false;
+      this.divLengthValidation = false;
+      this.divLengthReportUrl = false;
+
+    } else if (Type == "Target") {
+
+      this.divListValue = false;
+      this.divLengthValidation = false;
+      this.divLengthReportUrl = false;
+
+    } else if (Type == "URL") {
+
+      this.divListValue = false;
+      this.divLengthValidation = false;
+      this.divLengthReportUrl = false;
+
+    }
+
+  }
+
+  editLevel() {
+
+    if (this.levelAdd.levelName != "") {
+
+      if (this.levelAdd.isIndicator != "") {
+      //updating form
+      this.submitted = true;
+      // stop here if form is invalid
+      var val = {
+        "levelID": this.levelAdd.levelID,
+        "levelName": this.levelAdd.levelName,
+        "levelDescription":  this.levelAdd.levelDescription,
+        "treeID": this.treeData.treeID,
+        "status": "1",
+        "isIndicatorLevel": this.levelAdd.isIndicator
+      };
+      this.spinner.show();
+      this.service.updateLevelDetails(this.levelAdd.levelID, val).subscribe(res => {
+        this.spinner.hide();
+        this.levelID = this.levelAdd.levelID;
+        this.levelAdd.levelName ="";
+        this.levelAdd.levelDescription ="";
+        this.levelAdd.levelName ="";
+        this.levelAdd.isIndicator ="";
+        this.isSubmitBtnDisabled = false;
+        this.divLevelAdd = true;
+        this.divLevelEdit = false;
+        this.divGridAttr = false;
+        this.divAttr = false;
+        this.showNotification('top', 'center', 'Level Updated Successfully!', 'Success', 'success');
+      });
+
+      }else {
+        this.showNotification('top', 'center', 'Please select level type before saving!', '', 'danger');
+      }
+    }
+    else {
+      this.showNotification('top', 'center', 'Please add a Level name before saving!', '', 'danger');
+    }
+  }
+
+  
+  clickDelete(item: any) {
+    Swal.fire({
+      title: 'Are you sure you want to delete Level?',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      toast: true,
+      position: 'top',
+      allowOutsideClick: false,
+      confirmButtonColor: '#000000',
+      cancelButtonColor: '#000000'
+    }).then((result) => {
+      if (result.value) {
+        this.spinner.show();
+        this.service.DeleteLevel(item.levelID).subscribe(data => {
+          this.spinner.hide();
+          this.showNotification('top', 'center', 'Level Deleted Succesfully!', 'Success.', 'success');
+        });
+      }
+    })
   }
 
   onUserfieldTypesChange(ob) {    
@@ -144,6 +389,10 @@ export class LevelAddComponent implements OnInit {
     }
   }
 
+  closePopup() {
+    this.dialogRef.close();
+  }
+
   addDefaultAttributes() {
 
     this.LevelData = JSON.parse(localStorage.getItem('LevelData') || '{}');
@@ -194,8 +443,17 @@ export class LevelAddComponent implements OnInit {
       "ReportUrl": ""
     };
 
-    this.service.addLevelAttributes(Nameval).subscribe(res => {});
-    this.service.addLevelAttributes(Descriptionval).subscribe(res => {});
+    if(this.levelAdd.isIndicator == 0){
+
+      this.service.addLevelAttributes(Nameval).subscribe(res => {});
+      this.service.addLevelAttributes(Descriptionval).subscribe(res => {});
+
+    }else{
+      this.service.addLevelIndicatorAttributes(this.LevelData.levelID).subscribe(res=>{},error => {
+       console.log(error)
+    });
+
+    }
 
   }
   addAttributes() {
@@ -238,7 +496,7 @@ export class LevelAddComponent implements OnInit {
           };
           this.spinner.show();
           this.service.addLevelAttributes(val).subscribe(res => {
-          this.dialogRef.close();
+          // this.dialogRef.close();
           this.spinner.hide();
           this.showNotification('top', 'center', 'level Attributes Added Successfully!', 'Success', 'success');
           
@@ -250,7 +508,7 @@ export class LevelAddComponent implements OnInit {
           this.levelAdd.fieldQuestion = "";
           this.levelAdd.listValue = "";
           this.levelAdd.ReportUrl = "";
-
+          this.levelAdd.levelfieldName = "";
           this.divListValue = false;
           this.divLengthValidation = false;
           this.divLengthReportUrl = false;  
@@ -266,30 +524,54 @@ export class LevelAddComponent implements OnInit {
      });   
   }
 
+
+  getLevels(){
+    this.spinner.show();   
+    this.service.getLevelsList(this.treeData.treeID).subscribe(data => {
+         this.LevelsList =  data;
+         this.spinner.hide();
+    });
+  }
+
   addLevel() {
     if (this.levelAdd.levelName != "") {
-      //adding form
-      const DATE_TIME_FORMAT = 'YYYY-MM-DDTHH:mm';
-      this.submitted = true;
-      var val = {        
-        "levelID": 0,
-        "levelName": this.levelAdd.levelName,
-        "levelDescription": this.levelAdd.levelDescription,
-        "treeID": this.treeData.treeID,
-        "status": "1"
-      };
-      this.spinner.show();
-      this.service.addLevel(val).subscribe(res => {
-        //this.dialogRef.close();
-        this.spinner.hide();
-        this.showNotification('top', 'center', 'level Added Successfully!', 'Success', 'success');   
-        localStorage.setItem('LevelData', JSON.stringify(res));   
-        this.addDefaultAttributes(); 
-        this.levelID = this.levelAdd.levelID;
-        //this.levelAdd.levelName ="";
-        //this.levelAdd.levelDescription ="";
-        this.isSubmitBtnDisabled = false;
-      });
+      if (this.levelAdd.isIndicator != "") {
+
+        //adding form
+        const DATE_TIME_FORMAT = 'YYYY-MM-DDTHH:mm';
+        this.submitted = true;
+        var val = {
+          "levelID": 0,
+          "levelName": this.levelAdd.levelName,
+          "levelDescription": this.levelAdd.levelDescription,
+          "treeID": this.treeData.treeID,
+          "status": "1",
+          "isIndicatorLevel": this.levelAdd.isIndicator
+        };
+        this.spinner.show();
+        this.service.addLevel(val).subscribe(res => {
+          //this.dialogRef.close();
+          this.spinner.hide();
+          this.showNotification('top', 'center', 'level Added Successfully!', 'Success', 'success');
+          localStorage.setItem('LevelData', JSON.stringify(res));
+          this.addDefaultAttributes();
+          this.levelID = this.levelAdd.levelID;
+          this.levelAdd.levelName ="";
+          this.levelAdd.levelDescription ="";
+          this.levelAdd.levelName ="";
+          this.levelAdd.isIndicator ="";
+          this.isSubmitBtnDisabled = false;
+        });
+
+        
+        if(this.levelAdd.isIndicator == 0){
+          this.divAttr = true;
+        }
+
+      } else {
+        this.showNotification('top', 'center', 'Please select level type before saving!', '', 'danger');
+      }
+
     }
     else {
       this.showNotification('top', 'center', 'Please add a level name before saving!', '', 'danger');
