@@ -43,6 +43,11 @@ export class TreeAddComponent implements OnInit {
     this.dateCreated = this.treeAdd.dateCreated;
 
   }
+
+  closePopup() {
+    this.dialogRef.close();
+  }
+  
   addTree() {
     if (this.treeAdd.name != "") {
       //adding form

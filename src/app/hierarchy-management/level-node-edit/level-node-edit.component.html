@@ -1,6 +1,183 @@
+<div style="margin-left: -1%;">
+    <button mat-icon-button color="warn" (click)="closePopup()">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
 
-<h1 mat-dialog-title>Level/Node Edit</h1>
 <div mat-dialog-content>
+
+    <div class="form-group">
+        <div class="form-group">
+            <label style="font-size: medium;">Level Name</label>
+            <mat-form-field>
+                <input matInput ngModel type="text" [(ngModel)]=NodeData.levelName value="{{NodeData.levelName}}" disabled>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="form-group">
+            <label style="font-size: medium;">Parent Node</label>
+            <mat-form-field>
+                <input matInput ngModel type="text" [(ngModel)]=NodeData.ParentNodeName value="{{NodeData.ParentNodeName}}" disabled>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="form-group" *ngIf="divIsIndicator">
+        <div class="form-group">
+            <mat-form-field appearance="outline">
+                <mat-label>Select an Indicator</mat-label>
+                <mat-select [(ngModel)]="NodeData.indicatorID">
+                    <mat-option *ngFor="let c of Indicators" [value]="c.indicatorID">
+                        {{c.indicatorName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="form-group">
+            <mat-form-field appearance="outline">
+                <mat-label>Form Category</mat-label>
+                <mat-select [(ngModel)]="NodeData.FormCategory" (selectionChange)="onformCategoryChange($event)">
+                    <mat-option *ngFor="let c of FormCategory" [value]="c.formCategoryID">
+                        {{c.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+
+        <div class="form-group" *ngIf="divForm">
+            <mat-form-field appearance="outline">
+                <mat-label>Form Name</mat-label>
+                <mat-select [(ngModel)]="NodeData.FormName" (selectionChange)="onformChange($event)">
+                    <mat-option *ngFor="let c of Form" [value]="c.formID">
+                        {{c.displayName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+
+        <div class="form-group" *ngIf="divFormField" > 
+            <mat-form-field appearance="outline">
+                <mat-label>Form Field</mat-label>
+                <mat-select [(ngModel)]="NodeData.fName" (selectionChange)="onformfieldChange($event)">
+                    <mat-option *ngFor="let c of FormFields" [value]="c.fieldID">
+                        {{c.questionName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    
+    </div>
+    <div class="form-group">
+
+        <mat-accordion>
+            <ng-container *ngFor="let item of formDesign;let i= index;"
+                style="background-color: white;text-align: left;height: 100px;font-weight: bold;">
+            
+                <!-- Date Type -->
+                <ng-container *ngIf="item.recognitionType == 'Date' && item.status==='1'">
+                    <div class="form-group">
+                        <label style="font-size: medium;">{{item.questionName}}</label>
+                        <mat-form-field appearance="outline">
+                            <input matInput type="date" [(ngModel)]=item.data placeholder="{{item.toolTip}}"  value="{{item.data}}">
+                        </mat-form-field>
+                        
+                    </div>
+                </ng-container>
+            
+                <!-- Text Type -->
+                <ng-container *ngIf="item.recognitionType == 'Text' && item.status=='1' ">
+                    <div class="form-group">
+                        <label style="font-size: medium;">{{item.questionName}}</label>
+                        <mat-form-field>
+                            <input matInput ngModel type="text" [(ngModel)]=item.data placeholder="{{item.toolTip}}" value="{{item.data}}" maxlength={{item.lengthValidation}}>
+                        </mat-form-field>
+                    </div>
+                </ng-container>
+            
+                <!-- Number Type -->
+                <ng-container *ngIf="item.recognitionType=='Number' && item.status=='1' ">
+                    <div class="form-group">
+                        <label style="font-size: medium;">{{item.questionName}}</label>
+                        <mat-form-field>
+                            <input matInput type="number" ngModel maxlength={{item.lengthValidation}}
+                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                [(ngModel)]=item.data placeholder="{{item.toolTip}}" value="{{item.data}}" >
+                        </mat-form-field>
+                        <!-- <div style="height: 5px;"></div> -->
+                    </div>
+                </ng-container>
+
+                <!-- select Type -->
+                <ng-container *ngIf="item.recognitionType=='List' && item.status=='1' ">
+                    <div class="form-group">
+                        <label style="font-size: medium;">{{item.questionName}}</label>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Select a option</mat-label>
+                            <mat-select  [(ngModel)]=item.data>
+                                <mat-option *ngFor="let list of item.listValue" style="color: black;" [value]="list.value">
+                                    {{list.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <!-- <div style="height: 5px;"></div> -->
+                    </div>
+                </ng-container>
+                
+                <!-- Target -->
+                <ng-container *ngIf="item.recognitionType=='Target' && item.status=='1' ">
+                    <div class="form-group">
+                        <label style="font-size: medium;">{{item.questionName}}</label> <br>
+                        <button mat-button cdkFocusInitial (click)="OpenTargets()"
+                            class="btn btn-md btn-primary"   >Add/View Targets</button>
+                        <!-- <div style="height: 5px;"></div> -->
+                    </div>
+                </ng-container>
+                
+                <!-- External Data -->
+                <ng-container *ngIf="item.recognitionType=='External Data' && item.status=='1' ">
+                    <div class="form-group">
+                        <label style="font-size: medium;">{{item.questionName}}</label> <br>
+                        <button mat-button cdkFocusInitial (click)="OpenExternalData()"
+                            class="btn btn-md btn-primary"   >Configure External Data</button>
+                        <!-- <div style="height: 5px;"></div> -->
+                    </div>
+                </ng-container>
+                
+                <!-- URL-->
+                <ng-container *ngIf="item.recognitionType == 'URL' && item.status=='1' ">
+                    <div class="form-group">
+                        <label style="font-size: medium;">{{item.questionName}}</label>
+                        <mat-form-field>
+                            <input matInput ngModel type="text" [(ngModel)]=item.data placeholder="{{item.toolTip}}" value="{{item.data}}" maxlength={{item.lengthValidation}}>
+                        </mat-form-field>
+                    </div>
+                </ng-container>
+
+            </ng-container>
+        
+        </mat-accordion>
+    </div>
+    <div class="form-group" >
+        <button mat-button cdkFocusInitial  (click)="addForm()" 
+            class="btn btn-md btn-primary"  *ngIf="btnSave">Save</button>
+            &nbsp; 
+        <button mat-button [mat-dialog-close]=""
+        class="btn btn-md btn-primary"  >Cancel</button>
+          &nbsp;
+          <button mat-button cdkFocusInitial  (click)="deleteNode()"
+          class="btn btn-md btn-primary"  *ngIf="btnDelete">Delete Node</button>
+    </div>
+<ngx-spinner bdColor="rgba(	237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
+      <p style="font-size: 20px; color: black">Processing...</p>
+</ngx-spinner>
+
+</div>
+
+<!-- <div mat-dialog-content>
     <mat-tab-group animationDuration="0ms" [selectedIndex]="tabIndex">
         <mat-tab label={{TabLevelEdit}}>
             <div class="form-group">
@@ -12,16 +189,6 @@
                 <input type="text" class="form-control" value="{{NodeData.levelDescription}}"
                     [(ngModel)]="NodeData.levelDescription">
             </div>
-            <!-- <div class="form-group" style="display:none" >
-                <mat-form-field appearance="outline">
-                    <mat-label>Select Roles </mat-label> 
-                    <mat-select [(ngModel)]="NodeData.roleName">
-                        <mat-option *ngFor="let c of Roles" [value]="c.roleID">
-                            {{c.roleName}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div> -->
             <div class="form-group" *ngIf="divLevelButtons">
                 <button mat-button cdkFocusInitial  (click)="editLevel()"
                 class="btn btn-md btn-primary"  >Edit Level</button>
@@ -29,35 +196,42 @@
                 <button mat-button cdkFocusInitial  (click)="deleteLevel()"
                 class="btn btn-md btn-primary"  >Delete Level</button>
             </div>
-            <h1 mat-dialog-title>Node Field Attributes</h1> 
-            <div class="form-group">
-                <div class="col-md-12">          
-                    <table class="table">
-                        <thead class="thead-light">
-                            <tr>
-                                <th class="th">Field Name</th>
-                                <th class="th">Question Name</th>
-                                <th class="th">Description</th>
-                                <th class="th">Field Type</th>
-                                <th class="th" *ngIf="thEdit">Edit</th>
-                                <th class="th" *ngIf="thDelete">Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let pd of service.LevelMetadata | paginate: { itemsPerPage: 5, currentPage: p }">
-                                <td >{{pd.friendlyname}}</td>
-                                <td >{{pd.questionName}}</td>
-                                <td >{{pd.description}}</td>
-                                <td >{{pd.recognitionType}}</td>                             
-                                <td *ngIf="thEdit"><button type="button" *ngIf="pd.friendlyname != 'Name' && pd.description != 'Description'" class="btn btn-secondary" (click)="clickEdit(pd)"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
-                                <td *ngIf="thDelete"><button type="button" *ngIf="pd.friendlyname != 'Name' && pd.description != 'Description'" class="btn btn-danger" (click)="clickDelete(pd)"><i class="fa fa-trash"  aria-hidden="true"></i></button></td>         
-                            </tr>
-                            
-                        </tbody>                        
-                    </table>
 
-                    <pagination-controls (pageChange)="p = $event"></pagination-controls> 
-                </div>
+            <h1 mat-dialog-title>Node Field Attributes</h1> 
+
+            <div class="form-group">
+                <kendo-grid [kendoGridBinding]="service.LevelMetadata" [pageSize]="5" [pageable]="true"
+                    [filterable]="true" [sortable]="true" [groupable]="false" [resizable]="true">
+
+                    <kendo-grid-column field="friendlyname" title="Field Name" [width]="6">
+                    </kendo-grid-column>
+
+                    <kendo-grid-column field="questionName" title="Question Name" [width]="6">
+                    </kendo-grid-column>
+
+
+                    <kendo-grid-column field="recognitionType" title="Field Type" [width]="6">
+                    </kendo-grid-column>
+
+                    <kendo-grid-column [width]="1" *ngIf="thEdit">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <button mat-icon-button (click)="clickEdit(dataItem)" *ngIf="DisableEditandDelete(dataItem)">
+                                <mat-icon matTooltip="Edit" class="mat-18" style="color: #016000;">edit
+                                </mat-icon>
+                            </button>
+                        </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column [width]="1" *ngIf="thDelete">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <button mat-icon-button (click)="clickDelete(dataItem)" *ngIf="DisableEditandDelete(dataItem)">
+                                <mat-icon matTooltip="Delete" class="mat-18" style="color: #ff0000;">delete
+                                </mat-icon>
+                            </button>
+                        </ng-template>
+                    </kendo-grid-column>
+
+                </kendo-grid>
             </div>
 
             <div class="form-group" *ngIf="divAtrributes" >
@@ -145,13 +319,14 @@
                     </mat-form-field>
                 </div>
             </div>
+            
             <div class="form-group">
 
                 <mat-accordion>
                     <ng-container *ngFor="let item of formDesign;let i= index;"
                         style="background-color: white;text-align: left;height: 100px;font-weight: bold;">
                     
-                        <!-- Date Type -->
+
                         <ng-container *ngIf="item.recognitionType == 'Date' && item.status==='1'">
                             <div class="form-group">
                                 <label style="font-size: medium;">{{item.questionName}}</label>
@@ -162,7 +337,7 @@
                             </div>
                         </ng-container>
                     
-                        <!-- Text Type -->
+
                         <ng-container *ngIf="item.recognitionType == 'Text' && item.status=='1' ">
                             <div class="form-group">
                                 <label style="font-size: medium;">{{item.questionName}}</label>
@@ -172,7 +347,7 @@
                             </div>
                         </ng-container>
                     
-                        <!-- Number Type -->
+
                         <ng-container *ngIf="item.recognitionType=='Number' && item.status=='1' ">
                             <div class="form-group">
                                 <label style="font-size: medium;">{{item.questionName}}</label>
@@ -181,11 +356,11 @@
                                         oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                                         [(ngModel)]=item.data placeholder="{{item.toolTip}}" value="{{item.data}}" >
                                 </mat-form-field>
-                                <!-- <div style="height: 5px;"></div> -->
+
                             </div>
                         </ng-container>
 
-                        <!-- select Type -->
+
                         <ng-container *ngIf="item.recognitionType=='List' && item.status=='1' ">
                             <div class="form-group">
                                 <label style="font-size: medium;">{{item.questionName}}</label>
@@ -197,31 +372,27 @@
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
-                                <!-- <div style="height: 5px;"></div> -->
+
                             </div>
                         </ng-container>
                         
-                        <!-- Target -->
+
                         <ng-container *ngIf="item.recognitionType=='Target' && item.status=='1' ">
                             <div class="form-group">
                                 <label style="font-size: medium;">{{item.questionName}}</label> <br>
                                 <button mat-button cdkFocusInitial (click)="OpenTargets()"
                                     class="btn btn-md btn-primary"   >Add/View Targets</button>
-                                <!-- <div style="height: 5px;"></div> -->
                             </div>
                         </ng-container>
                         
-                        <!-- External Data -->
                         <ng-container *ngIf="item.recognitionType=='External Data' && item.status=='1' ">
                             <div class="form-group">
                                 <label style="font-size: medium;">{{item.questionName}}</label> <br>
                                 <button mat-button cdkFocusInitial (click)="OpenExternalData()"
                                     class="btn btn-md btn-primary"   >Configure External Data</button>
-                                <!-- <div style="height: 5px;"></div> -->
                             </div>
                         </ng-container>
                         
-                        <!-- URL-->
                         <ng-container *ngIf="item.recognitionType == 'URL' && item.status=='1' ">
                             <div class="form-group">
                                 <label style="font-size: medium;">{{item.questionName}}</label>
@@ -235,7 +406,6 @@
                 
                 </mat-accordion>
             </div>
-
             <div class="form-group" >
                 <button mat-button cdkFocusInitial  (click)="addForm()" 
                     class="btn btn-md btn-primary"  *ngIf="btnSave">Save</button>
@@ -252,4 +422,4 @@
         </mat-tab>
         
     </mat-tab-group>
-</div>
+</div> -->

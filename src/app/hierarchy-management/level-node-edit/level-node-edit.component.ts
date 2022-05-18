@@ -10,6 +10,7 @@ import Swal from 'sweetalert2'
 import * as JsonToXML from "js2xmlparser";
 import { TargetAddComponent } from '../target-add/target-add.component';
 import { ExternaldataAddComponent } from '../externaldata-add/externaldata-add.component';
+import { HierarchyManagementService } from 'src/app/hierarchy-management.service';
 
 declare var $: any;
 
@@ -62,10 +63,19 @@ export class LevelNodeEditComponent implements OnInit {
   TabLevelEdit: string = "Level Edit";
   btnSave : boolean  = true;
   btnDelete: boolean  = true;
+  divIsIndicator: boolean  = false; 
+  Indicators:any=[];
+  FormCategory: any=[];
+  Form: any=[];
+  divForm: boolean  = false;
+  divFormField: boolean  = false;
+  FormFields: any[];
+  IndicatorFormFields: any[];
+ 
 
   constructor(public dialog: MatDialog ,public dialogRef: MatDialogRef<LevelNodeEditComponent>,
     @Inject(MAT_DIALOG_DATA) data,
-    public service: TreediagramService, public formBuilder: FormBuilder, private spinner: NgxSpinnerService) {
+    public service: TreediagramService, public Hierarchyservice: HierarchyManagementService, public formBuilder: FormBuilder, private spinner: NgxSpinnerService) {
     this.NodeData = data;
     this.treeData = JSON.parse(localStorage.getItem('treeData') || '{}');
 
@@ -114,6 +124,8 @@ export class LevelNodeEditComponent implements OnInit {
   nodeDescription: string = "";
   XMLdataExportName: string = "";
   nodeParentD: number;
+  SelectedForm: any;
+  FormFieldsByFieldID: any;
 
   ngOnInit(): void {
     this.levelID = this.NodeData.levelID;
@@ -134,6 +146,7 @@ export class LevelNodeEditComponent implements OnInit {
     this.nodeName = this.NodeData.nodeName;
     this.nodeDescription = this.NodeData.nodeDescription;
     this.nodeParentD = this.NodeData.nodeParentD;
+    this.NodeData.indicatorID = 0;
     this.getNodeAttributesData(this.NodeData.nodeID);
     // this.getRoles();
     this.getUserfieldTypes();
@@ -142,6 +155,102 @@ export class LevelNodeEditComponent implements OnInit {
     this.getNodeAttributes(this.NodeData.levelID);
     this.service.getLevelMetadata(this.NodeData.levelID);
     this.hideEditButtons();
+    this.getIndicators();
+    this.getFormCategory();
+
+    if(this.NodeData.IsIndicatorLevel == 1){
+      this.divIsIndicator = true;
+      this.setIndicatorFileds();
+    }else{
+      this.divIsIndicator = false;
+    }
+  }
+
+  setIndicatorFileds(){
+    this.spinner.show();  
+    
+    this.service.getIndicatorNode(this.NodeData.nodeID).subscribe(data => {
+      this.IndicatorFormFields = data;
+
+      if(this.IndicatorFormFields.length > 0 ){
+        this.spinner.show();  
+        this.service.GetFormCategoryId(this.IndicatorFormFields[0].formCategoryID).subscribe(data => {    
+          this.Form = data;     
+          this.SelectedForm = this.Form.find(i => i.formID === this.IndicatorFormFields[0].formID);
+          this.spinner.hide();
+          this.divForm = true;
+        });
+
+        this.spinner.show();
+        this.service.GetFormFieldsByFormId(this.IndicatorFormFields[0].formID).subscribe(data => {
+          this.FormFields = data;
+          this.spinner.hide();
+          this.divFormField = true;
+        }); 
+
+        this.spinner.show();
+        this.service.GetFormFieldsByFieldID(this.IndicatorFormFields[0].fieldID).subscribe(data => {
+          this.FormFieldsByFieldID = data;
+          this.spinner.hide();
+        });
+
+        
+      }
+      this.spinner.hide();
+
+      this.NodeData.indicatorID = this.IndicatorFormFields[0].indicatorID;
+      this.NodeData.FormCategory = this.IndicatorFormFields[0].formCategoryID;     
+      this.NodeData.FormName = this.IndicatorFormFields[0].formID;
+      this.NodeData.fName = this.IndicatorFormFields[0].fieldID;
+    }); 
+
+
+  }
+  getIndicators(){
+    this.spinner.show();   
+    this.Hierarchyservice.getIndicatorNodes().subscribe(data => {
+         this.Indicators = data;
+         this.spinner.hide();
+    });
+  }
+
+  getFormCategory(){
+    this.spinner.show();   
+    this.service.getformCategoryList().subscribe(data => {
+         this.FormCategory = data;       
+         this.spinner.hide();
+    });
+  }
+
+  onformCategoryChange(ob) {
+
+    this.spinner.show();
+    this.service.GetFormCategoryId(ob.value).subscribe(data => {   
+      this.Form = data;     
+      this.spinner.hide();
+      this.divForm = true;
+    });
+  }
+
+  onformChange(ob) {  
+    this.spinner.show();
+    this.service.GetFormFieldsByFormId(ob.value).subscribe(data => {
+      this.FormFields = data;
+      this.spinner.hide();
+      this.divFormField = true;
+    }); 
+
+    this.SelectedForm = this.Form.find(i => i.formID === ob.value);
+  }
+
+  onformfieldChange(ob) {  
+    this.service.GetFormFieldsByFieldID(ob.value).subscribe(data => {
+      this.FormFieldsByFieldID = data;
+    });
+  }
+
+  closePopup() {
+    this.dialogRef.close();
   }
 
   hideEditButtons(){
@@ -191,8 +300,8 @@ export class LevelNodeEditComponent implements OnInit {
     let obj2: any = [];
     values.forEach(listV => {
       let obj = {
-        name: listV,
-        value: listV
+        name: listV.trim(),
+        value: listV.trim()
       }
       obj2.push(obj);
     });
@@ -261,7 +370,10 @@ export class LevelNodeEditComponent implements OnInit {
   getNodeAttributesData(NodeID: any) {
 
     this.service.getNodeAttributesData(NodeID).subscribe(data => {
+      this.spinner.show();
       this.formDesignData = data;
+      this.getNodeAttributes(this.NodeData.levelID);
+      this.spinner.hide();
     });
   }
 
@@ -272,7 +384,7 @@ export class LevelNodeEditComponent implements OnInit {
     this.service.getNodeAttributes(NodelevelID).subscribe(data => {
       this.formDesign = data;
 
-      this.getNodeAttributesData(this.NodeData.nodeID);
+      //  this.getNodeAttributesData(this.NodeData.nodeID);
 
       this.formDesign.forEach((element, index) => {
 
@@ -494,6 +606,16 @@ export class LevelNodeEditComponent implements OnInit {
     });
   }
 
+  DisableEditandDelete(item: any): Boolean {
+
+    if (item.friendlyname == "Name" || item.friendlyname == "Description") {
+      return false
+    }
+    else {
+      return true
+    }
+  }
+
   deleteLevel(){
 
     Swal.fire({
@@ -677,6 +799,30 @@ export class LevelNodeEditComponent implements OnInit {
   }
 
   addForm() {
+
+    if(this.NodeData.indicatorID != 0){
+
+      if (this.NodeData.FormName != "" && this.NodeData.fName) {
+
+        var Indicatorvalues = {
+          "treeID": this.treeData.treeID,
+          "NodeID": this.NodeData.nodeID,
+          "indicatorID": this.NodeData.indicatorID,
+          "tableName": 'Data_' + this.SelectedForm.formName + "_" + this.FormFieldsByFieldID[0].formPage.name.replace(/\s/g, ""),
+          "fieldID": this.NodeData.fName,
+          "formID": this.NodeData.FormName        
+        };
+
+        this.service.addupdateIndicatorNode(Indicatorvalues).subscribe(data => {
+   
+        }); 
+
+      }else {
+        this.showNotification('top', 'center', 'Please select a Form and Form Field before saving!', '', 'danger');
+        return;
+      }
+      
+    }
 
     this.formDesignAddData = {};
     this.EditNodeData = {

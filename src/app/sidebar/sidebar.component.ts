@@ -86,11 +86,20 @@ export const ROUTES: RouteInfo[] = [{
         collapse: 'hierarchy-management',
         children: [
             {path: 'HierarchyManagement', title: 'hierarchy management', ab:'HM', TreeCategoryID : 1},
-            // {path: 'GeographyManagement', title: 'location management', ab:'LM' , TreeCategoryID : 2},
-            // {path: 'LevelManagement', title: 'level management', ab:'LM' , TreeCategoryID : 3}
+            {path: 'indicator-management', title: 'indicator management', ab:'IM' }
         ]
     },
-
+    // ,{
+    //     path: '/indicator-management',
+    //     title: 'indicator management',
+    //     type: 'sub',
+    //     icontype: 'account_tree',
+    //     role: [],
+    //     collapse: 'indicator-management',
+    //     children: [
+    //         {path: 'IndicatorManagement', title: 'indicator management', ab:'IM'}
+    //     ]
+    // },
     {
         path: '/weather',
         title: 'Weather',

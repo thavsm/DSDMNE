@@ -80,6 +80,7 @@ export class TargetAddComponent implements OnInit {
  
 
   ngOnInit(): void {
+    this.hideEditButtons();
     this.service.GetTargetsForm(this.tgAdd.nodeID);
     this.getTargetPeriod(this.tgAdd.nodeID);
     this.nodeID = this.tgAdd.nodeID;
@@ -92,16 +93,15 @@ export class TargetAddComponent implements OnInit {
     this.financialYear = this.tgAdd.financialYear;
     this.financialStartDate = this.tgAdd.financialStartDate;
     this.getTargetPeriod(this.tgAdd.nodeID);
-    this.hideEditButtons();
   }
 
   hideEditButtons(){
 
     if(this.tgAdd.ViewEdit == 1){
 
+      this.BtnAddTarget = true;  
       this.divContorls = true;
       this.thEdit= true;  
-      this.BtnAddTarget = true;  
 
     }else if(this.tgAdd.ViewEdit == 0){
 
@@ -112,6 +112,10 @@ export class TargetAddComponent implements OnInit {
     }
   }
 
+  
+  closePopup() {
+    this.dialogRef.close();
+  }
   public gridData: any = this.service.GetTargetsForm(this.nodeID);
 
   onDateChange(ob) {

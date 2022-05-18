@@ -8,7 +8,9 @@ import { TreeAddComponent } from './tree-add/tree-add.component';
 import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
 import { ActivatedRoute } from '@angular/router';  
 import Swal from 'sweetalert2'
-
+import { PageSizeItem } from "@progress/kendo-angular-grid";
+import { GroupDescriptor } from '@progress/kendo-data-query';
+import { DataBindingDirective } from '@progress/kendo-angular-grid';
 
 declare var $: any;
 
@@ -25,7 +27,7 @@ export interface FormData {
 
 
 export class HierarchyManagementComponent implements OnInit {
-
+  @ViewChild(DataBindingDirective) dataBinding: DataBindingDirective;
   dataSaved = false;
   TreeForm: any;
 
@@ -86,7 +88,7 @@ export class HierarchyManagementComponent implements OnInit {
       treeCategoryID : this.TreeCategoryID
     }
 
-    const dialogRef = this.dialog.open(TreeAddComponent, { width: '40%', height: '45%', data: this.treeAdd, disableClose: true }
+    const dialogRef = this.dialog.open(TreeAddComponent, { width: '40%', height: '55%', data: this.treeAdd, disableClose: true }
 
     );
 

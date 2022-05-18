@@ -29,9 +29,18 @@ export class InternalDataImportComponent implements OnInit {
   xpandStatus: boolean  = false;
 	fieldNameId: string;
 	fieldName: string;
-  source = [];
-	target = [];
-  
+  source: Array<any>;
+	target: Array<any>;
+  key: string;
+  display: string;
+  filter = true;
+  sourceLeft = true;
+  keepSorted = true;
+
+  private sourceStations: Array<any>;
+
+  private confirmedStations: Array<any>;
+
   name = new FormControl('', [
     Validators.required,
   ]);
@@ -50,7 +59,6 @@ export class InternalDataImportComponent implements OnInit {
   public TableStructure:any=[];
   public LookupFieldName:any=[];
 
-  public displayedColumns = ['uploadName', 'folderLocation','timestamp','update','intrldetails'];
   @ViewChild(MatAccordion) accordion: MatAccordion;
   
   formInternal: any;
@@ -59,9 +67,24 @@ export class InternalDataImportComponent implements OnInit {
 
   ngOnInit(): void {
     this.intlDataList();
-    this.bindControls();
+    this.bindControls();   
   }
 
+  doReset() {
+    this.sourceStations = JSON.parse(JSON.stringify(this.source)); 
+    this.confirmedStations = new Array<any>();
+    this.confirmedStations.push(this.source);
+    this.useStations();
+  }
+
+  private useStations() {
+    this.key = 'fieldName';
+    this.display = 'fieldName'; 
+    this.keepSorted = true;
+    this.source = this.sourceStations;
+    this.target = JSON.parse(JSON.stringify(this.source)); 
+  }
+  
   onDataTypeChange(ob) {
 
   if(ob.value == 3){
@@ -77,6 +100,10 @@ export class InternalDataImportComponent implements OnInit {
 
   }
   
+  Click(event) {
+    this.spinner.show();
+  }
+
   bindControls() {
 
     this.spinner.show();
@@ -107,49 +134,8 @@ export class InternalDataImportComponent implements OnInit {
     });
   }
 
-  list1 = [
-    { text: 'item 1', selected: false },
-    { text: 'item 2', selected: false },
-    { text: 'item 3', selected: false },
-    { text: 'item 4', selected: false },
-    { text: 'item 5', selected: false }
-  ];
-  list2 = [
-    { text: 'item 6', selected: false },
-    { text: 'item 7', selected: false }
-  ];
 
-  public toggleSelection(item, list) {
-    item.selected = !item.selected;
-  }
 
-  public moveSelected(direction) {
-    if (direction === 'left') {
-      this.list2.forEach(item => {
-        if (item.selected) {
-          this.list1.push(item);
-        }
-      });
-      this.list2 = this.list2.filter(i => !i.selected);
-    } else {
-      this.list1.forEach(item => {
-        if (item.selected) {
-          this.list2.push(item);
-        }
-      });
-      this.list1 = this.list1.filter(i => !i.selected);
-    }
-  }
-
-  public moveAll(direction) {
-    if (direction === 'left') {
-      this.list1 = [...this.list1, ...this.list2];
-      this.list2 = [];
-    } else {
-      this.list2 = [...this.list2, ...this.list1];
-      this.list1 = [];
-    }
-  }
 
   ViewPatientInfo(): void {
     
@@ -191,7 +177,7 @@ export class InternalDataImportComponent implements OnInit {
     this.spinner.show();
     this.service.getLookupFieldNameByUploadId(item.treeUploadID).subscribe(data => {
       this.source = data;
-      this.target = data;
+      this.doReset();
       this.spinner.hide();
     });
 
