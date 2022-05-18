@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "MNE": {
+    "dsd_demo": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/MNE",
+            "outputPath": "dist/dsd_demo",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -104,10 +104,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "MNE:build:production"
+              "browserTarget": "dsd_demo:build:production"
             },
             "development": {
-              "browserTarget": "MNE:build:development"
+              "browserTarget": "dsd_demo:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -115,7 +115,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "MNE:build"
+            "browserTarget": "dsd_demo:build"
           }
         },
         "test": {
@@ -140,5 +140,5 @@
       }
     }
   },
-  "defaultProject": "MNE"
+  "defaultProject": "dsd_demo"
 }
