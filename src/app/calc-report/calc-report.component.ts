@@ -9,6 +9,7 @@ import { AddFormComponent } from '../form-capture/add-form/add-form.component';
 import { PageSizeItem } from "@progress/kendo-angular-grid";
 import { GroupDescriptor } from '@progress/kendo-data-query';
 
+import { ApprovalFormComponent } from './approval-form/approval-form.component';
 declare var $: any;
 
 @Component({
@@ -49,16 +50,7 @@ export class CalcReportComponent implements OnInit {
   }
 
   openFormDesign(item: any,index:any): void {
-    let formCaptureObj = {
-      formID: 6,
-      formName:'DevelopmentandResearch1',
-      formCaptureID:10,
-      state:'edit'
-    };
-    
-    localStorage.setItem('formCaptureDetails', JSON.stringify(formCaptureObj));
-    localStorage.setItem('tabIndex', index);
-    const dialogRef = this.dialog.open(AddFormComponent, {
+    const dialogRef = this.dialog.open(ApprovalFormComponent, {
       width: '85%',
       height: '85%',
       disableClose:true

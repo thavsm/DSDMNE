@@ -1,3 +1,8 @@
+//* <summary>
+//* Methods for sending HTTP requests to Hierarchy Controllers 
+//* </summary>
+//* <author>Mpilo Msomi,Katelyn Govender</author>
+//* <dateLastModified>May 2022</dateLastModified>
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -12,8 +17,8 @@ export class HierarchyManagementService {
 
   constructor(private http:HttpClient) { }
 
-  //readonly API_URL = environment.API_URL + '/'
-  readonly API_URL='https://localhost:44305/api/';
+  readonly API_URL = environment.API_URL + '/'
+  //readonly API_URL='https://localhost:44305/api/';
 
 
   hformData:hierarchyManagement = new hierarchyManagement();
@@ -96,6 +101,14 @@ export class HierarchyManagementService {
 
   assignIndicators(data:any,roleID:any,treeID:any){
     return this.http.post(this.API_URL+'Trees/'+roleID+'/'+treeID+'/AssignIndicatorRole',data,{responseType: 'text'});
+  }
+
+  AssignRoles(indicatorID:any,data:any,treeID:any){
+    return this.http.post(this.API_URL+'Trees/'+indicatorID+'/'+treeID+'/AssignRole',data,{responseType: 'text'});
+  }
+
+  getAssignedRolesNodesByTreeIndicatorID(indicatorID :any ,treeID):Observable<any[]>{
+    return this.http.get<any>(this.API_URL+'Trees/'+indicatorID+'/'+treeID+'/AssignedRolesNodesByIndicator');
   }
   //#endregion
 }

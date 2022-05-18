@@ -51,6 +51,17 @@ export const ROUTES: RouteInfo[] = [{
             //{path: 'formroles',title: 'Forms', ab:'F'},
         ]
     },{
+        path: '/administration',
+        title: 'Administration',
+        type: 'sub',
+        icontype: 'person',
+        role: [],
+        collapse: 'administration',
+        children: [
+            {path: 'holiday',title: 'Holidays', ab:'U'},
+            {path: 'scheduler',title: 'Scheduler', ab:'R'},
+        ]
+    },{
         path: '/pages',
         title: 'Pages',
         type: 'sub',
@@ -121,7 +132,7 @@ export const ROUTES: RouteInfo[] = [{
             {path: 'formList',title: 'Form Design',ab: 'FD'},   
             { path: 'formCapture', title: 'Form Capture', ab: 'FC' },
             { path: 'formInbox', title: 'Form Inbox', ab: 'FI' },
-            { path: '', title: 'Form Tasks', ab: 'FT' },
+            { path: 'formExport', title: 'Form Templates', ab: 'FT' },
         ]
     },
     {
@@ -147,7 +158,7 @@ export const ROUTES: RouteInfo[] = [{
 export class SidebarComponent implements OnInit {
     public menuItems: any[];
     ps: any;
-    userDetail: any;
+    public userDetail: any;
     menus: any[];
     
     public showMenu: boolean = true;
@@ -196,7 +207,7 @@ export class SidebarComponent implements OnInit {
 
             },
             err => {
-                console.log(err);
+                console.log(err); 
             },
         );
 

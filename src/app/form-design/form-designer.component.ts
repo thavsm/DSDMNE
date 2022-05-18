@@ -1712,6 +1712,7 @@ export class FormDesignerComponent implements OnInit {
     }
 
     publishPage() {
+        this.spinner.show();
         if (this.currentPage.name == "Page 1") {
             var count = 0;
             this.formDesign.forEach((element, index) => {

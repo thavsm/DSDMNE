@@ -86,7 +86,7 @@ export class FormListComponent implements OnInit {
 
 
   openFormDesign(item: any): void {
-    if (item.isLocked === true) {
+    if (item.isLocked === true && this.userDetail.formData.userID!==item.lockedByUserID) {
       this.service.getLockedByUserName(item.lockedByUserID).subscribe(res=>{
         this.showNotification('top', 'center', 'This form is locked and being edited by '+res, '', 'danger');
       });

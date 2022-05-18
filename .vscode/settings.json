@@ -1,5 +1,6 @@
 {
     "cSpell.words": [
+        "Displayables",
         "formcapture",
         "groupdata",
         "groupsection",
@@ -8,6 +9,8 @@
         "repeatgroup",
         "Swal",
         "sweetalert",
+        "Treediagram",
+        "treelist",
         "valuenow"
     ]
 }

@@ -28,42 +28,31 @@ export class UserProfileComponent implements OnInit {
   uRole: listitem;
   locationType: [listitem];
   roleTypes: [listitem];
-  branch: [listitem];
+  branch: [listitem];  
+  provinces: any[];
+  districts: any[];
+  servicePoints: any[];
+  facilities: any[];
+
+  roleSelected:number;
+  isNational:boolean;
+  isProvince:boolean;
+  isDistrict:boolean;
+  isSP:boolean;
+  isFac:boolean;
+  isBranch:boolean;
 
   @Output() newItemEvent = new EventEmitter<any>();
   
 
-  // roles = [
-  //   {value: '1', viewValue: 'Admin'},
-  //   {value: '3', viewValue: 'System Administrator'},
-  //   {value: '4', viewValue: 'Head of M&E'},
-  //   {value: '5', viewValue: 'Head Of Department'},
-  //   {value: '6', viewValue: 'Chief Director'},
-  //   {value: '7', viewValue: 'Director'},
-  //   {value: '8', viewValue: 'Assistant Director'},
-  //   {value: '9', viewValue: 'Programme Manager'},
-  //   {value: '10', viewValue: 'District Manager'},
-  //   {value: '11', viewValue: 'Service Point Manager'},
-  //   {value: '12', viewValue: 'Social Worker/CDP'},
-  //   {value: '13', viewValue: 'Facility Manager'},
-  //   {value: '14', viewValue: 'M&E Coordinator'},
-  //   {value: '15', viewValue: 'Social Worker Manager'}
-  // ];
-
-  // cities = [
-  //   {value: '7', viewValue: 'Western Cape'},
-  //   {value: '1', viewValue: 'Eastern Cape'},
-  //   {value: '2', viewValue: 'Northern Cape'},
-  //   {value: '3', viewValue: 'Kwa-ZuluNatal'},
-  //   {value: '4', viewValue: 'Free State'},
-  //   {value: '5', viewValue: 'Gauteng'},
-  //   {value: '6', viewValue: 'North West'},
-  //   {value: '8', viewValue: 'Mphumulanga'},
-  //   {value: '9', viewValue: 'Limpopo'}
-  // ];
   
     constructor(private element: ElementRef, private fb: FormBuilder, private service: UserService, @Inject(MAT_DIALOG_DATA) public data: any, private spinner: NgxSpinnerService, public dialog: MatDialog) {
       //this.passData.isChild = false;
+      this.isBranch=false;
+      this.isProvince=false;
+      this.isDistrict=false;
+      this.isSP=false;
+      this.isFac=false;
     }
 
     public ngOnInit() {
@@ -78,6 +67,7 @@ export class UserProfileComponent implements OnInit {
         this.service.getUserProfile().subscribe(
           res => {
             this.formData = res['formData'];
+            console.log(this.formData);
           },
           err => {
             console.log(err);
@@ -87,6 +77,45 @@ export class UserProfileComponent implements OnInit {
       else{
         this.formData = this.data.data;
         this.isButtonVisible = true;
+      }
+
+      switch(this.formData["locationType"])
+      {
+       case 4260:
+        this.isBranch=true;
+        this.isProvince=false;
+        this.isDistrict=false;
+        this.isSP=false;
+        this.isFac=false;
+        break;
+        case 4261:
+        this.isBranch=false;
+        this.isProvince=true;
+        this.isDistrict=false;
+        this.isSP=false;
+        this.isFac=false;
+        break;
+        case 4262:
+        this.isBranch=false;
+        this.isProvince=true;
+        this.isDistrict=true;
+        this.isSP=false;
+        this.isFac=false;
+        break;
+        case 4263:
+        this.isBranch=false;
+        this.isProvince=true;
+        this.isDistrict=true;
+        this.isSP=true;
+        this.isFac=false;
+        break;
+        case 4264:
+        this.isBranch=false;
+        this.isProvince=true;
+        this.isDistrict=true;
+        this.isSP=true;
+        this.isFac=true;
+        break;
       }
     }
      
@@ -101,6 +130,32 @@ export class UserProfileComponent implements OnInit {
     updateUser(){
 
       this.spinner.show();
+
+      
+      switch(this.formData["locationType"])
+      {
+        case 4260: this.formData["provinceID"] = "0";
+        this.formData["districtID"] = "0";
+        this.formData["servicePointID"] = "0";
+        this.formData["facilityID"] = "0";
+        this.formData["location"] = "8658";
+        break;
+        case 4261: this.formData["districtID"] = "0";
+        this.formData["servicePointID"] = "0";
+        this.formData["facilityID"] = "0";
+        this.formData["location"] = this.formData["provinceID"];
+        break;
+        case 4262: this.formData["servicePointID"] = "0";
+        this.formData["facilityID"] = "0";
+        this.formData["location"] = this.formData["districtID"];
+        break;
+        case 4263: this.formData["facilityID"] = "0";
+        this.formData["location"] = this.formData["servicePointID"];
+        break;
+        case 4264: this.formData["location"] = this.formData["facilityID"];
+        break;               
+        
+      }
       this.service.UpdateUserProfile(this.formData).subscribe(
         res => {          
           //this.data1 = res;
@@ -129,6 +184,44 @@ export class UserProfileComponent implements OnInit {
           console.log(err);
         },
       );
+
+
+     this.service.getNodes(4261).subscribe(
+      res => {
+        this.provinces = res;
+      },
+      err => {
+        console.log(err);
+      },
+    );
+  
+    this.service.getNodes(4262).subscribe(
+      res => {
+        this.districts = res;
+      },
+      err => {
+        console.log(err);
+      },
+    );
+  
+    this.service.getNodes(4263).subscribe(
+      res => {
+        this.servicePoints = res;
+      },
+      err => {
+        console.log(err);
+      },
+    );
+  
+    this.service.getNodes(4264).subscribe(
+      res => {
+        this.facilities = res;
+      },
+      err => {
+        console.log(err);
+      },
+    );
+
 
       this.roles = [new listitem()];
       this.service.getRoles().subscribe(
@@ -233,6 +326,110 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
-  
+  loadLocation(loctype:any)
+  {
+     console.log(loctype.value);
+     this.provinces =[];
+     this.districts = [];
+     this.servicePoints = [];
+     this.facilities = [];
+
+     switch(loctype.value)
+     {
+       case 4260:
+        this.isBranch=true;
+        this.isProvince=false;
+        this.isDistrict=false;
+        this.isSP=false;
+        this.isFac=false;
+        break;
+        case 4261:
+        this.isBranch=false;
+        this.isProvince=true;
+        this.isDistrict=false;
+        this.isSP=false;
+        this.isFac=false;
+        this.loadProvince();
+        break;
+        case 4262:
+        this.isBranch=false;
+        this.isProvince=true;
+        this.isDistrict=true;
+        this.isSP=false;
+        this.isFac=false;
+        this.loadProvince();
+        break;
+        case 4263:
+        this.isBranch=false;
+        this.isProvince=true;
+        this.isDistrict=true;
+        this.isSP=true;
+        this.isFac=false;
+        this.loadProvince();
+        break;
+        case 4264:
+        this.isBranch=false;
+        this.isProvince=true;
+        this.isDistrict=true;
+        this.isSP=true;
+        this.isFac=true;
+        this.loadProvince();
+        break;        
+     }
+    }
+
+     loadProvince()
+  {
+     console.log('LoadProvinces');
+     this.service.getNodes(4261).subscribe(
+      res => {
+        this.provinces = res;
+      },
+      err => {
+        console.log(err);
+      },
+    );
+  }
+
+  loadDistricts(province:any)
+  {
+     console.log(province.nodeID);
+     this.service.getNodesByParent(province.nodeID).subscribe(
+      res => {
+        this.districts = res;
+      },
+      err => {
+        console.log(err);
+      },
+    );
+  }
+
+  loadServicePoints(district:any)
+  {
+     console.log(district.nodeID);
+     this.service.getNodesByParent(district.nodeID).subscribe(
+      res => {
+        this.servicePoints = res;
+      },
+      err => {
+        console.log(err);
+      },
+    );
+  }
+
+  loadFacilities(sp:any)
+  {
+     console.log(sp.nodeID);
+     this.service.getNodesByParent(sp.nodeID).subscribe(
+      res => {
+        this.facilities = res;
+      },
+      err => {
+        console.log(err);
+      },
+    );
+  }
+
+
 
 }

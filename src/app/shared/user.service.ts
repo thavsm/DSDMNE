@@ -6,6 +6,8 @@ import { environment } from '../../environments/environment';
 import { role } from './lookup.model';
 import { FormRole } from '../usermanager/formrole.model';
 import { BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
+import {MatTableModule} from '@angular/material/table';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,7 @@ export class UserService {
 
   constructor(private fb: FormBuilder, private http: HttpClient) { }
   readonly BaseURI = environment.API_URL;
-  //readonly BaseURI = 'https://app1.terra.group/MNE_API/api';
+  //readonly BaseURI = 'https://app.terra.group/DSDFormWeb/api';
   
   public ulist:User[];
   private showMenu = new BehaviorSubject(true);
@@ -191,6 +193,10 @@ export class UserService {
     return this.http.get<any>(this.BaseURI+'/Nodes/GetNodeByLevelID/'+levelID);
   }
 
+  getNodesByParent(parentNode:number){
+    return this.http.get<any>(this.BaseURI+'/Nodes/GetnodesByParentID/'+parentNode);
+  }
+
   getBranches() {
 
     return this.http.get<any>(this.BaseURI + '/ApplicationUser/GetBranches');
@@ -202,5 +208,10 @@ export class UserService {
 
   addTypeRoles(typeRoles: any) {
     return this.http.post(this.BaseURI + '/ApplicationUser/AddTypeRoles', typeRoles);
+  }
+
+  
+  getAllData(): Observable<any[]> {
+    return this.http.get<any[]>('./assets/data/cars-large.json');
   }
 }

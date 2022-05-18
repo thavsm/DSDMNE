@@ -1,0 +1,19 @@
+<div style="margin-left: 0%;">
+    <button mat-icon-button color="warn" (click)="closePopup()">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+<hr>
+<h5>Select Roles</h5>
+<mat-form-field appearance="outline">
+    <mat-label>Select a Role/s</mat-label>
+    <mat-select [(ngModel)]=assignedRoles [compareWith]="compareFn"
+        panelClass="myPanelClass" multiple>
+        <mat-option *ngFor="let list of roleList" style="color: black;"
+            [value]="list">
+            {{list.name}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+<button class="btn btn-md" class="btn btn-md btn-primary"
+(click)=assign()>Assign</button>

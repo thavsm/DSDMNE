@@ -12,6 +12,7 @@ import { AddFormComponent } from '../form-capture/add-form/add-form.component';
 import { DataResult, process, State } from "@progress/kendo-data-query";
 import { groupBy } from '@progress/kendo-data-query';
 import { DataBindingDirective, PageSizeItem } from '@progress/kendo-angular-grid';
+import { UserService } from '../shared/user.service';
 
 declare var $: any;
 
@@ -24,7 +25,7 @@ declare var $: any;
 export class FormInboxComponent implements OnInit {
   @ViewChild(DataBindingDirective) dataBinding: DataBindingDirective;
 
-  constructor(public dialog: MatDialog, private route: Router, private service: FormbuilderService, private spinner: NgxSpinnerService) { }
+  constructor(public dialog: MatDialog, private route: Router, private service: FormbuilderService, private spinner: NgxSpinnerService, private userService: UserService) { }
 
   public pageSize = 10;
   public pageSizes: Array<number | PageSizeItem> = [5, 10, 20, {
@@ -43,6 +44,8 @@ export class FormInboxComponent implements OnInit {
   public formList: any = [];
 
   public gridView: any[];
+
+  userDetail:any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -85,30 +88,47 @@ export class FormInboxComponent implements OnInit {
   }
 
   refreshFormsList() {
-    this.formList = [
-      {
-        "formID": 0,
-        "formTypeID": 2,
-        "formCategoryID": 0,
-        "formName": "",
-        "displayName": "All Forms",
-        "formDescription": "",
-        "dateCreated": "2021-11-30T11:28:23.351Z",
-        "createdByUserID": 0,
-        "isLocked": false,
-        "lockedByUserID": 0,
-        "isDeleted": false,
-        "dateLocked": "2021-11-30T11:28:23.351Z",
-        "dateLastModified": "2021-11-30T11:28:23.351Z",
-        "lastModifiedByUserID": 0
-      }
-    ];
     this.spinner.show();
-    this.service.getCapturedForms().subscribe(data => {
-      this.gridView = data;
-      this.service.getPublishedListOfForms().subscribe(data => {
-        merge(this.formList, data);
-        this.spinner.hide();
+    this.userService.getUserProfile().subscribe(res => {
+      this.userDetail = res;
+      let userRoleID = this.userDetail.formData.role;
+      this.service.getCapturedForms(this.userDetail.formData.location, this.userDetail.formData.role).subscribe(data => {
+        this.gridView = data;
+        this.service.getPublishedListOfForms().subscribe(x => {
+          this.formList = [
+            {
+              "formID": 0,
+              "formTypeID": 2,
+              "formCategoryID": 0,
+              "formName": "",
+              "displayName": "All Forms",
+              "formDescription": "",
+              "dateCreated": "2021-11-30T11:28:23.351Z",
+              "createdByUserID": 0,
+              "isLocked": false,
+              "lockedByUserID": 0,
+              "isDeleted": false,
+              "dateLocked": "2021-11-30T11:28:23.351Z",
+              "dateLastModified": "2021-11-30T11:28:23.351Z",
+              "lastModifiedByUserID": 0
+            }
+          ];
+          merge(this.formList, x);
+          //TO FIX
+          this.userService.getFormsRole(userRoleID).subscribe(formRole => {
+            this.gridView.forEach(form => {
+              formRole.forEach(role => {
+                if (role.id === form.formID && role.capture == true) {
+                  form.step = "View/Edit";
+                }
+                else if (role.id === form.formID && role.capture == false) {
+                  form.step = "View";
+                }
+              });
+            });
+            this.spinner.hide();
+          });
+        });
       });
     });
   }
@@ -116,7 +136,7 @@ export class FormInboxComponent implements OnInit {
   filterForm(input: any, formID: any) {
     if (input === 'All Forms') {
       this.spinner.show();
-      this.service.getCapturedForms().subscribe(data => {
+      this.service.getCapturedForms(this.userDetail.formData.location,this.userDetail.formData.role).subscribe(data => {
         this.gridView = data;
         this.service.getPublishedListOfForms().subscribe(data => {
           this.formList = [
@@ -147,7 +167,7 @@ export class FormInboxComponent implements OnInit {
     }
     else {
       this.spinner.show();
-      this.service.getCapturedForms().subscribe(data => {
+      this.service.getCapturedForms(this.userDetail.formData.location,this.userDetail.formData.role).subscribe(data => {
         this.gridView = data;
         this.service.getPublishedListOfForms().subscribe(data => {
           this.gridView = process(this.gridView, {

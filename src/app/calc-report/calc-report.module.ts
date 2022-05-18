@@ -21,11 +21,20 @@ import { InputsModule } from "@progress/kendo-angular-inputs";
 import {PDFModule,ExcelModule,GridModule} from "@progress/kendo-angular-grid";
 import { CalcReportComponent } from './calc-report.component';
 import { CalcReportRoutes } from './calc-report.routing';
-
+import { ApprovalFormComponent } from './approval-form/approval-form.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import {MatRadioModule} from '@angular/material/radio';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { SignaturePadModule } from 'angular2-signaturepad';
+import { DropDownsModule } from "@progress/kendo-angular-dropdowns";
+import { LabelModule } from "@progress/kendo-angular-label";
 
 @NgModule({
   declarations: [
-    CalcReportComponent 
+    CalcReportComponent,
+    ApprovalFormComponent 
   ],
   imports: [
     CommonModule,
@@ -34,6 +43,14 @@ import { CalcReportRoutes } from './calc-report.routing';
     MatInputModule,
     MatTableModule,
     MatDialogModule,
+    LabelModule,
+    DropDownsModule,
+    SignaturePadModule,
+    MatExpansionModule,
+    MatButtonToggleModule,
+    MatRadioModule,
+    MatDatepickerModule,
+    MatToolbarModule,
     MatPaginatorModule,
     RouterModule.forChild(CalcReportRoutes),
     MatIconModule,

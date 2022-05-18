@@ -66,6 +66,10 @@ export const AppRoutes: Routes = [
         loadChildren: () => import('./form-capture/form-capture.module').then(m => m.FormCaptureModule)
       },
       {
+        path: 'formExport',
+        loadChildren: () => import('./form-export/form-export.module').then(m => m.FormExportModule)
+      },
+      {
         path: 'formInbox',
         loadChildren: () => import('./form-inbox/form-inbox.module').then(m => m.FormInboxModule)
       },
@@ -109,6 +113,10 @@ export const AppRoutes: Routes = [
       path: 'externalDI',
       loadChildren: () => import('./data-management/external-data-import/external-data-import.module').then(m => m.ExternalDataImportModule)
     },
+    {
+      path: 'administration',
+      loadChildren: () => import('./administration/administration.module').then(m => m.AdministrationModule)
+  },
     ]
   }, {
     path: '',

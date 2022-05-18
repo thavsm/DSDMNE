@@ -104,11 +104,9 @@ MatToolbarModule,
 MatTooltipModule,
 MatNativeDateModule,
 NgxSpinnerModule
-]
-// ,
-// declarations: [ 
-//     IndicatorManagementComponent
-//   ]
+],
+declarations: [
+  ]
 })
 export class MaterialModule {}
 

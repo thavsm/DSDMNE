@@ -80,42 +80,7 @@
                             <i class="material-icons">accessibility</i>
                           </span>
                         </div>
-                        <mat-select class="form-control" placeholder="Location Type..." formControlName="LocationType" >
-                          <mat-option *ngFor="let loctype of locationType" [value]="loctype.value" (click)="loadLocation(loctype)" >
-                            {{ loctype.viewValue }}
-                          </mat-option>
-                        </mat-select>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-5 mr-auto">
-                    <div class="form-group has-default">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">
-                            <i class="material-icons">accessibility</i>
-                          </span>
-                        </div>
-                        <mat-select class="form-control" placeholder="Location..." formControlName="Location">
-                          <mat-option *ngFor="let city of cities" [value]="city.nodeID">
-                            {{ city.nodeName }}
-                          </mat-option>
-                        </mat-select>
-                      </div>
-                      <span class="text-danger ml-5"
-                        *ngIf="formModel.get('Role').touched && formModel.get('Role').errors?.required">This
-                        field is mandatory.</span>
-                    </div>
-                  </div>
-                  <div class="col-md-5 ml-auto">
-                    <div class="form-group has-default">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">
-                            <i class="material-icons">accessibility</i>
-                          </span>
-                        </div>
-                        <mat-select class="form-control" placeholder="Role..." formControlName="Role">
+                        <mat-select class="form-control" placeholder="Role..." formControlName="Role" >
                           <mat-option *ngFor="let role of roles" [value]="role.name">
                             {{ role.name }}
                           </mat-option>
@@ -144,10 +109,26 @@
                         *ngIf="formModel.get('Role').touched && formModel.get('Role').errors?.required">This
                         field is mandatory.</span>
                     </div>
-                  </div> 
+                  </div>
                   <div class="col-md-5 ml-auto">
                     <div class="form-group has-default">
                       <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="material-icons">accessibility</i>
+                          </span>
+                        </div>
+                        <mat-select class="form-control" placeholder="Location Type..." formControlName="LocationType" >
+                          <mat-option *ngFor="let loctype of locationType" [value]="loctype.value" (click)="loadLocation(loctype)" >
+                            {{ loctype.viewValue }}
+                          </mat-option>
+                        </mat-select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-5 mr-auto">
+                    <div class="form-group has-default">
+                      <div class="input-group" *ngIf="isBranch">
                         <div class="input-group-prepend">
                           <span class="input-group-text">
                             <i class="material-icons">face</i>
@@ -161,13 +142,108 @@
                       </div>
                     </div>
                   </div>
+                  <div class="col-md-5 ml-auto">
+                    <div class="form-group has-default">
+                      <div class="input-group" *ngIf="isProvince">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="material-icons">face</i>
+                          </span>
+                        </div>                        
+                        <mat-select class="form-control" placeholder="Province..." formControlName="ProvinceID">
+                          <mat-option *ngFor="let b of provinces" [value]="b.nodeID" (click)="loadDistricts(b)">
+                            {{ b.nodeName }}
+                          </mat-option>
+                        </mat-select>
+                      </div>
+                    </div>
+                  </div>
                   <div class="col-md-5 mr-auto">
                     <div class="form-group has-default">
-                      <div class="input-group">
+                      <div class="input-group" *ngIf="isDistrict">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="material-icons">face</i>
+                          </span>
+                        </div>                        
+                        <mat-select class="form-control" placeholder="District..." formControlName="DistrictID">
+                          <mat-option *ngFor="let b of districts" [value]="b.nodeID" (click)="loadServicePoints(b)">
+                            {{ b.nodeName }}
+                          </mat-option>
+                        </mat-select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-5 ml-auto">
+                    <div class="form-group has-default">
+                      <div class="input-group" *ngIf="isSP">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="material-icons">face</i>
+                          </span>
+                        </div>                        
+                        <mat-select class="form-control" placeholder="Service Point..." formControlName="ServicePointID">
+                          <mat-option *ngFor="let b of servicePoints" [value]="b.nodeID"  (click)="loadFacilities(b)">
+                            {{ b.nodeName }}
+                          </mat-option>
+                        </mat-select>
+                      </div>
+                    </div>
+                  </div> 
+                  <div class="col-md-5 mr-auto">
+                    <div class="form-group has-default">
+                      <div class="input-group" *ngIf="isFac">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="material-icons">face</i>
+                          </span>
+                        </div>                        
+                        <mat-select class="form-control" placeholder="Facilities..." formControlName="FacilityID">
+                          <mat-option *ngFor="let b of facilities" [value]="b.nodeID">
+                            {{ b.nodeName }}
+                          </mat-option>
+                        </mat-select>
+                      </div>
+                    </div>
+                  </div>                 
+                  <div class="col-md-5 ml-auto">
+                    <div class="form-group has-default">
+                      <div class="input-group" *ngIf="false">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="material-icons">accessibility</i>
+                          </span>
+                        </div>
+                        <mat-select class="form-control" placeholder="Location..." formControlName="Location">
+                          <mat-option *ngFor="let city of cities" [value]="city.nodeID">
+                            {{ city.nodeName }}
+                          </mat-option>
+                        </mat-select>
+                      </div>
+                      <!-- <span class="text-danger ml-5"
+                        *ngIf="formModel.get('Role').touched && formModel.get('Role').errors?.required">This
+                        field is mandatory.</span> -->
+                    </div>
+                  </div>
+                                     
+                  <div class="col-md-5 mr-auto">
+                    <div class="form-group has-default">
+                      <div class="input-group"  *ngIf="programVisible">
+                        <!-- <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="material-icons">face</i>
+                          </span>
+                        </div>                        
+                        <mat-select class="form-control" placeholder="Programme..." formControlName="Programme"  (selectionChange)="onProgChange($event)" multiple>
+                          <mat-option *ngFor="let b of programmes" [value]="b.value">
+                            {{ b.viewValue }}
+                          </mat-option>
+        
+                        </mat-select> -->
                       </div>
                     </div>
                   </div>                                  
-                  <div class="col-md-5 ml-auto">
+                  <div class="col-md-5 ml-auto" style="display: none;">
                     <div class="form-group has-default">
                       <div class="input-group">
                         <div class="input-group-prepend">
@@ -178,15 +254,15 @@
                         <input type="password" placeholder="Password..." class="form-control"
                           formControlName="Password">
                       </div>
-                      <span class="text-danger ml-5"
+                      <!-- <span class="text-danger ml-5"
                         *ngIf="formModel.get('Password').touched && formModel.get('Password').errors?.required">This
                         field is mandatory.</span>
                       <span class="text-danger ml-5"
                         *ngIf="formModel.get('Password').touched && formModel.get('Password').errors?.minlength">Minimum
-                        4 characters required.</span>
+                        4 characters required.</span> -->
                     </div>
                   </div>
-                  <div class="col-md-5 mr-auto">
+                  <div class="col-md-5 mr-auto" style="display: none;">
                     <div class="form-group has-default">
                       <div class="input-group">
                         <div class="input-group-prepend">
@@ -197,12 +273,12 @@
                         <input type="password" placeholder="Confirm Password..." class="form-control"
                           formControlName="ConfirmPassword">
                       </div>
-                      <span class="text-danger ml-5"
+                      <!-- <span class="text-danger ml-5"
                         *ngIf="formModel.get('ConfirmPassword').touched && formModel.get('ConfirmPassword').errors?.required">This
                         field is mandatory.</span>
                       <span class="text-danger ml-5"
                         *ngIf="formModel.get('ConfirmPassword').touched && formModel.get('ConfirmPassword').errors?.passwordMismatch">Confirm
-                        Password does not match.</span>
+                        Password does not match.</span> -->
                     </div>
                   </div>
                   
@@ -220,8 +296,10 @@
                   </div>                  
                   <div class="col-md-12">
                     <div class="text-center">
-                      <button type="submit" class="btn btn-primary btn-round mt-4" [disabled]="!formModel.valid">Sign
-                        Up</button>
+                      <!-- <button type="submit" class="btn btn-primary btn-round mt-4" [disabled]="!formModel.valid">Sign
+                        Up</button> -->
+                        <button type="submit" class="btn btn-primary btn-round mt-4">Sign
+                          Up</button>
                     </div>
                   </div>
                 </div>

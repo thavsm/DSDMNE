@@ -33,26 +33,6 @@
                             </div>
                             <div class="col-md-6">
                                 <mat-form-field appearance="standard">
-                                    <mat-label>Location Type</mat-label>
-                                    <mat-select [(ngModel)]="formData['locationType']" (selectionChange)="updateFormData()">
-                                        <mat-option *ngFor="let loc of locationType" [value]="loc.value">
-                                            {{ loc.viewValue }}
-                                          </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div> 
-                            <div class="col-md-6">
-                                <mat-form-field appearance="standard">
-                                    <mat-label>Location</mat-label>
-                                    <mat-select [(ngModel)]="formData['location']" (selectionChange)="updateFormData()">
-                                        <mat-option *ngFor="let city of cities" [value]="city.value">
-                                            {{ city.viewValue }}
-                                          </mat-option>
-                                    </mat-select>
-                                </mat-form-field>
-                            </div> 
-                            <div class="col-md-6">
-                                <mat-form-field appearance="standard">
                                     <mat-label>Role Designation</mat-label>
                                     <mat-select [(ngModel)]="formData['role']" (selectionChange)="updateFormData()">
                                         <mat-option *ngFor="let rol of roles" [value]="rol.value">
@@ -73,6 +53,17 @@
                             </div> 
                             <div class="col-md-6">
                                 <mat-form-field appearance="standard">
+                                    <mat-label>Location Type</mat-label>
+                                    <mat-select [(ngModel)]="formData['locationType']" (selectionChange)="updateFormData()">
+                                        <mat-option *ngFor="let loc of locationType" [value]="loc.value" (click)="loadLocation(loc)" >
+                                            {{ loc.viewValue }}
+                                          </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div> 
+                            
+                            <div class="col-md-6">
+                                <mat-form-field appearance="standard" *ngIf="isBranch">
                                     <mat-label>Branch</mat-label>
                                     <mat-select [(ngModel)]="formData['branch']" (selectionChange)="updateFormData()">
                                         <mat-option *ngFor="let b of branch" [value]="b.value">
@@ -80,7 +71,58 @@
                                           </mat-option>  
                                     </mat-select>
                                 </mat-form-field>
-                            </div>     
+                            </div>  
+                            <div class="col-md-6">
+                                <mat-form-field appearance="standard" *ngIf="isProvince">
+                                    <mat-label>Province</mat-label>
+                                    <mat-select [(ngModel)]="formData['provinceID']" (selectionChange)="updateFormData()">
+                                        <mat-option *ngFor="let p of provinces" [value]="p.nodeID" (click)="loadDistricts(p)">
+                                            {{ p.nodeName }}
+                                          </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div> 
+                            <div class="col-md-6">
+                                <mat-form-field appearance="standard" *ngIf="isDistrict">
+                                    <mat-label>District</mat-label>
+                                    <mat-select [(ngModel)]="formData['districtID']" (selectionChange)="updateFormData()">
+                                        <mat-option *ngFor="let d of districts" [value]="d.nodeID" (click)="loadServicePoints(d)">
+                                            {{ d.nodeName }}
+                                          </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div> 
+                            <div class="col-md-6">
+                                <mat-form-field appearance="standard" *ngIf="isSP">
+                                    <mat-label>Service Point</mat-label>
+                                    <mat-select [(ngModel)]="formData['servicePointID']" (selectionChange)="updateFormData()">
+                                        <mat-option *ngFor="let s of servicePoints" [value]="s.nodeID" (click)="loadFacilities(s)">
+                                            {{ s.nodeName }}
+                                          </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div> 
+                            <div class="col-md-6">
+                                <mat-form-field appearance="standard" *ngIf="isFac">
+                                    <mat-label>Facilities</mat-label>
+                                    <mat-select [(ngModel)]="formData['facilityID']" (selectionChange)="updateFormData()">
+                                        <mat-option *ngFor="let f of facilities" [value]="f.nodeID">
+                                            {{ f.nodeName }}
+                                          </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div> 
+                               
+                            <div class="col-md-6">
+                                <mat-form-field appearance="standard" *ngif="false">
+                                    <mat-label>Location</mat-label>
+                                    <mat-select [(ngModel)]="formData['location']" (selectionChange)="updateFormData()">
+                                        <mat-option *ngFor="let city of cities" [value]="city.value">
+                                            {{ city.viewValue }}
+                                          </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>                               
                             <div class="col-md-6">
                                 <mat-form-field appearance="standard">
                                     <mat-label>Active</mat-label>                                                                        

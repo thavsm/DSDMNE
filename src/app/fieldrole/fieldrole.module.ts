@@ -33,10 +33,12 @@ import { FieldroleComponent } from './fieldrole.component';
 import { AngularDualListBoxModule } from 'angular-dual-listbox';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatListModule} from '@angular/material/list';
+import { AssignRolesComponent } from './assign-roles/assign-roles.component';
 
 @NgModule({
   declarations: [
-      FieldroleComponent
+      FieldroleComponent,
+      AssignRolesComponent
   ],
   imports: [
     CommonModule,
