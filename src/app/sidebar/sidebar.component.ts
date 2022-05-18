@@ -51,6 +51,17 @@ export const ROUTES: RouteInfo[] = [{
             //{path: 'formroles',title: 'Forms', ab:'F'},
         ]
     },{
+        path: '/administration',
+        title: 'Administration',
+        type: 'sub',
+        icontype: 'person',
+        role: [],
+        collapse: 'administration',
+        children: [
+            {path: 'holiday',title: 'Holidays', ab:'U'},
+            {path: 'scheduler',title: 'Scheduler', ab:'R'},
+        ]
+    },{
         path: '/pages',
         title: 'Pages',
         type: 'sub',
@@ -75,11 +86,20 @@ export const ROUTES: RouteInfo[] = [{
         collapse: 'hierarchy-management',
         children: [
             {path: 'HierarchyManagement', title: 'hierarchy management', ab:'HM', TreeCategoryID : 1},
-            // {path: 'GeographyManagement', title: 'location management', ab:'LM' , TreeCategoryID : 2},
-            // {path: 'LevelManagement', title: 'level management', ab:'LM' , TreeCategoryID : 3}
+            {path: 'indicator-management', title: 'indicator management', ab:'IM' }
         ]
     },
-
+    // ,{
+    //     path: '/indicator-management',
+    //     title: 'indicator management',
+    //     type: 'sub',
+    //     icontype: 'account_tree',
+    //     role: [],
+    //     collapse: 'indicator-management',
+    //     children: [
+    //         {path: 'IndicatorManagement', title: 'indicator management', ab:'IM'}
+    //     ]
+    // },
     {
         path: '/weather',
         title: 'Weather',
@@ -89,7 +109,7 @@ export const ROUTES: RouteInfo[] = [{
     },
     {
         path: '/process',
-        title: 'process',
+        title: 'User Workflow',
         type: 'link',
         icontype: 'schema',
         role: []
@@ -187,7 +207,7 @@ export class SidebarComponent implements OnInit {
 
             },
             err => {
-                console.log(err);
+                console.log(err); 
             },
         );
 

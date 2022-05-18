@@ -13,11 +13,11 @@ import { ExternalEdit } from './hierarchy-management/externaldata-add/externalda
 export class TreediagramService {
   
  
-  // readonly API_URL ='https://localhost:44305/api/';
-  // readonly APIUrl ='https://localhost:44305/1/';
+  readonly API_URL ='https://localhost:44305/api/';
+  readonly APIUrl ='https://localhost:44305/1/';
 
-  readonly API_URL = environment.API_URL + '/'
-  readonly APIUrl = environment.API_FormURL;
+  // readonly API_URL = environment.API_URL + '/'
+  // readonly APIUrl = environment.API_FormURL;
 
   constructor(private http: HttpClient) { }
 
@@ -40,7 +40,16 @@ export class TreediagramService {
     return this.http.get<any>(this.API_URL+'nodes/'+treeID);
 
   }
-  
+
+  addIndicatorNode(data:any){
+    return this.http.post(this.API_URL+'nodes/IndicatorNode/',data)
+  }
+
+  addupdateIndicatorNode(data:any){
+    return this.http.post(this.API_URL+'nodes/AddUpdateIndicatorNode/',data)
+  }
+
+ 
   public getRoles():Observable<any[]>{
 
     return this.http.get<any>(this.API_URL+'Rolezs');
@@ -55,6 +64,10 @@ export class TreediagramService {
 
   addLevelAttributes(data:any){
     return this.http.post<any>(this.API_URL+'MetadataLevels',data)
+  } 
+
+  addLevelIndicatorAttributes(LevelD:number){
+    return this.http.post(this.API_URL+'MetadataLevels/IndicatorMetadataLevels/'+LevelD,"")
   } 
 
   updateLevelDetails(LevelD:number,data:any){
@@ -78,6 +91,8 @@ export class TreediagramService {
     return this.http.get<any>(this.API_URL+'Nodes/GetNodeByLevelID/'+levelID);
   }
   
+
+
   archiveAttributes(metadataLevelID:any){
     return this.http.delete(this.API_URL+'MetadataLevels' + '/' + metadataLevelID);
   }
@@ -112,6 +127,14 @@ export class TreediagramService {
   updateNodeDetails(nodeID:number,data:any){
     return this.http.put(this.API_URL+'Nodes/'+nodeID,data);
   }
+
+  UpdateIndicatorNodeByID(data:any){
+    return this.http.post<any>(this.API_URL+'Nodes/UpdateIndicatorNodeByID',data)
+  } 
+
+  UpdateMetadataIndicatorForm(data:any){
+    return this.http.post<any>(this.API_URL+'MetadataNodeForms/UpdateMetadataIndicatorForm',data)
+  } 
 
   addNodeXMLForm(data:any){
     return this.http.post<any>(this.API_URL+'MetadataNodeForms',data)
@@ -166,11 +189,21 @@ export class TreediagramService {
     return this.http.get<any>(this.APIUrl+'Forms/'+FormID+'/pages/FieldsByFormID');
   }
 
+  GetFormFieldsByFormId(FormID:number){
+    return this.http.get<any>(this.APIUrl+'Forms/'+FormID+'/pages/FormFieldsByFormID');
+  }
+
 
   GetFormFieldsByFieldID(FieldID:number){
     return this.http.get<any>(this.APIUrl+'Forms/'+FieldID+'/pages/FieldsByFieldID');
   }
 
+  getIndicatorNode(NodeID:number){
+    console.log(this.API_URL+'nodes/'+NodeID);
+    return this.http.get<any>(this.API_URL+'nodes/getIndicatorNode/'+NodeID);
+
+  }
+  
   CountColumnData(columnName :any,dataValue :any,tableName :any){
     return this.http.get<any>(this.API_URL+'Trees/CountColumnData/'+columnName+'/'+dataValue+'/'+tableName);
   }

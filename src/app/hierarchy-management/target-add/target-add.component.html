@@ -1,7 +1,49 @@
-<h1 mat-dialog-title>Target Configuration</h1>
-    <div mat-dialog-content>
+<div style="margin-left: 0%;">
+    <button mat-icon-button color="warn" (click)="closePopup()">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
 
-        <div class="form-group">
+<div mat-dialog-content>
+    <h1 mat-dialog-title>Target Configuration</h1>
+
+    <div class="form-group">
+        <kendo-grid [kendoGridBinding]="service.TargetsMetadata" [pageSize]="5" [pageable]="true" [filterable]="true"
+            [sortable]="true" [groupable]="false" [resizable]="true">
+
+            <kendo-grid-column field="financialYear" title="Financial Year" [width]="6">
+            </kendo-grid-column>
+
+            <kendo-grid-column field="quaterOne" title="Q1" [width]="3">
+            </kendo-grid-column>
+
+            <kendo-grid-column field="quaterTwo" title="Q2" [width]="3">
+            </kendo-grid-column>
+
+            <kendo-grid-column field="quaterThree" title="Q3" [width]="3">
+            </kendo-grid-column>
+
+            <kendo-grid-column field="quaterFour" title="Q4" [width]="3">
+            </kendo-grid-column>
+
+
+            <kendo-grid-column field="annualTarget" title="Annual" [width]="3">
+            </kendo-grid-column>
+
+
+            <kendo-grid-column [width]="2" *ngIf="thEdit">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                    <button mat-icon-button (click)="clickEdit(dataItem)">
+                        <mat-icon matTooltip="Edit Tree Name" class="mat-18" style="color: #016000;">edit
+                        </mat-icon>
+                    </button>
+                </ng-template>
+            </kendo-grid-column>
+
+        </kendo-grid>
+    </div>
+
+    <!-- <div class="form-group">
             <div class="col-md-12">          
                 <table class="table">
                     <thead class="thead-light">
@@ -24,7 +66,6 @@
                             <td >{{pd.quaterFour}}</td> 
                             <td >{{pd.annualTarget}}</td>                             
                             <td *ngIf="thEdit"><button type="button" class="btn btn-secondary" (click)="clickEdit(pd)"><i class="fa fa-pencil" aria-hidden="true"></i></button></td>
-                            <!-- <td><button type="button" class="btn btn-danger" (click)="clickDelete(pd)"><i class="fa fa-trash"  aria-hidden="true"></i></button></td>          -->
                         </tr>
                         
                     </tbody>                        
@@ -32,64 +73,64 @@
 
                 <pagination-controls (pageChange)="p = $event"></pagination-controls>
             </div>
+        </div> -->
+
+    <div class="form-group" *ngIf="divContorls">
+
+        <div class="form-group">
+            <label style="font-size: medium;">Financial Year Start:</label>
+            <input type="date" class="form-control" value="{{tgAdd.financialStartDate}}"
+                [(ngModel)]=tgAdd.financialStartDate (change)="onDateChange($event)" [disabled]="isDisabled">
+        </div>
+        <div class="form-group" *ngIf="divPeriod">
+            <label style="font-size: medium;">Select a Period:</label>
+            <mat-form-field appearance="outline">
+                <mat-select [(ngModel)]=tgAdd.financialYear (selectionChange)="onTargetChange($event)"
+                    [disabled]="isDisabled">
+                    <mat-option *ngFor="let c of Period" [value]="c.financialYear">
+                        {{c.financialYear}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="form-group" *ngIf="divQ1">
+            <label style="font-size: medium;">Quater one:</label>
+            <input type="number" class="form-control" value="{{tgAdd.quaterOne}}" (change)="onValueChange($event)"
+                [(ngModel)]="tgAdd.quaterOne">
         </div>
 
-        <div class="form-group" *ngIf="divContorls">
-        
-            <div class="form-group">
-                <label style="font-size: medium;">Financial Year Start:</label>
-                <input type="date" class="form-control" value="{{tgAdd.financialStartDate}}"
-                    [(ngModel)]=tgAdd.financialStartDate (change)="onDateChange($event)" [disabled]="isDisabled">
-            </div>
-            <div class="form-group" *ngIf="divPeriod">
-                <label style="font-size: medium;">Select a Period:</label>
-                <mat-form-field appearance="outline">
-                    <mat-select [(ngModel)]=tgAdd.financialYear (selectionChange)="onTargetChange($event)"
-                        [disabled]="isDisabled">
-                        <mat-option *ngFor="let c of Period" [value]="c.financialYear">
-                            {{c.financialYear}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </div>
-            <div class="form-group" *ngIf="divQ1">
-                <label style="font-size: medium;">Quater one:</label>
-                <input type="number" class="form-control" value="{{tgAdd.quaterOne}}" (change)="onValueChange($event)"
-                    [(ngModel)]="tgAdd.quaterOne">
-            </div>
-        
-            <div class="form-group" *ngIf="divQ2">
-                <label style="font-size: medium;">Quater two:</label>
-                <input type="number" class="form-control" value="{{tgAdd.quaterTwo}}" (change)="onValueChange($event)"
-                    [(ngModel)]="tgAdd.quaterTwo">
-            </div>
-        
-            <div class="form-group" *ngIf="divQ3">
-                <label style="font-size: medium;">Quater three:</label>
-                <input type="number" class="form-control" value="{{tgAdd.quaterThree}}" (change)="onValueChange($event)"
-                    [(ngModel)]="tgAdd.quaterThree">
-            </div>
-        
-        
-            <div class="form-group" *ngIf="divQ4">
-                <label style="font-size: medium;">Quater four:</label>
-                <input type="number" class="form-control" value="{{tgAdd.quaterFour}}" (change)="onValueChange($event)"
-                    [(ngModel)]="tgAdd.quaterFour">
-            </div>
-        
-        
-            <div class="form-group" *ngIf="divAT">
-                <label style="font-size: medium;">Annual Target:</label>
-                <input type="number" aria-multiline="true" class="form-control" value="{{tgAdd.annualTarget}}"
-                    [(ngModel)]="tgAdd.annualTarget" disabled>
-            </div>
-
+        <div class="form-group" *ngIf="divQ2">
+            <label style="font-size: medium;">Quater two:</label>
+            <input type="number" class="form-control" value="{{tgAdd.quaterTwo}}" (change)="onValueChange($event)"
+                [(ngModel)]="tgAdd.quaterTwo">
         </div>
 
-        <div mat-dialog-actions>
-            <button mat-button cdkFocusInitial (click)="addTarget()" [disabled]="isBtnDisabled" *ngif="BtnAddTarget"
-                class="btn btn-md btn-primary">{{btnText}}</button>
-            <button mat-button [mat-dialog-close]="" class="btn btn-md btn-primary">Cancel</button>
+        <div class="form-group" *ngIf="divQ3">
+            <label style="font-size: medium;">Quater three:</label>
+            <input type="number" class="form-control" value="{{tgAdd.quaterThree}}" (change)="onValueChange($event)"
+                [(ngModel)]="tgAdd.quaterThree">
         </div>
-        
+
+
+        <div class="form-group" *ngIf="divQ4">
+            <label style="font-size: medium;">Quater four:</label>
+            <input type="number" class="form-control" value="{{tgAdd.quaterFour}}" (change)="onValueChange($event)"
+                [(ngModel)]="tgAdd.quaterFour">
+        </div>
+
+
+        <div class="form-group" *ngIf="divAT">
+            <label style="font-size: medium;">Annual Target:</label>
+            <input type="number" aria-multiline="true" class="form-control" value="{{tgAdd.annualTarget}}"
+                [(ngModel)]="tgAdd.annualTarget" disabled>
+        </div>
+
     </div>
+
+    <div mat-dialog-actions>
+        <button mat-button cdkFocusInitial (click)="addTarget()" [disabled]="isBtnDisabled"
+            class="btn btn-md btn-primary">{{btnText}}</button>
+        <button mat-button [mat-dialog-close]="" class="btn btn-md btn-primary">Cancel</button>
+    </div>
+
+</div>

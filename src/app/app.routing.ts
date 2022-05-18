@@ -82,6 +82,10 @@ export const AppRoutes: Routes = [
         loadChildren: () => import('./hierarchy-management/hierarchy-management.module').then(m => m.HierarchyManagementModule)      
       },
       {
+        path: 'hierarchy-management/indicator-management',      
+        loadChildren: () => import('./hierarchy-management/indicator-management/indicator-management.module').then(m => m.IndicatorManagementModule)      
+      },
+      {
         path: 'location',      
         loadChildren: () => import('./hierarchy-management/hierarchy-management.module').then(m => m.HierarchyManagementModule)      
       },
@@ -109,6 +113,10 @@ export const AppRoutes: Routes = [
       path: 'externalDI',
       loadChildren: () => import('./data-management/external-data-import/external-data-import.module').then(m => m.ExternalDataImportModule)
     },
+    {
+      path: 'administration',
+      loadChildren: () => import('./administration/administration.module').then(m => m.AdministrationModule)
+  },
     ]
   }, {
     path: '',

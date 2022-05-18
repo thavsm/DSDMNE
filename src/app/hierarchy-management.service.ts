@@ -28,7 +28,6 @@ export class HierarchyManagementService {
     this.http.get(this.API_URL + 'Trees/GettreesCategoryID' + '/' + TreeCategoryID)
     .toPromise()
     .then(res=> this.hlist = res as hierarchyManagement[]);
-
     console.log(this.hlist);
   }
 
@@ -41,6 +40,10 @@ export class HierarchyManagementService {
   }
   addTree(data:any){
     return this.http.post(this.API_URL+'Trees',data);
+  }
+
+  addIndicator(data:any){
+    return this.http.post(this.API_URL+'Nodes/AddIndicatorNode',data);
   }
 
   archiveTree(treeID:any){
@@ -63,11 +66,31 @@ export class HierarchyManagementService {
     return this.http.post(this.API_URL+'Nodes',data);
   }
 
+  getIsIndicatorLevelbyLevelID(levelID:number){
+    return this.http.get<any>(this.API_URL+'Levels/SelectIsIndicatorLevelbyLevelID/'+levelID);
+  }
+
   //#region Indicator Nodes
   getIndicatorNodes():Observable<any[]>{
     return this.http.get<any>(this.API_URL+'Trees/indicatorNodes');
   }
 
+  getAllIndicatorNodes(){
+    return this.http.get<any>(this.API_URL+'nodes/getAllIndicatorNodes');
+  }
+
+  getIndicatorAttributesDataByIndicatorID(IndicatorID:number){
+    //console.log(this.API_URL+'MetadataNodeForms/'+NodeID);
+    return this.http.get<any>(this.API_URL+'MetadataNodeForms/getIndicatorAttributesDataByIndicatorID/'+IndicatorID);    
+  }
+
+  getMetadataIndicatorLevel(){
+    return this.http.get<any>(this.API_URL+'nodes/getMetadataIndicatorLevel');
+  }
+
+  DeleteIndiactorByID(IndicatorID :number){
+    return this.http.post<any>(this.API_URL+'nodes/DeleteIndiactorByID/'+IndicatorID, "");
+  }
   getAssignedIndicatorNodesByTreeRoleID(RoleID :any ,treeID):Observable<any[]>{
     return this.http.get<any>(this.API_URL+'Trees/'+RoleID+'/'+treeID+'/AssignedIndicatorNodesByRole');
   }

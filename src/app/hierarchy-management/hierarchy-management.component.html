@@ -1,9 +1,10 @@
+
 <div class="main-content">
     <div class="container-fluid">
       <div class="container-fluid">
-        <div class="header text-center">
+        <!-- <div class="header text-center">
           <h3 class="title">Tree management</h3>
-        </div>
+        </div> -->
         <div class="row">
             <div class= "col-md-12">
                 <table class="table">    
@@ -13,7 +14,73 @@
                 </table>
             </div>
         </div>
+
         <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-rose card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">assignment</i>
+                        </div>
+                        <h4 class="card-title">List of trees</h4>
+                    </div>
+                    <div class="card-body">
+        
+                        <div class="row">
+                            <kendo-grid [kendoGridBinding]="service.hlist" [pageSize]="10" [pageable]="true"
+                                [filterable]="true" [sortable]="true" [groupable]="false" >
+        
+                                <kendo-grid-column field="name" title="Name" [width]="6">
+                                </kendo-grid-column>
+        
+                                <kendo-grid-column field="description" title="Description" [width]="6"> 
+                                </kendo-grid-column>
+        
+                                <kendo-grid-column field="dateCreated" title="Date Created" [width]="6">
+                                </kendo-grid-column>
+        
+                                <kendo-grid-column [width]="1">
+                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                        <button mat-icon-button (click)="openViewTree(dataItem)">
+                                            <mat-icon matTooltip="View Tree" class="mat-18"  style="color: #016000;">remove_red_eye</mat-icon>
+                                        </button>
+                                    </ng-template>
+                                </kendo-grid-column>
+
+                                <kendo-grid-column [width]="1">
+                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                        <button mat-icon-button (click)="openEditTree(dataItem)">
+                                            <mat-icon matTooltip="Configure Tree" class="mat-18"  style="color: #016000;">settings</mat-icon>
+                                        </button>
+                                    </ng-template>
+                                </kendo-grid-column>
+        
+                                <kendo-grid-column [width]="1">
+                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                        <button mat-icon-button (click)="clickEdit(dataItem)">
+                                            <mat-icon matTooltip="Edit Tree Name" class="mat-18"  style="color: #016000;">edit</mat-icon>
+                                        </button>
+                                    </ng-template>
+                                </kendo-grid-column>
+
+                                <kendo-grid-column [width]="1">
+                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                        <button mat-icon-button (click)="clickDelete(dataItem)">
+                                            <mat-icon matTooltip="Delete Tree" class="mat-18"  style="color: #ff0000;">delete</mat-icon>
+                                        </button>
+                                    </ng-template>
+                                </kendo-grid-column>
+
+                                <!-- <kendo-grid-pdf fileName="formCategory.pdf" [repeatHeaders]="true"></kendo-grid-pdf> -->
+                                <!-- <kendo-grid-excel fileName="FormInbox.xlsx"></kendo-grid-excel> -->
+                            </kendo-grid>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="row">
             <div class="col-md-12">
         
                 <table class="table">
@@ -42,7 +109,7 @@
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div> -->
       </div>
     </div>
 </div> 

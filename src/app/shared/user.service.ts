@@ -6,6 +6,8 @@ import { environment } from '../../environments/environment';
 import { role } from './lookup.model';
 import { FormRole } from '../usermanager/formrole.model';
 import { BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
+import {MatTableModule} from '@angular/material/table';
 
 @Injectable({
   providedIn: 'root'
@@ -206,5 +208,10 @@ export class UserService {
 
   addTypeRoles(typeRoles: any) {
     return this.http.post(this.BaseURI + '/ApplicationUser/AddTypeRoles', typeRoles);
+  }
+
+  
+  getAllData(): Observable<any[]> {
+    return this.http.get<any[]>('./assets/data/cars-large.json');
   }
 }

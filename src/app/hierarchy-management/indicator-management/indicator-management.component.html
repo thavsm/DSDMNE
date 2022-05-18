@@ -1,0 +1,60 @@
+
+<div class="main-content">
+    <div class="container-fluid">
+      <div class="container-fluid">
+        <div class="row">
+            <div class= "col-md-12">
+                <table class="table">    
+                        <tr>
+                            <td><button class="btn btn-md" class="btn btn-md btn-primary"   (click)="openDialogAdd()">Add New Indicator</button></td>
+                        </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-rose card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">assignment</i>
+                        </div>
+                        <h4 class="card-title">List of indicators</h4>
+                    </div>
+                    <div class="card-body">
+        
+                        <div class="row">
+                            <kendo-grid [kendoGridBinding]="Indicators" [pageSize]="10" [pageable]="true"
+                                [filterable]="true" [sortable]="true" [groupable]="false" >
+        
+                                <kendo-grid-column field="indicatorName" title="Name" [width]="6">
+                                </kendo-grid-column>
+        
+                                <kendo-grid-column field="indicatorDescription" title="Description" [width]="6"> 
+                                </kendo-grid-column>
+            
+                                <kendo-grid-column [width]="1">
+                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                        <button mat-icon-button (click)="clickEdit(dataItem)">
+                                            <mat-icon matTooltip="Edit Tree Name" class="mat-18"  style="color: #016000;">edit</mat-icon>
+                                        </button>
+                                    </ng-template>
+                                </kendo-grid-column>
+
+                                <kendo-grid-column [width]="1">
+                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                        <button mat-icon-button (click)="clickDelete(dataItem)">
+                                            <mat-icon matTooltip="Delete Tree" class="mat-18"  style="color: #ff0000;">delete</mat-icon>
+                                        </button>
+                                    </ng-template>
+                                </kendo-grid-column> -->
+
+                          </kendo-grid>
+                     </div> 
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+</div> 
