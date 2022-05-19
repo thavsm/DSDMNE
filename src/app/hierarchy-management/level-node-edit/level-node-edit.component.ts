@@ -166,6 +166,9 @@ export class LevelNodeEditComponent implements OnInit {
     }
   }
 
+  public filteredIndicators;
+  public filteredFormFields;
+  
   setIndicatorFileds(){
     this.spinner.show();  
     
@@ -184,6 +187,7 @@ export class LevelNodeEditComponent implements OnInit {
         this.spinner.show();
         this.service.GetFormFieldsByFormId(this.IndicatorFormFields[0].formID).subscribe(data => {
           this.FormFields = data;
+          this.filteredFormFields = this.FormFields.slice();
           this.spinner.hide();
           this.divFormField = true;
         }); 
@@ -210,6 +214,7 @@ export class LevelNodeEditComponent implements OnInit {
     this.spinner.show();   
     this.Hierarchyservice.getIndicatorNodes().subscribe(data => {
          this.Indicators = data;
+         this.filteredIndicators = this.Indicators.slice();
          this.spinner.hide();
     });
   }
@@ -236,6 +241,7 @@ export class LevelNodeEditComponent implements OnInit {
     this.spinner.show();
     this.service.GetFormFieldsByFormId(ob.value).subscribe(data => {
       this.FormFields = data;
+      this.filteredFormFields = this.FormFields.slice();
       this.spinner.hide();
       this.divFormField = true;
     }); 

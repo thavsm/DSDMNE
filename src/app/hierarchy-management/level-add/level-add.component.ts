@@ -301,6 +301,7 @@ export class LevelAddComponent implements OnInit {
         this.divLevelEdit = false;
         this.divGridAttr = false;
         this.divAttr = false;
+        this.getLevels();
         this.showNotification('top', 'center', 'Level Updated Successfully!', 'Success', 'success');
       });
 
@@ -555,6 +556,7 @@ export class LevelAddComponent implements OnInit {
           this.showNotification('top', 'center', 'level Added Successfully!', 'Success', 'success');
           localStorage.setItem('LevelData', JSON.stringify(res));
           this.addDefaultAttributes();
+          this.getLevels();
           this.levelID = this.levelAdd.levelID;
           this.levelAdd.levelName ="";
           this.levelAdd.levelDescription ="";
