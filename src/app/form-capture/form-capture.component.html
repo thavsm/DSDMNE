@@ -16,9 +16,8 @@
               </kendo-treelist-column>
               <kendo-treelist-column title="" [width]="20" [filterable]="false">
                 <ng-template kendoTreeListCellTemplate  let-dataItem let-rowIndex="rowIndex">
-                  <button *ngIf="dataItem.levelID==4264 && dataItem.completedForms>=1 " class="btn btn-sm" (click)="addForm(dataItem.nodeID)" style="background-color: green;">Create Form</button>
-                  <button *ngIf="dataItem.levelID==4264 && dataItem.completedForms==0 " class="btn btn-sm" (click)="addForm(dataItem.nodeID)" style="background-color: red;">Create Form</button>
-                  <label *ngIf="dataItem.levelID==4264" > ({{dataItem.completedForms}}) Captured</label>
+                  <button *ngIf="dataItem.levelID==4264 && dataItem.completedForms>=1 " class="btn btn-sm" (click)="addForm(dataItem)" style="background-color: green;">Complete Form</button>
+                  <button *ngIf="dataItem.levelID==4264 && dataItem.completedForms==0 " class="btn btn-sm" (click)="addForm(dataItem)" style="background-color: red;">Complete Form</button>
                   <label *ngIf="dataItem.levelID!=4264">({{dataItem.completedForms}}) Captured</label>
                 </ng-template>
               </kendo-treelist-column>
