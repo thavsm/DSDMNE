@@ -28,21 +28,17 @@
     </div>
     <div class="form-group" *ngIf="divIsIndicator">
         <div class="form-group">
-            <!-- <mat-form-field appearance="outline">
-                <mat-label>Select an Indicator</mat-label>
-                <input type="text" placeholder="Select an Indicator" aria-label="Select an Indicator" matInput [FormControl]="myControl"
-                    [matAutocomplete]="auto">
-                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                    <mat-option *ngFor="let c of Indicators | async" [value]="c.indicatorID">
-                        {{c.indicatorName}}
-                    </mat-option>
-                </mat-autocomplete>
-            </mat-form-field> -->
-    
             <mat-form-field appearance="outline">
                 <mat-label>Select an Indicator</mat-label>
-                <mat-select [(ngModel)]="NodeAdd.indicatorID">
-                    <mat-option *ngFor="let c of Indicators" [value]="c.indicatorID">
+                <!-- <input type="text" matInput [formControl]="IndicatorControl" [matAutocomplete]="auto"> -->
+                <!-- <mat-autocomplete #auto="matAutocomplete" [(ngModel)]="NodeAdd.indicatorID">
+                    <mat-option *ngFor="let c of IndicatorfilteredOptions" [value]="c.indicatorID">
+                        {{c.indicatorName}}
+                    </mat-option>
+                </mat-autocomplete> -->
+                <mat-select [(ngModel)]="NodeAdd.indicatorID"> 
+                    <mat-select-filter [placeholder]="'Search'" [displayMember]="'indicatorName'" [array]="Indicators" (filteredReturn)="filteredIndicators =$event"></mat-select-filter>
+                    <mat-option *ngFor="let c of filteredIndicators" [value]="c.indicatorID">
                         {{c.indicatorName}}
                     </mat-option>
                 </mat-select>
@@ -76,8 +72,9 @@
         <div class="form-group" *ngIf="divFormField" > 
             <mat-form-field appearance="outline">
                 <mat-label>Form Field</mat-label>
-                <mat-select [(ngModel)]="NodeAdd.fName" (selectionChange)="onformfieldChange($event)">
-                    <mat-option *ngFor="let c of FormFields" [value]="c.fieldID">
+                 <mat-select [(ngModel)]="NodeAdd.fName" (selectionChange)="onformfieldChange($event)">       
+                    <mat-select-filter [placeholder]="'Search'" [displayMember]="'questionName'" [array]="FormFields" (filteredReturn)="filteredFormFields =$event"></mat-select-filter>                         
+                    <mat-option *ngFor="let c of filteredFormFields" [value]="c.fieldID">
                         {{c.questionName}}
                     </mat-option>
                 </mat-select>

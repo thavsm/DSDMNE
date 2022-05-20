@@ -27,8 +27,9 @@
         <div class="form-group">
             <mat-form-field appearance="outline">
                 <mat-label>Select an Indicator</mat-label>
-                <mat-select [(ngModel)]="NodeData.indicatorID">
-                    <mat-option *ngFor="let c of Indicators" [value]="c.indicatorID">
+                <mat-select [(ngModel)]="NodeData.indicatorID" >  
+                    <mat-select-filter [placeholder]="'Search'" [displayMember]="'indicatorName'" [array]="Indicators" (filteredReturn)="filteredIndicators =$event"></mat-select-filter>                          
+                    <mat-option *ngFor="let c of filteredIndicators" [value]="c.indicatorID">
                         {{c.indicatorName}}
                     </mat-option>
                 </mat-select>
@@ -63,7 +64,8 @@
             <mat-form-field appearance="outline">
                 <mat-label>Form Field</mat-label>
                 <mat-select [(ngModel)]="NodeData.fName" (selectionChange)="onformfieldChange($event)">
-                    <mat-option *ngFor="let c of FormFields" [value]="c.fieldID">
+                    <mat-select-filter [placeholder]="'Search'" [displayMember]="'questionName'" [array]="FormFields" (filteredReturn)="filteredFormFields =$event"></mat-select-filter>                         
+                    <mat-option *ngFor="let c of filteredFormFields" [value]="c.fieldID">
                         {{c.questionName}}
                     </mat-option>
                 </mat-select>
