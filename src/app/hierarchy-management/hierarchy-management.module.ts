@@ -33,6 +33,11 @@ import { UserProfileComponent } from '../userprofile/userprofile.component';
 import { Injectable } from '@angular/core';
 import { IndicatorAddComponent } from './indicator-management/indicator-add/indicator-add.component';
 import { IndicatorEditComponent } from './indicator-management/indicator-edit/indicator-edit.component';
+import { DropDownsModule } from "@progress/kendo-angular-dropdowns";
+import { LabelModule } from "@progress/kendo-angular-label";
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatSelectFilterModule } from 'mat-select-filter';
 @Injectable({ providedIn: 'root' })
 
 
@@ -44,6 +49,8 @@ import { IndicatorEditComponent } from './indicator-management/indicator-edit/in
     CommonModule,
     MatTabsModule,
     MatExpansionModule,
+    MatAutocompleteModule,
+    MatSelectFilterModule,
     PDFExportModule,
     RouterModule.forChild(hierarchymanagementRoutes),
     FormsModule,  ReactiveFormsModule,  MatDialogModule,
@@ -58,7 +65,10 @@ import { IndicatorEditComponent } from './indicator-management/indicator-edit/in
     InputsModule,
     PDFModule,
     ExcelModule,
+    DropDownsModule,
+    LabelModule,
     MatSelectModule,
+    NgxMatSelectSearchModule,
     MatButtonModule],
     declarations: [HierarchyManagementComponent,  
       TreeAddComponent,
