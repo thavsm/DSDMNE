@@ -1,0 +1,43 @@
+<div style="margin-left: -1%;">
+    <button mat-icon-button color="warn" (click)="closePopup()">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<h1 mat-dialog-title *ngIf="holidayAdd.holidayId==0">Add Holiday </h1>
+<h1 mat-dialog-title *ngIf="holidayAdd.holidayId!=0">Edit Holiday</h1>
+<div mat-dialog-content>
+    <div class="form-group">
+        <label style="font-size: medium;">Holiday Name</label>
+        <input type="text" class="form-control" value="{{holidayAdd.name}}" [(ngModel)]="holidayAdd.name">
+    </div>
+    <!--<div class="form-group">
+        <label style="font-size: medium;">Holiday Year</label>
+        <input type="text" class="form-control" value="{{holidayAdd.year}}"
+            [(ngModel)]="holidayAdd.year">
+    </div>-->
+    <div class="form-group">
+        <label style="font-size: medium;">Holiday Date</label>
+        <!--<input type="text" class="form-control" value="{{holidayAdd.date}}" [(ngModel)]="holidayAdd.date">-->
+
+        <mat-form-field appearance="fill">       
+            <input matInput [matDatepicker]="picker" class="form-control" [(ngModel)]="holidayAdd.date">
+            <mat-hint>DD/MM/YYYY</mat-hint>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+    </div>
+    
+</div>
+<div mat-dialog-actions>
+    <button mat-button cdkFocusInitial (click)="addHoliday()"
+        class="btn btn-md btn-primary"   *ngIf="holidayAdd.holidayId==0">Add</button>
+    <button mat-button cdkFocusInitial (click)="updateHoliday()"
+        class="btn btn-md btn-primary"   *ngIf="holidayAdd.holidayId!=0">Edit</button> 
+    <button mat-button [mat-dialog-close]=""
+        class="btn btn-md btn-primary"   >Cancel</button>
+</div>
+<ngx-spinner bdColor="rgba(	237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: black">Processing...</p>
+</ngx-spinner>
