@@ -19,7 +19,7 @@ export class TaskDetailComponent implements OnInit {
   nextUserID: string;
   actionTakenAll: any;
   asgnUsers: any;
-  
+  pid: number
 
   roles = [
     {value: '1', viewValue: 'Admin'},
@@ -50,6 +50,7 @@ export class TaskDetailComponent implements OnInit {
     {value: '9', viewValue: 'Limpopo'}
   ];
   
+  
   constructor(private service: UserService, private spinner: NgxSpinnerService, private router: Router) {
     
      
@@ -79,9 +80,10 @@ export class TaskDetailComponent implements OnInit {
 
   public ngOnInit() {
    
-    const wkid =new URLSearchParams(window.location.search).get('workflowid');
-    const tid =new URLSearchParams(window.location.search).get('taskid');
-    
+    const urlObj = new URLSearchParams(window.location.search);
+    const wkid = urlObj.get('workflowid');
+    const tid = urlObj.get('taskid');
+    //this.pid = urlObj.get('pid');
     let body = {
         WorkflowID: parseInt(wkid),
         TaskID: parseInt(tid),
@@ -93,7 +95,7 @@ export class TaskDetailComponent implements OnInit {
           
           this.workflowData = res['workflow'];
           this.formData = res['formData'];
-          
+          this.pid = res['workflow']['processID'];
           var taskArray = res['workflow']['list'].filter(obj1 => {
             return obj1.id == parseInt(tid)
         });
@@ -109,6 +111,9 @@ export class TaskDetailComponent implements OnInit {
 
             if (task.actionTakenAll != null) {
                 this.actionTakenAll = task.actionTakenAll;
+                if(task.actionTakenAll.length ==1) {
+                  this.actTakenID = task.actionTakenAll[0]['id'];
+                }
             }
         }
 
@@ -125,7 +130,15 @@ export class TaskDetailComponent implements OnInit {
     const tid =new URLSearchParams(window.location.search).get('taskid');
     
     let appUserModel =this.formData;
-
+    
+    if(this.nextUserID === undefined) {
+      this.nextUserID="-1";
+    }
+    
+    // if(this.actTakenID === undefined) {
+    //   this.actTakenID="1";
+    // }
+    
     let formData1 = {
       WorkflowID: parseInt(wkid),
       TaskID: parseInt(tid),
@@ -137,6 +150,45 @@ export class TaskDetailComponent implements OnInit {
       //Role: this.formData['roleId']
     };
     this.service.completeTask(formData1).subscribe(
+      res => {
+        this.spinner.hide();
+        //this.data1 = res;
+        //window.location.replace("/dsd_demo/dashboard");
+        this.router.navigate(['/dashboard']);
+      },
+      err => {
+        this.spinner.hide();
+        console.log(err);
+      },
+    );
+  }
+
+  RejectTask() {
+    this.spinner.show();
+    const wkid =new URLSearchParams(window.location.search).get('workflowid');
+    const tid =new URLSearchParams(window.location.search).get('taskid');
+    
+    let appUserModel =this.formData;
+    
+    if(this.nextUserID === undefined) {
+      this.nextUserID="-1";
+    }
+    
+    // if(this.actTakenID === undefined) {
+    //   this.actTakenID="1";
+    // }
+    
+    let formData1 = {
+      WorkflowID: parseInt(wkid),
+      TaskID: parseInt(tid),
+      ProcessID:0,
+      ActionTakenID: parseInt(this.actTakenID),
+      NextUserID: parseInt(this.nextUserID),
+      Comment: this.comment,
+      ApplicationUserModel: appUserModel
+      //Role: this.formData['roleId']
+    };
+    this.service.rejectTask(formData1, 'dd').subscribe(
       res => {
         this.spinner.hide();
         //this.data1 = res;

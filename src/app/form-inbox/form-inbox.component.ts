@@ -92,7 +92,7 @@ export class FormInboxComponent implements OnInit {
     this.userService.getUserProfile().subscribe(res => {
       this.userDetail = res;
       let userRoleID = this.userDetail.formData.role;
-      this.service.getCapturedForms(this.userDetail.formData.locationType, this.userDetail.formData.role).subscribe(data => {
+      this.service.getCapturedForms(this.userDetail.formData.location, this.userDetail.formData.role).subscribe(data => {
         this.gridView = data;
         this.service.getPublishedListOfForms().subscribe(x => {
           this.formList = [

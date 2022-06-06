@@ -17,7 +17,7 @@
                                     <textarea matInput rows="1" [(ngModel)]="comment"></textarea>
                                 </mat-form-field>
                             </div>
-                            <div class="col-sm-2">
+                            <div class="col-sm-2" *ngIf="pid==1">
                                 <mat-form-field appearance="standard">
                                     <mat-label>Action Taken</mat-label>
                                     <mat-select (selectionChange)='onActionSelected($event)'>
@@ -27,7 +27,7 @@
                                     </mat-select>
                                 </mat-form-field>
                             </div>
-                            <div class="col-sm-2">
+                            <div class="col-sm-2" *ngIf="pid==1">
                                 <mat-form-field appearance="standard">
                                     <mat-label>User</mat-label>
                                     <mat-select (selectionChange)='onUserSelected($event)'>
@@ -40,11 +40,18 @@
                             <div class="col-sm-4">
                                 <button id="btnSearch" class="btn btn-primary mr-1"
                                     (click)="completeTask()">Complete</button>
-                                <!-- <button id="btnAddNewProcess" class="btn btn-primary">Reject</button> -->
+                                    
+                                <button id="btnReject" class="btn btn-primary" *ngIf="pid==1" (click)="RejectTask()">Reject</button>
+                            
 
                             </div>
                         </div>
-                        <app-userprofile-cmp [isParent]="false" [formData]="formData" (newItemEvent)="addItem($event)"></app-userprofile-cmp>
+                        <div *ngIf="pid==1; else elseBlock">
+                            <app-userprofile-cmp [isParent]="false" [formData]="formData" (newItemEvent)="addItem($event)"></app-userprofile-cmp>
+                          </div>
+                          <ng-template #elseBlock>
+                            Indicator Approvals Screen
+                          </ng-template>
                         <div class="card">
                             <div class="card-header bg-light">
                                 <a class="card-link" data-toggle="collapse" href="#collapseworkf"
