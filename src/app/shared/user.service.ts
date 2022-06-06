@@ -73,6 +73,10 @@ export class UserService {
     return this.http.post(this.BaseURI + '/UserProfile/CompleteTask', formData);
   }
 
+  rejectTask(formData: any, id: string) {
+    return this.http.post(this.BaseURI + '/UserProfile/TerminateWorkflow', formData);
+  }
+
   UpdateUserProfile(formData: any) {
     return this.http.post(this.BaseURI + '/UserProfile/UpdateUserProfile', formData);
   }
