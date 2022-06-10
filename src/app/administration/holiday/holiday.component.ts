@@ -94,6 +94,11 @@ export class HolidayComponent implements OnInit {
   }
 
   clickDelete(item: any) {
+    if (item.id <11)
+    {
+      alert ("Not allowed to delete this Holiday")
+    }
+    else{
     Swal.fire({
       title: 'Are you sure you want to delete ' + item.name + ' holiday?',
       showCancelButton: true,
@@ -115,8 +120,14 @@ export class HolidayComponent implements OnInit {
       }
     })
   }
+  }
 
   clickEdit(item: any) {
+    if (item.id <11)
+    {
+      alert ("Not allowed to edit this Holiday")
+    }
+    else{
     this.holidayAdd = item;
     const dialogRef = this.dialog.open(HolidayAddComponent, {
       width: '40%',
@@ -129,6 +140,7 @@ export class HolidayComponent implements OnInit {
       console.log('The dialog was closed');
       this.service.refreshhlist();
     });
+  }
   }
 
   SavedSuccessful(isUpdate) {
