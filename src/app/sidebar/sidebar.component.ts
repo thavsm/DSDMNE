@@ -37,7 +37,7 @@ export const ROUTES: RouteInfo[] = [{
         role: [],
     },{
         path: '/usermanager',
-        title: 'User Manager',
+        title: 'User Management',
         type: 'sub',
         icontype: 'person',
         role: [],

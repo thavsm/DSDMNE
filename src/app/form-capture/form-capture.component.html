@@ -16,9 +16,17 @@
               </kendo-treelist-column>
               <kendo-treelist-column title="" [width]="20" [filterable]="false">
                 <ng-template kendoTreeListCellTemplate  let-dataItem let-rowIndex="rowIndex">
-                  <button *ngIf="dataItem.levelID==4264 && dataItem.completedForms>=1 " class="btn btn-sm" (click)="addForm(dataItem)" style="background-color: green;">Complete Form</button>
-                  <button *ngIf="dataItem.levelID==4264 && dataItem.completedForms==0 " class="btn btn-sm" (click)="addForm(dataItem)" style="background-color: red;">Complete Form</button>
-                  <label *ngIf="dataItem.levelID!=4264">({{dataItem.completedForms}}) Captured</label>
+                  <div class="row">
+                    <div class="col">
+                      <label *ngIf="dataItem.levelID!=4264"> ({{dataItem.completedForms}}) Facilities Captured</label>
+                    </div>
+                    <div class="col">
+                      <button *ngIf="dataItem.levelID==userLocationLevel && dataItem.levelID!=4264 && dataItem.completedForms>=1 " class="btn btn-sm" (click)="addForm(dataItem)" style="background-color: green;width: 150px;">Complete My Form</button>
+                      <button *ngIf="dataItem.levelID==userLocationLevel && dataItem.levelID!=4264 && dataItem.completedForms==0 " class="btn btn-sm" (click)="addForm(dataItem)" style="background-color: red;width: 150px;">Complete My Form</button>    
+                    </div>
+                  </div>
+                  <button *ngIf="dataItem.levelID==4264 && dataItem.completedForms>=1 " class="btn btn-sm" (click)="addForm(dataItem)" style="background-color: green;width: 150px;">Complete Form</button>
+                  <button *ngIf="dataItem.levelID==4264 && dataItem.completedForms==0 " class="btn btn-sm" (click)="addForm(dataItem)" style="background-color: red;width: 150px;">Complete Form</button>
                 </ng-template>
               </kendo-treelist-column>
             </kendo-treelist>
