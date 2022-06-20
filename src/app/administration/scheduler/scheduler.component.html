@@ -1,1 +1,282 @@
-<p>scheduler works!</p>
+<div class="main-content">
+    <div class="container-fluid">
+      <div class="container-fluid">
+        <!-- <div class="header text-center">
+          <h3 class="title">Schedule Dates</h3>
+          
+        </div> -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                  <div class="card-header card-header-rose card-header-icon">
+                    <div class="card-icon">
+                      <i class="material-icons">people_outline</i>
+                    </div>
+                    <h4 class="card-title">Scheduler</h4>
+                  </div>
+                    <div class="card-body">
+                        <form class="form" [formGroup]="formModel"  method="" action="" (submit)="onSubmit()">
+                            <div class="row">                              
+                              <div class="col-md-5 ml-auto">
+                                <div class="form-group has-default">
+                                  <div class="input-group">
+                                    <!-- <div class="input-group-prepend">
+                                      <span class="input-group-text">
+                                        <i class="material-icons">accessibility</i>
+                                      </span>
+                                    </div> -->
+                                    <legend>Financial Year</legend>
+                                    <mat-select class="form-control" placeholder="Year..." formControlName="Year" >
+                                      <mat-option *ngFor="let year of years" [value]="year.id" (click)="loadYear(year)" >
+                                        {{ year.fy }}
+                                      </mat-option>
+                                    </mat-select>
+                                  </div>
+                                  <!-- <span class="text-danger ml-5"
+                                    *ngIf="formModel.get('Role').touched && formModel.get('Role').errors?.required">This
+                                    field is mandatory.</span> -->
+                                </div>
+                              </div>  
+                              <div class="col-md-5 mr-auto">
+                               
+                              </div>  
+                                                            
+                              <div class="col-md-5 ml-auto" >
+                                <div class="form-group has-default">
+                                  <div class="input-group">                                    
+                                    Start Date
+                                    <mat-form-field >
+                                        <input matInput [matDatepicker]="start"  (click)="start.open()"  formControlName="Start">
+                                        <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
+                                        <mat-datepicker #start></mat-datepicker>
+                                    </mat-form-field>
+                                  </div>
+                                  <!-- <span class="text-danger ml-5"
+                                    *ngIf="formModel.get('Password').touched && formModel.get('Password').errors?.required">This
+                                    field is mandatory.</span>
+                                  <span class="text-danger ml-5"
+                                    *ngIf="formModel.get('Password').touched && formModel.get('Password').errors?.minlength">Minimum
+                                    4 characters required.</span> -->
+                                </div>
+                              </div>
+                              <div class="col-md-5 mr-auto" >
+                                <div class="form-group has-default">
+                                  <div class="input-group">
+                                    End Date
+                                    <mat-form-field >
+                                        <input matInput [matDatepicker]="end"  (click)="end.open()" formControlName="End">
+                                        <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
+                                        <mat-datepicker #end></mat-datepicker>
+                                    </mat-form-field>
+                                  </div>
+                                  <!-- <span class="text-danger ml-5"
+                                    *ngIf="formModel.get('ConfirmPassword').touched && formModel.get('ConfirmPassword').errors?.required">This
+                                    field is mandatory.</span>
+                                  <span class="text-danger ml-5"
+                                    *ngIf="formModel.get('ConfirmPassword').touched && formModel.get('ConfirmPassword').errors?.passwordMismatch">Confirm
+                                    Password does not match.</span> -->
+                                </div>
+                              </div>
+
+                              <div class="col-md-5 ml-auto" >
+                                  Facility
+                                <div class="form-group has-default">
+                                  <div class="input-group">                                    
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                          <i class="material-icons">time</i>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="Capture Days..." formControlName="Facility">                                    
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-5 mr-auto" >   
+                                Notification                             
+                                <div class="form-group has-default">
+                                  <div class="input-group">                                    
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                          <i class="material-icons">time</i>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="Reminder Day" formControlName="FacilityReminder">                                    
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-5 ml-auto" >
+                                  Service Point
+                                <div class="form-group has-default">
+                                  <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                          <i class="material-icons">time</i>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="Approve Days..." formControlName="ServicePoint">                                    
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-5 mr-auto" >
+                                Notification
+                                <div class="form-group has-default">
+                                    <div class="input-group">
+                                      <div class="input-group-prepend">
+                                          <span class="input-group-text">
+                                            <i class="material-icons">time</i>
+                                          </span>
+                                      </div>
+                                      <input type="text" class="form-control" placeholder="Reminder Day" formControlName="ServicePointReminder">                                    
+                                    </div>
+                                  </div>
+                              </div>
+                              <div class="col-md-5 ml-auto" >
+                                District Manager
+                                <div class="form-group has-default">
+                                <div class="input-group">                                    
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="material-icons">time</i>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="Approve Days..." formControlName="District">                                    
+                                </div>
+                                </div>
+                              </div>
+                              <div class="col-md-5 mr-auto" >
+                                Notification
+                                <div class="form-group has-default">
+                                    <div class="input-group">                                    
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="material-icons">time</i>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="Reminder Day" formControlName="DistrictReminder">                                    
+                                    </div>
+                                </div>
+                              </div>
+                            <div class="col-md-5 ml-auto" >
+                                Provincial Programme Manager
+                            <div class="form-group has-default">
+                                <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="material-icons">time</i>
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Approve Days..." formControlName="PPM">                                    
+                                </div>
+                            </div>
+                            </div>
+                            <div class="col-md-5 mr-auto" >
+                                Notification
+                                <div class="form-group has-default">
+                                    <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="material-icons">time</i>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="Reminder Days" formControlName="PPMReminder">                                    
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5 ml-auto" >
+                                Provincial M&E
+                            <div class="form-group has-default">
+                                <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="material-icons">time</i>
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Approve Days..." formControlName="PME">                                    
+                                </div>
+                            </div>
+                            </div>
+                            <div class="col-md-5 mr-auto" >
+                                Notification
+                                <div class="form-group has-default">
+                                    <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="material-icons">time</i>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="Reminder Day" formControlName="PMEReminder">                                    
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5 ml-auto" >
+                                Provincial HOD
+                            <div class="form-group has-default">
+                                <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="material-icons">time</i>
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Approve Days..." formControlName="HOD">                                    
+                                </div>
+                            </div>
+                            </div>
+                            <div class="col-md-5 mr-auto" >
+                                Notification
+                                <div class="form-group has-default">
+                                    <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="material-icons">time</i>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="Reminder Day" formControlName="HODReminder">                                    
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5 ml-auto" >
+                             National M&E
+                            <div class="form-group has-default">
+                                <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        <i class="material-icons">time</i>
+                                    </span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Approve Days..." formControlName="NAT">                                    
+                                </div>
+                            </div>
+                            </div>
+                            <div class="col-md-5 mr-auto" >
+                                Notification
+                                <div class="form-group has-default">
+                                    <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="material-icons">time</i>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control" placeholder="Reminder Day" formControlName="NATReminder">                                    
+                                    </div>
+                                </div>
+                            </div>
+                                                 
+                              <div class="col-md-12">
+                                <div class="text-center">
+                                  <!-- <button type="submit" class="btn btn-primary btn-round mt-4" [disabled]="!formModel.valid">Sign
+                                    Up</button> -->
+                                    <button type="submit" class="btn btn-primary btn-round mt-4">Save </button>
+                                </div>
+                              </div>
+                            </div>                        
+
+                        </form>
+            
+                    </div>
+                </div>
+            </div>
+        </div>        
+      </div>
+    </div>
+  </div>
+  
