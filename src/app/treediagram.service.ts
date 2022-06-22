@@ -13,11 +13,11 @@ import { ExternalEdit } from './hierarchy-management/externaldata-add/externalda
 export class TreediagramService {
   
  
-  readonly API_URL ='https://localhost:44305/api/';
-  readonly APIUrl ='https://localhost:44305/1/';
+  // readonly API_URL ='https://localhost:44305/api/';
+  // readonly APIUrl ='https://localhost:44305/1/';
 
-  // readonly API_URL = environment.API_URL + '/'
-  // readonly APIUrl = environment.API_FormURL;
+  readonly API_URL = environment.API_URL + '/'
+  readonly APIUrl = environment.API_FormURL;
 
   constructor(private http: HttpClient) { }
 
@@ -279,6 +279,12 @@ export class TreediagramService {
     return this.http.post<any>(this.API_URL+'Trees/RefreshExternalCalculation/'+formData+'/'+tableName+'/'+CalculationID+'/'+Connstring+'/'+externalDataTypeID, "");
   }
 
+  getIndicatorsDataApproval(locationType:number, locationID:number, monthID:number, year:number){
+    return this.http.get<any>(this.API_URL+'Trees/getIndicatorsDataApproval?locationType='+locationType+'&locationID='+locationID+'&monthID='+monthID+'&year='+year);
+  }
 
-  
+  getFacilityIndicatorsDataApproval(indicatorID:number, locationType:number, locationID:number, year:number, monthID:number){
+    return this.http.get<any>(this.API_URL+'Trees/getFacilityIndicatorsDataApproval?indicatorID='+indicatorID+'&locationType='+locationType+'&locationID='+locationID+'&year='+year+'&monthID='+monthID);
+  }
+
 }

@@ -8,31 +8,32 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6">
-                                <mat-form-field appearance="standard">
+                                <mat-form-field appearance="outline">
                                     <mat-label>First Name</mat-label>
                                     <input matInput [value]="formData['fullName']" (input)="updateFormData()">
                                 </mat-form-field>
                             </div>
-                            <div class="col-md-6">
-                                <mat-form-field appearance="standard">
-                                    <mat-label>Surname</mat-label>
+                            <div class="col-md-6">           
+                                                                                      
+                                <mat-form-field appearance="outline">  
+                                    <mat-label >Surname</mat-label>                                                                                                 
                                     <input matInput [(ngModel)]="formData['surname']" (input)="updateFormData()">
                                 </mat-form-field>
                             </div>
                             <div class="col-md-6">
-                                <mat-form-field appearance="standard">
+                                <mat-form-field appearance="outline">
                                     <mat-label>Email</mat-label>
                                     <input matInput [(ngModel)]="formData['email']" [disabled]="!isParent">
                                 </mat-form-field>
                             </div>
                             <div class="col-md-6">
-                                <mat-form-field appearance="standard">
+                                <mat-form-field appearance="outline">
                                     <mat-label>Cell Number</mat-label>
                                     <input matInput [(ngModel)]="formData['phoneNumber']" (input)="updateFormData()">
                                 </mat-form-field>
                             </div>
                             <div class="col-md-6">
-                                <mat-form-field appearance="standard">
+                                <mat-form-field appearance="outline">
                                     <mat-label>Role Designation</mat-label>
                                     <mat-select [(ngModel)]="formData['role']" (selectionChange)="updateFormData()">
                                         <mat-option *ngFor="let rol of roles" [value]="rol.value">
@@ -42,7 +43,7 @@
                                 </mat-form-field>
                             </div>   
                             <div class="col-md-6">
-                                <mat-form-field appearance="standard">
+                                <mat-form-field appearance="outline">
                                     <mat-label>Role Type</mat-label>
                                     <mat-select [(ngModel)]="formData['roleType']" (selectionChange)="updateFormData()">
                                         <mat-option *ngFor="let type of roleTypes" [value]="type.value">
@@ -52,7 +53,7 @@
                                 </mat-form-field>
                             </div> 
                             <div class="col-md-6">
-                                <mat-form-field appearance="standard">
+                                <mat-form-field appearance="outline">
                                     <mat-label>Location Type</mat-label>
                                     <mat-select [(ngModel)]="formData['locationType']" (selectionChange)="updateFormData()">
                                         <mat-option *ngFor="let loc of locationType" [value]="loc.value" (click)="loadLocation(loc)" >
@@ -63,7 +64,7 @@
                             </div> 
                             
                             <div class="col-md-6">
-                                <mat-form-field appearance="standard" *ngIf="isBranch">
+                                <mat-form-field appearance="outline" *ngIf="isBranch">
                                     <mat-label>Branch</mat-label>
                                     <mat-select [(ngModel)]="formData['branch']" (selectionChange)="updateFormData()">
                                         <mat-option *ngFor="let b of branch" [value]="b.value">
@@ -73,7 +74,7 @@
                                 </mat-form-field>
                             </div>  
                             <div class="col-md-6">
-                                <mat-form-field appearance="standard" *ngIf="isProvince">
+                                <mat-form-field appearance="outline" *ngIf="isProvince">
                                     <mat-label>Province</mat-label>
                                     <mat-select [(ngModel)]="formData['provinceID']" (selectionChange)="updateFormData()">
                                         <mat-option *ngFor="let p of provinces" [value]="p.nodeID" (click)="loadDistricts(p)">
@@ -83,7 +84,7 @@
                                 </mat-form-field>
                             </div> 
                             <div class="col-md-6">
-                                <mat-form-field appearance="standard" *ngIf="isDistrict">
+                                <mat-form-field appearance="outline" *ngIf="isDistrict">
                                     <mat-label>District</mat-label>
                                     <mat-select [(ngModel)]="formData['districtID']" (selectionChange)="updateFormData()">
                                         <mat-option *ngFor="let d of districts" [value]="d.nodeID" (click)="loadServicePoints(d)">
@@ -93,7 +94,7 @@
                                 </mat-form-field>
                             </div> 
                             <div class="col-md-6">
-                                <mat-form-field appearance="standard" *ngIf="isSP">
+                                <mat-form-field appearance="outline" *ngIf="isSP">
                                     <mat-label>Service Point</mat-label>
                                     <mat-select [(ngModel)]="formData['servicePointID']" (selectionChange)="updateFormData()">
                                         <mat-option *ngFor="let s of servicePoints" [value]="s.nodeID" (click)="loadFacilities(s)">
@@ -103,7 +104,7 @@
                                 </mat-form-field>
                             </div> 
                             <div class="col-md-6">
-                                <mat-form-field appearance="standard" *ngIf="isFac">
+                                <mat-form-field appearance="outline" *ngIf="isFac">
                                     <mat-label>Facilities</mat-label>
                                     <mat-select [(ngModel)]="formData['facilityID']" (selectionChange)="updateFormData()">
                                         <mat-option *ngFor="let f of facilities" [value]="f.nodeID">
@@ -114,7 +115,7 @@
                             </div> 
                                
                             <div class="col-md-6">
-                                <mat-form-field appearance="standard" *ngif="false">
+                                <mat-form-field appearance="outline" *ngif="false">
                                     <mat-label>Location</mat-label>
                                     <mat-select [(ngModel)]="formData['location']" (selectionChange)="updateFormData()">
                                         <mat-option *ngFor="let city of cities" [value]="city.value">
@@ -124,11 +125,11 @@
                                 </mat-form-field>
                             </div>                               
                             <div class="col-md-6">
-                                <mat-form-field appearance="standard">
+                                <mat-form-field appearance="outline">
                                     <mat-label>Active</mat-label>                                                                        
                                     <!-- <input matInput type="checkbox" [value]="formData['active']" (input)="updateFormData()"> -->
                                     <input matInput [hidden]="true" [(ngModel)]="formData['active']">
-                                    <mat-checkbox class="ml-3" [(ngModel)]="formData['active']"  (input)="updateFormData()"></mat-checkbox>
+                                    <mat-checkbox class="ml-2" [(ngModel)]="formData['active']"  (input)="updateFormData()"></mat-checkbox>
                                 </mat-form-field>
                             </div>                                              
                             <!-- <div class="col-md-6">

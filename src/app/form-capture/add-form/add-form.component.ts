@@ -116,10 +116,6 @@ export class AddFormComponent implements OnInit {
       res => {
         this.userDetail = res;
         let userRoleID = this.userDetail.formData.role;
-        if(userRoleID==12){
-          userRoleID=13;
-          this.userDetail.formData.role=13;
-        }
         this.userService.getFormsRole(userRoleID).subscribe(formRole => {
           formRole.forEach(role => {
             if (role.id===this.formData.formID && role.capture == false) {
@@ -657,7 +653,12 @@ export class AddFormComponent implements OnInit {
   getDesignPerPage(pageGUID: any) {
     this.spinner.show();
     localStorage.setItem('cloneNumberForEdit', "0");
-    this.service.GetFieldsForCapturePerPage(this.userDetail.formData.role, pageGUID).subscribe(formFields => {
+    var locationRole=this.formData.roleID;
+    console.log(this.formData)
+    if(locationRole==0){
+      locationRole=this.userDetail.formData.role;
+    }
+    this.service.GetFieldsForCapturePerPage(locationRole, pageGUID).subscribe(formFields => {
       this.formDesign = formFields;
       this.formDesign.forEach((element, index) => {
         element.fieldStyles[0].height = Math.ceil(parseInt(element.fieldStyles[0].height) / 23.2); //23.2 is the size of one row in textarea
@@ -1098,7 +1099,6 @@ export class AddFormComponent implements OnInit {
 
   clickDownloadPhoto(data: any) {
     console.log(data)
-    alert(data.photoDesc.split('.').pop());
     const file = new Blob([this.base64toBlob(data.photo, 'image/' + data.photoDesc.split('.').pop())], { type: 'image/' + data.photoDesc.split('.').pop()});
     FileSaver.saveAs(file, data.postedFileName);
   }
