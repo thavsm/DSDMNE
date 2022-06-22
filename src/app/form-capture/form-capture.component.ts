@@ -47,6 +47,7 @@ export class FormCaptureComponent implements OnInit {
   data: any = [];
 
   userLocation:any;
+  userLocationLevel:any;
 
   ngOnInit(): void {
     this.spinner.show();
@@ -86,7 +87,8 @@ export class FormCaptureComponent implements OnInit {
           formID: 6,
           formName: JSON.parse(res).formName,
           formCaptureID: JSON.parse(res).formCaptureID,
-          state: 'add'
+          state: 'add',
+          roleID:dataItem.roleID
         };
         this.spinner.hide();
         this.showNotification('top', 'center', 'Form created successfully', '', 'success');
@@ -109,7 +111,8 @@ export class FormCaptureComponent implements OnInit {
         formID: 6,
         formName: 'ProvincialIndicators',
         formCaptureID: dataItem.captureID,
-        state: 'edit'
+        state: 'edit',
+        roleID:dataItem.roleID
       };
       localStorage.setItem('formCaptureDetails', JSON.stringify(formCaptureObj));
       localStorage.setItem('tabIndex', '0');
@@ -151,9 +154,11 @@ export class FormCaptureComponent implements OnInit {
   refreshLocationList() {
       this.service.GetUserLocationHierachy(this.userDetail.formData.userID).subscribe(location => {
         this.spinner.show();
+        this.userLocation=location;
         this.service.getFormCaptureCountPerLocation(location).subscribe(result => {
           this.data =  result;
-          console.log(this.data)
+          console.log(result);
+          this.userLocationLevel=this.data[0].levelID;
           this.spinner.hide();
         });
       });

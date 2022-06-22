@@ -37,7 +37,7 @@ export const ROUTES: RouteInfo[] = [{
         role: [],
     },{
         path: '/usermanager',
-        title: 'User Manager',
+        title: 'User Management',
         type: 'sub',
         icontype: 'person',
         role: [],
@@ -114,7 +114,8 @@ export const ROUTES: RouteInfo[] = [{
         icontype: 'schema',
         role: []
     },{
-        path: '/indicator-report',
+        //path: '/indicator-report',
+        path: '/indicatorapproval',
         title: 'Indicator Approval',
         type: 'link',
         icontype: 'fact_check',
