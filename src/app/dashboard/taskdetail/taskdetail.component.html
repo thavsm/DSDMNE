@@ -48,10 +48,11 @@
                               <div class="col-sm-12">Indicator Approvals Screen</div>
                             </ng-template>
                         </div>
-                        <ng-template #elseCon>
-                            <div class="row">
-                                <div class="col-sm-12">No Task Found</div>
-                            </div>
+                        <div *ngIf="pid==1; else elseBlock">
+                            <app-userprofile-cmp [isParent]="false" [formData]="formData" (newItemEvent)="addItem($event)"></app-userprofile-cmp>
+                          </div>
+                          <ng-template #elseBlock>
+                            <app-indicatorapproval [isParent]="false" [formData]="formData" (newItemEvent)="addItem($event)"></app-indicatorapproval>
                           </ng-template>
                         <div class="card">
                             <div class="card-header bg-light">

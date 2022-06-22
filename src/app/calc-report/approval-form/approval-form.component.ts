@@ -95,13 +95,25 @@ export class ApprovalFormComponent implements OnInit {
 
   isViewOnly:boolean=false;
 
-  constructor(public dialog: MatDialog, private service: FormbuilderService, private spinner: NgxSpinnerService, public dialogRef: MatDialogRef<CalcReportComponent>, private userService: UserService) {
+  constructor(public dialog: MatDialog, private service: FormbuilderService, private spinner: NgxSpinnerService, public dialogRef: MatDialogRef<CalcReportComponent>, private userService: UserService, @Inject(MAT_DIALOG_DATA) data) {
+    console.log(data);
+
+    // this.IndicatorData=27;
+    // this.formData  = {
+    //   formID: 6,
+    //   formName: 'ProvincialIndicators',
+    //   formCaptureID:'8581',
+    //   state: 'edit'
+    // };
+
+    this.IndicatorData = data["indicatorID"];
     this.formData  = {
-      formID: 6,
-      formName: 'DevelopmentandResearch19',
-      formCaptureID:'5457',
+      formID: data["formID"],
+      formName: data["formName"],
+      formCaptureID: data["formcaptureID"],
       state: 'edit'
     };
+
     //this.formData = JSON.parse(localStorage.getItem('formApprovalDetails') || '{}');
     this.tabIndex = parseInt(localStorage.getItem('tabIndex'));
     this.ClickedRow = function (index) {
@@ -114,8 +126,7 @@ export class ApprovalFormComponent implements OnInit {
     localStorage.setItem('fieldNamePhoto', "");
   }
 
-  ngOnInit(): void {
-    this.IndicatorData=26;
+  ngOnInit(): void {    
     localStorage.setItem('cloneNumberForEdit', "0");
     this.userService.getUserProfile().subscribe(
       res => {
@@ -500,9 +511,9 @@ export class ApprovalFormComponent implements OnInit {
           });
         });
       }
-      else {
-        this.service.FormHistory(this.formData.formCaptureID, this.IndicatorData, obj2).subscribe(result => {
+      else {        
           this.service.UpdateFormMetadata(this.formData.formCaptureID, obj, this.userDetail.formData.userID).subscribe(res => {
+            this.service.FormHistory(this.formData.formCaptureID, this.IndicatorData, obj2).subscribe(result => {
             let pg = this.currentPage.pageNumber;
             let pageStatus = {
               "userID": this.userDetail.formData.userID,
