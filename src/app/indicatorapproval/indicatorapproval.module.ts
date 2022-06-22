@@ -29,10 +29,12 @@ import { SignaturePadModule } from 'angular2-signaturepad';
 import { DropDownsModule } from "@progress/kendo-angular-dropdowns";
 import { LabelModule } from "@progress/kendo-angular-label";
 import { MatMenuModule } from '@angular/material/menu';
+import { FacilitydataComponent } from './facilitydata/facilitydata.component';
 
 @NgModule({
   declarations: [
-    IndicatorapprovalComponent
+    IndicatorapprovalComponent,
+    FacilitydataComponent
   ],
   imports: [
     CommonModule,
@@ -68,6 +70,9 @@ import { MatMenuModule } from '@angular/material/menu';
   ],
   providers: [
     { provide: MAT_DIALOG_DATA, useValue: {} }
-    ]
+    ],
+    exports: [
+      IndicatorapprovalComponent 
+      ]
 })
 export class IndicatorapprovalModule { }
