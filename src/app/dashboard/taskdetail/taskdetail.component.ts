@@ -181,6 +181,7 @@ export class TaskDetailComponent implements OnInit {
       NextUserID: -1,
       Comment: this.comment,
       ApplicationUserModel: appUserModel
+      //Role: this.formData['roleId']  
     };
     this.service.rejectTask(formData1, 'dd').subscribe(
       res => {

@@ -45,7 +45,7 @@
                                     <app-userprofile-cmp [isParent]="false" [formData]="formData" (newItemEvent)="addItem($event)"></app-userprofile-cmp>
                                   </div>
                             <ng-template #elseBlock>
-                              <div class="col-sm-12">Indicator Approvals Screen</div>
+                                <app-indicatorapproval [isParent]="false" [formData]="formData" (newItemEvent)="addItem($event)"></app-indicatorapproval>
                             </ng-template>
                         </div>
                         <ng-template #elseCon>

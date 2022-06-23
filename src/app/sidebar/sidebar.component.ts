@@ -149,6 +149,16 @@ export const ROUTES: RouteInfo[] = [{
             {path: 'internalDI',title: 'Internal Data Import',ab: 'IDI'}
 
         ]
+    },{
+        path: '/reports',
+        title: 'Reports',
+        type: 'sub',
+        icontype: 'person',
+        role: [],
+        collapse: 'reports',
+        children: [
+            {path: 'sqlreports',title: 'SQL Reports', ab:'S'},
+        ]
     }
 ];
 @Component({
