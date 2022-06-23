@@ -1,12 +1,13 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { UserService } from 'src/app/shared/user.service';
 import { TypeRole } from '../typerole.model';
 import { FormRole } from '../formrole.model';
 import { MenuRole } from '../menurole.model';
+import { MenurolesComponent } from '../menuroles/menuroles.component';
 
 
 declare var $: any;
@@ -41,7 +42,7 @@ export class RoleaccessComponent implements OnInit {
 
   checksloaded = false;
 
-  constructor(private service: UserService, @Inject(MAT_DIALOG_DATA) data) { 
+  constructor(private service: UserService, @Inject(MAT_DIALOG_DATA) data,public dialogRef: MatDialogRef<MenurolesComponent>) { 
     this.roleAdd = data;
   }
 
@@ -76,6 +77,10 @@ export class RoleaccessComponent implements OnInit {
     console.log(this.roleList);
   }
 
+  closePopup(){
+    this.dialogRef.close();
+  }
+
   ngDoCheck(): void{
     if(!this.checksloaded)
       this.checkAll();
@@ -89,6 +94,7 @@ export class RoleaccessComponent implements OnInit {
 
     this.service.getMenusRole(this.roleID).subscribe(data => {
       this.menuList.data = data;
+      console.log( this.menuList.data)
     });
 
     this.service.getFormsRole(this.roleID).subscribe(data => {

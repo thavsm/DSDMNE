@@ -3,11 +3,12 @@ import { Component, OnInit, ElementRef, OnDestroy, AfterViewInit, Input, Output,
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { UserService } from '../shared/user.service';
 import { FormsModule } from '@angular/forms';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog'
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { NgxSpinnerService } from 'ngx-spinner';
 import { role } from '../shared/lookup.model';
 import { listitem } from '../userprofile/listitem.model';
 import { RoleaccessComponent } from '../usermanager/roleaccess/roleaccess.component';
+import { AppusersComponent } from '../usermanager/appusers/appusers.component';
 
 declare var $: any;
 
@@ -46,13 +47,17 @@ export class UserProfileComponent implements OnInit {
   
 
   
-    constructor(private element: ElementRef, private fb: FormBuilder, private service: UserService, @Inject(MAT_DIALOG_DATA) public data: any, private spinner: NgxSpinnerService, public dialog: MatDialog) {
+    constructor(private element: ElementRef, private fb: FormBuilder, private service: UserService, @Inject(MAT_DIALOG_DATA) public data: any, private spinner: NgxSpinnerService, public dialog: MatDialog,public dialogRef: MatDialogRef<AppusersComponent>) {
       //this.passData.isChild = false;
       this.isBranch=false;
       this.isProvince=false;
       this.isDistrict=false;
       this.isSP=false;
       this.isFac=false;
+    }
+
+    closePopup(){
+      this.dialogRef.close();
     }
 
     public ngOnInit() {
