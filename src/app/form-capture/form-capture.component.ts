@@ -18,16 +18,6 @@ export interface FormData {
   description: string;
 }
 
-export interface Node {
-  nodeID: number,
-  nodeName: string,
-  nodeParentD: number,
-  levelID: number,
-  nodeDescription: string,
-  status: string,
-  color?: string
-}
-
 @Component({
   selector: 'app-form-capture',
   templateUrl: './form-capture.component.html',
@@ -48,6 +38,7 @@ export class FormCaptureComponent implements OnInit {
 
   userLocation:any;
   userLocationLevel:any;
+  PeriodStatus:any;
 
   ngOnInit(): void {
     this.spinner.show();
@@ -88,7 +79,8 @@ export class FormCaptureComponent implements OnInit {
           formName: JSON.parse(res).formName,
           formCaptureID: JSON.parse(res).formCaptureID,
           state: 'add',
-          roleID:dataItem.roleID
+          roleID:dataItem.roleID,
+          view:'readwrite'
         };
         this.spinner.hide();
         this.showNotification('top', 'center', 'Form created successfully', '', 'success');
@@ -112,7 +104,8 @@ export class FormCaptureComponent implements OnInit {
         formName: 'ProvincialIndicators',
         formCaptureID: dataItem.captureID,
         state: 'edit',
-        roleID:dataItem.roleID
+        roleID:dataItem.roleID,
+        view:'readwrite'
       };
       localStorage.setItem('formCaptureDetails', JSON.stringify(formCaptureObj));
       localStorage.setItem('tabIndex', '0');
@@ -159,6 +152,7 @@ export class FormCaptureComponent implements OnInit {
           this.data =  result;
           console.log(result);
           this.userLocationLevel=this.data[0].levelID;
+          this.PeriodStatus=this.data[0].periodStatus;
           this.spinner.hide();
         });
       });

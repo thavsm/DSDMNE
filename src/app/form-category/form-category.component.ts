@@ -50,8 +50,8 @@ export class FormCategoryComponent implements OnInit {
   clickEdit(item: any) {
     this.formCategory = item;
     const dialogRef = this.dialog.open(AddEditCategoryComponent, {
-      width: '500px',
-      height: '400px',
+      width: '60%', 
+      height:'70%',
       data: this.formCategory,
       disableClose: true
     });
@@ -97,8 +97,8 @@ export class FormCategoryComponent implements OnInit {
       lastModifiedByUserID: 0
     }
     const dialogRef = this.dialog.open(AddEditCategoryComponent, {
-      width: '500px',
-      height: '400px',
+      width: '60%', 
+      height:'70%',
       data: this.formCategory,
       disableClose: true
     });
