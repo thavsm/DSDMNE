@@ -4,18 +4,10 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { FormAddComponent } from 'src/app/form-list/form-add/form-add.component';
 import { FormbuilderService } from 'src/app/shared/formbuilder.service';
 import Swal from 'sweetalert2'
-import { merge } from 'jquery';
-import { SignaturePad } from 'angular2-signaturepad';
 import { AddSignatureComponent } from './add-signature.component';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { saveAs } from 'file-saver';
 import * as FileSaver from 'file-saver';
 import { lexdata } from '../lexdata';
-import { ignoreElements } from 'rxjs/operators';
 import { UserService } from 'src/app/shared/user.service';
-import { NgModel } from '@angular/forms';
-import { ItemTemplateDirective } from '@progress/kendo-angular-dropdowns';
 
 declare var $: any;
 
@@ -23,10 +15,6 @@ export interface DialogData {
   image: any;
 }
 
-interface Item {
-  text: string;
-  value: number;
-}
 
 @Component({
   selector: 'app-add-form',
@@ -92,7 +80,7 @@ export class AddFormComponent implements OnInit {
 
   IndicatorData: any;
 
-  isViewOnly:boolean=false;
+  isViewOnly:any;
 
   constructor(public dialog: MatDialog, private service: FormbuilderService, private spinner: NgxSpinnerService, public dialogRef: MatDialogRef<FormAddComponent>, private userService: UserService) {
     this.formData = JSON.parse(localStorage.getItem('formCaptureDetails') || '{}');
@@ -111,18 +99,11 @@ export class AddFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isViewOnly=this.formData.view;
     localStorage.setItem('cloneNumberForEdit', "0");
     this.userService.getUserProfile().subscribe(
       res => {
         this.userDetail = res;
-        let userRoleID = this.userDetail.formData.role;
-        this.userService.getFormsRole(userRoleID).subscribe(formRole => {
-          formRole.forEach(role => {
-            if (role.id===this.formData.formID && role.capture == false) {
-              this.isViewOnly=true;
-            }
-          });
-        });
         this.refreshPageList();
         this.refreshAttachmentList();
         this.refreshPhotoList();
@@ -654,7 +635,6 @@ export class AddFormComponent implements OnInit {
     this.spinner.show();
     localStorage.setItem('cloneNumberForEdit', "0");
     var locationRole=this.formData.roleID;
-    console.log(this.formData)
     if(locationRole==0){
       locationRole=this.userDetail.formData.role;
     }

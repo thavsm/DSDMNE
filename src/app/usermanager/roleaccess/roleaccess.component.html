@@ -1,98 +1,102 @@
+<div style="margin-left: 0%;">
+  <button mat-icon-button color="warn" (click)="closePopup()">
+    <mat-icon>close</mat-icon>
+  </button>
+  <br>
+</div>
 <div class="row">
-    <!-- <div class="col-md-12">-
-        <div class="card"> -->          
-              <div class="card-body">                
-                  <div class="row">
-                    <div class="col-md-10 ml-auto mr-auto">
-                      <div class="page-categories">
-                        <!-- <h3 class="title text-center">Role Access</h3>
-                        <br /> -->                        
-                        <ul class="nav nav-pills nav-pills-warning nav-pills-icons justify-content-center" role="tablist">
-                          <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#link7" role="tablist">
-                              <i class="material-icons">assignment</i> Menus
-                            </a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#link8" role="tablist">
-                              <i class="material-icons">article</i> Forms
-                            </a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#link9" role="tablist">
-                              <i class="material-icons">accessibility</i> Types
-                            </a>
-                          </li>
-                        </ul>                                                
-                        <div class="tab-content tab-space tab-subcategories">
-                          <div class="tab-pane" id="link7">
-                              <div class="card">
-                                <div class="card-body">
-                                  <div class="table-responsive">                            
-                                    <table mat-table [dataSource]="menuList" matSort class="table table-striped">
-                                        <ng-container matColumnDef="menu">
-                                        <th mat-header-cell *matHeaderCellDef mat-sort-header width="80%">Menu </th>
-                                        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-                                        </ng-container>
-                                                  
-                                        <!-- Checkbox Column -->
-                                        <ng-container matColumnDef="select">
-                                            <th mat-header-cell *matHeaderCellDef>
-                                            <mat-checkbox (change)="$event ? masterToggle() : null"
-                                                            [checked]="selection.hasValue() && isAllSelected()"
-                                                            [indeterminate]="selection.hasValue() && !isAllSelected()">
-                                            </mat-checkbox>
-                                            </th>
-                                            <td mat-cell *matCellDef="let row">
-                                            <mat-checkbox (click)="$event.stopPropagation()"
-                                                            (change)="$event ? selection.toggle(row) : null"
-                                                            [checked]="selection.isSelected(row)">
-                                            </mat-checkbox>
-                                            </td>
-                                        </ng-container>
-                
-                                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>     
-                                    </table>
-                                    <mat-paginator #menuPaginator="matPaginator" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
-                                    </mat-paginator>
-                                  </div>
-                              </div>
-                              </div>
-                          </div>
-                          <div class="tab-pane active" id="link8">
-                            <div class="card">
-                              <div class="card-body">
-                                <div class="table-responsive">                            
-                                  <table mat-table [dataSource]="formList" matSort class="table table-striped">
-                                      <ng-container matColumnDef="form">
-                                      <th mat-header-cell *matHeaderCellDef mat-sort-header width="70%">Form </th>
-                                      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-                                      </ng-container>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-md-10 ml-auto mr-auto">
+        <div class="page-categories">
+          <ul class="nav nav-pills nav-pills-warning nav-pills-icons justify-content-center" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#link7" role="tablist">
+                <i class="material-icons">assignment</i> Menus
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" data-toggle="tab" href="#link8" role="tablist">
+                <i class="material-icons">article</i> Forms
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#link9" role="tablist">
+                <i class="material-icons">accessibility</i> Types
+              </a>
+            </li>
+          </ul>
+          <div class="tab-content tab-subcategories">
+            <div class="tab-pane" id="link7">
+              <div class="card">
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table mat-table [dataSource]="menuList" matSort class="table table-striped">
+                      <ng-container matColumnDef="menu">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header width="80%">Menu </th>
+                        <td mat-cell *matCellDef="let element">
+                          <label *ngIf="!element?.parentMenuID" style="font-weight: bold;">{{element.name}}</label> 
+                          <label *ngIf="element?.parentMenuID">-->{{element.name}}</label> 
+                        </td>
+                      </ng-container>
 
-                                      <!-- Checkbox Column -->
-                                      <ng-container matColumnDef="capture">
-                                        <th mat-header-cell *matHeaderCellDef>Capture</th>
-                                        <td mat-cell *matCellDef="let row">
-                                        <mat-checkbox (click)="$event.stopPropagation()"
-                                                        (change)="$event ? selectionCaptureForms.toggle(row) : null"
-                                                        [checked]="selectionCaptureForms.isSelected(row)">
-                                        </mat-checkbox>
-                                        </td>
-                                    </ng-container>
+                      <!-- Checkbox Column -->
+                      <ng-container matColumnDef="select">
+                        <th mat-header-cell *matHeaderCellDef>
+                          <mat-checkbox (change)="$event ? masterToggle() : null"
+                            [checked]="selection.hasValue() && isAllSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllSelected()">
+                          </mat-checkbox>
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                          <mat-checkbox (click)="$event.stopPropagation()"
+                            (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
+                          </mat-checkbox>
+                        </td>
+                      </ng-container>
 
-                                    <!-- Checkbox Column -->
-                                    <ng-container matColumnDef="view">
-                                      <th mat-header-cell *matHeaderCellDef>View</th>
-                                      <td mat-cell *matCellDef="let row">
-                                      <mat-checkbox (click)="$event.stopPropagation()"
-                                                      (change)="$event ? selectionViewForms.toggle(row) : null"
-                                                      [checked]="selectionViewForms.isSelected(row)">
-                                      </mat-checkbox>
-                                      </td>
-                                    </ng-container>
-                                                
-                                      <!-- Checkbox Column
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                    <mat-paginator #menuPaginator="matPaginator" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+                    </mat-paginator>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane active" id="link8">
+              <div class="card">
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table mat-table [dataSource]="formList" matSort class="table table-striped">
+                      <ng-container matColumnDef="form">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header width="70%">Form </th>
+                        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                      </ng-container>
+
+                      <!-- Checkbox Column -->
+                      <ng-container matColumnDef="capture">
+                        <th mat-header-cell *matHeaderCellDef>Capture</th>
+                        <td mat-cell *matCellDef="let row">
+                          <mat-checkbox (click)="$event.stopPropagation()"
+                            (change)="$event ? selectionCaptureForms.toggle(row) : null"
+                            [checked]="selectionCaptureForms.isSelected(row)">
+                          </mat-checkbox>
+                        </td>
+                      </ng-container>
+
+                      <!-- Checkbox Column -->
+                      <ng-container matColumnDef="view">
+                        <th mat-header-cell *matHeaderCellDef>View</th>
+                        <td mat-cell *matCellDef="let row">
+                          <mat-checkbox (click)="$event.stopPropagation()"
+                            (change)="$event ? selectionViewForms.toggle(row) : null"
+                            [checked]="selectionViewForms.isSelected(row)">
+                          </mat-checkbox>
+                        </td>
+                      </ng-container>
+
+                      <!-- Checkbox Column
                                       <ng-container matColumnDef="select">
                                           <th mat-header-cell *matHeaderCellDef>                                        
                                           <mat-checkbox (change)="$event ? masterToggleForms() : null"
@@ -107,72 +111,63 @@
                                           </mat-checkbox>
                                           </td>
                                       </ng-container> -->
-              
-                                      <tr mat-header-row *matHeaderRowDef="displayedFormColumns"></tr>
-                                      <tr mat-row *matRowDef="let row; columns: displayedFormColumns;"></tr>     
-                                  </table>
-                                  <mat-paginator #formPaginator="matPaginator" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
-                                  aria-label="Select page of periodic elements">
-                                  </mat-paginator>
-                                </div>
-                            </div>
-                            </div>
-                          </div>
-                          <div class="tab-pane" id="link9">
-                            <div class="card">
-                              <div class="card-body">
-                                <div class="table-responsive">                           
-                                  <table mat-table [dataSource]="roleList" matSort class="table table-striped">
-                                      <ng-container matColumnDef="role">
-                                      <th mat-header-cell *matHeaderCellDef mat-sort-header width="80%">Role Type </th>
-                                      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-                                      </ng-container>
-                                                
-                                      <!-- Checkbox Column -->
-                                      <ng-container matColumnDef="select">
-                                          <th mat-header-cell *matHeaderCellDef>
-                                          <mat-checkbox (change)="$event ? masterToggleRoles2() : null"
-                                                          [checked]="selectionRole.hasValue() && isAllRoleTypesSelected()"
-                                                          [indeterminate]="selectionRole.hasValue() && !isAllRoleTypesSelected()">
-                                          </mat-checkbox>
-                                          </th>
-                                          <td mat-cell *matCellDef="let row">
-                                          <mat-checkbox (click)="$event.stopPropagation()"
-                                                          (change)="$event ? selectionRole.toggle(row) : null"
-                                                          [checked]="selectionRole.isSelected(row)">
-                                          </mat-checkbox>
-                                          </td>
-                                      </ng-container>
-              
-                                      <tr mat-header-row *matHeaderRowDef="displayedRoleColumns"></tr>
-                                      <tr mat-row *matRowDef="let row; columns: displayedRoleColumns;"></tr>     
-                                  </table>
-                                  <mat-paginator #rolePaginator="matPaginator" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
-                                  aria-label="Select page of periodic elements">
-                                  </mat-paginator>
-                                </div>
-                            </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-5 ml-auto">
-                            <button mat-button [mat-dialog-close]="" class="btn btn-md btn-primary"  >Cancel</button>
-                          </div>
-                          <div class="col-md-4 mr-auto"></div>
-                          <div class="col-md-3 mr-auto">
-                            
-                            <button id="btnSave" class="btn btn-primary mr-1" (click)='addRoleAccess()'>Save </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                </div>
-                <div class="row">
-                  <!-- <button id="btnSave" class="btn btn-primary mr-1" (click)='addRoleAccess()'>Save Access</button> -->
+
+                      <tr mat-header-row *matHeaderRowDef="displayedFormColumns"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedFormColumns;"></tr>
+                    </table>
+                    <mat-paginator #formPaginator="matPaginator" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                      aria-label="Select page of periodic elements">
+                    </mat-paginator>
+                  </div>
                 </div>
               </div>
-       <!-- </div>
-    </div> -->
+            </div>
+            <div class="tab-pane" id="link9">
+              <div class="card">
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table mat-table [dataSource]="roleList" matSort class="table table-striped">
+                      <ng-container matColumnDef="role">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header width="80%">Role Type </th>
+                        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                      </ng-container>
+
+                      <!-- Checkbox Column -->
+                      <ng-container matColumnDef="select">
+                        <th mat-header-cell *matHeaderCellDef>
+                          <mat-checkbox (change)="$event ? masterToggleRoles2() : null"
+                            [checked]="selectionRole.hasValue() && isAllRoleTypesSelected()"
+                            [indeterminate]="selectionRole.hasValue() && !isAllRoleTypesSelected()">
+                          </mat-checkbox>
+                        </th>
+                        <td mat-cell *matCellDef="let row">
+                          <mat-checkbox (click)="$event.stopPropagation()"
+                            (change)="$event ? selectionRole.toggle(row) : null"
+                            [checked]="selectionRole.isSelected(row)">
+                          </mat-checkbox>
+                        </td>
+                      </ng-container>
+
+                      <tr mat-header-row *matHeaderRowDef="displayedRoleColumns"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedRoleColumns;"></tr>
+                    </table>
+                    <mat-paginator #rolePaginator="matPaginator" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons
+                      aria-label="Select page of periodic elements">
+                    </mat-paginator>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row justify-left">
+            <div class="col-4 col-md-4" style="text-align:left;">
+              <!-- <button mat-button [mat-dialog-close]="" class="btn btn-md btn-primary">Cancel</button> -->
+              <button id="btnSave" class="btn btn-primary mr-1" (click)='addRoleAccess()'>Save </button></div>
+          </div>
+            <div class="col-6 col-md-4"></div>
+            <div class="col-6 col-md-4"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-  

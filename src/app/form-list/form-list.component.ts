@@ -123,8 +123,8 @@ export class FormListComponent implements OnInit {
   clickEdit(item: any) {
     this.formAdd = item;
     const dialogRef = this.dialog.open(FormAddComponent, {
-      width: '75%',
-      height: '75%',
+      width: '60%',
+      height: '80%',
       data: [this.formAdd,this.formList],
       disableClose: true
     });
@@ -156,8 +156,8 @@ export class FormListComponent implements OnInit {
       ArchivedByUserID:""
     }
     const dialogRef = this.dialog.open(FormAddComponent, {
-      width: '75%',
-      height: '75%',
+      width: '60%',
+      height: '80%',
       data: [this.formAdd,this.formList],
       disableClose: true
     });

@@ -62,8 +62,8 @@
               "node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.js",
               "node_modules/jasny-bootstrap/dist/js/jasny-bootstrap.min.js",
               "node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js",
-              "node_modules/jqvmap/dist/jquery.vmap.min.js",
-              "node_modules/jqvmap/dist/maps/jquery.vmap.world.js",
+              "node_modules/jqvmap/jqvmap/jquery.vmap.min.js",
+              "node_modules/jqvmap/jqvmap/maps/jquery.vmap.world.js",
               "node_modules/jquery-validation/dist/jquery.validate.min.js",
               "node_modules/slick-carousel/slick/slick.min.js"]
           },

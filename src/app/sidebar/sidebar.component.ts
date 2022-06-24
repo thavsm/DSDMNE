@@ -100,13 +100,13 @@ export const ROUTES: RouteInfo[] = [{
     //         {path: 'IndicatorManagement', title: 'indicator management', ab:'IM'}
     //     ]
     // },
-    {
-        path: '/weather',
-        title: 'Weather',
-        type: 'link',
-        icontype: 'cloud',
-        role: []
-    },
+    // {
+    //     path: '/weather',
+    //     title: 'Weather',
+    //     type: 'link',
+    //     icontype: 'cloud',
+    //     role: []
+    // },
     {
         path: '/process',
         title: 'User Workflow',
