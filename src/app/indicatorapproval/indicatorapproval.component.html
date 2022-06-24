@@ -15,11 +15,20 @@
                       ****************************************
                   </div> -->
                   <div class="card-body">
+                      <div class="row">
+                            <div class="card-header">
+                              <h4 class="card-title">Process: {{processName}}</h4>                              
+                              <h4 class="card-title">Task: {{taskName}}</h4>   
+                              <h4 class="card-title">Year: {{year}}</h4>   
+                              <h4 class="card-title">Month: {{monthName}}</h4>  
+                              <h4 class="card-title">Task will close on : {{endDate}}</h4>  
+                            </div>
+                      </div>
                     <div class="row">
                     <div class="col-md-12" *ngIf="isNational">
                     <kendo-grid [kendoGridBinding]="gridViewNational" [pageSize]="pageSize" [pageable]="true"
                         [height]="700"   (pageChange)="onPageChange($event)"
-                        [filterable]="true" [sortable]="false" [groupable]="false" [group]="groups">
+                        [filterable]="true" [sortable]="false" [groupable]="false" [group]="groupsNational">
 
 
                         <!-- <kendo-grid-column field="programme" title="Program">

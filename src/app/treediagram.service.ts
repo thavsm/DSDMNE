@@ -287,4 +287,7 @@ export class TreediagramService {
     return this.http.get<any>(this.API_URL+'Trees/getFacilityIndicatorsDataApproval?indicatorID='+indicatorID+'&locationType='+locationType+'&locationID='+locationID+'&year='+year+'&monthID='+monthID);
   }
 
+  getTaskDetails(taskID:number){
+    return this.http.get<any>(this.API_URL+'Trees/getTaskDetails?taskID='+taskID);
+  }
 }

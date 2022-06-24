@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, Inject, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { MatDialog, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA, MatDialogRef, MatDialogConfig } from '@angular/material/dialog';
 import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
 import { MatPaginator } from '@angular/material/paginator';
 import { DataBindingDirective } from '@progress/kendo-angular-grid';
@@ -133,7 +133,7 @@ export class FacilitydataComponent implements OnInit {
       height: '85%',
       disableClose:true,
       data:item
-    });
+    }).afterClosed().subscribe(() => { this.refreshFormsList(); });
   }
   
   closePopup() {
