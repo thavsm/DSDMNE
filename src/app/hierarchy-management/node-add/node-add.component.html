@@ -3,7 +3,7 @@
         <mat-icon>close</mat-icon>
     </button>
 </div>
-<h1 mat-dialog-title>Node Add</h1>
+<!-- <h1 mat-dialog-title>Node Add</h1> -->
 <div mat-dialog-content>
 
     <div class="form-group">
@@ -45,7 +45,7 @@
             </mat-form-field>
         </div>
 
-        <div class="form-group">
+        <!-- <div class="form-group">
             <mat-form-field appearance="outline">
                 <mat-label>Form Category</mat-label>
                 <mat-select [(ngModel)]="NodeAdd.FormCategory" (selectionChange)="onformCategoryChange($event)">
@@ -79,29 +79,31 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-        </div>
+        </div> -->
     
     </div>
 
     <div class="form-group" *ngIf="divIsNotIndicator">
         <div class="form-group">
             <label style="font-size: medium;">Node Name</label>
-            <input type="text" class="form-control" value="{{NodeAdd.nodeName}}" [(ngModel)]="NodeAdd.nodeName">
+            <mat-form-field appearance="outline">
+                <input matInput ngModel type="text" value="{{NodeAdd.nodeName}}" [(ngModel)]="NodeAdd.nodeName">
+            </mat-form-field>
         </div>
         <div class="form-group">
             <label style="font-size: medium;">Node Description</label>
-            <input type="text" class="form-control" value="{{NodeAdd.nodeDescription}}"
-                [(ngModel)]="NodeAdd.nodeDescription">
-        </div> 
+            <mat-form-field appearance="outline">
+                <input matInput ngModel type="text"  value="{{NodeAdd.nodeDescription}}"  [(ngModel)]="NodeAdd.nodeDescription">
+            </mat-form-field>
+        </div>
     </div>
-   
-    <div mat-dialog-actions>
-        <button mat-button cdkFocusInitial (click)="addNode()"
-            class="btn btn-md btn-primary"   >Add</button>
-        <button mat-button [mat-dialog-close]=""
-            class="btn btn-md btn-primary"   >Cancel</button>
-    </div>
-    <ngx-spinner bdColor="rgba(	237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
-        <p style="font-size: 20px; color: black">Processing...</p>
-    </ngx-spinner>
 </div>
+<div mat-dialog-actions>
+    <button  (click)="addNode()"
+        class="btn btn-md btn-primary"   >Add</button>
+    <button mat-button [mat-dialog-close]=""
+        class="btn btn-md btn-primary"   >Cancel</button>
+</div>
+<ngx-spinner bdColor="rgba(	237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: black">Processing...</p>
+</ngx-spinner>

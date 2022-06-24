@@ -5,24 +5,31 @@
     </button>
 </div>
 
-<h1 mat-dialog-title *ngIf="treeAdd.treeID==0">Tree Add</h1>
-<h1 mat-dialog-title *ngIf="treeAdd.treeID!=0">Tree Edit</h1>
+<!-- <h1 mat-dialog-title *ngIf="treeAdd.treeID==0">Tree Add</h1>
+<h1 mat-dialog-title *ngIf="treeAdd.treeID!=0">Tree Edit</h1> -->
+
 <div mat-dialog-content>
+
     <div class="form-group">
         <label style="font-size: medium;">Tree Name</label>
-        <input type="text" class="form-control" value="{{treeAdd.name}}" [(ngModel)]="treeAdd.name">
-    </div>
-    <div class="form-group">
-        <label style="font-size: medium;">Tree Description</label>
-        <input type="text" class="form-control" value="{{treeAdd.description}}"
-            [(ngModel)]="treeAdd.description">
+        <mat-form-field appearance="outline">
+            <input matInput ngModel type="text" value="{{treeAdd.name}}" [(ngModel)]="treeAdd.name">
+        </mat-form-field>
     </div>
 
+    <div class="form-group">
+        <label style="font-size: medium;">Tree Description</label>
+        <mat-form-field appearance="outline">
+            <input matInput ngModel type="text"  value="{{treeAdd.description}}"
+            [(ngModel)]="treeAdd.description">
+        </mat-form-field>
+    </div>
+  
 </div>
 <div mat-dialog-actions>
-    <button mat-button cdkFocusInitial (click)="addTree()"
+    <button (click)="addTree()"
         class="btn btn-md btn-primary"   *ngIf="treeAdd.treeID==0">Add</button>
-    <button mat-button cdkFocusInitial (click)="updateTree()"
+    <button (click)="updateTree()"
         class="btn btn-md btn-primary"   *ngIf="treeAdd.treeID!=0">Edit</button> 
     <button mat-button [mat-dialog-close]=""
         class="btn btn-md btn-primary"   >Cancel</button>

@@ -37,7 +37,7 @@ export class IndicatorAddComponent implements OnInit {
   
 
   addIndicator() {
-    if (this.IndicatorAdd.name != "") {
+    if (this.IndicatorAdd.indicatorName != "") {
 
       var val = {
         "indicatorID": 0,

@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { NodeAddComponent } from './node-add.component';
 
 describe('NodeAddComponent', () => {

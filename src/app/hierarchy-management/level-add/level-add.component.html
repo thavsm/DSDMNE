@@ -64,12 +64,12 @@
     </div> -->
     
     <div class="form-group" *ngIf="divLevelAdd">
-        <button mat-button cdkFocusInitial  (click)="addLevel()"
+        <button  (click)="addLevel()"
         class="btn btn-md btn-primary"   >Add Level</button>
     </div>
 
     <div class="form-group" *ngIf="divLevelEdit">
-        <button mat-button cdkFocusInitial  (click)="editLevel()"
+        <button  (click)="editLevel()"
         class="btn btn-md btn-primary"  >Edit Level</button>
     </div>
 
@@ -170,9 +170,9 @@
         </div>
     
         <div class="form-group" >
-            <button mat-button cdkFocusInitial  (click)="addAttributes()" *ngIf="divAddAtrributes" 
+            <button   (click)="addAttributes()" *ngIf="divAddAtrributes" 
                 class="btn btn-md btn-primary"   >Add Attributes</button>
-            <button mat-button cdkFocusInitial  (click)="saveAttributes()" *ngIf="divEditAtrributes" 
+            <button  (click)="saveAttributes()" *ngIf="divEditAtrributes" 
               class="btn btn-md btn-primary"   >Edit Attributes</button>      
               &nbsp; 
             <button mat-button [mat-dialog-close]=""

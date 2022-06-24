@@ -14,7 +14,7 @@ import { ignoreElements } from 'rxjs/operators';
 import { UserService } from 'src/app/shared/user.service';
 import { NgModel } from '@angular/forms';
 import { ItemTemplateDirective } from '@progress/kendo-angular-dropdowns';
-import { CalcReportComponent } from '../calc-report.component';
+import { LevelNodeEdit } from '../level-node-edit/level-node-edit.model'; 
 
 declare var $: any;
 
@@ -28,11 +28,11 @@ interface Item {
 }
 
 @Component({
-  selector: 'app-approval-form',
-  templateUrl: './approval-form.component.html',
-  styleUrls: ['./approval-form.component.css']
+  selector: 'app-hierarchy-form-preview',
+  templateUrl: './hierarchy-form-preview.component.html',
+  styleUrls: ['./hierarchy-form-preview.component.css']
 })
-export class ApprovalFormComponent implements OnInit {
+export class HierarchyFormPreviewComponent implements OnInit {
 
   panelOpenState = false;
 
@@ -95,13 +95,15 @@ export class ApprovalFormComponent implements OnInit {
 
   isViewOnly:boolean=false;
 
-  constructor(public dialog: MatDialog, private service: FormbuilderService, private spinner: NgxSpinnerService, public dialogRef: MatDialogRef<CalcReportComponent>, private userService: UserService) {
-    this.formData  = {
-      formID: 6,
-      formName: 'DevelopmentandResearch19',
-      formCaptureID:'',
-      state: 'edit'
-    };
+  constructor(public dialog: MatDialog, private service: FormbuilderService, private spinner: NgxSpinnerService,@Inject(MAT_DIALOG_DATA) data, public dialogRef: MatDialogRef<LevelNodeEdit>, private userService: UserService) {
+ 
+    this.formData = data;
+    // this.formData  = {
+    //   formID: 6,
+    //   formName: 'DevelopmentandResearch19',
+    //   formCaptureID:'5457',
+    //   state: 'edit'
+    // };
     //this.formData = JSON.parse(localStorage.getItem('formApprovalDetails') || '{}');
     this.tabIndex = parseInt(localStorage.getItem('tabIndex'));
     this.ClickedRow = function (index) {
@@ -115,7 +117,7 @@ export class ApprovalFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.IndicatorData=23;
+    this.IndicatorData= this.formData.indicatorID;
     localStorage.setItem('cloneNumberForEdit', "0");
     this.userService.getUserProfile().subscribe(
       res => {
@@ -708,35 +710,35 @@ export class ApprovalFormComponent implements OnInit {
       this.firstPage = this.pages[0];
 
       this.lastPage = Object.keys(this.pages).length;
-      this.pages.forEach((page, index) => {
-        this.service.getPageStatus(this.formData.formCaptureID, page.pageGUID).subscribe(val => {
-          page["pageNumber"] = index;
-          page["color"] = val;
-        });
-      });
+      // this.pages.forEach((page, index) => {
+      //   this.service.getPageStatus(this.formData.formCaptureID, page.pageGUID).subscribe(val => {
+      //     page["pageNumber"] = index;
+      //     page["color"] = val;
+      //   });
+      // });
       this.pageStatus = this.pages[0].name;
     });
   }
 
   refreshAttachmentList() {
-    this.service.getFormAttachments(this.formData.formCaptureID).subscribe(data => {
-      this.attachmentList = data;
-      this.totalNumAttachments = Object.keys(this.attachmentList).length;
-    });
+    // this.service.getFormAttachments(this.formData.formCaptureID).subscribe(data => {
+    //   this.attachmentList = data;
+    //   this.totalNumAttachments = Object.keys(this.attachmentList).length;
+    // });
   }
 
   refreshPhotoList() {
-    this.service.getFormPhotos(this.formData.formCaptureID).subscribe(data => {
-      this.photoList = data;
-      this.totalNumPhotos = Object.keys(this.photoList).length
-    });
+    // this.service.getFormPhotos(this.formData.formCaptureID).subscribe(data => {
+    //   this.photoList = data;
+    //   this.totalNumPhotos = Object.keys(this.photoList).length
+    // });
   }
 
   refreshCommentList() {
-    this.service.getFormComments(this.formData.formCaptureID).subscribe(data => {
-      this.commentList = data;
-      this.totalNumComments = Object.keys(this.commentList).length
-    });
+    // this.service.getFormComments(this.formData.formCaptureID).subscribe(data => {
+    //   this.commentList = data;
+    //   this.totalNumComments = Object.keys(this.commentList).length
+    // });
   }
 
   compareFn(option1: lexdata, option2: lexdata) {
@@ -754,7 +756,7 @@ export class ApprovalFormComponent implements OnInit {
   getDesignPerPage(pageGUID: any) {
     this.spinner.show();
     localStorage.setItem('cloneNumberForEdit', "0");
-    this.service.GetFieldsForApprovalPerPage(this.IndicatorData, pageGUID).subscribe(formFields => {
+    this.service.GetfieldsForPreviewPerPage(this.formData.fieldID, pageGUID).subscribe(formFields => {
       this.formDesign = formFields;
       this.formDesign.forEach((element, index) => {
         element.fieldStyles[0].height = Math.ceil(parseInt(element.fieldStyles[0].height) / 23.2); //23.2 is the size of one row in textarea
@@ -923,7 +925,7 @@ export class ApprovalFormComponent implements OnInit {
   }
 
   getDesignPerPageHistory(pageGUID: any) {
-    this.service.GetFieldsForApprovalPerPage(this.IndicatorData, pageGUID).subscribe(formFields => {
+    this.service.GetfieldsForPreviewPerPage(this.formData.fieldID, pageGUID).subscribe(formFields => {
       this.oldFormDesign = formFields;
       this.oldFormDesign.forEach((element, index) => {
         element.fieldStyles[0].height = Math.ceil(parseInt(element.fieldStyles[0].height) / 23.2); //23.2 is the size of one row in textarea
@@ -1782,5 +1784,3 @@ export class ApprovalFormComponent implements OnInit {
     localStorage.setItem('fieldNameComment', item.questionName + '(' + item.fieldName + ')');
   }
 }
-
-

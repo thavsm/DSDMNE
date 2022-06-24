@@ -281,6 +281,11 @@ export class FormbuilderService {
     return this.http.get<any>(this.APIUrl + 'forms/' + IndicatorID + '/pages/' + pageGuID + '/fieldsForApproval');
   }
 
+  GetfieldsForPreviewPerPage(FieldID: any, pageGuID: any): Observable<any[]> {
+    return this.http.get<any>(this.APIUrl + 'forms/' + FieldID + '/pages/' + pageGuID + '/fieldsForPreview');
+  }
+
+
   FormHistory(formCaptureID: any, IndicatorID: any, data: any) {
     return this.http.post(this.APIUrl + formCaptureID + '/' + IndicatorID + '/FormHistory', data, { responseType: 'text' });
   }
