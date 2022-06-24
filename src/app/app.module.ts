@@ -66,6 +66,10 @@ import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 import { UserService } from './shared/user.service';
 import { AuthInterceptor } from './auth/auth.interceptor';
 
+import { IndicatorapprovalModule } from './indicatorapproval/indicatorapproval.module';
+
+
+
 import {NgxSpinnerModule} from 'ngx-spinner';
 import { PaginationService } from 'ngx-pagination';
 
@@ -105,6 +109,7 @@ MatNativeDateModule,
 NgxSpinnerModule
 ],
 declarations: [
+  
   ]
 })
 export class MaterialModule {}
@@ -139,7 +144,7 @@ export class MaterialModule {}
     NavbarModule,
     FooterModule,
     FixedpluginModule,
-    MatProgressSpinnerModule,
+    MatProgressSpinnerModule    
   ],
   providers: [
     MatNativeDateModule,
@@ -151,7 +156,7 @@ export class MaterialModule {}
       multi: true
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent]  
 })
 export class AppModule { }
 

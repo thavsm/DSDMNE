@@ -100,6 +100,10 @@ export class AddEditCategoryComponent implements OnInit {
     }
   }
 
+  closePopup() {
+    this.dialogRef.close();
+  }
+
   showNotification(from: any, align: any, message: any, title: any, type: string) {
     $.notify({
         icon: 'notifications',

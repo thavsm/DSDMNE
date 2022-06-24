@@ -35,16 +35,16 @@
                   <kendo-grid-column field="timeSent" title="Time Sent" [width]="12">
                   </kendo-grid-column>
         
-                  <kendo-grid-column field="formName" title="Form Name" [width]="15">
+                  <!-- <kendo-grid-column field="formName" title="Form Name" [width]="15">
+                  </kendo-grid-column> -->
+        
+                  <!-- <kendo-grid-column field="displayableOne" title="{{DisplayOne}}" [width]="10">
                   </kendo-grid-column>
         
-                  <kendo-grid-column field="displayableOne" title="{{DisplayOne}}" [width]="15">
-                  </kendo-grid-column>
+                  <kendo-grid-column field="displayableTwo" title="{{DisplayTwo}}" [width]="10">
+                  </kendo-grid-column> -->
         
-                  <kendo-grid-column field="displayableTwo" title="{{DisplayTwo}}" [width]="15">
-                  </kendo-grid-column>
-        
-                  <kendo-grid-column field="geography" title="Geography" [width]="10">
+                  <kendo-grid-column field="geography" title="Location" [width]="30">
                   </kendo-grid-column>
         
                   <kendo-grid-column field="sentBy" title="Sent By" [width]="18">
@@ -52,7 +52,7 @@
         
                   <kendo-grid-column field="step" title="" [width]="10">
                     <ng-template kendoGridCellTemplate let-dataItem>
-                      <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.step}}</u></a>
+                      <a mat-button (click)="openFormDesign(dataItem,'0')"><u>View Form</u></a>
                     </ng-template>
                   </kendo-grid-column>
         
@@ -83,13 +83,13 @@
                     </ng-template>
                   </kendo-grid-column>
         
-                  <kendo-grid-column [width]="5">
+                  <!-- <kendo-grid-column [width]="5">
                     <ng-template kendoGridCellTemplate let-dataItem>
                       <button mat-icon-button (click)="clickDelete(dataItem)">
                         <mat-icon class="mat-14" style="color: #016000;">delete</mat-icon>
                       </button>
                     </ng-template>
-                  </kendo-grid-column>
+                  </kendo-grid-column> -->
         
                   <ng-template kendoPagerTemplate let-totalPages="totalPages" let-currentPage="currentPage">
                     <kendo-pager-prev-buttons></kendo-pager-prev-buttons>             

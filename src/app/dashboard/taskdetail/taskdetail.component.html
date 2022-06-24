@@ -10,27 +10,27 @@
                         <h4 class="card-title">Task</h4>
                     </div>
                     <div class=card-body>
-                        <div class="row">
+                        <div *ngIf="actionTaken==0; else elseCon" class="row">
                             <div class="col-sm-4">
                                 <mat-form-field appearance="standard">
                                     <mat-label>Comment</mat-label>
                                     <textarea matInput rows="1" [(ngModel)]="comment"></textarea>
                                 </mat-form-field>
                             </div>
-                            <div class="col-sm-2">
+                            <div class="col-sm-2" *ngIf="pid==1">
                                 <mat-form-field appearance="standard">
                                     <mat-label>Action Taken</mat-label>
-                                    <mat-select (selectionChange)='onActionSelected($event)'>
+                                    <mat-select [(value)]="actTakenID" (selectionChange)='onActionSelected($event)'>
                                         <mat-option *ngFor="let actTak of actionTakenAll" [value]="actTak.id">
                                             {{actTak.description}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>
-                            <div class="col-sm-2">
+                            <div class="col-sm-2" *ngIf="pid==1">
                                 <mat-form-field appearance="standard">
                                     <mat-label>User</mat-label>
-                                    <mat-select (selectionChange)='onUserSelected($event)'>
+                                    <mat-select [(value)]="nextUserID" (selectionChange)='onUserSelected($event)'>
                                         <mat-option *ngFor="let accU of asgnUsers" [value]="accU.key">
                                             {{accU.value}}
                                         </mat-option>
@@ -38,13 +38,21 @@
                                 </mat-form-field>
                             </div>
                             <div class="col-sm-4">
-                                <button id="btnSearch" class="btn btn-primary mr-1"
-                                    (click)="completeTask()">Complete</button>
-                                <!-- <button id="btnAddNewProcess" class="btn btn-primary">Reject</button> -->
-
+                                <button id="btnSearch" class="btn btn-primary mr-1" (click)="completeTask()">Complete</button>
+                                <button id="btnReject" class="btn btn-primary" *ngIf="pid==1" (click)="rejectTask()">Reject</button>
                             </div>
+                            <div class="col-sm-12" *ngIf="pid==1; else elseBlock">
+                                    <app-userprofile-cmp [isParent]="false" [formData]="formData" (newItemEvent)="addItem($event)"></app-userprofile-cmp>
+                                  </div>
+                            <ng-template #elseBlock>
+                                <app-indicatorapproval [isParent]="false" [formData]="formData" (newItemEvent)="addItem($event)"></app-indicatorapproval>
+                            </ng-template>
                         </div>
-                        <app-userprofile-cmp [isParent]="false" [formData]="formData" (newItemEvent)="addItem($event)"></app-userprofile-cmp>
+                        <ng-template #elseCon>
+                            <div class="row">
+                                <div class="col-sm-12">No Task Found</div>
+                            </div>
+                          </ng-template>
                         <div class="card">
                             <div class="card-header bg-light">
                                 <a class="card-link" data-toggle="collapse" href="#collapseworkf"
@@ -67,7 +75,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr *ngFor="let obj of workflowData['list'];let i = index">
+                                                    <tr *ngFor="let obj of taskArray;let i = index">
                                                         <td>{{ i+1 }}</td>
                                                         <td>{{ obj['userDescription'] }}</td>
                                                         <td>{{ obj['actionRequiredDescription'] }}</td>

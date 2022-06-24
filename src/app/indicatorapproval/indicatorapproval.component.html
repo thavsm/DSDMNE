@@ -1,0 +1,269 @@
+<!-- <div class="main-content">
+    <div class="container-fluid">
+      <div class="container-fluid">
+       
+        <div class="row">
+            <div class="col-md-12"> -->
+                <div class="card">
+                  <!-- <div class="card-header card-header-rose card-header-icon">
+                    <div class="card-icon">
+                      <i class="material-icons">people_outline</i>
+                    </div>
+                    <h4 class="card-title">Indicators Approval</h4>
+                  </div>
+                  <div class="col-md-12">
+                      ****************************************
+                  </div> -->
+                  <div class="card-body">
+                      <div class="row">
+                            <div class="card-header">
+                              <h4 class="card-title">Process: {{processName}}</h4>                              
+                              <h4 class="card-title">Task: {{taskName}}</h4>   
+                              <h4 class="card-title">Year: {{year}}</h4>   
+                              <h4 class="card-title">Month: {{monthName}}</h4>  
+                              <h4 class="card-title">Task will close on : {{endDate}}</h4>  
+                            </div>
+                      </div>
+                    <div class="row">
+                    <div class="col-md-12" *ngIf="isNational">
+                    <kendo-grid [kendoGridBinding]="gridViewNational" [pageSize]="pageSize" [pageable]="true"
+                        [height]="700"   (pageChange)="onPageChange($event)"
+                        [filterable]="true" [sortable]="false" [groupable]="false" [group]="groupsNational">
+
+
+                        <!-- <kendo-grid-column field="programme" title="Program">
+                            <ng-template kendoGridGroupHeaderTemplate let-value="value">
+                            {{ value }}
+                            </ng-template>
+                        </kendo-grid-column> -->
+
+                            <!-- <kendo-grid-column field="provincialProgram" title="Program" [width]="130">
+                            </kendo-grid-column> -->
+                
+                            <!-- <kendo-grid-column field="subProgram" title="Sub-Program">
+                            <ng-template kendoGridGroupHeaderTemplate let-value="value">
+                                {{ value }}
+                            </ng-template>
+                            </kendo-grid-column> -->
+
+                            <!-- <kendo-grid-column field="provincialSubProgram" title="Sub-Program" [width]="130">
+                            </kendo-grid-column> -->
+                
+                            <kendo-grid-column field="indicator" title="Indicator" [width]="600">
+                            </kendo-grid-column>
+                
+                            <kendo-grid-column field="Month" title="{{monthName}}">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.month}}</u></a>
+                            </ng-template>
+                            </kendo-grid-column>
+                            <!-- <kendo-grid-column field="february" title="Feb">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.february}}</u></a>
+                            </ng-template>
+                            </kendo-grid-column>
+                
+                            <kendo-grid-column field="march" title="March">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.march}}</u></a>
+                            </ng-template>
+                            </kendo-grid-column>
+
+                            <kendo-grid-column field="april" title="April">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.april}}</u></a>
+                            </ng-template>
+                            </kendo-grid-column>
+
+                            <kendo-grid-column field="may" title="May">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.may}}</u></a>
+                            </ng-template>
+                            </kendo-grid-column>
+
+                            <kendo-grid-column field="june" title="June">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.june}}</u></a>
+                            </ng-template>
+                            </kendo-grid-column>
+
+                            <kendo-grid-column field="july" title="July">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.july}}</u></a>
+                            </ng-template>
+                            </kendo-grid-column>
+
+                            <kendo-grid-column field="august" title="Aug">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.august}}</u></a>
+                            </ng-template>
+                            </kendo-grid-column>
+
+                            <kendo-grid-column field="september" title="Sept">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.september}}</u></a>
+                            </ng-template>
+                            </kendo-grid-column>
+
+                        
+                            <kendo-grid-column field="october" title="Oct">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.october}}</u></a>
+                            </ng-template>
+                            </kendo-grid-column>
+                            
+                            <kendo-grid-column field="november" title="Nov">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.november}}</u></a>
+                            </ng-template>
+                            </kendo-grid-column>
+
+                            <kendo-grid-column field="december" title="Dec">
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.december}}</u></a>
+                            </ng-template>
+                            </kendo-grid-column> -->
+
+                            <ng-template kendoPagerTemplate let-totalPages="totalPages" let-currentPage="currentPage">
+                            <kendo-pager-prev-buttons></kendo-pager-prev-buttons>             
+                            <kendo-pager-numeric-buttons [buttonCount]="10"></kendo-pager-numeric-buttons>
+                            <kendo-pager-next-buttons></kendo-pager-next-buttons>
+                            <kendo-pager-page-sizes [pageSizes]="pageSizes"></kendo-pager-page-sizes>
+                            <kendo-pager-info></kendo-pager-info>
+                            Current page: {{currentPage}}
+                        </ng-template>
+
+                            <!-- <ng-template kendoPagerTemplate PagerNextButtonsComponent >
+                            <kendo-pager-prev-buttons></kendo-pager-prev-buttons>
+                            <kendo-pager-info></kendo-pager-info>
+                            <kendo-pager-next-buttons></kendo-pager-next-buttons>
+                            <kendo-pager-page-sizes [pageSizes]="pageSizes"></kendo-pager-page-sizes>
+                            </ng-template> -->
+                    </kendo-grid>
+                    </div>
+                  
+                    <div class="col-md-12" *ngIf="!isNational">
+                  <kendo-grid [kendoGridBinding]="gridViewProvince" [pageSize]="pageSize" [pageable]="true"
+                      [height]="700"   (pageChange)="onPageChange($event)"
+                      [filterable]="true" [sortable]="false" [groupable]="false" [group]="groups">
+
+
+                      <!-- <kendo-grid-column field="programme" title="Program">
+                          <ng-template kendoGridGroupHeaderTemplate let-value="value">
+                          {{ value }}
+                          </ng-template>
+                      </kendo-grid-column> -->
+
+                          <!-- <kendo-grid-column field="provincialProgram" title="Program" [width]="130">
+                          </kendo-grid-column> -->
+              
+                          <!-- <kendo-grid-column field="subProgram" title="Sub-Program">
+                          <ng-template kendoGridGroupHeaderTemplate let-value="value">
+                              {{ value }}
+                          </ng-template>
+                          </kendo-grid-column> -->
+
+                          <!-- <kendo-grid-column field="provincialSubProgram" title="Sub-Program" [width]="130">
+                          </kendo-grid-column> -->
+              
+                          <kendo-grid-column field="indicator" title="Indicator" [width]="600">
+                          </kendo-grid-column>
+              
+                          <kendo-grid-column field="Month" title="{{monthName}}">
+                          <ng-template kendoGridCellTemplate let-dataItem>
+                              <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.month}}</u></a>
+                          </ng-template>
+                          </kendo-grid-column>
+                          <!-- <kendo-grid-column field="february" title="Feb">
+                          <ng-template kendoGridCellTemplate let-dataItem>
+                              <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.february}}</u></a>
+                          </ng-template>
+                          </kendo-grid-column>
+              
+                          <kendo-grid-column field="march" title="March">
+                          <ng-template kendoGridCellTemplate let-dataItem>
+                              <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.march}}</u></a>
+                          </ng-template>
+                          </kendo-grid-column>
+
+                          <kendo-grid-column field="april" title="April">
+                          <ng-template kendoGridCellTemplate let-dataItem>
+                              <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.april}}</u></a>
+                          </ng-template>
+                          </kendo-grid-column>
+
+                          <kendo-grid-column field="may" title="May">
+                          <ng-template kendoGridCellTemplate let-dataItem>
+                              <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.may}}</u></a>
+                          </ng-template>
+                          </kendo-grid-column>
+
+                          <kendo-grid-column field="june" title="June">
+                          <ng-template kendoGridCellTemplate let-dataItem>
+                              <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.june}}</u></a>
+                          </ng-template>
+                          </kendo-grid-column>
+
+                          <kendo-grid-column field="july" title="July">
+                          <ng-template kendoGridCellTemplate let-dataItem>
+                              <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.july}}</u></a>
+                          </ng-template>
+                          </kendo-grid-column>
+
+                          <kendo-grid-column field="august" title="Aug">
+                          <ng-template kendoGridCellTemplate let-dataItem>
+                              <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.august}}</u></a>
+                          </ng-template>
+                          </kendo-grid-column>
+
+                          <kendo-grid-column field="september" title="Sept">
+                          <ng-template kendoGridCellTemplate let-dataItem>
+                              <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.september}}</u></a>
+                          </ng-template>
+                          </kendo-grid-column>
+
+                      
+                          <kendo-grid-column field="october" title="Oct">
+                          <ng-template kendoGridCellTemplate let-dataItem>
+                              <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.october}}</u></a>
+                          </ng-template>
+                          </kendo-grid-column>
+                          
+                          <kendo-grid-column field="november" title="Nov">
+                          <ng-template kendoGridCellTemplate let-dataItem>
+                              <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.november}}</u></a>
+                          </ng-template>
+                          </kendo-grid-column>
+
+                          <kendo-grid-column field="december" title="Dec">
+                          <ng-template kendoGridCellTemplate let-dataItem>
+                              <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.december}}</u></a>
+                          </ng-template>
+                          </kendo-grid-column> -->
+
+                          <ng-template kendoPagerTemplate let-totalPages="totalPages" let-currentPage="currentPage">
+                          <kendo-pager-prev-buttons></kendo-pager-prev-buttons>             
+                          <kendo-pager-numeric-buttons [buttonCount]="10"></kendo-pager-numeric-buttons>
+                          <kendo-pager-next-buttons></kendo-pager-next-buttons>
+                          <kendo-pager-page-sizes [pageSizes]="pageSizes"></kendo-pager-page-sizes>
+                          <kendo-pager-info></kendo-pager-info>
+                          Current page: {{currentPage}}
+                      </ng-template>
+
+                          <!-- <ng-template kendoPagerTemplate PagerNextButtonsComponent >
+                          <kendo-pager-prev-buttons></kendo-pager-prev-buttons>
+                          <kendo-pager-info></kendo-pager-info>
+                          <kendo-pager-next-buttons></kendo-pager-next-buttons>
+                          <kendo-pager-page-sizes [pageSizes]="pageSizes"></kendo-pager-page-sizes>
+                          </ng-template> -->
+                  </kendo-grid>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+            <!-- </div>
+        </div>     
+
+      </div>
+    </div>
+</div>         -->

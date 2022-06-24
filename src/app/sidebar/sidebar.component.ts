@@ -100,13 +100,13 @@ export const ROUTES: RouteInfo[] = [{
     //         {path: 'IndicatorManagement', title: 'indicator management', ab:'IM'}
     //     ]
     // },
-    {
-        path: '/weather',
-        title: 'Weather',
-        type: 'link',
-        icontype: 'cloud',
-        role: []
-    },
+    // {
+    //     path: '/weather',
+    //     title: 'Weather',
+    //     type: 'link',
+    //     icontype: 'cloud',
+    //     role: []
+    // },
     {
         path: '/process',
         title: 'User Workflow',
@@ -114,7 +114,8 @@ export const ROUTES: RouteInfo[] = [{
         icontype: 'schema',
         role: []
     },{
-        path: '/indicator-report',
+        //path: '/indicator-report',
+        path: '/indicatorapproval',
         title: 'Indicator Approval',
         type: 'link',
         icontype: 'fact_check',
@@ -147,6 +148,16 @@ export const ROUTES: RouteInfo[] = [{
             {path: 'externalDI',title: 'External Data Import',ab: 'EDI'},
             {path: 'internalDI',title: 'Internal Data Import',ab: 'IDI'}
 
+        ]
+    },{
+        path: '/reports',
+        title: 'Reports',
+        type: 'sub',
+        icontype: 'person',
+        role: [],
+        collapse: 'reports',
+        children: [
+            {path: 'sqlreports',title: 'SQL Reports', ab:'S'},
         ]
     }
 ];
@@ -199,12 +210,20 @@ export class SidebarComponent implements OnInit {
                     let a = res.find(menu => (menu.name).toLowerCase() === el.title.toLowerCase());
                     if (typeof a !== 'undefined') {
                         el.role=[userRole];
+                        let cs = el.children;
+                        if (typeof cs !== 'undefined') {
+                            let c = cs.find(menu => (menu.title).toLowerCase() === 'form category');
+                            const index = cs.indexOf(c, 0);
+                            if (index > -1) {
+                                el.children.splice(index, 1);
+                            }
+                        }
                     }
                 }
             );
 
             this.menuItems = ROUTES.filter(menuItem => menuItem.role.indexOf(userRole) > -1 );
-
+            console.log(this.menuItems);
             },
             err => {
                 console.log(err); 

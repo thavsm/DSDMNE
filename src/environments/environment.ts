@@ -8,7 +8,11 @@ export const environment = {
   API_FormURL: 'https://localhost:44305/1/'
 
   // API_URL: 'https://app.terra.group/MNE_Demo_API/api',
-  // API_FormURL: 'https://app.terra.group/MNE_Demo_API/api/1/'  
+  // API_FormURL: 'https://app.terra.group/MNE_Demo_API/1/'  
+
+  
+  // API_URL: 'https://app.terra.group/MNE_UAT_API/api',
+  // API_FormURL: 'https://app.terra.group/MNE_UAT_API/1/'  
 };
 
 /*

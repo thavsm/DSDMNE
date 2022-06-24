@@ -117,6 +117,14 @@ export const AppRoutes: Routes = [
       path: 'administration',
       loadChildren: () => import('./administration/administration.module').then(m => m.AdministrationModule)
   },
+  {
+    path: 'indicatorapproval',
+    loadChildren: () => import('./indicatorapproval/indicatorapproval.module').then(m => m.IndicatorapprovalModule)
+  },
+  {
+    path: 'reports',
+    loadChildren: () => import('./reports/reports.module').then(m => m.ReportsModule)
+}
     ]
   }, {
     path: '',

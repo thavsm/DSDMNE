@@ -11,9 +11,59 @@
                     <h4 class="card-title">Holidays</h4>
                   </div>
                     <div class="card-body">
-                      <div class="table-responsive">
-                          
+                      <button type="button" class="btn btn-primary float-end m-2" data-bs-toggle="modal" data-bs-target="#staticBackdrop"  (click)="openDialogAdd()">
+                          Add Holiday
+                        </button>
+                      <div class="table-responsive">                          
                       </div>
+
+                      <div class="col-lg-5 col-md-8 col-sm-4">
+                        <mat-form-field>
+                            <mat-select placeholder="Select Year" name="Year" (selectionChange)="RefreshHolist($event.value)">
+                              <mat-option *ngFor="let yr of holYears" [value]="yr">
+                                {{ yr }}
+                              </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                      <div class="card-body">
+                      
+          
+                        <div class="row">
+                            <kendo-grid [kendoGridBinding]="service.hlist" [pageSize]="10" [pageable]="true"
+                                [filterable]="true" [sortable]="true" [groupable]="false" >
+        
+                                <kendo-grid-column field="name" title="Name" [width]="6">
+                                </kendo-grid-column>
+        
+                                <kendo-grid-column field="year" title="Year" [width]="6"> 
+                                </kendo-grid-column>
+        
+                                <kendo-grid-column field=date title="Date" [width]="6">
+                                </kendo-grid-column>
+        
+                                        
+                                <kendo-grid-column [width]="1">
+                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                        <button mat-icon-button (click)="clickEdit(dataItem)">
+                                            <mat-icon matTooltip="Edit Holiday Name" class="mat-18"  style="color: #016000;">edit</mat-icon>
+                                        </button>
+                                    </ng-template>
+                                </kendo-grid-column>
+
+                                <kendo-grid-column [width]="1">
+                                    <ng-template kendoGridCellTemplate let-dataItem>
+                                        <button mat-icon-button (click)="clickDelete(dataItem)">
+                                            <mat-icon matTooltip="Delete Holiday" class="mat-18"  style="color: #ff0000;">delete</mat-icon>
+                                        </button>
+                                    </ng-template>
+                                </kendo-grid-column>
+
+                              
+                            </kendo-grid>
+                        </div>
+                    </div>
   
                     </div>
                 </div>

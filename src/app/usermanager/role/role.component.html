@@ -25,40 +25,16 @@
                       </button>
                     </ng-template>
                   </kendo-grid-column>
-        
-                  <!-- <kendo-grid-pdf fileName="formCategory.pdf" [repeatHeaders]="true"></kendo-grid-pdf> -->
-                  <!-- <kendo-grid-excel fileName="FormInbox.xlsx"></kendo-grid-excel> -->
+                  <ng-template kendoPagerTemplate let-totalPages="totalPages" let-currentPage="currentPage">
+                    <kendo-pager-prev-buttons></kendo-pager-prev-buttons>             
+                    <kendo-pager-numeric-buttons [buttonCount]="10"></kendo-pager-numeric-buttons>
+                    <kendo-pager-next-buttons></kendo-pager-next-buttons>
+                    <kendo-pager-page-sizes [pageSizes]="pageSizes"></kendo-pager-page-sizes>
+                    <kendo-pager-info></kendo-pager-info>
+                    Current page: {{currentPage}}
+                 </ng-template>
                 </kendo-grid>
                 </div>
-
-                <div class="row">
-                  
-                <!-- </div>
-                <p *ngIf="!data"><em>Loading...</em></p>
-                <table id="tblProcess" class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Designation</th>
-                      <th>No of Users</th>
-                      <th>Access</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let obj of data;let i = index">
-                      <td>{{ i+1 }}</td>
-                      <td>{{ obj['role'] }}</td>
-                      <td><span class="badge badge-primary" onclick="clickEdit(obj)" >{{ obj['users'] }}</span></td>
-                      <td>
-                        <button mat-icon-button (click)="clickEditAccess(obj)">
-                        <mat-icon class="mat-18">edit</mat-icon>
-                        </button>
-                    </td>
-                    </tr>
-                  </tbody>
-                </table> -->
-              </div>
-
             </div>
           </div>
         </div>

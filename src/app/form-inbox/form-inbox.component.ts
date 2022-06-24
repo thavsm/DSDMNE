@@ -70,7 +70,9 @@ export class FormInboxComponent implements OnInit {
       formID: item.formID,
       formName: item.formName,
       formCaptureID: item.formCaptureID,
-      state: 'edit'
+      roleID:item.locationID,
+      state: 'edit',
+      view:'readonly'
     };
     localStorage.setItem('formCaptureDetails', JSON.stringify(formCaptureObj));
     localStorage.setItem('tabIndex', index);
@@ -92,7 +94,8 @@ export class FormInboxComponent implements OnInit {
     this.userService.getUserProfile().subscribe(res => {
       this.userDetail = res;
       let userRoleID = this.userDetail.formData.role;
-      this.service.getCapturedForms(this.userDetail.formData.locationType, this.userDetail.formData.role).subscribe(data => {
+      this.service.GetUserLocationHierachy(this.userDetail.formData.userID).subscribe(location => {
+      this.service.getCapturedForms(location, this.userDetail.formData.role).subscribe(data => {
         this.gridView = data;
         this.service.getPublishedListOfForms().subscribe(x => {
           this.formList = [
@@ -131,12 +134,14 @@ export class FormInboxComponent implements OnInit {
         });
       });
     });
+    });
   }
 
   filterForm(input: any, formID: any) {
     if (input === 'All Forms') {
       this.spinner.show();
-      this.service.getCapturedForms(this.userDetail.formData.location,this.userDetail.formData.role).subscribe(data => {
+      this.service.GetUserLocationHierachy(this.userDetail.formData.userID).subscribe(location => {
+      this.service.getCapturedForms(location,this.userDetail.formData.role).subscribe(data => {
         this.gridView = data;
         this.service.getPublishedListOfForms().subscribe(data => {
           this.formList = [
@@ -164,10 +169,12 @@ export class FormInboxComponent implements OnInit {
           this.spinner.hide();
         });
       });
+    });
     }
     else {
       this.spinner.show();
-      this.service.getCapturedForms(this.userDetail.formData.location,this.userDetail.formData.role).subscribe(data => {
+      this.service.GetUserLocationHierachy(this.userDetail.formData.userID).subscribe(location => {
+      this.service.getCapturedForms(location,this.userDetail.formData.role).subscribe(data => {
         this.gridView = data;
         this.service.getPublishedListOfForms().subscribe(data => {
           this.gridView = process(this.gridView, {
@@ -186,6 +193,7 @@ export class FormInboxComponent implements OnInit {
           })
         });
       });
+    });
     }
   }
 

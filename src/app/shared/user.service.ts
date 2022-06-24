@@ -73,6 +73,10 @@ export class UserService {
     return this.http.post(this.BaseURI + '/UserProfile/CompleteTask', formData);
   }
 
+  rejectTask(formData: any, id: string) {
+    return this.http.post(this.BaseURI + '/UserProfile/TerminateWorkflow', formData);
+  }
+
   UpdateUserProfile(formData: any) {
     return this.http.post(this.BaseURI + '/UserProfile/UpdateUserProfile', formData);
   }
@@ -214,4 +218,18 @@ export class UserService {
   getAllData(): Observable<any[]> {
     return this.http.get<any[]>('./assets/data/cars-large.json');
   }
+
+  
+  getFinancialYears() {
+    return this.http.get<any>(this.BaseURI + '/FinancialYears');
+  }
+
+  getFinancialYear(id:number) {
+    return this.http.get<any>(this.BaseURI + '/FinancialYears');
+  }
+
+  getSchedule() {
+    return this.http.get<any>(this.BaseURI + '/Schedules');
+  }
+
 }

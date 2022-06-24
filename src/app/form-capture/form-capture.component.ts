@@ -18,16 +18,6 @@ export interface FormData {
   description: string;
 }
 
-export interface Node {
-  nodeID: number,
-  nodeName: string,
-  nodeParentD: number,
-  levelID: number,
-  nodeDescription: string,
-  status: string,
-  color?: string
-}
-
 @Component({
   selector: 'app-form-capture',
   templateUrl: './form-capture.component.html',
@@ -47,6 +37,8 @@ export class FormCaptureComponent implements OnInit {
   data: any = [];
 
   userLocation:any;
+  userLocationLevel:any;
+  PeriodStatus:any;
 
   ngOnInit(): void {
     this.spinner.show();
@@ -63,44 +55,72 @@ export class FormCaptureComponent implements OnInit {
     );
   }
 
-  addForm(nodeID:any) {
-    this.spinner.show();
-    let formCaptureData = {
-      formCaptureID: 0,
-      formName: '',
-      formID: 6,
-      step: "string",
-      sentBy: this.userDetail.formData.userID,
-      dateSent: "string",
-      timeSent: "string",
-      displayableOne: "",
-      displayableTwo: "",
-      geography: nodeID,
-      stage: "string",
-      formTemplateName: "string"
-    }
-    this.service.addCapturedForms(formCaptureData).subscribe(res => {
-      let myObj = {
+  addForm(dataItem:any) {
+    console.log(dataItem)
+    if(dataItem.captureID==0){
+      this.spinner.show();
+      let formCaptureData = {
+        formCaptureID: 0,
+        formName: '',
         formID: 6,
-        formName: JSON.parse(res).formName,
-        formCaptureID: JSON.parse(res).formCaptureID,
-        state: 'add'
+        step: "string",
+        sentBy: this.userDetail.formData.userID,
+        dateSent: "string",
+        timeSent: "string",
+        displayableOne: "",
+        displayableTwo: "",
+        geography: dataItem.nodeID,
+        stage: "string",
+        formTemplateName: "string"
+      }
+      this.service.addCapturedForms(formCaptureData).subscribe(res => {
+        let myObj = {
+          formID: 6,
+          formName: JSON.parse(res).formName,
+          formCaptureID: JSON.parse(res).formCaptureID,
+          state: 'add',
+          roleID:dataItem.roleID,
+          view:'readwrite'
+        };
+        this.spinner.hide();
+        this.showNotification('top', 'center', 'Form created successfully', '', 'success');
+        localStorage.setItem('formCaptureDetails', JSON.stringify(myObj));
+        localStorage.setItem('tabIndex', '0');
+        const dialogRef = this.dialog.open(AddFormComponent, {
+          width: '85%',
+          height: '85%',
+          disableClose: true
+        });
+        this.formData.formName = "";
+        dialogRef.afterClosed().subscribe(result => {
+          console.log('The dialog was closed');
+          this.refreshLocationList();
+        });
+      });
+    }
+    else{
+      let formCaptureObj = {
+        formID: 6,
+        formName: 'ProvincialIndicators',
+        formCaptureID: dataItem.captureID,
+        state: 'edit',
+        roleID:dataItem.roleID,
+        view:'readwrite'
       };
-      this.spinner.hide();
-      this.showNotification('top', 'center', 'Form created successfully', '', 'success');
-      localStorage.setItem('formCaptureDetails', JSON.stringify(myObj));
+      localStorage.setItem('formCaptureDetails', JSON.stringify(formCaptureObj));
       localStorage.setItem('tabIndex', '0');
       const dialogRef = this.dialog.open(AddFormComponent, {
         width: '85%',
         height: '85%',
         disableClose: true
       });
-      this.formData.formName = "";
       dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
-        this.refreshLocationList();
+        this.refreshFormsList();
+        this.formList.filterPredicate = function (data, filter: string): boolean {
+          return data.formName.toLowerCase().includes(filter);
+        };
       });
-    });
+    }
   }
 
   refreshFormsList() {
@@ -127,8 +147,12 @@ export class FormCaptureComponent implements OnInit {
   refreshLocationList() {
       this.service.GetUserLocationHierachy(this.userDetail.formData.userID).subscribe(location => {
         this.spinner.show();
+        this.userLocation=location;
         this.service.getFormCaptureCountPerLocation(location).subscribe(result => {
           this.data =  result;
+          console.log(result);
+          this.userLocationLevel=this.data[0].levelID;
+          this.PeriodStatus=this.data[0].periodStatus;
           this.spinner.hide();
         });
       });
