@@ -51,7 +51,7 @@ export class AppusersComponent implements OnInit {
       width: '50%',
       height: '75%',
       data: obj,
-      disableClose:true
+      disableClose:false
     });
 
     dialogRef.afterClosed().subscribe(result => {
