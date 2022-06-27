@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { RoleaccessComponent } from '../roleaccess/roleaccess.component';
 import { MatPaginator } from '@angular/material/paginator';
 import { PageSizeItem } from '@progress/kendo-angular-grid';
-
+import { NewroleComponent } from '../newrole/newrole.component';
 
 
 declare var $: any;
@@ -46,16 +46,20 @@ export class RoleComponent implements OnInit {
 
     public ngOnInit() {
       
-        this.service.roleUsersCount().subscribe(
-            res => {
-              this.data = res;
-            },
-            err => {
-              console.log(err);
-            },
-          );
+       this.loadUsers();
     }
 
+    loadUsers(){
+      this.service.roleUsersCount().subscribe(
+        res => {
+          this.data = res;
+        },
+        err => {
+          console.log(err);
+        },
+      );
+    }
+    
     validateControl() {
 
    if(this.roleName.trim() == '') {
@@ -140,6 +144,18 @@ export class RoleComponent implements OnInit {
   
       dialogRef.afterClosed().subscribe(result => {
         console.log('The menu dialog was closed');
+      });
+    }
+
+    clickNewRole() {
+      const dialogRef = this.dialog.open(NewroleComponent, {
+        width: '50%',
+        height: '60%',
+        disableClose:true
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        this.loadUsers();
       });
     }
 
