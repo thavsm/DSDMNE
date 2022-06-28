@@ -94,7 +94,7 @@ export class MenurolesComponent implements OnInit {
       this.mroles.push(this.mrole);
     });
 
-      this.service.addMenusRole(this.mroles).subscribe(
+      this.service.addMenusRole(this.mroles,this.roleID).subscribe(
         (res: any) => {
           if (res.message == 'Menu added successfully') {
           this.showNotification('top','right','Menus role added!', 'Role successful.','success');
