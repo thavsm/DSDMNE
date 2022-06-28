@@ -1,0 +1,14 @@
+tr.mat-footer-row {
+    border: 1px solid #e7e7e7;
+    font-weight: bold;
+    height: 10px !important;
+}
+
+tr.mat-row {    
+    font-weight: bold;
+    height: 12px !important;
+}
+
+td.mat-cell {
+    padding: 1px 1px 1px 1px;
+}

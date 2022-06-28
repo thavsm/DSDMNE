@@ -4,6 +4,7 @@ import { UserService } from '../shared/user.service';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { FormbuilderService } from '../shared/formbuilder.service';
+import { CommandColumnComponent } from '@progress/kendo-angular-grid';
 
 
 declare const $: any;
@@ -211,11 +212,26 @@ export class SidebarComponent implements OnInit {
                     if (typeof a !== 'undefined') {
                         el.role=[userRole];
                         let cs = el.children;
+                        console.log(el.children);
                         if (typeof cs !== 'undefined') {
-                            let c = cs.find(menu => (menu.title).toLowerCase() === 'form category');
-                            const index = cs.indexOf(c, 0);
-                            if (index > -1) {
-                                el.children.splice(index, 1);
+                            // let c = cs.find(menu => (menu.title).toLowerCase() === 'form category');
+                            // const index = cs.indexOf(c, 0);
+                            // if (index > -1) {
+                            //     //el.children.splice(index, 1);
+                            //     el.children.push(c);
+                            // }
+                            let subMenus = [];
+                            cs.forEach((subMenu)=>{
+                                let sub = res.find(menu => (menu.name).toLowerCase() === subMenu.title.toLowerCase());
+                                if (typeof sub !== 'undefined') {
+                                    subMenus.push(subMenu);
+                                }
+                            }
+                            )
+                            console.log(el.title);
+                            console.log(subMenus);
+                            if(subMenus.length>0){
+                                el.children = subMenus;
                             }
                         }
                     }

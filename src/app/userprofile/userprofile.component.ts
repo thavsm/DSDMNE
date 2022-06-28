@@ -47,7 +47,7 @@ export class UserProfileComponent implements OnInit {
   
 
   
-    constructor(private element: ElementRef, private fb: FormBuilder, private service: UserService, @Inject(MAT_DIALOG_DATA) public data: any, private spinner: NgxSpinnerService, public dialog: MatDialog,public dialogRef: MatDialogRef<AppusersComponent>) {
+    constructor(private element: ElementRef, private fb: FormBuilder, private service: UserService, @Inject(MAT_DIALOG_DATA) public data: any, private spinner: NgxSpinnerService, public dialog: MatDialog) {
       //this.passData.isChild = false;
       this.isBranch=false;
       this.isProvince=false;
@@ -56,9 +56,9 @@ export class UserProfileComponent implements OnInit {
       this.isFac=false;
     }
 
-    closePopup(){
-      this.dialogRef.close();
-    }
+    // closePopup(){
+    //   this.dialogRef.close();
+    // }
 
     public ngOnInit() {
       this.loadLookups();

@@ -16,6 +16,7 @@ import { ButtonsModule } from "@progress/kendo-angular-buttons";
 import { InputsModule } from "@progress/kendo-angular-inputs";
 import { PDFModule, ExcelModule, } from "@progress/kendo-angular-grid";
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { NewroleComponent } from './newrole/newrole.component';
 
 @NgModule({
     imports: [
@@ -38,7 +39,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
         FormrolesComponent,
         AddformrolesComponent,
         MenurolesComponent,
-        RoleaccessComponent
+        RoleaccessComponent,
+        NewroleComponent
     ]
 })
 

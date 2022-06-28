@@ -129,6 +129,11 @@ export class UserService {
     //return this.http.post(this.BaseURI + '/Lookup/AddRole', body);
   }
 
+  
+  addNewRole(role: string) {
+    return this.http.post(this.BaseURI + '/ApplicationUser/AddNewRole?role='+role,  role);
+  }
+
   deleteFormRoles(formID: number) {
     return this.http.delete(this.BaseURI + '/ApplicationUser/DeleteFormRoles?formID='+formID);
   }

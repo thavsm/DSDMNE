@@ -16,13 +16,17 @@
                   </div> -->
                   <div class="card-body">
                       <div class="row">
-                            <div class="card-header">
-                              <h4 class="card-title">Process: {{processName}}</h4>                              
-                              <h4 class="card-title">Task: {{taskName}}</h4>   
-                              <h4 class="card-title">Year: {{year}}</h4>   
-                              <h4 class="card-title">Month: {{monthName}}</h4>  
-                              <h4 class="card-title">Task will close on : {{endDate}}</h4>  
-                            </div>
+                          <div class="col-md-12">
+                                <table class="table table-striped" >
+                                    <tr><td><h4 class="card-title" style="font-weight: bold;">Process: </h4> </td><td>{{processName}}</td>
+                                        <td><h4 class="card-title" style="font-weight: bold;">Task: </h4>  </td><td>{{taskName}}</td>
+                                    </tr>
+                                    <tr><td><h4 class="card-title" style="font-weight: bold;">Year: </h4></td><td>{{year}}</td>
+                                        <td><h4 class="card-title" style="font-weight: bold;">Month: </h4> </td><td>{{monthName}}</td>
+                                    </tr>
+                                    <tr><td><h4 class="card-title" style="font-weight: bold;">Task will close on :</h4> </td><td> {{endDate}}</td></tr>
+                                </table> 
+                            </div>                                                            
                       </div>
                     <div class="row">
                     <div class="col-md-12" *ngIf="isNational">
