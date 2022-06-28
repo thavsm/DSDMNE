@@ -48,11 +48,11 @@
                             [indeterminate]="selection.hasValue() && !isAllSelected()">
                           </mat-checkbox>   -->
                         </th>
-                        <td mat-cell *matCellDef="let row">
-                          <mat-checkbox (click)="$event.stopPropagation()"
-                            (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
-                          </mat-checkbox>
-                        </td>
+                          <td mat-cell *matCellDef="let row">
+                            <mat-checkbox (click)="$event.stopPropagation()"
+                              (change)="onToggleChangeMenu(row,$event)" [checked]="selection.isSelected(row)">
+                            </mat-checkbox>
+                          </td>
                       </ng-container>
 
                       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -79,7 +79,7 @@
                         <th mat-header-cell *matHeaderCellDef>Capture</th>
                         <td mat-cell *matCellDef="let row">
                           <mat-checkbox (click)="$event.stopPropagation()"
-                            (change)="$event ? selectionCaptureForms.toggle(row) : null"
+                          (change)="onToggleChangeCaptureForms(row,$event)"
                             [checked]="selectionCaptureForms.isSelected(row)">
                           </mat-checkbox>
                         </td>
@@ -90,7 +90,7 @@
                         <th mat-header-cell *matHeaderCellDef>View</th>
                         <td mat-cell *matCellDef="let row">
                           <mat-checkbox (click)="$event.stopPropagation()"
-                            (change)="$event ? selectionViewForms.toggle(row) : null"
+                          (change)="onToggleChangeViewForms(row,$event)"
                             [checked]="selectionViewForms.isSelected(row)">
                           </mat-checkbox>
                         </td>
@@ -142,7 +142,7 @@
                         </th>
                         <td mat-cell *matCellDef="let row">
                           <mat-checkbox (click)="$event.stopPropagation()"
-                            (change)="$event ? selectionRole.toggle(row) : null"
+                            (change)="onToggleChangeTypes(row,$event)"
                             [checked]="selectionRole.isSelected(row)">
                           </mat-checkbox>
                         </td>
