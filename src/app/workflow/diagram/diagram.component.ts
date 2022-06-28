@@ -497,9 +497,9 @@ export class DiagramComponent implements AfterContentInit, OnChanges, OnDestroy,
     $elem.append('<div class="form-group mb-2 has-float-label"><span>Question to Ask</span><input class="form-control" id="Question" type="text" placeholder="Question to Ask"></div>');
 
 
-    $elem.append('<div class="form-group mb-2 has-float-label"><span>Reminder Period(Days)</span><input class="form-control" id="FlagReminder" type="text" value="0" placeholder="Reminder Period(Days)"></div>');
+    $elem.append('<div class="form-group mb-2 has-float-label"><span>Turnaround Time(days)</span><input class="form-control" id="FlagReminder" type="text" value="0" placeholder="Turnaround Time(days)"></div>');
 
-    $elem.append('<div class="form-group mb-2 has-float-label"><span>Escalation Period (Days)</span><input class="form-control" id="Escalation" type="text" value="0" placeholder="Escalation Period (Days)"></div>');
+    $elem.append('<div class="form-group mb-2 has-float-label"><span>Notification Time(days)</span><input class="form-control" id="Escalation" type="text" value="0" placeholder="Notification Time(days)"></div>');
 
     //Uncomment for Multiple Location, Group, Level
     //$elem.append('<div class="input-group mb-1 input-group-sm"><button id="btnMultipleLoction" type="button" class="btn btn-light btn-sm btn-block" onclick="$(\'#modalLocation\').modal(\'show\');">Multiple Location</button></div>');

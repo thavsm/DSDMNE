@@ -160,40 +160,34 @@ export class NodeAddComponent implements OnInit {
 
     if (this.NodeAdd.indicatorID != 0) {
 
-      if (this.NodeAdd.FormName != "" && this.NodeAdd.fName) {
+      var values = {
+        "treeID": this.treeData.treeID,
+        "nodeParentD": this.SelectednodeParentD,
+        "levelID": this.NodeAdd.levelID,
+        "indicatorID": this.NodeAdd.indicatorID,
+        "fieldID": 0,
+        "formID": 0,
+        "tableName": ""
+      };
 
-        var values = {
-          "treeID": this.treeData.treeID,
-          "nodeParentD": this.SelectednodeParentD,
-          "levelID": this.NodeAdd.levelID,
-          "indicatorID": this.NodeAdd.indicatorID,
-          "fieldID": this.NodeAdd.fName,
-          "formID": this.NodeAdd.FormName,
-          "tableName": 'Data_' + this.SelectedForm.formName + "_" + this.FormFieldsByFieldID[0].formPage.name.replace(/\s/g, "")
-        };
+      this.spinner.show();
+      this.treediagramService.addIndicatorNode(values).subscribe(data => {
+        // this.dialogRef.close();
+        this.spinner.hide();
+        this.showNotification('top', 'center', 'Node Added Successfully!', 'Success', 'success');
+        this.NodeAdd.levelID = "";
+        this.NodeAdd.nodeID = "";
+        this.NodeAdd.indicatorID = "";
+        this.NodeAdd.FormCategory = "";
+        this.NodeAdd.FormName = "";
+        this.NodeAdd.fName = "";
+        this.NodeAdd.nodeName = "";
+        this.NodeAdd.nodeDescription = "";
+        this.divIsNotIndicator = true;
+        this.divIsIndicator = false;
+        this.treediagramService.getNodes(this.treeData.treeID);
+      });
 
-        this.spinner.show();
-        this.treediagramService.addIndicatorNode(values).subscribe(data => {
-          // this.dialogRef.close();
-          this.spinner.hide();
-          this.showNotification('top', 'center', 'Node Added Successfully!', 'Success', 'success');
-          this.NodeAdd.levelID = "";
-          this.NodeAdd.nodeID = "";
-          this.NodeAdd.indicatorID = "";
-          this.NodeAdd.FormCategory = "";
-          this.NodeAdd.FormName = "";
-          this.NodeAdd.fName = "";
-          this.NodeAdd.nodeName = "";
-          this.NodeAdd.nodeDescription = "";
-          this.divIsNotIndicator = true;
-          this.divIsIndicator = false;
-          this.treediagramService.getNodes(this.treeData.treeID);
-        });
-
-
-      } else {
-        this.showNotification('top', 'center', 'Please select a Form and Form Field before saving!', '', 'danger');
-      }
     } else {
       if (this.NodeAdd.nodeName != "") {
         //adding form

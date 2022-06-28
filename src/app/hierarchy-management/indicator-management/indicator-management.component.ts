@@ -12,6 +12,8 @@ import { GroupDescriptor } from '@progress/kendo-data-query';
 import { DataBindingDirective } from '@progress/kendo-angular-grid';
 import { IndicatorAddComponent } from './indicator-add/indicator-add.component';
 import { IndicatorEditComponent } from './indicator-edit/indicator-edit.component';
+import { ExternaldataAddComponent } from '../externaldata-add/externaldata-add.component';
+import { TreediagramService } from 'src/app/treediagram.service';
 
 declare var $: any;
 
@@ -22,10 +24,11 @@ declare var $: any;
 })
 export class IndicatorManagementComponent implements OnInit {
   @ViewChild(DataBindingDirective) dataBinding: DataBindingDirective;
-  constructor(public service: HierarchyManagementService, private route: Router, public dialog: MatDialog, private spinner: NgxSpinnerService, private Aroute: ActivatedRoute) { }
+  constructor(public service: HierarchyManagementService, public treeservice: TreediagramService, private route: Router, public dialog: MatDialog, private spinner: NgxSpinnerService, private Aroute: ActivatedRoute) { }
 
   Indicators: any;
   IndicatorAdd: any;
+  OpnExternalData: any;
 
   ngOnInit(): void {
 
@@ -49,7 +52,7 @@ export class IndicatorManagementComponent implements OnInit {
       status : 1
     }
 
-    const dialogRef = this.dialog.open(IndicatorAddComponent, { width: '40%', height: '55%', data: this.IndicatorAdd, disableClose: true }
+    const dialogRef = this.dialog.open(IndicatorAddComponent, { width: '40%', data: this.IndicatorAdd, disableClose: true }
 
     );
     
@@ -58,6 +61,8 @@ export class IndicatorManagementComponent implements OnInit {
       console.log('The dialog was closed');
     });
   }
+
+
 
   
   clickEdit(item: any) {
@@ -89,6 +94,8 @@ export class IndicatorManagementComponent implements OnInit {
       if (result.value) {
         this.spinner.show();
         this.service.DeleteIndiactorByID(item.indicatorID).subscribe(data => {
+          this.treeservice.getExternalCalculationByNodeID(item.indicatorID);
+          this.treeservice.DeleteLinkByIndicatorID(item.indicatorID);
           this.spinner.hide();
           this.showNotification('top','center','Indicator Deleted Succesfully!','Success.','success');
           this.getIndicators();

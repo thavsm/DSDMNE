@@ -1,12 +1,14 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ElementRef, OnDestroy, AfterViewInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ElementRef, OnDestroy, AfterViewInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { UserService } from '../../shared/user.service';
 import { FormsModule } from '@angular/forms';
 import { MenurolesComponent } from '../menuroles/menuroles.component';
 import { MatDialog } from '@angular/material/dialog';
 import { RoleaccessComponent } from '../roleaccess/roleaccess.component';
-
+import { MatPaginator } from '@angular/material/paginator';
+import { PageSizeItem } from '@progress/kendo-angular-grid';
+import { NewroleComponent } from '../newrole/newrole.component';
 
 
 declare var $: any;
@@ -26,22 +28,38 @@ export class RoleComponent implements OnInit {
     isValid = false;
     menuAdd: any;
     
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+    
     constructor(private service: UserService, public dialog: MatDialog) {
       
     }
 
-    public ngOnInit() {
-      
-        this.service.roleUsersCount().subscribe(
-            res => {
-              this.data = res;
-            },
-            err => {
-              console.log(err);
-            },
-          );
+    public pageSize = 10;
+    public pageSizes: Array<number | PageSizeItem> = [5, 10, 20, {
+      text: 'All',
+      value: 'all'
+       }];
+
+    public onPageChange(state: any): void {
+      this.pageSize = state.take;
     }
 
+    public ngOnInit() {
+      
+       this.loadUsers();
+    }
+
+    loadUsers(){
+      this.service.roleUsersCount().subscribe(
+        res => {
+          this.data = res;
+        },
+        err => {
+          console.log(err);
+        },
+      );
+    }
+    
     validateControl() {
 
    if(this.roleName.trim() == '') {
@@ -106,7 +124,7 @@ export class RoleComponent implements OnInit {
         width: '60%',
         height: '60%',
         data: this.menuAdd,
-        disableClose:false
+        disableClose: true
       });
   
       dialogRef.afterClosed().subscribe(result => {
@@ -121,11 +139,23 @@ export class RoleComponent implements OnInit {
         height: '80%',
         //data: this.menuAdd,
         data: item.roleID,
-        disableClose:false
+        disableClose:true
       });
   
       dialogRef.afterClosed().subscribe(result => {
         console.log('The menu dialog was closed');
+      });
+    }
+
+    clickNewRole() {
+      const dialogRef = this.dialog.open(NewroleComponent, {
+        width: '50%',
+        height: '60%',
+        disableClose:true
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        this.loadUsers();
       });
     }
 

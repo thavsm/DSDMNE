@@ -5,172 +5,517 @@
 </div>
 
 <div mat-dialog-content>
-
-    <div class="form-group">
-        <div class="form-group">
-            <label style="font-size: medium;">Level Name</label>
-            <mat-form-field>
-                <input matInput ngModel type="text" [(ngModel)]=NodeData.levelName value="{{NodeData.levelName}}" disabled>
-            </mat-form-field>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="form-group">
-            <label style="font-size: medium;">Parent Node</label>
-            <mat-form-field>
-                <input matInput ngModel type="text" [(ngModel)]=NodeData.ParentNodeName value="{{NodeData.ParentNodeName}}" disabled>
-            </mat-form-field>
-        </div>
-    </div>
-
-    <div class="form-group" *ngIf="divIsIndicator">
-        <div class="form-group">
-            <mat-form-field appearance="outline">
-                <mat-label>Select an Indicator</mat-label>
-                <mat-select [(ngModel)]="NodeData.indicatorID" >  
-                    <mat-select-filter [placeholder]="'Search'" [displayMember]="'indicatorName'" [array]="Indicators" (filteredReturn)="filteredIndicators =$event"></mat-select-filter>                          
-                    <mat-option *ngFor="let c of filteredIndicators" [value]="c.indicatorID">
-                        {{c.indicatorName}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-
-        <div class="form-group">
-            <mat-form-field appearance="outline">
-                <mat-label>Form Category</mat-label>
-                <mat-select [(ngModel)]="NodeData.FormCategory" (selectionChange)="onformCategoryChange($event)">
-                    <mat-option *ngFor="let c of FormCategory" [value]="c.formCategoryID">
-                        {{c.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-
-
-        <div class="form-group" *ngIf="divForm">
-            <mat-form-field appearance="outline">
-                <mat-label>Form Name</mat-label>
-                <mat-select [(ngModel)]="NodeData.FormName" (selectionChange)="onformChange($event)">
-                    <mat-option *ngFor="let c of Form" [value]="c.formID">
-                        {{c.displayName}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-
-
-        <div class="form-group" *ngIf="divFormField" > 
-            <mat-form-field appearance="outline">
-                <mat-label>Form Field</mat-label>
-                <mat-select [(ngModel)]="NodeData.fName" (selectionChange)="onformfieldChange($event)">
-                    <mat-select-filter [placeholder]="'Search'" [displayMember]="'questionName'" [array]="FormFields" (filteredReturn)="filteredFormFields =$event"></mat-select-filter>                         
-                    <mat-option *ngFor="let c of filteredFormFields" [value]="c.fieldID">
-                        {{c.questionName}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-    
-    </div>
-    <div class="form-group">
-
-        <mat-accordion>
-            <ng-container *ngFor="let item of formDesign;let i= index;"
-                style="background-color: white;text-align: left;height: 100px;font-weight: bold;">
-            
-                <!-- Date Type -->
-                <ng-container *ngIf="item.recognitionType == 'Date' && item.status==='1'">
-                    <div class="form-group">
-                        <label style="font-size: medium;">{{item.questionName}}</label>
-                        <mat-form-field appearance="outline">
-                            <input matInput type="date" [(ngModel)]=item.data placeholder="{{item.toolTip}}"  value="{{item.data}}">
-                        </mat-form-field>
+    <mat-tab-group animationDuration="0ms">
+        <mat-tab label="Node Meta Data Form">
+            <div class="form-group">
+                <div class="form-group">
+                    <label style="font-size: medium;">Level Name</label>
+                    <mat-form-field appearance="outline">
+                        <input matInput ngModel type="text" [(ngModel)]=NodeData.levelName value="{{NodeData.levelName}}" disabled>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group">
+                    <label style="font-size: medium;">Parent Node</label>
+                    <mat-form-field appearance="outline">
+                        <input matInput ngModel type="text" [(ngModel)]=NodeData.ParentNodeName value="{{NodeData.ParentNodeName}}" disabled>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="form-group">
+                <mat-accordion>
+                    <ng-container *ngFor="let item of formDesign;let i= index;"
+                        style="background-color: white;text-align: left;height: 100px;font-weight: bold;">
+                    
+                        <!-- Date Type -->
+                        <ng-container *ngIf="item.recognitionType == 'Date' && item.status==='1'">
+                            <div class="form-group">
+                                <label style="font-size: medium;">{{item.questionName}}</label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput type="date" [(ngModel)]=item.data placeholder="{{item.toolTip}}"  value="{{item.data}}" [disabled]="divIsIndicator">
+                                </mat-form-field>
+                                
+                            </div>
+                        </ng-container>
+                    
+                        <!-- Text Type -->
+                        <ng-container *ngIf="item.recognitionType == 'Text' && item.status=='1' ">
+                            <div class="form-group">
+                                <label style="font-size: medium;">{{item.questionName}}</label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput ngModel type="text" [(ngModel)]=item.data placeholder="{{item.toolTip}}" value="{{item.data}}" maxlength={{item.lengthValidation}} [disabled]="divIsIndicator">
+                                </mat-form-field>
+                            </div>
+                        </ng-container>
+                    
+                        <!-- Number Type -->
+                        <ng-container *ngIf="item.recognitionType=='Number' && item.status=='1' ">
+                            <div class="form-group">
+                                <label style="font-size: medium;">{{item.questionName}}</label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput type="number" ngModel maxlength={{item.lengthValidation}} [disabled]="divIsIndicator"
+                                        oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                        [(ngModel)]=item.data placeholder="{{item.toolTip}}" value="{{item.data}}" >
+                                </mat-form-field>
+                                <!-- <div style="height: 5px;"></div> -->
+                            </div>
+                        </ng-container>
+        
+                        <!-- select Type -->
+                        <ng-container *ngIf="item.recognitionType=='List' && item.status=='1' ">
+                            <div class="form-group">
+                                <label style="font-size: medium;">{{item.questionName}}</label>
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Select a option</mat-label>
+                                    <mat-select  [(ngModel)]=item.data [disabled]="divIsIndicator">
+                                        <mat-option *ngFor="let list of item.listValue" style="color: black;" [value]="list.value" >
+                                            {{list.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <!-- <div style="height: 5px;"></div> -->
+                            </div>
+                        </ng-container>
                         
-                    </div>
-                </ng-container>
-            
-                <!-- Text Type -->
-                <ng-container *ngIf="item.recognitionType == 'Text' && item.status=='1' ">
+                        <!-- Target -->
+                        <ng-container *ngIf="item.recognitionType=='Target' && item.status=='1' ">
+                            <div class="form-group">
+                                <label style="font-size: medium;">{{item.questionName}}</label> <br>
+                                <button (click)="OpenTargets()"
+                                    class="btn btn-md btn-primary"   >Add/View Targets</button>
+                                <!-- <div style="height: 5px;"></div> -->
+                            </div>
+                        </ng-container>
+                        
+                        <!-- External Data -->
+                        <!-- <ng-container *ngIf="item.recognitionType=='External Data' && item.status=='1' ">
+                            <div class="form-group">
+                                <label style="font-size: medium;">{{item.questionName}}</label> <br>
+                                <button  (click)="OpenExternalData()"
+                                    class="btn btn-md btn-primary"   >Configure External Data</button>
+                            </div>
+                        </ng-container> -->
+                        
+                        <!-- URL-->
+                        <ng-container *ngIf="item.recognitionType == 'URL' && item.status=='1' ">
+                            <div class="form-group">
+                                <label style="font-size: medium;">{{item.questionName}}</label>
+                                <mat-form-field appearance="outline">
+                                    <input matInput ngModel type="text" [(ngModel)]=item.data placeholder="{{item.toolTip}}" value="{{item.data}}" maxlength={{item.lengthValidation}} [disabled]="divIsIndicator">
+                                </mat-form-field>
+                            </div>
+                        </ng-container>
+        
+                    </ng-container>
+                
+                </mat-accordion>
+            </div>
+        </mat-tab>
+        <mat-tab label="Datasource Mapping"  *ngIf="divIsIndicator">
+        
+            <div class="form-group" *ngIf="divContorls">
+                <div class="form-group">
+                    <mat-form-field appearance="outline">
+                        <mat-label>*Datasource Type</mat-label>
+                        <mat-select [(ngModel)]="ExternalData.name" (selectionChange)="onType($event)" [disabled]="isDisabledDrp">
+                            <mat-option *ngFor="let c of ExternalDataType" [value]="c.externalDataTypeID">
+                                {{c.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+        
+                <div class="form-group" *ngIf="divIsForm">
                     <div class="form-group">
-                        <label style="font-size: medium;">{{item.questionName}}</label>
-                        <mat-form-field>
-                            <input matInput ngModel type="text" [(ngModel)]=item.data placeholder="{{item.toolTip}}" value="{{item.data}}" maxlength={{item.lengthValidation}}>
-                        </mat-form-field>
-                    </div>
-                </ng-container>
-            
-                <!-- Number Type -->
-                <ng-container *ngIf="item.recognitionType=='Number' && item.status=='1' ">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Select an Indicator</mat-label>
+                                    <mat-select [(ngModel)]="NodeData.indicatorID" [disabled]="isDisabledDrp">
+                                        <mat-select-filter [placeholder]="'Search'"   [displayMember]="'indicatorName'" [array]="Indicators"
+                                            (filteredReturn)="filteredIndicators =$event"></mat-select-filter>
+                                        <mat-option *ngFor="let c of filteredIndicators" [value]="c.indicatorID">
+                                            {{c.indicatorName}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+        
                     <div class="form-group">
-                        <label style="font-size: medium;">{{item.questionName}}</label>
-                        <mat-form-field>
-                            <input matInput type="number" ngModel maxlength={{item.lengthValidation}}
-                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                [(ngModel)]=item.data placeholder="{{item.toolTip}}" value="{{item.data}}" >
-                        </mat-form-field>
-                        <!-- <div style="height: 5px;"></div> -->
-                    </div>
-                </ng-container>
-
-                <!-- select Type -->
-                <ng-container *ngIf="item.recognitionType=='List' && item.status=='1' ">
-                    <div class="form-group">
-                        <label style="font-size: medium;">{{item.questionName}}</label>
                         <mat-form-field appearance="outline">
-                            <mat-label>Select a option</mat-label>
-                            <mat-select  [(ngModel)]=item.data>
-                                <mat-option *ngFor="let list of item.listValue" style="color: black;" [value]="list.value">
-                                    {{list.name}}
+                            <mat-label>Form Category</mat-label>
+                            <mat-select [(ngModel)]="NodeData.FormCategory"  [disabled]="isDisabledDrp" (selectionChange)="onIsformCategoryChange($event)">
+                                <mat-option *ngFor="let c of FormCategory" [value]="c.formCategoryID">
+                                    {{c.name}}
                                 </mat-option>
                             </mat-select>
                         </mat-form-field>
-                        <!-- <div style="height: 5px;"></div> -->
                     </div>
-                </ng-container>
-                
-                <!-- Target -->
-                <ng-container *ngIf="item.recognitionType=='Target' && item.status=='1' ">
-                    <div class="form-group">
-                        <label style="font-size: medium;">{{item.questionName}}</label> <br>
-                        <button mat-button cdkFocusInitial (click)="OpenTargets()"
-                            class="btn btn-md btn-primary"   >Add/View Targets</button>
-                        <!-- <div style="height: 5px;"></div> -->
-                    </div>
-                </ng-container>
-                
-                <!-- External Data -->
-                <ng-container *ngIf="item.recognitionType=='External Data' && item.status=='1' ">
-                    <div class="form-group">
-                        <label style="font-size: medium;">{{item.questionName}}</label> <br>
-                        <button mat-button cdkFocusInitial (click)="OpenExternalData()"
-                            class="btn btn-md btn-primary"   >Configure External Data</button>
-                        <!-- <div style="height: 5px;"></div> -->
-                    </div>
-                </ng-container>
-                
-                <!-- URL-->
-                <ng-container *ngIf="item.recognitionType == 'URL' && item.status=='1' ">
-                    <div class="form-group">
-                        <label style="font-size: medium;">{{item.questionName}}</label>
-                        <mat-form-field>
-                            <input matInput ngModel type="text" [(ngModel)]=item.data placeholder="{{item.toolTip}}" value="{{item.data}}" maxlength={{item.lengthValidation}}>
+        
+        
+                    <div class="form-group" *ngIf="divIsFormD">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Form Name</mat-label>
+                            <mat-select [(ngModel)]="NodeData.FormName" [disabled]="isDisabledDrp" (selectionChange)="onformChangeIsForm($event)">
+                                <mat-option *ngFor="let c of Form" [value]="c.formID">
+                                    {{c.displayName}}
+                                </mat-option>
+                            </mat-select>
                         </mat-form-field>
                     </div>
-                </ng-container>
-
-            </ng-container>
         
-        </mat-accordion>
-    </div>
+        
+                    <div class="form-group" *ngIf="divIsFormField">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Form Field</mat-label>
+                            <mat-select [(ngModel)]="NodeData.fName"  [disabled]="isDisabledDrp" (selectionChange)="onIsformfieldChange($event)">
+                                <mat-select-filter [placeholder]="'Search'" [displayMember]="'questionName'"
+                                    [array]="FormFields" (filteredReturn)="filteredFormFields =$event"></mat-select-filter>
+                                <mat-option *ngFor="let c of filteredFormFields" [value]="c.fieldID">
+                                    {{c.questionName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+        
+                    <div class="form-group">
+                        <button (click)="openFormDesign()" class="btn btn-md btn-primary">Preview</button>
+                    </div>
+        
+                </div>
+        
+                <div class="form-group" *ngIf="divNotForm">
+                    <div class="form-group">
+                        <kendo-grid [kendoGridBinding]="ExtData" [pageSize]="5" [pageable]="true"
+                            [filterable]="true" [sortable]="true" [groupable]="false" [resizable]="true">
+                            <kendo-grid-column field="externalDataName" title="Name" [width]="6">
+                            </kendo-grid-column>
+                            <kendo-grid-column field="externalDataType" title="Type" [width]="6">
+                            </kendo-grid-column>
+                            <kendo-grid-column field="calculationField" title="Calculation" [width]="6">
+                            </kendo-grid-column>
+                            <kendo-grid-column field="value" title="Value" [width]="6">
+                            </kendo-grid-column>
+                            <!-- <kendo-grid-column [width]="1">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    <button mat-icon-button (click)="clickRefresh(dataItem)">
+                                        <mat-icon matTooltip="refresh" class="mat-18" style="color: #016000;">refresh
+                                        </mat-icon>
+                                    </button>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="1">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    <button mat-icon-button (click)="clickEdit(dataItem)">
+                                        <mat-icon matTooltip="Edit" class="mat-18" style="color: #016000;">edit
+                                        </mat-icon>
+                                    </button>
+                                </ng-template>
+                            </kendo-grid-column>
+                            <kendo-grid-column [width]="1">
+                                <ng-template kendoGridCellTemplate let-dataItem>
+                                    <button mat-icon-button (click)="clickDelete(dataItem)">
+                                        <mat-icon matTooltip="Delete Tree" class="mat-18" style="color: #ff0000;">delete
+                                        </mat-icon>
+                                    </button>
+                                </ng-template>
+                            </kendo-grid-column> -->
+                        </kendo-grid>
+                    </div>
+                </div>
+                   
+            </div>
+            <!-- <div>
+                        <app-externaldata-add></app-externaldata-add>
+                    </div> -->
+            <!-- <div class="form-group"> 
+                    
+                        <div class="form-group">
+                            <mat-form-field appearance="outline">
+                                <mat-label>*Field Type</mat-label>
+                                <mat-select [(ngModel)]="NodeData.name" (selectionChange)="onType($event)">
+                                    <mat-option *ngFor="let c of ExternalDataType" [value]="c.externalDataTypeID">
+                                        {{c.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    
+                        <div class="form-group" *ngIf="divFTIContorls">
+                            <div class="form-group">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Select an Indicator</mat-label>
+                                    <mat-select [(ngModel)]="NodeData.indicatorID">  
+                                        <mat-select-filter [placeholder]="'Search'" [displayMember]="'indicatorName'" [array]="Indicators" (filteredReturn)="filteredIndicators =$event"></mat-select-filter>                          
+                                        <mat-option *ngFor="let c of filteredIndicators" [value]="c.indicatorID">
+                                            {{c.indicatorName}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                    
+                            <div class="form-group">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Form Category</mat-label>
+                                    <mat-select [(ngModel)]="NodeData.FormCategory" (selectionChange)="onEXTformCategoryChange($event)" >
+                                        <mat-option *ngFor="let c of FormCategory" [value]="c.formCategoryID">
+                                            {{c.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            
+                            <div class="form-group" *ngIf="divForm">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Form Name</mat-label>
+                                    <mat-select [(ngModel)]="NodeData.FormName" (selectionChange)="onEXTformChange($event)" >
+                                        <mat-option *ngFor="let c of Form" [value]="c.formID">
+                                            {{c.displayName}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                    
+                    
+                            <div class="form-group" *ngIf="divFormField" > 
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Form Field</mat-label>
+                                    <mat-select [(ngModel)]="NodeData.fName" (selectionChange)="onformfieldChange($event)" >
+                                        <mat-select-filter [placeholder]="'Search'" [displayMember]="'questionName'" [array]="FormFields" (filteredReturn)="filteredFormFields =$event"></mat-select-filter>                         
+                                        <mat-option *ngFor="let c of filteredFormFields" [value]="c.fieldID">
+                                            {{c.questionName}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+            
+                            <div class="form-group">
+                                <button (click)="openFormDesign()" class="btn btn-md btn-primary">Preview</button>
+                            </div>
+            
+                            <div class="form-group">
+                                <button  (click)="OpenExternalData()"
+                                    class="btn btn-md btn-primary"   >Configure External Data</button>
+                            </div>                                    
+                        </div>
+        
+                        <div class="form-group" *ngIf="divEXTContorls">
+                            <div class="form-group" *ngIf="divFormCat">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>*Form Category</mat-label>
+                                    <mat-select [(ngModel)]="NodeData.FormEXTCategory" (selectionChange)="onformCategoryChange($event)">
+                                        <mat-option *ngFor="let c of FormCategory" [value]="c.formCategoryID">
+                                            {{c.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+        
+                            <div class="form-group" *ngIf="divImportTableName">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>*Import Table Name</mat-label>
+                                    <mat-select [(ngModel)]="NodeData.uploadName" (selectionChange)="onUploadNameChange($event)">
+                                        <mat-option *ngFor="let c of DataImportUpload" [value]="c.uploadName">
+                                            {{c.uploadName}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+        
+                            <div class="form-group" *ngIf="divExternalDataName">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>*External Data Connection Name</mat-label>
+                                    <mat-select [(ngModel)]="NodeData.connectString" (selectionChange)="onDataservice($event)">
+                                        <mat-option *ngFor="let c of Dataservice" [value]="c.connectString">
+                                            {{c.initialCatalog}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        
+                            <div class="form-group" *ngIf="divExternalTableDataName">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>*External Data Table Name</mat-label>
+                                    <mat-select [(ngModel)]="NodeData.tablE_NAME" (selectionChange)="onExternalDataTableName($event)">
+                                        <mat-option *ngFor="let c of ExternalDataTableName" [value]="c.tablE_NAME">
+                                            {{c.tablE_NAME}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        
+                            <div class="form-group" *ngIf="divColName">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>*Table Column Name</mat-label>
+                                    <mat-select [(ngModel)]="NodeData.column_name"  (selectionChange)="onColName($event)">
+                                        <mat-option *ngFor="let c of TableColumns" [value]="c.column_name">
+                                            {{c.column_name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+            
+                            <div class="form-group"  *ngIf="divEXTForm" >
+                                <mat-form-field appearance="outline">
+                                    <mat-label>*Form Name</mat-label>
+                                    <mat-select [(ngModel)]="NodeData.FormName" (selectionChange)="onformChange($event)">
+                                        <mat-option *ngFor="let c of Form" [value]="c.formID">
+                                            {{c.formName}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+        
+                            <div class="form-group"  *ngIf="divEXTFormField" >
+                                <mat-form-field appearance="outline">
+                                    <mat-label>*Form Field</mat-label>
+                                    <mat-select [(ngModel)]="NodeData.fName" (selectionChange)="onEXTformfieldChange($event)">
+                                        <mat-option *ngFor="let c of FormFields" [value]="c.fieldID">
+                                            {{c.dataExportName}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+        
+                            <div class="form-group"  *ngIf="divSearchCriteriaCmb" >
+                                <mat-form-field appearance="outline">
+                                    <mat-label>*Search Criteria</mat-label>
+                                    <mat-select  [(ngModel)]="NodeData.ArraySearchCriteria" multiple>
+                                        <mat-option *ngFor="let list of listCategory" style="color: black;" [value]="list.value">
+                                            {{list.name}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        
+                            <div class="form-group"  *ngIf="divSearchCriteriaTxt" >
+                                <div class="form-group">
+                                    <label style="font-size: medium;">*Search Criteria</label>
+                                    <mat-form-field appearance="outline">
+                                        <input matInput ngModel type="text" [(ngModel)]="NodeData.SearchCriteria">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+        
+                            <div class="form-group"  *ngIf="divSearchCriteriaNmb" >
+                                <div class="form-group">
+                                    <label style="font-size: medium;">*Search Criteria</label>
+                                    <mat-form-field appearance="outline">
+                                        <input matInput ngModel type="number" [(ngModel)]="NodeData.SearchCriteria">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        
+                            <div class="form-group"  *ngIf="divSearchCriteriaDate" >
+                                <div class="form-group">
+                                    <label style="font-size: medium;">*Search Criteria</label>
+                                    <mat-form-field appearance="outline">
+                                        <input matInput type="date" [(ngModel)]="NodeData.SearchCriteria">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+        
+                            <div class="form-group"  *ngIf="divOperator" >
+                                <div class="form-group">
+                                    <mat-radio-group aria-label="Operator" [(ngModel)]="NodeData.selection">
+                                        <mat-radio-button value="+">Add</mat-radio-button>
+                                        <mat-radio-button value="-">Subtract</mat-radio-button>
+                                        <mat-radio-button value="*">Multiply</mat-radio-button>
+                                        <mat-radio-button value="/">Divide</mat-radio-button>
+                                    </mat-radio-group>
+                                </div>
+                            </div>
+        
+                            <div class="form-group">
+                                <button mat-button  (click)="addCalculation()" 
+                                  class="btn btn-md btn-primary">Add Calculation</button>&nbsp;
+                                  <button mat-button   (click)="EXTClear()" 
+                                  class="btn btn-md btn-primary">Clear</button>
+                            </div>
+        
+                        </div>
+                    </div>    -->
+        </mat-tab>
+        <!-- <mat-tab label="Indicator Form Mapping"  *ngIf="divIsIndicator">     
+            <div class="form-group" *ngIf="divIsIndicator">
+                <div class="form-group">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Select an Indicator</mat-label>
+                        <mat-select [(ngModel)]="NodeData.indicatorID" [disabled]="divIsIndicator">  
+                            <mat-select-filter [placeholder]="'Search'" [displayMember]="'indicatorName'" [array]="Indicators" (filteredReturn)="filteredIndicators =$event"></mat-select-filter>                          
+                            <mat-option *ngFor="let c of filteredIndicators" [value]="c.indicatorID">
+                                {{c.indicatorName}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+        
+                <div class="form-group">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Form Category</mat-label>
+                        <mat-select [(ngModel)]="NodeData.FormCategory" (selectionChange)="onformCategoryChange($event)" [disabled]="divIsIndicator">
+                            <mat-option *ngFor="let c of FormCategory" [value]="c.formCategoryID">
+                                {{c.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+        
+        
+                <div class="form-group" *ngIf="divForm">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Form Name</mat-label>
+                        <mat-select [(ngModel)]="NodeData.FormName" (selectionChange)="onformChange($event)" [disabled]="divIsIndicator">
+                            <mat-option *ngFor="let c of Form" [value]="c.formID">
+                                {{c.displayName}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+        
+        
+                <div class="form-group" *ngIf="divFormField" > 
+                    <mat-form-field appearance="outline">
+                        <mat-label>Form Field</mat-label>
+                        <mat-select [(ngModel)]="NodeData.fName" (selectionChange)="onformfieldChange($event)" [disabled]="divIsIndicator">
+                            <mat-select-filter [placeholder]="'Search'" [displayMember]="'questionName'" [array]="FormFields" (filteredReturn)="filteredFormFields =$event"></mat-select-filter>                         
+                            <mat-option *ngFor="let c of filteredFormFields" [value]="c.fieldID">
+                                {{c.questionName}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <div class="form-group">
+                    <button (click)="openFormDesign()" class="btn btn-md btn-primary">Preview</button>
+                </div>
+
+                <div class="form-group">
+                    <mat-accordion>
+                        <ng-container *ngFor="let item of formDesign;let i= index;"
+                            style="background-color: white;text-align: left;height: 100px;font-weight: bold;">                       
+                            <ng-container *ngIf="item.recognitionType=='External Data' && item.status=='1' ">
+                                <div class="form-group">
+                                    <button  (click)="OpenExternalData()"
+                                        class="btn btn-md btn-primary"   >Configure External Data</button>
+                                </div>
+                            </ng-container>                            
+                        </ng-container>                    
+                    </mat-accordion>
+                </div>
+            </div>        
+        </mat-tab> -->
+    </mat-tab-group>
+
     <div class="form-group" >
-        <button mat-button cdkFocusInitial  (click)="addForm()" 
-            class="btn btn-md btn-primary"  *ngIf="btnSave">Save</button>
+        <button  (click)="addForm()"  
+            class="btn btn-md btn-primary" *ngIf="btnSave">Save</button>
+        <!-- <div *ngIf="btnSave">
             &nbsp; 
+        </div>            -->
         <button mat-button [mat-dialog-close]=""
         class="btn btn-md btn-primary"  >Cancel</button>
-          &nbsp;
-          <button mat-button cdkFocusInitial  (click)="deleteNode()"
+          <!-- &nbsp; -->
+          <button  (click)="deleteNode()"
           class="btn btn-md btn-primary"  *ngIf="btnDelete">Delete Node</button>
     </div>
 <ngx-spinner bdColor="rgba(	237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">

@@ -103,7 +103,8 @@ export class TreediagramComponent implements OnInit {
       nodeName: event.dataItem.nodeName,
       nodeDescription: event.dataItem.nodeDescription,
       ViewEdit:this.treeData.ViewEdit,
-      IsIndicatorLevel:event.dataItem.isIndicatorLevel
+      IsIndicatorLevel:event.dataItem.isIndicatorLevel,
+      indicatorID: event.dataItem.indicatorID
     }
 
     const dialogRef = this.dialog.open(LevelNodeEditComponent, { width: '70%', height: '80%', data: this.NodeData, disableClose: true }

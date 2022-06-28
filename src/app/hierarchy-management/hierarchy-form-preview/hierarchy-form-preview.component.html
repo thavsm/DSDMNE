@@ -5,20 +5,20 @@
 </div>
 <div style="text-align: center;">
     <!-- <h2>{{this.formData.formName}}</h2> -->
-    <mat-form-field appearance="outline" style="width: 250px;margin-left: 75%;">
+    <mat-form-field appearance="outline" style="width: 250px;margin-left: 75%;" >
         <mat-label>Select page</mat-label>
-        <mat-select name="list" [(ngModel)]=pageStatus panelClass="mat-select-content">
+        <mat-select name="list" [(ngModel)]=pageStatus panelClass="mat-select-content" [disabled]="true">
             <mat-option class="custom_hover" *ngFor="let page of pages" [value]="page.name" (click)="goToPage(page)">
                 <span [style.color]=page.color> {{page.name}}</span>
             </mat-option>
         </mat-select>
     </mat-form-field>
     <mat-button-toggle-group name="buttons">
-        <mat-button-toggle value="Prev" (click)="prevPage()"
+        <mat-button-toggle value="Prev" (click)="prevPage()"  [disabled]="true"
             style="font-weight: 500;background-color: whitesmoke;color: black;">Prev & Save</mat-button-toggle>
-        <mat-button-toggle value="save" style="background-color: whitesmoke;font-weight: 500;width: 150px;color: black;"
+        <mat-button-toggle value="save" style="background-color: whitesmoke;font-weight: 500;width: 150px;color: black;"  [disabled]="true"
             (click)="savePage()">Save</mat-button-toggle>
-        <mat-button-toggle value="next" (click)="nextPage()"
+        <mat-button-toggle value="next" (click)="nextPage()"  [disabled]="true"
             style="font-weight: 500;background-color: whitesmoke;color: black;">Next & Save</mat-button-toggle>
     </mat-button-toggle-group>
     <h5>{{currentPage.name}} / {{lastPage}}</h5>
@@ -3721,4 +3721,4 @@
     </mat-tab-group>
 </div>
 <ngx-spinner bdColor="rgba( 237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
-    <p style="font-size: 20px; color: black"></p>
+    <p style="font-size: 20px; color: black">Loading Form...</p>

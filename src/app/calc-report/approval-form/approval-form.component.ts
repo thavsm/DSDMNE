@@ -110,7 +110,7 @@ export class ApprovalFormComponent implements OnInit {
     this.formData  = {
       formID: data["formID"],
       formName: data["formName"],
-      formCaptureID: data["formcaptureID"],
+      formCaptureID: data["formcapturedID"],
       state: 'edit'
     };
 
@@ -523,8 +523,8 @@ export class ApprovalFormComponent implements OnInit {
             }
             this.service.modifyPageStatus(this.formData.formCaptureID, this.currentPage.pageGUID, pageStatus).subscribe(result => {
               this.showNotification('top', 'center', 'Page data has been saved Successfully!', '', 'success');
-              this.getDesignPerPage(this.currentPage.pageGUID);
-              this.getDesignPerPageHistory(this.currentPage.pageGUID);
+              //this.getDesignPerPage(this.currentPage.pageGUID);
+              //this.getDesignPerPageHistory(this.currentPage.pageGUID);
               this.currentPage.color = "green";
               this.formData.state = 'edit';
             });

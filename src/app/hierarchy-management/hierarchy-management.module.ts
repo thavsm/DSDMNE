@@ -29,7 +29,6 @@ import {MatRadioModule} from '@angular/material/radio';
 import { ButtonsModule } from "@progress/kendo-angular-buttons";
 import { InputsModule } from "@progress/kendo-angular-inputs";
 import {PDFModule,ExcelModule,GridModule} from "@progress/kendo-angular-grid";
-import { UserProfileComponent } from '../userprofile/userprofile.component';
 import { Injectable } from '@angular/core';
 import { IndicatorAddComponent } from './indicator-management/indicator-add/indicator-add.component';
 import { IndicatorEditComponent } from './indicator-management/indicator-edit/indicator-edit.component';
@@ -38,12 +37,32 @@ import { LabelModule } from "@progress/kendo-angular-label";
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatSelectFilterModule } from 'mat-select-filter';
+import { HierarchyFormPreviewComponent } from './hierarchy-form-preview/hierarchy-form-preview.component';
+import {MatDividerModule} from '@angular/material/divider';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { SignaturePadModule } from 'angular2-signaturepad';
+
+
 @Injectable({ providedIn: 'root' })
+
 
 
 @NgModule({
   
   imports: [
+    SignaturePadModule,
+    MatToolbarModule,
+    MatButtonToggleModule,
+    MatDatepickerModule,
+    MatTooltipModule,
+    MatCheckboxModule,
+    DragDropModule,
+    MatDividerModule,
     NgxSpinnerModule,
     NgxPaginationModule,
     CommonModule,
@@ -79,7 +98,8 @@ import { MatSelectFilterModule } from 'mat-select-filter';
       ExternaldataAddComponent,
       IndicatorManagementComponent,
       IndicatorAddComponent,
-      IndicatorEditComponent
+      IndicatorEditComponent,
+      HierarchyFormPreviewComponent
       ]
 ,
 bootstrap: [HierarchyManagementComponent],

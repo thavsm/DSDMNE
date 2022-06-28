@@ -44,12 +44,13 @@ import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 
-
-
+import { DropDownsModule } from "@progress/kendo-angular-dropdowns";
+import { LabelModule } from "@progress/kendo-angular-label";
+import { InputsModule } from "@progress/kendo-angular-inputs";
+import { ButtonsModule } from "@progress/kendo-angular-buttons";
 import { DatePipe } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
 
 
 import { AppRoutes } from './app.routing';
@@ -134,7 +135,10 @@ export class MaterialModule {}
       useHash: false
     }),
     HttpClientModule,
-
+    DropDownsModule,
+    LabelModule,
+    InputsModule,
+    ButtonsModule,
     MaterialModule,
     SidebarModule,
     NavbarModule,

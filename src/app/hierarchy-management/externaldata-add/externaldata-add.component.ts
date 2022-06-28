@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {NgxSpinner, NgxSpinnerService} from 'ngx-spinner';
 import { merge } from 'jquery';
 import * as moment from 'moment';
@@ -8,6 +8,8 @@ import { TreediagramService } from 'src/app/treediagram.service';
 declare var $: any;
 import { DatePipe } from '@angular/common';
 import Swal from 'sweetalert2'
+import { HierarchyManagementService } from 'src/app/hierarchy-management.service';
+import { HierarchyFormPreviewComponent } from '../hierarchy-form-preview/hierarchy-form-preview.component';
 
 
 @Component({
@@ -19,6 +21,7 @@ export class ExternaldataAddComponent implements OnInit {
 
   ExternalDataType: any=[];
   FormCategory: any=[];
+  NodeData: any=[];
   Form: any=[];
   ExternalData: any;
   FormFields: any[]
@@ -48,6 +51,7 @@ export class ExternaldataAddComponent implements OnInit {
   p: number = 1;
   nodeID: number = 0;
   TotalVal: any;
+  Preview: any;
   CalTotalVal: any;
   DataImportUpload: any;
   TableColumns: any;
@@ -61,13 +65,16 @@ export class ExternaldataAddComponent implements OnInit {
   divAdd: boolean  = true;
   divEdit: boolean  = false;
   divContorls : boolean  = true;
-
+  divNotForm: boolean  = false;
+  divIsForm: boolean  = false;
   thEdit: boolean  = true;
   thDelete: boolean  = true;
+  Indicators:any=[];
+  divIsFormField: boolean = false;
 
-  constructor(public dialogRef: MatDialogRef<ExternaldataAddComponent>,
+  constructor(public dialog: MatDialog ,public dialogRef: MatDialogRef<ExternaldataAddComponent>,
     @Inject(MAT_DIALOG_DATA) data,
-    public service: TreediagramService, public formBuilder: FormBuilder,private spinner: NgxSpinnerService, public datepipe: DatePipe) {
+    public service: TreediagramService,public Hierarchyservice: HierarchyManagementService, public formBuilder: FormBuilder,private spinner: NgxSpinnerService, public datepipe: DatePipe) {
 
       this.CalcAdd =data; 
       this.service.getExternalCalculationByNodeID(this.CalcAdd.nodeID);
@@ -118,9 +125,76 @@ export class ExternaldataAddComponent implements OnInit {
 
     this.hideEditButtons();
    
+    this.getIndicators();
+
   }
 
+  public filteredIndicators;
+  public filteredFormFields;
 
+  onformChangeIsForm(ob) {  
+    this.spinner.show();
+    this.service.GetFormFieldsByFormId(ob.value).subscribe(data => {
+      this.FormFields = data;
+      this.filteredFormFields = this.FormFields.slice();
+      this.spinner.hide();
+      this.divIsFormField = true;
+    }); 
+
+    this.SelectedForm = this.Form.find(i => i.formID === ob.value);
+  }  
+  
+  onIsformfieldChange(ob) {  
+    this.service.GetFormFieldsByFieldID(ob.value).subscribe(data => {
+      this.FormFieldsByFieldID = data;
+    });
+  }
+  onIsformCategoryChange(ob) {
+
+    this.spinner.show();
+    this.service.GetFormCategoryId(ob.value).subscribe(data => {   
+      this.Form = data;     
+      this.spinner.hide();
+      this.divIsForm = true;
+    });
+  }
+  openFormDesign(): void {
+
+    if (this.NodeData.FormName != "" && this.NodeData.fName) {
+
+      this.Preview = {
+        formID: this.NodeData.FormName,
+        indicatorID: this.NodeData.indicatorID,
+        formName: '' , //'DevelopmentandResearch19'
+        formCaptureID:'', 
+        state: 'edit',
+        fieldID: this.NodeData.fName
+      }
+  
+      const dialogRef = this.dialog.open(HierarchyFormPreviewComponent, {
+        width: '65%',
+        height: '65%',
+        data: this.Preview,
+        disableClose:true
+      });
+
+    }else {
+      this.showNotification('top', 'center', 'Please select a Form and Form Field before preview!', '', 'danger');
+      return;
+    }
+
+  }
+  
+  getIndicators(){
+    this.spinner.show();   
+    this.Hierarchyservice.getIndicatorNodes().subscribe(data => {
+         this.Indicators = data;
+         this.filteredIndicators = this.Indicators.slice();
+         this.spinner.hide();
+    });
+  }
+
+  
   hideEditButtons(){
 
 
@@ -148,6 +222,8 @@ export class ExternaldataAddComponent implements OnInit {
       this.divImportTableName = false;
       this.divExternalTableDataName = false;
       this.divExternalDataName = false;
+      this.divNotForm  = true;
+      this.divIsForm  = false;
 
     }else if(this.ExternalData.name == 2){
 
@@ -157,6 +233,8 @@ export class ExternaldataAddComponent implements OnInit {
       this.divImportTableName = true;
       this.divExternalTableDataName = false;
       this.divExternalDataName = false;
+      this.divNotForm  = true;
+      this.divIsForm  = false;
 
     }else if(this.ExternalData.name == 3){
 
@@ -166,7 +244,12 @@ export class ExternaldataAddComponent implements OnInit {
       this.divImportTableName = false;
       this.divExternalTableDataName = false;
       this.divExternalDataName = true;
+      this.divNotForm  = true;
+      this.divIsForm  = false;
 
+    }else if(this.ExternalData.name == 1003){
+      this.divNotForm  = false;
+      this.divIsForm  = true;
     }
 
 
@@ -836,6 +919,10 @@ export class ExternaldataAddComponent implements OnInit {
         });
       }
     })
+  }
+
+  closePopup() {
+    this.dialogRef.close();
   }
 
 

@@ -144,6 +144,10 @@ export class TreediagramService {
     return this.http.put(this.API_URL+'MetadataNodeForms/'+MetadataNodeFormID,data);
   }
 
+  DeleteLinkByIndicatorID(IndicatorID :number){
+    return this.http.post<any>(this.API_URL+'nodes/DeleteLinkByIndicatorID/'+IndicatorID, "");
+  }
+
   GetMetadataNodeFormID(nodeID:number){
     return this.http.get<any>(this.API_URL+'MetadataNodeForms/GetMetadataNodeFormID/'+nodeID);
   }
@@ -193,14 +197,17 @@ export class TreediagramService {
     return this.http.get<any>(this.APIUrl+'Forms/'+FormID+'/pages/FormFieldsByFormID');
   }
 
+  GetEXTFormFieldsByFormId(FormID:number){
+    return this.http.get<any>(this.APIUrl+'Forms/'+FormID+'/pages/GetEXTFormFieldsByFormId');
+  }
 
   GetFormFieldsByFieldID(FieldID:number){
     return this.http.get<any>(this.APIUrl+'Forms/'+FieldID+'/pages/FieldsByFieldID');
   }
 
-  getIndicatorNode(NodeID:number){
-    console.log(this.API_URL+'nodes/'+NodeID);
-    return this.http.get<any>(this.API_URL+'nodes/getIndicatorNode/'+NodeID);
+  getIndicatorNode(IndicatorID:number){
+    console.log(this.API_URL+'nodes/'+IndicatorID);
+    return this.http.get<any>(this.API_URL+'nodes/getIndicatorNode/'+IndicatorID);
 
   }
   
@@ -235,6 +242,10 @@ export class TreediagramService {
     .then(res=> this.ExternalMetadata = res as ExternalEdit[]);
     console.log(this.ExternalMetadata);
     
+  }
+
+  getExternalCalculationByIndicatorID(IndicatorID:number){
+    return this.http.get<any>(this.API_URL+'Trees/getExternalCalculationByNodeID/'+IndicatorID);
   }
 
   getTreeUpload(){
@@ -287,4 +298,7 @@ export class TreediagramService {
     return this.http.get<any>(this.API_URL+'Trees/getFacilityIndicatorsDataApproval?indicatorID='+indicatorID+'&locationType='+locationType+'&locationID='+locationID+'&year='+year+'&monthID='+monthID);
   }
 
+  getTaskDetails(taskID:number){
+    return this.http.get<any>(this.API_URL+'Trees/getTaskDetails?taskID='+taskID);
+  }
 }
