@@ -55,7 +55,7 @@ export const ROUTES: RouteInfo[] = [{
         path: '/administration',
         title: 'Administration',
         type: 'sub',
-        icontype: 'person',
+        icontype: 'manage_accounts',
         role: [],
         collapse: 'administration',
         children: [
@@ -154,7 +154,7 @@ export const ROUTES: RouteInfo[] = [{
         path: '/reports',
         title: 'Reports',
         type: 'sub',
-        icontype: 'person',
+        icontype: 'query_stats',
         role: [],
         collapse: 'reports',
         children: [

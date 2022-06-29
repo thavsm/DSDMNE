@@ -1,51 +1,56 @@
 <div class="main-content">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-12 ml-auto mr-auto">
-          <div class="card">
-            <div class="card-header card-header-rose card-header-icon">
-              <div class="card-icon">
-                <i class="material-icons">groups</i>
-              </div>
-              <div style="text-align: left;">
-                <hr>
-                <button class="btn btn-md btn-primary"   
-                    (click)="clickNewRole()">Add New Role</button>
-             </div>
-              <div class="card-body">
-                <div class="row">
-                  <kendo-grid [kendoGridBinding]="data" [pageSize]="10" [pageable]="true" [height]="700" 
-                    [filterable]="true" [sortable]="true" [groupable]="false">
-        
-                  <kendo-grid-column field="role" title="Role" [width]="4">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12 ml-auto mr-auto">
+        <div class="card">
+          <div class="card-header card-header-rose card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">groups</i>
+            </div>
+            <div class="card-body">
+              <br>
+              <br>
+              <button class="btn btn-md btn-primary" (click)="clickNewRole()">Add New Role</button>
+              <div class="row">
+                <kendo-grid [kendoGridBinding]="data" [pageSize]="10" [pageable]="true" [height]="700"
+                  [filterable]="true" [sortable]="true" [groupable]="false">
+
+                  <kendo-grid-column field="role" title="Role" [width]="5">
                   </kendo-grid-column>
-        
-                  <kendo-grid-column field="users" title="Users" [width]="2">
+
+                  <kendo-grid-column field="users" title="Users" [width]="1">
                   </kendo-grid-column>
-                  
                   <kendo-grid-column [width]="1">
                     <ng-template kendoGridCellTemplate let-dataItem>
                       <button mat-icon-button (click)="clickEditAccess(dataItem)">
-                          <mat-icon matTooltip="Update" class="mat-18" style="color: #016000;">edit</mat-icon>
+                        <mat-icon matTooltip="Access Rights" class="mat-18" style="color: #016000;">settings</mat-icon>
+                      </button>
+                    </ng-template>
+                  </kendo-grid-column>
+                  <kendo-grid-column [width]="1">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <button mat-icon-button (click)="clickEditRole(dataItem)">
+                        <mat-icon matTooltip="Update" class="mat-18" style="color: #016000;">edit</mat-icon>
                       </button>
                     </ng-template>
                   </kendo-grid-column>
                   <ng-template kendoPagerTemplate let-totalPages="totalPages" let-currentPage="currentPage">
-                    <kendo-pager-prev-buttons></kendo-pager-prev-buttons>             
+                    <kendo-pager-prev-buttons></kendo-pager-prev-buttons>
                     <kendo-pager-numeric-buttons [buttonCount]="10"></kendo-pager-numeric-buttons>
                     <kendo-pager-next-buttons></kendo-pager-next-buttons>
                     <kendo-pager-page-sizes [pageSizes]="pageSizes"></kendo-pager-page-sizes>
                     <kendo-pager-info></kendo-pager-info>
                     Current page: {{currentPage}}
-                 </ng-template>
+                  </ng-template>
                 </kendo-grid>
-                </div>
+              </div>
             </div>
           </div>
         </div>
-        </div>
       </div>
     </div>
+  </div>
 </div>
-  
-  
+<ngx-spinner bdColor="rgba(	237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: black">Processing...</p>
+</ngx-spinner>

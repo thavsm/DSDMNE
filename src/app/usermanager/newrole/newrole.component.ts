@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { HierarchyManagementService } from 'src/app/hierarchy-management.service';
 import { UserService } from '../../shared/user.service';
 declare var $: any;
 
@@ -13,36 +14,82 @@ declare var $: any;
 export class NewroleComponent implements OnInit {
 
 
+  data:any;
+  name:any='';
+  facilityType:any='-1';
+  isActive:boolean=true;
+  facilityTypes:any=[];
   formRole = this.fb.group({
     RoleName: ['',[Validators.required]]
   },{});
 
+ secondFormGroup = this.fb.group({
+  facilityType: ['', Validators.required],
+  });
+
   constructor(
     public dialogRef: MatDialogRef<NewroleComponent>,
-    private service: UserService, public formBuilder: FormBuilder,private spinner: NgxSpinnerService,
-    private fb: FormBuilder
-  ) {
-    
+    private service: UserService, public formBuilder: FormBuilder, private spinner: NgxSpinnerService,
+    private fb: FormBuilder, @Inject(MAT_DIALOG_DATA) d,private treeService:HierarchyManagementService) {
+    this.data = d;
   }
 
 
   ngOnInit(): void {
+    this.getFacilityTypes();
+    if(this.data.state=="edit"){
+      this.facilityType=this.data.data.facilityTypeID;
+      this.name=this.data.data.role;
+      if(this.data.data.concurrencyStamp!=null){
+        this.isActive=false;
+      }
+    }
+    else{
+      this.name='';
+      if(this.data.data.concurrencyStamp!=null){
+        this.isActive=false;
+      }
+    }
+  }
+
+  getFacilityTypes(){
+    this.treeService.getFacilityType().subscribe(res=>{
+      this.facilityTypes=res;
+    })
   }
 
   addRole(){
-
-    //roleName
-    let body = this.formRole.value.RoleName;
-    console.log(body);
-    this.service.addNewRole(body).subscribe(
+    let body = this.name;
+    let concurrency='';
+    if(this.isActive==false){
+      concurrency=new Date().toUTCString();
+    }
+    this.service.addNewRole(body,concurrency,-1,this.facilityType).subscribe(
       (res: any) => {
-        this.showNotification('top','right',res.message, 'Success','success');
+        this.showNotification('top','right',"Added role successfully", 'Success','success');
+        this.dialogRef.close();
       },
       err => {
         this.showNotification('top','right',err.error.message, 'Failed','danger');
       }
     );
+  }
 
+  editRole(){
+    let body =this.name;
+    let concurrency='';
+    if(this.isActive==false){
+      concurrency= new Date().toUTCString();
+    }
+    this.service.addNewRole(body,concurrency,this.data.data.roleID,this.facilityType).subscribe(
+      (res: any) => {
+        this.showNotification('top','right',"Updated role successfully", 'Success','success');
+        this.dialogRef.close();
+      },
+      err => {
+        this.showNotification('top','right',err.error.message, 'Failed','danger');
+      }
+    );
   }
 
   showNotification(from: any, align: any, message: any, title: any, type: string) {
