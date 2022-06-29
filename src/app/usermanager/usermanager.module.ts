@@ -17,6 +17,9 @@ import { InputsModule } from "@progress/kendo-angular-inputs";
 import { PDFModule, ExcelModule, } from "@progress/kendo-angular-grid";
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NewroleComponent } from './newrole/newrole.component';
+import { AngularDualListBoxModule } from 'angular-dual-listbox';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
     imports: [
@@ -30,7 +33,10 @@ import { NewroleComponent } from './newrole/newrole.component';
         InputsModule,
         PDFModule,
         ExcelModule,
-        NgxSpinnerModule
+        NgxSpinnerModule,
+        AngularDualListBoxModule,
+        MatStepperModule,
+        MatListModule
     ],
 
     declarations: [

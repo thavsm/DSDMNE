@@ -8,6 +8,11 @@ import { TypeRole } from '../typerole.model';
 import { FormRole } from '../formrole.model';
 import { MenuRole } from '../menurole.model';
 import { MenurolesComponent } from '../menuroles/menuroles.component';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { FormbuilderService } from 'src/app/shared/formbuilder.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HierarchyManagementService } from 'src/app/hierarchy-management.service';
+import { MatStepper } from '@angular/material/stepper';
 
 
 declare var $: any;
@@ -42,7 +47,7 @@ export class RoleaccessComponent implements OnInit {
 
   checksloaded = false;
 
-  constructor(private service: UserService, @Inject(MAT_DIALOG_DATA) data,public dialogRef: MatDialogRef<MenurolesComponent>) { 
+  constructor(private service: UserService, @Inject(MAT_DIALOG_DATA) data,public dialogRef: MatDialogRef<MenurolesComponent>,private fbservice: FormbuilderService, private spinner: NgxSpinnerService, private _formBuilder: FormBuilder,private treeService:HierarchyManagementService) { 
     this.roleAdd = data;
   }
 
@@ -58,11 +63,26 @@ export class RoleaccessComponent implements OnInit {
 
   selectionCaptureForms = new SelectionModel<roleItem>(true, []);
   selectionViewForms = new SelectionModel<roleItem>(true, []);
-  
+  format = {
+    add: 'Assign Indicator', remove: 'Unassign Indicator', all: 'Select All', none: 'Deselect All',
+    direction: 'left-to-right', draggable: true, locale: 'undefined'
+  };
+  userRoles: any;
+  IndicatorList:any;
+  key: string;
+  station: string;
+  treeList:any;
+  treeID:any;
+  searchTreeID:any;
+  firstFormGroup: FormGroup;
+  IndicatorRoleList:any[];
+  assigned=[];
+  source=[];
 
   @ViewChild('menuPaginator', {read:MatPaginator}) paginator: MatPaginator;
   @ViewChild('formPaginator', {read:MatPaginator}) paginatorForms: MatPaginator;
   @ViewChild('rolePaginator', {read:MatPaginator}) paginatorRoles: MatPaginator;
+  @ViewChild('stepper') private myStepper: MatStepper;
 
   ngAfterViewInit() {
     this.menuList.paginator = this.paginator;
@@ -74,7 +94,10 @@ export class RoleaccessComponent implements OnInit {
     //this.roleID = this.roleAdd.roleID;
     this.roleID = this.roleAdd;
     this.getRoles();
-    console.log(this.roleList);
+    this.getTrees();
+    this.firstFormGroup = this._formBuilder.group({
+      tree: ['', Validators.required],
+    });
   }
 
   closePopup(){
@@ -88,6 +111,37 @@ export class RoleaccessComponent implements OnInit {
       this.checksloaded = true;
   }
 
+  getTrees() {
+    this.treeService.getTreeByCatergory(1).subscribe(res => {
+      this.treeList = res;
+    });
+  };
+
+    //Returns all indicators that belong to a roles and a tree
+    getAllIndicators():void{
+      this.spinner.show();
+      this.treeService.getIndicatorNodes().subscribe(res => {
+        this.source = res;
+        this.treeService.getAssignedIndicatorNodesByTreeRoleID(this.roleID, this.treeID).subscribe(val => {
+          this.assigned = val;
+          this.spinner.hide();
+        });
+      });
+    }
+
+   //Assigns indicator/s to a role
+   assign():void{
+    if(this.assigned.length==0){
+      alert("Please select some indicators first");
+    }
+    else{
+      this.treeService.assignIndicators(this.assigned,this.roleID,this.treeID).subscribe(res=>{
+        this.showNotification('top', 'center', 'Assigned Indicators Successfully!', '', 'success');
+        this.myStepper.previous();
+        this.myStepper.previous();
+      });
+    }
+  }
   
   getRoles() {    
     this.service.getMenusRole(this.roleID).subscribe(data => {

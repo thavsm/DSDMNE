@@ -130,8 +130,8 @@ export class UserService {
   }
 
   
-  addNewRole(role: string) {
-    return this.http.post(this.BaseURI + '/ApplicationUser/AddNewRole?role='+role,  role);
+  addNewRole(role: string,concurrency:any,roleID:any,typeID:any) {
+    return this.http.post(this.BaseURI + '/ApplicationUser/AddNewRole?role='+role+'&concurrency='+concurrency+'&roleID='+roleID+'&typeID='+typeID,  role);
   }
 
   deleteFormRoles(formID: number) {
