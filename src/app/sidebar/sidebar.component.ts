@@ -117,7 +117,7 @@ export const ROUTES: RouteInfo[] = [{
     },{
         //path: '/indicator-report',
         path: '/indicatorapproval',
-        title: 'Indicator Approval',
+        title: 'Indicator Approval-hide',
         type: 'link',
         icontype: 'fact_check',
         role: []
