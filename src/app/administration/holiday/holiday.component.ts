@@ -96,7 +96,7 @@ export class HolidayComponent implements OnInit {
   clickDelete(item: any) {
     if (item.id <11)
     {
-      alert ("Not allowed to delete this Holiday")
+      this.showNotification('top','center','Not allowed to delete this Holiday','Danger.','danger');   
     }
     else{
     Swal.fire({
@@ -124,8 +124,8 @@ export class HolidayComponent implements OnInit {
 
   clickEdit(item: any) {
     if (item.id <11)
-    {
-      alert ("Not allowed to edit this Holiday")
+    {      
+      this.showNotification('top','center','Not allowed to edit this Holiday','Warning.','warning');      
     }
     else{
     this.holidayAdd = item;
