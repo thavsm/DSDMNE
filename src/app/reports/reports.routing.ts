@@ -2,6 +2,7 @@ import { IframereportsviewerComponent } from './iframereportsviewer/iframereport
 import { Routes } from '@angular/router';
 import { ReportsviewerComponent } from './reportsviewer/reportsviewer.component';
 import { SqlreportsComponent } from './sqlreports/sqlreports.component'
+import { PowerBiViewerComponent } from './power-bi-viewer/power-bi-viewer.component';
 
 export const ReportsRoutes: Routes = [
     {
@@ -9,6 +10,10 @@ export const ReportsRoutes: Routes = [
         children: [ {
             path: 'sqlreports',
             component: SqlreportsComponent
+        },
+        {
+            path: 'powerBireports',
+            component: PowerBiViewerComponent
         },
         {
             path: 'iframereportsviewer/:id',
