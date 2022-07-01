@@ -51,6 +51,18 @@ export class UserService {
     return this.http.post(this.BaseURI + '/ApplicationUser/Register', body);
   }
 
+  InsertFinancialPeriod(data: any) {
+    return this.http.post(this.BaseURI + '/Scheduler/InsertFinancialPeriod', data);
+  }
+  
+  UpdateFinancialPeriod(data: any) {
+    return this.http.post(this.BaseURI + '/Scheduler/UpdateFinancialPeriod', data);
+  }
+
+  InsertPeriods(data: any) {
+    return this.http.post(this.BaseURI + '/Scheduler/InsertPeriods', data);
+  }
+
   login(formData: any) {
     this.showMenu.next(true);
     return this.http.post(this.BaseURI + '/ApplicationUser/Login', formData);
@@ -225,11 +237,16 @@ export class UserService {
   }
 
   getFinancialYear(id:number) {
-    return this.http.get<any>(this.BaseURI + '/FinancialYears');
+    return this.http.get<any>(this.BaseURI + '/FinancialYears/'+ id);
   }
+
 
   getSchedule() {
     return this.http.get<any>(this.BaseURI + '/Schedules');
+  }
+
+  getFinancialPeriods(id:number) {
+    return this.http.get<any>(this.BaseURI + '/Scheduler/SelectFinancialPeriods/'+ id);
   }
 
 }

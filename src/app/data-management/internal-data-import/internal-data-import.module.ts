@@ -22,6 +22,7 @@ import { GridModule } from '@progress/kendo-angular-grid';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 import { AngularDualListBoxModule } from 'angular-dual-listbox';
+import {MatListModule} from '@angular/material/list';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { AngularDualListBoxModule } from 'angular-dual-listbox';
     ButtonsModule,
     GridModule,
     InputsModule,
-    PDFExportModule
+    PDFExportModule,
+    MatListModule
   ]
 })
 export class InternalDataImportModule { }

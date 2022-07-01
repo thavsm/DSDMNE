@@ -15,267 +15,205 @@
                     <h4 class="card-title">Scheduler</h4>
                   </div>
                     <div class="card-body">
-                        <form class="form" [formGroup]="formModel"  method="" action="" (submit)="onSubmit()">
-                            <div class="row">                              
+                        <form class="form" [formGroup]="formModel"  method="" action="">
+                            <div class="row">   
+                              <div class="col-md-12">
+                                <div class="form-group has-default">
+                                  <div class="form-group">
+                                      <legend>Financial Year</legend>                                                             
+                                  </div>
+                                </div>
+                              </div> 
+
                               <div class="col-md-5 ml-auto">
                                 <div class="form-group has-default">
-                                  <div class="input-group">
-                                    <!-- <div class="input-group-prepend">
-                                      <span class="input-group-text">
-                                        <i class="material-icons">accessibility</i>
-                                      </span>
-                                    </div> -->
-                                    <legend>Financial Year</legend>
-                                    <mat-select class="form-control" placeholder="Year..." formControlName="Year" >
-                                      <mat-option *ngFor="let year of years" [value]="year.id" (click)="loadYear(year)" >
-                                        {{ year.fy }}
-                                      </mat-option>
-                                    </mat-select>
+                                  <div class="form-group">
+                                 <!-- <legend>Financial Year</legend>  -->
+                                    <mat-form-field appearance="outline">
+                                      <mat-select formControlName="Year" [(ngModel)]="Year" >
+                                        <mat-option *ngFor="let year of years" [value]="year.fy" (click)="loadYear(year)" >
+                                          {{ year.fy }}
+                                        </mat-option>
+                                      </mat-select>  
+                                    </mat-form-field>                              
                                   </div>
-                                  <!-- <span class="text-danger ml-5"
-                                    *ngIf="formModel.get('Role').touched && formModel.get('Role').errors?.required">This
-                                    field is mandatory.</span> -->
                                 </div>
                               </div>  
-                              <div class="col-md-5 mr-auto">
-                               
+
+                              <div class="col-md-5 ml-auto">
+                                <div class="form-group has-default">
+                                  <div class="form-group">
+                                    <button  (click)="InsertFinancialPeriods()" class="btn btn-md btn-primary">Add Financial Year</button>                   
+                                  </div>
+                                </div>
                               </div>  
-                                                            
+                                                           
                               <div class="col-md-5 ml-auto" >
                                 <div class="form-group has-default">
                                   <div class="input-group">                                    
                                     Start Date
-                                    <mat-form-field >
-                                        <input matInput [matDatepicker]="start"  (click)="start.open()"  formControlName="Start">
+                                    <mat-form-field appearance="outline"> 
+                                        <input matInput [matDatepicker]="start"  (click)="start.open()"  formControlName="Start" [(ngModel)]="StartDate">
                                         <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
                                         <mat-datepicker #start></mat-datepicker>
                                     </mat-form-field>
                                   </div>
-                                  <!-- <span class="text-danger ml-5"
-                                    *ngIf="formModel.get('Password').touched && formModel.get('Password').errors?.required">This
-                                    field is mandatory.</span>
-                                  <span class="text-danger ml-5"
-                                    *ngIf="formModel.get('Password').touched && formModel.get('Password').errors?.minlength">Minimum
-                                    4 characters required.</span> -->
                                 </div>
                               </div>
+
                               <div class="col-md-5 mr-auto" >
                                 <div class="form-group has-default">
                                   <div class="input-group">
                                     End Date
-                                    <mat-form-field >
-                                        <input matInput [matDatepicker]="end"  (click)="end.open()" formControlName="End">
+                                    <mat-form-field appearance="outline"> 
+                                        <input matInput [matDatepicker]="end"  (click)="end.open()" formControlName="End" [(ngModel)]="EndDate">
                                         <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
                                         <mat-datepicker #end></mat-datepicker>
                                     </mat-form-field>
                                   </div>
-                                  <!-- <span class="text-danger ml-5"
-                                    *ngIf="formModel.get('ConfirmPassword').touched && formModel.get('ConfirmPassword').errors?.required">This
-                                    field is mandatory.</span>
-                                  <span class="text-danger ml-5"
-                                    *ngIf="formModel.get('ConfirmPassword').touched && formModel.get('ConfirmPassword').errors?.passwordMismatch">Confirm
-                                    Password does not match.</span> -->
                                 </div>
                               </div>
 
-                              <div class="col-md-5 ml-auto" >
-                                  Facility
+
+                              <div class="col-md-12">
                                 <div class="form-group has-default">
-                                  <div class="input-group">                                    
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                          <i class="material-icons">time</i>
-                                        </span>
-                                    </div>
-                                    <input type="text" class="form-control" placeholder="Capture Days..." formControlName="Facility">                                    
+                                  <div class="form-group">
+                                    <legend>Financial Quarters</legend>                                                               
                                   </div>
                                 </div>
-                              </div>
-                              <div class="col-md-5 mr-auto" >   
-                                Notification                             
+                              </div> 
+
+                              <div class="col-md-5 ml-auto" >
                                 <div class="form-group has-default">
-                                  <div class="input-group">                                    
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                          <i class="material-icons">time</i>
-                                        </span>
+                                  <div class="input-group"> 
+                                    <div class="input-group">
+                                      Quarter 1 Start Date 
+                                      <mat-form-field appearance="outline"> 
+                                          <input matInput [matDatepicker]="startQ1"  formControlName="StartQ1" [(ngModel)]="StartQ1">
+                                          <mat-datepicker-toggle matSuffix [for]="startQ1"></mat-datepicker-toggle>
+                                          <mat-datepicker #startQ1></mat-datepicker>
+                                      </mat-form-field>
                                     </div>
-                                    <input type="text" class="form-control" placeholder="Reminder Day" formControlName="FacilityReminder">                                    
                                   </div>
                                 </div>
-                              </div>
-                              <div class="col-md-5 ml-auto" >
-                                  Service Point
+                              </div> 
+                              
+                              <div class="col-md-5 mr-auto">
                                 <div class="form-group has-default">
                                   <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                          <i class="material-icons">time</i>
-                                        </span>
+                                    <div class="input-group">
+                                      Quarter 1 End Date
+                                      <mat-form-field appearance="outline"> 
+                                        <input matInput [matDatepicker]="endQ1" formControlName="EndQ1" [(ngModel)]="EndQ1">
+                                        <mat-datepicker-toggle matSuffix [for]="endQ1"></mat-datepicker-toggle>
+                                        <mat-datepicker #endQ1></mat-datepicker>
+                                      </mat-form-field>
                                     </div>
-                                    <input type="text" class="form-control" placeholder="Approve Days..." formControlName="ServicePoint">                                    
                                   </div>
                                 </div>
                               </div>
-                              <div class="col-md-5 mr-auto" >
-                                Notification
-                                <div class="form-group has-default">
-                                    <div class="input-group">
-                                      <div class="input-group-prepend">
-                                          <span class="input-group-text">
-                                            <i class="material-icons">time</i>
-                                          </span>
-                                      </div>
-                                      <input type="text" class="form-control" placeholder="Reminder Day" formControlName="ServicePointReminder">                                    
-                                    </div>
-                                  </div>
-                              </div>
-                              <div class="col-md-5 ml-auto" >
-                                District Manager
-                                <div class="form-group has-default">
-                                <div class="input-group">                                    
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="material-icons">time</i>
-                                        </span>
-                                    </div>
-                                    <input type="text" class="form-control" placeholder="Approve Days..." formControlName="District">                                    
-                                </div>
-                                </div>
-                              </div>
-                              <div class="col-md-5 mr-auto" >
-                                Notification
-                                <div class="form-group has-default">
-                                    <div class="input-group">                                    
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="material-icons">time</i>
-                                        </span>
-                                    </div>
-                                    <input type="text" class="form-control" placeholder="Reminder Day" formControlName="DistrictReminder">                                    
-                                    </div>
-                                </div>
-                              </div>
-                            <div class="col-md-5 ml-auto" >
-                                Provincial Programme Manager
-                            <div class="form-group has-default">
-                                <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <i class="material-icons">time</i>
-                                    </span>
-                                </div>
-                                <input type="text" class="form-control" placeholder="Approve Days..." formControlName="PPM">                                    
-                                </div>
-                            </div>
-                            </div>
-                            <div class="col-md-5 mr-auto" >
-                                Notification
-                                <div class="form-group has-default">
-                                    <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="material-icons">time</i>
-                                        </span>
-                                    </div>
-                                    <input type="text" class="form-control" placeholder="Reminder Days" formControlName="PPMReminder">                                    
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-5 ml-auto" >
-                                Provincial M&E
-                            <div class="form-group has-default">
-                                <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <i class="material-icons">time</i>
-                                    </span>
-                                </div>
-                                <input type="text" class="form-control" placeholder="Approve Days..." formControlName="PME">                                    
-                                </div>
-                            </div>
-                            </div>
-                            <div class="col-md-5 mr-auto" >
-                                Notification
-                                <div class="form-group has-default">
-                                    <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="material-icons">time</i>
-                                        </span>
-                                    </div>
-                                    <input type="text" class="form-control" placeholder="Reminder Day" formControlName="PMEReminder">                                    
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-5 ml-auto" >
-                                Provincial HOD
-                            <div class="form-group has-default">
-                                <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <i class="material-icons">time</i>
-                                    </span>
-                                </div>
-                                <input type="text" class="form-control" placeholder="Approve Days..." formControlName="HOD">                                    
-                                </div>
-                            </div>
-                            </div>
-                            <div class="col-md-5 mr-auto" >
-                                Notification
-                                <div class="form-group has-default">
-                                    <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="material-icons">time</i>
-                                        </span>
-                                    </div>
-                                    <input type="text" class="form-control" placeholder="Reminder Day" formControlName="HODReminder">                                    
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-5 ml-auto" >
-                             National M&E
-                            <div class="form-group has-default">
-                                <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        <i class="material-icons">time</i>
-                                    </span>
-                                </div>
-                                <input type="text" class="form-control" placeholder="Approve Days..." formControlName="NAT">                                    
-                                </div>
-                            </div>
-                            </div>
-                            <div class="col-md-5 mr-auto" >
-                                Notification
-                                <div class="form-group has-default">
-                                    <div class="input-group">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">
-                                            <i class="material-icons">time</i>
-                                        </span>
-                                    </div>
-                                    <input type="text" class="form-control" placeholder="Reminder Day" formControlName="NATReminder">                                    
-                                    </div>
-                                </div>
-                            </div>
-                                                 
-                              <div class="col-md-12">
-                                <div class="text-center">
-                                  <!-- <button type="submit" class="btn btn-primary btn-round mt-4" [disabled]="!formModel.valid">Sign
-                                    Up</button> -->
-                                    <button type="submit" class="btn btn-primary btn-round mt-4">Save </button>
-                                </div>
-                              </div>
-                            </div>                        
 
-                        </form>
-            
+                              <div class="col-md-5 ml-auto" >
+                                <div class="form-group has-default">
+                                  <div class="input-group"> 
+                                    <div class="input-group">
+                                      Quarter 2 Start Date 
+                                      <mat-form-field appearance="outline"> 
+                                          <input matInput [matDatepicker]="startQ2" formControlName="StartQ2" [(ngModel)]="StartQ2">
+                                          <mat-datepicker-toggle matSuffix [for]="startQ2"></mat-datepicker-toggle>
+                                          <mat-datepicker #startQ2></mat-datepicker>
+                                      </mat-form-field>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div> 
+                              
+                              <div class="col-md-5 mr-auto">
+                                <div class="form-group has-default">
+                                  <div class="input-group">
+                                    <div class="input-group">
+                                      Quarter 2 End Date
+                                      <mat-form-field appearance="outline"> 
+                                        <input matInput [matDatepicker]="endQ2" formControlName="EndQ2" [(ngModel)]="EndQ2">
+                                        <mat-datepicker-toggle matSuffix [for]="endQ2"></mat-datepicker-toggle>
+                                        <mat-datepicker #endQ2></mat-datepicker>
+                                      </mat-form-field>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                                                           
+                              <div class="col-md-5 ml-auto" >
+                                <div class="form-group has-default">
+                                  <div class="input-group"> 
+                                    <div class="input-group">
+                                      Quarter 3 Start Date 
+                                      <mat-form-field  appearance="outline"> 
+                                          <input matInput [matDatepicker]="startQ3" formControlName="StartQ3" [(ngModel)]="StartQ3">
+                                          <mat-datepicker-toggle matSuffix [for]="startQ3"></mat-datepicker-toggle>
+                                          <mat-datepicker #startQ3></mat-datepicker>
+                                      </mat-form-field>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div> 
+                              
+                              <div class="col-md-5 mr-auto">
+                                <div class="form-group has-default">
+                                  <div class="input-group">
+                                    <div class="input-group">
+                                      Quarter 3 End Date
+                                      <mat-form-field appearance="outline"> 
+                                        <input matInput [matDatepicker]="endQ3" formControlName="EndQ3" [(ngModel)]="EndQ3">
+                                        <mat-datepicker-toggle matSuffix [for]="endQ3"></mat-datepicker-toggle>
+                                        <mat-datepicker #endQ3></mat-datepicker>
+                                      </mat-form-field>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="col-md-5 ml-auto" >
+                                <div class="form-group has-default">
+                                  <div class="input-group"> 
+                                    <div class="input-group">
+                                      Quarter 4 Start Date 
+                                      <mat-form-field appearance="outline"> 
+                                          <input matInput [matDatepicker]="startQ4" formControlName="StartQ4" [(ngModel)]="StartQ4">
+                                          <mat-datepicker-toggle matSuffix [for]="startQ4"></mat-datepicker-toggle>
+                                          <mat-datepicker #startQ4></mat-datepicker>
+                                      </mat-form-field>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div> 
+                              
+                              <div class="col-md-5 mr-auto">
+                                <div class="form-group has-default">
+                                  <div class="input-group">
+                                    <div class="input-group">
+                                      Quarter 4 End Date
+                                      <mat-form-field appearance="outline"> 
+                                        <input matInput [matDatepicker]="endQ4" formControlName="EndQ4" [(ngModel)]="EndQ4">
+                                        <mat-datepicker-toggle matSuffix [for]="endQ4"></mat-datepicker-toggle>
+                                        <mat-datepicker #endQ4></mat-datepicker>
+                                      </mat-form-field>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-12">
+                                <div class="text-right">
+                                    <button  (click)="onSubmit()" class="btn btn-md btn-primary" *ngIf="btnSave">Save</button> 
+                                    <button  (click)="onSubmitEdit()" class="btn btn-md btn-primary" *ngIf="btnEdit">Edit</button> 
+                                </div>
+                              </div>
+                            </div>
+                        </form>         
                     </div>
                 </div>
             </div>
-        </div>        
+        </div>   
       </div>
     </div>
   </div>
