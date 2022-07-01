@@ -141,6 +141,11 @@ export class UserService {
     //return this.http.post(this.BaseURI + '/Lookup/AddRole', body);
   }
 
+  
+  addNewRole(role: string,concurrency:any,roleID:any,typeID:any) {
+    return this.http.post(this.BaseURI + '/ApplicationUser/AddNewRole?role='+role+'&concurrency='+concurrency+'&roleID='+roleID+'&typeID='+typeID,  role);
+  }
+
   deleteFormRoles(formID: number) {
     return this.http.delete(this.BaseURI + '/ApplicationUser/DeleteFormRoles?formID='+formID);
   }
@@ -151,8 +156,8 @@ export class UserService {
   }
 
   
-  addFormRoles(formRoles: any) {
-    return this.http.post(this.BaseURI + '/ApplicationUser/AddFormRoles', formRoles);
+  addFormRoles(formRoles: any,role) {
+    return this.http.post(this.BaseURI + '/ApplicationUser/AddFormRoles?roleID='+role, formRoles);
   }
 
   
@@ -175,8 +180,8 @@ export class UserService {
     return this.http.get<any>(this.BaseURI + '/ApplicationUser/GetTypeRoles?roleID='+roleID);
   }
 
-  addMenusRole(menusRole: any) {
-    return this.http.post(this.BaseURI + '/ApplicationUser/AddRoleMenus', menusRole);
+  addMenusRole(menusRole: any,role:any) {
+    return this.http.post(this.BaseURI + '/ApplicationUser/AddRoleMenus?roleID='+role, menusRole);
   }
   
   getRoleMenus(role: string) {
@@ -222,8 +227,8 @@ export class UserService {
     return this.http.get<any>(this.BaseURI + '/ApplicationUser/GetRoleTypes');
   }
 
-  addTypeRoles(typeRoles: any) {
-    return this.http.post(this.BaseURI + '/ApplicationUser/AddTypeRoles', typeRoles);
+  addTypeRoles(typeRole: any,role:any) {
+    return this.http.post(this.BaseURI + '/ApplicationUser/AddTypeRoles?roleID='+role,typeRole);
   }
 
   

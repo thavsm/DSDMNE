@@ -12,17 +12,22 @@
           <ul class="nav nav-pills nav-pills-warning nav-pills-icons justify-content-center" role="tablist">
             <li class="nav-item">
               <a class="nav-link" data-toggle="tab" href="#link7" role="tablist">
-                <i class="material-icons">assignment</i> Menus
+                <i class="material-icons">list</i> Menu Access
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" data-toggle="tab" href="#link8" role="tablist">
-                <i class="material-icons">article</i> Forms
+                <i class="material-icons">summarize</i> Form Access
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link" data-toggle="tab" href="#link9" role="tablist">
-                <i class="material-icons">accessibility</i> Types
+                <i class="material-icons">accessibility</i> Role Type
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#link10" role="tablist">
+                <i class="material-icons">assignment_turned_in</i> Mapped Indicators
               </a>
             </li>
           </ul>
@@ -43,16 +48,16 @@
                       <!-- Checkbox Column -->
                       <ng-container matColumnDef="select">
                         <th mat-header-cell *matHeaderCellDef>
-                          <mat-checkbox (change)="$event ? masterToggle() : null"
+                          <!-- <mat-checkbox (change)="$event ? masterToggle() : null"
                             [checked]="selection.hasValue() && isAllSelected()"
                             [indeterminate]="selection.hasValue() && !isAllSelected()">
-                          </mat-checkbox>
+                          </mat-checkbox>   -->
                         </th>
-                        <td mat-cell *matCellDef="let row">
-                          <mat-checkbox (click)="$event.stopPropagation()"
-                            (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
-                          </mat-checkbox>
-                        </td>
+                          <td mat-cell *matCellDef="let row">
+                            <mat-checkbox (click)="$event.stopPropagation()"
+                              (change)="onToggleChangeMenu(row,$event)" [checked]="selection.isSelected(row)">
+                            </mat-checkbox>
+                          </td>
                       </ng-container>
 
                       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -79,7 +84,7 @@
                         <th mat-header-cell *matHeaderCellDef>Capture</th>
                         <td mat-cell *matCellDef="let row">
                           <mat-checkbox (click)="$event.stopPropagation()"
-                            (change)="$event ? selectionCaptureForms.toggle(row) : null"
+                          (change)="onToggleChangeCaptureForms(row,$event)"
                             [checked]="selectionCaptureForms.isSelected(row)">
                           </mat-checkbox>
                         </td>
@@ -90,7 +95,7 @@
                         <th mat-header-cell *matHeaderCellDef>View</th>
                         <td mat-cell *matCellDef="let row">
                           <mat-checkbox (click)="$event.stopPropagation()"
-                            (change)="$event ? selectionViewForms.toggle(row) : null"
+                          (change)="onToggleChangeViewForms(row,$event)"
                             [checked]="selectionViewForms.isSelected(row)">
                           </mat-checkbox>
                         </td>
@@ -142,7 +147,7 @@
                         </th>
                         <td mat-cell *matCellDef="let row">
                           <mat-checkbox (click)="$event.stopPropagation()"
-                            (change)="$event ? selectionRole.toggle(row) : null"
+                            (change)="onToggleChangeTypes(row,$event)"
                             [checked]="selectionRole.isSelected(row)">
                           </mat-checkbox>
                         </td>
@@ -155,6 +160,61 @@
                       aria-label="Select page of periodic elements">
                     </mat-paginator>
                   </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="link10">
+              <div class="card">
+                <div class="card-body">
+                  <mat-stepper orientation="vertical" [linear]="true" #stepper>
+                    <mat-step [stepControl]="firstFormGroup">
+                        <form [formGroup]="firstFormGroup">
+                            <ng-template matStepLabel>Select a Tree</ng-template>
+                            <mat-form-field appearance="outline" style="width: 700px;">
+                                <mat-label>Select a Tree</mat-label>
+                                <mat-select [(ngModel)]="treeID" matInput
+                                    formControlName="tree" required>
+                                    <mat-option *ngFor="let tree of treeList"
+                                        [value]="tree.treeID">
+                                        {{tree.name}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                            <div>
+                                <button class="btn btn-md btn-primary" mat-button
+                                    matStepperNext  (click)=getAllIndicators()>Next</button>
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step>
+                        <ng-template matStepLabel>Select Indicators</ng-template>
+                        <dual-list [source]="source" [(destination)]="assigned"
+                            height="300px" key="indicatorID" display="indicatorName"
+                            [filter]="true" [format]="format">
+                        </dual-list>
+                        <hr>
+                        <div>
+                            <button class="btn btn-md btn-primary" mat-button
+                                matStepperPrevious>Back</button>
+                            <button class="btn btn-md btn-primary" mat-button
+                                matStepperNext>Next</button>
+                        </div>
+                    </mat-step>
+                    <mat-step>
+                        <ng-template matStepLabel>Assign Indicators to role</ng-template>
+                        <h6>The Capture Role will be assigned to these indicators:</h6>
+                        <mat-list>
+                            <mat-list-item *ngFor="let assign of assigned">
+                                -> {{assign.indicatorName}}
+                            </mat-list-item>
+                        </mat-list>
+                        <button class="btn btn-md" class="btn btn-md btn-primary"
+                            (click)=assign()>Assign</button>
+                        <button class="btn btn-md btn-primary" mat-button
+                            matStepperPrevious>Back</button>
+                        <hr>
+                    </mat-step>
+                </mat-stepper>
                 </div>
               </div>
             </div>

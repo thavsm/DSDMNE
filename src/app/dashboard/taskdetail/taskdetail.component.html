@@ -17,7 +17,7 @@
                                     <textarea matInput rows="1" [(ngModel)]="comment"></textarea>
                                 </mat-form-field>
                             </div>
-                            <div class="col-sm-2" *ngIf="pid==1">
+                            <div class="col-sm-2" *ngIf="pid>2">
                                 <mat-form-field appearance="standard">
                                     <mat-label>Action Taken</mat-label>
                                     <mat-select [(value)]="actTakenID" (selectionChange)='onActionSelected($event)'>
@@ -27,7 +27,7 @@
                                     </mat-select>
                                 </mat-form-field>
                             </div>
-                            <div class="col-sm-2" *ngIf="pid==1">
+                            <div class="col-sm-2" *ngIf="pid>2">
                                 <mat-form-field appearance="standard">
                                     <mat-label>User</mat-label>
                                     <mat-select [(value)]="nextUserID" (selectionChange)='onUserSelected($event)'>

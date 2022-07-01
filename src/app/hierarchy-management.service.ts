@@ -110,6 +110,10 @@ export class HierarchyManagementService {
   getAssignedRolesNodesByTreeIndicatorID(indicatorID :any ,treeID):Observable<any[]>{
     return this.http.get<any>(this.API_URL+'Trees/'+indicatorID+'/'+treeID+'/AssignedRolesNodesByIndicator');
   }
+
+  getFacilityType(){
+    return this.http.get<any>(this.API_URL+'Trees/getFacilityType');
+  }
   //#endregion
 }
 

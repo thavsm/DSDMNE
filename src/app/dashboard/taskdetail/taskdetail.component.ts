@@ -144,6 +144,13 @@ export class TaskDetailComponent implements OnInit {
        }
     }
     
+    if(this.pid === 1) {
+      this.nextUserID = "11";//system user
+      if(this.actTakenID === undefined) {
+         this.actTakenID = "1";
+      }
+   }
+
     let formData1 = {
       WorkflowID: parseInt(wkid),
       TaskID: parseInt(tid),

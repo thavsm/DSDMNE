@@ -8,6 +8,11 @@ import { TypeRole } from '../typerole.model';
 import { FormRole } from '../formrole.model';
 import { MenuRole } from '../menurole.model';
 import { MenurolesComponent } from '../menuroles/menuroles.component';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { FormbuilderService } from 'src/app/shared/formbuilder.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HierarchyManagementService } from 'src/app/hierarchy-management.service';
+import { MatStepper } from '@angular/material/stepper';
 
 
 declare var $: any;
@@ -42,7 +47,7 @@ export class RoleaccessComponent implements OnInit {
 
   checksloaded = false;
 
-  constructor(private service: UserService, @Inject(MAT_DIALOG_DATA) data,public dialogRef: MatDialogRef<MenurolesComponent>) { 
+  constructor(private service: UserService, @Inject(MAT_DIALOG_DATA) data,public dialogRef: MatDialogRef<MenurolesComponent>,private fbservice: FormbuilderService, private spinner: NgxSpinnerService, private _formBuilder: FormBuilder,private treeService:HierarchyManagementService) { 
     this.roleAdd = data;
   }
 
@@ -58,11 +63,26 @@ export class RoleaccessComponent implements OnInit {
 
   selectionCaptureForms = new SelectionModel<roleItem>(true, []);
   selectionViewForms = new SelectionModel<roleItem>(true, []);
-  
+  format = {
+    add: 'Assign Indicator', remove: 'Unassign Indicator', all: 'Select All', none: 'Deselect All',
+    direction: 'left-to-right', draggable: true, locale: 'undefined'
+  };
+  userRoles: any;
+  IndicatorList:any;
+  key: string;
+  station: string;
+  treeList:any;
+  treeID:any;
+  searchTreeID:any;
+  firstFormGroup: FormGroup;
+  IndicatorRoleList:any[];
+  assigned=[];
+  source=[];
 
   @ViewChild('menuPaginator', {read:MatPaginator}) paginator: MatPaginator;
   @ViewChild('formPaginator', {read:MatPaginator}) paginatorForms: MatPaginator;
   @ViewChild('rolePaginator', {read:MatPaginator}) paginatorRoles: MatPaginator;
+  @ViewChild('stepper') private myStepper: MatStepper;
 
   ngAfterViewInit() {
     this.menuList.paginator = this.paginator;
@@ -74,7 +94,10 @@ export class RoleaccessComponent implements OnInit {
     //this.roleID = this.roleAdd.roleID;
     this.roleID = this.roleAdd;
     this.getRoles();
-    console.log(this.roleList);
+    this.getTrees();
+    this.firstFormGroup = this._formBuilder.group({
+      tree: ['', Validators.required],
+    });
   }
 
   closePopup(){
@@ -88,10 +111,39 @@ export class RoleaccessComponent implements OnInit {
       this.checksloaded = true;
   }
 
+  getTrees() {
+    this.treeService.getTreeByCatergory(1).subscribe(res => {
+      this.treeList = res;
+    });
+  };
+
+    //Returns all indicators that belong to a roles and a tree
+    getAllIndicators():void{
+      this.spinner.show();
+      this.treeService.getIndicatorNodes().subscribe(res => {
+        this.source = res;
+        this.treeService.getAssignedIndicatorNodesByTreeRoleID(this.roleID, this.treeID).subscribe(val => {
+          this.assigned = val;
+          this.spinner.hide();
+        });
+      });
+    }
+
+   //Assigns indicator/s to a role
+   assign():void{
+    if(this.assigned.length==0){
+      alert("Please select some indicators first");
+    }
+    else{
+      this.treeService.assignIndicators(this.assigned,this.roleID,this.treeID).subscribe(res=>{
+        this.showNotification('top', 'center', 'Assigned Indicators Successfully!', '', 'success');
+        this.myStepper.previous();
+        this.myStepper.previous();
+      });
+    }
+  }
   
   getRoles() {    
-    
-
     this.service.getMenusRole(this.roleID).subscribe(data => {
       this.menuList.data = data;
       console.log( this.menuList.data)
@@ -212,18 +264,8 @@ export class RoleaccessComponent implements OnInit {
 
 
 
-  addRoleAccess()
+addRoleAccess()
   {
-
-    // this.froles = [];
-    // this.selectionForms.selected.forEach(row => {
-    //   this.frole = new FormRole();      
-    //   this.frole.formID = row.id;
-    //   this.frole.roleID = this.roleID;
-    //   this.frole.uid = 0;
-    //   this.froles.push(this.frole);
-    // });
-
     this.froles = [];
     this.selectionCaptureForms.selected.forEach(row => {
       this.frole = new FormRole();      
@@ -252,11 +294,10 @@ export class RoleaccessComponent implements OnInit {
         this.froles.push(this.fvrole);
       }      
     });
-
-    this.service.addFormRoles(this.froles).subscribe(
+    this.service.addFormRoles(this.froles,this.roleID).subscribe(
       (res: any) => {
         if (res.message == 'Role added successfully') {
-        this.showNotification('top','right','Form roles added!', 'Roles successful.','success');
+        this.showNotification('top','right','', 'Forms updated successfully.','success');
         }
         else{}
       },
@@ -277,10 +318,10 @@ export class RoleaccessComponent implements OnInit {
       this.mroles.push(this.mrole);
     });
 
-    this.service.addMenusRole(this.mroles).subscribe(
+    this.service.addMenusRole(this.mroles,this.roleID).subscribe(
       (res: any) => {
         if (res.message == 'Menu added successfully') {
-        this.showNotification('top','right','Menus role added!', 'Role successful.','success');
+        this.showNotification('top','right','', 'Menus updated successfully.','success');
         }
         else{}
       },
@@ -300,11 +341,10 @@ export class RoleaccessComponent implements OnInit {
       this.trole.uid = 0;
       this.typeroles.push(this.trole);
     });
-
-    this.service.addTypeRoles(this.typeroles).subscribe(
+    this.service.addTypeRoles(this.typeroles,this.roleID).subscribe(
       (res: any) => {
         if (res.message == 'Role Types added successfully') {
-        this.showNotification('top','right','Role types role added!', 'Role Type successful.','success');
+        this.showNotification('top','right','', 'Types updated successfully.','success');
         }
         else{}
       },
@@ -317,5 +357,81 @@ export class RoleaccessComponent implements OnInit {
     );
 
   }
+
+onToggleChangeCaptureForms(row:any,event:any){
+    if(event.checked==false){
+    this.selectionCaptureForms.deselect(row);
+    this.formList.data.forEach(r=>{
+      if(r==row){
+        r.capture=false;
+      }
+    });
+  }
+  else{
+    this.selectionCaptureForms.select(row);
+    this.formList.data.forEach(r=>{
+      if(r==row){
+        r.capture=true;
+      }
+    });
+  }
+}
+
+onToggleChangeViewForms(row:any,event:any){
+  if(event.checked==false){
+  this.selectionViewForms.deselect(row);
+  this.formList.data.forEach(r=>{
+    if(r==row){
+      r.view=false;
+    }
+  });
+}
+else{
+  this.selectionViewForms.select(row);
+  this.formList.data.forEach(r=>{
+    if(r==row){
+      r.view=true;
+    }
+  });
+}
+}
+
+onToggleChangeMenu(row:any,event:any){
+  if(event.checked==false){
+  this.selection.deselect(row);
+  this.menuList.data.forEach(r=>{
+    if(r==row){
+      r.checked=0;
+    }
+  });
+}
+else{
+  this.selection.select(row);
+  this.menuList.data.forEach(r=>{
+    if(r==row){
+      r.checked=1;
+    }
+  });
+}
+}
+
+onToggleChangeTypes(row:any,event:any){
+  if(event.checked==false){
+  this.selectionRole.deselect(row);
+  this.roleList.data.forEach(r=>{
+    if(r==row){
+      r.checked=0;
+    }
+  });
+}
+else{
+  this.selectionRole.select(row);
+  this.roleList.data.forEach(r=>{
+    if(r==row){
+      r.checked=1;
+    }
+  });
+}
+}
 
 }

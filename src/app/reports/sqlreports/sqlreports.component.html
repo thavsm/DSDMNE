@@ -1,1 +1,39 @@
-<p>sqlreports works!</p>
+<div class="col-md-12">
+    <div class="card">
+      <div class="card-header card-header-rose card-header-icon">
+        <div class="card-icon">
+          <i class="material-icons">assignment</i>
+        </div>
+        <h4 class="card-title">Reports</h4>
+      </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                        <thead>
+                            <tr>
+                              <th class="text-center">{{ tableData.headerRow[0] }}</th>
+                              <th>{{ tableData.headerRow[1] }}</th>
+                              
+                              <th></th>
+                            </tr>
+                        </thead>
+                      <tbody>
+                          <tr *ngFor="let row of tableData.dataRows">
+                              <td>
+                                  
+                              </td>
+                              <td class="td-name">
+                                  
+                                  <a [routerLink] ="['../iframereportsviewer', row[1]]" routerLinkActive="router-link-active" >{{row[2]}}</a>
+                                  <br />
+                                
+                              </td>
+                              
+                          </tr>                       
+                         
+                      </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
