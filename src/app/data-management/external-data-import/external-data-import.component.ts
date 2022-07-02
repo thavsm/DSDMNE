@@ -9,7 +9,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 
 import { DataManagementService } from '../DataManagementService.service';
 import { AddEditExternalDataComponent } from './add-edit-external-data/add-edit-external-data.component';
-
 @Component({
   selector: 'app-external-data-import',
   templateUrl: './external-data-import.component.html',
@@ -17,75 +16,65 @@ import { AddEditExternalDataComponent } from './add-edit-external-data/add-edit-
 })
 export class ExternalDataImportComponent implements OnInit {
 
-  constructor(public dialog: MatDialog,private service: DataManagementService ,private route: Router,private spinner: NgxSpinnerService) { 
+  constructor(public dialog: MatDialog, private service: DataManagementService, private route: Router, private spinner: NgxSpinnerService) {
   }
   public pageSize = 5;
   public skip = 0;
-
-
-  public externalDataList:any=[];
-  
-
+  public externalDataList: any = [];
   formExternal: any;
-  dataServiceID:any;
-  dataSource:string;
+  dataServiceID: any;
+  dataSource: string;
   initialCatalog: string;
   password: string;
-  status:string;
-  connectString:string;
-  externalDataServiceTypeID:any;
-  userID:string;
-  dataSUrl:string;
+  status: string;
+  connectString: string;
+  externalDataServiceTypeID: any;
+  userID: string;
+  dataSUrl: string;
   connectionName: string;
 
-  
   ngOnInit(): void {
     this.extlDataList()
   }
 
   @ViewChild(DataBindingDirective) dataBinding: DataBindingDirective;
 
+  clickEdit(item: any) {
+    this.formExternal = item;
+    const dialogRef = this.dialog.open(AddEditExternalDataComponent, {
+      width: '500px',
+      height: '720px',
+      data: this.formExternal,
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.extlDataList();
+    });
+  }
 
-    clickEdit(item: any) {
-      this.formExternal = item;
-
-      const dialogRef = this.dialog.open(AddEditExternalDataComponent, {
-        width: '500px',
-        height: '720px',
-        data: this.formExternal,
-        disableClose:true
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
-        this.extlDataList();
-      });
+  openDialogAdd(): void {
+    this.formExternal = {
+      dataServiceID: 0,
+      dataSource: this.dataSource,
+      dataSUrl: this.dataSUrl,
+      initialCatalog: this.initialCatalog,
+      userID: this.userID,
+      password: this.password,
+      externalDataServiceTypeID: this.externalDataServiceTypeID,
+      status: 0,
+      connectString: this.connectString
     }
-  
-    openDialogAdd(): void {
-      this.formExternal = {
-        dataServiceID: 0,
-        dataSource: this.dataSource,
-        dataSUrl:this.dataSUrl,
-        initialCatalog: this.initialCatalog,
-        userID: this.userID,
-        password: this.password,
-        externalDataServiceTypeID: this.externalDataServiceTypeID,
-        status: 0,
-        connectString:this.connectString
-      }
-      const dialogRef = this.dialog.open(AddEditExternalDataComponent, {
-        width: '500px',
-        height: '720px',
-        data: this.formExternal,
-        disableClose:true
-      });
-  
-      dialogRef.afterClosed().subscribe(result => {
-        this.extlDataList();
-      });
-    }
-
+    const dialogRef = this.dialog.open(AddEditExternalDataComponent, {
+      width: '500px',
+      height: '720px',
+      data: this.formExternal,
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.extlDataList();
+    });
+  }
 
   extlDataList() {
     this.spinner.show();
@@ -95,4 +84,13 @@ export class ExternalDataImportComponent implements OnInit {
     });
   }
 
+  DisableEditandDelete(item: any): Boolean {
+    if (item.connectionName == "restApi.terra.group") {
+      return false
+    }
+    else {
+      return true
+    }
+  }
 }
+

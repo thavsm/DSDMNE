@@ -2,14 +2,13 @@
     <div class="container-fluid">
         <div class="container-fluid">
             <div class="header text-center">
-                <h3 class="title">External Data Import</h3>
+                <h3 class="title">Internal Data Connection</h3>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <div style="text-align: left;">
                         <button class="btn btn-md" (click)="openDialogAdd()"
-                          class="btn btn-md btn-primary" >Add
-                            New Import</button>
+                          class="btn btn-md btn-primary">Add New Import</button>
                     </div>
                     <hr>
                    <kendo-grid [kendoGridBinding]="externalDataList" [navigable]="true" [filterable]="true"
@@ -18,7 +17,7 @@
                         <kendo-grid-column field="name" title="Type"></kendo-grid-column>
                         <kendo-grid-column title="Edit">
                             <ng-template kendoGridCellTemplate let-element>
-                                <button mat-icon-button (click)="clickEdit(element)">
+                                <button mat-icon-button (click)="clickEdit(element)" *ngIf="DisableEditandDelete(element)">
                                     <mat-icon class="mat-14">edit</mat-icon>
                                 </button>
                             </ng-template>
