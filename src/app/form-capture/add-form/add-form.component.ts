@@ -218,7 +218,6 @@ export class AddFormComponent implements OnInit {
             "pageGUID": this.currentPage.pageGUID
           }
           this.service.modifyPageStatus(this.formData.formCaptureID, this.currentPage.pageGUID, pageStatus).subscribe(result => {
-            this.showNotification('top', 'center', 'Page data has been saved Successfully!', '', 'success');
             this.currentPage.color = "green";
             this.formData.state = 'edit';
             var index = -1;
@@ -230,6 +229,7 @@ export class AddFormComponent implements OnInit {
               }
            });
             if ((index !== -1) && ((index - 1) !== -1)) {
+              this.showNotification('top', 'center', 'Page data has been saved Successfully!', '', 'success');
               this.currentPage = this.pages[index - 1];
               this.pageStatus = this.currentPage.name;
               this.getDesignPerPage(this.currentPage.pageGUID);
@@ -251,7 +251,6 @@ export class AddFormComponent implements OnInit {
             "pageGUID": this.currentPage.pageGUID
           }
           this.service.modifyPageStatus(this.formData.formCaptureID, this.currentPage.pageGUID, pageStatus).subscribe(result => {
-            this.showNotification('top', 'center', 'Page data has been saved Successfully!', '', 'success');
             this.currentPage.color = "green";
             this.formData.state = 'edit';
             var index = -1;
@@ -263,6 +262,7 @@ export class AddFormComponent implements OnInit {
               }
             });
             if ((index !== -1) && ((index - 1) !== -1)) {
+              this.showNotification('top', 'center', 'Page data has been saved Successfully!', '', 'success');
               this.currentPage = this.pages[index - 1];
               this.pageStatus = this.currentPage.name;
               this.getDesignPerPage(this.currentPage.pageGUID);
@@ -380,7 +380,7 @@ export class AddFormComponent implements OnInit {
             "pageGUID": this.currentPage.pageGUID
           }
           this.service.modifyPageStatus(this.formData.formCaptureID, this.currentPage.pageGUID, pageStatus).subscribe(result => {
-            this.showNotification('top', 'center', 'Page data has been saved Successfully!', '', 'success');
+            this.showNotification('top', 'center', 'Data has been submitted successfully!', '', 'success');
             this.getDesignPerPage(this.currentPage.pageGUID);
             this.currentPage.color = "green";
             this.formData.state = 'edit';
@@ -397,7 +397,7 @@ export class AddFormComponent implements OnInit {
             "pageGUID": this.currentPage.pageGUID
           }
           this.service.modifyPageStatus(this.formData.formCaptureID, this.currentPage.pageGUID, pageStatus).subscribe(result => {
-            this.showNotification('top', 'center', 'Page data has been saved Successfully!', '', 'success');
+            this.showNotification('top', 'center', 'Data has been submitted successfully!', '', 'success');
             this.getDesignPerPage(this.currentPage.pageGUID);
             this.currentPage.color = "green";
             this.formData.state = 'edit';
@@ -519,7 +519,6 @@ export class AddFormComponent implements OnInit {
             "pageGUID": this.currentPage.pageGUID
           }
           this.service.modifyPageStatus(this.formData.formCaptureID, this.currentPage.pageGUID, pageStatus).subscribe(result => {
-            this.showNotification('top', 'center', 'Page data has been saved Successfully!', '', 'success');
             this.currentPage.color = "green";
             this.formData.state = 'edit';
             var index = -1;
@@ -531,6 +530,7 @@ export class AddFormComponent implements OnInit {
               }
             });
             if ((index !== -1) && ((index + 1) !== Object.keys(this.pages).length)) {
+              this.showNotification('top', 'center', 'Page data has been saved Successfully!', '', 'success');
               this.currentPage = this.pages[index + 1];
               this.pageStatus = this.currentPage.name;
               this.getDesignPerPage(this.currentPage.pageGUID);
@@ -543,7 +543,6 @@ export class AddFormComponent implements OnInit {
       }
       else {
         this.service.UpdateFormMetadata(this.formData.formCaptureID, obj,this.userDetail.formData.userID).subscribe(res => {
-          this.showNotification('top', 'center', 'Page data has been saved Successfully!', '', 'success');
           let pg = this.currentPage.pageNumber;
           let pageStatus = {
             "userID": this.userDetail.formData.userID,
@@ -563,6 +562,7 @@ export class AddFormComponent implements OnInit {
               }
             });
             if ((index !== -1) && ((index + 1) !== Object.keys(this.pages).length)) {
+              this.showNotification('top', 'center', 'Page data has been saved Successfully!', '', 'success');
               this.currentPage = this.pages[index + 1];
               this.pageStatus = this.currentPage.name;
               this.getDesignPerPage(this.currentPage.pageGUID);
@@ -1520,11 +1520,10 @@ export class AddFormComponent implements OnInit {
         if (calc !== "") {
           var stringArray = calc.split(/(\s+)/);
           stringArray.forEach(num => {
-            console.log(this.formDesign);
             data.forEach(res => {
               if ('#' + res.fieldName === num) {
                 var re = new RegExp(num, "gi");
-                if (res.data === "" || res.data === undefined) {
+                if (res.data === "" || res.data === undefined || res.data==null) {
                   calc = calc.replace(re, "0");
                 }
                 else {

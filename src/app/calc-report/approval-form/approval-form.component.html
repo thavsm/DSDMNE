@@ -3544,10 +3544,10 @@
                 <div class="col-md-12">
                     <kendo-grid [kendoGridBinding]="photoList" [pageSize]="2" [pageable]="true" [height]="500"
                         [filterable]="true" [sortable]="true" [groupable]="true">
-                        <ng-template kendoGridToolbarTemplate>
+                        <!-- <ng-template kendoGridToolbarTemplate>
                             <kendo-grid-spacer></kendo-grid-spacer>
                             <button kendoGridPDFCommand icon="file-pdf">Export to PDF</button>
-                        </ng-template>
+                        </ng-template> -->
 
                         <kendo-grid-column field="photo" title="Preview" [width]="12">
                             <ng-template kendoGridCellTemplate let-dataItem>
@@ -3618,10 +3618,10 @@
                 <div class="col-md-12">
                     <kendo-grid [kendoGridBinding]="attachmentList" [pageSize]="2" [pageable]="true" [height]="400"
                         [filterable]="true" [sortable]="true" [groupable]="true">
-                        <ng-template kendoGridToolbarTemplate>
+                        <!-- <ng-template kendoGridToolbarTemplate>
                             <kendo-grid-spacer></kendo-grid-spacer>
                             <button kendoGridPDFCommand icon="file-pdf">Export to PDF</button>
-                        </ng-template>
+                        </ng-template> -->
 
                         <kendo-grid-column field="createdTS" title="Uploaded On" [width]="12">
                         </kendo-grid-column>
@@ -3679,10 +3679,10 @@
             <div class="parent">
                 <kendo-grid [kendoGridBinding]="commentList" [pageSize]="2" [pageable]="true" [height]="400"
                     [filterable]="true" [sortable]="true" [groupable]="true">
-                    <ng-template kendoGridToolbarTemplate>
+                    <!-- <ng-template kendoGridToolbarTemplate>
                         <kendo-grid-spacer></kendo-grid-spacer>
                         <button kendoGridPDFCommand icon="file-pdf">Export to PDF</button>
-                    </ng-template>
+                    </ng-template> -->
 
                     <kendo-grid-column field="timeStamp" title="Date Added" [width]="12">
                     </kendo-grid-column>

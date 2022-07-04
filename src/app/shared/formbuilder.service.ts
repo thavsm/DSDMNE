@@ -293,8 +293,8 @@ export class FormbuilderService {
     return this.http.get(this.APIUrl + 'Forms/'+userID +'/UserLocationHierachy', { responseType: 'text' });
   }
 
-  getFormCaptureCountPerLocation(locationID: any): Observable<any[]>  {
-    return this.http.get<any>(this.APIUrl + locationID + '/CaptureCount');
+  getFormCaptureCountPerLocation(locationID: any,roleID): Observable<any[]>  {
+    return this.http.get<any>(this.APIUrl + locationID +'/'+roleID+ '/CaptureCount');
   }
   //#endregion
 
