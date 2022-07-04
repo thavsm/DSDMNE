@@ -117,7 +117,7 @@ export const ROUTES: RouteInfo[] = [{
     },{
         //path: '/indicator-report',
         path: '/indicatorapproval',
-        title: 'Indicator Approval',
+        title: 'Indicator Approval-hide',
         type: 'link',
         icontype: 'fact_check',
         role: []
@@ -159,6 +159,7 @@ export const ROUTES: RouteInfo[] = [{
         collapse: 'reports',
         children: [
             {path: 'sqlreports',title: 'SQL Reports', ab:'S'},
+            {path: 'powerBireports',title: 'PowerBi Reports', ab:'P'}
         ]
     }
 ];

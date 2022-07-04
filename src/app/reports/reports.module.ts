@@ -8,6 +8,7 @@ import { MaterialModule } from '../app.module';
 import { ReportsviewerComponent } from './reportsviewer/reportsviewer.component';
 //import { ReportViewerModule } from 'ngx-ssrs-reportviewer';
 import { IframereportsviewerComponent } from './iframereportsviewer/iframereportsviewer.component';
+import { PowerBiViewerComponent } from './power-bi-viewer/power-bi-viewer.component';
 
 
 
@@ -18,7 +19,8 @@ import { IframereportsviewerComponent } from './iframereportsviewer/iframereport
   declarations: [
     SqlreportsComponent,
     ReportsviewerComponent,
-    IframereportsviewerComponent
+    IframereportsviewerComponent,
+    PowerBiViewerComponent
   ],
   imports: [
     CommonModule,
