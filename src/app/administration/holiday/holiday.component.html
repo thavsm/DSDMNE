@@ -46,7 +46,7 @@
                                         
                                 <kendo-grid-column [width]="1">
                                     <ng-template kendoGridCellTemplate let-dataItem>
-                                        <button mat-icon-button (click)="clickEdit(dataItem)">
+                                        <button mat-icon-button (click)="clickEdit(dataItem)" *ngIf="dataItem.id>=11">
                                             <mat-icon matTooltip="Edit Holiday Name" class="mat-18"  style="color: #016000;">edit</mat-icon>
                                         </button>
                                     </ng-template>
@@ -54,7 +54,7 @@
 
                                 <kendo-grid-column [width]="1">
                                     <ng-template kendoGridCellTemplate let-dataItem>
-                                        <button mat-icon-button (click)="clickDelete(dataItem)">
+                                        <button mat-icon-button (click)="clickDelete(dataItem)" *ngIf="dataItem.id>=11">
                                             <mat-icon matTooltip="Delete Holiday" class="mat-18"  style="color: #ff0000;">delete</mat-icon>
                                         </button>
                                     </ng-template>

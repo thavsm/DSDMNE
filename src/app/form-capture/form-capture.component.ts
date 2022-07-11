@@ -83,7 +83,7 @@ export class FormCaptureComponent implements OnInit {
           view:'readwrite'
         };
         this.spinner.hide();
-        this.showNotification('top', 'center', 'Form created successfully', '', 'success');
+        // this.showNotification('top', 'center', 'Form created successfully', '', 'success');
         localStorage.setItem('formCaptureDetails', JSON.stringify(myObj));
         localStorage.setItem('tabIndex', '0');
         const dialogRef = this.dialog.open(AddFormComponent, {
@@ -148,9 +148,8 @@ export class FormCaptureComponent implements OnInit {
       this.service.GetUserLocationHierachy(this.userDetail.formData.userID).subscribe(location => {
         this.spinner.show();
         this.userLocation=location;
-        this.service.getFormCaptureCountPerLocation(location).subscribe(result => {
+        this.service.getFormCaptureCountPerLocation(location,this.userDetail.formData.role).subscribe(result => {
           this.data =  result;
-          console.log(result);
           this.userLocationLevel=this.data[0].levelID;
           this.PeriodStatus=this.data[0].periodStatus;
           this.spinner.hide();

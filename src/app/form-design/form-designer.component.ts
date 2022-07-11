@@ -5687,19 +5687,40 @@ export class FormDesignerComponent implements OnInit {
 
     //auto populate other fields
     populateNames(item: any) {
-        item.fieldName = item.xmlElementName.replace(/\s/g, "").replace(/[^a-zA-Z0-9]/g, "_").substring(0, 100);
-        item.dataExportName = item.xmlElementName.replace(/\s/g, "").replace(/[^a-zA-Z0-9]/g, "_").substring(0, 100);
+        if (!isNaN(item.xmlElementName.charAt(0)) && item.xmlElementName!=""){ 
+            this.showNotification('top', 'center', 'Friendly Name cannot start with a number', '', 'danger');
+            item.dataExportName="";
+            item.xmlElementName="";
+            item.fieldName="";
+        }
+        else{
+            item.fieldName = item.xmlElementName.replace(/\s/g, "").replace(/[^a-zA-Z0-9]/g, "_").substring(0, 100);
+            item.dataExportName = item.xmlElementName.replace(/\s/g, "").replace(/[^a-zA-Z0-9]/g, "_").substring(0, 100);
+        }
         // item.xmlElementName=item.questionName.replace(/[^a-zA-Z0-9]\s/g, "_").substring(0,100);
     }
 
     //Remove blank space when pasting field name and and data export name
     removeBlankSpaceFieldName(atom: any) {
         atom.fieldName = atom.fieldName.replace(/\s/g, "");
+        if (!isNaN(atom.fieldName.charAt(0))){ 
+            this.showNotification('top', 'center', 'Database Name cannot start with a number', '', 'danger');
+            atom.dataExportName="";
+            atom.xmlElementName="";
+            atom.fieldName="";
+        }
     }
 
     removeBlankSpaceDataExportName(item: any) {
         item.dataExportName = item.dataExportName.replace(/\s/g, "");
+        if (!isNaN( item.dataExportName.charAt(0))){ 
+            this.showNotification('top', 'center', 'Export name cannot start with a number', '', 'danger');
+            item.dataExportName="";
+            item.xmlElementName="";
+            item.fieldName="";
+        }
     }
+
 
     //Date validation
     validateDateFriendlyName(item: any) {
@@ -5743,5 +5764,16 @@ export class FormDesignerComponent implements OnInit {
             item.dataExportName = item.dataExportName.replace(item.dataExportName, "");
             this.showNotification('top', 'center', 'Data Export Name cannot be time', '', 'danger');
         }
+    }
+
+    onKeyUp(item:any){
+    //     let length = boxInput.value.length ;
+    //     let isnumber=isNaN(parseInt(boxInput.value));
+    //     if(length>0 && isnumber==false){   
+    //       console.log("error");
+    //       boxInput.value=""; 
+    //       this.showNotification('top', 'center', 'Upload name cannot start with a number', '', 'danger');
+    //    }
+    
     }
 }

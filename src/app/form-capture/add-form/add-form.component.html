@@ -13,7 +13,7 @@
             </mat-option>
         </mat-select>
     </mat-form-field>
-    <mat-button-toggle-group name="buttons">
+    <mat-button-toggle-group name="buttons" *ngIf="isViewOnly!='readonly'">
         <mat-button-toggle value="Prev" (click)="prevPage()"
             style="font-weight: 500;background-color: whitesmoke;color: black;">Prev & Save</mat-button-toggle>
         <mat-button-toggle value="save" style="background-color: whitesmoke;font-weight: 500;width: 150px;color: black;"
@@ -966,7 +966,7 @@
                                                             [(ngModel)]=subsectionItem.data (blur)="checkInfo()"
                                                             [(ngModel)]=subsectionItem.data
                                                             maxlength={{subsectionItem.fieldValidations[0].dataLength}}
-                                                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                                                             placeholder="{{subsectionItem.toolTip}}"
                                                             value="{{subsectionItem.data}}" (blur)="checkForCalc()">
                                                     </mat-form-field>
@@ -1631,7 +1631,7 @@
                                                             [(ngModel)]=subSectionItem.data
                                                             (change)="setSubSectionValue(subSectionItem.fieldName,subSectionItem.data)"
                                                             maxlength={{subSectionItem.fieldValidations[0].dataLength}}
-                                                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                                            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); "
                                                             placeholder="{{subSectionItem.toolTip}}"
                                                             (blur)="checkForCalc()">
                                                     </mat-form-field>
@@ -2025,7 +2025,7 @@
                                             <input matInput type="number" (blur)="checkInfo()"
                                                 [(ngModel)]=sectionItem.data
                                                 maxlength={{sectionItem.fieldValidations[0].dataLength}}
-                                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); "
                                                 placeholder="{{sectionItem.toolTip}}" (blur)="checkForCalc()">
                                         </mat-form-field>
                                         <div style="height: 5px;"></div>
@@ -2537,7 +2537,7 @@
                                             <input matInput type="number" (blur)="checkInfo()"
                                                 [(ngModel)]=sectionItem.data
                                                 maxlength={{sectionItem.fieldValidations[0].dataLength}}
-                                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); "
                                                 placeholder="{{sectionItem.toolTip}}" (blur)="checkForCalc()">
                                         </mat-form-field>
                                         <div style="height: 5px;"></div>
@@ -3048,7 +3048,7 @@
                                             <input matInput type="number" (blur)="checkInfo()"
                                                 [(ngModel)]=sectionItem.data
                                                 maxlength={{sectionItem.fieldValidations[0].dataLength}}
-                                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); "
                                                 placeholder="{{sectionItem.toolTip}}"
                                                 (blur)="checkForCalcInQuestionGroup(item.groupGUID)">
                                         </mat-form-field>
@@ -3366,7 +3366,7 @@
                             <mat-form-field appearance="outline">
                                 <input matInput type="number" (blur)="checkInfo()" [(ngModel)]=item.data
                                     maxlength={{item.fieldValidations[0].dataLength}}
-                                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); "
                                     placeholder="{{item.toolTip}}" (blur)="checkForCalc()" (blur)="checkInfo()">
                             </mat-form-field>
                             <div style="height: 5px;"></div>
@@ -3519,7 +3519,7 @@
             <div style="height: 10px;"></div>
             <div class="parent">
                 <h4>Upload/Download Photo</h4>
-                <mat-form-field style="width: 30%;">
+                <mat-form-field style="width: 30%;" *ngIf="isViewOnly!='readonly'">
                     <div style="text-align: center;">
                         <mat-toolbar>
                             <input matInput (blur)="checkInfo()" [(ngModel)]="photoFileAttr" readonly name="Photoname"
@@ -3530,12 +3530,12 @@
                             </button>
                         </mat-toolbar>
                         <!-- Fetch selected file on change -->
-                        <input type="file" #photoInput id="uploadPhoto" (change)="onChangePhoto($event)"
+                        <input  type="file" #photoInput id="uploadPhoto" (change)="onChangePhoto($event)"
                             name="uploadPhoto" accept="image/*" />
                         <div id="hidden_upload_itemPhoto2" style="display: none;"></div>
                     </div>
                 </mat-form-field>
-                <button mat-flat-button (click)="onUploadPhoto()" class="btn btn-md btn-primary">
+                <button *ngIf="isViewOnly!='readonly'" mat-flat-button (click)="onUploadPhoto()" class="btn btn-md btn-primary">
                     Upload
                 </button>
                 <div style="height: 10px;"></div>
@@ -3544,10 +3544,10 @@
                 <div class="col-md-12">
                     <kendo-grid [kendoGridBinding]="photoList" [pageSize]="2" [pageable]="true" [height]="500"
                         [filterable]="true" [sortable]="true" [groupable]="true">
-                        <ng-template kendoGridToolbarTemplate>
+                        <!-- <ng-template kendoGridToolbarTemplate>
                             <kendo-grid-spacer></kendo-grid-spacer>
                             <button kendoGridPDFCommand icon="file-pdf">Export to PDF</button>
-                        </ng-template>
+                        </ng-template> -->
 
                         <kendo-grid-column field="photo" title="Preview" [width]="12">
                             <ng-template kendoGridCellTemplate let-dataItem>
@@ -3565,7 +3565,7 @@
                         <kendo-grid-column field="createDate" title="Created On" [width]="15">
                         </kendo-grid-column>
 
-                        <kendo-grid-column [width]="5" title="Download">
+                        <kendo-grid-column [width]="5" title="Download" *ngIf="isViewOnly!='readonly'">
                             <ng-template kendoGridCellTemplate let-dataItem>
                                 <button mat-icon-button (click)="clickDownloadPhoto(dataItem)">
                                     <mat-icon class="mat-18">file_download</mat-icon>
@@ -3573,7 +3573,7 @@
                             </ng-template>
                         </kendo-grid-column>
 
-                        <kendo-grid-column [width]="5">
+                        <kendo-grid-column [width]="5" *ngIf="isViewOnly!='readonly'">
                             <ng-template kendoGridCellTemplate let-dataItem>
                                 <button mat-icon-button (click)="deletePhoto(dataItem)">
                                     <mat-icon class="mat-18">delete</mat-icon>
@@ -3593,7 +3593,7 @@
             <div style="height: 10px;"></div>
             <div class="parent">
                 <h4>Upload/Download Files</h4>
-                <mat-form-field style="width: 30%;">
+                <mat-form-field style="width: 30%;" *ngIf="isViewOnly!='readonly'">
                     <div style="text-align: center;">
                         <mat-toolbar>
                             <input matInput (blur)="checkInfo()" [(ngModel)]="fileAttr" readonly name="name"
@@ -3609,7 +3609,7 @@
                         <div id="hidden_upload_item" style="display: none;"></div>
                     </div>
                 </mat-form-field>
-                <button mat-flat-button (click)="onUpload()" class="btn btn-md btn-primary">
+                <button *ngIf="isViewOnly!='readonly'" mat-flat-button (click)="onUpload()" class="btn btn-md btn-primary">
                     Upload
                 </button>
                 <div style="height: 10px;"></div>
@@ -3618,10 +3618,10 @@
                 <div class="col-md-12">
                     <kendo-grid [kendoGridBinding]="attachmentList" [pageSize]="2" [pageable]="true" [height]="400"
                         [filterable]="true" [sortable]="true" [groupable]="true">
-                        <ng-template kendoGridToolbarTemplate>
+                        <!-- <ng-template kendoGridToolbarTemplate>
                             <kendo-grid-spacer></kendo-grid-spacer>
                             <button kendoGridPDFCommand icon="file-pdf">Export to PDF</button>
-                        </ng-template>
+                        </ng-template> -->
 
                         <kendo-grid-column field="createdTS" title="Uploaded On" [width]="12">
                         </kendo-grid-column>
@@ -3638,7 +3638,7 @@
                         <kendo-grid-column field="fileSize" title="File Size" [width]="15">
                         </kendo-grid-column>
 
-                        <kendo-grid-column [width]="5" title="Download">
+                        <kendo-grid-column [width]="5" title="Download" *ngIf="isViewOnly!='readonly'">
                             <ng-template kendoGridCellTemplate let-dataItem>
                                 <button mat-icon-button (click)="clickDownload(dataItem)">
                                     <mat-icon class="mat-18">file_download</mat-icon>
@@ -3646,7 +3646,7 @@
                             </ng-template>
                         </kendo-grid-column>
 
-                        <kendo-grid-column [width]="5">
+                        <kendo-grid-column [width]="5" *ngIf="isViewOnly!='readonly'">
                             <ng-template kendoGridCellTemplate let-dataItem>
                                 <button mat-icon-button (click)="deleteFile(dataItem)">
                                     <mat-icon class="mat-18">delete</mat-icon>
@@ -3666,12 +3666,12 @@
             <div style="height: 10px;"></div>
             <div class="parent">
                 <h4>Comments</h4>
-                <mat-form-field class="example-full-width" appearance="outline">
+                <mat-form-field *ngIf="isViewOnly!='readonly'" class="example-full-width" appearance="outline">
                     <mat-label>Leave a comment</mat-label>
                     <textarea matInput (blur)="checkInfo()" [(ngModel)]=formComment
                         placeholder="Type comment here..."></textarea>
                 </mat-form-field>
-                <button mat-flat-button (click)="addComment()" class="btn btn-md btn-primary">
+                <button *ngIf="isViewOnly!='readonly'" mat-flat-button (click)="addComment()" class="btn btn-md btn-primary">
                     {{addEditComment}} Comment
                 </button>
                 <div style="height: 10px;"></div>
@@ -3679,10 +3679,10 @@
             <div class="parent">
                 <kendo-grid [kendoGridBinding]="commentList" [pageSize]="2" [pageable]="true" [height]="400"
                     [filterable]="true" [sortable]="true" [groupable]="true">
-                    <ng-template kendoGridToolbarTemplate>
+                    <!-- <ng-template kendoGridToolbarTemplate>
                         <kendo-grid-spacer></kendo-grid-spacer>
                         <button kendoGridPDFCommand icon="file-pdf">Export to PDF</button>
-                    </ng-template>
+                    </ng-template> -->
 
                     <kendo-grid-column field="timeStamp" title="Date Added" [width]="12">
                     </kendo-grid-column>
@@ -3696,7 +3696,7 @@
                     <kendo-grid-column field="linkedTo" title="Fields Linked To" [width]="15">
                     </kendo-grid-column>
 
-                    <kendo-grid-column [width]="3">
+                    <kendo-grid-column [width]="3" *ngIf="isViewOnly!='readonly'">
                         <ng-template kendoGridCellTemplate let-dataItem>
                             <button mat-icon-button (click)="showComment(dataItem)">
                                 <mat-icon class="mat-18">edit</mat-icon>
@@ -3704,7 +3704,7 @@
                         </ng-template>
                     </kendo-grid-column>
 
-                    <kendo-grid-column [width]="3">
+                    <kendo-grid-column [width]="3" *ngIf="isViewOnly!='readonly'">
                         <ng-template kendoGridCellTemplate let-dataItem>
                             <button mat-icon-button (click)="deleteComment(dataItem)">
                                 <mat-icon class="mat-18">delete</mat-icon>
@@ -3721,4 +3721,4 @@
     </mat-tab-group>
 </div>
 <ngx-spinner bdColor="rgba( 237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
-    <p style="font-size: 20px; color: black">Loading Form...</p>
+    <p style="font-size: 20px; color: black"></p>
