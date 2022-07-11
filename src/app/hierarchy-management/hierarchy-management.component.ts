@@ -38,6 +38,7 @@ export class HierarchyManagementComponent implements OnInit {
   treeID: number;
   treeAdd: any;
   TreeCategoryID = "0";
+  divHide: boolean  = true; 
 
   constructor(public service: HierarchyManagementService, private route: Router, public dialog: MatDialog, private spinner: NgxSpinnerService, private Aroute: ActivatedRoute) {
      
@@ -49,6 +50,10 @@ export class HierarchyManagementComponent implements OnInit {
 
   ngOnInit(): void {
     this.service.refreshhlist(this.TreeCategoryID);
+
+    if(this.TreeCategoryID == "2"){
+      this.divHide = false;
+    }
   }
 
   openViewTree(item: any): void {
@@ -65,7 +70,8 @@ export class HierarchyManagementComponent implements OnInit {
     // Create item:
     let myObj = {
       treeID: item.treeID,
-      ViewEdit: 1
+      ViewEdit: 1,
+      TreeCategoryID: this.TreeCategoryID
     };
     localStorage.setItem('treeData', JSON.stringify(myObj));
     this.route.navigate(['treediagram']);
@@ -121,6 +127,14 @@ export class HierarchyManagementComponent implements OnInit {
   }
 
   clickEdit(item: any) {
+
+    let myObj = {
+      treeID: item.treeID,
+      ViewEdit: 0,
+      TreeCategoryID: this.TreeCategoryID
+    };
+    localStorage.setItem('treeData', JSON.stringify(myObj));
+
     this.treeAdd = item;
     const dialogRef = this.dialog.open(TreeAddComponent, {
       width: '40%',

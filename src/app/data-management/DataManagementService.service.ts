@@ -28,7 +28,6 @@ export class DataManagementService {
   addExternalDatas(data: any) {
     return this.http.post<any>(this.API_URL + 'DataServices', data)
   }
-
   public TestSqlDatas(dataSource: any, initialCatalog: any, userID: any, password: string) {
     return this.http.get(this.API_URL + 'DataServices/TestConn/' + dataSource + '/' + initialCatalog + '/' + userID + '/' + password, { responseType: 'text' })
   }
@@ -36,7 +35,12 @@ export class DataManagementService {
   updateExternalDatas(dataServiceID: number, data: any) {
     return this.http.put(this.API_URL + 'DataServices/' + dataServiceID, data);
   }
-  
+  archiveLookUp(TreeUploadID){
+    return this.http.delete(this.API_URL+'LookupFieldNames' + '/' + TreeUploadID);
+  }
+  DeleteTreeUpload(TreeUploadID){
+    return this.http.delete(this.API_URL+'TreeUploads' + '/' + TreeUploadID);
+  }
   updateTreeUpload(treeUploadID: number, data: any) {
     return this.http.put(this.API_URL + 'TreeUploads/' + treeUploadID, data);
   }
@@ -46,7 +50,6 @@ export class DataManagementService {
   public getintlDataList(): Observable<any[]> {
     return this.http.get<any>(this.API_URL + 'TreeUploads/getTreeUploads');
   }
-
   CreateTableandColumns(data: any) {
     return this.http.post(this.API_URL + 'InternalData', data, { responseType: 'text' });
   }
@@ -54,6 +57,9 @@ export class DataManagementService {
     return this.http.post(this.API_URL + 'InternalData/InternalUpdate', data, { responseType: 'text' });
   }
 
+  dropTable(TreeUploadID){
+    return this.http.delete(this.API_URL+'TreeUploads/droptable' + '/' + TreeUploadID);
+  }
   addDataToTreeUpload(data: any) {
     return this.http.post(this.API_URL + 'TreeUploads', data, { responseType: 'text' });
   }

@@ -127,7 +127,10 @@ export class LevelNodeEditComponent implements OnInit {
   divIsFormD: boolean = false;
   isDisabledDrp  : boolean  = true;
   ExtData: any[];
-
+  FacilityTypes: any = [];
+  IsFacility: number;
+  divIsFacility: boolean = false;
+  FacilityTypeID: any;
   constructor(public dialog: MatDialog ,public dialogRef: MatDialogRef<LevelNodeEditComponent>,
     @Inject(MAT_DIALOG_DATA) data,
     public service: TreediagramService, public Hierarchyservice: HierarchyManagementService, public formBuilder: FormBuilder, private spinner: NgxSpinnerService) {
@@ -196,6 +199,12 @@ export class LevelNodeEditComponent implements OnInit {
    
     }
 
+
+    this.Hierarchyservice.getNodeRoleFacilityType(this.NodeData.nodeID).subscribe(data => {
+      this.FacilityTypeID = data;   
+      this.NodeData.FaciltyID = this.FacilityTypeID[0].facilityTypeID; 
+    });
+
     this.levelID = this.NodeData.levelID;
     this.NodeID = this.NodeData.nodeID;
     this.role = this.NodeData.role;
@@ -215,6 +224,13 @@ export class LevelNodeEditComponent implements OnInit {
     this.nodeDescription = this.NodeData.nodeDescription;
     this.nodeParentD = this.NodeData.nodeParentD;
     this.NodeData.indicatorID = this.NodeData.indicatorID;
+
+    this.Hierarchyservice.getFacilityTypes().subscribe(data => {
+      this.spinner.show();
+      this.FacilityTypes = data;
+      this.spinner.hide();
+    });
+    
     this.getNodeAttributesData(this.NodeData.nodeID);
     // this.getRoles();
     this.getUserfieldTypes();
@@ -285,13 +301,26 @@ export class LevelNodeEditComponent implements OnInit {
     this.getIndicators();   
     //this.setIndicatorFileds();
 
+    if (this.NodeData.IsFacilityLevel == 1) {
+      this.divIsFacility = true;
+      this.IsFacility = 1;
+    } else {
+      this.divIsFacility = false;
+      this.IsFacility = 0;
+    }
+
+
     if(this.NodeData.IsIndicatorLevel == 1){
       this.divIsIndicator = true;
       this.btnSave = false;
       this.setIndicatorFileds();
     }else{
       this.divIsIndicator = false;
-      this.btnSave = true;
+
+      if(this.NodeData.ViewEdit != 0){
+        this.btnSave = true;
+      }
+      
     }
 
   }
@@ -1480,6 +1509,16 @@ export class LevelNodeEditComponent implements OnInit {
     //   }
       
     // }
+
+    if(this.IsFacility == 1){
+      var values = {
+        "nodeID": this.NodeData.nodeID,
+        "facilityTypeID": this.NodeData.FaciltyID
+      }
+      this.spinner.show();
+      this.Hierarchyservice.InsertUpdateNodeRoleFacilityType(values).subscribe(res => {
+      });
+    }
 
     this.formDesignAddData = {};
     this.EditNodeData = {

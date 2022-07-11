@@ -26,6 +26,7 @@ import { ConstantPool, ThisReceiver } from '@angular/compiler';
 import { Byte } from '@angular/compiler/src/util';
 
 import { MatGridTileHeaderCssMatStyler } from '@angular/material/grid-list';
+import Swal from 'sweetalert2';
 const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
 const EXCEL_EXTENSION = '.xlsx';
 declare var $: any;
@@ -79,6 +80,8 @@ export class InternalDataImportComponent implements OnInit {
   Maxlength: string;
   remove: Byte;
   createTableBool: boolean = false;
+  updateTableBool: boolean = false;
+
   closed: boolean = true;
   name = new FormControl('', [
     Validators.required,
@@ -128,7 +131,6 @@ export class InternalDataImportComponent implements OnInit {
     this.intlDataList();
     this.bindControls();
   }
-
   //#region Data setup for duallist
   doReset() {
     this.sourceStations = JSON.parse(JSON.stringify(this.source));
@@ -184,7 +186,7 @@ export class InternalDataImportComponent implements OnInit {
       this.spinner.hide();
     });
   }
-//#endregion
+  //#endregion
 
   typeSetTrue() {
     this.setType = true;
@@ -200,7 +202,7 @@ export class InternalDataImportComponent implements OnInit {
   ViewPatientInfo(item: any): void {
     const viewdata = localStorage.getItem('ViewInfo');
     this.service.getDataImport(viewdata).subscribe((data) => {
-      this.formPatientInfo=data;
+      this.formPatientInfo = data;
     });
 
     const dialogRef = this.dialog.open(ViewInternalDataImportComponent, {
@@ -219,6 +221,7 @@ export class InternalDataImportComponent implements OnInit {
   }
 
   Upload() {
+    this.source = [];
     let fileReader = new FileReader();
     fileReader.onload = (e) => {
       this.arrayBuffer = fileReader.result;
@@ -236,7 +239,7 @@ export class InternalDataImportComponent implements OnInit {
     fileReader.readAsArrayBuffer(this.file);
     this.internalData?.forEach(data => {
       data = data.replace(/\s/g, "");
-      this.source.push({"fieldName": (data)});
+      this.source.push({ "fieldName": (data) });
     });
   }
 
@@ -258,11 +261,13 @@ export class InternalDataImportComponent implements OnInit {
     this.ImportAdd.uploadTableStructureId = "";
     this.ImportAdd.uploadTypeId = "";
     this.ImportAdd.dataTypeId = "";
+    this.ImportAdd.remove = "";
     this.abcValue = "";
     this.target = [];
     this.source = [];
-    this.fieldanddatatype=[];
+    this.fieldanddatatype = [];
     this.lockQuestions = false;
+
   }
   removeItem() {
     this.target.forEach((item, index) => {
@@ -365,8 +370,9 @@ export class InternalDataImportComponent implements OnInit {
   }
   //#endregion
 
-  //save and update importdata
+  //save, update and delete importdata
   CreateColumns() {
+    this.fieldanddatatype=[];
     let fieldo = "";
     let dtypeonly = "";
     let columns = '';
@@ -419,7 +425,6 @@ export class InternalDataImportComponent implements OnInit {
       "username": this.ImportAdd.username,
       "password": this.ImportAdd.password
     }
-    //localStorage.clear();
     this.spinner.show();
     this.service.CreateTableandColumns(treeupload).subscribe(data => {
       this.spinner.hide();
@@ -437,8 +442,11 @@ export class InternalDataImportComponent implements OnInit {
             "treeUploadID": treeUID
           }
           this.spinner.show();
-          this.service.addDataToLookupFieldName(lookupfieldname).subscribe(data => { }
+          this.service.addDataToLookupFieldName(lookupfieldname).subscribe(data => {
+            this.intlDataList();
+          }
           );
+          this.intlDataList();
           this.spinner.hide();
         }, error => {
           this.spinner.hide();
@@ -446,6 +454,7 @@ export class InternalDataImportComponent implements OnInit {
         });
         this.spinner.hide();
         this.showNotification('top', 'center', 'Tree uploaded successfully', '', 'success');
+        this.clearAddImport();
         this.intlDataList();
       }
     }, error => {
@@ -458,7 +467,7 @@ export class InternalDataImportComponent implements OnInit {
     this.xpandStatus = true;
     this.saveBool = false;
     this.updateBool = true;
-    this.closed=false;
+    this.closed = false;
     this.ImportAdd.uploadName = item.uploadName;
     this.ImportAdd.dataTypeId = item.dataTypeId;
     this.ImportAdd.uploadTypeId = item.uploadTypeId;
@@ -477,10 +486,48 @@ export class InternalDataImportComponent implements OnInit {
       this.source = data;
       this.doReset();
       this.spinner.hide();
-      this.source=[];
+      this.source = [];
     });
-    this.fieldanddatatype=[];
     localStorage.setItem('TreeUploadID', item.treeUploadID);
+  }
+
+  clickDelete(item: any) {
+    localStorage.setItem('TreeID', item.treeUploadID);
+    localStorage.setItem('Treename', item.uploadName);
+  }
+
+  archiveTree(treeUploadID: number) {
+    Swal.fire({
+      title: "<h5 style='color:white;font-weight:400'> Are you sure you want to delete this tree?</h5>",
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      toast: true,
+      position: 'top',
+      allowOutsideClick: false,
+      confirmButtonColor: '#000000',
+      cancelButtonColor: '#000000',
+      background: '#CA0B00'
+    }).then((result) => {
+      if (result.value) {
+        this.spinner.show();
+        const treeuploadid = localStorage.getItem('TreeID');
+        const treename = localStorage.getItem('Treename');
+        this.service.DeleteTreeUpload(parseInt(treeuploadid)).subscribe(data => {
+          this.service.archiveLookUp(parseInt(treeuploadid)).subscribe(data => { }
+          );
+          this.service.dropTable(treename).subscribe(data => { }
+          );
+          this.spinner.hide();
+          this.showNotification('top', 'center', 'Tree has been deleted successfully!', '', 'success');
+          this.intlDataList();
+        },
+          error => {
+            this.showNotification('top', 'center', 'Error deleting tree, please try again', '', 'danger');
+            this.spinner.hide();
+          });
+      }
+    })
   }
 
   updateTreeUpload(treeUploadID: number) {
@@ -500,6 +547,11 @@ export class InternalDataImportComponent implements OnInit {
     let columns = [...new Set(this.fieldanddatatype)];
     let column = columns.toString();
     const treeuploadid = localStorage.getItem('TreeUploadID');
+    const treeuploadidupdate = localStorage.getItem('TreeUploadID');
+    let treeuploadcreate = {
+      uploadName: this.ImportAdd.uploadName.replace(/\s/g, ""),
+      columns: column
+    }
     let treeupload = {
       treeID: 0,
       treeUploadID: parseInt(treeuploadid),
@@ -509,22 +561,40 @@ export class InternalDataImportComponent implements OnInit {
       folderLocation: "C:\\temp\\Files\\" + this.ImportAdd.uploadName.replace(/\s/g, ""),
       dataTypeId: this.ImportAdd.dataTypeId,
       uploadTableStructureId: this.ImportAdd.uploadTableStructureId,
-      columns: column,
       prefix: this.ImportAdd.Prefix,
       suffix: this.ImportAdd.Suffix,
       username: this.ImportAdd.username,
       password: this.ImportAdd.password
     }
-      this.service.CreateTableandColumn(treeupload).subscribe(data => {
+    let lookupfieldname = {
+      "description": field,
+      "fieldName": field,
+      "uniqueIdentifier": 0,
+      "dataTypeId": datatyp,
+      "treeUploadID": parseInt(treeuploadid)
+    }
+    this.service.CreateTableandColumns(treeuploadcreate).subscribe(data => {
       this.spinner.hide();
+      this.updateTableBool = true;
+      if (this.updateTableBool == true) {
+        this.spinner.show();
+        this.service.archiveLookUp(parseInt(treeuploadid)).subscribe(data => { }
+        );
+        this.service.updateTreeUpload(parseInt(treeuploadidupdate), treeupload).subscribe(data => {
+          this.intlDataList();
+          this.spinner.hide();
+        });
+        this.service.addDataToLookupFieldName(lookupfieldname).subscribe(data => {
+          this.intlDataList();
+        }
+        );
+        this.spinner.hide();
+      }
+      this.intlDataList();
       this.showNotification('top', 'center', 'Table data updated successfully', '', 'success');
     }, error => {
       this.spinner.hide();
       this.showNotification('top', 'center', 'Import not updated, please try again', '', 'danger');
-    });
-    this.spinner.show();
-    this.service.updateTreeUpload(parseInt(treeuploadid), treeupload).subscribe(data => {
-      this.spinner.hide();
     });
   }
   //#endregion
@@ -583,11 +653,35 @@ export class InternalDataImportComponent implements OnInit {
     });
   }
 
-  onlyNumberKey(event) {
-  console.log(this.ImportAdd.uploadName.value.length);
-    return "success"
-}
+  onKeyUp(boxInput: HTMLInputElement, e: KeyboardEvent) {
+    let length = boxInput.value.length;
+    let isnumber = isNaN(parseInt(boxInput.value));
+    if (length > 0 && isnumber == false) {
+      console.log("error");
+      boxInput.value = "";
+      this.showNotification('top', 'center', 'Import name cannot start with a number', '', 'danger');
+    }
+  }
 
+  onKeyUpColumn(boxInput: HTMLInputElement, e: KeyboardEvent) {
+    let length = boxInput.value.length;
+    let isnumber = isNaN(parseInt(boxInput.value));
+    if (length > 0 && isnumber == false) {
+      console.log("error");
+      boxInput.value = "";
+      this.showNotification('top', 'center', 'Field name cannot start with a number', '', 'danger');
+    }
+  }
+
+  onKeyUpField(boxInput: HTMLInputElement, e: KeyboardEvent) {
+    let length = boxInput.value.length;
+    let isnumber = isNaN(parseInt(boxInput.value));
+    if (length > 0 && isnumber == false) {
+      console.log("error");
+      boxInput.value = "";
+      this.showNotification('top', 'center', 'Field name cannot start with a number', '', 'danger');
+    }
+  }
   optionWasClickedright(optionClicked) {
     this.target.forEach((option) =>
       option.selected = (optionClicked == option) ? true : false)

@@ -37,7 +37,7 @@ export class NodeAddComponent implements OnInit {
   NodeAdd: any;
   levels: any = [];
   nodes: any = [];
-
+  FacilityTypes: any = [];
   FormFields: any[];
   treeData: any;
   index: any;
@@ -45,8 +45,10 @@ export class NodeAddComponent implements OnInit {
   Form: any = [];
   divForm: boolean = false;
   divFormField: boolean = false;
+  divIsFacility: boolean = false;
   FormCategory: any = [];
   isIndicatorlevel: any;
+  NodeRes:any=[];
   protected _onDestroy = new Subject<void>();
   /** list of banks filtered by search keyword */
   //public filteredBanks: ReplaySubject<Indicator[]> = new ReplaySubject<Indicator[]>(1);
@@ -55,7 +57,7 @@ export class NodeAddComponent implements OnInit {
     public dialogRef: MatDialogRef<NodeAddComponent>,
     @Inject(MAT_DIALOG_DATA) data,
 
-    private service: HierarchyManagementService, private Treeservice: TreediagramService, public formBuilder: FormBuilder, private spinner: NgxSpinnerService, private treediagramService: TreediagramService
+  private service: HierarchyManagementService, private Treeservice: TreediagramService, public formBuilder: FormBuilder, private spinner: NgxSpinnerService, private treediagramService: TreediagramService
   ) {
     this.NodeAdd = data;
     this.treeData = JSON.parse(localStorage.getItem('treeData') || '{}');
@@ -72,6 +74,7 @@ export class NodeAddComponent implements OnInit {
   SelectednodeParentD: number = null;
   divIsNotIndicator: boolean = true;
   divIsIndicator: boolean = false;
+  IsFacility:  number = 0;
 
   ngOnInit(): void {
 
@@ -87,6 +90,11 @@ export class NodeAddComponent implements OnInit {
     this.getIndicators();
     this.getFormCategory();
 
+    this.service.getFacilityTypes().subscribe(data => {
+      this.spinner.show();
+      this.FacilityTypes = data;
+      this.spinner.hide();
+    });
 
   }
 
@@ -137,6 +145,15 @@ export class NodeAddComponent implements OnInit {
         this.divIsNotIndicator = true;
         this.divIsIndicator = false;
       }
+
+      if (data[0].isFacilityLevel == 1) {
+        this.divIsFacility = true;
+        this.IsFacility = 1;
+      } else {
+        this.divIsFacility = false;
+        this.IsFacility = 0;
+      }
+
       this.spinner.hide();
     });
   }
@@ -203,6 +220,20 @@ export class NodeAddComponent implements OnInit {
         };
         this.spinner.show();
         this.service.addNode(val).subscribe(res => {
+          this.NodeRes = res;
+
+          if(this.IsFacility == 1){
+            var values = {
+              "nodeID": this.NodeRes.nodeID,
+              "facilityTypeID": this.NodeAdd.FaciltyID
+            }
+  
+            this.spinner.show();
+            this.service.InsertUpdateNodeRoleFacilityType(values).subscribe(res => {
+            });
+  
+          }
+
           //this.dialogRef.close();
           this.spinner.hide();
           this.showNotification('top', 'center', 'Node Added Successfully!', 'Success', 'success');
@@ -214,6 +245,8 @@ export class NodeAddComponent implements OnInit {
           this.NodeAdd.fName = "";
           this.NodeAdd.nodeName = "";
           this.NodeAdd.nodeDescription = "";
+          this.NodeAdd.FaciltyID = "";
+          this.divIsFacility = false;
           this.divIsNotIndicator = true;
           this.divIsIndicator = false;
           this.treediagramService.getNodes(this.treeData.treeID);

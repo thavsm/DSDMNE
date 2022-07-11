@@ -9,7 +9,7 @@
             <div class= "col-md-12">
                 <table class="table">    
                         <tr>
-                            <td><button class="btn btn-md" class="btn btn-md btn-primary"   (click)="openDialogAdd()">Add New Tree</button></td>
+                            <td><button class="btn btn-md" class="btn btn-md btn-primary"   (click)="openDialogAdd()" *ngIf="divHide">Add New Tree</button></td>
                         </tr>
                 </table>
             </div>
@@ -63,7 +63,7 @@
                                     </ng-template>
                                 </kendo-grid-column>
 
-                                <kendo-grid-column [width]="1">
+                                <kendo-grid-column [width]="1" *ngIf="divHide">
                                     <ng-template kendoGridCellTemplate let-dataItem>
                                         <button mat-icon-button (click)="clickDelete(dataItem)">
                                             <mat-icon matTooltip="Delete Tree" class="mat-18"  style="color: #ff0000;">delete</mat-icon>

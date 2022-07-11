@@ -62,12 +62,25 @@ export class HierarchyManagementService {
     return this.http.get<any>(this.API_URL+'Nodes/GetNodeByLevelID/'+levelID);
   }
 
+  getNodeRoleFacilityType(NodeID:number){
+    return this.http.get<any>(this.API_URL+'Nodes/SelectNodeRoleFacilityType/'+NodeID);
+  }
+
   addNode(data:any){
     return this.http.post(this.API_URL+'Nodes',data);
   }
 
+  
+  InsertUpdateNodeRoleFacilityType(data:any){
+    return this.http.post(this.API_URL+'Nodes/InsertUpdateNodeRoleFacilityType',data);
+  }
+
   getIsIndicatorLevelbyLevelID(levelID:number){
     return this.http.get<any>(this.API_URL+'Levels/SelectIsIndicatorLevelbyLevelID/'+levelID);
+  }
+
+  getFacilityTypes(){
+    return this.http.get<any>(this.API_URL+'Levels/SelectFacilityTypes');
   }
 
   //#region Indicator Nodes
