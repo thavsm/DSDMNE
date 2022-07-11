@@ -26,6 +26,8 @@
             </mat-select>
         </mat-form-field>
     </div>
+
+
     <div class="form-group" *ngIf="divIsIndicator">
         <div class="form-group">
             <mat-form-field appearance="outline">
@@ -96,6 +98,17 @@
                 <input matInput ngModel type="text"  value="{{NodeAdd.nodeDescription}}"  [(ngModel)]="NodeAdd.nodeDescription">
             </mat-form-field>
         </div>
+    </div>
+
+    <div class="form-group" *ngIf="divIsFacility">
+        <mat-form-field appearance="outline">
+            <mat-label>Select a facility type</mat-label>
+            <mat-select [(ngModel)]="NodeAdd.FaciltyID">
+                <mat-option *ngFor="let c of FacilityTypes" [value]="c.id">
+                    {{c.facilityType}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
     </div>
 </div>
 <div mat-dialog-actions>

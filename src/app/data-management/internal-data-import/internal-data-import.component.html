@@ -52,6 +52,13 @@
                                 </button>
                             </ng-template>
                         </kendo-grid-column>
+                        <kendo-grid-column [width]="70" title="Delete">
+                            <ng-template kendoGridCellTemplate let-element>
+                                <button mat-icon-button (click)=" clickDelete(element); archiveTree(element);">
+                                    <mat-icon class="mat-14">delete</mat-icon>
+                                </button>
+                            </ng-template>
+                        </kendo-grid-column>
                     </kendo-grid>
                 </div>
             </div>
@@ -77,8 +84,8 @@
                 </mat-expansion-panel-header>
                 <div class="form-group">
                     <label style="font-size: medium;">Import Name</label>
-                    <input type="text" class="form-control" #ImportNameinput
-                        value="{{ImportAdd.uploadName}}" [(ngModel)]="ImportAdd.uploadName" 
+                    <input type="text" class="form-control" #ImportNameinput (keyup)="onKeyUp(ImportNameinput,$event)"
+                        value="{{ImportAdd.uploadName}}" [(ngModel)]="ImportAdd.uploadName"
                         onkeypress="return (event.charCode> 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95) || (event.charCode >= 48 && event.charCode <= 57)" />
                     <mat-hint>{{ImportNameinput.value?.length || 0}}/100
                     </mat-hint>
@@ -106,7 +113,7 @@
                 <div class="form-group">
                     <mat-form-field appearance="outline">
                         <mat-label>Table Structure</mat-label>
-                        <mat-select [(ngModel)]="ImportAdd.uploadTableStructureId">
+                        <mat-select [(ngModel)]="ImportAdd.uploadTableStructureId" >
                             <mat-option *ngFor="let c of TableStructure" [value]="c.uploadTableStructureId">
                                 {{c.description}}
                             </mat-option>
@@ -126,7 +133,7 @@
                 </div>
                 <div>
                     <div class="form-inline">
-                        <input class="form-control" value="{{abcValue}}" #Addcolumninput [(ngModel)]="abcValue"
+                        <input class="form-control" value="{{abcValue}}" #Addcolumninput [(ngModel)]="abcValue" (keyup)="onKeyUpColumn(Addcolumninput,$event)"
                             id="columnheadersInput"
                             onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95) || (event.charCode >= 48 && event.charCode <= 57)" />
                         <mat-hint>{{Addcolumninput.value?.length || 0}}/100
@@ -190,7 +197,7 @@
                         <div class="form-group">
                             <label style="font-size: medium;">Field Name</label>
                             <input type="text" class="form-control" #fieldName value="{{ImportAdd.fieldName}}"
-                                [(ngModel)]="ImportAdd.fieldName"
+                                [(ngModel)]="ImportAdd.fieldName" (keyup)="onKeyUpField(fieldName,$event)"
                                 onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95) || (event.charCode >= 48 && event.charCode <= 57)" />
                             <mat-hint>{{fieldName.value?.length || 0}}/100
                             </mat-hint>

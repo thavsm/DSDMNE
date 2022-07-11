@@ -408,7 +408,7 @@ export class LevelAddComponent implements OnInit {
       "alert": "",
       "Compulsory": 1,
       "LengthValidation": "",
-      "LevelID": this.LevelData.levelID,
+      "LevelID": this.levelAdd.levelID,
       "QuestionName": "Name",
       "HasChildren": "0",
       "ListValue": "",
@@ -431,7 +431,7 @@ export class LevelAddComponent implements OnInit {
       "alert": "",
       "Compulsory": 1,
       "LengthValidation": "",
-      "LevelID": this.LevelData.levelID,
+      "LevelID": this.levelAdd.levelID,
       "QuestionName": "Description",
       "HasChildren": "0",
       "ListValue": "",
@@ -460,7 +460,7 @@ export class LevelAddComponent implements OnInit {
   addAttributes() {
 
     this.LevelData = JSON.parse(localStorage.getItem('LevelData') || '{}');
-    this.service.getAttributesDataExportName(this.levelAdd.fieldName.replace(/\s/g, ""), this.LevelData.levelID).subscribe(data => { 
+    this.service.getAttributesDataExportName(this.levelAdd.fieldName.replace(/\s/g, ""), this.levelAdd.levelID).subscribe(data => { 
       this.AttributesDataExportName = data;
       if(typeof this.AttributesDataExportName !== "undefined" && this.AttributesDataExportName.length === 0){
 
@@ -483,7 +483,7 @@ export class LevelAddComponent implements OnInit {
             "alert": "",
             "Compulsory": this.LevelfieldCompulsory,
             "LengthValidation": this.levelAdd.lengthValidation,
-            "LevelID": this.LevelData.levelID,
+            "LevelID": this.levelAdd.levelID,
             "QuestionName": this.levelAdd.fieldQuestion,
             "HasChildren": "0",
             "ListValue": this.levelAdd.listValue,

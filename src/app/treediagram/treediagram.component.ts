@@ -69,6 +69,11 @@ export class TreediagramComponent implements OnInit {
       ;  
     }
 
+    if(this.treeData.TreeCategoryID == 2){
+
+      this.tdAddLevel = false;  
+
+    }
   }
   openDialogEdit(event){
   
@@ -104,7 +109,9 @@ export class TreediagramComponent implements OnInit {
       nodeDescription: event.dataItem.nodeDescription,
       ViewEdit:this.treeData.ViewEdit,
       IsIndicatorLevel:event.dataItem.isIndicatorLevel,
-      indicatorID: event.dataItem.indicatorID
+      indicatorID: event.dataItem.indicatorID,
+      IsFacilityLevel: event.dataItem.isFacilityLevel,
+      FaciltyID: 0
     }
 
     const dialogRef = this.dialog.open(LevelNodeEditComponent, { width: '70%', height: '80%', data: this.NodeData, disableClose: true }

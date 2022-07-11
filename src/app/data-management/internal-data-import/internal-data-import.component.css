@@ -104,3 +104,8 @@ span.name {
   font-family: Tahoma;
   font-size: 20
 }
+
+/* mat-list-option {
+  max-height: 400px;
+  overflow: auto;
+} */
