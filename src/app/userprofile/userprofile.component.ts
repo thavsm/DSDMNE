@@ -22,6 +22,7 @@ export class UserProfileComponent implements OnInit {
   @Input() isParent?: boolean;
   userDetail: any;
   isButtonVisible = false;
+  isButtonVisibleAccess = false;
   cities: [listitem];
   levels: [listitem];
   roles: [listitem];

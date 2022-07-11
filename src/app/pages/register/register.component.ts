@@ -95,8 +95,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
       EmployeeNo: [''],
       ServicePoint: [''],
       Address: [''],
-      Surname: [''],
-      LocationType: [''],
+      Surname: ['', Validators.required],
+      LocationType: ['', Validators.required],
       Designation: [''],
       Branch: [''],
       RoleType:[''],
@@ -211,75 +211,79 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     onSubmit() {
       //this.saving = true;
-      this.spinner.show();
-      var locBranch = 0;
-      var locProvince = 0;
-      var locDistrict = 0;
-      var locSPoint = 0;
-      var locFacility = 0;
-      if(this.formModel.value.Branch!='') {
-        locBranch = this.formModel.value.Branch;
-      }
-      if(this.formModel.value.ProvinceID!='') {
-        locProvince = this.formModel.value.ProvinceID;
-      }
-      if(this.formModel.value.DistrictID!='') {
-        locDistrict = this.formModel.value.DistrictID;
-      }
-      if(this.formModel.value.ServicePointID!='') {
-        locSPoint = this.formModel.value.ServicePointID;
-      }
-      if(this.formModel.value.FacilityID!='') {
-        locFacility = this.formModel.value.FacilityID;
-      }
-
-      var body = {
-        Email: this.formModel.value.Email,
-        FullName: this.formModel.value.FullName,
-        Password: this.formModel.value.Password,
-        Location: this.formModel.value.Location,
-        Role: this.formModel.value.Role,
-        PhoneNumber: this.formModel.value.PhoneNumber,
-        EmployeeNo: this.formModel.value.EmployeeNo,
-        ServicePoint: this.formModel.value.ServicePoint,
-        Address: this.formModel.value.Address,
-        Branch: locBranch,
-        Surname: this.formModel.value.Surname,
-        LocationType: this.formModel.value.LocationType,
-        RoleType: this.formModel.value.RoleType,
-        ProvinceID: locProvince,
-        DistrictID: locDistrict,
-        ServicePointID: locSPoint,
-        FacilityID: locFacility
-      };
-      //let bd ={Email: this.formModel.Email, Password: this.formModel.Password, FullName: this.formModel.FullName};
-      this.service.register(body).subscribe(
-        (res: any) => {
-          this.spinner.hide();
-          if (res.succeeded) {
-            this.formModel.reset();
-            this.showNotification('top','right','New user created!', 'Registration successful.','success');
-          } 
-          else {  
-            res.errors.forEach(element => {
-              switch (element.code) {
-                case 'DuplicateUserName':
-                  this.showNotification('top','right','Email is already taken','Registration failed.','danger');
-                  break;
-  
-                default:
-                  this.showNotification('top','right',element.description,'Registration failed.','danger');
-                  break;
-              }
-            });
-          }
-        },
-        err => {
-          this.spinner.hide();
-          console.log(err);
+      if(this.formModel.value.FullName =='' || this.formModel.value.Surname =='' || this.formModel.value.Email =='' || this.formModel.value.PhoneNumber =='' || this.formModel.value.Role =='' || this.formModel.value.RoleType =='' || this.formModel.value.LocationType ==''){
+        this.showNotification('top','right','Please complete all fields.','Error', 'info');
+      }    
+      else{  
+        this.spinner.show();
+        var locBranch = 0;
+        var locProvince = 0;
+        var locDistrict = 0;
+        var locSPoint = 0;
+        var locFacility = 0;
+        if(this.formModel.value.Branch!='') {
+          locBranch = this.formModel.value.Branch;
         }
-      );
+        if(this.formModel.value.ProvinceID!='') {
+          locProvince = this.formModel.value.ProvinceID;
+        }
+        if(this.formModel.value.DistrictID!='') {
+          locDistrict = this.formModel.value.DistrictID;
+        }
+        if(this.formModel.value.ServicePointID!='') {
+          locSPoint = this.formModel.value.ServicePointID;
+        }
+        if(this.formModel.value.FacilityID!='') {
+          locFacility = this.formModel.value.FacilityID;
+        }
 
+        var body = {
+          Email: this.formModel.value.Email,
+          FullName: this.formModel.value.FullName,
+          Password: this.formModel.value.Password,
+          Location: this.formModel.value.Location,
+          Role: this.formModel.value.Role,
+          PhoneNumber: this.formModel.value.PhoneNumber,
+          EmployeeNo: this.formModel.value.EmployeeNo,
+          ServicePoint: this.formModel.value.ServicePoint,
+          Address: this.formModel.value.Address,
+          Branch: locBranch,
+          Surname: this.formModel.value.Surname,
+          LocationType: this.formModel.value.LocationType,
+          RoleType: this.formModel.value.RoleType,
+          ProvinceID: locProvince,
+          DistrictID: locDistrict,
+          ServicePointID: locSPoint,
+          FacilityID: locFacility
+        };
+        //let bd ={Email: this.formModel.Email, Password: this.formModel.Password, FullName: this.formModel.FullName};
+        this.service.register(body).subscribe(
+          (res: any) => {
+            this.spinner.hide();
+            if (res.succeeded) {
+              this.formModel.reset();
+              this.showNotification('top','right','New user created!', 'Registration successful.','success');
+            } 
+            else {  
+              res.errors.forEach(element => {
+                switch (element.code) {
+                  case 'DuplicateUserName':
+                    this.showNotification('top','right','Email is already taken','Registration failed.','danger');
+                    break;
+    
+                  default:
+                    this.showNotification('top','right',element.description,'Registration failed.','danger');
+                    break;
+                }
+              });
+            }
+          },
+          err => {
+            this.spinner.hide();
+            console.log(err);
+          }
+        );
+      }
   }
 
   loadLocation(loctype:any)

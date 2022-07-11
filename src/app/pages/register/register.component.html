@@ -35,7 +35,7 @@
                         <input type="text" class="form-control" placeholder="Surname..." formControlName="Surname">
                       </div>
                       <span class="text-danger ml-5"
-                        *ngIf="formModel.get('FullName').touched && formModel.get('FullName').errors?.required">This
+                        *ngIf="formModel.get('Surname').touched && formModel.get('Surname').errors?.required">This
                         field is mandatory.</span>
                     </div>
                   </div>
@@ -106,7 +106,7 @@
                         </mat-select>
                       </div>
                       <span class="text-danger ml-5"
-                        *ngIf="formModel.get('Role').touched && formModel.get('Role').errors?.required">This
+                        *ngIf="formModel.get('RoleType').touched && formModel.get('RoleType').errors?.required">This
                         field is mandatory.</span>
                     </div>
                   </div>
@@ -123,7 +123,10 @@
                             {{ loctype.viewValue }}
                           </mat-option>
                         </mat-select>
-                      </div>
+                      </div>                      
+                      <span class="text-danger ml-5"
+                        *ngIf="formModel.get('LocationType').touched && formModel.get('LocationType').errors?.required">This
+                        field is mandatory.</span>
                     </div>
                   </div>
                   <div class="col-md-5 mr-auto">
