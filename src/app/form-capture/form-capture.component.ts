@@ -150,8 +150,10 @@ export class FormCaptureComponent implements OnInit {
         this.userLocation=location;
         this.service.getFormCaptureCountPerLocation(location,this.userDetail.formData.role).subscribe(result => {
           this.data =  result;
-          this.userLocationLevel=this.data[0].levelID;
-          this.PeriodStatus=this.data[0].periodStatus;
+          if(this.data.length>0){
+            this.userLocationLevel=this.data[0].levelID;
+            this.PeriodStatus=this.data[0].periodStatus;
+          }
           this.spinner.hide();
         });
       });
