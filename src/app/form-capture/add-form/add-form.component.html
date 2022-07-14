@@ -465,7 +465,7 @@
                                                     </td>
                                                     <td style="width: 10px;">
                                                         <mat-icon class="mat-18"
-                                                            (click)=deleteClone(dataItem.cloneNum,sectionItem.groupGUID[0].parentFieldName)>
+                                                            (click)=deleteClone(dataItem.cloneNum,sectionItem.groupGUID[0].parentFieldName)  style="color:red ;">
                                                             delete</mat-icon>
                                                     </td>
                                                     <td style="text-align:center">{{dataItem.colOne}}</td>
@@ -1010,7 +1010,7 @@
                                                         <input matInput type="number" step="0.01" (blur)="checkInfo()"
                                                             [(ngModel)]=subsectionItem.data (blur)="checkInfo()"
                                                             maxlength={{subsectionItem.fieldValidations[0].dataLength}}
-                                                            pattern="^\d+(?:\.\d{1,2})?$"
+                                                            pattern="^\d+(?:\.\d{1,2})?$"                                                            
                                                             onblur="this.parentNode.parentNode.style.backgroundColor=/^\d+(?:\.\d{1,2})?$/.test(this.value)?'inherit':'white'"
                                                             placeholder="{{subsectionItem.toolTip}}"
                                                             value="{{subsectionItem.data}}">
@@ -3565,7 +3565,7 @@
                         <kendo-grid-column field="createDate" title="Created On" [width]="15">
                         </kendo-grid-column>
 
-                        <kendo-grid-column [width]="5" title="Download" *ngIf="isViewOnly!='readonly'">
+                        <kendo-grid-column [width]="5" title="" *ngIf="isViewOnly!='readonly'">
                             <ng-template kendoGridCellTemplate let-dataItem>
                                 <button mat-icon-button (click)="clickDownloadPhoto(dataItem)">
                                     <mat-icon class="mat-18">file_download</mat-icon>
@@ -3576,7 +3576,7 @@
                         <kendo-grid-column [width]="5" *ngIf="isViewOnly!='readonly'">
                             <ng-template kendoGridCellTemplate let-dataItem>
                                 <button mat-icon-button (click)="deletePhoto(dataItem)">
-                                    <mat-icon class="mat-18">delete</mat-icon>
+                                    <mat-icon class="mat-18" style="color:red ;">delete</mat-icon>
                                 </button>
                             </ng-template>
                         </kendo-grid-column>
@@ -3638,7 +3638,7 @@
                         <kendo-grid-column field="fileSize" title="File Size" [width]="15">
                         </kendo-grid-column>
 
-                        <kendo-grid-column [width]="5" title="Download" *ngIf="isViewOnly!='readonly'">
+                        <kendo-grid-column [width]="5" title="" *ngIf="isViewOnly!='readonly'">
                             <ng-template kendoGridCellTemplate let-dataItem>
                                 <button mat-icon-button (click)="clickDownload(dataItem)">
                                     <mat-icon class="mat-18">file_download</mat-icon>
@@ -3649,7 +3649,7 @@
                         <kendo-grid-column [width]="5" *ngIf="isViewOnly!='readonly'">
                             <ng-template kendoGridCellTemplate let-dataItem>
                                 <button mat-icon-button (click)="deleteFile(dataItem)">
-                                    <mat-icon class="mat-18">delete</mat-icon>
+                                    <mat-icon class="mat-18"  style="color:red ;">delete</mat-icon>
                                 </button>
                             </ng-template>
                         </kendo-grid-column>
@@ -3693,6 +3693,12 @@
                     <kendo-grid-column field="fullName" title="Added By" [width]="15">
                     </kendo-grid-column>
 
+                    <kendo-grid-column field="roleName" title="Role" [width]="15">
+                    </kendo-grid-column>
+
+                    <kendo-grid-column field="locationName" title="Location" [width]="15">
+                    </kendo-grid-column>
+
                     <kendo-grid-column field="linkedTo" title="Fields Linked To" [width]="15">
                     </kendo-grid-column>
 
@@ -3707,7 +3713,7 @@
                     <kendo-grid-column [width]="3" *ngIf="isViewOnly!='readonly'">
                         <ng-template kendoGridCellTemplate let-dataItem>
                             <button mat-icon-button (click)="deleteComment(dataItem)">
-                                <mat-icon class="mat-18">delete</mat-icon>
+                                <mat-icon class="mat-18"  style="color:red ;">delete</mat-icon>
                             </button>
                         </ng-template>
                     </kendo-grid-column>

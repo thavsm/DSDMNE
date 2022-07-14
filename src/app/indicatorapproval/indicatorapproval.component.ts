@@ -67,6 +67,9 @@ export class IndicatorapprovalComponent implements OnInit {
     this.wfid = Number(new URLSearchParams(window.location.search).get('workflowid'));
     this.taskID = Number(new URLSearchParams(window.location.search).get('taskid'));
     
+    console.log(this.wfid);
+    console.log(this.taskID);
+    
     if(Object.keys(this.data).length ==0) {
       this.userService.getUserProfile().subscribe(
         res => {
@@ -139,7 +142,8 @@ export class IndicatorapprovalComponent implements OnInit {
       locationTypeID: this.locationTypeID,
       locationID: this.locationID,
       year: this.year,
-      month: this.monthID
+      month: this.monthID,
+      indLocation: item["indicatorLocation"]
     }
     
     const dialogRef = this.dialog.open(FacilitydataComponent, {

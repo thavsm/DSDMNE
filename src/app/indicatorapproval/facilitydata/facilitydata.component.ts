@@ -48,6 +48,11 @@ export class FacilitydataComponent implements OnInit {
   public year=0;
   public month=0;
   public indicatorName='';
+  public indicatorLocation=0;
+
+  public facIndicator = false;
+  public spIndicator = false;
+  public provIndicator = false;
 
   //public groupsServicePoint: GroupDescriptor[] = [{ }];
   public groupsDistrict: GroupDescriptor[] = [{ field: "servicePoint" }]; //, {field: "facilityID"}, {field: "facilityName"}];
@@ -88,6 +93,24 @@ export class FacilitydataComponent implements OnInit {
       this.year = Number(this.data["year"]);
     } else{
         this.year = 0;
+    }
+
+    if(!isNaN(Number(this.data["indLocation"]))){
+      this.indicatorLocation = Number(this.data["indLocation"]);
+    } else{
+        this.indicatorID = 0;
+    }
+
+    
+    this.provIndicator = false;
+    this.spIndicator = false;
+    this.facIndicator = false;
+
+    switch (this.indicatorLocation)
+    {
+      case 4261: this.provIndicator = true; break;
+      case 4263: this.spIndicator = true; break;
+      case 4264: this.facIndicator = true; break;
     }
     //this.locationTypeID=4260;
     this.isNational = false;

@@ -268,7 +268,7 @@ export class ApprovalFormComponent implements OnInit {
               this.currentPage = this.pages[index - 1];
               this.pageStatus = this.currentPage.name;
               this.getDesignPerPage(this.currentPage.pageGUID);
-              this.getDesignPerPageHistory(this.currentPage.pageGUID);
+              //this.getDesignPerPageHistory(this.currentPage.pageGUID);
             }
             else {
               this.showNotification('top', 'center', 'There are no pages before this page for this form!', '', 'warning');
@@ -302,7 +302,7 @@ export class ApprovalFormComponent implements OnInit {
               this.currentPage = this.pages[index - 1];
               this.pageStatus = this.currentPage.name;
               this.getDesignPerPage(this.currentPage.pageGUID);
-              this.getDesignPerPageHistory(this.currentPage.pageGUID);
+              //this.getDesignPerPageHistory(this.currentPage.pageGUID);
             }
             else {
               this.showNotification('top', 'center', 'There are no pages before this page for this form!', '', 'warning');
@@ -505,7 +505,7 @@ export class ApprovalFormComponent implements OnInit {
           this.service.modifyPageStatus(this.formData.formCaptureID, this.currentPage.pageGUID, pageStatus).subscribe(result => {
             this.showNotification('top', 'center', 'Page data has been saved Successfully!', '', 'success');
             this.getDesignPerPage(this.currentPage.pageGUID);
-            this.getDesignPerPageHistory(this.currentPage.pageGUID);
+            //this.getDesignPerPageHistory(this.currentPage.pageGUID);
             this.currentPage.color = "green";
             this.formData.state = 'edit';
           });
@@ -542,7 +542,7 @@ export class ApprovalFormComponent implements OnInit {
     this.currentPage = page;
     this.pageStatus = this.currentPage.name;
     this.getDesignPerPage(page.pageGUID);
-    this.getDesignPerPageHistory(this.currentPage.pageGUID);
+    //this.getDesignPerPageHistory(this.currentPage.pageGUID);
   }
 
   closePopup() {
@@ -662,7 +662,7 @@ export class ApprovalFormComponent implements OnInit {
               this.currentPage = this.pages[index + 1];
               this.pageStatus = this.currentPage.name;
               this.getDesignPerPage(this.currentPage.pageGUID);
-              this.getDesignPerPageHistory(this.currentPage.pageGUID);
+              //this.getDesignPerPageHistory(this.currentPage.pageGUID);
             }
             else {
               this.showNotification('top', 'center', 'There are no more pages for this form!', '', 'warning');
@@ -695,7 +695,7 @@ export class ApprovalFormComponent implements OnInit {
               this.currentPage = this.pages[index + 1];
               this.pageStatus = this.currentPage.name;
               this.getDesignPerPage(this.currentPage.pageGUID);
-              this.getDesignPerPageHistory(this.currentPage.pageGUID);
+              //this.getDesignPerPageHistory(this.currentPage.pageGUID);
             }
             else {
               this.showNotification('top', 'center', 'There are no more pages for this form!', '', 'warning');
@@ -1071,7 +1071,7 @@ export class ApprovalFormComponent implements OnInit {
         localStorage.setItem('cloneNumberForEdit', "0");
         this.spinner.hide();
         this.getDesignPerPage(this.currentPage.pageGUID);
-        this.getDesignPerPageHistory(this.currentPage.pageGUID);
+        //this.getDesignPerPageHistory(this.currentPage.pageGUID);
       },
         error => {
           this.showNotification('top', 'center', 'Error saving repeat data, please try again', '', 'danger');
@@ -1096,7 +1096,7 @@ export class ApprovalFormComponent implements OnInit {
         this.HighlightRow = -1;
         this.spinner.hide();
         this.getDesignPerPage(this.currentPage.pageGUID);
-        this.getDesignPerPageHistory(this.currentPage.pageGUID);
+        //this.getDesignPerPageHistory(this.currentPage.pageGUID);
       },
         error => {
           this.showNotification('top', 'center', 'Error updating repeat data, please try again', '', 'danger');
@@ -1138,7 +1138,7 @@ export class ApprovalFormComponent implements OnInit {
         this.service.deleteClone(groupGUID, this.formData.formCaptureID, cloneNum).subscribe(res => {
           this.showNotification('top', 'center', 'Repeat data has been deleted successfully!', '', 'success');
           this.getDesignPerPage(this.currentPage.pageGUID);
-          this.getDesignPerPageHistory(this.currentPage.pageGUID);
+          //this.getDesignPerPageHistory(this.currentPage.pageGUID);
         });
       }
     })
@@ -1272,7 +1272,7 @@ export class ApprovalFormComponent implements OnInit {
             localStorage.setItem('fieldNameAttach', "");
             localStorage.setItem('fieldNamePhoto', "");
             this.getDesignPerPage(this.currentPage.pageGUID);
-            this.getDesignPerPageHistory(this.currentPage.pageGUID);
+            //this.getDesignPerPageHistory(this.currentPage.pageGUID);
             this.spinner.hide();
           });
         });
@@ -1307,7 +1307,7 @@ export class ApprovalFormComponent implements OnInit {
           localStorage.setItem('fieldNameAttach', "");
           localStorage.setItem('fieldNamePhoto', "");
           this.getDesignPerPage(this.currentPage.pageGUID);
-          this.getDesignPerPageHistory(this.currentPage.pageGUID);
+          //this.getDesignPerPageHistory(this.currentPage.pageGUID);
           this.spinner.hide();
         });
       }
@@ -1379,7 +1379,7 @@ export class ApprovalFormComponent implements OnInit {
             localStorage.setItem('fieldNameAttach', "");
             localStorage.setItem('fieldNamePhoto', "");
             this.getDesignPerPage(this.currentPage.pageGUID);
-            this.getDesignPerPageHistory(this.currentPage.pageGUID);
+            //this.getDesignPerPageHistory(this.currentPage.pageGUID);
             this.spinner.hide();
           });
         })
@@ -1418,7 +1418,7 @@ export class ApprovalFormComponent implements OnInit {
           localStorage.setItem('fieldNameAttach', "");
           localStorage.setItem('fieldNamePhoto', "");
           this.getDesignPerPage(this.currentPage.pageGUID);
-          this.getDesignPerPageHistory(this.currentPage.pageGUID);
+          //this.getDesignPerPageHistory(this.currentPage.pageGUID);
           this.spinner.hide();
         });
       }
@@ -1473,7 +1473,7 @@ export class ApprovalFormComponent implements OnInit {
           localStorage.setItem('fieldNameComment', "");
           this.addEditComment = 'Add';
           this.getDesignPerPage(this.currentPage.pageGUID);
-          this.getDesignPerPageHistory(this.currentPage.pageGUID);
+          //this.getDesignPerPageHistory(this.currentPage.pageGUID);
           this.spinner.hide();
         });
       }
@@ -1498,7 +1498,7 @@ export class ApprovalFormComponent implements OnInit {
           this.addEditComment = 'Add';
           this.HighlightRowComment = -1;
           this.getDesignPerPage(this.currentPage.pageGUID);
-          this.getDesignPerPageHistory(this.currentPage.pageGUID);
+          //this.getDesignPerPageHistory(this.currentPage.pageGUID);
           this.spinner.hide();
         });
       }
