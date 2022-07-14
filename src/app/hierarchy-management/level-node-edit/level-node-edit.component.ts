@@ -202,7 +202,10 @@ export class LevelNodeEditComponent implements OnInit {
 
     this.Hierarchyservice.getNodeRoleFacilityType(this.NodeData.nodeID).subscribe(data => {
       this.FacilityTypeID = data;   
-      this.NodeData.FaciltyID = this.FacilityTypeID[0].facilityTypeID; 
+
+      if(typeof this.FacilityTypeID !== "undefined" && this.FacilityTypeID.length != 0){
+        this.NodeData.FaciltyID = this.FacilityTypeID[0].facilityTypeID; 
+      }
     });
 
     this.levelID = this.NodeData.levelID;

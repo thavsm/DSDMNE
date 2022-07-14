@@ -61,7 +61,7 @@
 
                             <!-- Calculation Type -->
                             <div *ngIf="item.fieldType.value=='calculation' && item.isActive===true"
-                                style="text-align: left;" cdkDragHandle>
+                                style="text-align: left;">
                                 <div style="margin-right: 96%;">
                                     <mat-icon>{{item.fieldType.description}}</mat-icon>
                                 </div>
@@ -211,7 +211,7 @@
                                     </tr> -->
                                             </table>
                                         </mat-tab>
-                                        <mat-tab label="Style">
+                                        <!-- <mat-tab label="Style">
                                             <br>
                                             <table mat-table>
                                                 <tr mat-row>
@@ -235,7 +235,7 @@
                                                     </td>
                                                 </tr>
                                             </table>
-                                        </mat-tab>
+                                        </mat-tab> -->
                                         <mat-tab label="Validation">
                                             <br>
 
@@ -447,7 +447,7 @@
                                                             [(ngModel)]="item.calculation"></textarea>
                                                     </td>
                                                 </tr>
-                                                <tr mat-row>
+                                                <!-- <tr mat-row>
                                                     <td mat-cell>
                                                         <mat-form-field appearance="outline" *ngIf="greyedOut===false">
                                                             <mat-label>{{operationField}}</mat-label>
@@ -465,10 +465,10 @@
                                                             style="background-color: crimson;color: white;font-weight: 400;width: 200px;"
                                                             *ngIf="greyedOut===false">Clear Information</button>
                                                     </td>
-                                                </tr>
+                                                </tr> -->
                                             </table>
                                         </mat-tab>
-                                        <mat-tab label="Style">
+                                        <!-- <mat-tab label="Style">
                                             <br>
                                             <table mat-table>
                                                 <tr mat-row>
@@ -492,7 +492,7 @@
                                                     </td>
                                                 </tr>
                                             </table>
-                                        </mat-tab>
+                                        </mat-tab> -->
                                         <mat-tab label="Validation">
                                             <br>
                                             <table mat-table>
@@ -711,7 +711,7 @@
                                                 </tr>
                                             </table>
                                         </mat-tab>
-                                        <mat-tab label="Style">
+                                        <!-- <mat-tab label="Style">
                                             <br>
                                             <table mat-table>
                                                 <tr mat-row>
@@ -735,7 +735,7 @@
                                                     </td>
                                                 </tr>
                                             </table>
-                                        </mat-tab>
+                                        </mat-tab> -->
                                         <mat-tab label="Validation">
                                             <br>
 
@@ -952,7 +952,7 @@
                                                 </tr>
                                             </table>
                                         </mat-tab>
-                                        <mat-tab label="Style">
+                                        <!-- <mat-tab label="Style">
                                             <br>
                                             <table mat-table>
                                                 <tr mat-row>
@@ -976,7 +976,7 @@
                                                     </td>
                                                 </tr>
                                             </table>
-                                        </mat-tab>
+                                        </mat-tab> -->
                                         <mat-tab label="Validation">
                                             <br>
                                             <table mat-table>
@@ -1198,7 +1198,7 @@
                                                 </tr>
                                             </table>
                                         </mat-tab>
-                                        <mat-tab label="Style">
+                                        <!-- <mat-tab label="Style">
                                             <br>
                                             <table mat-table>
                                                 <tr mat-row>
@@ -1222,7 +1222,7 @@
                                                     </td>
                                                 </tr>
                                             </table>
-                                        </mat-tab>
+                                        </mat-tab> -->
                                         <mat-tab label="Validation">
                                             <br>
 
@@ -1434,7 +1434,7 @@
                                                 </tr>
                                             </table>
                                         </mat-tab>
-                                        <mat-tab label="Style">
+                                        <!-- <mat-tab label="Style">
                                             <br>
                                             <table mat-table>
                                                 <tr mat-row>
@@ -1458,7 +1458,7 @@
                                                     </td>
                                                 </tr>
                                             </table>
-                                        </mat-tab>
+                                        </mat-tab> -->
                                         <mat-tab label="Validation">
                                             <br>
 
@@ -2326,7 +2326,7 @@
                                                 </tr>
                                             </table>
                                         </mat-tab>
-                                        <mat-tab label="Style">
+                                        <!-- <mat-tab label="Style">
                                             <br>
                                             <table mat-table>
                                                 <tr mat-row>
@@ -2350,7 +2350,7 @@
                                                     </td>
                                                 </tr>
                                             </table>
-                                        </mat-tab>
+                                        </mat-tab> -->
                                         <mat-tab label="Validation">
                                             <br>
 
@@ -2666,8 +2666,7 @@
                             </div>
 
                             <!-- Toggle icons -->
-                            <div *ngIf="item.isActive===true">
-                               
+                            <div *ngIf="item.isActive===true">            
                                 <mat-icon title="Collapse Attributes" *ngIf="item.toggle" (click)="item.toggle=false">
                                     expand_less
                                 </mat-icon>

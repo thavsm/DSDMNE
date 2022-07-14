@@ -5266,6 +5266,7 @@ export class FormDesignerComponent implements OnInit {
 
     saveDesignPerPage(pageGUID: any) {
         var errorMessage = "Please ensure number ";
+        var errorMessageCompulsory="Please ensure number ";
         var count = 0;
         var count1 = 0;
         let hasDuplicates: Boolean = false;
@@ -5278,6 +5279,12 @@ export class FormDesignerComponent implements OnInit {
                 errorMessage = errorMessage + (index + 1) + ",";
             }
 
+            if(element.fieldTypeID=="6" || element.fieldTypeID=="7" || element.fieldTypeID=="32"){
+                if(element.groupGUID=="string"){
+                    errorMessageCompulsory  = errorMessageCompulsory + (index+1) + ",";
+                }
+            }
+
             hasDuplicates = this.checkForDuplicates(element.fieldName);
             if (hasDuplicates == true) {
                 count1++
@@ -5286,40 +5293,49 @@ export class FormDesignerComponent implements OnInit {
             element.formPage.name = this.currentPage.name;
         });
 
-        if (errorMessage === "Please ensure number ") {
-            if (count1 == 0) {
-                if (errorMessage === "Please ensure number ") {
-                    this.spinner.show();
-                    this.service.addFieldPerPage(this.formDesign, this.formData.formID, this.currentPage.pageGUID).subscribe(data => {
-                        this.formData.publishStatus = 0;
-                        this.service.updateDynamicFormDetails(this.formData.formID, this.formData).subscribe(result => {
-                            this.formData = result;
-                            this.checkStatus();
+        if(errorMessageCompulsory==="Please ensure number "){
+            if (errorMessage === "Please ensure number ") {
+                if (count1 == 0) {
+                    if (errorMessage === "Please ensure number ") {
+                        this.spinner.show();
+                        this.service.addFieldPerPage(this.formDesign, this.formData.formID, this.currentPage.pageGUID).subscribe(data => {
+                            this.formData.publishStatus = 0;
+                            this.service.updateDynamicFormDetails(this.formData.formID, this.formData).subscribe(result => {
+                                this.formData = result;
+                                this.checkStatus();
+                                this.spinner.hide();
+                                this.getDesignPerPage(pageGUID);
+                                this.refreshGroupSectionList();
+                                this.showNotification('top', 'center', 'Page Fields Saved Successfully!', '', 'success');
+                            });
+                        }, error => {
+                            this.showNotification('top', 'center', 'Error saving page fields, please try again', '', 'danger');
                             this.spinner.hide();
-                            this.getDesignPerPage(pageGUID);
-                            this.refreshGroupSectionList();
-                            this.showNotification('top', 'center', 'Page Fields Saved Successfully!', '', 'success');
                         });
-                    }, error => {
-                        this.showNotification('top', 'center', 'Error saving page fields, please try again', '', 'danger');
-                        this.spinner.hide();
+                    }
+                }
+                else {
+                    errorMessage = "Database name must be unique";
+                    this.formDesign.forEach((element, index) => {
+                        element.pageGUID = "pageGUID";
                     });
+                    this.showNotification('top', 'center', errorMessage, '', 'danger');
                 }
             }
             else {
-                errorMessage = "Database name must be unique";
+                errorMessage = errorMessage + " form field/s have question name/s,database name/s on the form before saving";
                 this.formDesign.forEach((element, index) => {
                     element.pageGUID = "pageGUID";
                 });
                 this.showNotification('top', 'center', errorMessage, '', 'danger');
             }
         }
-        else {
-            errorMessage = errorMessage + " form fields have question names,database names on the form before saving";
+        else{
+            errorMessageCompulsory = errorMessageCompulsory + " form field/s has been given a name/s and added before saving the entire form";
             this.formDesign.forEach((element, index) => {
                 element.pageGUID = "pageGUID";
             });
-            this.showNotification('top', 'center', errorMessage, '', 'danger');
+            this.showNotification('top', 'center', errorMessageCompulsory, '', 'danger');
         }
     }
 
@@ -5694,6 +5710,7 @@ export class FormDesignerComponent implements OnInit {
             item.fieldName="";
         }
         else{
+            item.xmlElementName = item.xmlElementName.replace(/\s/g, "").replace(/[^a-zA-Z0-9]/g, "").substring(0, 100);
             item.fieldName = item.xmlElementName.replace(/\s/g, "").replace(/[^a-zA-Z0-9]/g, "_").substring(0, 100);
             item.dataExportName = item.xmlElementName.replace(/\s/g, "").replace(/[^a-zA-Z0-9]/g, "_").substring(0, 100);
         }
