@@ -100,6 +100,7 @@ export class NodeAddComponent implements OnInit {
 
 
   public filteredIndicators;
+  public filteredParents;
   public filteredFormFields;
   getFormCategory() {
     this.spinner.show();
@@ -291,6 +292,7 @@ export class NodeAddComponent implements OnInit {
     if (this.index > 0) {
       this.service.getNodes(this.level.levelID).subscribe(data => {
         this.nodes = data;
+        this.filteredParents = this.nodes.slice();
         this.spinner.hide();
       });
     }

@@ -19,8 +19,15 @@
     <div class="form-group">
         <mat-form-field appearance="outline">
             <mat-label>Select a parent node</mat-label>
-            <mat-select [(ngModel)]="NodeAdd.nodeID">
+            <!-- <mat-select [(ngModel)]="NodeAdd.nodeID">
                 <mat-option *ngFor="let c of nodes" [value]="c.nodeID">
+                    {{c.nodeName}}
+                </mat-option>
+            </mat-select> -->
+
+            <mat-select [(ngModel)]="NodeAdd.nodeID"> 
+                <mat-select-filter [placeholder]="'Search'" [displayMember]="'nodeName'" [array]="nodes" (filteredReturn)="filteredParents =$event"></mat-select-filter>
+                <mat-option *ngFor="let c of filteredParents" [value]="c.nodeID">
                     {{c.nodeName}}
                 </mat-option>
             </mat-select>
