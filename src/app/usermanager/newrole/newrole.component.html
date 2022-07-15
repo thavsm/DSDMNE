@@ -26,7 +26,7 @@
                         <div class="form-group" [formGroup]="secondFormGroup">
                             <label style="font-size: medium;">Facility Type</label>
                             <mat-form-field appearance="outline">
-                                <mat-label>Select a Facility Type</mat-label>
+                                <!-- <mat-label>Select a Facility Type</mat-label> -->
                                 <mat-select [(ngModel)]="facilityType" matInput formControlName="facilityType" required>
                                     <mat-option value="-1">Not Applicable</mat-option>
                                     <mat-option *ngFor="let facility of facilityTypes" [value]="facility.id">
