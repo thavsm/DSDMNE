@@ -26,12 +26,15 @@ declare var $: any;
 })
 export class LevelNodeEditComponent implements OnInit {
 
+  index: any;
+  level: any;
   submitted = false;
   NodeData: any;
   Preview: any;
   NodeAttributesData: any;
   levels: any;
   nodes: any;
+  ParentNodes: any;
   nodefields: any;
   Roles: any = [];
   UserfieldTypes: any = [];
@@ -227,7 +230,7 @@ export class LevelNodeEditComponent implements OnInit {
     this.nodeDescription = this.NodeData.nodeDescription;
     this.nodeParentD = this.NodeData.nodeParentD;
     this.NodeData.indicatorID = this.NodeData.indicatorID;
-
+    
     this.Hierarchyservice.getFacilityTypes().subscribe(data => {
       this.spinner.show();
       this.FacilityTypes = data;
@@ -239,6 +242,7 @@ export class LevelNodeEditComponent implements OnInit {
     this.getUserfieldTypes();
     this.getLevels();
     this.getNodes();
+    // this.getParentNodes();
     this.getNodeAttributes(this.NodeData.levelID);
     this.service.getLevelMetadata(this.NodeData.levelID);
     this.hideEditButtons();
@@ -315,7 +319,7 @@ export class LevelNodeEditComponent implements OnInit {
 
     if(this.NodeData.IsIndicatorLevel == 1){
       this.divIsIndicator = true;
-      this.btnSave = false;
+      // this.btnSave = false;
       this.setIndicatorFileds();
     }else{
       this.divIsIndicator = false;
@@ -332,6 +336,7 @@ export class LevelNodeEditComponent implements OnInit {
   public filteredFormFields;
   
  
+
   getIndicators(){
     this.spinner.show();   
     this.Hierarchyservice.getIndicatorNodes().subscribe(data => {
@@ -1052,6 +1057,16 @@ export class LevelNodeEditComponent implements OnInit {
   getLevels() {
     this.service.getLevelsList(this.treeData.treeID).subscribe(data => {
       this.levels = data;
+      this.spinner.show();
+      this.index = this.levels.findIndex(x => x.levelID === this.levelID);
+      this.level = this.levels.filter(item => item)[this.index - 1];
+      if (this.index > 0) {
+        this.Hierarchyservice.getNodes(this.level.levelID).subscribe(ParentNodesdata => {
+          this.ParentNodes = ParentNodesdata;
+          this.filteredParents = this.ParentNodes.slice();
+          this.spinner.hide();
+        });
+      }     
     });
   }
 
@@ -1165,7 +1180,21 @@ export class LevelNodeEditComponent implements OnInit {
     });
   }
 
+  public filteredParents;
 
+  // getParentNodes() {
+  //   this.spinner.show();
+  //   this.index = this.levels.findIndex(x => x.levelID === this.levelID);
+  //   this.level = this.levels.filter(item => item)[this.index - 1];
+  //   if (this.index > 0) {
+  //     this.service.getNodes(this.levelID).subscribe(data => {
+  //       this.ParentNodes = data;
+  //       this.filteredParents = this.nodes.slice();
+  //       this.spinner.hide();
+  //     });
+  //   }
+
+  // }
 
   ShowHide(Type: any) {
 

@@ -1,54 +1,68 @@
-<div class="main-content">
-  <div class="container-fluid">
-    <div class="container-fluid">
-      <div class="header text-center">
-        <h3 class="title">Tree Diagram</h3>
-      </div>
-      <div class="row">
-        <div class="col-md-20">
-          <table class="table">
-            <tr> <!-- *ngIf="tdAddLevel" -->
-              <td *ngIf="tdAddLevel"><button class="btn btn-md" class="btn btn-md btn-primary" (click)="openDialogAddLevel()"><i
-                    class="fa fa-plus" aria-hidden="true"></i> Add/Edit Level</button></td>
-              <!-- <td><button type="button" class="btn btn-success" title="Previous Page"><i class="fa fa-backward" *ngIf="divDsiplay" ></i><a href="/hierarchy-management" style="color: aliceblue;"> Previous page</a></button></td> -->
-              <td *ngIf="tdAddNode"><button class="btn btn-md" class="btn btn-md btn-primary" (click)="openDialogAdd()"><i
-                    class="fa fa-plus" aria-hidden="true"></i> Add Node</button></td>
-              <td><button type="button" class="btn btn-success" title="Export To PDF" (click)="pdf.saveAs('Export.pdf')"><i
-                    class="fa fa-file" aria-hidden="true"></i> Export To
-                  PDF</button></td>
-              <td><button type="button" class="btn btn-success" title="Expand All Nodes" (click)="expandNodes()"><i
-                    class="fa fa-arrows-alt" aria-hidden="true"></i> Expand All Nodes</button></td>
-              <td><button type="button" class="btn btn-success" title="Collapse All Nodes" (click)="collapseNodes()"><i
-                    class="fa fa-compress" aria-hidden="true"></i> Collapse All Nodes</button></td>
-            </tr>
-          </table>
-        </div>
-      </div>
-<!-- 
-      <div class="row">
-        <div class="col-md-20">
-          <table class="table">
-            <tr>
-              <td><button class="btn btn-md" class="btn btn-md btn-primary" (click)="expand()"><i class="fa fa-minus"
-                    aria-hidden="true"></i>Expand All</button></td>
-              <td><button class="btn btn-md" class="btn btn-md btn-primary" (click)="collapse()"><i class="fa fa-plus"
-                    aria-hidden="true"></i>Collapse All</button></td>
-            </tr>
-          </table>
-        </div>
-      </div> -->
 
-      <ng-template #template let-anchor>
-        {{ anchor.nativeElement.innerText }}
-      </ng-template>
-      <kendo-pdf-export #pdf paperSize="A3" [landscape]=true margin="2cm">    
-        <div kendoTooltip filter="span.k-in" [tooltipTemplate]="template">   
-          <kendo-treeview [nodes]="treenodes | async" textField="levelNameNodeName" kendoTreeViewFlatDataBinding [filterable]="true"
-            [expandBy]="'levelNameNodeName'" kendoTreeViewExpandable [(expandedKeys)]="expandedKeys" idField="nodeID"
-            (selectionChange)="openDialogEdit($event)" parentIdField="nodeParentD">     
-          </kendo-treeview>      
-        </div>     
-      </kendo-pdf-export>
-    </div>
+<div class="row">
+  <div class="col-md-12">
+      <div class="card">
+          <div class="card-header card-header-rose card-header-icon">
+              <div class="card-icon">
+                  <i class="material-icons">assignment</i>
+              </div>
+              <h4 class="card-title">Tree Diagram</h4>
+          </div>
+          <div class="card-body">
+            <div class="main-content">
+              <div class="container-fluid">
+                <div class="container-fluid">
+                  <div class="row">
+                    <div class="col-md-20">
+                      <table class="table">
+                        <tr> <!-- *ngIf="tdAddLevel" -->
+                          <td *ngIf="tdAddLevel"><button class="btn btn-md" class="btn btn-md btn-primary" (click)="openDialogAddLevel()"><i
+                                class="fa fa-plus" aria-hidden="true"></i> Add/Edit Level</button></td>
+                          <!-- <td><button type="button" class="btn btn-success" title="Previous Page"><i class="fa fa-backward" *ngIf="divDsiplay" ></i><a href="/hierarchy-management" style="color: aliceblue;"> Previous page</a></button></td> -->
+                          <td *ngIf="tdAddNode"><button class="btn btn-md" class="btn btn-md btn-primary" (click)="openDialogAdd()"><i
+                                class="fa fa-plus" aria-hidden="true"></i> Add Node</button></td>
+                          <td><button type="button" class="btn btn-success" title="Export To PDF" (click)="pdf.saveAs('Export.pdf')"><i
+                                class="fa fa-file" aria-hidden="true"></i> Export To
+                              PDF</button></td>
+                          <td><button type="button" class="btn btn-success" title="Expand All Nodes" (click)="expandNodes()"><i
+                                class="fa fa-arrows-alt" aria-hidden="true"></i> Expand All Nodes</button></td>
+                          <td><button type="button" class="btn btn-success" title="Collapse All Nodes" (click)="collapseNodes()"><i
+                                class="fa fa-compress" aria-hidden="true"></i> Collapse All Nodes</button></td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+            <!-- 
+                  <div class="row">
+                    <div class="col-md-20">
+                      <table class="table">
+                        <tr>
+                          <td><button class="btn btn-md" class="btn btn-md btn-primary" (click)="expand()"><i class="fa fa-minus"
+                                aria-hidden="true"></i>Expand All</button></td>
+                          <td><button class="btn btn-md" class="btn btn-md btn-primary" (click)="collapse()"><i class="fa fa-plus"
+                                aria-hidden="true"></i>Collapse All</button></td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div> -->
+            
+                  <ng-template #template let-anchor>
+                    {{ anchor.nativeElement.innerText }}
+                  </ng-template>
+                  <kendo-pdf-export #pdf paperSize="A3" [landscape]=true margin="2cm">    
+                    <div kendoTooltip filter="span.k-in" [tooltipTemplate]="template">   
+                      <kendo-treeview [nodes]="treenodes | async" textField="levelNameNodeName" kendoTreeViewFlatDataBinding [filterable]="true"
+                        [expandBy]="'levelNameNodeName'" kendoTreeViewExpandable [(expandedKeys)]="expandedKeys" idField="nodeID"
+                        (selectionChange)="openDialogEdit($event)" parentIdField="nodeParentD">     
+                      </kendo-treeview>      
+                    </div>     
+                  </kendo-pdf-export>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
   </div>
 </div>
+
+

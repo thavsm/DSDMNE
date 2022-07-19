@@ -36,6 +36,7 @@ export class NodeAddComponent implements OnInit {
   submitted = false;
   NodeAdd: any;
   levels: any = [];
+  AllLevels: any = [];
   nodes: any = [];
   FacilityTypes: any = [];
   FormFields: any[];
@@ -273,6 +274,13 @@ export class NodeAddComponent implements OnInit {
     this.service.getLevelsList(this.treeData.treeID).subscribe(data => {
       this.levels = data;
       this.spinner.hide();
+
+      let indexNational = this.levels.findIndex(d => d.levelID === 4260); //find index in your array
+      this.levels.splice(indexNational, 1);//remove element from array
+
+      let indexProvincial = this.levels.findIndex(d => d.levelID === 4261); //find index in your array
+      this.levels.splice(indexProvincial, 1);//remove element from array
+
     });
   }
 
@@ -287,15 +295,18 @@ export class NodeAddComponent implements OnInit {
 
   getNodes(levelID, index) {
     this.spinner.show();
-    this.index = this.levels.findIndex(x => x.levelID === levelID);
-    this.level = this.levels.filter(item => item)[this.index - 1];
-    if (this.index > 0) {
+    this.service.getLevelsList(this.treeData.treeID).subscribe(data => {
+      this.AllLevels = data;
+      this.index = this.AllLevels.findIndex(x => x.levelID === levelID);
+      this.level = this.AllLevels.filter(item => item)[this.index - 1];
+  
       this.service.getNodes(this.level.levelID).subscribe(data => {
         this.nodes = data;
         this.filteredParents = this.nodes.slice();
         this.spinner.hide();
       });
-    }
+      this.spinner.hide();
+    });
 
   }
 

@@ -138,7 +138,6 @@ export class HierarchyManagementComponent implements OnInit {
     this.treeAdd = item;
     const dialogRef = this.dialog.open(TreeAddComponent, {
       width: '40%',
-      height: '50%',
       data: this.treeAdd,
       disableClose:true
     });

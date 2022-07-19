@@ -114,7 +114,7 @@ export class TreediagramComponent implements OnInit {
       FaciltyID: 0
     }
 
-    const dialogRef = this.dialog.open(LevelNodeEditComponent, { width: '70%', height: '80%', data: this.NodeData, disableClose: true }
+    const dialogRef = this.dialog.open(LevelNodeEditComponent, { width: '70%', data: this.NodeData, disableClose: true }
 
     );
 

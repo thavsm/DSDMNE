@@ -5,32 +5,43 @@
     </button>
 </div>
 
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-rose card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">assignment</i>
+                </div>
+                <h4 class="card-title">Add Indicator</h4>
+            </div>
+            <div class="card-body">
+                <div mat-dialog-content>
+                    <div class="form-group">
+                        <label style="font-size: medium;">Indicator Name</label>
+                        <mat-form-field appearance="outline">
+                            <input matInput ngModel type="text" value="{{IndicatorAdd.indicatorName}}" [(ngModel)]="IndicatorAdd.indicatorName">
+                        </mat-form-field>               
+                    </div>
+                    <div class="form-group">
+                        <label style="font-size: medium;">Indicator Description</label>
+                        <mat-form-field appearance="outline"> 
+                            <input matInput ngModel  type="text" value="{{IndicatorAdd.indicatorDescription}}"
+                            [(ngModel)]="IndicatorAdd.indicatorDescription">
+                        </mat-form-field>               
+                    </div>
+                </div>
+                <div mat-dialog-actions>
+                    <button (click)="addIndicator()"
+                        class="btn btn-md btn-primary">Add</button>
+                    <button mat-button [mat-dialog-close]=""
+                        class="btn btn-md btn-primary">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- <h1 mat-dialog-title>Indicator Add</h1> -->
-<div mat-dialog-content>
 
- 
-    <div class="form-group">
-        <label style="font-size: medium;">Indicator Name</label>
-        <mat-form-field appearance="outline">
-            <input matInput ngModel type="text" value="{{IndicatorAdd.indicatorName}}" [(ngModel)]="IndicatorAdd.indicatorName">
-        </mat-form-field>
-
-    </div>
-    <div class="form-group">
-        <label style="font-size: medium;">Indicator Description</label>
-        <mat-form-field appearance="outline"> 
-            <input matInput ngModel  type="text" value="{{IndicatorAdd.indicatorDescription}}"
-            [(ngModel)]="IndicatorAdd.indicatorDescription">
-        </mat-form-field>
-
-    </div>
-</div>
-<div mat-dialog-actions>
-    <button (click)="addIndicator()"
-        class="btn btn-md btn-primary">Add</button>
-    <button mat-button [mat-dialog-close]=""
-        class="btn btn-md btn-primary">Cancel</button>
-</div>
 <ngx-spinner bdColor="rgba(	237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
     <p style="font-size: 20px; color: black">Processing...</p>
 </ngx-spinner>

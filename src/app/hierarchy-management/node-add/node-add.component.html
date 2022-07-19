@@ -3,58 +3,66 @@
         <mat-icon>close</mat-icon>
     </button>
 </div>
-<!-- <h1 mat-dialog-title>Node Add</h1> -->
-<div mat-dialog-content>
 
-    <div class="form-group">
-        <mat-form-field appearance="outline">
-            <mat-label>Select a level </mat-label>
-            <mat-select [(ngModel)]="NodeAdd.levelID" (selectionChange)="onLevelChange($event)">
-                <mat-option *ngFor="let c of levels" [value]="c.levelID">
-                    {{c.levelName}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div>
-    <div class="form-group">
-        <mat-form-field appearance="outline">
-            <mat-label>Select a parent node</mat-label>
-            <!-- <mat-select [(ngModel)]="NodeAdd.nodeID">
-                <mat-option *ngFor="let c of nodes" [value]="c.nodeID">
-                    {{c.nodeName}}
-                </mat-option>
-            </mat-select> -->
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-rose card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">assignment</i>
+                </div>
+                <h4 class="card-title">Add Node</h4>
+            </div>
+            <div class="card-body">
+                <!-- <h1 mat-dialog-title>Node Add</h1> -->
+                <div mat-dialog-content>
 
-            <mat-select [(ngModel)]="NodeAdd.nodeID"> 
-                <mat-select-filter [placeholder]="'Search'" [displayMember]="'nodeName'" [array]="nodes" (filteredReturn)="filteredParents =$event"></mat-select-filter>
-                <mat-option *ngFor="let c of filteredParents" [value]="c.nodeID">
-                    {{c.nodeName}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div>
+                    <div class="form-group">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Select a level </mat-label>
+                            <mat-select [(ngModel)]="NodeAdd.levelID" (selectionChange)="onLevelChange($event)">
+                                <mat-option *ngFor="let c of levels" [value]="c.levelID">
+                                    {{c.levelName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="form-group">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Select a parent node</mat-label>
+                            <mat-select [(ngModel)]="NodeAdd.nodeID">
+                                <mat-select-filter [placeholder]="'Search'" [displayMember]="'nodeName'" [array]="nodes"
+                                    (filteredReturn)="filteredParents =$event"></mat-select-filter>
+                                <mat-option *ngFor="let c of filteredParents" [value]="c.nodeID">
+                                    {{c.nodeName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
 
 
-    <div class="form-group" *ngIf="divIsIndicator">
-        <div class="form-group">
-            <mat-form-field appearance="outline">
-                <mat-label>Select an Indicator</mat-label>
-                <!-- <input type="text" matInput [formControl]="IndicatorControl" [matAutocomplete]="auto"> -->
-                <!-- <mat-autocomplete #auto="matAutocomplete" [(ngModel)]="NodeAdd.indicatorID">
+                    <div class="form-group" *ngIf="divIsIndicator">
+                        <div class="form-group">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Select an Indicator</mat-label>
+                                <!-- <input type="text" matInput [formControl]="IndicatorControl" [matAutocomplete]="auto"> -->
+                                <!-- <mat-autocomplete #auto="matAutocomplete" [(ngModel)]="NodeAdd.indicatorID">
                     <mat-option *ngFor="let c of IndicatorfilteredOptions" [value]="c.indicatorID">
                         {{c.indicatorName}}
                     </mat-option>
                 </mat-autocomplete> -->
-                <mat-select [(ngModel)]="NodeAdd.indicatorID"> 
-                    <mat-select-filter [placeholder]="'Search'" [displayMember]="'indicatorName'" [array]="Indicators" (filteredReturn)="filteredIndicators =$event"></mat-select-filter>
-                    <mat-option *ngFor="let c of filteredIndicators" [value]="c.indicatorID">
-                        {{c.indicatorName}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+                                <mat-select [(ngModel)]="NodeAdd.indicatorID">
+                                    <mat-select-filter [placeholder]="'Search'" [displayMember]="'indicatorName'"
+                                        [array]="Indicators" (filteredReturn)="filteredIndicators =$event">
+                                    </mat-select-filter>
+                                    <mat-option *ngFor="let c of filteredIndicators" [value]="c.indicatorID">
+                                        {{c.indicatorName}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
 
-        <!-- <div class="form-group">
+                        <!-- <div class="form-group">
             <mat-form-field appearance="outline">
                 <mat-label>Form Category</mat-label>
                 <mat-select [(ngModel)]="NodeAdd.FormCategory" (selectionChange)="onformCategoryChange($event)">
@@ -89,41 +97,47 @@
                 </mat-select>
             </mat-form-field>
         </div> -->
-    
-    </div>
 
-    <div class="form-group" *ngIf="divIsNotIndicator">
-        <div class="form-group">
-            <label style="font-size: medium;">Node Name</label>
-            <mat-form-field appearance="outline">
-                <input matInput ngModel type="text" value="{{NodeAdd.nodeName}}" [(ngModel)]="NodeAdd.nodeName">
-            </mat-form-field>
-        </div>
-        <div class="form-group">
-            <label style="font-size: medium;">Node Description</label>
-            <mat-form-field appearance="outline">
-                <input matInput ngModel type="text"  value="{{NodeAdd.nodeDescription}}"  [(ngModel)]="NodeAdd.nodeDescription">
-            </mat-form-field>
-        </div>
-    </div>
+                    </div>
 
-    <div class="form-group" *ngIf="divIsFacility">
-        <mat-form-field appearance="outline">
-            <mat-label>Select a facility type</mat-label>
-            <mat-select [(ngModel)]="NodeAdd.FaciltyID">
-                <mat-option *ngFor="let c of FacilityTypes" [value]="c.id">
-                    {{c.facilityType}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
+                    <div class="form-group" *ngIf="divIsNotIndicator">
+                        <div class="form-group">
+                            <label style="font-size: medium;">Node Name</label>
+                            <mat-form-field appearance="outline">
+                                <input matInput ngModel type="text" value="{{NodeAdd.nodeName}}"
+                                    [(ngModel)]="NodeAdd.nodeName">
+                            </mat-form-field>
+                        </div>
+                        <div class="form-group">
+                            <label style="font-size: medium;">Node Description</label>
+                            <mat-form-field appearance="outline">
+                                <input matInput ngModel type="text" value="{{NodeAdd.nodeDescription}}"
+                                    [(ngModel)]="NodeAdd.nodeDescription">
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="form-group" *ngIf="divIsFacility">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Select a facility type</mat-label>
+                            <mat-select [(ngModel)]="NodeAdd.FaciltyID">
+                                <mat-option *ngFor="let c of FacilityTypes" [value]="c.id">
+                                    {{c.facilityType}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div mat-dialog-actions>
+                    <button (click)="addNode()" class="btn btn-md btn-primary">Add</button>
+                    <button mat-button [mat-dialog-close]="" class="btn btn-md btn-primary">Cancel</button>
+                </div>
+
+            </div>
+        </div>
     </div>
 </div>
-<div mat-dialog-actions>
-    <button  (click)="addNode()"
-        class="btn btn-md btn-primary"   >Add</button>
-    <button mat-button [mat-dialog-close]=""
-        class="btn btn-md btn-primary"   >Cancel</button>
-</div>
+
 <ngx-spinner bdColor="rgba(	237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
     <p style="font-size: 20px; color: black">Processing...</p>
 </ngx-spinner>

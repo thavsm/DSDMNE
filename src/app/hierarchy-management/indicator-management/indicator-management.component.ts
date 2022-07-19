@@ -68,7 +68,7 @@ export class IndicatorManagementComponent implements OnInit {
   clickEdit(item: any) {
     this.IndicatorAdd = item;
     const dialogRef = this.dialog.open(IndicatorEditComponent, {
-      width: '70%', height: '80%',
+      width: '70%',
       data: this.IndicatorAdd ,
       disableClose:true
     });

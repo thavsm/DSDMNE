@@ -52,7 +52,7 @@ export class IndicatorAddComponent implements OnInit {
         // this.showNotification('top', 'center', 'Indicator Added Successfully!', 'Success', 'success');          
       });
 
-      this.showNotification('top', 'center', 'Indicator Added Successfully!', 'Success', 'success');
+      this.showNotification('top', 'center', 'Indicator has been added successfully!', 'Success', 'success');
       this.IndicatorAdd.indicatorID = 0,
       this.IndicatorAdd.indicatorName = "";
       this.IndicatorAdd.indicatorDescription = "";
