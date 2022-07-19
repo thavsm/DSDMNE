@@ -230,7 +230,8 @@ export class FormExportComponent implements OnInit {
       message: message
     }, {
       type: type,
-      timer: 3000,
+    delay: 1500,
+timer: 1500,
       placement: {
         from: from,
         align: align

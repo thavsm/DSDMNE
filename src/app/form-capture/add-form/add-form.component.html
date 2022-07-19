@@ -962,7 +962,7 @@
                                                         </div>
                                                     </div>
                                                     <mat-form-field appearance="outline">
-                                                        <input matInput type="number" (blur)="checkInfo()"
+                                                        <input matInput type="number" onmousewheel="return false;" (blur)="checkInfo()"
                                                             [(ngModel)]=subsectionItem.data (blur)="checkInfo()"
                                                             [(ngModel)]=subsectionItem.data
                                                             maxlength={{subsectionItem.fieldValidations[0].dataLength}}
@@ -1007,7 +1007,7 @@
                                                         </div>
                                                     </div>
                                                     <mat-form-field appearance="outline">
-                                                        <input matInput type="number" step="0.01" (blur)="checkInfo()"
+                                                        <input matInput type="number" onmousewheel="return false;" step="0.01" (blur)="checkInfo()"
                                                             [(ngModel)]=subsectionItem.data (blur)="checkInfo()"
                                                             maxlength={{subsectionItem.fieldValidations[0].dataLength}}
                                                             pattern="^\d+(?:\.\d{1,2})?$"                                                            
@@ -1052,7 +1052,7 @@
                                                         </div>
                                                     </div>
                                                     <mat-form-field appearance="outline" style="background: rgb(236, 236, 236);">
-                                                        <input matInput type="number" (blur)="checkInfo()"
+                                                        <input matInput type="number" onmousewheel="return false;" (blur)="checkInfo()"
                                                             [(ngModel)]=subsectionItem.data readonly
                                                             placeholder="{{subsectionItem.toolTip}}"
                                                             value="{{subsectionItem.data}}">
@@ -1671,7 +1671,7 @@
                                                         </div>
                                                     </div>
                                                     <mat-form-field appearance="outline">
-                                                        <input matInput type="number" (blur)="checkInfo()"
+                                                        <input matInput type="number" onmousewheel="return false;" (blur)="checkInfo()"
                                                             (blur)="checkForCalcInQuestionGroup(sectionItem.groupGUID)"
                                                             [(ngModel)]=subSectionItem.data
                                                             (change)="setSubSectionValue(subSectionItem.fieldName,subSectionItem.data)"
@@ -1717,7 +1717,7 @@
                                                         </div>
                                                     </div>
                                                     <mat-form-field appearance="outline">
-                                                        <input matInput type="number" step="0.01" (blur)="checkInfo() "
+                                                        <input matInput type="number" onmousewheel="return false;" step="0.01" (blur)="checkInfo() "
                                                             (blur)="checkForCalcInQuestionGroup(sectionItem.groupGUID)"
                                                             [(ngModel)]=subSectionItem.data
                                                             (change)="setSubSectionValue(subSectionItem.fieldName,subSectionItem.data)"
@@ -1763,7 +1763,7 @@
                                                         </div>
                                                     </div>
                                                     <mat-form-field appearance="outline" style="background: rgb(236, 236, 236);">
-                                                        <input matInput type="number" (blur)="checkInfo()"
+                                                        <input matInput type="number" onmousewheel="return false;" (blur)="checkInfo()"
                                                             [(ngModel)]=subSectionItem.data
                                                             (change)="setSubSectionValue(subSectionItem.fieldName,subSectionItem.data)"
                                                             readonly placeholder="{{subSectionItem.toolTip}}">
@@ -2112,7 +2112,7 @@
                                             </div>
                                         </div>
                                         <mat-form-field appearance="outline">
-                                            <input matInput type="number" (blur)="checkInfo()"
+                                            <input matInput type="number" onmousewheel="return false;" (blur)="checkInfo()"
                                                 [(ngModel)]=sectionItem.data
                                                 maxlength={{sectionItem.fieldValidations[0].dataLength}}
                                                 oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); "
@@ -2148,7 +2148,7 @@
                                             </div>
                                         </div>
                                         <mat-form-field appearance="outline">
-                                            <input matInput type="number" step="0.01" (blur)="checkInfo()"
+                                            <input matInput type="number" onmousewheel="return false;" step="0.01" (blur)="checkInfo()"
                                                 [(ngModel)]=sectionItem.data min="0"
                                                 maxlength={{sectionItem.fieldValidations[0].dataLength}}
                                                 pattern="^\d+(?:\.\d{1,2})?$"
@@ -2185,7 +2185,7 @@
                                             </div>
                                         </div>
                                         <mat-form-field appearance="outline" style="background: rgb(236, 236, 236);">
-                                            <input matInput type="number" (blur)="checkInfo()"
+                                            <input matInput type="number" onmousewheel="return false;" (blur)="checkInfo()"
                                                 [(ngModel)]=sectionItem.data readonly
                                                 placeholder="{{sectionItem.toolTip}}">
                                         </mat-form-field>
@@ -2662,7 +2662,7 @@
                                             </div>
                                         </div>
                                         <mat-form-field appearance="outline">
-                                            <input matInput type="number" (blur)="checkInfo()"
+                                            <input matInput type="number" onmousewheel="return false;" (blur)="checkInfo()"
                                                 [(ngModel)]=sectionItem.data
                                                 maxlength={{sectionItem.fieldValidations[0].dataLength}}
                                                 oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); "
@@ -2698,7 +2698,7 @@
                                             </div>
                                         </div>
                                         <mat-form-field appearance="outline">
-                                            <input matInput type="number" step="0.01" (blur)="checkInfo()"
+                                            <input matInput type="number" onmousewheel="return false;" step="0.01" (blur)="checkInfo()"
                                                 [(ngModel)]=sectionItem.data
                                                 maxlength={{sectionItem.fieldValidations[0].dataLength}}
                                                 pattern="^\d+(?:\.\d{1,2})?$"
@@ -2735,7 +2735,7 @@
                                             </div>
                                         </div>
                                         <mat-form-field appearance="outline" style="background: rgb(236, 236, 236);">
-                                            <input matInput type="number" (blur)="checkInfo()"
+                                            <input matInput type="number" onmousewheel="return false;" (blur)="checkInfo()"
                                                 [(ngModel)]=sectionItem.data readonly
                                                 placeholder="{{sectionItem.toolTip}}">
                                         </mat-form-field>
@@ -3211,7 +3211,7 @@
                                             </div>
                                         </div>
                                         <mat-form-field appearance="outline">
-                                            <input matInput type="number" (blur)="checkInfo()"
+                                            <input matInput type="number" onmousewheel="return false;" (blur)="checkInfo()"
                                                 [(ngModel)]=sectionItem.data
                                                 maxlength={{sectionItem.fieldValidations[0].dataLength}}
                                                 oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); "
@@ -3248,7 +3248,7 @@
                                             </div>
                                         </div>
                                         <mat-form-field appearance="outline">
-                                            <input matInput type="number" step="0.01" (blur)="checkInfo()"
+                                            <input matInput type="number" onmousewheel="return false;" step="0.01" (blur)="checkInfo()"
                                                 (blur)="checkForCalcInQuestionGroup(item.groupGUID)"
                                                 [(ngModel)]=sectionItem.data
                                                 maxlength={{sectionItem.fieldValidations[0].dataLength}}
@@ -3286,7 +3286,7 @@
                                             </div>
                                         </div>
                                         <mat-form-field appearance="outline" style="background: rgb(236, 236, 236);">
-                                            <input matInput type="number" (blur)="checkInfo()"
+                                            <input matInput type="number" onmousewheel="return false;" (blur)="checkInfo()"
                                                 [(ngModel)]=sectionItem.data readonly
                                                 placeholder="{{sectionItem.toolTip}}">
                                         </mat-form-field>
@@ -3568,7 +3568,7 @@
                                 </div>
                             </div>
                             <mat-form-field appearance="outline">
-                                <input matInput type="number" (blur)="checkInfo()" [(ngModel)]=item.data
+                                <input matInput type="number" onmousewheel="return false;" (blur)="checkInfo()" [(ngModel)]=item.data
                                     maxlength={{item.fieldValidations[0].dataLength}}
                                     oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); "
                                     placeholder="{{item.toolTip}}" (blur)="checkForCalc()" (blur)="checkInfo()">
@@ -3602,7 +3602,7 @@
                                 </div>
                             </div>
                             <mat-form-field appearance="outline">
-                                <input matInput type="number" step="0.01" [(ngModel)]=item.data
+                                <input matInput type="number" onmousewheel="return false;" step="0.01" [(ngModel)]=item.data
                                     maxlength={{item.fieldValidations[0].dataLength}}
                                     pattern="(^[0-9]{0,2}$)|(^[0-9]{0,2}\.[0-9]{0,5}$)" pattern="^\d+(?:\.\d{1,2})?$"
                                     onblur="this.parentNode.parentNode.style.backgroundColor=/^\d+(?:\.\d{1,2})?$/.test(this.value)?'inherit':'white'"
@@ -3637,7 +3637,7 @@
                                 </div>
                             </div>
                             <mat-form-field appearance="outline" style="background: rgb(236, 236, 236);">
-                                <input matInput type="number" (blur)="checkInfo()" [(ngModel)]=item.data readonly
+                                <input matInput type="number" onmousewheel="return false;" (blur)="checkInfo()" [(ngModel)]=item.data readonly
                                     placeholder="{{item.toolTip}}" (blur)="checkInfo()">
                             </mat-form-field>
                             <div style="height: 5px;"></div>
@@ -3669,7 +3669,7 @@
                                 </div>
                             </div>
                             <!-- <mat-form-field appearance="outline">
-                                <input matInput type="number" (blur)="checkInfo()" [(ngModel)]=item.data readonly
+                                <input matInput type="number" onmousewheel="return false;" (blur)="checkInfo()" [(ngModel)]=item.data readonly
                                     placeholder="{{item.toolTip}}">
                             </mat-form-field> -->
                             <h3 style="color: black;font-size: medium;">{{item.data}}</h3>
