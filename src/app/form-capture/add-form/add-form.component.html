@@ -1060,6 +1060,51 @@
                                                     <div style="height: 5px;"></div>
                                                 </ng-container>
 
+                                                <ng-container
+                                                    *ngIf="subsectionItem.fieldType.value=='lexicon list' && subsectionItem.isActive===true ">
+                                                    <div class="row">
+                                                        <div class="col-md-6 ml-auto">
+                                                            <label
+                                                                style="color:black">{{subsectionItem.questionName}}</label>
+                                                        </div>
+                                                        <div class="col-md-6 mr-auto">
+                                                            <div style="text-align: right;">
+                                                                <button mat-icon-button
+                                                                    *ngIf="subsectionItem.hasComment===true"
+                                                                    (click)="fieldComment(subsectionItem)">
+                                                                    <mat-icon class="mat-14" matTooltip="">comment
+                                                                    </mat-icon>
+                                                                </button>
+
+                                                                <button mat-icon-button
+                                                                    *ngIf="subsectionItem.hasAttachment===true"
+                                                                    (click)="fieldAttachment(subsectionItem)">
+                                                                    <mat-icon class="mat-14" matTooltip="">attach_file
+                                                                    </mat-icon>
+                                                                </button>
+
+                                                                <button mat-icon-button
+                                                                    *ngIf="subsectionItem.hasPhoto===true"
+                                                                    (click)="fieldPhoto(subsectionItem)">
+                                                                    <mat-icon class="mat-14" matTooltip="">photo_camera
+                                                                    </mat-icon>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <mat-form-field appearance="outline">
+                                                        <mat-label>Select a option</mat-label>
+                                                        <mat-select name="list" (blur)="checkInfo()"
+                                                            [(ngModel)]=subsectionItem.data panelClass="myPanelClass">
+                                                            <mat-option *ngFor="let list of subsectionItem.listValue"
+                                                                style="color: black;" [value]="list.name">
+                                                                {{list.name}}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                    </mat-form-field>
+                                                    <div style="height: 5px;"></div>
+                                                </ng-container>
+
                                                 <!-- select Type -->
                                                 <ng-container
                                                     *ngIf="subsectionItem.fieldType.value=='link multi select' && subsectionItem.isActive===true ">
@@ -1726,6 +1771,51 @@
                                                     <div style="height: 5px;"></div>
                                                 </ng-container>
 
+                                                <ng-container
+                                                *ngIf="subSectionItem.fieldType.value=='lexicon list' && subSectionItem.isActive===true ">
+                                                <div class="row">
+                                                    <div class="col-md-6 ml-auto">
+                                                        <label
+                                                            style="color:black">{{subSectionItem.questionName}}</label>
+                                                    </div>
+                                                    <div class="col-md-6 mr-auto">
+                                                        <div style="text-align: right;">
+                                                            <button mat-icon-button
+                                                                *ngIf="subSectionItem.hasComment===true"
+                                                                (click)="fieldComment(subSectionItem)">
+                                                                <mat-icon class="mat-14" matTooltip="">comment
+                                                                </mat-icon>
+                                                            </button>
+
+                                                            <button mat-icon-button
+                                                                *ngIf="subSectionItem.hasAttachment===true"
+                                                                (click)="fieldAttachment(subSectionItem)">
+                                                                <mat-icon class="mat-14" matTooltip="">attach_file
+                                                                </mat-icon>
+                                                            </button>
+
+                                                            <button mat-icon-button
+                                                                *ngIf="subSectionItem.hasPhoto===true"
+                                                                (click)="fieldPhoto(subSectionItem)">
+                                                                <mat-icon class="mat-14" matTooltip="">photo_camera
+                                                                </mat-icon>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <mat-form-field appearance="outline">
+                                                    <mat-label>Select a option</mat-label>
+                                                    <mat-select name="list" (blur)="checkInfo()"
+                                                        [(ngModel)]=subSectionItem.data panelClass="myPanelClass">
+                                                        <mat-option *ngFor="let list of subSectionItem.listValue"
+                                                            style="color: black;" [value]="list.name">
+                                                            {{list.name}}
+                                                        </mat-option>
+                                                    </mat-select>
+                                                </mat-form-field>
+                                                <div style="height: 5px;"></div>
+                                            </ng-container>
+
                                                 <!-- select Type -->
                                                 <ng-container
                                                     *ngIf="subSectionItem.fieldType.value=='link multi select' && subSectionItem.isActive===true ">
@@ -2101,6 +2191,44 @@
                                         </mat-form-field>
                                         <div style="height: 5px;"></div>
                                     </ng-container>
+
+                                    <ng-container
+                                    *ngIf="sectionItem.fieldType.value=='lexicon list' && sectionItem.isActive===true ">
+                                    <div class="row">
+                                        <div class="col-md-6 ml-auto">
+                                            <label style="color:black">{{sectionItem.questionName}}</label>
+                                        </div>
+                                        <div class="col-md-6 mr-auto">
+                                            <div style="text-align: right;">
+                                                <button mat-icon-button *ngIf="sectionItem.hasComment===true"
+                                                    (click)="fieldComment(sectionItem)">
+                                                    <mat-icon class="mat-14" matTooltip="">comment</mat-icon>
+                                                </button>
+
+                                                <button mat-icon-button *ngIf="sectionItem.hasAttachment===true"
+                                                    (click)="fieldAttachment(sectionItem)">
+                                                    <mat-icon class="mat-14" matTooltip="">attach_file</mat-icon>
+                                                </button>
+
+                                                <button mat-icon-button *ngIf="sectionItem.hasPhoto===true"
+                                                    (click)="fieldPhoto(sectionItem)">
+                                                    <mat-icon class="mat-14" matTooltip="">photo_camera</mat-icon>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Select a option</mat-label>
+                                        <mat-select name="list" (blur)="checkInfo()" [(ngModel)]=sectionItem.data
+                                            panelClass="myPanelClass">
+                                            <mat-option *ngFor="let list of sectionItem.listValue"
+                                                style="color: black;" [value]="list.name">
+                                                {{list.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <div style="height: 5px;"></div>
+                                </ng-container>
 
                                     <!-- select Type -->
                                     <ng-container
@@ -2613,6 +2741,44 @@
                                         </mat-form-field>
                                         <div style="height: 5px;"></div>
                                     </ng-container>
+
+                                    <ng-container
+                                    *ngIf="sectionItem.fieldType.value=='lexicon list' && sectionItem.isActive===true ">
+                                    <div class="row">
+                                        <div class="col-md-6 ml-auto">
+                                            <label style="color:black">{{sectionItem.questionName}}</label>
+                                        </div>
+                                        <div class="col-md-6 mr-auto">
+                                            <div style="text-align: right;">
+                                                <button mat-icon-button *ngIf="sectionItem.hasComment===true"
+                                                    (click)="fieldComment(sectionItem)">
+                                                    <mat-icon class="mat-14" matTooltip="">comment</mat-icon>
+                                                </button>
+
+                                                <button mat-icon-button *ngIf="sectionItem.hasAttachment===true"
+                                                    (click)="fieldAttachment(sectionItem)">
+                                                    <mat-icon class="mat-14" matTooltip="">attach_file</mat-icon>
+                                                </button>
+
+                                                <button mat-icon-button *ngIf="sectionItem.hasPhoto===true"
+                                                    (click)="fieldPhoto(sectionItem)">
+                                                    <mat-icon class="mat-14" matTooltip="">photo_camera</mat-icon>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Select a option</mat-label>
+                                        <mat-select name="list" (blur)="checkInfo()" [(ngModel)]=sectionItem.data
+                                            panelClass="myPanelClass">
+                                            <mat-option *ngFor="let list of sectionItem.listValue"
+                                                style="color: black;" [value]="list.name">
+                                                {{list.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <div style="height: 5px;"></div>
+                                </ng-container>
 
                                     <!-- select Type -->
                                     <ng-container
@@ -3161,6 +3327,44 @@
                                         <div style="height: 5px;"></div>
                                     </ng-container>
 
+                                    <ng-container
+                                        *ngIf="sectionItem.fieldType.value=='lexicon list' && sectionItem.isActive===true ">
+                                        <div class="row">
+                                            <div class="col-md-6 ml-auto">
+                                                <label style="color:black">{{sectionItem.questionName}}</label>
+                                            </div>
+                                            <div class="col-md-6 mr-auto">
+                                                <div style="text-align: right;">
+                                                    <button mat-icon-button *ngIf="sectionItem.hasComment===true"
+                                                        (click)="fieldComment(sectionItem)">
+                                                        <mat-icon class="mat-14" matTooltip="">comment</mat-icon>
+                                                    </button>
+
+                                                    <button mat-icon-button *ngIf="sectionItem.hasAttachment===true"
+                                                        (click)="fieldAttachment(sectionItem)">
+                                                        <mat-icon class="mat-14" matTooltip="">attach_file</mat-icon>
+                                                    </button>
+
+                                                    <button mat-icon-button *ngIf="sectionItem.hasPhoto===true"
+                                                        (click)="fieldPhoto(sectionItem)">
+                                                        <mat-icon class="mat-14" matTooltip="">photo_camera</mat-icon>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <mat-form-field appearance="outline">
+                                            <mat-label>Select a option</mat-label>
+                                            <mat-select name="list" (blur)="checkInfo()" [(ngModel)]=sectionItem.data
+                                                panelClass="myPanelClass">
+                                                <mat-option *ngFor="let list of sectionItem.listValue"
+                                                    style="color: black;" [value]="list.name">
+                                                    {{list.name}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                        <div style="height: 5px;"></div>
+                                    </ng-container>
+
                                     <!-- select Type -->
                                     <ng-container
                                         *ngIf="sectionItem.fieldType.value=='link multi select' && sectionItem.isActive===true ">
@@ -3509,6 +3713,43 @@
                             </mat-form-field>
                             <div style="height: 5px;"></div>
                         </ng-container>
+
+                        <!-- Single list Type -->
+                        <ng-container
+                        *ngIf="item.fieldType.value=='lexicon list' && item.isActive===true && item.parentFieldName===''">
+                        <div class="row">
+                            <div class="col-md-6 ml-auto">
+                                <label style="color:black">{{item.questionName}}</label>
+                            </div>
+                            <div class="col-md-6 mr-auto">
+                                <div style="text-align: right;">
+                                    <button mat-icon-button *ngIf="item.hasComment===true"
+                                        (click)="fieldComment(item)">
+                                        <mat-icon class="mat-14" matTooltip="">comment</mat-icon>
+                                    </button>
+
+                                    <button mat-icon-button *ngIf="item.hasAttachment===true"
+                                        (click)="fieldAttachment(item)">
+                                        <mat-icon class="mat-14" matTooltip="">attach_file</mat-icon>
+                                    </button>
+
+                                    <button mat-icon-button *ngIf="item.hasPhoto===true" (click)="fieldPhoto(item)">
+                                        <mat-icon class="mat-14" matTooltip="">photo_camera</mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Select a option</mat-label>
+                            <mat-select (blur)="checkInfo()" [(ngModel)]=item.data panelClass="myPanelClass">
+                                <mat-option *ngFor="let list of item.listValue" style="color: black;"
+                                [value]="list.name">
+                                    {{list.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <div style="height: 5px;"></div>
+                    </ng-container>
                     </ng-container>
                 </mat-accordion>
             </div>

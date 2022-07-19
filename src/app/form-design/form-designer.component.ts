@@ -1222,7 +1222,7 @@ export class FormDesignerComponent implements OnInit {
                 "fieldTypeID": 5,
                 "displayName": "Select - Single",
                 "description": "arrow_drop_down",
-                "value": "lexicon data"
+                "value": "lexicon list"
             },
             "formPage": {
                 "pageGUID": "string",
@@ -1693,12 +1693,19 @@ export class FormDesignerComponent implements OnInit {
             if (result.value) {
                 if (i > -1) {
                     if (this.formDesign[i].pageGUID === "pageGUID") {
+                        this.spinner.show();
                         this.formDesign.splice(i, 1);
                         this.fields = this.updateCalculationFieldList();
+                        this.getDesignPerPage(this.currentPage.pageGUID);
+                        this.refreshGroupSectionList();
+                        this.spinner.hide();
                         this.showNotification('top', 'center', 'The field has been deleted Successfully!', '', 'success');
                     }
                     else {
+                        this.spinner.show();
                         this.formDesign[i].isActive = 'false';
+                        this.refreshGroupSectionList();
+                        this.spinner.hide();
                         this.showNotification('top', 'center', 'The field has been deleted Successfully!', '', 'success');
                     }
                 }
@@ -3243,7 +3250,7 @@ export class FormDesignerComponent implements OnInit {
                             "fieldTypeID": 5,
                             "displayName": "Select - Single",
                             "description": "arrow_drop_down",
-                            "value": "lexicon data"
+                            "value": "lexicon list"
                         },
                         "formPage": {
                             "pageGUID": "string",
@@ -4760,7 +4767,7 @@ export class FormDesignerComponent implements OnInit {
                         "fieldTypeID": 5,
                         "displayName": "Select - Single",
                         "description": "arrow_drop_down",
-                        "value": "lexicon data"
+                        "value": "lexicon list"
                     },
                     "formPage": {
                         "pageGUID": "string",
@@ -5353,9 +5360,9 @@ export class FormDesignerComponent implements OnInit {
         this.service.addGroupOrSection(obj, this.currentPage.pageGUID).subscribe(data => {
             this.formDesign[i].groupGUID = JSON.parse(JSON.stringify(data)).groupGUID;
             this.formDesign[i].questionName = JSON.parse(JSON.stringify(data)).name;
-            this.refreshGroupSectionList();
-            this.spinner.hide();
-            this.showNotification('top', 'center', 'Section Saved Successfully!', '', 'success');
+                this.showNotification('top', 'center', 'Section saved successfully!', '', 'success');
+                this.refreshGroupSectionList();
+                this.spinner.hide();
         },
             error => {
                 this.showNotification('top', 'center', 'Error saving section, please try again', '', 'danger');
@@ -5377,9 +5384,9 @@ export class FormDesignerComponent implements OnInit {
         this.service.addGroupOrSection(obj, this.currentPage.pageGUID).subscribe(data => {
             this.formDesign[i].groupGUID = JSON.parse(JSON.stringify(data)).groupGUID;
             this.formDesign[i].questionName = JSON.parse(JSON.stringify(data)).name;
-            this.refreshGroupSectionList();
-            this.spinner.hide();
-            this.showNotification('top', 'center', 'Group Saved Successfully!', '', 'success');
+                this.showNotification('top', 'center', 'Group saved successfully!', '', 'success');
+                this.refreshGroupSectionList();
+                this.spinner.hide();
         },
             error => {
                 this.showNotification('top', 'center', 'Error saving group, please try again', '', 'danger');
@@ -5401,12 +5408,12 @@ export class FormDesignerComponent implements OnInit {
         this.service.addGroupOrSection(obj, this.currentPage.pageGUID).subscribe(data => {
             this.formDesign[i].groupGUID = JSON.parse(JSON.stringify(data)).groupGUID;
             this.formDesign[i].questionName = JSON.parse(JSON.stringify(data)).name;
-            this.showNotification('top', 'center', 'Group Saved Successfully!', '', 'success');
-            this.refreshGroupSectionList();
-            this.spinner.hide();
+                this.showNotification('top', 'center', 'Question group saved successfully!', '', 'success');
+                this.refreshGroupSectionList();
+                this.spinner.hide();
         },
             error => {
-                this.showNotification('top', 'center', 'Error saving group, please try again', '', 'danger');
+                this.showNotification('top', 'center', 'Error saving question group, please try again', '', 'danger');
                 this.spinner.hide();
             });
     }
@@ -5720,21 +5727,27 @@ export class FormDesignerComponent implements OnInit {
     //Remove blank space when pasting field name and and data export name
     removeBlankSpaceFieldName(atom: any) {
         atom.fieldName = atom.fieldName.replace(/\s/g, "");
-        if (!isNaN(atom.fieldName.charAt(0))){ 
+        if (!isNaN(atom.fieldName.charAt(0)) && atom.fieldName!==""){ 
             this.showNotification('top', 'center', 'Database Name cannot start with a number', '', 'danger');
             atom.dataExportName="";
             atom.xmlElementName="";
             atom.fieldName="";
         }
+        else if(atom.fieldName==""){
+            this.showNotification('top', 'center', 'Database Name cannot be empty', '', 'danger');
+        }
     }
 
     removeBlankSpaceDataExportName(item: any) {
         item.dataExportName = item.dataExportName.replace(/\s/g, "");
-        if (!isNaN( item.dataExportName.charAt(0))){ 
+        if (!isNaN(item.dataExportName.charAt(0)) && item.dataExportName!==""){ 
             this.showNotification('top', 'center', 'Export name cannot start with a number', '', 'danger');
             item.dataExportName="";
             item.xmlElementName="";
             item.fieldName="";
+        }
+        else if(item.dataExportName==""){
+            this.showNotification('top', 'center', 'Export Name cannot be empty', '', 'danger');
         }
     }
 

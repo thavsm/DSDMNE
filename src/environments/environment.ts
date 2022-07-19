@@ -4,8 +4,10 @@
 
 export const environment = {
   production: false,
-  API_URL: 'https://localhost:44305/api',  
-  API_FormURL: 'https://localhost:44305/1/', 
+  // API_URL: 'https://localhost:44305/api',  
+  // API_FormURL: 'https://localhost:44305/1/', 
+  API_URL: 'https://app.terra.group/MNE_UAT_API/api',
+  API_FormURL: 'https://app.terra.group/MNE_UAT_API/1/'  ,
 
   REPORT_SERVER: 'https://app.terra.group/DSDReportViewerSSRS/Default?ID=',
   REPORT_URL : 'DSD MnE/',

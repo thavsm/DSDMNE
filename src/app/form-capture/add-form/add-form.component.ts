@@ -136,10 +136,14 @@ export class AddFormComponent implements OnInit {
             });
             element.data = s;
           }
+          if(element.fieldType.value === "lexicon list"){
+            let val = element.data;
+            element.data = val.name;
+          }
           if (element.groupGUID !== "" && element.groupGUID !== "string" && element.fieldType.value !== "repeatgroup" && element.fieldType.value === "group" && element.fieldType.value !== "subSection" && element.fieldType.value !== "PageTitle") {
             let groupValues = element.groupGUID;
             groupValues.forEach(e => {
-              if (e.fieldValidations[0].isRequired === true && e.isAssigned === 1 && e.data === " ") {
+              if (e.fieldValidations[0].isRequired === true && element.isAssigned === 1 && e.data === " ") {
                 errorMessage = errorMessage + e.questionName + ",";
               }
               if (e.parentFieldName === element.groupGUID) {
@@ -153,6 +157,10 @@ export class AddFormComponent implements OnInit {
                   s += listValue.name + ","
                 });
                 e.data = s;
+              }
+              if(e.fieldType.value === "lexicon list"){
+                let val = e.data;
+                e.data = val.name;
               }
               obj.push(e);
               element.groupGUID = "";
@@ -180,6 +188,10 @@ export class AddFormComponent implements OnInit {
             });
             e.data = s;
           }
+          if(e.fieldType.value === "lexicon list"){
+            let val = e.data;
+            e.data = val.name;
+          }
           e.groupGUID = "";
           if (e.fieldValidations[0].isRequired === true && e.isAssigned === 1 && e.data === " ") {
             errorMessage = errorMessage + e.questionName + ",";
@@ -198,6 +210,10 @@ export class AddFormComponent implements OnInit {
               s += listValue.name + ","
             });
             field.data = s;
+          }
+          if(field.fieldType.value === "lexicon list"){
+            let val = field.data;
+            field.data = val.name;
           }
           obj.push(field);
         }
@@ -388,6 +404,7 @@ export class AddFormComponent implements OnInit {
         });
       }
       else {
+        console.log(obj)
         this.service.UpdateFormMetadata(this.formData.formCaptureID, obj, this.userDetail.formData.userID).subscribe(res => {
           let pg = this.currentPage.pageNumber;
           let pageStatus = {
@@ -437,10 +454,14 @@ export class AddFormComponent implements OnInit {
             });
             element.data = s;
           }
+          if(element.fieldType.value === "lexicon list"){
+            let val = element.data;
+            element.data = val.name;
+          }
           if (element.groupGUID !== "" && element.groupGUID !== "string" && element.fieldType.value !== "repeatgroup" && element.fieldType.value === "group" && element.fieldType.value !== "subSection" && element.fieldType.value !== "PageTitle") {
             let groupValues = element.groupGUID;
             groupValues.forEach(e => {
-              if (e.fieldValidations[0].isRequired === true && e.isAssigned === 1 && e.data === " ") {
+              if (e.fieldValidations[0].isRequired === true && element.isAssigned === 1 && e.data === " ") {
                 errorMessage = errorMessage + e.questionName + ",";
               }
               if (e.parentFieldName === element.groupGUID) {
@@ -454,6 +475,10 @@ export class AddFormComponent implements OnInit {
                   s += listValue.name + ","
                 });
                 e.data = s;
+              }
+              if(e.fieldType.value === "lexicon list"){
+                let val = e.data;
+                e.data = val.name;
               }
               obj.push(e);
               element.groupGUID = "";
@@ -481,6 +506,10 @@ export class AddFormComponent implements OnInit {
             });
             e.data = s;
           }
+          if(e.fieldType.value === "lexicon list"){
+            let val = e.data;
+            e.data = val.name;
+          }
           e.groupGUID = "";
           if (e.fieldValidations[0].isRequired === true && e.isAssigned === 1 && e.data === " ") {
             errorMessage = errorMessage + e.questionName + ",";
@@ -499,6 +528,10 @@ export class AddFormComponent implements OnInit {
               s += listValue.name + ","
             });
             field.data = s;
+          }
+          if(field.fieldType.value === "lexicon list"){
+            let val = field.data;
+            field.data = val.name;
           }
           obj.push(field);
         }
@@ -704,7 +737,7 @@ export class AddFormComponent implements OnInit {
               if (element.fieldType.value === "checkbox") {
                 element["data"] = Boolean(res);
               }
-              else if (element.fieldType.value === "link multi select") {
+              else if (element.fieldType.value === "link multi select" || element.fieldType.value === "lexicon list") {
                 element["data"] = this.splitString(res) as Array<string>;
               }
               else {
