@@ -136,10 +136,14 @@ export class AddFormComponent implements OnInit {
             });
             element.data = s;
           }
+          if(element.fieldType.value === "lexicon list"){
+            let val = element.data;
+            element.data = val.name;
+          }
           if (element.groupGUID !== "" && element.groupGUID !== "string" && element.fieldType.value !== "repeatgroup" && element.fieldType.value === "group" && element.fieldType.value !== "subSection" && element.fieldType.value !== "PageTitle") {
             let groupValues = element.groupGUID;
             groupValues.forEach(e => {
-              if (e.fieldValidations[0].isRequired === true && e.isAssigned === 1 && e.data === " ") {
+              if (e.fieldValidations[0].isRequired === true && element.isAssigned === 1 && e.data === " ") {
                 errorMessage = errorMessage + e.questionName + ",";
               }
               if (e.parentFieldName === element.groupGUID) {
@@ -153,6 +157,10 @@ export class AddFormComponent implements OnInit {
                   s += listValue.name + ","
                 });
                 e.data = s;
+              }
+              if(e.fieldType.value === "lexicon list"){
+                let val = e.data;
+                e.data = val.name;
               }
               obj.push(e);
               element.groupGUID = "";
@@ -180,6 +188,10 @@ export class AddFormComponent implements OnInit {
             });
             e.data = s;
           }
+          if(e.fieldType.value === "lexicon list"){
+            let val = e.data;
+            e.data = val.name;
+          }
           e.groupGUID = "";
           if (e.fieldValidations[0].isRequired === true && e.isAssigned === 1 && e.data === " ") {
             errorMessage = errorMessage + e.questionName + ",";
@@ -198,6 +210,10 @@ export class AddFormComponent implements OnInit {
               s += listValue.name + ","
             });
             field.data = s;
+          }
+          if(field.fieldType.value === "lexicon list"){
+            let val = field.data;
+            field.data = val.name;
           }
           obj.push(field);
         }
@@ -236,9 +252,10 @@ export class AddFormComponent implements OnInit {
             }
             else {
               this.showNotification('top', 'center', 'There are no pages before this page for this form!', '', 'warning');
+              this.pageStatus = this.currentPage.name;
+              this.getDesignPerPage(this.currentPage.pageGUID);
             };
           });
-
         });
       }
       else {
@@ -388,6 +405,7 @@ export class AddFormComponent implements OnInit {
         });
       }
       else {
+        console.log(obj)
         this.service.UpdateFormMetadata(this.formData.formCaptureID, obj, this.userDetail.formData.userID).subscribe(res => {
           let pg = this.currentPage.pageNumber;
           let pageStatus = {
@@ -418,7 +436,22 @@ export class AddFormComponent implements OnInit {
   }
 
   closePopup() {
-    this.dialogRef.close();
+    Swal.fire({
+      title: "<h5 style='color:white;font-weight:400'> Are you sure you want to close this form?</h5>",
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      toast: true,
+      position: 'top',
+      allowOutsideClick: false,
+      confirmButtonColor: '#000000',
+      cancelButtonColor: '#000000',
+      background: '#CA0B00'
+    }).then((result) => {
+      if (result.value) {
+        this.dialogRef.close();
+      }
+    })
   }
 
   nextPage() {
@@ -437,10 +470,14 @@ export class AddFormComponent implements OnInit {
             });
             element.data = s;
           }
+          if(element.fieldType.value === "lexicon list"){
+            let val = element.data;
+            element.data = val.name;
+          }
           if (element.groupGUID !== "" && element.groupGUID !== "string" && element.fieldType.value !== "repeatgroup" && element.fieldType.value === "group" && element.fieldType.value !== "subSection" && element.fieldType.value !== "PageTitle") {
             let groupValues = element.groupGUID;
             groupValues.forEach(e => {
-              if (e.fieldValidations[0].isRequired === true && e.isAssigned === 1 && e.data === " ") {
+              if (e.fieldValidations[0].isRequired === true && element.isAssigned === 1 && e.data === " ") {
                 errorMessage = errorMessage + e.questionName + ",";
               }
               if (e.parentFieldName === element.groupGUID) {
@@ -454,6 +491,10 @@ export class AddFormComponent implements OnInit {
                   s += listValue.name + ","
                 });
                 e.data = s;
+              }
+              if(e.fieldType.value === "lexicon list"){
+                let val = e.data;
+                e.data = val.name;
               }
               obj.push(e);
               element.groupGUID = "";
@@ -481,6 +522,10 @@ export class AddFormComponent implements OnInit {
             });
             e.data = s;
           }
+          if(e.fieldType.value === "lexicon list"){
+            let val = e.data;
+            e.data = val.name;
+          }
           e.groupGUID = "";
           if (e.fieldValidations[0].isRequired === true && e.isAssigned === 1 && e.data === " ") {
             errorMessage = errorMessage + e.questionName + ",";
@@ -499,6 +544,10 @@ export class AddFormComponent implements OnInit {
               s += listValue.name + ","
             });
             field.data = s;
+          }
+          if(field.fieldType.value === "lexicon list"){
+            let val = field.data;
+            field.data = val.name;
           }
           obj.push(field);
         }
@@ -537,6 +586,9 @@ export class AddFormComponent implements OnInit {
             }
             else {
               this.showNotification('top', 'center', 'There are no more pages for this form!', '', 'warning');
+              this.currentPage = this.pages[index];
+              this.pageStatus = this.currentPage.name;
+              this.getDesignPerPage(this.currentPage.pageGUID);
             };
           });
         });
@@ -704,7 +756,7 @@ export class AddFormComponent implements OnInit {
               if (element.fieldType.value === "checkbox") {
                 element["data"] = Boolean(res);
               }
-              else if (element.fieldType.value === "link multi select") {
+              else if (element.fieldType.value === "link multi select" || element.fieldType.value === "lexicon list") {
                 element["data"] = this.splitString(res) as Array<string>;
               }
               else {
@@ -934,7 +986,8 @@ export class AddFormComponent implements OnInit {
       message: message
     }, {
       type: type,
-      timer: 3000,
+      delay: 1500,
+      timer: 1500,
       placement: {
         from: from,
         align: align
@@ -1032,7 +1085,7 @@ export class AddFormComponent implements OnInit {
             this.refreshAttachmentList();
             localStorage.setItem('fieldNameAttach', "");
             localStorage.setItem('fieldNamePhoto', "");
-            this.getDesignPerPage(this.currentPage.pageGUID);
+            //this.getDesignPerPage(this.currentPage.pageGUID);
             this.spinner.hide();
           });
         });
@@ -1066,7 +1119,7 @@ export class AddFormComponent implements OnInit {
           this.refreshAttachmentList();
           localStorage.setItem('fieldNameAttach', "");
           localStorage.setItem('fieldNamePhoto', "");
-          this.getDesignPerPage(this.currentPage.pageGUID);
+          //this.getDesignPerPage(this.currentPage.pageGUID);
           this.spinner.hide();
         });
       }
@@ -1136,7 +1189,7 @@ export class AddFormComponent implements OnInit {
             this.refreshPhotoList();
             localStorage.setItem('fieldNameAttach', "");
             localStorage.setItem('fieldNamePhoto', "");
-            this.getDesignPerPage(this.currentPage.pageGUID);
+            //this.getDesignPerPage(this.currentPage.pageGUID);
             this.spinner.hide();
           });
         })
@@ -1174,7 +1227,7 @@ export class AddFormComponent implements OnInit {
           this.refreshPhotoList();
           localStorage.setItem('fieldNameAttach', "");
           localStorage.setItem('fieldNamePhoto', "");
-          this.getDesignPerPage(this.currentPage.pageGUID);
+          //this.getDesignPerPage(this.currentPage.pageGUID);
           this.spinner.hide();
         });
       }
@@ -1236,7 +1289,7 @@ export class AddFormComponent implements OnInit {
             this.refreshCommentList();
             localStorage.setItem('fieldNameComment', "");
             this.addEditComment = 'Add';
-            this.getDesignPerPage(this.currentPage.pageGUID);
+            //this.getDesignPerPage(this.currentPage.pageGUID);
             this.spinner.hide();
           });
         }
@@ -1260,7 +1313,7 @@ export class AddFormComponent implements OnInit {
             localStorage.setItem('fieldNameComment', "");
             this.addEditComment = 'Add';
             this.HighlightRowComment = -1;
-            this.getDesignPerPage(this.currentPage.pageGUID);
+            //this.getDesignPerPage(this.currentPage.pageGUID);
             this.spinner.hide();
           });
         }

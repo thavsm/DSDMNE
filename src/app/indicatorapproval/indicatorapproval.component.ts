@@ -183,8 +183,10 @@ export class IndicatorapprovalComponent implements OnInit {
         
       }
       this.refreshFormsList();
-      this.spinner.hide();
+      
     });
+
+    this.spinner.hide();
   }
 
   
