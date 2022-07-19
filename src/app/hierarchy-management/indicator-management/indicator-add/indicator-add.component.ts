@@ -19,7 +19,7 @@ declare var $: any;
 export class IndicatorAddComponent implements OnInit {
 
   IndicatorAdd: any;
-
+  levels: any = [];
   constructor(public dialogRef: MatDialogRef<IndicatorAddComponent>,
     @Inject(MAT_DIALOG_DATA) data,
     private service: HierarchyManagementService, public formBuilder: FormBuilder,private spinner: NgxSpinnerService, public datepipe: DatePipe)  
@@ -29,12 +29,22 @@ export class IndicatorAddComponent implements OnInit {
 
 
   ngOnInit(): void {
+
+    this.getLevels();
   }
+
 
   closePopup() {
     this.dialogRef.close();
   }
   
+  getLevels() {
+    this.spinner.show();
+    this.service.getLevelsList(4082).subscribe(data => {
+      this.levels = data;
+      this.spinner.hide();
+    });
+  }
 
   addIndicator() {
     if (this.IndicatorAdd.indicatorName != "") {
@@ -43,7 +53,8 @@ export class IndicatorAddComponent implements OnInit {
         "indicatorID": 0,
         "indicatorName": this.IndicatorAdd.indicatorName,
         "indicatorDescription": this.IndicatorAdd.indicatorDescription,       
-        "status": this.IndicatorAdd.status
+        "status": this.IndicatorAdd.status,
+        "locationID": this.IndicatorAdd.levelID
       };
       this.spinner.show();
       this.service.addIndicator(val).subscribe(res => {

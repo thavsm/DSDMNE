@@ -88,6 +88,7 @@ export class IndicatorEditComponent implements OnInit {
   divIsFormField: boolean = false;
   divIsFormD: boolean = false;
   ExtData: any[];
+  levels: any = [];
   constructor(public dialog: MatDialog , private Treeservice: TreediagramService, public dialogRef: MatDialogRef<IndicatorEditComponent>,
     @Inject(MAT_DIALOG_DATA) data,
   public service: TreediagramService, public Hierarchyservice: HierarchyManagementService, public formBuilder: FormBuilder, private spinner: NgxSpinnerService)  
@@ -119,6 +120,7 @@ export class IndicatorEditComponent implements OnInit {
 
     this.getExternalDataType();
     this.getFormCategory();
+    this.getLevels();
     this.nodeID = this.IndicatorAdd.indicatorID;
   
     this.ExternalData = {
@@ -380,12 +382,21 @@ export class IndicatorEditComponent implements OnInit {
     })
   }
 
+  getLevels() {
+    this.spinner.show();
+    this.service.getLevelsList(4082).subscribe(data => {
+      this.levels = data;
+      this.spinner.hide();
+    });
+  }
+
   addForm() {
     
     this.formDesignAddData = {};
     this.EditNodeData = {
       "indicatorID": this.IndicatorAdd.indicatorID,
-      "status": "1"
+      "status": "1",
+      "locationID": this.IndicatorAdd.locationID
     };
 
     this.formDesign.forEach(item => {

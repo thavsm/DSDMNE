@@ -18,6 +18,16 @@
                     <mat-tab-group animationDuration="0ms">
                         <mat-tab label="Indicator Meta Data Form">
                             <div class="form-group">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Select a Location </mat-label>
+                                    <mat-select [(ngModel)]="IndicatorAdd.locationID" >
+                                        <mat-option *ngFor="let c of levels" [value]="c.levelID">
+                                            {{c.levelName}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="form-group">
                                 <mat-accordion>
                                     <ng-container *ngFor="let item of formDesign;let i= index;"
                                         style="background-color: white;text-align: left;height: 100px;font-weight: bold;">
