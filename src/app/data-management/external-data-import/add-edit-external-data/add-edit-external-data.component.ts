@@ -74,6 +74,9 @@ export class AddEditExternalDataComponent implements OnInit {
     });
   }
 
+  closePopup() {
+    this.dialogRef.close();
+  }
   //Process
   TestConn() {
       this.service.TestSqlDatas(this.externalDataAdd.dataSource, this.externalDataAdd.initialCatalog, this.externalDataAdd.userID, this.externalDataAdd.password.replace('#', '%23')).subscribe(rest => {
@@ -110,7 +113,7 @@ export class AddEditExternalDataComponent implements OnInit {
       this.service.addExternalDatas(val).subscribe(res => {
         this.dialogRef.close();
         this.spinner.hide();
-        this.showNotification('top', 'center', 'External data Added Succesfully!', 'Success', 'success');
+        this.showNotification('top', 'center', 'External data Added Succesfully!', '', 'success');
       });
       this.externalDataAdd.dataServiceID = 0;
       this.externalDataAdd.dataSource = "";
@@ -148,7 +151,7 @@ export class AddEditExternalDataComponent implements OnInit {
       this.service.updateExternalDatas(this.externalDataAdd.dataServiceID, val).subscribe(res => {
         this.dialogRef.close();
         this.spinner.hide();
-        this.showNotification('top', 'center', 'External Data import updated Succesfully!', 'Success', 'success');
+        this.showNotification('top', 'center', 'External Data import updated Succesfully!', '', 'success');
       });
     }
     else {

@@ -27,7 +27,7 @@
                             <kendo-grid-column [width]="1">
                                 <ng-template kendoGridCellTemplate let-dataItem>
                                     <button mat-icon-button (click)="clickEdit(dataItem)">
-                                        <mat-icon matTooltip="Edit" class="mat-18" style="color: #016000;">edit
+                                        <mat-icon matTooltip="Edit" class="mat-18" style="color:#bf7c00;">edit
                                         </mat-icon>
                                     </button>
                                 </ng-template>
@@ -102,7 +102,7 @@
                             <kendo-grid-column [width]="1" *ngIf="thEdit">
                                 <ng-template kendoGridCellTemplate let-dataItem>
                                     <button mat-icon-button (click)="clickEditAttritubes(dataItem)" *ngIf="DisableEditandDelete(dataItem)">
-                                        <mat-icon matTooltip="Edit" class="mat-18" style="color: #016000;">edit
+                                        <mat-icon matTooltip="Edit" class="mat-18" style="color:#bf7c00;">edit
                                         </mat-icon>
                                     </button>
                                 </ng-template>

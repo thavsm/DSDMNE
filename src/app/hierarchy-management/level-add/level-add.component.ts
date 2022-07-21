@@ -171,7 +171,7 @@ export class LevelAddComponent implements OnInit {
       this.spinner.show();
       this.service.updateLevelAttributes(this.levelAdd.metadataLevelID, val).subscribe(res => {
         this.spinner.hide();
-        this.showNotification('top', 'center', 'level Attributes Updated Successfully!', 'Success', 'success');
+        this.showNotification('top', 'center', 'level Attributes Updated Successfully!', '', 'success');
         this.service.getLevelMetadata(this.levelAdd.levelID);
         //this.getNodeAttributes(this.NodeData.levelID);
 
@@ -302,7 +302,7 @@ export class LevelAddComponent implements OnInit {
         this.divGridAttr = false;
         this.divAttr = false;
         this.getLevels();
-        this.showNotification('top', 'center', 'Level Updated Successfully!', 'Success', 'success');
+        this.showNotification('top', 'center', 'Level Updated Successfully!', '', 'success');
       });
 
       }else {
@@ -499,7 +499,7 @@ export class LevelAddComponent implements OnInit {
           this.service.addLevelAttributes(val).subscribe(res => {
           // this.dialogRef.close();
           this.spinner.hide();
-          this.showNotification('top', 'center', 'level Attributes Added Successfully!', 'Success', 'success');
+          this.showNotification('top', 'center', 'level Attributes Added Successfully!', '', 'success');
           
           this.levelAdd.ReportUrl = "";
           this.levelAdd.fieldName = "";
@@ -553,7 +553,7 @@ export class LevelAddComponent implements OnInit {
         this.service.addLevel(val).subscribe(res => {
           //this.dialogRef.close();
           this.spinner.hide();
-          this.showNotification('top', 'center', 'level Added Successfully!', 'Success', 'success');
+          this.showNotification('top', 'center', 'level Added Successfully!', '', 'success');
           localStorage.setItem('LevelData', JSON.stringify(res));
           this.addDefaultAttributes();
           this.getLevels();

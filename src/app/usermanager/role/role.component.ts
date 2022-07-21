@@ -109,7 +109,7 @@ timer: 1500,
     let body = this.roleName;
     this.service.addRole(body).subscribe(
       (res: any) => {
-        this.showNotification('top', 'right', res.message, 'Success', 'success');
+        this.showNotification('top', 'right', res.message, '', 'success');
         this.data.push({ role: this.roleName, users: 0 });
         this.data.sort((a, b) => (a.role > b.role) ? 1 : ((b.role > a.role) ? -1 : 0));
       },

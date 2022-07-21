@@ -89,7 +89,7 @@ export class SchedulerComponent implements OnInit {
   
         this.insertPeriods(val);
       }
-      this.showNotification('top', 'center', 'Added Successfully!', 'Success', 'success');    
+      this.showNotification('top', 'center', 'Added Successfully!', '', 'success');    
       this.spinner.hide();  
 
     }else{
@@ -133,7 +133,7 @@ export class SchedulerComponent implements OnInit {
           },
         );
         this.spinner.hide();  
-        this.showNotification('top', 'center', 'Edited Successfully!', 'Success', 'success');    
+        this.showNotification('top', 'center', 'Edited Successfully!', '', 'success');    
 
         this.btnSave = true; 
         this.btnEdit = false; 
@@ -248,7 +248,7 @@ export class SchedulerComponent implements OnInit {
   
         this.spinner.show();
         this.service.InsertFinancialPeriod(val).subscribe(res => {
-          this.showNotification('top', 'center', 'Financial Year Added Successfully!', 'Success', 'success');        
+          this.showNotification('top', 'center', 'Financial Year Added Successfully!', '', 'success');        
           this.service.getFinancialYears().subscribe(
             res => {
               this.years = res;        

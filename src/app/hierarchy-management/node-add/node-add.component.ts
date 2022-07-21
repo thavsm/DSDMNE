@@ -193,7 +193,7 @@ export class NodeAddComponent implements OnInit {
       this.treediagramService.addIndicatorNode(values).subscribe(data => {
         // this.dialogRef.close();
         this.spinner.hide();
-        this.showNotification('top', 'center', 'Node Added Successfully!', 'Success', 'success');
+        this.showNotification('top', 'center', 'Node Added Successfully!', '', 'success');
         this.NodeAdd.levelID = "";
         this.NodeAdd.nodeID = "";
         this.NodeAdd.indicatorID = "";
@@ -238,7 +238,7 @@ export class NodeAddComponent implements OnInit {
 
           //this.dialogRef.close();
           this.spinner.hide();
-          this.showNotification('top', 'center', 'Node Added Successfully!', 'Success', 'success');
+          this.showNotification('top', 'center', 'Node Added Successfully!', '', 'success');
           this.NodeAdd.levelID = "";
           this.NodeAdd.nodeID = "";
           this.NodeAdd.indicatorID = "";
@@ -275,12 +275,13 @@ export class NodeAddComponent implements OnInit {
       this.levels = data;
       this.spinner.hide();
 
-      let indexNational = this.levels.findIndex(d => d.levelID === 4260); //find index in your array
-      this.levels.splice(indexNational, 1);//remove element from array
-
-      let indexProvincial = this.levels.findIndex(d => d.levelID === 4261); //find index in your array
-      this.levels.splice(indexProvincial, 1);//remove element from array
-
+      if(this.treeData.treeID == 4082){
+        let indexNational = this.levels.findIndex(d => d.levelID === 4260); //find index in your array
+        this.levels.splice(indexNational, 1);//remove element from array
+  
+        let indexProvincial = this.levels.findIndex(d => d.levelID === 4261); //find index in your array
+        this.levels.splice(indexProvincial, 1);//remove element from array
+      }
     });
   }
 

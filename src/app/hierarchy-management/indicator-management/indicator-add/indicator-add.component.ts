@@ -60,10 +60,10 @@ export class IndicatorAddComponent implements OnInit {
       this.service.addIndicator(val).subscribe(res => {
         this.dialogRef.close();
         this.spinner.hide();
-        // this.showNotification('top', 'center', 'Indicator Added Successfully!', 'Success', 'success');          
+        // this.showNotification('top', 'center', 'Indicator Added Successfully!', '', 'success');          
       });
 
-      this.showNotification('top', 'center', 'Indicator has been added successfully!', 'Success', 'success');
+      this.showNotification('top', 'center', 'Indicator has been added successfully!', '', 'success');
       this.IndicatorAdd.indicatorID = 0,
       this.IndicatorAdd.indicatorName = "";
       this.IndicatorAdd.indicatorDescription = "";

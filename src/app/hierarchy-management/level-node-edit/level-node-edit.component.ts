@@ -382,7 +382,7 @@ export class LevelNodeEditComponent implements OnInit {
         this.spinner.hide();
         this.service.getExternalCalculationByNodeID(this.nodeID);
         this.Clear();
-        this.showNotification('top', 'center', 'Calculation updated successfully!', 'Success', 'success');
+        this.showNotification('top', 'center', 'Calculation updated successfully!', '', 'success');
       });
     }
     else {
@@ -467,7 +467,7 @@ export class LevelNodeEditComponent implements OnInit {
           this.spinner.hide();
           this.service.getExternalCalculationByNodeID(this.nodeID);
           this.Clear();
-          this.showNotification('top', 'center', 'Calculation added successfully!', 'Success', 'success');
+          this.showNotification('top', 'center', 'Calculation added successfully!', '', 'success');
         });
          
       });
@@ -1290,7 +1290,7 @@ export class LevelNodeEditComponent implements OnInit {
       this.spinner.show();
       this.service.updateLevelAttributes(this.NodeAttributesData.metadataLevelID, val).subscribe(res => {
         this.spinner.hide();
-        this.showNotification('top', 'center', 'level Attributes Updated Successfully!', 'Success', 'success');
+        this.showNotification('top', 'center', 'level Attributes Updated Successfully!', '', 'success');
         this.service.getLevelMetadata(this.NodeData.levelID);
         this.getNodeAttributes(this.NodeData.levelID);
 
@@ -1459,7 +1459,7 @@ export class LevelNodeEditComponent implements OnInit {
           this.spinner.show();
           this.service.addLevelAttributes(val).subscribe(res => {
             this.spinner.hide();
-            this.showNotification('top', 'center', 'level Attributes Added Successfully!', 'Success', 'success');
+            this.showNotification('top', 'center', 'level Attributes Added Successfully!', '', 'success');
             this.service.getLevelMetadata(this.NodeData.levelID);
             this.getNodeAttributes(this.NodeData.levelID);
 
@@ -1508,7 +1508,7 @@ export class LevelNodeEditComponent implements OnInit {
       this.spinner.show();
       this.service.updateLevelDetails(this.NodeData.levelID, val).subscribe(res => {
         this.spinner.hide();
-        this.showNotification('top', 'center', 'Level Updated Successfully!', 'Success', 'success');
+        this.showNotification('top', 'center', 'Level Updated Successfully!', '', 'success');
       });
     }
     else {
@@ -1639,7 +1639,7 @@ export class LevelNodeEditComponent implements OnInit {
   
             this.service.UpdateNodeXMLForm(this.GetMetadataNodeFormID.filter(item => item)[0], this.formDesignAddDataXML).subscribe(res => {
               this.spinner.hide();
-              this.showNotification('top', 'center', 'Node Updated Form Successfully!', 'Success', 'success');
+              this.showNotification('top', 'center', 'Node Updated Form Successfully!', '', 'success');
             });
           });
 
@@ -1657,7 +1657,7 @@ export class LevelNodeEditComponent implements OnInit {
 
           this.service.addNodeXMLForm(this.formDesignAddDataXML).subscribe(res => {
             this.spinner.hide();
-            this.showNotification('top', 'center', 'Node Updated Successfully!', 'Success', 'success');
+            this.showNotification('top', 'center', 'Node Updated Successfully!', '', 'success');
           });
         }
       });

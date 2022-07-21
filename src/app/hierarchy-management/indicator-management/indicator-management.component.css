@@ -1,0 +1,39 @@
+::ng-deep .k-grid tr.k-alt {
+    background-color: #e8ccb02b;
+}
+
+::ng-deep .k-grid-header
+{
+    background-color: #e8ccb02b;
+}
+
+::ng-deep .k-pager-wrap {
+    background-color: white;
+}
+
+/* ::ng-deep .k-pager-wrap {
+    background-color: #e8ccb02b;
+    color: white;
+}
+
+::ng-deep .k-pager-wrap .k-link.k-state-selected {
+    background-color: #bf7c00;
+}  */
+
+/* ::ng-deep .k-grid .k-grid-header .k-header {
+    border-bottom: none;
+    background-color: #e8ccb02b;
+}
+
+::ng-deep .k-grid .k-grid-header .k-header a {
+    color: white;
+}
+
+::ng-deep .k-pager-wrap {
+    background-color: #e8ccb02b;
+    color: white;
+} */
+
+/* ::ng-deep .k-pager-wrap .k-link.k-state-selected {
+    background-color: lime;
+} */

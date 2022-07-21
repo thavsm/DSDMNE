@@ -66,7 +66,7 @@ export class TreeAddComponent implements OnInit {
       this.service.addTree(val).subscribe(res => {
         this.dialogRef.close();
         this.spinner.hide();
-        this.showNotification('top', 'center', 'Tree Added Successfully!', 'Success', 'success');          
+        this.showNotification('top', 'center', 'Tree Added Successfully!', '', 'success');          
         this.service.refreshhlist(this.treeAdd.treeCategoryID);
       });
       this.treeID = this.treeAdd.treeID;
