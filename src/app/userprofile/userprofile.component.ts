@@ -44,6 +44,8 @@ export class UserProfileComponent implements OnInit {
   isFac:boolean;
   isBranch:boolean;
 
+  active = 'InActive';
+
   @Output() newItemEvent = new EventEmitter<any>();
   
 
@@ -68,70 +70,90 @@ export class UserProfileComponent implements OnInit {
           this.isParent = true;
       }
       
+      console.log(this.isParent);
       if(this.isParent) {
         if(Object.keys(this.data).length ==0) {
         this.service.getUserProfile().subscribe(
           res => {
             this.formData = res['formData'];
             console.log(this.formData);
+            console.log(this.formData["active"]);
+            if(this.formData["active"])
+              this.active = "Active";
+            else
+              this.active = "InActive";
           },
           err => {
             console.log(err);
           },
         );
-      }
-      else{
-        this.formData = this.data.data;
-        this.isButtonVisible = true;
-      }
+        }      
+        else{
+          this.formData = this.data.data;
+          console.log(this.formData);
+          if(this.formData["active"])
+                this.active = "Active";
+              else
+                this.active = "InActive";
+          this.isButtonVisible = true;
+        }      
 
-      switch(this.formData["locationType"])
-      {
-       case 4260:
-        this.isBranch=true;
-        this.isProvince=false;
-        this.isDistrict=false;
-        this.isSP=false;
-        this.isFac=false;
-        break;
-        case 4261:
-        this.isBranch=false;
-        this.isProvince=true;
-        this.isDistrict=false;
-        this.isSP=false;
-        this.isFac=false;
-        break;
-        case 4262:
-        this.isBranch=false;
-        this.isProvince=true;
-        this.isDistrict=true;
-        this.isSP=false;
-        this.isFac=false;
-        break;
-        case 4263:
-        this.isBranch=false;
-        this.isProvince=true;
-        this.isDistrict=true;
-        this.isSP=true;
-        this.isFac=false;
-        break;
-        case 4264:
-        this.isBranch=false;
-        this.isProvince=true;
-        this.isDistrict=true;
-        this.isSP=true;
-        this.isFac=true;
-        break;
-      }
-    }
-     
-    }
+        switch(this.formData["locationType"])
+        {
+        case 4260:
+          this.isBranch=true;
+          this.isProvince=false;
+          this.isDistrict=false;
+          this.isSP=false;
+          this.isFac=false;
+          break;
+          case 4261:
+          this.isBranch=false;
+          this.isProvince=true;
+          this.isDistrict=false;
+          this.isSP=false;
+          this.isFac=false;
+          break;
+          case 4262:
+          this.isBranch=false;
+          this.isProvince=true;
+          this.isDistrict=true;
+          this.isSP=false;
+          this.isFac=false;
+          break;
+          case 4263:
+          this.isBranch=false;
+          this.isProvince=true;
+          this.isDistrict=true;
+          this.isSP=true;
+          this.isFac=false;
+          break;
+          case 4264:
+          this.isBranch=false;
+          this.isProvince=true;
+          this.isDistrict=true;
+          this.isSP=true;
+          this.isFac=true;
+          break;
+        }
+      }  
+    }       
 
     updateFormData() {
+
+      if(this.formData["active"])
+      {
+        this.active = "Active";
+      }
+      else
+      {
+        this.active = "In-Active";
+      }
       
       this.newItemEvent.emit(this.formData);
 
     }
+
 
     updateUser(){
 
@@ -166,7 +188,7 @@ export class UserProfileComponent implements OnInit {
         res => {          
           //this.data1 = res;
           //window.location.replace("/dashboard");
-          this.showNotification('top','right','User updated', 'Updated successfull.','success');
+          this.showNotification('top','right','User updated', 'User has been updated successfull.','success');
           this.spinner.hide();
         },
         err => {

@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { UserService } from 'src/app/shared/user.service';
 import {NgxSpinner, NgxSpinnerService} from 'ngx-spinner';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 declare const $: any;
 
@@ -131,75 +132,117 @@ export class TaskDetailComponent implements OnInit {
   }
 
   completeTask() {
-    this.spinner.show();
-    const wkid =new URLSearchParams(window.location.search).get('workflowid');
-    const tid =new URLSearchParams(window.location.search).get('taskid');
-    
-    let appUserModel =this.formData;
-    
-    if(this.pid === 2) {
-       this.nextUserID = "-1";//do not complete task
-       if(this.actTakenID === undefined) {
-          this.actTakenID = "1";
-       }
-    }
-    
-    if(this.pid === 1) {
-      this.nextUserID = "11";//system user
-      if(this.actTakenID === undefined) {
-         this.actTakenID = "1";
-      }
-   }
 
-    let formData1 = {
-      WorkflowID: parseInt(wkid),
-      TaskID: parseInt(tid),
-      ProcessID:0,
-      ActionTakenID: parseInt(this.actTakenID),
-      NextUserID: parseInt(this.nextUserID),
-      Comment: this.comment,
-      ApplicationUserModel: appUserModel
-      //Role: this.formData['roleId']
-    };
-    this.service.completeTask(formData1).subscribe(
-      res => {
-        this.spinner.hide();
-        this.router.navigate(['/dashboard']);
-      },
-      err => {
-        this.spinner.hide();
-        console.log(err);
-      },
-    );
+    Swal.fire({
+      title: 'Are you sure you want to approve?',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      toast: false,
+      position: 'top',
+      allowOutsideClick: false,
+      confirmButtonColor: '#000000',
+      cancelButtonColor: '#000000',
+      allowEscapeKey:true
+    }).then((result) => {
+      if (result.value) {
+        this.spinner.show();
+        const wkid =new URLSearchParams(window.location.search).get('workflowid');
+        const tid =new URLSearchParams(window.location.search).get('taskid');
+        
+        let appUserModel =this.formData;
+        
+        if(this.pid === 2) {
+          this.nextUserID = "-1";//do not complete task
+          if(this.actTakenID === undefined) {
+              this.actTakenID = "1";
+          }
+        }
+        
+        if(this.pid === 1) {
+          this.nextUserID = "11";//system user
+          if(this.actTakenID === undefined) {
+            this.actTakenID = "1";
+          }
+      }
+
+        let formData1 = {
+          WorkflowID: parseInt(wkid),
+          TaskID: parseInt(tid),
+          ProcessID:0,
+          ActionTakenID: parseInt(this.actTakenID),
+          NextUserID: parseInt(this.nextUserID),
+          Comment: this.comment,
+          ApplicationUserModel: appUserModel
+          //Role: this.formData['roleId']
+        };
+        this.service.completeTask(formData1).subscribe(
+          res => {
+            this.spinner.hide();
+            this.showNotification('top','center','Task approved Succesfully!','Success.','success');
+            this.router.navigate(['/dashboard']);
+          },
+          err => {
+            this.spinner.hide();
+            console.log(err);
+          },
+        );
+      }
+    })
+
+
+    
   }
 
   rejectTask() {
-    this.spinner.show();
-    const wkid =new URLSearchParams(window.location.search).get('workflowid');
-    const tid =new URLSearchParams(window.location.search).get('taskid');
-    
-    let appUserModel = this.formData;
 
-    let formData1 = {
-      WorkflowID: parseInt(wkid),
-      TaskID: parseInt(tid),
-      ProcessID:0,
-      ActionTakenID: 0,
-      NextUserID: -1,
-      Comment: this.comment,
-      ApplicationUserModel: appUserModel
-      //Role: this.formData['roleId']  
-    };
-    this.service.rejectTask(formData1, 'dd').subscribe(
-      res => {
-        this.spinner.hide();
-        this.router.navigate(['/dashboard']);
-      },
-      err => {
-        this.spinner.hide();
-        console.log(err);
-      },
-    );
+    
+    Swal.fire({
+      title: 'Are you sure you want to reject?',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      toast: true,
+      position: 'top',
+      allowOutsideClick: false,
+      confirmButtonColor: '#000000',
+      cancelButtonColor: '#000000'
+    }).then((result) => {
+      if (result.value) {
+
+        this.spinner.show();
+          const wkid =new URLSearchParams(window.location.search).get('workflowid');
+          const tid =new URLSearchParams(window.location.search).get('taskid');
+          
+          let appUserModel = this.formData;
+
+          let formData1 = {
+            WorkflowID: parseInt(wkid),
+            TaskID: parseInt(tid),
+            ProcessID:0,
+            ActionTakenID: 0,
+            NextUserID: -1,
+            Comment: this.comment,
+            ApplicationUserModel: appUserModel
+            //Role: this.formData['roleId']  
+          };
+          this.service.rejectTask(formData1, 'dd').subscribe(
+            res => {
+              this.spinner.hide();
+              this.showNotification('top','center','User rejected Succesfully!','Success.','success');
+              this.router.navigate(['/dashboard']);
+            },
+            err => {
+              this.spinner.hide();
+              console.log(err);
+            },
+          );
+       
+      }
+    })
+
+
+    
   }
 
   addItem(newItem: any) {
@@ -207,6 +250,33 @@ export class TaskDetailComponent implements OnInit {
     this.formData = newItem;
   }
 
+  
+  showNotification(from: any, align: any, message: any, title: any, type: string) {
+    $.notify({
+        icon: 'notifications',
+        title: title,
+        message: message
+    }, {
+        type: type,
+        delay: 1500,
+        timer: 1500,
+        placement: {
+            from: from,
+            align: align
+        },
+
+        template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
+            '<button mat-raised-button type="button" aria-hidden="true" class="close" data-notify="dismiss">  <i class="material-icons">close</i></button>' +
+            '<i class="material-icons" data-notify="icon">notifications</i> ' +
+            '<span data-notify="title">{1}</span> ' +
+            '<span data-notify="message">{2}</span>' +
+            '<div class="progress" data-notify="progressbar">' +
+            '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+            '</div>' +
+            '<a href="{3}" target="{4}" data-notify="url"></a>' +
+            '</div>'
+    });
+}
 
 }
 

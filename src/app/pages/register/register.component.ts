@@ -99,7 +99,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       LocationType: ['', Validators.required],
       Designation: [''],
       Branch: [''],
-      RoleType:[''],
+      RoleType:['3'],
       ProvinceID:[''],
       DistrictID:[''],
       ServicePointID:[''],
@@ -222,27 +222,33 @@ timer: 1500,
         var locDistrict = 0;
         var locSPoint = 0;
         var locFacility = 0;
+        var loc = 0;
         if(this.formModel.value.Branch!='') {
           locBranch = this.formModel.value.Branch;
+          loc = 8658;
         }
         if(this.formModel.value.ProvinceID!='') {
           locProvince = this.formModel.value.ProvinceID;
+          loc = this.formModel.value.ProvinceID;
         }
         if(this.formModel.value.DistrictID!='') {
           locDistrict = this.formModel.value.DistrictID;
+          loc = this.formModel.value.DistrictID;
         }
         if(this.formModel.value.ServicePointID!='') {
           locSPoint = this.formModel.value.ServicePointID;
+          loc = this.formModel.value.ServicePointID;
         }
         if(this.formModel.value.FacilityID!='') {
           locFacility = this.formModel.value.FacilityID;
+          loc = this.formModel.value.FacilityID;
         }
 
         var body = {
           Email: this.formModel.value.Email,
           FullName: this.formModel.value.FullName,
           Password: this.formModel.value.Password,
-          Location: this.formModel.value.Location,
+          Location: loc ,
           Role: this.formModel.value.Role,
           PhoneNumber: this.formModel.value.PhoneNumber,
           EmployeeNo: this.formModel.value.EmployeeNo,

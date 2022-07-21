@@ -297,15 +297,15 @@ addRoleAccess()
     });
     this.service.addFormRoles(this.froles,this.roleID).subscribe(
       (res: any) => {
-        if (res.message == 'Role added successfully') {
-        this.showNotification('top','right','', 'Forms updated successfully.','success');
+        if (res.message == 'Forms') {
+        //this.showNotification('top','right','', 'Form access updated successfully.','success');
         }
         else{}
       },
       err => {
         console.log(err);
         if (err.status == 400) {
-        
+          this.showNotification('top','right','', 'Form access updated failed. Please try again','danger');
         }          
       }
     );
@@ -321,15 +321,15 @@ addRoleAccess()
 
     this.service.addMenusRole(this.mroles,this.roleID).subscribe(
       (res: any) => {
-        if (res.message == 'Menu added successfully') {
-        this.showNotification('top','right','', 'Menus updated successfully.','success');
+        if (res.message == 'Menus') {
+        //this.showNotification('top','right','', 'Menu access updated successfully.','success');
         }
         else{}
       },
       err => {
         console.log(err);
         if (err.status == 400) {
-        
+          this.showNotification('top','right','', 'Menu access updated failed. Please try again','danger');
         }          
       }
     );
@@ -344,15 +344,15 @@ addRoleAccess()
     });
     this.service.addTypeRoles(this.typeroles,this.roleID).subscribe(
       (res: any) => {
-        if (res.message == 'Role Types added successfully') {
-        this.showNotification('top','right','', 'Types updated successfully.','success');
+        if (res.message == 'Role Types added successfully' ) {
+        this.showNotification('top','right','', 'Access updated successfully.','success');
         }
         else{}
       },
       err => {
         console.log(err);
         if (err.status == 400) {
-        
+          this.showNotification('top','right','', 'Role type access updated failed. Please try again','danger');
         }          
       }
     );

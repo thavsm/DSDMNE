@@ -43,7 +43,9 @@
                         <i class="material-icons" style="color: #000000c4;">lock_outline</i>
                       </span>
                     </div>
-                    <input type="password" class="form-control" placeholder="Password..." formControlName="Password">
+                    <input [type]="showPassword ? 'text' : 'password'" class="form-control" placeholder="Password..." formControlName="Password">
+                    <mat-icon matSuffix style="padding-top:25px;" (click)="togglePasswordVisibility()">    {{showPassword?'visibility_off':'visibility'}}
+                    </mat-icon>
                   </div>
                 </span>
               </div>

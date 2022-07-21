@@ -14,12 +14,19 @@ declare var $: any;
 })
 export class LandingComponent implements OnInit {
 
+  // images = [  
+  //   { img: "./assets/img/Department.jpg" },  
+  //   { img: "./assets/img/hope.jpg" },  
+  //   { img: "./assets/img/gbv.png" },   
+  // ];  
+  
   images = [  
-    { img: "./assets/img/Department.jpg" },  
-    { img: "./assets/img/hope.jpg" },  
-    { img: "./assets/img/gbv.png" },   
+    { img: "./assets/img/carousel1.jpg" },  
+    { img: "./assets/img/carousel2.jpg" },  
+    { img: "./assets/img/carousel3.jpg" },   
   ];  
   
+
   slideConfig = {  
     "slidesToShow": 1,  
     "slidesToScroll": 1,  

@@ -127,10 +127,10 @@
                     </div> -->
                     <div class="col-md-6">
                         <mat-form-field appearance="outline">
-                            <mat-label>Active</mat-label>
+                            <mat-label>{{active}}</mat-label>
                             <!-- <input matInput type="checkbox" [value]="formData['active']" (input)="updateFormData()"> -->
                             <input matInput [hidden]="true" [(ngModel)]="formData['active']">
-                            <mat-checkbox class="ml-2" [(ngModel)]="formData['active']" (input)="updateFormData()">
+                            <mat-checkbox class="ml-4" [(ngModel)]="formData['active']" (input)="updateFormData()" style="float:right;">
                             </mat-checkbox>
                         </mat-form-field>
                     </div>

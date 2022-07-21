@@ -65,7 +65,7 @@
                             <i class="material-icons">call</i>
                           </span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Cell Number..." formControlName="PhoneNumber">
+                        <input type="number" class="form-control" placeholder="Cell Number..." formControlName="PhoneNumber" maxlength="10" onKeyPress="if(this.value.length==10) return false;" >
                       </div>
                       <span class="text-danger ml-5"
                         *ngIf="formModel.get('PhoneNumber').touched && formModel.get('PhoneNumber').errors?.required">This
@@ -80,10 +80,10 @@
                             <i class="material-icons">accessibility</i>
                           </span>
                         </div>
-                        <mat-select class="form-control" placeholder="Role..." formControlName="Role" >
+                        <mat-select class="form-control" placeholder="Role..." formControlName="Role"  disableOptionCentering panelClass="myPanelClass">
                           <mat-option *ngFor="let role of roles" [value]="role.name">
                             {{ role.name }}
-                          </mat-option>
+                          </mat-option>  
                         </mat-select>
                       </div>
                       <span class="text-danger ml-5"
@@ -93,7 +93,7 @@
                   </div>  
                   <div class="col-md-5 mr-auto">
                     <div class="form-group has-default">
-                      <div class="input-group">
+                      <div class="input-group" *ngIf="false">
                         <div class="input-group-prepend">
                           <span class="input-group-text">
                             <i class="material-icons">accessibility</i>
@@ -105,9 +105,9 @@
                           </mat-option>
                         </mat-select>
                       </div>
-                      <span class="text-danger ml-5"
+                      <!-- <span class="text-danger ml-5"
                         *ngIf="formModel.get('RoleType').touched && formModel.get('RoleType').errors?.required">This
-                        field is mandatory.</span>
+                        field is mandatory.</span> -->
                     </div>
                   </div>
                   <div class="col-md-5 ml-auto">

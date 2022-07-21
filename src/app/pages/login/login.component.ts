@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit, OnDestroy {
      
     });
 
-      
+    public showPassword: boolean = false;      
 
     constructor(private element: ElementRef, private fb: FormBuilder, private service: UserService, private router: Router, private spinner: NgxSpinnerService) {
         this.nativeElement = element.nativeElement;
@@ -117,6 +117,11 @@ timer: 1500,
           }
         );
 
+    }
+
+
+    public togglePasswordVisibility(): void {
+      this.showPassword = !this.showPassword;
     }
 
 

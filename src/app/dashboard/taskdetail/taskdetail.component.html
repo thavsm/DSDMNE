@@ -12,7 +12,7 @@
                     <div class=card-body>
                         <div *ngIf="actionTaken==0; else elseCon" class="row">
                             <div class="col-sm-4">
-                                <mat-form-field appearance="standard">
+                                <mat-form-field appearance="outline">
                                     <mat-label>Comment</mat-label>
                                     <textarea matInput rows="1" [(ngModel)]="comment"></textarea>
                                 </mat-form-field>
