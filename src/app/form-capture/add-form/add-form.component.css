@@ -127,6 +127,20 @@
       margin: 0;
     }
 
+    ::ng-deep .k-grid tr.k-alt {
+      background-color: #e8ccb02b;
+    }
+
+    ::ng-deep .k-grid-header {
+      background-color: #e8ccb02b;
+    }
+
+    ::ng-deep .k-pager-wrap {
+      background-color: white;
+    }
+
+
+
     /* 
       ::ng-deep .mat-select-panel .custom_hover.mat-option.mat-selected:not(.mat-option-multiple) {
         background: #fff;

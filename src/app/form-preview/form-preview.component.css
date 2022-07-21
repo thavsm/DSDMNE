@@ -1,119 +1,133 @@
 .radio {
 
-    display: inline-flex;
+  display: inline-flex;
 
-    flex-direction: row;
+  flex-direction: row;
 
-    margin-left: 8px;
+  margin-left: 8px;
 
-     color:black !important;
-    }
+  color: black !important;
+}
 
-    .checkbox {
+.checkbox {
 
-        display: inline-flex;
-    
-        flex-direction: row;
-    
-        margin-left: 8px;
+  display: inline-flex;
 
-        color:black !important;
-    }
-          
-    .mat-toolbar-single-row {
-        height: auto !important;
-        background: transparent;
-    }
-    
-    .mat-toolbar-single-row button {
-        width: 200px;
-    }
-    
-    #uploadFile {
-        top: 0px;
-        left: 0px;
-        width: 100%;    
-        z-index: 9;
-        opacity: 0;
-        height: 100%;
-        cursor: pointer;
-        position: absolute;
-    }
+  flex-direction: row;
 
-    tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
+  margin-left: 8px;
 
-    .signature-container {
-        border-style: dotted;
-        border-width: 1px;
-        margin-bottom: 20px;
-        background-color: rgb(213, 242, 255);
-    }
+  color: black !important;
+}
 
-    table {
-        width: 100%;
-        overflow-x: auto;
-        overflow-y: hidden;
-        min-width: 500px;
-    }
-    
-    th.mat-header-cell {
-        text-align: left;
-        font-weight: 500;
-        font-size: medium;
-        color: black;
-        max-width: 300px;
-    }
-    
-    td.mat-cell{
-        white-space: normal;
-        word-wrap: break-word;
-        max-width: 200px;
-    }
-    
-    #uploadFile {
-        top: 0px;
-        left: 0px;
-        width: 100%;    
-        z-index: 9;
-        opacity: 0;
-        height: 100%;
-        cursor: pointer;
-        position: absolute;
-    }
+.mat-toolbar-single-row {
+  height: auto !important;
+  background: transparent;
+}
 
-    #uploadPhoto {
-        top: 0px;
-        left: 0px;
-        width: 100%;    
-        z-index: 9;
-        opacity: 0;
-        height: 100%;
-        cursor: pointer;
-        position: absolute;
-    }
+.mat-toolbar-single-row button {
+  width: 200px;
+}
 
-    .parent {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-      }
+#uploadFile {
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  z-index: 9;
+  opacity: 0;
+  height: 100%;
+  cursor: pointer;
+  position: absolute;
+}
 
-      .table tr.active td {  
-        background-color:#befdfd !important;  
-        color: black; 
-      }
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
 
-      .disabled-pointer {
-        pointer-events: none;
-      }
+.signature-container {
+  border-style: dotted;
+  border-width: 1px;
+  margin-bottom: 20px;
+  background-color: rgb(213, 242, 255);
+}
 
-      ::ng-deep .select{
-        height: 58px !important;
-        border-radius: 5px !important;
-      }
+table {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  min-width: 500px;
+}
+
+th.mat-header-cell {
+  text-align: left;
+  font-weight: 500;
+  font-size: medium;
+  color: black;
+  max-width: 300px;
+}
+
+td.mat-cell {
+  white-space: normal;
+  word-wrap: break-word;
+  max-width: 200px;
+}
+
+#uploadFile {
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  z-index: 9;
+  opacity: 0;
+  height: 100%;
+  cursor: pointer;
+  position: absolute;
+}
+
+#uploadPhoto {
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  z-index: 9;
+  opacity: 0;
+  height: 100%;
+  cursor: pointer;
+  position: absolute;
+}
+
+.parent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.table tr.active td {
+  background-color: #befdfd !important;
+  color: black;
+}
+
+.disabled-pointer {
+  pointer-events: none;
+}
+
+::ng-deep .select {
+  height: 58px !important;
+  border-radius: 5px !important;
+}
+
+::ng-deep .k-grid tr.k-alt {
+  background-color: #e8ccb02b;
+}
+
+::ng-deep .k-grid-header {
+  background-color: #e8ccb02b;
+}
+
+::ng-deep .k-pager-wrap {
+  background-color: white;
+}
+
+
 /* 
       ::ng-deep .mat-select-panel .custom_hover.mat-option.mat-selected:not(.mat-option-multiple) {
         background: #fff;
@@ -123,7 +137,6 @@
         background: rgba(0, 0, 0, 0.04);
       } */
 
-      /* ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+/* ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
         color: navy !important;
       } */
-

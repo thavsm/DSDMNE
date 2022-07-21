@@ -18,3 +18,16 @@ td.mat-cell{
     word-wrap: break-word;
     max-width: 200px;
 }
+
+::ng-deep .k-grid tr.k-alt {
+    background-color: #e8ccb02b;
+}
+
+::ng-deep .k-grid-header
+{
+    background-color: #e8ccb02b;
+}
+
+::ng-deep .k-pager-wrap {
+    background-color: white;
+}

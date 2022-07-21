@@ -23,3 +23,16 @@ td.mat-cell{
     font-weight: bold !important;
     font-size: medium !important;
 }
+
+::ng-deep .k-grid tr.k-alt {
+    background-color: #e8ccb02b;
+}
+
+::ng-deep .k-grid-header
+{
+    background-color: #e8ccb02b;
+}
+
+::ng-deep .k-pager-wrap {
+    background-color: white;
+}

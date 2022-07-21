@@ -43,7 +43,6 @@ export class ExternalDataImportComponent implements OnInit {
     this.formExternal = item;
     const dialogRef = this.dialog.open(AddEditExternalDataComponent, {
       width: '500px',
-      height: '720px',
       data: this.formExternal,
       disableClose: true
     });

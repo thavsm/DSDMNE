@@ -458,7 +458,7 @@ export class ExternaldataAddComponent implements OnInit {
         this.spinner.hide();
         this.service.getExternalCalculationByNodeID(this.nodeID);
         this.Clear();
-        this.showNotification('top', 'center', 'Calculation updated successfully!', 'Success', 'success');
+        this.showNotification('top', 'center', 'Calculation updated successfully!', '', 'success');
       });
     }
     else {
@@ -504,7 +504,7 @@ export class ExternaldataAddComponent implements OnInit {
           this.spinner.hide();
           this.service.getExternalCalculationByNodeID(this.nodeID);
           this.Clear();
-          this.showNotification('top', 'center', 'Calculation added successfully!', 'Success', 'success');
+          this.showNotification('top', 'center', 'Calculation added successfully!', '', 'success');
         });
          
       });

@@ -29,7 +29,7 @@ export class IndicatorManagementComponent implements OnInit {
   Indicators: any;
   IndicatorAdd: any;
   OpnExternalData: any;
-
+  levels: any = [];
   ngOnInit(): void {
 
     this.getIndicators();

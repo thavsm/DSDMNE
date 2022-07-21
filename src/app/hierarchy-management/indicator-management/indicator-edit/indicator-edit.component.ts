@@ -88,6 +88,7 @@ export class IndicatorEditComponent implements OnInit {
   divIsFormField: boolean = false;
   divIsFormD: boolean = false;
   ExtData: any[];
+  levels: any = [];
   constructor(public dialog: MatDialog , private Treeservice: TreediagramService, public dialogRef: MatDialogRef<IndicatorEditComponent>,
     @Inject(MAT_DIALOG_DATA) data,
   public service: TreediagramService, public Hierarchyservice: HierarchyManagementService, public formBuilder: FormBuilder, private spinner: NgxSpinnerService)  
@@ -119,6 +120,7 @@ export class IndicatorEditComponent implements OnInit {
 
     this.getExternalDataType();
     this.getFormCategory();
+    this.getLevels();
     this.nodeID = this.IndicatorAdd.indicatorID;
   
     this.ExternalData = {
@@ -198,7 +200,7 @@ export class IndicatorEditComponent implements OnInit {
         this.service.addupdateIndicatorNode(Indicatorvalues).subscribe(data => {
          
         }); 
-        this.showNotification('top', 'center', 'Indicator, Form Field link saved!', 'Success', 'success');
+        this.showNotification('top', 'center', 'Indicator, Form Field link saved!', '', 'success');
         this.spinner.hide();
       }else {
         this.showNotification('top', 'center', 'Please select a Form and Form Field before saving!', '', 'danger');
@@ -380,12 +382,21 @@ export class IndicatorEditComponent implements OnInit {
     })
   }
 
+  getLevels() {
+    this.spinner.show();
+    this.service.getLevelsList(4082).subscribe(data => {
+      this.levels = data;
+      this.spinner.hide();
+    });
+  }
+
   addForm() {
     
     this.formDesignAddData = {};
     this.EditNodeData = {
       "indicatorID": this.IndicatorAdd.indicatorID,
-      "status": "1"
+      "status": "1",
+      "locationID": this.IndicatorAdd.locationID
     };
 
     this.formDesign.forEach(item => {
@@ -459,7 +470,7 @@ export class IndicatorEditComponent implements OnInit {
         this.service.UpdateMetadataIndicatorForm(this.formDesignAddDataXML).subscribe(res => {
           this.spinner.hide();
 
-          this.showNotification('top', 'center', 'Indicator Updated Form Successfully!', 'Success', 'success');
+          this.showNotification('top', 'center', 'Indicator Updated Form Successfully!', '', 'success');
         });
       });
 
@@ -875,7 +886,7 @@ export class IndicatorEditComponent implements OnInit {
         this.spinner.hide();
         this.service.getExternalCalculationByNodeID(this.nodeID);
         this.Clear();
-        this.showNotification('top', 'center', 'Calculation updated successfully!', 'Success', 'success');
+        this.showNotification('top', 'center', 'Calculation updated successfully!', '', 'success');
       });
     }
     else {
@@ -921,7 +932,7 @@ export class IndicatorEditComponent implements OnInit {
           this.spinner.hide();
           this.service.getExternalCalculationByNodeID(this.nodeID);
           this.Clear();
-          this.showNotification('top', 'center', 'Calculation added successfully!', 'Success', 'success');
+          this.showNotification('top', 'center', 'Calculation added successfully!', '', 'success');
 
           this.service.getExternalCalculationByIndicatorID(this.IndicatorAdd.indicatorID).subscribe(data => {
             this.ExtData = data; 

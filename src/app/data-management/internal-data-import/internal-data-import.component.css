@@ -79,7 +79,7 @@ flex-start .buttons-container {
 }
 
 #buttonstyle {
-  background-color: #016000;
+  background-color:#bf7c00;
   border: none;
   color: rgb(255, 255, 255);
   padding: 15px 32px;
@@ -109,3 +109,16 @@ span.name {
   max-height: 400px;
   overflow: auto;
 } */
+
+::ng-deep .k-grid tr.k-alt {
+  background-color: #e8ccb02b;
+}
+
+::ng-deep .k-grid-header
+{
+  background-color: #e8ccb02b;
+}
+
+::ng-deep .k-pager-wrap {
+  background-color: white;
+}

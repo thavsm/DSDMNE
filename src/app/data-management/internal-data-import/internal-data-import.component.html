@@ -1,261 +1,276 @@
-<div class="main-content">
-    <div class="container-fluid">
-        <div class="container-fluid">
-            <div class="header text-center">
-                <h3 class="title">External Data Import</h3>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header card-header-rose card-header-icon">
+                <div class="card-icon">
+                    <i class="material-icons">assignment</i>
+                </div>
+                <h4 class="card-title">Internal Data Import</h4>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <hr>
-                    <kendo-grid [kendoGridBinding]="internalDataList" [navigable]="true" [filterable]="true"
-                        [pageSize]="pageSize" [skip]="skip" [pageable]="true">
-                        <kendo-grid-column field="uploadName" title="Upload Name"></kendo-grid-column>
-                        <kendo-grid-column field="folderLocation" title="Folder Location"></kendo-grid-column>
-                        <kendo-grid-column field="timestamp" [width]="110" title="Timestamp">
-                            <ng-template kendoGridCellTemplate let-dataItem>
-                                {{dataItem.timestamp | date: 'MM/dd/yyyy'}}
-                            </ng-template>
-                        </kendo-grid-column>
-                        <kendo-grid-column [width]="87" title="Template">
-                            <ng-template kendoGridCellTemplate let-element>
-                                <button mat-icon-button (click)="extractColumns(element);">
-                                    <i class="fa fa-file-excel-o" style="font-size:24px" aria-hidden="true"></i>
-                                </button>
-                            </ng-template>
-                        </kendo-grid-column>
-                        <kendo-grid-column [width]="67" title="Attach">
-                            <ng-template kendoGridCellTemplate>
-                                <i class="fa fa-paperclip"  style="font-size:24px" (click)="file.click()"></i>
-                                <input type="file" #fileInput  style="display: inline-block;"
-                                    (click)="fileInput.value = null" value="" (change)="incomingfile($event);"
-                                    placeholder="Upload file" accept=".xlsx" id="fileToUpload" style="display:none;">
-                            </ng-template>
-                        </kendo-grid-column>
-                        <kendo-grid-column [width]="70" title="Upload">
-                            <ng-template kendoGridCellTemplate let-element>
-                                <button mat-icon-button (click)="SaveExcelInformation(element);">
-                                    <i class="fa fa-upload" style="font-size:24px" aria-hidden="true"></i>
-                                </button>
-                            </ng-template>
-                        </kendo-grid-column>
-                        <kendo-grid-column [width]="70" title="View">
-                            <ng-template kendoGridCellTemplate let-element>
-                                <button mat-icon-button (click)="clickView(element); ViewPatientInfo(element); intlDataList()">
-                                    <mat-icon class="mat-14">visibility</mat-icon>
-                                </button>
-                            </ng-template>
-                        </kendo-grid-column>
-                        <kendo-grid-column [width]="70" title="Edit">
-                            <ng-template kendoGridCellTemplate let-element>
-                                <button mat-icon-button (click)="clickEdit(element); typeSetFalse();">
-                                    <mat-icon class="mat-14">edit</mat-icon>
-                                </button>
-                            </ng-template>
-                        </kendo-grid-column>
-                        <kendo-grid-column [width]="70" title="Delete">
-                            <ng-template kendoGridCellTemplate let-element>
-                                <button mat-icon-button (click)=" clickDelete(element); archiveTree(element);">
-                                    <mat-icon class="mat-14">delete</mat-icon>
-                                </button>
-                            </ng-template>
-                        </kendo-grid-column>
-                    </kendo-grid>
+            <div class="card-body">
+                <div class="main-content">
+                    <div class="container-fluid">
+                        <div class="container-fluid">
+                            <!-- <div class="header text-center">
+                                <h3 class="title">External Data Import</h3>
+                            </div> -->
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <hr>
+                                    <kendo-grid [kendoGridBinding]="internalDataList" [navigable]="true" [filterable]="true"
+                                        [pageSize]="pageSize" [skip]="skip" [pageable]="true">
+                                        <kendo-grid-column field="uploadName" title="Upload Name"></kendo-grid-column>
+                                        <kendo-grid-column field="folderLocation" title="Folder Location"></kendo-grid-column>
+                                        <kendo-grid-column field="timestamp" [width]="110" title="Timestamp">
+                                            <ng-template kendoGridCellTemplate let-dataItem>
+                                                {{dataItem.timestamp | date: 'MM/dd/yyyy'}}
+                                            </ng-template>
+                                        </kendo-grid-column>
+                                        <kendo-grid-column [width]="87" title="Template">
+                                            <ng-template kendoGridCellTemplate let-element>
+                                                <button mat-icon-button (click)="extractColumns(element);" style="color:#bf7c00;">
+                                                    <i class="fa fa-file-excel-o" style="font-size:24px" aria-hidden="true"></i>
+                                                </button>
+                                            </ng-template>
+                                        </kendo-grid-column>
+                                        <kendo-grid-column [width]="67" title="Attach">
+                                            <ng-template kendoGridCellTemplate>
+                                                <i class="fa fa-paperclip"  style="font-size:24px; color:#bf7c00;" (click)="file.click()"></i>
+                                                <input type="file" #fileInput  style="display: inline-block;" 
+                                                    (click)="fileInput.value = null" value="" (change)="incomingfile($event);"
+                                                    placeholder="Upload file" accept=".xlsx" id="fileToUpload" style="display:none;">
+                                            </ng-template>
+                                        </kendo-grid-column>
+                                        <kendo-grid-column [width]="70" title="Upload">
+                                            <ng-template kendoGridCellTemplate let-element>
+                                                <button mat-icon-button (click)="SaveExcelInformation(element);"  style="color:#bf7c00;">
+                                                    <i class="fa fa-upload" style="font-size:24px" aria-hidden="true"></i>
+                                                </button>
+                                            </ng-template>
+                                        </kendo-grid-column>
+                                        <kendo-grid-column [width]="70" title="View">
+                                            <ng-template kendoGridCellTemplate let-element>
+                                                <button mat-icon-button (click)="clickView(element); ViewPatientInfo(element); intlDataList()"  style="color:#bf7c00;">
+                                                    <mat-icon class="mat-14">visibility</mat-icon>
+                                                </button>
+                                            </ng-template>
+                                        </kendo-grid-column>
+                                        <kendo-grid-column [width]="70" title="Edit">
+                                            <ng-template kendoGridCellTemplate let-element>
+                                                <button mat-icon-button (click)="clickEdit(element); typeSetFalse();"  style="color:#bf7c00;">
+                                                    <mat-icon class="mat-14">edit</mat-icon>
+                                                </button>
+                                            </ng-template>
+                                        </kendo-grid-column>
+                                        <kendo-grid-column [width]="70" title="Delete">
+                                            <ng-template kendoGridCellTemplate let-element>
+                                                <button mat-icon-button (click)=" clickDelete(element); archiveTree(element);" style="color: #ff0000;">
+                                                    <mat-icon class="mat-14">delete</mat-icon>
+                                                </button>
+                                            </ng-template>
+                                        </kendo-grid-column>
+                                    </kendo-grid>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                    <ngx-spinner bdColor="rgba(	237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
+                        <p style="font-size: 20px; color: black">Processing...</p>
+                    </ngx-spinner>
+                
+                    <div class="container" style="margin-top:50px;">
+                        <div class="" style="text-align: center;">
+                            <button class="btn btn-md btn-primary" (click)="accordion.openAll(); clearAddImport(); typeSetTrue();">
+                                Add Import
+                            </button>
+                        </div>
+                        <mat-accordion class="example-headers-align" multi>
+                            <mat-expansion-panel style="margin-top: 20px;" [(expanded)]="xpandStatus">
+                                <mat-expansion-panel-header style="background-color:rgb(218, 218, 218);">
+                                    <mat-panel-title>
+                                        Field Names
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="form-group">
+                                    <label style="font-size: medium;">Import Name</label>
+                                    <input type="text" class="form-control" #ImportNameinput (keyup)="onKeyUp(ImportNameinput,$event)"
+                                        value="{{ImportAdd.uploadName}}" [(ngModel)]="ImportAdd.uploadName"
+                                        onkeypress="return (event.charCode> 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95) || (event.charCode >= 48 && event.charCode <= 57)" />
+                                    <mat-hint>{{ImportNameinput.value?.length || 0}}/100
+                                    </mat-hint>
+                                </div>
+                                <div class="form-group">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Import Type</mat-label>
+                                        <mat-select [(ngModel)]="ImportAdd.dataTypeId">
+                                            <mat-option *ngFor="let c of ImportType" [value]="c.dataTypeId">
+                                                {{c.description}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="form-group">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Data Type</mat-label>
+                                        <mat-select [(ngModel)]="ImportAdd.uploadTypeId" (selectionChange)="onDataTypeChange($event)">
+                                            <mat-option *ngFor="let c of DataType" [value]="c.uploadTypeId">
+                                                {{c.description}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="form-group">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Table Structure</mat-label>
+                                        <mat-select [(ngModel)]="ImportAdd.uploadTableStructureId" >
+                                            <mat-option *ngFor="let c of TableStructure" [value]="c.uploadTableStructureId">
+                                                {{c.description}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="form-group" *ngIf="divUsername">
+                                    <label style="font-size: medium;">Username</label>
+                                    <input type="text" class="form-control" value="{{ImportAdd.username}}"
+                                        [(ngModel)]="ImportAdd.username">
+                                </div>
+                
+                                <div class="form-group" *ngIf="divPassword">
+                                    <label style="font-size: medium;">Password</label>
+                                    <input type="text" class="form-control" value="{{ImportAdd.password}}"
+                                        [(ngModel)]="ImportAdd.password">
+                                </div>
+                                <div>
+                                    <div class="form-inline">
+                                        <input class="form-control" value="{{abcValue}}" #Addcolumninput [(ngModel)]="abcValue" (keyup)="onKeyUpColumn(Addcolumninput,$event)"
+                                            id="columnheadersInput"
+                                            onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95) || (event.charCode >= 48 && event.charCode <= 57)" />
+                                        <mat-hint>{{Addcolumninput.value?.length || 0}}/100
+                                        </mat-hint>
+                                        <button mat-flat-button class="btn btn-md btn-primary" (click)="AddcolumnManually()">
+                                            Add field
+                                        </button>
+                                    </div>
+                                </div>
+                
+                                <div style="width: 100%; display: table; table-layout: auto; padding-left: 8%;">
+                                    <mat-selection-list [multiple]="false" [style.overflow]="'auto'">
+                                        <div style="display: table-row">
+                                            <div id="control" style="width: 300px; display: table-cell;">
+                                                <div id="headers" style="width: 300px; height: 73px;" class="form-inline">
+                                                    <h5>Add new fields</h5>
+                                                </div>
+                                                <div [style.overflow]="'auto'" [style.height.px]="'300'">
+                                                    <mat-list-option *ngFor="let item of source" [value]="item"
+                                                        (click)="optionWasClickedleft(item)">
+                                                        {{item.fieldName}}
+                                                    </mat-list-option>
+                                                </div>
+                                            </div>
+                                            <div style="width: 160px; display: table-cell;">
+                                                <div id="headers" style="width: 160px; height: 73px;" class="form-inline">
+                                                    <h5>  </h5>
+                                                </div>
+                                                <div id="buttonsdiv">
+                                                    <button kendoButton [icon]="'arrow-60-right'" id="buttonstyle"
+                                                        (click)="moveSelected('right')">to
+                                                        right</button> <br />
+                                                    <button kendoButton [icon]="'arrow-60-left'" id="buttonstyle"
+                                                        (click)="moveSelected('left')">to
+                                                        left</button> <br />
+                                                    <button kendoButton [icon]="'arrow-60-left'" id="buttonstyle"
+                                                        (click)="moveAll('left')">all to
+                                                        left</button> <br />
+                                                    <button kendoButton [icon]="'arrow-60-right'" id="buttonstyle"
+                                                        (click)="moveAll('right')">all to
+                                                        right</button>
+                                                </div>
+                                            </div>
+                                            <div id="control" style="width: 300px; display: table-cell;">
+                                                <div id="headers" style="width: 300px; height:73px;" class="form-inline">
+                                                    <h5>Current fieldnames <span class="name" *ngIf="setType==true">(Please set type)</span></h5>
+                                                </div>
+                                                <div [style.overflow]="'auto'" [style.height.px]="'300'">
+                                                    <mat-list-option *ngFor="let item of target" [value]="item"
+                                                        (click)="optionWasClickedright(item)" (click)="selectById(item)">
+                                                        {{item.fieldName}}
+                                                    </mat-list-option>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </mat-selection-list>
+                                </div>
+                                <div *ngIf="lockQuestions">
+                                    <div>
+                                        <div style="height: 20px;"></div>
+                                        <div class="form-group">
+                                            <label style="font-size: medium;">Field Name</label>
+                                            <input type="text" class="form-control" #fieldName value="{{ImportAdd.fieldName}}"
+                                                [(ngModel)]="ImportAdd.fieldName" (keyup)="onKeyUpField(fieldName,$event)"
+                                                onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95) || (event.charCode >= 48 && event.charCode <= 57)" />
+                                            <mat-hint>{{fieldName.value?.length || 0}}/100
+                                            </mat-hint>
+                                        </div>
+                
+                                        <div class="form-group">
+                                            <mat-form-field appearance="outline">
+                                                <mat-label>Data Type</mat-label>
+                                                <mat-select [(ngModel)]="ImportAdd.databaseType">
+                                                    <mat-option *ngFor="let c of dataTypes" [value]="c.value">
+                                                        {{c.viewValue}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                
+                                        <div class="form-group" *ngIf="varchat">
+                                            <label style="font-size: medium;">Max Length</label>
+                                            <input type="text" class="form-control" value="{{ImportAdd.Maxlength}}"
+                                                [(ngModel)]="ImportAdd.Maxlength">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <button mat-flat-button class="btn btn-md btn-primary" (click)="CreateColumns(); intlDataList();">
+                                            Save
+                                        </button>
+                                        <button mat-flat-button class="btn btn-md btn-primary" (click)="removeItem()">
+                                            Remove
+                                        </button>
+                                    </div>
+                                </div>
+                
+                                <div style="height: 20px;"></div>
+                                <div class="parent">
+                                    <label style="font-size: medium;">
+                                        Select Fields From File</label>
+                                    <div>
+                                        <input type="file" style="display: inline-block;" [(ngModel)]="ImportAdd.remove"
+                                            (change)="incomingfile($event)" placeholder="Upload file" accept=".xlsx" #file>
+                                    </div>
+                                    <div style="height: 20px;">
+                                    </div>
+                                    <div>
+                                        <button type="button" class="btn btn-md btn-primary" (click)="Upload();">Extract
+                                            Fields</button>
+                                        <button mat-raised-button class="btn btn-md btn-primary" *ngIf="saveBool"
+                                            style="position: relative;left: 610px;" (click)="SaveExternalImport();">
+                                            Save
+                                        </button>
+                                        <button mat-raised-button class="btn btn-md btn-primary" *ngIf="updateBool"
+                                            style="position: relative;left: 610px;" (click)="updateTreeUpload(treeUploadID);"
+                                            (click)="intlDataList()">
+                                            Update
+                                        </button>
+                                    </div>
+                                    <div style="height: 10px;"></div>
+                                </div>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <ngx-spinner bdColor="rgba(	237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
-        <p style="font-size: 20px; color: black">Processing...</p>
-    </ngx-spinner>
-
-    <div class="container" style="margin-top:50px;">
-        <div class="" style="text-align: center;">
-            <button class="btn btn-md btn-primary" (click)="accordion.openAll(); clearAddImport(); typeSetTrue();">
-                Add Import
-            </button>
-        </div>
-        <mat-accordion class="example-headers-align" multi>
-            <mat-expansion-panel style="margin-top: 20px;" [(expanded)]="xpandStatus">
-                <mat-expansion-panel-header style="background-color:rgb(218, 218, 218);">
-                    <mat-panel-title>
-                        Field Names
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
-                <div class="form-group">
-                    <label style="font-size: medium;">Import Name</label>
-                    <input type="text" class="form-control" #ImportNameinput (keyup)="onKeyUp(ImportNameinput,$event)"
-                        value="{{ImportAdd.uploadName}}" [(ngModel)]="ImportAdd.uploadName"
-                        onkeypress="return (event.charCode> 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95) || (event.charCode >= 48 && event.charCode <= 57)" />
-                    <mat-hint>{{ImportNameinput.value?.length || 0}}/100
-                    </mat-hint>
-                </div>
-                <div class="form-group">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Import Type</mat-label>
-                        <mat-select [(ngModel)]="ImportAdd.dataTypeId">
-                            <mat-option *ngFor="let c of ImportType" [value]="c.dataTypeId">
-                                {{c.description}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div class="form-group">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Data Type</mat-label>
-                        <mat-select [(ngModel)]="ImportAdd.uploadTypeId" (selectionChange)="onDataTypeChange($event)">
-                            <mat-option *ngFor="let c of DataType" [value]="c.uploadTypeId">
-                                {{c.description}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div class="form-group">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Table Structure</mat-label>
-                        <mat-select [(ngModel)]="ImportAdd.uploadTableStructureId" >
-                            <mat-option *ngFor="let c of TableStructure" [value]="c.uploadTableStructureId">
-                                {{c.description}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div class="form-group" *ngIf="divUsername">
-                    <label style="font-size: medium;">Username</label>
-                    <input type="text" class="form-control" value="{{ImportAdd.username}}"
-                        [(ngModel)]="ImportAdd.username">
-                </div>
-
-                <div class="form-group" *ngIf="divPassword">
-                    <label style="font-size: medium;">Password</label>
-                    <input type="text" class="form-control" value="{{ImportAdd.password}}"
-                        [(ngModel)]="ImportAdd.password">
-                </div>
-                <div>
-                    <div class="form-inline">
-                        <input class="form-control" value="{{abcValue}}" #Addcolumninput [(ngModel)]="abcValue" (keyup)="onKeyUpColumn(Addcolumninput,$event)"
-                            id="columnheadersInput"
-                            onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95) || (event.charCode >= 48 && event.charCode <= 57)" />
-                        <mat-hint>{{Addcolumninput.value?.length || 0}}/100
-                        </mat-hint>
-                        <button mat-flat-button class="btn btn-md btn-primary" (click)="AddcolumnManually()">
-                            Add field
-                        </button>
-                    </div>
-                </div>
-
-                <div style="width: 100%; display: table; table-layout: auto; padding-left: 8%;">
-                    <mat-selection-list [multiple]="false" [style.overflow]="'auto'">
-                        <div style="display: table-row">
-                            <div id="control" style="width: 300px; display: table-cell;">
-                                <div id="headers" style="width: 300px; height: 73px;" class="form-inline">
-                                    <h5>Add new fields</h5>
-                                </div>
-                                <div [style.overflow]="'auto'" [style.height.px]="'300'">
-                                    <mat-list-option *ngFor="let item of source" [value]="item"
-                                        (click)="optionWasClickedleft(item)">
-                                        {{item.fieldName}}
-                                    </mat-list-option>
-                                </div>
-                            </div>
-                            <div style="width: 160px; display: table-cell;">
-                                <div id="headers" style="width: 160px; height: 73px;" class="form-inline">
-                                    <h5>  </h5>
-                                </div>
-                                <div id="buttonsdiv">
-                                    <button kendoButton [icon]="'arrow-60-right'" id="buttonstyle"
-                                        (click)="moveSelected('right')">to
-                                        right</button> <br />
-                                    <button kendoButton [icon]="'arrow-60-left'" id="buttonstyle"
-                                        (click)="moveSelected('left')">to
-                                        left</button> <br />
-                                    <button kendoButton [icon]="'arrow-60-left'" id="buttonstyle"
-                                        (click)="moveAll('left')">all to
-                                        left</button> <br />
-                                    <button kendoButton [icon]="'arrow-60-right'" id="buttonstyle"
-                                        (click)="moveAll('right')">all to
-                                        right</button>
-                                </div>
-                            </div>
-                            <div id="control" style="width: 300px; display: table-cell;">
-                                <div id="headers" style="width: 300px; height:73px;" class="form-inline">
-                                    <h5>Current fieldnames <span class="name" *ngIf="setType==true">(Please set type)</span></h5>
-                                </div>
-                                <div [style.overflow]="'auto'" [style.height.px]="'300'">
-                                    <mat-list-option *ngFor="let item of target" [value]="item"
-                                        (click)="optionWasClickedright(item)" (click)="selectById(item)">
-                                        {{item.fieldName}}
-                                    </mat-list-option>
-                                </div>
-                            </div>
-                        </div>
-                    </mat-selection-list>
-                </div>
-                <div *ngIf="lockQuestions">
-                    <div>
-                        <div style="height: 20px;"></div>
-                        <div class="form-group">
-                            <label style="font-size: medium;">Field Name</label>
-                            <input type="text" class="form-control" #fieldName value="{{ImportAdd.fieldName}}"
-                                [(ngModel)]="ImportAdd.fieldName" (keyup)="onKeyUpField(fieldName,$event)"
-                                onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123) || (event.charCode==95) || (event.charCode >= 48 && event.charCode <= 57)" />
-                            <mat-hint>{{fieldName.value?.length || 0}}/100
-                            </mat-hint>
-                        </div>
-
-                        <div class="form-group">
-                            <mat-form-field appearance="outline">
-                                <mat-label>Data Type</mat-label>
-                                <mat-select [(ngModel)]="ImportAdd.databaseType">
-                                    <mat-option *ngFor="let c of dataTypes" [value]="c.value">
-                                        {{c.viewValue}}
-                                    </mat-option>
-                                </mat-select>
-                            </mat-form-field>
-                        </div>
-
-                        <div class="form-group" *ngIf="varchat">
-                            <label style="font-size: medium;">Max Length</label>
-                            <input type="text" class="form-control" value="{{ImportAdd.Maxlength}}"
-                                [(ngModel)]="ImportAdd.Maxlength">
-                        </div>
-                    </div>
-                    <div>
-                        <button mat-flat-button class="btn btn-md btn-primary" (click)="CreateColumns(); intlDataList();">
-                            Save
-                        </button>
-                        <button mat-flat-button class="btn btn-md btn-primary" (click)="removeItem()">
-                            Remove
-                        </button>
-                    </div>
-                </div>
-
-                <div style="height: 20px;"></div>
-                <div class="parent">
-                    <label style="font-size: medium;">
-                        Select Fields From File</label>
-                    <div>
-                        <input type="file" style="display: inline-block;" [(ngModel)]="ImportAdd.remove"
-                            (change)="incomingfile($event)" placeholder="Upload file" accept=".xlsx" #file>
-                    </div>
-                    <div style="height: 20px;">
-                    </div>
-                    <div>
-                        <button type="button" class="btn btn-md btn-primary" (click)="Upload();">Extract
-                            Fields</button>
-                        <button mat-raised-button class="btn btn-md btn-primary" *ngIf="saveBool"
-                            style="position: relative;left: 610px;" (click)="SaveExternalImport();">
-                            Save
-                        </button>
-                        <button mat-raised-button class="btn btn-md btn-primary" *ngIf="updateBool"
-                            style="position: relative;left: 610px;" (click)="updateTreeUpload(treeUploadID);"
-                            (click)="intlDataList()">
-                            Update
-                        </button>
-                    </div>
-                    <div style="height: 10px;"></div>
-                </div>
-            </mat-expansion-panel>
-        </mat-accordion>
     </div>
 </div>
+

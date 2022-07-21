@@ -29,6 +29,19 @@
                             [(ngModel)]="IndicatorAdd.indicatorDescription">
                         </mat-form-field>               
                     </div>
+
+                    
+                    <div class="form-group">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Select a Location </mat-label>
+                            <mat-select [(ngModel)]="IndicatorAdd.levelID" >
+                                <mat-option *ngFor="let c of levels" [value]="c.levelID">
+                                    {{c.levelName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    
                 </div>
                 <div mat-dialog-actions>
                     <button (click)="addIndicator()"

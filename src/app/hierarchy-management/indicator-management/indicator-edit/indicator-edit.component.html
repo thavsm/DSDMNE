@@ -18,6 +18,16 @@
                     <mat-tab-group animationDuration="0ms">
                         <mat-tab label="Indicator Meta Data Form">
                             <div class="form-group">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Select a Location </mat-label>
+                                    <mat-select [(ngModel)]="IndicatorAdd.locationID" >
+                                        <mat-option *ngFor="let c of levels" [value]="c.levelID">
+                                            {{c.levelName}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="form-group">
                                 <mat-accordion>
                                     <ng-container *ngFor="let item of formDesign;let i= index;"
                                         style="background-color: white;text-align: left;height: 100px;font-weight: bold;">
@@ -351,7 +361,7 @@
                                             <kendo-grid-column [width]="1">
                                                 <ng-template kendoGridCellTemplate let-dataItem>
                                                     <button mat-icon-button (click)="clickRefresh(dataItem)">
-                                                        <mat-icon matTooltip="refresh" class="mat-18" style="color: #016000;">refresh
+                                                        <mat-icon matTooltip="refresh" class="mat-18" style="color:#bf7c00;">refresh
                                                         </mat-icon>
                                                     </button>
                                                 </ng-template>
@@ -359,7 +369,7 @@
                                             <kendo-grid-column [width]="1">
                                                 <ng-template kendoGridCellTemplate let-dataItem>
                                                     <button mat-icon-button (click)="clickEdit(dataItem)">
-                                                        <mat-icon matTooltip="Edit" class="mat-18" style="color: #016000;">edit
+                                                        <mat-icon matTooltip="Edit" class="mat-18" style="color:#bf7c00;">edit
                                                         </mat-icon>
                                                     </button>
                                                 </ng-template>

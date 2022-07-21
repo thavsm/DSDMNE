@@ -70,7 +70,7 @@ var val = {
       this.service.addHoliday(val).subscribe(res => {
         this.dialogRef.close();
         this.spinner.hide();
-        this.showNotification('top', 'center', 'Holiday Added Successfully!', 'Success', 'success');          
+        this.showNotification('top', 'center', 'Holiday Added Successfully!', '', 'success');          
         this.service.refreshhlist();
       });
       this.holidayId = this.holidayAdd.holidayId;
