@@ -1,22 +1,27 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+
 import { TableData } from '../md/md-table/md-table.component';
 import { LegendItem, ChartType } from '../md/md-chart/md-chart.component';
 
 import * as Chartist from 'chartist';
 import { UserService } from '../shared/user.service';
+import { DataBindingDirective } from '@progress/kendo-angular-grid';
 
 declare const $: any;
 
 @Component({
   selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html'
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit, AfterViewInit {
-  
+  @ViewChild(DataBindingDirective) dataBinding: DataBindingDirective;
   public tableData: TableData;
   public data: [];
 
-  public data1: [];
+  public data1: any=[];
+
+
 
   constructor(private service: UserService) {
       

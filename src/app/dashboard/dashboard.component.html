@@ -1,132 +1,178 @@
 <div class="main-content">
-    <div class="container-fluid">
-      <div class="row">
-          <div class="col-md-12">
-              <div class="card">
-                <div class="card-header card-header-rose card-header-icon">
-                  <div class="card-icon">
-                    <i class="material-icons"></i>
-                  </div>
-                  <h4 class="card-title">Tasks</h4>
-                </div>
-                  <div class="card-body">
-                      <div class="row">
-                          <div class="col-md-12">
-                            <table id="tblProcess" class="table table-striped">
-                              <thead>
-                                <tr>
-                                  <th>#</th>
-                                  <th>Action Required</th>
-                                  <th>Process</th>
-                                  <th>PostedOn</th>
-                                  <th>User</th>
-                                  <th>Task</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                <tr *ngFor="let obj of data1;let i = index">
-                                  <td>{{ i+1 }}</td>
-                                  <td>{{ obj['actionDescription'] }}</td>
-                                  <td><a [routerLink]="['/workflow']" [queryParams]="{ PID: obj['processID'] }">{{ obj['processName'] }}</a></td>
-                                  <td>{{ obj['postedOn'] }}</td>
-                                  <td>{{ obj['userName'] }}</td>
-                                  <td><a [routerLink]="['/taskdetail']" [queryParams]="{ workflowid: obj['workflowID'], taskid: obj['taskID'] }">View Task</a></td>
-                                </tr>
-                              </tbody>
-                        
-                            </table>
-                          </div>
-                          
-                      </div>
-                  </div>
-              </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-rose card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons"></i>
+            </div>
+            <h4 class="card-title">Tasks</h4>
           </div>
+          <div class="card-body">
+
+            <div class="row">
+              <kendo-grid  [kendoGridBinding]="data1" [pageSize]="10" [pageable]="true" [filterable]="true"
+                [sortable]="true" [groupable]="false">
+
+                <!-- <kendo-grid-column field="{{ i+1 }}" title="#" [width]="6">
+                </kendo-grid-column> -->
+
+                <kendo-grid-column field="actionDescription" title="Action Required" [width]="6">
+                </kendo-grid-column>
+
+                <kendo-grid-column field="processName" title="Process" filter="text" [width]="6">
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    <a style="color:blue" [routerLink]="['/workflow']" [queryParams]="{ PID: dataItem.processID }">{{dataItem.processName}}</a>
+                  </ng-template>
+                </kendo-grid-column>
+
+                <!-- <kendo-grid-column field="processName" title="Process" [width]="6">
+                </kendo-grid-column> -->
+
+                <kendo-grid-column field="PostedOn" title="PostedOn" [width]="6">
+                </kendo-grid-column>
+
+                <kendo-grid-column field="userName" title="User" [width]="6">
+                </kendo-grid-column>
+
+                <kendo-grid-column  title="Task" filter="text" [width]="6" [filterable]="false">
+                  <ng-template kendoGridCellTemplate let-dataItem>
+                    <a  style="color:blue" [routerLink]="['/taskdetail']" [queryParams]="{ workflowid: dataItem.workflowID, taskid: dataItem.taskID }">View Task</a>
+                  </ng-template>
+                </kendo-grid-column>
+
+              </kendo-grid>
+            </div>
+
+            <!-- <div class="row">
+              <div class="col-md-12">
+                <table id="tblProcess" class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Action Required</th>
+                      <th>Process</th>
+                      <th>PostedOn</th>
+                      <th>User</th>
+                      <th>Task</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let obj of data1;let i = index">
+                      <td>{{ i+1 }}</td>
+                      <td>{{ obj['actionDescription'] }}</td>
+                      <td><a [routerLink]="['/workflow']" [queryParams]="{ PID: obj['processID'] }">{{
+                          obj['processName'] }}</a></td>
+                      <td>{{ obj['postedOn'] }}</td>
+                      <td>{{ obj['userName'] }}</td>
+                      <td><a [routerLink]="['/taskdetail']"
+                          [queryParams]="{ workflowid: obj['workflowID'], taskid: obj['taskID'] }">View Task</a></td>
+                    </tr>
+                  </tbody>
+
+                </table>
+              </div>
+
+            </div> -->
+          </div>
+        </div>
       </div>
-      <div class="row">
-        <div class="col-md-4">
-          <div class="card card-chart">
-            <div class="card-header card-header-rose" data-header-animation="true">
-              <div class="ct-chart" id="websiteViewsChart"></div>
-            </div>
-            <div class="card-body">
-              <div class="card-actions">
-                <button mat-raised-button type="button" class="btn btn-danger btn-link fix-broken-card">
-                  <i class="material-icons">build</i> Fix Header!
-                </button>
-                <button mat-raised-button type="button" class="btn btn-info btn-link" matTooltip="Refresh" [matTooltipPosition]="'below'">
-                  <i class="material-icons">refresh</i>
-                </button>
-                <button mat-raised-button type="button" class="btn btn-default btn-link" matTooltip="Change Date" [matTooltipPosition]="'below'">
-                  <i class="material-icons">edit</i>
-                </button>
-              </div>
-              <h4 class="card-title">Website Views</h4>
-              <p class="card-category">Last Campaign Performance</p>
-            </div>
-            <div class="card-footer">
-              <div class="stats">
-                <i class="material-icons">access_time</i> campaign sent 2 days ago
-              </div>
-            </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card card-chart">
+          <div class="card-header card-header-rose" data-header-animation="true">
+            <div class="ct-chart" id="websiteViewsChart"></div>
           </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card card-chart">
-            <div class="card-header card-header-success" data-header-animation="true">
-              <div class="ct-chart" id="dailySalesChart"></div>
+          <div class="card-body">
+            <div class="card-actions">
+              <button mat-raised-button type="button" class="btn btn-danger btn-link fix-broken-card">
+                <i class="material-icons">build</i> Fix Header!
+              </button>
+              <button mat-raised-button type="button" class="btn btn-info btn-link" matTooltip="Refresh"
+                [matTooltipPosition]="'below'">
+                <i class="material-icons">refresh</i>
+              </button>
+              <button mat-raised-button type="button" class="btn btn-default btn-link" matTooltip="Change Date"
+                [matTooltipPosition]="'below'">
+                <i class="material-icons">edit</i>
+              </button>
             </div>
-            <div class="card-body">
-              <div class="card-actions">
-                <button mat-raised-button type="button" class="btn btn-danger btn-link fix-broken-card">
-                  <i class="material-icons">build</i> Fix Header!
-                </button>
-                <button mat-raised-button type="button" class="btn btn-info btn-link" matTooltip="Refresh" [matTooltipPosition]="'below'">
-                  <i class="material-icons">refresh</i>
-                </button>
-                <button mat-raised-button type="button" class="btn btn-default btn-link" matTooltip="Change Date" [matTooltipPosition]="'below'">
-                  <i class="material-icons">edit</i>
-                </button>
-              </div>
-              <h4 class="card-title">Forms Captured</h4>
-              <p class="card-category">
-                <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today forms.</p>
-            </div>
-            <div class="card-footer">
-              <div class="stats">
-                <i class="material-icons">access_time</i> updated 4 minutes ago
-              </div>
-            </div>
+            <h4 class="card-title">Website Views</h4>
+            <p class="card-category">Last Campaign Performance</p>
           </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card card-chart">
-            <div class="card-header card-header-info" data-header-animation="true">
-              <div class="ct-chart" id="completedTasksChart"></div>
-            </div>
-            <div class="card-body">
-              <div class="card-actions">
-                <button mat-raised-button type="button" class="btn btn-danger btn-link fix-broken-card">
-                  <i class="material-icons">build</i> Fix Header!
-                </button>
-                <button mat-raised-button type="button" class="btn btn-info btn-link" matTooltip="Refresh" [matTooltipPosition]="'below'">
-                  <i class="material-icons">refresh</i>
-                </button>
-                <button mat-raised-button type="button" class="btn btn-default btn-link" matTooltip="Change Date" [matTooltipPosition]="'below'">
-                  <i class="material-icons">edit</i>
-                </button>
-              </div>
-              <h4 class="card-title">Completed Tasks</h4>
-              <p class="card-category">Last Campaign Performance</p>
-            </div>
-            <div class="card-footer">
-              <div class="stats">
-                <i class="material-icons">access_time</i> campaign sent 2 days ago
-              </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons">access_time</i> campaign sent 2 days ago
             </div>
           </div>
         </div>
       </div>
-      <!-- <div class="row">
+      <div class="col-md-4">
+        <div class="card card-chart">
+          <div class="card-header card-header-success" data-header-animation="true">
+            <div class="ct-chart" id="dailySalesChart"></div>
+          </div>
+          <div class="card-body">
+            <div class="card-actions">
+              <button mat-raised-button type="button" class="btn btn-danger btn-link fix-broken-card">
+                <i class="material-icons">build</i> Fix Header!
+              </button>
+              <button mat-raised-button type="button" class="btn btn-info btn-link" matTooltip="Refresh"
+                [matTooltipPosition]="'below'">
+                <i class="material-icons">refresh</i>
+              </button>
+              <button mat-raised-button type="button" class="btn btn-default btn-link" matTooltip="Change Date"
+                [matTooltipPosition]="'below'">
+                <i class="material-icons">edit</i>
+              </button>
+            </div>
+            <h4 class="card-title">Forms Captured</h4>
+            <p class="card-category">
+              <span class="text-success"><i class="fa fa-long-arrow-up"></i> 55% </span> increase in today forms.
+            </p>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons">access_time</i> updated 4 minutes ago
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card card-chart">
+          <div class="card-header card-header-info" data-header-animation="true">
+            <div class="ct-chart" id="completedTasksChart"></div>
+          </div>
+          <div class="card-body">
+            <div class="card-actions">
+              <button mat-raised-button type="button" class="btn btn-danger btn-link fix-broken-card">
+                <i class="material-icons">build</i> Fix Header!
+              </button>
+              <button mat-raised-button type="button" class="btn btn-info btn-link" matTooltip="Refresh"
+                [matTooltipPosition]="'below'">
+                <i class="material-icons">refresh</i>
+              </button>
+              <button mat-raised-button type="button" class="btn btn-default btn-link" matTooltip="Change Date"
+                [matTooltipPosition]="'below'">
+                <i class="material-icons">edit</i>
+              </button>
+            </div>
+            <h4 class="card-title">Completed Tasks</h4>
+            <p class="card-category">Last Campaign Performance</p> 
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <i class="material-icons">access_time</i> campaign sent 2 days ago
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- <div class="row">
         <div class="col-lg-3 col-md-6 col-sm-6">
           <div class="card card-stats">
             <div class="card-header card-header-warning card-header-icon">
@@ -194,5 +240,5 @@
         </div>
       </div>
        -->
-    </div>
+  </div>
 </div>
