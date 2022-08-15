@@ -78,53 +78,57 @@ export const AppRoutes: Routes = [
         loadChildren: () => import('./calc-report/calc-report.module').then(m => m.CalcReportModule)
       },
       {
-        path: 'hierarchy-management',      
-        loadChildren: () => import('./hierarchy-management/hierarchy-management.module').then(m => m.HierarchyManagementModule)      
+        path: 'hierarchy-management',
+        loadChildren: () => import('./hierarchy-management/hierarchy-management.module').then(m => m.HierarchyManagementModule)
       },
       {
-        path: 'hierarchy-management/indicator-management',      
-        loadChildren: () => import('./hierarchy-management/indicator-management/indicator-management.module').then(m => m.IndicatorManagementModule)      
+        path: 'hierarchy-management/indicator-management',
+        loadChildren: () => import('./hierarchy-management/indicator-management/indicator-management.module').then(m => m.IndicatorManagementModule)
       },
       {
-        path: 'location',      
-        loadChildren: () => import('./hierarchy-management/hierarchy-management.module').then(m => m.HierarchyManagementModule)      
+        path: 'location',
+        loadChildren: () => import('./hierarchy-management/hierarchy-management.module').then(m => m.HierarchyManagementModule)
       },
       {
-        path: 'usermanager/indicatorrole',      
-        loadChildren: () => import('./fieldrole/fieldrole.module').then(m => m.FieldRoleModule)      
+        path: 'usermanager/indicatorrole',
+        loadChildren: () => import('./fieldrole/fieldrole.module').then(m => m.FieldRoleModule)
       },
       {
-        path: 'level',      
-        loadChildren: () => import('./hierarchy-management/hierarchy-management.module').then(m => m.HierarchyManagementModule)      
+        path: 'level',
+        loadChildren: () => import('./hierarchy-management/hierarchy-management.module').then(m => m.HierarchyManagementModule)
       },
       {
-        path: 'treediagram',  
-        loadChildren: () => import('./treediagram/treediagram.module').then(m => m.TreediagramModule)  
-    },
-    {
+        path: 'treediagram',
+        loadChildren: () => import('./treediagram/treediagram.module').then(m => m.TreediagramModule)
+      },
+      {
         path: 'usermanager',
         loadChildren: () => import('./usermanager/usermanager.module').then(m => m.UserManagerModule)
-    },{
+      }, {
 
-      path: 'internalDI',
-      loadChildren: () => import('./data-management/internal-data-import/internal-data-import.module').then(m => m.InternalDataImportModule)
-    },
-    {
-      path: 'externalDI',
-      loadChildren: () => import('./data-management/external-data-import/external-data-import.module').then(m => m.ExternalDataImportModule)
-    },
-    {
-      path: 'administration',
-      loadChildren: () => import('./administration/administration.module').then(m => m.AdministrationModule)
-  },
-  {
-    path: 'indicatorapproval',
-    loadChildren: () => import('./indicatorapproval/indicatorapproval.module').then(m => m.IndicatorapprovalModule)
-  },
-  {
-    path: 'reports',
-    loadChildren: () => import('./reports/reports.module').then(m => m.ReportsModule)
-}
+        path: 'internalDI',
+        loadChildren: () => import('./data-management/internal-data-import/internal-data-import.module').then(m => m.InternalDataImportModule)
+      },
+      {
+        path: 'externalDI',
+        loadChildren: () => import('./data-management/external-data-import/external-data-import.module').then(m => m.ExternalDataImportModule)
+      },
+      {
+        path: 'administration',
+        loadChildren: () => import('./administration/administration.module').then(m => m.AdministrationModule)
+      },
+      {
+        path: 'indicatorapproval',
+        loadChildren: () => import('./indicatorapproval/indicatorapproval.module').then(m => m.IndicatorapprovalModule)
+      },
+      {
+        path: 'reports',
+        loadChildren: () => import('./reports/reports.module').then(m => m.ReportsModule)
+      },
+      {
+        path: 'usermanager/facilitymanager',
+        loadChildren: () => import('./usermanager/usermanager.module').then(m => m.UserManagerModule)
+      }
     ]
   }, {
     path: '',

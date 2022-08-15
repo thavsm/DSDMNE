@@ -3,6 +3,7 @@ import { RoleComponent } from './role/role.component';
 import { AppusersComponent } from './appusers/appusers.component';
 import { FormrolesComponent } from './formroles/formroles.component';
 import { HierarchyManagementComponent } from '../hierarchy-management/hierarchy-management.component';
+import { FacilitymanagerComponent } from './facilitymanager/facilitymanager.component';
 
 export const UserManagerRoutes: Routes = [
     {
@@ -24,9 +25,10 @@ export const UserManagerRoutes: Routes = [
         }, {
             path: 'level',
             component: HierarchyManagementComponent
+        },{
+            path: 'facilitymanager',
+            component: FacilitymanagerComponent
         }
-    
     ]
     }
-
 ];
