@@ -122,6 +122,29 @@ export class LevelAddComponent implements OnInit {
     }
   }
 
+  clickDeleteAtrribute(item: any) {
+    Swal.fire({
+      title: 'Are you sure you want to delete ' + item.friendlyname + ' Atrribute?',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      toast: true,
+      position: 'top',
+      allowOutsideClick: false,
+      confirmButtonColor: '#000000',
+      cancelButtonColor: '#000000'
+    }).then((result) => {
+      if (result.value) {
+        this.spinner.show();
+        this.service.archiveAttributes(item.metadataLevelID).subscribe(data => {
+          this.spinner.hide();
+          this.showNotification('top', 'center', 'Atrribute Deleted Succesfully!', 'Success.', 'success');
+          this.service.getLevelMetadata(this.levelAdd.levelID)
+        });
+      }
+    })
+  }
+
 
   clickEdit(item: any) {
     this.levelAdd.levelName = item.levelName;
