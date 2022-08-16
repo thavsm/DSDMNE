@@ -16,7 +16,7 @@ export class UserService {
 
   constructor(private fb: FormBuilder, private http: HttpClient) { }
   readonly BaseURI = environment.API_URL;
-  //readonly BaseURI = 'https://app.terra.group/DSDFormWeb/api';
+  //readonly BaseURI = 'https://app1.terra.group/DSDFormWeb/api';
   
   public ulist:User[];
   private showMenu = new BehaviorSubject(true);
@@ -46,6 +46,17 @@ export class UserService {
     return this.http.get<any>(this.BaseURI + '/ApplicationUser');
   }
 
+  getAllFacilities(): Observable<any[]> {
+    return this.http.get<any>(this.BaseURI + '/Facilities');
+  }
+
+  UpdateFacilities(ID:number,formData: any) {
+    return this.http.put(this.BaseURI + '/Facilities/' + ID, formData);
+  }
+  
+  addFacility(formData: any) {
+    return this.http.post(this.BaseURI + '/Facilities', formData);
+  }
 
   register(body: any) {
     return this.http.post(this.BaseURI + '/ApplicationUser/Register', body);

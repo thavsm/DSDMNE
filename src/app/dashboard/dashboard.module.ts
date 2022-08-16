@@ -12,6 +12,7 @@ import { UserProfileComponent } from '../userprofile/userprofile.component';
 import { ChangePasswordComponent } from '../userprofile/changepassword/changepassword.component';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { IndicatorapprovalModule } from '../indicatorapproval/indicatorapproval.module';
+import {PDFModule,ExcelModule,GridModule} from "@progress/kendo-angular-grid";
 
 @NgModule({
     imports: [
@@ -20,7 +21,10 @@ import { IndicatorapprovalModule } from '../indicatorapproval/indicatorapproval.
         FormsModule,
         MdModule,
         MaterialModule,
-        IndicatorapprovalModule
+        IndicatorapprovalModule,
+        PDFModule,
+        ExcelModule,
+        GridModule
     ],
     declarations: [
         DashboardComponent,

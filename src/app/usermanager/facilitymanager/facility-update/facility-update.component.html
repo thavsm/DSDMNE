@@ -1,0 +1,36 @@
+<div style="margin-left: 0%;">
+    <button mat-icon-button color="warn" (click)="closePopup()">
+        <mat-icon>close</mat-icon>
+    </button>
+    <br>
+</div>
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 ml-auto mr-auto">
+                <div class="card">
+                    <div class="card-header card-header-rose card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">settings</i>
+                        </div>
+                        <h4 class="card-title">Edit Facility Type</h4>
+                    </div>
+                    <div class="card-body p-2">
+                        <div class="form-group">
+                            <label style="font-size: medium;">Facility Type</label>
+                            <mat-form-field appearance="outline">
+                                <input matInput type="text" class="form-control" value="{{FacilityAdd.facilityType}}"
+                                    [(ngModel)]="FacilityAdd.facilityType">
+                            </mat-form-field>
+                        </div>
+                        <button mat-button cdkFocusInitial (click)="updateFacility()" class="btn btn-md btn-primary"
+                             >Edit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ngx-spinner bdColor="rgba( 237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
+    <p style="font-size: 20px; color: black">Processing...</p>
+</ngx-spinner>
