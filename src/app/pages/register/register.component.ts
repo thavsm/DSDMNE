@@ -91,7 +91,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       ConfirmPassword: [''],
       Location: ['',Validators.required],
       Role: ['',Validators.required],
-      PhoneNumber: ['',Validators.required],
+      PhoneNumber: ['',Validators.required, Validators.pattern(new RegExp("[0-9 ]{10}"))],
       EmployeeNo: [''],
       ServicePoint: [''],
       Address: [''],
@@ -212,6 +212,7 @@ timer: 1500,
 
     onSubmit() {
       //this.saving = true;
+      console.log(this.formModel.value);
       if(this.formModel.value.FullName =='' || this.formModel.value.Surname =='' || this.formModel.value.Email =='' || this.formModel.value.PhoneNumber =='' || this.formModel.value.Role =='' || this.formModel.value.RoleType =='' || this.formModel.value.LocationType ==''){
         this.showNotification('top','right','Please complete all fields.','Error', 'info');
       }    
@@ -427,6 +428,90 @@ timer: 1500,
       case "Facility": this.isFac = true; break;
     }
 
+  }
+
+  loadLocationType(role:any)
+  {
+     console.log(role.id);
+
+     this.service.getLevels(4082).subscribe(
+      res => {
+        this.locationType = res;
+      },
+      err => {
+        console.log(err);
+      },
+    );
+     
+     this.isBranch=false;
+     this.isProvince=false;
+     this.isDistrict=false;
+     this.isSP=false;
+     this.isFac=false;
+
+     let locs = [];
+     let l:any;
+
+     switch(role.id)
+     {
+       case '46':
+          case '6':
+            case '7':
+              case '8':
+                case '18':
+                  case '3':
+            
+        this.isBranch=true;
+        this.isProvince=false;
+        this.isDistrict=false;
+        this.isSP=false;
+        this.isFac=false;        
+        l = this.locationType.find(loc => loc.value === 4260);
+        locs.push(l);
+        this.locationType = locs;                            
+        break;
+        
+       case '4':
+        case '42':
+          case '44':
+            case '45':
+              case '47':
+                case '9': 
+        this.isBranch=false;
+        this.isProvince=true;
+        this.isDistrict=false;
+        this.isSP=false;
+        this.isFac=false;       
+        l = this.locationType.find(loc => loc.value === 4261);
+        locs.push(l);
+        this.locationType = locs;
+        this.loadProvince(); 
+        break;
+        case '10':
+        this.isBranch=false;
+        this.isProvince=true;
+        this.isDistrict=true;
+        this.isSP=false;
+        this.isFac=false;
+        this.loadProvince();
+        l = this.locationType.find(loc => loc.value === 4262);
+        locs.push(l);
+        this.locationType = locs; 
+        break;
+        case '11':
+        this.isBranch=false;
+        this.isProvince=true;
+        this.isDistrict=true;
+        this.isSP=true;
+        this.isFac=false;
+        this.loadProvince();
+        l = this.locationType.find(loc => loc.value === 4263);
+        locs.push(l);
+        this.locationType = locs; 
+        break;
+        
+     }
+     
   }
 
   // onRoleChange(e)

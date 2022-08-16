@@ -65,14 +65,17 @@
                             <i class="material-icons">call</i>
                           </span>
                         </div>
-                        <input type="number" class="form-control" placeholder="Cell Number..." formControlName="PhoneNumber" maxlength="10" onKeyPress="if(this.value.length==10) return false;" >
+                        <input type="tel" class="form-control" placeholder="Cell Number..." formControlName="PhoneNumber" pattern="[0-9 ]{10}" maxlength="10">
                       </div>
                       <span class="text-danger ml-5"
-                        *ngIf="formModel.get('PhoneNumber').touched && formModel.get('PhoneNumber').errors?.required">This
-                        field is mandatory.</span>
+                        *ngIf="formModel.get('PhoneNumber').touched && formModel.get('PhoneNumber').errors?.required">This field is mandatory.</span>
+                        <!-- <span class="text-danger ml-5"
+                        *ngIf="formModel.get('PhoneNumber').touched && formModel.get('PhoneNumber').errors?.tel">Invalid phone number</span> -->
+                        <span class="text-danger ml-5" *ngIf="formModel.controls['PhoneNumber'].errors?.pattern">
+                          Please insert 10 digit phone number</span>
                     </div>
                   </div>
-                  <div class="col-md-5 ml-auto">
+                  <div class="col-md-10 ml-auto">
                     <div class="form-group has-default">
                       <div class="input-group">
                         <div class="input-group-prepend">
@@ -80,8 +83,8 @@
                             <i class="material-icons">accessibility</i>
                           </span>
                         </div>
-                        <mat-select class="form-control" placeholder="Role..." formControlName="Role"  disableOptionCentering panelClass="myPanelClass">
-                          <mat-option *ngFor="let role of roles" [value]="role.name">
+                        <mat-select class="form-control" placeholder="Role..." formControlName="Role"  disableOptionCentering panelClass="myPanelClass" >
+                          <mat-option *ngFor="let role of roles" [value]="role.name" (click)="loadLocationType(role)" >
                             {{ role.name }}
                           </mat-option>  
                         </mat-select>
@@ -91,7 +94,7 @@
                         field is mandatory.</span>
                     </div>
                   </div>  
-                  <div class="col-md-5 mr-auto">
+                  <div class="col-md-0 mr-auto">
                     <div class="form-group has-default">
                       <div class="input-group" *ngIf="false">
                         <div class="input-group-prepend">

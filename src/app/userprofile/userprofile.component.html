@@ -32,7 +32,7 @@
                             <input matInput [(ngModel)]="formData['phoneNumber']" (input)="updateFormData()">
                         </mat-form-field>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-10">
                         <mat-form-field appearance="outline">
                             <mat-label>Role Designation</mat-label>
                             <mat-select [(ngModel)]="formData['role']" (selectionChange)="updateFormData()">
@@ -42,8 +42,8 @@
                             </mat-select>
                         </mat-form-field>
                     </div>
-                    <div class="col-md-6">
-                        <mat-form-field appearance="outline">
+                    <div class="col-md-0">
+                        <mat-form-field appearance="outline" *ngif="false">
                             <mat-label>Role Type</mat-label>
                             <mat-select [(ngModel)]="formData['roleType']" (selectionChange)="updateFormData()">
                                 <mat-option *ngFor="let type of roleTypes" [value]="type.value">

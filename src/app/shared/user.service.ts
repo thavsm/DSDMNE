@@ -254,4 +254,10 @@ export class UserService {
     return this.http.get<any>(this.BaseURI + '/Scheduler/SelectFinancialPeriods/'+ id);
   }
 
+  
+  getUserByID(userID: number) {
+    return this.http.get<any>(this.BaseURI + '/ApplicationUser/GetUserByID?userID='+userID);
+  }
+  
+
 }

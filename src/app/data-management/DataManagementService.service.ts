@@ -14,8 +14,8 @@ const EXCEL_EXTENSION = '.xlsx';
 })
 export class DataManagementService {
 
-  readonly API_URL = 'https://localhost:44305/api/';
-  // readonly API_URL = environment.API_URL + '/'
+  //readonly API_URL = 'https://localhost:44305/api/';
+  readonly API_URL = environment.API_URL + '/'
 
   constructor(private http: HttpClient) { }
   

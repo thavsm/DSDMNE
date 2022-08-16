@@ -110,7 +110,7 @@ export const ROUTES: RouteInfo[] = [{
     // },
     {
         path: '/process',
-        title: 'User Workflow',
+        title: 'Workflow',
         type: 'link',
         icontype: 'schema',
         role: []
@@ -173,7 +173,8 @@ export class SidebarComponent implements OnInit {
     ps: any;
     public userDetail: any;
     menus: any[];
-    
+    location: any;
+
     public showMenu: boolean = true;
 
     constructor(private service: UserService, private router: Router,private formService:FormbuilderService) {
@@ -190,10 +191,11 @@ export class SidebarComponent implements OnInit {
     ngOnInit() {
 
         this.service.sm.subscribe(show => this.showMenu = show);
-       
         this.service.getUserProfile().subscribe(
             res => {
               this.userDetail = res['formData'];
+              this.location = this.userDetail.location;
+              console.log(this.userDetail);
             },
             err => {
               console.log(err);
@@ -202,6 +204,8 @@ export class SidebarComponent implements OnInit {
         
         let userRole= this.service.getRole();
 
+        if(this.location === 4260)
+            console.log('National');
     
         this.menus = [];
         this.service.getRoleMenus(userRole).subscribe(
@@ -272,7 +276,7 @@ export class SidebarComponent implements OnInit {
           }
 
          
-        }
+    }
 
         
     updatePS(): void  {

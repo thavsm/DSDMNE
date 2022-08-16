@@ -17,8 +17,8 @@ export class HierarchyManagementService {
 
   constructor(private http:HttpClient) { }
 
-  //readonly API_URL = environment.API_URL + '/'
-  readonly API_URL='https://localhost:44305/api/';
+  readonly API_URL = environment.API_URL + '/'
+  //readonly API_URL='https://localhost:44305/api/';
 
 
   hformData:hierarchyManagement = new hierarchyManagement();
