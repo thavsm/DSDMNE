@@ -17,6 +17,7 @@ declare var $: any;
     templateUrl: './form-designer.component.html',
     styleUrls: ['./form-designer.component.css']
 })
+
 export class FormDesignerComponent implements OnInit {
 
     dateFormats: any = [

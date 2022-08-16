@@ -48,6 +48,7 @@ export const ROUTES: RouteInfo[] = [{
             {path: 'role',title: 'Roles', ab:'R'},
             {path: 'location', title: 'location management', ab:'LM' , TreeCategoryID : 2},
             {path: 'indicatorrole',title: 'Indicator Role Management', ab:'F'},
+            {path: 'facilitymanager',title: 'Facility Types', ab:'FT'}
             //{path: 'level', title: 'level management', ab:'LM' , TreeCategoryID : 3},
             //{path: 'formroles',title: 'Forms', ab:'F'},
         ]

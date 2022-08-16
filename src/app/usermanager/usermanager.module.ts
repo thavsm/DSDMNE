@@ -20,7 +20,9 @@ import { NewroleComponent } from './newrole/newrole.component';
 import { AngularDualListBoxModule } from 'angular-dual-listbox';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatListModule} from '@angular/material/list';
-
+import { FacilitymanagerComponent } from './facilitymanager/facilitymanager.component';
+import { FacilityUpdateComponent } from './facilitymanager/facility-update/facility-update.component';
+import { FacilityaddComponent } from './facilitymanager/facilityadd/facilityadd.component';
 @NgModule({
     imports: [
         CommonModule,
@@ -46,7 +48,10 @@ import {MatListModule} from '@angular/material/list';
         AddformrolesComponent,
         MenurolesComponent,
         RoleaccessComponent,
-        NewroleComponent
+        NewroleComponent,
+        FacilitymanagerComponent,
+        FacilityUpdateComponent,
+        FacilityaddComponent
     ]
 })
 

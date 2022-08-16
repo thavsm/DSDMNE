@@ -1,0 +1,37 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12 ml-auto mr-auto">
+          <div class="card">
+            <div class="card-header card-header-rose card-header-icon">
+              <div class="card-icon">
+                <i class="material-icons">house_alt</i>
+              </div>
+              <h4 class="card-title">List of Facilities</h4>
+              <div>
+                <button id="btnAccess" class="btn btn-primary mr-1" (click)="openDialogAdd()">Add Facility Type</button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <kendo-grid [kendoGridBinding]="Facilities" [pageSize]="10" [pageable]="true" [height]="700"
+                  [filterable]="true" [sortable]="true" [groupable]="false">
+                  <kendo-grid-column field="facilityType" title="Facility Types" [width]="6">
+                  </kendo-grid-column>
+                  <kendo-grid-column [width]="1">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                      <button mat-icon-button (click)="clickEdit(dataItem)">
+                        <mat-icon matTooltip="Update" class="mat-18" style="color:#bf7c00;">edit</mat-icon>
+                      </button>
+                    </ng-template>
+                  </kendo-grid-column>
+                </kendo-grid>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
