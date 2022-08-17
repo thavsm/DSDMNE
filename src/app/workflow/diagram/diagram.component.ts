@@ -337,7 +337,7 @@ export class DiagramComponent implements AfterContentInit, OnChanges, OnDestroy,
     var $elem = $('<div/>', { 'id': 'div' + elementId, 'class': 'card-body shadow-lg bg-light p-2' });
 
 
-    $elem.append('<div class="form-group mb-2 has-float-label"><label for="txtProcessName">Process Name</label><input id="txtProcessName" type="text" class="form-control" placeholder="Name Required"></div>');
+    $elem.append('<div class="form-group mb-2 has-float-label"><label for="txtProcessName">Process Name</label><input id="txtProcessName" type="text" class="form-control" placeholder="Name Required" style="padding-top: 25px;"></div>');
     
     var module = $('<select>').attr({ id: 'ddlModule', class: 'form-control' });
 
@@ -347,14 +347,14 @@ export class DiagramComponent implements AfterContentInit, OnChanges, OnDestroy,
 
     $elem.append($('<div class="form-group mb-2 has-float-label"><span>Module</span></div>').append(module));
 
-    $elem.append('<div class="form-group mb-2 has-float-label"><label for="txtProcessDescription">Description</label><textarea type="text" placeholder="Description" id="txtProcessDescription" class="form-control" rows="2"></textarea></div>');
-    $elem.append('<div class="form-group mb-2 has-float-label"><label for="txtTurnaroundTime">Turnaround Time(days)</label><input type="text" placeholder="Turnaround Time(days)" id="txtTurnaroundTime" class="form-control"></div>');
-    $elem.append('<div class="form-group mb-2 has-float-label"><label for="txtNotificationTime">Notification Time(days)</label><input type="text" placeholder="Notification Time(days)" id="txtNotificationTime" class="form-control"></div>');
-    $elem.append('<div class="form-group mb-2 has-float-label"><label for="txtPrefix">Prefix</label><input type="text" placeholder="Prefix" id="txtPrefix" class="form-control" oninput="SetSampleValue()"></div>');
-    $elem.append('<div class="form-group mb-2 has-float-label"><label for="ddlResetNumberEY">Reset Number Every Year</label><select name="ddlResetNumberEY" id="ddlResetNumberEY" class="form-control"><option value="Yes">Yes</option><option value="No">No</option></select></div>');
+    $elem.append('<div class="form-group mb-2 has-float-label"><label for="txtProcessDescription">Description</label><textarea type="text" placeholder="Description" id="txtProcessDescription" class="form-control" rows="2" style="padding-top: 25px;"></textarea></div>');
+    $elem.append('<div class="form-group mb-2 has-float-label"><label for="txtTurnaroundTime">Turnaround Time(days)</label><input type="text" placeholder="Turnaround Time(days)" id="txtTurnaroundTime" class="form-control" style="padding-top: 25px;"></div>');
+    $elem.append('<div class="form-group mb-2 has-float-label"><label for="txtNotificationTime">Notification Time(days)</label><input type="text" placeholder="Notification Time(days)" id="txtNotificationTime" class="form-control" style="padding-top: 25px;"></div>');
+    $elem.append('<div class="form-group mb-2 has-float-label"><label for="txtPrefix">Prefix</label><input type="text" placeholder="Prefix" id="txtPrefix" class="form-control" oninput="SetSampleValue()" style="padding-top: 25px;"></div>');
+    $elem.append('<div class="form-group mb-2 has-float-label"><label for="ddlResetNumberEY">Reset Number Every Year</label><select name="ddlResetNumberEY" id="ddlResetNumberEY" class="form-control" style="padding-top: 10px;"><option value="Yes">Yes</option><option value="No">No</option></select></div>');
     $elem.append('<div class="form-group mb-2 has-float-label"><label for="txtSeparator">Separator</label><input type="text" placeholder="Separator" id="txtSeparator" class="form-control" oninput="SetSampleValue()"></div>');
-    $elem.append('<div class="form-group mb-2 has-float-label"><label for="ddlPostfixType">Postfix Type</label><select name="ddlPostfixType" id="ddlPostfixType" class="form-control" onchange="SetSampleValue()"><option value="None">None</option><option value="OfficeCode">OfficeCode</option><option value="Other">Other</option><option value="Year">Year</option></select></div>');
-    $elem.append('<div class="form-group mb-2 has-float-label"><label for="txtPostfix">Post Fix</label><input type="text" placeholder="Post Fix" id="txtPostfix" class="form-control" oninput="SetSampleValue()"></div>');
+    $elem.append('<div class="form-group mb-2 has-float-label"><label for="ddlPostfixType">Postfix Type</label><select name="ddlPostfixType" id="ddlPostfixType" class="form-control" onchange="SetSampleValue()" style="padding-top: 10px;"><option value="None">None</option><option value="OfficeCode">OfficeCode</option><option value="Other">Other</option><option value="Year">Year</option></select></div>');
+    $elem.append('<div class="form-group mb-2 has-float-label"><label for="txtPostfix">Post Fix</label><input type="text" placeholder="Post Fix" id="txtPostfix" class="form-control" oninput="SetSampleValue()" style="padding-top: 20px;"></div>');
 
     $elem.append('<div class="form-group ml-1 mb-2">Sample: <span id="spnSample" class="badge badge-secondary badge-pill">001</span></div>');
 

@@ -70,23 +70,24 @@ export class UserProfileComponent implements OnInit {
           this.isParent = true;
       }
       
+      //this.isParent = true;
       console.log(this.isParent);
       if(this.isParent) {
         if(Object.keys(this.data).length ==0) {
-        this.service.getUserProfile().subscribe(
-          res => {
-            this.formData = res['formData'];
-            console.log(this.formData);
-            console.log(this.formData["active"]);
-            if(this.formData["active"])
-              this.active = "Active";
-            else
-              this.active = "InActive";
-          },
-          err => {
-            console.log(err);
-          },
-        );
+            this.service.getUserProfile().subscribe(
+              res => {
+                this.formData = res['formData'];
+                console.log(this.formData);
+                console.log(this.formData["active"]);
+                if(this.formData["active"])
+                  this.active = "Active";
+                else
+                  this.active = "InActive";
+              },
+              err => {
+                console.log(err);
+              },
+            );
         }      
         else{
           this.formData = this.data.data;
@@ -97,8 +98,37 @@ export class UserProfileComponent implements OnInit {
                 this.active = "InActive";
           this.isButtonVisible = true;
         }      
+        
+      } 
+      else{
+        this.service.getUserByID(this.formData["userID"]).subscribe(
+          res => {
+            res.forEach(element => {
+              this.formData["provinceID"] = element.provinceID;
+            this.formData["districtID"] = element.districtID;
+            this.formData["servicePointID"] = element.servicePointID;
+            this.formData["facilityID"] = element.facilityID;
+            this.formData["active"] = element.active;
+            if(this.formData["active"])
+            this.active = "Active";
+          else
+            this.active = "InActive";
+            });
+            
+          },
+          err => {
+            this.spinner.hide();
+            console.log(err);
+          },
+        );
+          console.log(this.formData);
+          if(this.formData["active"])
+                this.active = "Active";
+              else
+                this.active = "InActive";
+      } 
 
-        switch(this.formData["locationType"])
+      switch(this.formData["locationType"])
         {
         case 4260:
           this.isBranch=true;
@@ -136,7 +166,6 @@ export class UserProfileComponent implements OnInit {
           this.isFac=true;
           break;
         }
-      }  
     }       
 
     updateFormData() {
@@ -188,7 +217,7 @@ export class UserProfileComponent implements OnInit {
         res => {          
           //this.data1 = res;
           //window.location.replace("/dashboard");
-          this.showNotification('top','right','User updated', 'User has been updated successfull.','success');
+          this.showNotification('top','right','', 'User details has been updated successfully.','success');
           this.spinner.hide();
         },
         err => {
