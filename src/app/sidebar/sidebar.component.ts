@@ -192,67 +192,80 @@ export class SidebarComponent implements OnInit {
     ngOnInit() {
 
         this.service.sm.subscribe(show => this.showMenu = show);
+        let userRole= this.service.getRole();
         this.service.getUserProfile().subscribe(
             res => {
               this.userDetail = res['formData'];
               this.location = this.userDetail.location;
               console.log(this.userDetail);
-            },
-            err => {
-              console.log(err);
-            },
-          );
-        
-        let userRole= this.service.getRole();
+            // },
+            // err => {
+            //   console.log(err);
+            // }, 
+            
+            // );       
 
-        if(this.location === 4260)
-            console.log('National');
-    
-        this.menus = [];
-        this.service.getRoleMenus(userRole).subscribe(
-            res => {
-              
-            ROUTES.forEach(
-                (el) => {
-                    let a = res.find(menu => (menu.name).toLowerCase() === el.title.toLowerCase());
-                    if (typeof a !== 'undefined') {
-                        el.role=[userRole];
-                        let cs = el.children;
-                        console.log(el.children);
-                        if (typeof cs !== 'undefined') {
-                            // let c = cs.find(menu => (menu.title).toLowerCase() === 'form category');
-                            // const index = cs.indexOf(c, 0);
-                            // if (index > -1) {
-                            //     //el.children.splice(index, 1);
-                            //     el.children.push(c);
-                            // }
-                            let subMenus = [];
-                            cs.forEach((subMenu)=>{
-                                let sub = res.find(menu => (menu.name).toLowerCase() === subMenu.title.toLowerCase());
-                                if (typeof sub !== 'undefined') {
-                                    subMenus.push(subMenu);
+                
+                let locType = this.userDetail['locationType'];
+                let uRole = this.userDetail['role'];
+                console.log(locType);
+                console.log(uRole);
+                
+                this.menus = [];
+                this.service.getRoleMenus(userRole).subscribe(
+                    res => {
+                    
+                    ROUTES.forEach(
+                        (el) => {
+                            let a = res.find(menu => (menu.name).toLowerCase() === el.title.toLowerCase());
+                            if (typeof a !== 'undefined') {
+                                el.role=[userRole];
+                                let cs = el.children;
+                                console.log(el.children);
+                                if (typeof cs !== 'undefined') {
+                                    // let c = cs.find(menu => (menu.title).toLowerCase() === 'form category');
+                                    // const index = cs.indexOf(c, 0);
+                                    // if (index > -1) {
+                                    //     //el.children.splice(index, 1);
+                                    //     el.children.push(c);
+                                    // }
+                                    let subMenus = [];
+                                    cs.forEach((subMenu)=>{
+                                        let sub = res.find(menu => (menu.name).toLowerCase() === subMenu.title.toLowerCase());
+                                        if (typeof sub !== 'undefined') {
+                                            subMenus.push(subMenu);
+                                        }
+                                    }
+                                    )
+                                    console.log(el.title);
+                                    console.log(subMenus);
+                                    if(subMenus.length>0){
+                                        el.children = subMenus;
+                                    }
                                 }
                             }
-                            )
-                            console.log(el.title);
-                            console.log(subMenus);
-                            if(subMenus.length>0){
-                                el.children = subMenus;
-                            }
                         }
-                    }
-                }
-            );
+                    );
 
-            this.menuItems = ROUTES.filter(menuItem => menuItem.role.indexOf(userRole) > -1 );
-            console.log(this.menuItems);
+                    if(uRole == '3' && locType != 4260){
+                        this.menuItems = ROUTES.filter(menuItem => menuItem.title == 'Dashboard' );
+                    }
+                    else
+                        this.menuItems = ROUTES.filter(menuItem => menuItem.role.indexOf(userRole) > -1 );
+                    console.log(this.menuItems);
+                    },
+                    err => {
+                        console.log(err); 
+                    },
+                );
+
             },
             err => {
-                console.log(err); 
+            console.log(err);
             },
-        );
+  
 
-          
+        );  
         
         //this.menuItems = ROUTES.filter(menuItem => menuItem.role.length ==0 ); //|| menuItem.role.indexOf(userRole) > -1);
         if (window.matchMedia(`(min-width: 960px)`).matches && !this.isMac()) {

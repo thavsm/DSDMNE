@@ -20,7 +20,7 @@
                 [filterable]="true" [sortable]="false" [groupable]="false" [group]="groupsNational">
 
 
-                    <kendo-grid-column field="facilityName" title="Facility" [width]="600" *ngIf="facIndicator">
+                    <kendo-grid-column field="facilityName" title="Location" [width]="600" *ngIf="facIndicator">
                     </kendo-grid-column>
                     
                     <kendo-grid-column field="servicePoint" title="Service Point" [width]="600" *ngIf="spIndicator">
@@ -52,7 +52,7 @@
                 [filterable]="true" [sortable]="false" [groupable]="false" [group]="groupsProvince">
 
 
-                    <kendo-grid-column field="facilityName" title="Facility" [width]="600" *ngIf="facIndicator">
+                    <kendo-grid-column field="facilityName" title="Location" [width]="600" *ngIf="facIndicator">
                     </kendo-grid-column>
                     
                     <kendo-grid-column field="servicePoint" title="Service Point" [width]="600" *ngIf="spIndicator">
@@ -83,12 +83,13 @@
                 [height]="700"   (pageChange)="onPageChange($event)"
                 [filterable]="true" [sortable]="false" [groupable]="false" [group]="groupsDistrict">
 
-
-                    <kendo-grid-column field="facilityName" title="Facility" [width]="600" *ngIf="facIndicator">
+                    
+                    <kendo-grid-column field="facilityName" title="Location" [width]="600" >
                     </kendo-grid-column>
                     
-                    <kendo-grid-column field="servicePoint" title="Service Point" [width]="600" *ngIf="spIndicator">
-                    </kendo-grid-column>
+                    <!-- <kendo-grid-column field="servicePoint" title="Service Point" [width]="600" *ngIf="spIndicator">
+                    </kendo-grid-column>         -->
+                    
     
         
                     <kendo-grid-column field="data" title="Value">
@@ -114,12 +115,12 @@
                 [filterable]="true" [sortable]="false" [groupable]="false" >
 
 
-                    <kendo-grid-column field="facilityName" title="Facility" [width]="600" *ngIf="facIndicator">
+                    <kendo-grid-column field="facilityName" title="Location" [width]="600" >
                     </kendo-grid-column>
                     
-                    <kendo-grid-column field="servicePoint" title="Service Point" [width]="600" *ngIf="spIndicator">
-                    </kendo-grid-column>
-        
+                    <!-- <kendo-grid-column field="servicePoint" title="Service Point" [width]="600" *ngIf="spIndicator">
+                    </kendo-grid-column>         -->
+                    
                     <kendo-grid-column field="data" title="Value">
                     <ng-template kendoGridCellTemplate let-dataItem>
                         <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.data}}</u></a>
