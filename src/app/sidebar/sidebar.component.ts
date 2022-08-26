@@ -111,7 +111,7 @@ export const ROUTES: RouteInfo[] = [{
     // },
     {
         path: '/process',
-        title: 'User Workflow',
+        title: 'Workflow',
         type: 'link',
         icontype: 'schema',
         role: []
