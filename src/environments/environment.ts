@@ -6,13 +6,8 @@ export const environment = {
   production: false,
   API_URL: 'https://localhost:44305/api',  
   API_FormURL: 'https://localhost:44305/1/', 
-<<<<<<< HEAD
   //  API_URL: 'https://app.terra.group/MNE_UAT_API/api',
   //  API_FormURL: 'https://app.terra.group/MNE_UAT_API/1/'  ,
-=======
-  // API_URL: 'https://app1.terra.group/MNE_UAT_API/api',
-  // API_FormURL: 'https://app1.terra.group/MNE_UAT_API/1/'  ,
->>>>>>> d9cb09a0704cf4150577f7dfe9c157e2a0bc0354
 
   REPORT_SERVER: 'https://app1.terra.group/DSDReportViewerSSRS/Default?ID=',
   REPORT_URL : 'DSD MnE/',
@@ -23,14 +18,9 @@ export const environment = {
   // API_FormURL: 'https://app1.terra.group/MNE_Demo_API/1/'  
 
   
-<<<<<<< HEAD
   
   // API_URL: 'https://app.terra.group/MNE_UAT_API/api',
   // API_FormURL: 'https://app.terra.group/MNE_UAT_API/1/'  
-=======
-  // API_URL: 'https://app1.terra.group/MNE_UAT_API/api',
-  // API_FormURL: 'https://app1.terra.group/MNE_UAT_API/1/'  
->>>>>>> d9cb09a0704cf4150577f7dfe9c157e2a0bc0354
 };
 
 /*
