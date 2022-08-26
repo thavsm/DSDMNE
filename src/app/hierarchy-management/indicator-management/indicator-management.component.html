@@ -36,12 +36,12 @@
                                 <kendo-grid-column [width]="1">
                                     <ng-template kendoGridCellTemplate let-dataItem>
                                         <button mat-icon-button (click)="clickEdit(dataItem)">
-                                            <mat-icon matTooltip="Edit Tree Name" class="mat-18"  style="color: #bf7c00;">edit</mat-icon>
+                                            <mat-icon matTooltip="Edit Indicator" class="mat-18"  style="color: #bf7c00;">edit</mat-icon>
                                         </button>
                                     </ng-template>
                                 </kendo-grid-column>
 
-                                <kendo-grid-column [width]="1">
+                                <kendo-grid-column [width]="1"  *ngIf="divDeleteHide">
                                     <ng-template kendoGridCellTemplate let-dataItem>
                                         <button mat-icon-button (click)="clickDelete(dataItem)">
                                             <mat-icon matTooltip="Delete Indicator" class="mat-18"  style="color: #ff0000;">delete</mat-icon>

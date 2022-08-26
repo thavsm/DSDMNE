@@ -63,7 +63,7 @@
                                     </ng-template>
                                 </kendo-grid-column>
 
-                                <kendo-grid-column [width]="1" *ngIf="divHide">
+                                <kendo-grid-column [width]="1" *ngIf="divDeleteHide">
                                     <ng-template kendoGridCellTemplate let-dataItem>
                                         <button mat-icon-button (click)="clickDelete(dataItem)">
                                             <mat-icon matTooltip="Delete Tree" class="mat-18"  style="color: #ff0000;">delete</mat-icon>

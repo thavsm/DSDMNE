@@ -11,6 +11,7 @@ import Swal from 'sweetalert2'
 import { PageSizeItem } from "@progress/kendo-angular-grid";
 import { GroupDescriptor } from '@progress/kendo-data-query';
 import { DataBindingDirective } from '@progress/kendo-angular-grid';
+import { UserService } from '../shared/user.service';
 
 declare var $: any;
 
@@ -39,8 +40,10 @@ export class HierarchyManagementComponent implements OnInit {
   treeAdd: any;
   TreeCategoryID = "0";
   divHide: boolean  = true; 
+  divDeleteHide: boolean  = false; 
+  userData: any;
 
-  constructor(public service: HierarchyManagementService, private route: Router, public dialog: MatDialog, private spinner: NgxSpinnerService, private Aroute: ActivatedRoute) {
+  constructor(public userService: UserService ,public service: HierarchyManagementService, private route: Router, public dialog: MatDialog, private spinner: NgxSpinnerService, private Aroute: ActivatedRoute) {
      
     this.Aroute.queryParamMap.subscribe(params => this.TreeCategoryID = params.get('TreeCategoryID'));
   }
@@ -53,7 +56,18 @@ export class HierarchyManagementComponent implements OnInit {
 
     if(this.TreeCategoryID == "2"){
       this.divHide = false;
+      this.divDeleteHide = false;
     }
+
+    this.userService.getUserProfile().subscribe(data => {
+      this.userData = data['formData'];
+
+      if (this.userData["role"] != "1")
+        this.divDeleteHide = false;
+      else
+        this.divDeleteHide = true;
+    });
+
   }
 
   openViewTree(item: any): void {

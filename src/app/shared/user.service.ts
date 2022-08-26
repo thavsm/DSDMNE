@@ -16,7 +16,7 @@ export class UserService {
 
   constructor(private fb: FormBuilder, private http: HttpClient) { }
   readonly BaseURI = environment.API_URL;
-  //readonly BaseURI = 'https://app.terra.group/DSDFormWeb/api';
+  //readonly BaseURI = 'https://app1.terra.group/DSDFormWeb/api';
   
   public ulist:User[];
   private showMenu = new BehaviorSubject(true);
@@ -264,5 +264,11 @@ export class UserService {
   getFinancialPeriods(id:number) {
     return this.http.get<any>(this.BaseURI + '/Scheduler/SelectFinancialPeriods/'+ id);
   }
+
+  
+  getUserByID(userID: number) {
+    return this.http.get<any>(this.BaseURI + '/ApplicationUser/GetUserByID?userID='+userID);
+  }
+  
 
 }

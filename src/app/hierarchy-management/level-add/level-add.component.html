@@ -110,7 +110,7 @@
                 
                             <kendo-grid-column [width]="1" *ngIf="thDelete">
                                 <ng-template kendoGridCellTemplate let-dataItem>
-                                    <button mat-icon-button (click)="clickDelete(dataItem)" *ngIf="DisableEditandDelete(dataItem)">
+                                    <button mat-icon-button (click)="clickDeleteAtrribute(dataItem)" *ngIf="DisableEditandDelete(dataItem)">
                                         <mat-icon matTooltip="Delete" class="mat-18" style="color: #ff0000;">delete
                                         </mat-icon>
                                     </button>

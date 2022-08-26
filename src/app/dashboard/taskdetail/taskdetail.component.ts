@@ -138,7 +138,7 @@ export class TaskDetailComponent implements OnInit {
       showCancelButton: true,
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
-      toast: false,
+      toast: true,
       position: 'top',
       allowOutsideClick: false,
       confirmButtonColor: '#000000',

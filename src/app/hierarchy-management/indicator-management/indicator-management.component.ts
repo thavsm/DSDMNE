@@ -14,6 +14,7 @@ import { IndicatorAddComponent } from './indicator-add/indicator-add.component';
 import { IndicatorEditComponent } from './indicator-edit/indicator-edit.component';
 import { ExternaldataAddComponent } from '../externaldata-add/externaldata-add.component';
 import { TreediagramService } from 'src/app/treediagram.service';
+import { UserService } from 'src/app/shared/user.service';
 
 declare var $: any;
 
@@ -24,15 +25,27 @@ declare var $: any;
 })
 export class IndicatorManagementComponent implements OnInit {
   @ViewChild(DataBindingDirective) dataBinding: DataBindingDirective;
-  constructor(public service: HierarchyManagementService, public treeservice: TreediagramService, private route: Router, public dialog: MatDialog, private spinner: NgxSpinnerService, private Aroute: ActivatedRoute) { }
+  constructor(public userService: UserService ,public service: HierarchyManagementService, public treeservice: TreediagramService, private route: Router, public dialog: MatDialog, private spinner: NgxSpinnerService, private Aroute: ActivatedRoute) { }
 
   Indicators: any;
   IndicatorAdd: any;
   OpnExternalData: any;
   levels: any = [];
+  divDeleteHide: boolean  = false; 
+  userData: any;
+
   ngOnInit(): void {
 
     this.getIndicators();
+
+    this.userService.getUserProfile().subscribe(data => {
+      this.userData = data['formData'];
+
+      if (this.userData["role"] != "1")
+        this.divDeleteHide = false;
+      else
+        this.divDeleteHide = true;
+    });
   }
 
   getIndicators(){
@@ -81,7 +94,7 @@ export class IndicatorManagementComponent implements OnInit {
 
   clickDelete(item: any) {
     Swal.fire({
-      title: 'Are you sure you want to delete ' + item.indicatorName + '?',
+      title: 'Are you sure you want to delete ?',
       showCancelButton: true,
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
@@ -111,8 +124,7 @@ export class IndicatorManagementComponent implements OnInit {
         message: message
     }, {
         type: type,
-      delay: 1500,
-timer: 1500,
+      delay: 1500,timer: 1500,
         placement: {
             from: from,
             align: align
