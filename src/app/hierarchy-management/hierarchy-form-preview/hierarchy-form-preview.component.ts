@@ -93,7 +93,7 @@ export class HierarchyFormPreviewComponent implements OnInit {
 
   IndicatorData: any;
 
-  isViewOnly:boolean=false;
+  isViewOnly:any;
 
   constructor(public dialog: MatDialog, private service: FormbuilderService, private spinner: NgxSpinnerService,@Inject(MAT_DIALOG_DATA) data, public dialogRef: MatDialogRef<LevelNodeEdit>, private userService: UserService) {
  
@@ -117,6 +117,7 @@ export class HierarchyFormPreviewComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isViewOnly = true;
     this.IndicatorData= this.formData.indicatorID;
     localStorage.setItem('cloneNumberForEdit', "0");
     this.userService.getUserProfile().subscribe(
