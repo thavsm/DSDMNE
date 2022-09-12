@@ -110,7 +110,7 @@ export class IndicatorManagementComponent implements OnInit {
           this.treeservice.getExternalCalculationByNodeID(item.indicatorID);
           this.treeservice.DeleteLinkByIndicatorID(item.indicatorID);
           this.spinner.hide();
-          this.showNotification('top','center','Indicator Deleted Succesfully!','Success.','success');
+          this.showNotification('top','center','Indicator deleted succesfully!','','success');
           this.getIndicators();
         });
       }

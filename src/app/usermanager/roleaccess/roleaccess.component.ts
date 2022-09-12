@@ -136,7 +136,7 @@ export class RoleaccessComponent implements OnInit {
     }
     else{
       this.treeService.assignIndicators(this.assigned,this.roleID,this.treeID).subscribe(res=>{
-        this.showNotification('top', 'center', 'Assigned Indicators Successfully!', '', 'success');
+        this.showNotification('top', 'center', 'Assigned indicators successfully!', '', 'success');
         this.myStepper.previous();
         this.myStepper.previous();
       });
@@ -305,7 +305,7 @@ addRoleAccess()
       err => {
         console.log(err);
         if (err.status == 400) {
-          this.showNotification('top','right','', 'Form access updated failed. Please try again','danger');
+          this.showNotification('top','right','Form access updated failed. Please try again', '','danger');
         }          
       }
     );
@@ -329,7 +329,7 @@ addRoleAccess()
       err => {
         console.log(err);
         if (err.status == 400) {
-          this.showNotification('top','right','', 'Menu access updated failed. Please try again','danger');
+          this.showNotification('top','right','Menu access updated failed. Please try again', '','danger');
         }          
       }
     );
@@ -345,14 +345,14 @@ addRoleAccess()
     this.service.addTypeRoles(this.typeroles,this.roleID).subscribe(
       (res: any) => {
         if (res.message == 'Role Types added successfully' ) {
-        this.showNotification('top','right','', 'Access updated successfully.','success');
+        this.showNotification('top','right','Access updated successfully', '','success');
         }
         else{}
       },
       err => {
         console.log(err);
         if (err.status == 400) {
-          this.showNotification('top','right','', 'Role type access updated failed. Please try again','danger');
+          this.showNotification('top','right','Role type access updated failed. Please try again', '','danger');
         }          
       }
     );

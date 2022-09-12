@@ -47,7 +47,7 @@ export class FacilityaddComponent implements OnInit {
       this.service.addFacility(val).subscribe(res => {
       });
       this.spinner.hide();
-      this.showNotification('top','center','Facility saved Successfully!','','success'); 
+      this.showNotification('top','center','Facility saved successfully!','','success'); 
       this.FacilityAdd.ID = 0;
       this.FacilityAdd.facilityType = "";
       this.closePopup();

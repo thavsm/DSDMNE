@@ -200,10 +200,10 @@ export class IndicatorEditComponent implements OnInit {
         this.service.addupdateIndicatorNode(Indicatorvalues).subscribe(data => {
          
         }); 
-        this.showNotification('top', 'center', 'Indicator, Form Field link saved!', '', 'success');
+        this.showNotification('top', 'center', 'Indicator, form field link saved!', '', 'success');
         this.spinner.hide();
       }else {
-        this.showNotification('top', 'center', 'Please select a Form and Form Field before saving!', '', 'danger');
+        this.showNotification('top', 'center', 'Please select a form and form field before saving!', '', 'danger');
         return;
       }
       
@@ -358,7 +358,7 @@ export class IndicatorEditComponent implements OnInit {
 
   deleteLink() {
     Swal.fire({
-      title: 'Are you sure you want to delete Linkage ?',
+      title: 'Are you sure you want to delete linkage ?',
       showCancelButton: true,
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
@@ -372,7 +372,7 @@ export class IndicatorEditComponent implements OnInit {
         this.spinner.show();
         this.service.DeleteLinkByIndicatorID(this.IndicatorAdd.indicatorID).subscribe(data => {
           this.spinner.hide();
-          this.showNotification('top','center','Indicator Linkage Deleted Succesfully!','Success.','success');
+          this.showNotification('top','center','Indicator linkage deleted succesfully!','','success');
 
           this.divIsForm = false;
           this.isDisabled = false;
@@ -470,7 +470,7 @@ export class IndicatorEditComponent implements OnInit {
         this.service.UpdateMetadataIndicatorForm(this.formDesignAddDataXML).subscribe(res => {
           this.spinner.hide();
 
-          this.showNotification('top', 'center', 'Indicator Updated Form Successfully!', '', 'success');
+          this.showNotification('top', 'center', 'Indicator updated form successfully!', '', 'success');
         });
       });
 
@@ -607,7 +607,7 @@ export class IndicatorEditComponent implements OnInit {
       });
 
     }else {
-      this.showNotification('top', 'center', 'Please select a Form and Form Field before preview!', '', 'danger');
+      this.showNotification('top', 'center', 'Please select a form and form field before preview!', '', 'danger');
       return;
     }
 
@@ -738,9 +738,6 @@ export class IndicatorEditComponent implements OnInit {
     this.divSearchCriteriaTxt = true;
   }
   
-
-
-
   onformChange(ob) {  
     this.spinner.show();
     this.service.GetEXTFormFieldsByFormId(ob.value).subscribe(data => {
@@ -974,7 +971,7 @@ export class IndicatorEditComponent implements OnInit {
 
     if(this.ExternalData.calculation != "" && this.ExternalData.selection == ""){
 
-      this.showNotification('top', 'center', 'Please choose Operation', 'Danger', 'danger');
+      this.showNotification('top', 'center', 'Please choose operation', '', 'danger');
 
     }else{
 
@@ -1006,7 +1003,7 @@ export class IndicatorEditComponent implements OnInit {
         } 
 
       }else{
-        this.showNotification('top', 'center', 'Please choose all required(*) fields', 'Danger', 'danger');
+        this.showNotification('top', 'center', 'Please choose all required(*) fields', '', 'danger');
       }
   
     }
@@ -1017,7 +1014,7 @@ export class IndicatorEditComponent implements OnInit {
 
     if(this.ExternalData.calculation != "" && this.ExternalData.selection == ""){
 
-      this.showNotification('top', 'center', 'Please choose Operation', 'Danger', 'danger');
+      this.showNotification('top', 'center', 'Please choose operation', '', 'danger');
 
     }else{
 
@@ -1047,7 +1044,7 @@ export class IndicatorEditComponent implements OnInit {
           );
         }   
       }else{
-        this.showNotification('top', 'center', 'Please choose all required(*) fields', 'Danger', 'danger');
+        this.showNotification('top', 'center', 'Please choose all required(*) fields', '', 'danger');
       }
 
 
@@ -1076,7 +1073,7 @@ export class IndicatorEditComponent implements OnInit {
 
       this.spinner.show();
       this.service.getExternalCalculationByNodeID(this.nodeID);
-      this.showNotification('top','center','Calcualtion Refreshed Succesfully!','Success.','success');
+      this.showNotification('top','center','Calculation refreshed succesfully!','','success');
       this.service.getExternalTotalCalculationByNodeID(this.nodeID).subscribe(data => {
         this.TotalVal = data;
         this.CalTotalVal = {
@@ -1101,7 +1098,7 @@ export class IndicatorEditComponent implements OnInit {
 
   //     this.spinner.show();
   //     this.service.getExternalCalculationByNodeID(this.nodeID);
-  //     this.showNotification('top','center','Calcualtion Refreshed Succesfully!','Success.','success');
+  //     this.showNotification('top','center','Calculation Refreshed Succesfully!','Success.','success');
   //     this.service.getExternalTotalCalculationByNodeID(this.nodeID).subscribe(data => {
   //       this.TotalVal = data;
   //       this.CalTotalVal = {
@@ -1120,7 +1117,7 @@ export class IndicatorEditComponent implements OnInit {
 
   //     this.spinner.show();
   //     this.service.getExternalCalculationByNodeID(this.nodeID);
-  //     this.showNotification('top','center','Calcualtion Refreshed Succesfully!','Success.','success');
+  //     this.showNotification('top','center','Calculation Refreshed Succesfully!','Success.','success');
   //     this.service.getExternalTotalCalculationByNodeID(this.nodeID).subscribe(data => {
   //       this.TotalVal = data;
   //       this.CalTotalVal = {
@@ -1139,7 +1136,7 @@ export class IndicatorEditComponent implements OnInit {
 
     if (this.ExternalData.calculation != "" && this.ExternalData.selection == "") {
 
-      this.showNotification('top', 'center', 'Please choose Operation', 'Danger', 'danger');
+      this.showNotification('top', 'center', 'Please choose operation', '', 'danger');
 
     } else {
 
@@ -1147,7 +1144,7 @@ export class IndicatorEditComponent implements OnInit {
 
         if (this.ExternalData.SearchCriteria == "" && this.ExternalData.ArraySearchCriteria == "") {
 
-          this.showNotification('top', 'center', 'Please choose all required(*) fields', 'Danger', 'danger');
+          this.showNotification('top', 'center', 'Please choose all required(*) fields', '', 'danger');
 
         } else {
 
@@ -1213,7 +1210,7 @@ export class IndicatorEditComponent implements OnInit {
         }
 
       } else {
-        this.showNotification('top', 'center', 'Please choose all required(*) fields', 'Danger', 'danger');
+        this.showNotification('top', 'center', 'Please choose all required(*) fields', '', 'danger');
       }
     }
 
@@ -1325,7 +1322,7 @@ export class IndicatorEditComponent implements OnInit {
 
   clickDelete(item: any) {
     Swal.fire({
-      title: 'Are you sure you want to delete ' + item.externalDataName + ' Calcualtion?',
+      title: 'Are you sure you want to delete ' + item.externalDataName + ' calculation?',
       showCancelButton: true,
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
@@ -1341,7 +1338,7 @@ export class IndicatorEditComponent implements OnInit {
         this.service.DeleteExternalCalculation(item.calculationID).subscribe(data => {
           this.spinner.hide();
           this.service.getExternalCalculationByNodeID(this.nodeID);
-          this.showNotification('top','center','Calcualtion Deleted Succesfully!','Success.','success');
+          this.showNotification('top','center','Calculation deleted succesfully!','','success');
           this.service.getExternalTotalCalculationByNodeID(this.nodeID).subscribe(data => {
             this.TotalVal = data;
             this.CalTotalVal = {

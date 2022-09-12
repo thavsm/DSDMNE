@@ -66,7 +66,7 @@ export class TreeAddComponent implements OnInit {
       this.service.addTree(val).subscribe(res => {
         this.dialogRef.close();
         this.spinner.hide();
-        this.showNotification('top', 'center', 'Tree Added Successfully!', '', 'success');          
+        this.showNotification('top', 'center', 'Tree added successfully!', '', 'success');          
         this.service.refreshhlist(this.treeAdd.treeCategoryID);
       });
       this.treeID = this.treeAdd.treeID;
@@ -99,12 +99,12 @@ export class TreeAddComponent implements OnInit {
       this.service.updateTreeDetails(this.treeAdd.treeID, val).subscribe(res => {
         this.dialogRef.close();
         this.spinner.hide();
-        this.showNotification('top','center','Tree Updated Successfully!','Success','success');
+        this.showNotification('top','center','Tree updated successfully!','','success');
         this.service.refreshhlist(this.treeAdd.treeCategoryID);
       });
     }
     else {
-      this.showNotification('top','center','Please add a Tree name before saving!','','danger');
+      this.showNotification('top','center','Please add a tree name before saving!','','danger');
     }
   }
 

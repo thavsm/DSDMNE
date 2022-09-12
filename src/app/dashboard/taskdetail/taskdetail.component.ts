@@ -179,7 +179,7 @@ export class TaskDetailComponent implements OnInit {
         this.service.completeTask(formData1).subscribe(
           res => {
             this.spinner.hide();
-            this.showNotification('top','center','Task approved Succesfully!','Success.','success');
+            this.showNotification('top','center','Task approved succesfully!','Success.','success');
             this.router.navigate(['/dashboard']);
           },
           err => {
@@ -229,7 +229,7 @@ export class TaskDetailComponent implements OnInit {
           this.service.rejectTask(formData1, 'dd').subscribe(
             res => {
               this.spinner.hide();
-              this.showNotification('top','center','User rejected Succesfully!','Success.','success');
+              this.showNotification('top','center','User rejected succesfully!','Success.','success');
               this.router.navigate(['/dashboard']);
             },
             err => {

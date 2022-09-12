@@ -193,7 +193,7 @@ export class NodeAddComponent implements OnInit {
       this.treediagramService.addIndicatorNode(values).subscribe(data => {
         // this.dialogRef.close();
         this.spinner.hide();
-        this.showNotification('top', 'center', 'Node Added Successfully!', '', 'success');
+        this.showNotification('top', 'center', 'Node added successfully!', '', 'success');
         this.NodeAdd.levelID = "";
         this.NodeAdd.nodeID = "";
         this.NodeAdd.indicatorID = "";
@@ -238,7 +238,7 @@ export class NodeAddComponent implements OnInit {
 
           //this.dialogRef.close();
           this.spinner.hide();
-          this.showNotification('top', 'center', 'Node Added Successfully!', '', 'success');
+          this.showNotification('top', 'center', 'Node added successfully!', '', 'success');
           this.NodeAdd.levelID = "";
           this.NodeAdd.nodeID = "";
           this.NodeAdd.indicatorID = "";
@@ -261,7 +261,7 @@ export class NodeAddComponent implements OnInit {
         // this.status = "1";
       }
       else {
-        this.showNotification('top', 'center', 'Please add a Node name before saving!', '', 'danger');
+        this.showNotification('top', 'center', 'Please add a node name before saving!', '', 'danger');
       }
     }
   }

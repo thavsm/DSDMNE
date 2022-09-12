@@ -112,7 +112,7 @@ export class AddformrolesComponent implements OnInit {
       this.service.addFormRoles(this.froles,this.formID).subscribe(
         (res: any) => {
           if (res.message == 'Role added successfully') {
-          this.showNotification('top','right','', 'Role added successfully','success');
+          this.showNotification('top','right','Role added successfully', '','success');
           }
           else{}
         },

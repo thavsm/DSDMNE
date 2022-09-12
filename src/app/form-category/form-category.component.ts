@@ -64,7 +64,7 @@ export class FormCategoryComponent implements OnInit {
 
   clickDelete(item:any){
     Swal.fire({
-      title: "<h5 style='color:white;font-weight:400'> Are you sure want to remove this form category? </h5>",
+      title: "<h5 style='color:white;font-weight:400'> Are you sure you want to remove this form category? </h5>",
       showCancelButton: true,
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
@@ -80,7 +80,7 @@ export class FormCategoryComponent implements OnInit {
         this.service.DeleteFormCategory(item.formCategoryID).subscribe(data => {
           this.spinner.hide();
           this.refreshFormsList();
-           this.showNotification('top','center','Form Category Deleted Successfully!','','success');
+           this.showNotification('top','center','Form category deleted successfully!','','success');
         });
       }
     })

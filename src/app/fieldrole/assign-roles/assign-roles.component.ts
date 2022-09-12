@@ -75,7 +75,7 @@ export class AssignRolesComponent implements OnInit {
         obj.push(parseInt(role.value));
       });
       this.treeService.AssignRoles(this.roleAssignData.indicatorID,obj,this.roleAssignData.treeID).subscribe(res=>{
-        this.showNotification('top', 'center', 'Assigned Roles Successfully!', '', 'success');
+        this.showNotification('top', 'center', 'Roles assigned successfully!', '', 'success');
       });
     }
   }

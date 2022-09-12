@@ -89,11 +89,11 @@ export class SchedulerComponent implements OnInit {
   
         this.insertPeriods(val);
       }
-      this.showNotification('top', 'center', 'Added Successfully!', '', 'success');    
+      this.showNotification('top', 'center', 'Added successfully!', '', 'success');    
       this.spinner.hide();  
 
     }else{
-      this.showNotification('top', 'center', 'Please select all Quarters Start Date and all Quarters End Date before saving!', '', 'danger');
+      this.showNotification('top', 'center', 'Please select all quarters start date and all quarters end date before saving!', '', 'danger');
     }
 
   }
@@ -133,7 +133,7 @@ export class SchedulerComponent implements OnInit {
           },
         );
         this.spinner.hide();  
-        this.showNotification('top', 'center', 'Edited Successfully!', '', 'success');    
+        this.showNotification('top', 'center', 'Updated successfully!', '', 'success');    
 
         this.btnSave = true; 
         this.btnEdit = false; 
@@ -142,7 +142,7 @@ export class SchedulerComponent implements OnInit {
       });
 
     }else{
-      this.showNotification('top', 'center', 'Please select all Dates before saving!', '', 'danger');
+      this.showNotification('top', 'center', 'Please select all dates before saving!', '', 'danger');
     }
 
   }

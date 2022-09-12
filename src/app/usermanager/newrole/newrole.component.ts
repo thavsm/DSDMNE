@@ -66,11 +66,11 @@ export class NewroleComponent implements OnInit {
     }
     this.service.addNewRole(body,concurrency,-1,this.facilityType).subscribe(
       (res: any) => {
-        this.showNotification('top','right',"Added role successfully", 'Success','success');
+        this.showNotification('top','right',"Added role successfully", '','success');
         this.dialogRef.close();
       },
       err => {
-        this.showNotification('top','right',err.error.message, 'Failed','danger');
+        this.showNotification('top','right',err.error.message, '','danger');
       }
     );
   }
@@ -83,11 +83,11 @@ export class NewroleComponent implements OnInit {
     }
     this.service.addNewRole(body,concurrency,this.data.data.roleID,this.facilityType).subscribe(
       (res: any) => {
-        this.showNotification('top','right',"Updated role successfully", 'Success','success');
+        this.showNotification('top','right',"Updated role successfully", '','success');
         this.dialogRef.close();
       },
       err => {
-        this.showNotification('top','right',err.error.message, 'Failed','danger');
+        this.showNotification('top','right',err.error.message, '','danger');
       }
     );
   }

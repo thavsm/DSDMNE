@@ -124,7 +124,7 @@ export class LevelAddComponent implements OnInit {
 
   clickDeleteAtrribute(item: any) {
     Swal.fire({
-      title: 'Are you sure you want to delete ' + item.friendlyname + ' Atrribute?',
+      title: 'Are you sure you want to delete ' + item.friendlyname + ' atrribute?',
       showCancelButton: true,
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
@@ -138,7 +138,7 @@ export class LevelAddComponent implements OnInit {
         this.spinner.show();
         this.service.archiveAttributes(item.metadataLevelID).subscribe(data => {
           this.spinner.hide();
-          this.showNotification('top', 'center', 'Atrribute Deleted Succesfully!', 'Success.', 'success');
+          this.showNotification('top', 'center', 'Atrribute deleted succesfully!', '', 'success');
           this.service.getLevelMetadata(this.levelAdd.levelID)
         });
       }
@@ -194,7 +194,7 @@ export class LevelAddComponent implements OnInit {
       this.spinner.show();
       this.service.updateLevelAttributes(this.levelAdd.metadataLevelID, val).subscribe(res => {
         this.spinner.hide();
-        this.showNotification('top', 'center', 'level Attributes Updated Successfully!', '', 'success');
+        this.showNotification('top', 'center', 'Level attributes updated successfully!', '', 'success');
         this.service.getLevelMetadata(this.levelAdd.levelID);
         //this.getNodeAttributes(this.NodeData.levelID);
 
@@ -214,7 +214,7 @@ export class LevelAddComponent implements OnInit {
         this.divEditAtrributes = false; 
       });
     } else {
-      this.showNotification('top', 'center', 'Please enter a Field Name, Question Name and Field Type before saving!', '', 'danger');
+      this.showNotification('top', 'center', 'Please enter a field Name, question Name and field type before saving!', '', 'danger');
     }
   }
 
@@ -325,7 +325,7 @@ export class LevelAddComponent implements OnInit {
         this.divGridAttr = false;
         this.divAttr = false;
         this.getLevels();
-        this.showNotification('top', 'center', 'Level Updated Successfully!', '', 'success');
+        this.showNotification('top', 'center', 'Level updated successfully!', '', 'success');
       });
 
       }else {
@@ -333,14 +333,14 @@ export class LevelAddComponent implements OnInit {
       }
     }
     else {
-      this.showNotification('top', 'center', 'Please add a Level name before saving!', '', 'danger');
+      this.showNotification('top', 'center', 'Please add a level name before saving!', '', 'danger');
     }
   }
 
   
   clickDelete(item: any) {
     Swal.fire({
-      title: 'Are you sure you want to delete Level?',
+      title: 'Are you sure you want to delete level?',
       showCancelButton: true,
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
@@ -354,7 +354,7 @@ export class LevelAddComponent implements OnInit {
         this.spinner.show();
         this.service.DeleteLevel(item.levelID).subscribe(data => {
           this.spinner.hide();
-          this.showNotification('top', 'center', 'Level Deleted Succesfully!', 'Success.', 'success');
+          this.showNotification('top', 'center', 'Level deleted succesfully!', '', 'success');
         });
       }
     })
@@ -522,7 +522,7 @@ export class LevelAddComponent implements OnInit {
           this.service.addLevelAttributes(val).subscribe(res => {
           // this.dialogRef.close();
           this.spinner.hide();
-          this.showNotification('top', 'center', 'level Attributes Added Successfully!', '', 'success');
+          this.showNotification('top', 'center', 'Level attributes added successfully!', '', 'success');
           
           this.levelAdd.ReportUrl = "";
           this.levelAdd.fieldName = "";
@@ -539,11 +539,11 @@ export class LevelAddComponent implements OnInit {
 
           });
         }else {
-          this.showNotification('top','center','Please enter a Field Name, Question Name and Field Type before saving!','','danger');
+          this.showNotification('top','center','Please enter a field Name, question name and field type before saving!','','danger');
         }
   
       }else {
-        this.showNotification('top','center','Please enter a Unique Field Name!','','danger');
+        this.showNotification('top','center','Please enter a unique field name!','','danger');
       }
      });   
   }
@@ -576,7 +576,7 @@ export class LevelAddComponent implements OnInit {
         this.service.addLevel(val).subscribe(res => {
           //this.dialogRef.close();
           this.spinner.hide();
-          this.showNotification('top', 'center', 'level Added Successfully!', '', 'success');
+          this.showNotification('top', 'center', 'Level added successfully!', '', 'success');
           localStorage.setItem('LevelData', JSON.stringify(res));
           this.addDefaultAttributes();
           this.getLevels();
