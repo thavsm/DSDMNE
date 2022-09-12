@@ -248,7 +248,7 @@ export class SchedulerComponent implements OnInit {
   
         this.spinner.show();
         this.service.InsertFinancialPeriod(val).subscribe(res => {
-          this.showNotification('top', 'center', 'Financial Year Added Successfully!', '', 'success');        
+          this.showNotification('top', 'center', 'Financial year added successfully!', '', 'success');        
           this.service.getFinancialYears().subscribe(
             res => {
               this.years = res;        
@@ -262,11 +262,11 @@ export class SchedulerComponent implements OnInit {
           this.EndDate = "";
         });
       }else{
-        this.showNotification('top', 'center', 'Please select a Start Date and End Date before saving!', '', 'danger');
+        this.showNotification('top', 'center', 'Please select a start date and end date before saving!', '', 'danger');
       }
 
     }else{
-      this.showNotification('top', 'center', 'Please select a Start Date and End Date before saving!', '', 'danger');
+      this.showNotification('top', 'center', 'Please select a start date and end date before saving!', '', 'danger');
     }
 
   }
