@@ -70,7 +70,7 @@ var val = {
       this.service.addHoliday(val).subscribe(res => {
         this.dialogRef.close();
         this.spinner.hide();
-        this.showNotification('top', 'center', 'Holiday Added Successfully!', '', 'success');          
+        this.showNotification('top', 'center', 'Holiday added successfully!', '', 'success');          
         this.service.refreshhlist();
       });
       this.holidayId = this.holidayAdd.holidayId;
@@ -80,7 +80,7 @@ var val = {
 
     }
     else {
-      this.showNotification('top', 'center', 'Please add a Holiday name before saving!', '', 'danger');
+      this.showNotification('top', 'center', 'Please add a holiday name before saving!', '', 'danger');
     }
   }
 
@@ -106,12 +106,12 @@ let dateFinal = (String(dateEx.getFullYear()) +'-'+ String(dateEx.getMonth()+1) 
       this.service.updateHoliday(this.holidayAdd.id, val).subscribe(res => {
         this.dialogRef.close();
         this.spinner.hide();
-        this.showNotification('top','center','Holiday Updated Successfully!','','success');
+        this.showNotification('top','center','Holiday updated successfully!','','success');
         this.service.refreshhlist();
       });
     }
     else {
-      this.showNotification('top','center','Please add a Holiday name before saving!','','danger');
+      this.showNotification('top','center','Please add a holiday name before saving!','','danger');
     }
   }
 
