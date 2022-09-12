@@ -96,7 +96,7 @@ export class HolidayComponent implements OnInit {
   clickDelete(item: any) {
     if (item.id <11)
     {
-      this.showNotification('top','center','Not allowed to delete this holiday','Danger.','danger');   
+      this.showNotification('top','center','Not allowed to delete this holiday','','danger');   
     }
     else{
     Swal.fire({
@@ -114,7 +114,7 @@ export class HolidayComponent implements OnInit {
         this.spinner.show();
         this.service.deleteHoliday(item.id).subscribe(data => {
           this.spinner.hide();
-          this.showNotification('top','center','Holiday deleted successfully!','Success.','success');
+          this.showNotification('top','center','Holiday deleted successfully!','','success');
           this.service.refreshhlist();
         });
       }
@@ -125,7 +125,7 @@ export class HolidayComponent implements OnInit {
   clickEdit(item: any) {
     if (item.id <11)
     {      
-      this.showNotification('top','center','Not allowed to edit this holiday','Warning.','warning');      
+      this.showNotification('top','center','Not allowed to edit this holiday','','warning');      
     }
     else{
     this.holidayAdd = item;

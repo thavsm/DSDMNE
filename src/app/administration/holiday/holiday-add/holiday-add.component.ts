@@ -106,7 +106,7 @@ let dateFinal = (String(dateEx.getFullYear()) +'-'+ String(dateEx.getMonth()+1) 
       this.service.updateHoliday(this.holidayAdd.id, val).subscribe(res => {
         this.dialogRef.close();
         this.spinner.hide();
-        this.showNotification('top','center','Holiday Updated Successfully!','Success','success');
+        this.showNotification('top','center','Holiday Updated Successfully!','','success');
         this.service.refreshhlist();
       });
     }
