@@ -1,0 +1,286 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12 ml-auto mr-auto">
+                <div class="card">
+                    <div class="card-header card-header-rose card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">table_chart</i>
+                        </div>
+                        <h4 class="card-title">Indicator Report</h4>
+                    </div>
+                    <div class="card-body p-2">
+                        <table style="table-layout: fixed; width: 1060px;font-size: small;">
+                            <colgroup>
+                                <col style="width: 60px;text-align: right;">
+                                <col style="width: 1000px">
+                            </colgroup>
+                            <tbody>
+                                <tr>
+                                    <td style="font-size: small">Tree</td>
+                                    <td style="font-size: small">
+                                        <mat-form-field appearance="outline" style="width: 250px;">
+                                            <mat-label>Select a Tree</mat-label>
+                                            <mat-select [(ngModel)]="tree" matInput
+                                                (selectionChange)="getSelectedTree()">
+                                                <mat-option *ngFor="let tree of treeList" [value]="tree">
+                                                    {{tree.name}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: small">Level</td>
+                                    <td>
+                                        <table [hidden]="hideElementN" style="table-layout: fixed; width: 560px"
+                                            id="National Gov">
+                                            <colgroup>
+                                                <col style="width: 250px">
+                                                <col style="width: 250px">
+                                                <col style="width: 10px">
+                                            </colgroup>
+                                            <thead>
+                                                <tr>
+                                                    <td style="font-size: small">
+                                                        <mat-form-field appearance="outline" style="width: 250px;"
+                                                            id="Branch">
+                                                            <mat-label>Select Branch/s</mat-label>
+                                                            <mat-select [(ngModel)]=assignedBranch
+                                                                [compareWith]="compareFn" panelClass="myPanelClass"
+                                                                multiple (selectionChange)="getSelectedBranch()">
+                                                                <mat-option *ngFor="let list of branches"
+                                                                    style="color: black;" [value]="list">
+                                                                    {{list.nodeName}}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                    </td>
+                                                    <td style="font-size: small">
+                                                        <mat-form-field appearance="outline" style="width: 250px;"
+                                                            id="ChiefDirectorate" *ngIf="hideElementCD">
+                                                            <mat-label>Select Chief Directorate/s</mat-label>
+                                                            <mat-select [(ngModel)]=assignedChiefDirectorate
+                                                                [compareWith]="compareFn" panelClass="myPanelClass"
+                                                                multiple
+                                                                (selectionChange)="getSelectedChiefDirectorate()">
+                                                                <mat-option *ngFor="let list of chiefDirectorates"
+                                                                    style="color: black;" [value]="list">
+                                                                    {{list.nodeName}}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                    </td>
+                                                    <td style="font-size: small">
+                                                        <mat-form-field appearance="outline" style="width: 250px;"
+                                                            id="Directorate" *ngIf="hideElementD">
+                                                            <mat-label>Select Directorate/s</mat-label>
+                                                            <mat-select [(ngModel)]=assignedDirectorate
+                                                                [compareWith]="compareFn" panelClass="myPanelClass"
+                                                                multiple (selectionChange)="getSelectedDirectorate()">
+                                                                <mat-option *ngFor="let list of Directorates"
+                                                                    style="color: black;" [value]="list">
+                                                                    {{list.nodeName}}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                    </td>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                        <table [hidden]="hideElementP" style="table-layout: fixed; width: 560px"
+                                            id="Provincial Gov">
+                                            <colgroup>
+                                                <col style="width: 250px">
+                                                <col style="width: 250px">
+                                                <col style="width: 10px">
+                                            </colgroup>
+                                            <thead>
+                                                <tr>
+                                                    <td style="font-size: small">
+                                                        <mat-form-field appearance="outline" style="width: 250px;"
+                                                            id="Program">
+                                                            <mat-label>Select Programme/s</mat-label>
+                                                            <mat-select [(ngModel)]=assignedProgram
+                                                                [compareWith]="compareFn" panelClass="myPanelClass"
+                                                                multiple (selectionChange)="getSelectedProgram()">
+                                                                <mat-option *ngFor="let list of Program"
+                                                                    style="color: black;" [value]="list">
+                                                                    {{list.nodeName}}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                    </td>
+                                                    <td style="font-size: small">
+                                                        <mat-form-field appearance="outline" style="width: 250px;"
+                                                            id="SubProgram" *ngIf="hideElementSP">
+                                                            <mat-label>Select Sub-Programme/s</mat-label>
+                                                            <mat-select [(ngModel)]=assignedSubProgram
+                                                                [compareWith]="compareFn" panelClass="myPanelClass"
+                                                                multiple (selectionChange)="getSelectedSubProgram()">
+                                                                <mat-option *ngFor="let list of SubProgram"
+                                                                    style="color: black;" [value]="list">
+                                                                    {{list.nodeName}}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                    </td>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: small">Indicators</td>
+                                    <td style="font-size: small">
+                                        <mat-form-field appearance="outline" style="width: 30%;">
+                                            <mat-label>Select Indicator/s</mat-label>
+                                            <mat-select [(ngModel)]=assignedIndicators [compareWith]="compareFn"
+                                                panelClass="myPanelClass" multiple>
+                                                <mat-option *ngFor="let list of indicatorList" style="color: black;"
+                                                    [value]="list">
+                                                    {{list.nodeName}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: small">Location</td>
+                                    <td style="font-size: small">
+                                        <table style="table-layout: fixed; width: 678px">
+                                            <colgroup>
+                                                <col style="width: 200px">
+                                                <col style="width: 200px">
+                                                <col style="width: 200px">
+                                                <col style="width: 200px">
+                                                <col style="width: 200px">
+                                            </colgroup>
+                                            <thead>
+                                                <tr>
+                                                    <td>
+                                                        <mat-form-field appearance="outline" style="width: 195px;">
+                                                            <mat-label>Select Location Type</mat-label>
+                                                            <mat-select [(ngModel)]=assignedLocation
+                                                                [compareWith]="compareFn" panelClass="myPanelClass" (selectionChange)="getSelectedLocation()">
+                                                                <mat-option *ngFor="let list of locations"
+                                                                    style="color: black;" [value]="list.value">
+                                                                    {{list.name}}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                    </td>
+                                                    <td>
+                                                        <mat-form-field appearance="outline" style="width: 195px;" *ngIf="hideElementProv">
+                                                            <mat-label>Select Province/s</mat-label>
+                                                            <mat-select [(ngModel)]=assignedProvinces
+                                                                [compareWith]="compareFn" panelClass="myPanelClass" (selectionChange)="getSelectedProvince()">
+                                                                <mat-option *ngFor="let list of provinces"
+                                                                    style="color: black;" [value]="list">
+                                                                    {{list.nodeName}}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                    </td>
+                                                    <td>
+                                                        <mat-form-field appearance="outline" style="width: 195px;" *ngIf="hideElementDist">
+                                                            <mat-label>Select District/s</mat-label>
+                                                            <mat-select [(ngModel)]=assignedDistricts
+                                                                [compareWith]="compareFn" panelClass="myPanelClass" (selectionChange)="getSelectedDistrict()">
+                                                                <mat-option *ngFor="let list of districts"
+                                                                    style="color: black;" [value]="list">
+                                                                    {{list.nodeName}}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                    </td>
+                                                    <td>
+                                                        <mat-form-field appearance="outline" style="width: 195px;" *ngIf="hideElementService">
+                                                            <mat-label>Select Service Point/s</mat-label>
+                                                            <mat-select [(ngModel)]=assignedServicePoint
+                                                                [compareWith]="compareFn" panelClass="myPanelClass" (selectionChange)="getSelectedServicePoint()">
+                                                                <mat-option *ngFor="let list of servicePoint"
+                                                                    style="color: black;" [value]="list">
+                                                                    {{list.nodeName}}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                    </td>
+                                                    <td>
+                                                        <mat-form-field appearance="outline" style="width: 195px;" *ngIf="hideElementFacility">
+                                                            <mat-label>Select Facility/NPO/s</mat-label>
+                                                            <mat-select [(ngModel)]=assignedFacility
+                                                                [compareWith]="compareFn" panelClass="myPanelClass">
+                                                                <mat-option *ngFor="let list of facilities"
+                                                                    style="color: black;" [value]="list">
+                                                                    {{list.nodeName}}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                    </td>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: small">Year</td>
+                                    <td style="font-size: small">
+                                        <mat-form-field appearance="outline" color="primary" style="width: 250px;">
+                                            <input matInput [matDatepicker]="dp" placeholder="Month and Year"
+                                                [formControl]="date" required [min]="minDate" readonly>
+                                            <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                                            <mat-datepicker #dp startView="multi-year"
+                                                (yearSelected)="chosenYearHandler($event, dp)"
+                                                panelClass="example-month-picker">
+                                            </mat-datepicker>
+                                        </mat-form-field>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: small">Month</td>
+                                    <td style="font-size: small">
+                                        <mat-form-field appearance="outline" style="width: 250px;">
+                                            <mat-label>Select Month/s</mat-label>
+                                            <mat-select [(ngModel)]=assignedMonth [compareWith]="compareFn"
+                                                panelClass="myPanelClass">
+                                                <mat-option *ngFor="let list of months" style="color: black;"
+                                                    [value]="list.value">
+                                                    {{list.name}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: small">View</td>
+                                    <td style="font-size: small">
+                                        <mat-form-field appearance="outline" style="width: 250px;">
+                                            <mat-label>Select View/s</mat-label>
+                                            <mat-select [(ngModel)]=assignedView [compareWith]="compareFn"
+                                                panelClass="myPanelClass" multiple>
+                                                <mat-option *ngFor="let list of view" style="color: black;"
+                                                    [value]="list.value">
+                                                    {{list.name}}
+                                                </mat-option>
+                                            </mat-select>
+                                        </mat-form-field>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <button class="btn btn-md" class="btn btn-md btn-primary" style="width: 200px;"
+                                            (click)="viewReport()">View Report</button>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div id="table"></div>
+                    </div>
+                </div>
+            </div>
+            <ngx-spinner bdColor="rgba(	237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
+                <p style="font-size: 20px; color: black">Processing...</p>
+            </ngx-spinner>

@@ -29,7 +29,8 @@ export class SqlreportsComponent implements OnInit {
                   ['report6', 'Service Point Indicator Report', 'Service Point Indicator Report'],
                   ['report7', 'SummaryReportlNational',  'User Summary Report National'],
                   ['report8', 'SummaryReportProvincial', 'User Summary Report Provincial  '],
-                  ['report8', 'Tree maintenance report', 'Tree Maintenance Report ']
+                  ['report8', 'Tree maintenance report', 'Tree Maintenance Report '],
+                  ['report9', 'INDICATOR REPORT', 'Indicator Report']
               ]
            };
     }

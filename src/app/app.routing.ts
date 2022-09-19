@@ -7,13 +7,18 @@ import { LandingComponent } from './pages/landing/landing.component';
 
 import { LoginComponent } from './pages/login/login.component';
 import { ResetPasswordComponent } from './pages/resetpassword/resetpassword.component';
+import { IframereportsviewerComponent } from './reports/iframereportsviewer/iframereportsviewer.component';
+import { IndicatorReportComponent } from './reports/indicator-report/indicator-report.component';
+import { PowerBiViewerComponent } from './reports/power-bi-viewer/power-bi-viewer.component';
+import { SqlreportsComponent } from './reports/sqlreports/sqlreports.component';
 
 export const AppRoutes: Routes = [
   {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',
-  }, {
+  },
+  {
     path: '',
     component: AdminLayoutComponent,
     children: [
@@ -128,9 +133,14 @@ export const AppRoutes: Routes = [
       {
         path: 'usermanager/facilitymanager',
         loadChildren: () => import('./usermanager/usermanager.module').then(m => m.UserManagerModule)
+      },
+      {
+        path: 'indicatorReports',
+        component: IndicatorReportComponent
       }
     ]
-  }, {
+  },
+  {
     path: '',
     component: AuthLayoutComponent,
     children: [{
@@ -148,5 +158,21 @@ export const AppRoutes: Routes = [
       path: 'resetpassword',
       component: ResetPasswordComponent
     }]
+  },
+  {
+    path: '',
+    children: [{
+      path: 'sqlreports',
+      component: SqlreportsComponent
+    },
+    {
+      path: 'powerBireports',
+      component: PowerBiViewerComponent
+    },
+    {
+      path: 'iframereportsviewer/:id',
+      component: IframereportsviewerComponent
+    }
+    ]
   }
 ];
