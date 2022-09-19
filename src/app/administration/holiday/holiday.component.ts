@@ -96,7 +96,7 @@ export class HolidayComponent implements OnInit {
   clickDelete(item: any) {
     if (item.id <11)
     {
-      this.showNotification('top','center','Not allowed to delete this Holiday','Danger.','danger');   
+      this.showNotification('top','center','Not allowed to delete this holiday','','danger');   
     }
     else{
     Swal.fire({
@@ -114,7 +114,7 @@ export class HolidayComponent implements OnInit {
         this.spinner.show();
         this.service.deleteHoliday(item.id).subscribe(data => {
           this.spinner.hide();
-          this.showNotification('top','center','Holiday Deleted Succesfully!','Success.','success');
+          this.showNotification('top','center','Holiday deleted successfully!','','success');
           this.service.refreshhlist();
         });
       }
@@ -125,7 +125,7 @@ export class HolidayComponent implements OnInit {
   clickEdit(item: any) {
     if (item.id <11)
     {      
-      this.showNotification('top','center','Not allowed to edit this Holiday','Warning.','warning');      
+      this.showNotification('top','center','Not allowed to edit this holiday','','warning');      
     }
     else{
     this.holidayAdd = item;
@@ -145,21 +145,21 @@ export class HolidayComponent implements OnInit {
 
   SavedSuccessful(isUpdate) {
     if (isUpdate == 0) {
-      this._snackBar.open('Record Updated Successfully!', 'Close', {
+      this._snackBar.open('Record updated successfully!', 'Close', {
         duration: 2000,
         horizontalPosition: this.horizontalPosition,
         verticalPosition: this.verticalPosition,
       });
     }
     else if (isUpdate == 1) {
-      this._snackBar.open('Record Saved Successfully!', 'Close', {
+      this._snackBar.open('Record saved successfully!', 'Close', {
         duration: 2000,
         horizontalPosition: this.horizontalPosition,
         verticalPosition: this.verticalPosition,
       });
     }
     else if (isUpdate == 2) {
-      this._snackBar.open('Record Deleted Successfully!', 'Close', {
+      this._snackBar.open('Record deleted successfully!', 'Close', {
         duration: 2000,
         horizontalPosition: this.horizontalPosition,
         verticalPosition: this.verticalPosition,

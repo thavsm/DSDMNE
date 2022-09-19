@@ -352,7 +352,7 @@ export class InternalDataImportComponent implements OnInit {
               exceldataobj = [];
             }, error => {
               this.spinner.hide();
-              this.showNotification('top', 'center', 'Error saving import, please check data if filled in correctly and try again', '', 'danger');
+              this.showNotification('top', 'center', 'Error saving import, please check if data is filled in correctly and try again', '', 'danger');
             });
           } else {
             this.spinner.hide();

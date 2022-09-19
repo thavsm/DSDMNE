@@ -253,7 +253,7 @@ export class ApprovalFormComponent implements OnInit {
             "pageGUID": this.currentPage.pageGUID
           }
           this.service.modifyPageStatus(this.formData.formCaptureID, this.currentPage.pageGUID, pageStatus).subscribe(result => {
-            this.showNotification('top', 'center', 'Page data has been saved Successfully!', '', 'success');
+            this.showNotification('top', 'center', 'Page data has been saved successfully!', '', 'success');
             this.currentPage.color = "green";
             this.formData.state = 'edit';
             var index = -1;
@@ -287,7 +287,7 @@ export class ApprovalFormComponent implements OnInit {
             "pageGUID": this.currentPage.pageGUID
           }
           this.service.modifyPageStatus(this.formData.formCaptureID, this.currentPage.pageGUID, pageStatus).subscribe(result => {
-            this.showNotification('top', 'center', 'Page data has been saved Successfully!', '', 'success');
+            this.showNotification('top', 'center', 'Page data has been saved successfully!', '', 'success');
             this.currentPage.color = "green";
             this.formData.state = 'edit';
             var index = -1;
@@ -503,7 +503,7 @@ export class ApprovalFormComponent implements OnInit {
             "pageGUID": this.currentPage.pageGUID
           }
           this.service.modifyPageStatus(this.formData.formCaptureID, this.currentPage.pageGUID, pageStatus).subscribe(result => {
-            this.showNotification('top', 'center', 'Page data has been saved Successfully!', '', 'success');
+            this.showNotification('top', 'center', 'Page data has been saved successfully!', '', 'success');
             this.getDesignPerPage(this.currentPage.pageGUID);
             //this.getDesignPerPageHistory(this.currentPage.pageGUID);
             this.currentPage.color = "green";
@@ -522,7 +522,7 @@ export class ApprovalFormComponent implements OnInit {
               "pageGUID": this.currentPage.pageGUID
             }
             this.service.modifyPageStatus(this.formData.formCaptureID, this.currentPage.pageGUID, pageStatus).subscribe(result => {
-              this.showNotification('top', 'center', 'Page data has been saved Successfully!', '', 'success');
+              this.showNotification('top', 'center', 'Page data has been saved successfully!', '', 'success');
               //this.getDesignPerPage(this.currentPage.pageGUID);
               //this.getDesignPerPageHistory(this.currentPage.pageGUID);
               this.currentPage.color = "green";
@@ -647,7 +647,7 @@ export class ApprovalFormComponent implements OnInit {
             "pageGUID": this.currentPage.pageGUID
           }
           this.service.modifyPageStatus(this.formData.formCaptureID, this.currentPage.pageGUID, pageStatus).subscribe(result => {
-            this.showNotification('top', 'center', 'Page data has been saved Successfully!', '', 'success');
+            this.showNotification('top', 'center', 'Page data has been saved successfully!', '', 'success');
             this.currentPage.color = "green";
             this.formData.state = 'edit';
             var index = -1;
@@ -672,7 +672,7 @@ export class ApprovalFormComponent implements OnInit {
       }
       else {
         this.service.UpdateFormMetadata(this.formData.formCaptureID, obj,this.userDetail.formData.userID).subscribe(res => {
-          this.showNotification('top', 'center', 'Page data has been saved Successfully!', '', 'success');
+          this.showNotification('top', 'center', 'Page data has been saved successfully!', '', 'success');
           let pg = this.currentPage.pageNumber;
           let pageStatus = {
             "userID": this.userDetail.formData.userID,
@@ -1067,7 +1067,7 @@ export class ApprovalFormComponent implements OnInit {
         }
       });
       this.service.saveGroupMetadata(this.formData.formCaptureID, data[0].parentFieldName, data,this.userDetail.formData.userID).subscribe(res => {
-        this.showNotification('top', 'center', 'Repeat data has been saved Successfully!', '', 'success');
+        this.showNotification('top', 'center', 'Repeat data has been saved successfully!', '', 'success');
         localStorage.setItem('cloneNumberForEdit', "0");
         this.spinner.hide();
         this.getDesignPerPage(this.currentPage.pageGUID);
@@ -1091,7 +1091,7 @@ export class ApprovalFormComponent implements OnInit {
         }
       });
       this.service.UpdateGroupMetadata(this.formData.formCaptureID, data[0].parentFieldName, localStorage.getItem('cloneNumberForEdit'), data,this.userDetail.formData.userID).subscribe(res => {
-        this.showNotification('top', 'center', 'Repeat data has been updated Successfully!', '', 'success');
+        this.showNotification('top', 'center', 'Repeat data has been updated successfully!', '', 'success');
         localStorage.setItem('cloneNumberForEdit', "0");
         this.HighlightRow = -1;
         this.spinner.hide();
@@ -1236,7 +1236,7 @@ timer: 1500,
       reader.readAsDataURL(this.file);
     }
     else {
-      this.showNotification('top', 'center', 'File exceeds maximum size of 4mb,Please upload a file of 4mb or less', '', 'danger');
+      this.showNotification('top', 'center', 'File exceeds maximum size of 4mb, Please upload a file of 4mb or less', '', 'danger');
       this.file = null;
     }
   }
@@ -1265,7 +1265,7 @@ timer: 1500,
             "formCaptureID": this.formData.formCaptureID
           }
           this.service.addFormAttachments(obj).subscribe(res => {
-            this.showNotification('top', 'center', 'Attachment has been saved Successfully!', '', 'success');
+            this.showNotification('top', 'center', 'Attachment has been saved successfully!', '', 'success');
             this.file = null;
             this.fileAttr = 'Choose File(Max Size:4MB)';
             //this.fileInput = ElementRef;
@@ -1300,7 +1300,7 @@ timer: 1500,
           "formCaptureID": this.formData.formCaptureID
         }
         this.service.addFormAttachments(obj).subscribe(res => {
-          this.showNotification('top', 'center', 'Attachment has been saved Successfully!', '', 'success');
+          this.showNotification('top', 'center', 'Attachment has been saved successfully!', '', 'success');
           this.file = null;
           this.fileAttr = 'Choose File(Max Size:4MB)';
           // this.fileInput = null;
@@ -1372,7 +1372,7 @@ timer: 1500,
             "formCaptureID": this.formData.formCaptureID
           }
           this.service.addFormPhotos(obj).subscribe(res => {
-            this.showNotification('top', 'center', 'Photo has been saved Successfully!', '', 'success');
+            this.showNotification('top', 'center', 'Photo has been saved successfully!', '', 'success');
             this.photoFile = null;
             this.photoFileAttr = 'Choose Photo(Max Size:4MB)';
             //this.photoInput = null;
@@ -1411,7 +1411,7 @@ timer: 1500,
           "formCaptureID": this.formData.formCaptureID
         }
         this.service.addFormPhotos(obj).subscribe(res => {
-          this.showNotification('top', 'center', 'Photo has been saved Successfully!', '', 'success');
+          this.showNotification('top', 'center', 'Photo has been saved successfully!', '', 'success');
           this.photoFile = null;
           this.photoFileAttr = 'Choose Photo(Max Size:4MB)';
           //this.photoInput = null;
@@ -1468,7 +1468,7 @@ timer: 1500,
           "LinkedTo": commentName
         }
         this.service.addFormComment(obj).subscribe(res => {
-          this.showNotification('top', 'center', 'Form comment has been saved Successfully!', '', 'success');
+          this.showNotification('top', 'center', 'Form comment has been saved successfully!', '', 'success');
           this.formComment = '';
           this.refreshCommentList();
           localStorage.setItem('fieldNameComment', "");
@@ -1492,7 +1492,7 @@ timer: 1500,
           "LinkedTo": commentName
         }
         this.service.updateFormComment(obj, this.commentID).subscribe(res => {
-          this.showNotification('top', 'center', 'Form comment has been updated Successfully!', '', 'success');
+          this.showNotification('top', 'center', 'Form comment has been updated successfully!', '', 'success');
           this.formComment = '';
           this.refreshCommentList();
           localStorage.setItem('fieldNameComment', "");
@@ -1519,7 +1519,7 @@ timer: 1500,
           "LinkedTo": ""
         }
         this.service.addFormComment(obj).subscribe(res => {
-          this.showNotification('top', 'center', 'Form comment has been saved Successfully!', '', 'success');
+          this.showNotification('top', 'center', 'Form comment has been saved successfully!', '', 'success');
           this.formComment = '';
           this.refreshCommentList();
           this.addEditComment = 'Add';
@@ -1541,7 +1541,7 @@ timer: 1500,
           "LinkedTo": ""
         }
         this.service.updateFormComment(obj, this.commentID).subscribe(res => {
-          this.showNotification('top', 'center', 'Form comment has been updated Successfully!', '', 'success');
+          this.showNotification('top', 'center', 'Form comment has been updated successfully!', '', 'success');
           this.formComment = '';
           this.refreshCommentList();
           this.addEditComment = 'Add';
@@ -1584,7 +1584,7 @@ timer: 1500,
         this.service.DeleteFile(item.attachmentID).subscribe(data => {
           this.spinner.hide();
           this.refreshAttachmentList();
-          this.showNotification('top', 'center', 'File Deleted Successfully!', '', 'success');
+          this.showNotification('top', 'center', 'File deleted successfully!', '', 'success');
         });
       }
     })
@@ -1608,7 +1608,7 @@ timer: 1500,
         this.service.DeleteComment(item.commentID).subscribe(data => {
           this.spinner.hide();
           this.refreshCommentList();
-          this.showNotification('top', 'center', 'Comment Deleted Successfully!', '', 'success');
+          this.showNotification('top', 'center', 'Comment deleted successfully!', '', 'success');
         });
       }
     })
@@ -1632,7 +1632,7 @@ timer: 1500,
         this.service.DeletePhoto(item.photoGUID).subscribe(data => {
           this.spinner.hide();
           this.refreshPhotoList();
-          this.showNotification('top', 'center', 'Photo Deleted Successfully!', '', 'success');
+          this.showNotification('top', 'center', 'Photo deleted successfully!', '', 'success');
         });
       }
     })

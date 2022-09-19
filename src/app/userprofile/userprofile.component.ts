@@ -217,7 +217,7 @@ export class UserProfileComponent implements OnInit {
         res => {          
           //this.data1 = res;
           //window.location.replace("/dashboard");
-          this.showNotification('top','right','', 'User details has been updated successfully.','success');
+          this.showNotification('top','right','User details has been updated successfully', '','success');
           this.spinner.hide();
         },
         err => {

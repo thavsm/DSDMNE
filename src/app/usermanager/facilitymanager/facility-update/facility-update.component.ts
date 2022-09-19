@@ -45,7 +45,7 @@ export class FacilityUpdateComponent implements OnInit {
       });
       this.dialogRef.close();
       this.spinner.hide();
-      this.showNotification('top','center','Facility updated Successfully!','','success');
+      this.showNotification('top','center','Facility updated successfully!','','success');
     }
     else {
       this.showNotification('top','center','Please add a name before saving!','','danger');

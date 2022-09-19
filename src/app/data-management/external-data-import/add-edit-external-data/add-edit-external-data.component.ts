@@ -113,7 +113,7 @@ export class AddEditExternalDataComponent implements OnInit {
       this.service.addExternalDatas(val).subscribe(res => {
         this.dialogRef.close();
         this.spinner.hide();
-        this.showNotification('top', 'center', 'External data Added Succesfully!', '', 'success');
+        this.showNotification('top', 'center', 'External data added successfully!', '', 'success');
       });
       this.externalDataAdd.dataServiceID = 0;
       this.externalDataAdd.dataSource = "";
@@ -151,11 +151,11 @@ export class AddEditExternalDataComponent implements OnInit {
       this.service.updateExternalDatas(this.externalDataAdd.dataServiceID, val).subscribe(res => {
         this.dialogRef.close();
         this.spinner.hide();
-        this.showNotification('top', 'center', 'External Data import updated Succesfully!', '', 'success');
+        this.showNotification('top', 'center', 'External data import updated successfully!', '', 'success');
       });
     }
     else {
-      this.showNotification('top', 'center', 'Please add a Data Source before saving!', '', 'danger');
+      this.showNotification('top', 'center', 'Please add a data Source before saving!', '', 'danger');
     }
   }
 

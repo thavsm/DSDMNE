@@ -56,7 +56,7 @@ export class ChangePasswordComponent implements OnInit {
       }
       
       else if(this.newPassword != this.confirmPassword) {
-        this.error.confPassword = 'Confirm Password does not match.';
+        this.error.confPassword = 'Confirm password does not match.';
         this.error.isValid = false;
       }
       else {
@@ -106,13 +106,13 @@ timer: 1500,
       //let bd ={UserName: this.formModel.value.UserName, Password: this.formModel.value.Password};
       this.service.changePassword(body).subscribe(
         (res: any) => {
-          this.showNotification('top','right',res.message, 'Success','success');
+          this.showNotification('top','right',res.message, '','success');
           localStorage.removeItem('token');
           this.router.navigate(['/login']);
         },
         err => {
           if (err.status == 400)
-          this.showNotification('top','right',err.error.message[0].description, 'Failed','danger');
+          this.showNotification('top','right',err.error.message[0].description, '','danger');
           else
             console.log(err);
         }

@@ -179,7 +179,7 @@ export class ExternaldataAddComponent implements OnInit {
       });
 
     }else {
-      this.showNotification('top', 'center', 'Please select a Form and Form Field before preview!', '', 'danger');
+      this.showNotification('top', 'center', 'Please select a form and form field before preview!', '', 'danger');
       return;
     }
 
@@ -541,7 +541,7 @@ export class ExternaldataAddComponent implements OnInit {
 
     if(this.ExternalData.calculation != "" && this.ExternalData.selection == ""){
 
-      this.showNotification('top', 'center', 'Please choose Operation', 'Danger', 'danger');
+      this.showNotification('top', 'center', 'Please choose operation', 'Danger', 'danger');
 
     }else{
 
@@ -584,7 +584,7 @@ export class ExternaldataAddComponent implements OnInit {
 
     if(this.ExternalData.calculation != "" && this.ExternalData.selection == ""){
 
-      this.showNotification('top', 'center', 'Please choose Operation', 'Danger', 'danger');
+      this.showNotification('top', 'center', 'Please choose operation', 'Danger', 'danger');
 
     }else{
 
@@ -643,7 +643,7 @@ export class ExternaldataAddComponent implements OnInit {
 
       this.spinner.show();
       this.service.getExternalCalculationByNodeID(this.nodeID);
-      this.showNotification('top','center','Calcualtion Refreshed Succesfully!','Success.','success');
+      this.showNotification('top','center','Calcualtion refreshed Succesfully!','','success');
       this.service.getExternalTotalCalculationByNodeID(this.nodeID).subscribe(data => {
         this.TotalVal = data;
         this.CalTotalVal = {
@@ -706,7 +706,7 @@ export class ExternaldataAddComponent implements OnInit {
 
     if (this.ExternalData.calculation != "" && this.ExternalData.selection == "") {
 
-      this.showNotification('top', 'center', 'Please choose Operation', 'Danger', 'danger');
+      this.showNotification('top', 'center', 'Please choose operation', 'Danger', 'danger');
 
     } else {
 
@@ -892,7 +892,7 @@ export class ExternaldataAddComponent implements OnInit {
 
   clickDelete(item: any) {
     Swal.fire({
-      title: 'Are you sure you want to delete ' + item.externalDataName + ' Calcualtion?',
+      title: 'Are you sure you want to delete ' + item.externalDataName + ' calcualtion?',
       showCancelButton: true,
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
@@ -908,7 +908,7 @@ export class ExternaldataAddComponent implements OnInit {
         this.service.DeleteExternalCalculation(item.calculationID).subscribe(data => {
           this.spinner.hide();
           this.service.getExternalCalculationByNodeID(this.nodeID);
-          this.showNotification('top','center','Calcualtion Deleted Succesfully!','Success.','success');
+          this.showNotification('top','center','Calcualtion deleted succesfully!','','success');
           this.service.getExternalTotalCalculationByNodeID(this.nodeID).subscribe(data => {
             this.TotalVal = data;
             this.CalTotalVal = {

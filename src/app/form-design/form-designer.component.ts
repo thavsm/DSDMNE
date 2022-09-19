@@ -1680,7 +1680,7 @@ export class FormDesignerComponent implements OnInit {
 
     removeField(i: any) {
         Swal.fire({
-            title: "<h5 style='color:white;font-weight:400'> Are you sure want to remove this field? </h5>",
+            title: "<h5 style='color:white;font-weight:400'> Are you sure you want to remove this field? </h5>",
             showCancelButton: true,
             confirmButtonText: 'Yes',
             cancelButtonText: 'No',
@@ -1700,14 +1700,14 @@ export class FormDesignerComponent implements OnInit {
                         this.getDesignPerPage(this.currentPage.pageGUID);
                         this.refreshGroupSectionList();
                         this.spinner.hide();
-                        this.showNotification('top', 'center', 'The field has been deleted Successfully!', '', 'success');
+                        this.showNotification('top', 'center', 'The field has been deleted successfully!', '', 'success');
                     }
                     else {
                         this.spinner.show();
                         this.formDesign[i].isActive = 'false';
                         this.refreshGroupSectionList();
                         this.spinner.hide();
-                        this.showNotification('top', 'center', 'The field has been deleted Successfully!', '', 'success');
+                        this.showNotification('top', 'center', 'The field has been deleted successfully!', '', 'success');
                     }
                 }
             }
@@ -1763,7 +1763,7 @@ export class FormDesignerComponent implements OnInit {
                                         this.service.updateDynamicFormDetails(this.formData.formID, this.formData).subscribe(result => {
                                             this.formData = result;
                                             this.checkStatus();
-                                            if (res === "Form published Successfully!") {
+                                            if (res === "Form published successfully!") {
                                                 this.getDesignPerPage(this.currentPage.pageGUID);
                                                 this.refreshGroupSectionList();
                                                 this.showNotification('top', 'center', res, '', 'success');
@@ -1790,7 +1790,7 @@ export class FormDesignerComponent implements OnInit {
                     }
                 }
                 else {
-                    errorMessage = errorMessage + " form fields have question names,database names on the form before saving";
+                    errorMessage = errorMessage + " form fields have question names, database names on the form before saving";
                     this.formDesign.forEach((element, index) => {
                         element.pageGUID = "pageGUID";
                     });
@@ -1917,7 +1917,7 @@ export class FormDesignerComponent implements OnInit {
                     }
                 }
                 else {
-                    errorMessage = errorMessage + " form fields have question names,database names on the form before saving";
+                    errorMessage = errorMessage + " form fields have question names, database names on the form before saving";
                     this.formDesign.forEach((element, index) => {
                         element.pageGUID = "pageGUID";
                     });
@@ -2016,10 +2016,10 @@ export class FormDesignerComponent implements OnInit {
             this.service.addFieldPerPage(pageField, this.formData.formID, JSON.parse(JSON.stringify(data)).pageGUID).subscribe(val => {
                 this.refreshPageList();
                 this.spinner.hide();
-                this.showNotification('top', 'center', 'Page Added Successfully!', 'Success.', 'success');
+                this.showNotification('top', 'center', 'Page added successfully!', '', 'success');
             },
                 error => {
-                    this.showNotification('top', 'center', 'Error saving page, please try again', 'Error.', 'danger');
+                    this.showNotification('top', 'center', 'Error saving page, please try again', '', 'danger');
                     this.spinner.hide();
                 });
 
@@ -2059,7 +2059,7 @@ export class FormDesignerComponent implements OnInit {
                     this.service.deleteFormPage(page.pageGUID, page).subscribe(data => {
                         this.spinner.hide();
                         this.refreshPageList();
-                        this.showNotification('top', 'center', 'The Page and its Fields has been Deleted Successfully!', '', 'success');
+                        this.showNotification('top', 'center', 'The page and its Fields has been deleted successfully!', '', 'success');
                     },
                         error => {
                             this.showNotification('top', 'center', 'Error deleting page and its field, please try again', '', 'danger');
@@ -5314,7 +5314,7 @@ export class FormDesignerComponent implements OnInit {
                                 this.spinner.hide();
                                 this.getDesignPerPage(pageGUID);
                                 this.refreshGroupSectionList();
-                                this.showNotification('top', 'center', 'Page Fields Saved Successfully!', '', 'success');
+                                this.showNotification('top', 'center', 'Page fields saved successfully!', '', 'success');
                             });
                         }, error => {
                             this.showNotification('top', 'center', 'Error saving page fields, please try again', '', 'danger');
@@ -5331,7 +5331,7 @@ export class FormDesignerComponent implements OnInit {
                 }
             }
             else {
-                errorMessage = errorMessage + " form field/s have question name/s,database name/s on the form before saving";
+                errorMessage = errorMessage + " form field/s have question name/s, database name/s on the form before saving";
                 this.formDesign.forEach((element, index) => {
                     element.pageGUID = "pageGUID";
                 });
@@ -5535,7 +5535,7 @@ export class FormDesignerComponent implements OnInit {
                     }
                 }
                 else {
-                    errorMessage = errorMessage + " form fields have question names,database names on the form before previewing";
+                    errorMessage = errorMessage + " form fields have question names, database names on the form before previewing";
                     this.formDesign.forEach((element, index) => {
                         element.pageGUID = "pageGUID";
                     });
@@ -5589,100 +5589,105 @@ export class FormDesignerComponent implements OnInit {
             return el.fieldType.value !== "PageTitle";
         });
         localStorage.setItem('copiedPage', JSON.stringify(data));
-        this.showNotification('top', 'center', 'Page Fields Copied!', '', 'success');
+        this.showNotification('top', 'center', 'Page fields copied!', '', 'success');
     }
 
     pastePage() {
         let data: any[] = JSON.parse(localStorage.getItem('copiedPage') || '{}');
         merge(this.formDesign, data);
-        this.showNotification('top', 'center', 'Page Fields Pasted!', '', 'success');
+        this.showNotification('top', 'center', 'Page fields pasted!', '', 'success');
     }
 
-    saveSkipRule(Option: any, Field: any, Condition: any, Value: any, item: any) {
-        this.spinner.show();
-        if (Option.value !== "" && Field.value !== "" && Condition.value !== "") {
-            let obj = {
-                "showSkip": Option.value,
-                "allAny": 0,
-                "field": Field.value,
-                "condition": Condition.value,
-                "value": Value.value,
-                "pageGUID": this.currentPage.pageGUID,
-                "displayText": "This field will be " + Option.value + " if " + Condition.value + " " + Value.value,
-                "xmlElementName": item.fieldName
-            }
-            this.service.insertSkipLogic(obj).subscribe(res => {
-                this.showNotification('top', 'center', 'Skip ruled saved successfully!', '', 'success');
-                this.spinner.hide();
-            });
-        }
-        else {
-            this.showNotification('top', 'center', 'Error saving skip rule, please choose a skip option,field and enter a value before saving', '', 'danger');
-            this.spinner.hide();
-        }
-    }
 
-    deleteSkipRule(Option: any, Field: any, Condition: any, Data: any, item: any) {
-        this.spinner.show();
-        let obj = {
-            "showSkip": "",
-            "allAny": 0,
-            "field": "",
-            "condition": "",
-            "value": "",
-            "pageGUID": "",
-            "displayText": "",
-            "xmlElementName": ""
-        }
-        this.service.DeleteSkipRule(this.currentPage.pageGUID, item.fieldName).subscribe(res => {
-            this.showNotification('top', 'center', 'Skip ruled deleted successfully!', '', 'success');
-            item.skipRules = obj;
-            this.spinner.hide();
-        });
-    }
+    //#region SKip rule
 
-    deleteValidationRule(validCondition: any, ValidData: any, ErrorMsg: any, item: any) {
-        this.spinner.show();
-        let obj = {
-            "allAny": 0,
-            "condition": "",
-            "value": "",
-            "errorMessage": "",
-            "displayText": "",
-            "pageGUID": "",
-            "xmlElementName": "",
-            "field": ""
-        }
-        this.service.DeleteAdvancedValidation(this.currentPage.pageGUID, item.fieldName).subscribe(res => {
-            this.showNotification('top', 'center', 'Validation ruled deleted successfully!', 'Success.', 'success');
-            item.validRules = obj;
-            this.spinner.hide();
-        });
-    }
+    // saveSkipRule(Option: any, Field: any, Condition: any, Value: any, item: any) {
+    //     this.spinner.show();
+    //     if (Option.value !== "" && Field.value !== "" && Condition.value !== "") {
+    //         let obj = {
+    //             "showSkip": Option.value,
+    //             "allAny": 0,
+    //             "field": Field.value,
+    //             "condition": Condition.value,
+    //             "value": Value.value,
+    //             "pageGUID": this.currentPage.pageGUID,
+    //             "displayText": "This field will be " + Option.value + " if " + Condition.value + " " + Value.value,
+    //             "xmlElementName": item.fieldName
+    //         }
+    //         this.service.insertSkipLogic(obj).subscribe(res => {
+    //             this.showNotification('top', 'center', 'Skip rule saved successfully!', '', 'success');
+    //             this.spinner.hide();
+    //         });
+    //     }
+    //     else {
+    //         this.showNotification('top', 'center', 'Error saving skip rule, please choose a skip option, field and enter a value before saving', '', 'danger');
+    //         this.spinner.hide();
+    //     }
+    // }
 
-    saveValidationRule(validCondition: any, ValidData: any, ErrorMsg: any, item: any) {
-        if (validCondition.value !== "" && ValidData.value !== "") {
-            let obj = {
-                "allAny": 0,
-                "condition": validCondition.value,
-                "value": ValidData.value,
-                "errorMessage": ErrorMsg.value,
-                "displayText": "This field will be valid when it is" + validCondition.value + " " + ValidData.value,
-                "pageGUID": this.currentPage.pageGUID,
-                "xmlElementName": item.fieldName,
-                "field": item.fieldName
-            }
-            this.service.insertAdvancedValidation(obj).subscribe(res => {
-                this.showNotification('top', 'center', 'Validation ruled saved successfully!', '', 'success');
-                this.spinner.hide();
-            });
-        }
-        else {
-            this.showNotification('top', 'center', 'Error saving skip rule, please choose a validation option enter a value before saving', '', 'danger');
-            this.spinner.hide();
-        }
-    }
+    // deleteSkipRule(Option: any, Field: any, Condition: any, Data: any, item: any) {
+    //     this.spinner.show();
+    //     let obj = {
+    //         "showSkip": "",
+    //         "allAny": 0,
+    //         "field": "",
+    //         "condition": "",
+    //         "value": "",
+    //         "pageGUID": "",
+    //         "displayText": "",
+    //         "xmlElementName": ""
+    //     }
+    //     this.service.DeleteSkipRule(this.currentPage.pageGUID, item.fieldName).subscribe(res => {
+    //         this.showNotification('top', 'center', 'Skip rule deleted successfully!', '', 'success');
+    //         item.skipRules = obj;
+    //         this.spinner.hide();
+    //     });
+    // }
 
+    // deleteValidationRule(validCondition: any, ValidData: any, ErrorMsg: any, item: any) {
+    //     this.spinner.show();
+    //     let obj = {
+    //         "allAny": 0,
+    //         "condition": "",
+    //         "value": "",
+    //         "errorMessage": "",
+    //         "displayText": "",
+    //         "pageGUID": "",
+    //         "xmlElementName": "",
+    //         "field": ""
+    //     }
+    //     this.service.DeleteAdvancedValidation(this.currentPage.pageGUID, item.fieldName).subscribe(res => {
+    //         this.showNotification('top', 'center', 'Validation rule deleted successfully!', '', 'success');
+    //         item.validRules = obj;
+    //         this.spinner.hide();
+    //     });
+    // }
+
+    // saveValidationRule(validCondition: any, ValidData: any, ErrorMsg: any, item: any) {
+    //     if (validCondition.value !== "" && ValidData.value !== "") {
+    //         let obj = {
+    //             "allAny": 0,
+    //             "condition": validCondition.value,
+    //             "value": ValidData.value,
+    //             "errorMessage": ErrorMsg.value,
+    //             "displayText": "This field will be valid when it is" + validCondition.value + " " + ValidData.value,
+    //             "pageGUID": this.currentPage.pageGUID,
+    //             "xmlElementName": item.fieldName,
+    //             "field": item.fieldName
+    //         }
+    //         this.service.insertAdvancedValidation(obj).subscribe(res => {
+    //             this.showNotification('top', 'center', 'Validation rule saved successfully!', '', 'success');
+    //             this.spinner.hide();
+    //         });
+    //     }
+    //     else {
+    //         this.showNotification('top', 'center', 'Error saving skip rule, please choose a validation option enter a value before saving', '', 'danger');
+    //         this.spinner.hide();
+    //     }
+    // }
+
+    //#endregion
+    
     showNotification(from: any, align: any, message: any, title: any, type: string) {
         $.notify({
             icon: 'notifications',
@@ -5730,13 +5735,13 @@ timer: 1500,
     removeBlankSpaceFieldName(atom: any) {
         atom.fieldName = atom.fieldName.replace(/\s/g, "");
         if (!isNaN(atom.fieldName.charAt(0)) && atom.fieldName!==""){ 
-            this.showNotification('top', 'center', 'Database Name cannot start with a number', '', 'danger');
+            this.showNotification('top', 'center', 'Database name cannot start with a number', '', 'danger');
             atom.dataExportName="";
             atom.xmlElementName="";
             atom.fieldName="";
         }
         else if(atom.fieldName==""){
-            this.showNotification('top', 'center', 'Database Name cannot be empty', '', 'danger');
+            this.showNotification('top', 'center', 'Database name cannot be empty', '', 'danger');
         }
     }
 
@@ -5772,7 +5777,7 @@ timer: 1500,
     validateDateDataExportName(item: any) {
         if (item.dataExportName.toLowerCase() === "date") {
             item.dataExportName = item.dataExportName.replace(item.dataExportName, "");
-            this.showNotification('top', 'center', 'Data Export Name cannot be date', '', 'danger');
+            this.showNotification('top', 'center', 'Data export Name cannot be date', '', 'danger');
         }
     }
 
@@ -5794,7 +5799,7 @@ timer: 1500,
     validateTimeDataExportName(item: any) {
         if (item.dataExportName.toLowerCase() === "time") {
             item.dataExportName = item.dataExportName.replace(item.dataExportName, "");
-            this.showNotification('top', 'center', 'Data Export Name cannot be time', '', 'danger');
+            this.showNotification('top', 'center', 'Data export name cannot be time', '', 'danger');
         }
     }
 

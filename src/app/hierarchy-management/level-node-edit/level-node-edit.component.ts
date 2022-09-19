@@ -504,7 +504,7 @@ export class LevelNodeEditComponent implements OnInit {
 
     if(this.ExternalData.calculation != "" && this.ExternalData.selection == ""){
 
-      this.showNotification('top', 'center', 'Please choose Operation', 'Danger', 'danger');
+      this.showNotification('top', 'center', 'Please choose operation', '', 'danger');
 
     }else{
 
@@ -536,7 +536,7 @@ export class LevelNodeEditComponent implements OnInit {
         } 
 
       }else{
-        this.showNotification('top', 'center', 'Please choose all required(*) fields', 'Danger', 'danger');
+        this.showNotification('top', 'center', 'Please choose all required(*) fields', '', 'danger');
       }
   
     }
@@ -547,7 +547,7 @@ export class LevelNodeEditComponent implements OnInit {
 
     if(this.ExternalData.calculation != "" && this.ExternalData.selection == ""){
 
-      this.showNotification('top', 'center', 'Please choose Operation', 'Danger', 'danger');
+      this.showNotification('top', 'center', 'Please choose operation', '', 'danger');
 
     }else{
 
@@ -577,7 +577,7 @@ export class LevelNodeEditComponent implements OnInit {
           );
         }   
       }else{
-        this.showNotification('top', 'center', 'Please choose all required(*) fields', 'Danger', 'danger');
+        this.showNotification('top', 'center', 'Please choose all required(*) fields', '', 'danger');
       }
 
 
@@ -606,7 +606,7 @@ export class LevelNodeEditComponent implements OnInit {
 
       this.spinner.show();
       this.service.getExternalCalculationByNodeID(this.nodeID);
-      this.showNotification('top','center','Calcualtion Refreshed Succesfully!','Success.','success');
+      this.showNotification('top','center','Calculation Refreshed Succesfully!','','success');
       this.service.getExternalTotalCalculationByNodeID(this.nodeID).subscribe(data => {
         this.TotalVal = data;
         this.CalTotalVal = {
@@ -631,7 +631,7 @@ export class LevelNodeEditComponent implements OnInit {
 
   //     this.spinner.show();
   //     this.service.getExternalCalculationByNodeID(this.nodeID);
-  //     this.showNotification('top','center','Calcualtion Refreshed Succesfully!','Success.','success');
+  //     this.showNotification('top','center','Calculation Refreshed Succesfully!','Success.','success');
   //     this.service.getExternalTotalCalculationByNodeID(this.nodeID).subscribe(data => {
   //       this.TotalVal = data;
   //       this.CalTotalVal = {
@@ -650,7 +650,7 @@ export class LevelNodeEditComponent implements OnInit {
 
   //     this.spinner.show();
   //     this.service.getExternalCalculationByNodeID(this.nodeID);
-  //     this.showNotification('top','center','Calcualtion Refreshed Succesfully!','Success.','success');
+  //     this.showNotification('top','center','Calculation Refreshed Succesfully!','Success.','success');
   //     this.service.getExternalTotalCalculationByNodeID(this.nodeID).subscribe(data => {
   //       this.TotalVal = data;
   //       this.CalTotalVal = {
@@ -669,7 +669,7 @@ export class LevelNodeEditComponent implements OnInit {
 
     if (this.ExternalData.calculation != "" && this.ExternalData.selection == "") {
 
-      this.showNotification('top', 'center', 'Please choose Operation', 'Danger', 'danger');
+      this.showNotification('top', 'center', 'Please choose operation', '', 'danger');
 
     } else {
 
@@ -677,7 +677,7 @@ export class LevelNodeEditComponent implements OnInit {
 
         if (this.ExternalData.SearchCriteria == "" && this.ExternalData.ArraySearchCriteria == "") {
 
-          this.showNotification('top', 'center', 'Please choose all required(*) fields', 'Danger', 'danger');
+          this.showNotification('top', 'center', 'Please choose all required(*) fields', '', 'danger');
 
         } else {
 
@@ -743,7 +743,7 @@ export class LevelNodeEditComponent implements OnInit {
         }
 
       } else {
-        this.showNotification('top', 'center', 'Please choose all required(*) fields', 'Danger', 'danger');
+        this.showNotification('top', 'center', 'Please choose all required(*) fields', '', 'danger');
       }
     }
 
@@ -848,7 +848,7 @@ export class LevelNodeEditComponent implements OnInit {
 
   CalclickDelete(item: any) {
     Swal.fire({
-      title: 'Are you sure you want to delete ' + item.externalDataName + ' Calcualtion?',
+      title: 'Are you sure you want to delete ' + item.externalDataName + ' Calculation?',
       showCancelButton: true,
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
@@ -864,7 +864,7 @@ export class LevelNodeEditComponent implements OnInit {
         this.service.DeleteExternalCalculation(item.calculationID).subscribe(data => {
           this.spinner.hide();
           this.service.getExternalCalculationByNodeID(this.nodeID);
-          this.showNotification('top','center','Calcualtion Deleted Succesfully!','Success.','success');
+          this.showNotification('top','center','Calculation deleted succesfully!','','success');
           this.service.getExternalTotalCalculationByNodeID(this.nodeID).subscribe(data => {
             this.TotalVal = data;
             this.CalTotalVal = {
@@ -900,7 +900,7 @@ export class LevelNodeEditComponent implements OnInit {
       });
 
     }else {
-      this.showNotification('top', 'center', 'Please select a Form and Form Field before preview!', '', 'danger');
+      this.showNotification('top', 'center', 'Please select a form and form field before preview!', '', 'danger');
       return;
     }
 
@@ -1290,7 +1290,7 @@ export class LevelNodeEditComponent implements OnInit {
       this.spinner.show();
       this.service.updateLevelAttributes(this.NodeAttributesData.metadataLevelID, val).subscribe(res => {
         this.spinner.hide();
-        this.showNotification('top', 'center', 'level Attributes Updated Successfully!', '', 'success');
+        this.showNotification('top', 'center', 'Level attributes updated successfully!', '', 'success');
         this.service.getLevelMetadata(this.NodeData.levelID);
         this.getNodeAttributes(this.NodeData.levelID);
 
@@ -1312,7 +1312,7 @@ export class LevelNodeEditComponent implements OnInit {
 
       });
     } else {
-      this.showNotification('top', 'center', 'Please enter a Field Name, Question Name and Field Type before saving!', '', 'danger');
+      this.showNotification('top', 'center', 'Please enter a field name, question name and field type before saving!', '', 'danger');
     }
   }
 
@@ -1351,7 +1351,7 @@ export class LevelNodeEditComponent implements OnInit {
         this.spinner.show();
         this.service.DeleteLevel(this.NodeData.levelID).subscribe(data => {
           this.spinner.hide();
-          this.showNotification('top', 'center', 'Level Deleted Succesfully!', 'Success.', 'success');
+          this.showNotification('top', 'center', 'Level deleted succesfully!', '', 'success');
         });
       }
     })
@@ -1362,7 +1362,7 @@ export class LevelNodeEditComponent implements OnInit {
   deleteNode(){
 
     Swal.fire({
-      title: 'Are you sure you want to delete Node?',
+      title: 'Are you sure you want to delete node?',
       showCancelButton: true,
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
@@ -1376,7 +1376,7 @@ export class LevelNodeEditComponent implements OnInit {
         this.spinner.show();
         this.service.DeleteNode(this.NodeData.nodeID).subscribe(data => {
           this.spinner.hide();
-          this.showNotification('top', 'center', 'Node Deleted Succesfully!', 'Success.', 'success');
+          this.showNotification('top', 'center', 'Node deleted succesfully!', '', 'success');
         });
       }
     })
@@ -1401,7 +1401,7 @@ export class LevelNodeEditComponent implements OnInit {
         this.spinner.show();
         this.service.archiveAttributes(item.metadataLevelID).subscribe(data => {
           this.spinner.hide();
-          this.showNotification('top', 'center', 'Atrribute Deleted Succesfully!', 'Success.', 'success');
+          this.showNotification('top', 'center', 'Atrribute deleted succesfully!', '', 'success');
           this.service.getLevelMetadata(this.NodeData.levelID)
         });
       }
@@ -1459,7 +1459,7 @@ export class LevelNodeEditComponent implements OnInit {
           this.spinner.show();
           this.service.addLevelAttributes(val).subscribe(res => {
             this.spinner.hide();
-            this.showNotification('top', 'center', 'level Attributes Added Successfully!', '', 'success');
+            this.showNotification('top', 'center', 'Level attributes added successfully!', '', 'success');
             this.service.getLevelMetadata(this.NodeData.levelID);
             this.getNodeAttributes(this.NodeData.levelID);
 
@@ -1483,10 +1483,10 @@ export class LevelNodeEditComponent implements OnInit {
 
           });
         } else {
-          this.showNotification('top', 'center', 'Please enter a Field Name, Question Name and Field Type before saving!', '', 'danger');
+          this.showNotification('top', 'center', 'Please enter a field name, question name and field type before saving!', '', 'danger');
         }
       } else {
-        this.showNotification('top', 'center', 'Please enter a Unique Field Name!', '', 'danger');
+        this.showNotification('top', 'center', 'Please enter a unique field name!', '', 'danger');
       }
     });
   }
@@ -1508,11 +1508,11 @@ export class LevelNodeEditComponent implements OnInit {
       this.spinner.show();
       this.service.updateLevelDetails(this.NodeData.levelID, val).subscribe(res => {
         this.spinner.hide();
-        this.showNotification('top', 'center', 'Level Updated Successfully!', '', 'success');
+        this.showNotification('top', 'center', 'Level updated successfully!', '', 'success');
       });
     }
     else {
-      this.showNotification('top', 'center', 'Please add a Level name before saving!', '', 'danger');
+      this.showNotification('top', 'center', 'Please add a level name before saving!', '', 'danger');
     }
   }
 
@@ -1639,7 +1639,7 @@ export class LevelNodeEditComponent implements OnInit {
   
             this.service.UpdateNodeXMLForm(this.GetMetadataNodeFormID.filter(item => item)[0], this.formDesignAddDataXML).subscribe(res => {
               this.spinner.hide();
-              this.showNotification('top', 'center', 'Node Updated Form Successfully!', '', 'success');
+              this.showNotification('top', 'center', 'Node updated form successfully!', '', 'success');
             });
           });
 
@@ -1657,12 +1657,12 @@ export class LevelNodeEditComponent implements OnInit {
 
           this.service.addNodeXMLForm(this.formDesignAddDataXML).subscribe(res => {
             this.spinner.hide();
-            this.showNotification('top', 'center', 'Node Updated Successfully!', '', 'success');
+            this.showNotification('top', 'center', 'Node updated successfully!', '', 'success');
           });
         }
       });
     } else {
-      this.showNotification('top', 'center', 'Please add a Node name before saving!', '', 'danger');
+      this.showNotification('top', 'center', 'Please add a node name before saving!', '', 'danger');
     }
     // this.formDesignAddData = this.formDesign;
 

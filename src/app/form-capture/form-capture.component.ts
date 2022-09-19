@@ -116,6 +116,7 @@ export class FormCaptureComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         this.refreshFormsList();
+        this.refreshLocationList();
         this.formList.filterPredicate = function (data, filter: string): boolean {
           return data.formName.toLowerCase().includes(filter);
         };

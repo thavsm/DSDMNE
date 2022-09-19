@@ -133,7 +133,7 @@ export class HierarchyManagementComponent implements OnInit {
         this.spinner.show();
         this.service.archiveTree(item.treeID).subscribe(data => {
           this.spinner.hide();
-          this.showNotification('top','center','Tree Deleted Succesfully!','Success.','success');
+          this.showNotification('top','center','Tree deleted succesfully!','','success');
           this.service.refreshhlist(this.TreeCategoryID);
         });
       }
@@ -164,21 +164,21 @@ export class HierarchyManagementComponent implements OnInit {
 
   SavedSuccessful(isUpdate) {
     if (isUpdate == 0) {
-      this._snackBar.open('Record Updated Successfully!', 'Close', {
+      this._snackBar.open('Record updated successfully!', 'Close', {
         duration: 2000,
         horizontalPosition: this.horizontalPosition,
         verticalPosition: this.verticalPosition,
       });
     }
     else if (isUpdate == 1) {
-      this._snackBar.open('Record Saved Successfully!', 'Close', {
+      this._snackBar.open('Record saved successfully!', 'Close', {
         duration: 2000,
         horizontalPosition: this.horizontalPosition,
         verticalPosition: this.verticalPosition,
       });
     }
     else if (isUpdate == 2) {
-      this._snackBar.open('Record Deleted Successfully!', 'Close', {
+      this._snackBar.open('Record deleted successfully!', 'Close', {
         duration: 2000,
         horizontalPosition: this.horizontalPosition,
         verticalPosition: this.verticalPosition,

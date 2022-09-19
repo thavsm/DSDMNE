@@ -245,7 +245,7 @@ export class AddFormComponent implements OnInit {
               }
             });
             if ((index !== -1) && ((index - 1) !== -1)) {
-              this.showNotification('top', 'center', 'Page data has been saved Successfully!', '', 'success');
+              this.showNotification('top', 'center', 'Page data has been saved successfully!', '', 'success');
               this.currentPage = this.pages[index - 1];
               this.pageStatus = this.currentPage.name;
               this.getDesignPerPage(this.currentPage.pageGUID);
@@ -279,7 +279,7 @@ export class AddFormComponent implements OnInit {
               }
             });
             if ((index !== -1) && ((index - 1) !== -1)) {
-              this.showNotification('top', 'center', 'Page data has been saved Successfully!', '', 'success');
+              this.showNotification('top', 'center', 'Page data has been saved successfully!', '', 'success');
               this.currentPage = this.pages[index - 1];
               this.pageStatus = this.currentPage.name;
               this.getDesignPerPage(this.currentPage.pageGUID);
@@ -405,7 +405,6 @@ export class AddFormComponent implements OnInit {
         });
       }
       else {
-        console.log(obj)
         this.service.UpdateFormMetadata(this.formData.formCaptureID, obj, this.userDetail.formData.userID).subscribe(res => {
           let pg = this.currentPage.pageNumber;
           let pageStatus = {
@@ -579,7 +578,7 @@ export class AddFormComponent implements OnInit {
               }
             });
             if ((index !== -1) && ((index + 1) !== Object.keys(this.pages).length)) {
-              this.showNotification('top', 'center', 'Page data has been saved Successfully!', '', 'success');
+              this.showNotification('top', 'center', 'Page data has been saved successfully!', '', 'success');
               this.currentPage = this.pages[index + 1];
               this.pageStatus = this.currentPage.name;
               this.getDesignPerPage(this.currentPage.pageGUID);
@@ -614,7 +613,7 @@ export class AddFormComponent implements OnInit {
               }
             });
             if ((index !== -1) && ((index + 1) !== Object.keys(this.pages).length)) {
-              this.showNotification('top', 'center', 'Page data has been saved Successfully!', '', 'success');
+              this.showNotification('top', 'center', 'Page data has been saved successfully!', '', 'success');
               this.currentPage = this.pages[index + 1];
               this.pageStatus = this.currentPage.name;
               this.getDesignPerPage(this.currentPage.pageGUID);
@@ -874,7 +873,7 @@ export class AddFormComponent implements OnInit {
         }
       });
       this.service.saveGroupMetadata(this.formData.formCaptureID, data[0].parentFieldName, data, this.userDetail.formData.userID).subscribe(res => {
-        this.showNotification('top', 'center', 'Repeat data has been saved Successfully!', '', 'success');
+        this.showNotification('top', 'center', 'Repeat data has been saved successfully!', '', 'success');
         localStorage.setItem('cloneNumberForEdit', "0");
         this.spinner.hide();
         this.getDesignPerPage(this.currentPage.pageGUID);
@@ -897,7 +896,7 @@ export class AddFormComponent implements OnInit {
         }
       });
       this.service.UpdateGroupMetadata(this.formData.formCaptureID, data[0].parentFieldName, localStorage.getItem('cloneNumberForEdit'), data, this.userDetail.formData.userID).subscribe(res => {
-        this.showNotification('top', 'center', 'Repeat data has been updated Successfully!', '', 'success');
+        this.showNotification('top', 'center', 'Repeat data has been updated successfully!', '', 'success');
         localStorage.setItem('cloneNumberForEdit', "0");
         this.HighlightRow = -1;
         this.spinner.hide();
@@ -928,7 +927,7 @@ export class AddFormComponent implements OnInit {
 
   deleteClone(cloneNum: any, groupGUID: any) {
     Swal.fire({
-      title: "<h5 style='color:white;font-weight:400'> Are you sure want to remove this repeat data? </h5>",
+      title: "<h5 style='color:white;font-weight:400'> Are you sure you want to remove this repeat data? </h5>",
       showCancelButton: true,
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
@@ -1078,7 +1077,7 @@ export class AddFormComponent implements OnInit {
             "formCaptureID": this.formData.formCaptureID
           }
           this.service.addFormAttachments(obj).subscribe(res => {
-            this.showNotification('top', 'center', 'Attachment has been saved Successfully!', '', 'success');
+            this.showNotification('top', 'center', 'Attachment has been saved successfully!', '', 'success');
             this.file = null;
             this.fileAttr = 'Choose File(Max Size:4MB)';
             //this.fileInput = ElementRef;
@@ -1112,7 +1111,7 @@ export class AddFormComponent implements OnInit {
           "formCaptureID": this.formData.formCaptureID
         }
         this.service.addFormAttachments(obj).subscribe(res => {
-          this.showNotification('top', 'center', 'Attachment has been saved Successfully!', '', 'success');
+          this.showNotification('top', 'center', 'Attachment has been saved successfully!', '', 'success');
           this.file = null;
           this.fileAttr = 'Choose File(Max Size:4MB)';
           // this.fileInput = null;
@@ -1149,7 +1148,7 @@ export class AddFormComponent implements OnInit {
       reader.readAsDataURL(this.photoFile);
     }
     else {
-      this.showNotification('top', 'center', 'Photo exceeds maximum size of 4mb,Please upload a photo of 4mb or less', '', 'danger');
+      this.showNotification('top', 'center', 'Photo exceeds maximum size of 4mb, Please upload a photo of 4mb or less', '', 'danger');
       this.photoFile = null;
     }
   }
@@ -1182,7 +1181,7 @@ export class AddFormComponent implements OnInit {
             "formCaptureID": this.formData.formCaptureID
           }
           this.service.addFormPhotos(obj).subscribe(res => {
-            this.showNotification('top', 'center', 'Photo has been saved Successfully!', '', 'success');
+            this.showNotification('top', 'center', 'Photo has been saved successfully!', '', 'success');
             this.photoFile = null;
             this.photoFileAttr = 'Choose Photo(Max Size:4MB)';
             //this.photoInput = null;
@@ -1220,7 +1219,7 @@ export class AddFormComponent implements OnInit {
           "formCaptureID": this.formData.formCaptureID
         }
         this.service.addFormPhotos(obj).subscribe(res => {
-          this.showNotification('top', 'center', 'Photo has been saved Successfully!', '', 'success');
+          this.showNotification('top', 'center', 'Photo has been saved successfully!', '', 'success');
           this.photoFile = null;
           this.photoFileAttr = 'Choose Photo(Max Size:4MB)';
           //this.photoInput = null;
@@ -1284,7 +1283,7 @@ export class AddFormComponent implements OnInit {
             "LinkedTo": commentName
           }
           this.service.addFormComment(obj).subscribe(res => {
-            this.showNotification('top', 'center', 'Form comment has been saved Successfully!', '', 'success');
+            this.showNotification('top', 'center', 'Form comment has been saved successfully!', '', 'success');
             this.formComment = '';
             this.refreshCommentList();
             localStorage.setItem('fieldNameComment', "");
@@ -1307,7 +1306,7 @@ export class AddFormComponent implements OnInit {
             "LinkedTo": commentName
           }
           this.service.updateFormComment(obj, this.commentID).subscribe(res => {
-            this.showNotification('top', 'center', 'Form comment has been updated Successfully!', '', 'success');
+            this.showNotification('top', 'center', 'Form comment has been updated successfully!', '', 'success');
             this.formComment = '';
             this.refreshCommentList();
             localStorage.setItem('fieldNameComment', "");
@@ -1333,7 +1332,7 @@ export class AddFormComponent implements OnInit {
             "LinkedTo": ""
           }
           this.service.addFormComment(obj).subscribe(res => {
-            this.showNotification('top', 'center', 'Form comment has been saved Successfully!', '', 'success');
+            this.showNotification('top', 'center', 'Form comment has been saved successfully!', '', 'success');
             this.formComment = '';
             this.refreshCommentList();
             this.addEditComment = 'Add';
@@ -1355,7 +1354,7 @@ export class AddFormComponent implements OnInit {
             "LinkedTo": ""
           }
           this.service.updateFormComment(obj, this.commentID).subscribe(res => {
-            this.showNotification('top', 'center', 'Form comment has been updated Successfully!', '', 'success');
+            this.showNotification('top', 'center', 'Form comment has been updated successfully!', '', 'success');
             this.formComment = '';
             this.refreshCommentList();
             this.addEditComment = 'Add';
@@ -1386,7 +1385,7 @@ export class AddFormComponent implements OnInit {
 
   deleteFile(item: any) {
     Swal.fire({
-      title: "<h5 style='color:white;font-weight:400'> Are you sure want to remove this file? </h5>",
+      title: "<h5 style='color:white;font-weight:400'> Are you sure you want to remove this file? </h5>",
       showCancelButton: true,
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
@@ -1402,7 +1401,7 @@ export class AddFormComponent implements OnInit {
         this.service.DeleteFile(item.attachmentID).subscribe(data => {
           this.spinner.hide();
           this.refreshAttachmentList();
-          this.showNotification('top', 'center', 'File Deleted Successfully!', '', 'success');
+          this.showNotification('top', 'center', 'File deleted successfully!', '', 'success');
         });
       }
     })
@@ -1410,7 +1409,7 @@ export class AddFormComponent implements OnInit {
 
   deleteComment(item: any) {
     Swal.fire({
-      title: "<h5 style='color:white;font-weight:400'> Are you sure want to remove this comment? </h5>",
+      title: "<h5 style='color:white;font-weight:400'> Are you sure you want to remove this comment? </h5>",
       showCancelButton: true,
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
@@ -1426,7 +1425,7 @@ export class AddFormComponent implements OnInit {
         this.service.DeleteComment(item.commentID).subscribe(data => {
           this.spinner.hide();
           this.refreshCommentList();
-          this.showNotification('top', 'center', 'Comment Deleted Successfully!', '', 'success');
+          this.showNotification('top', 'center', 'Comment deleted successfully!', '', 'success');
         });
       }
     })
@@ -1434,7 +1433,7 @@ export class AddFormComponent implements OnInit {
 
   deletePhoto(item: any) {
     Swal.fire({
-      title: "<h5 style='color:white;font-weight:400'> Are you sure want to remove this photo? </h5>",
+      title: "<h5 style='color:white;font-weight:400'> Are you sure you want to remove this photo? </h5>",
       showCancelButton: true,
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
@@ -1450,7 +1449,7 @@ export class AddFormComponent implements OnInit {
         this.service.DeletePhoto(item.photoGUID).subscribe(data => {
           this.spinner.hide();
           this.refreshPhotoList();
-          this.showNotification('top', 'center', 'Photo Deleted Successfully!', '', 'success');
+          this.showNotification('top', 'center', 'Photo deleted successfully!', '', 'success');
         });
       }
     })

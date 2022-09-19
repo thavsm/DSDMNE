@@ -114,7 +114,7 @@ timer: 1500,
         this.data.sort((a, b) => (a.role > b.role) ? 1 : ((b.role > a.role) ? -1 : 0));
       },
       err => {
-        this.showNotification('top', 'right', err.error.message, 'Failed', 'danger');
+        this.showNotification('top', 'right', err.error.message, '', 'danger');
       }
     );
   }

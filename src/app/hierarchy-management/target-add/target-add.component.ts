@@ -218,7 +218,7 @@ export class TargetAddComponent implements OnInit {
         this.btnText = "Add";
         this.service.AddTargetsForm(val).subscribe(res => {
           this.spinner.hide();
-          this.showNotification('top','center','Target Added Successfully!','Success','success');
+          this.showNotification('top','center','Target added successfully!','','success');
           this.service.GetTargetsForm(this.tgAdd.nodeID);  
           this.tgAdd.targetID = 0;
           this.tgAdd.quaterOne = "";
@@ -259,7 +259,7 @@ export class TargetAddComponent implements OnInit {
       this.btnText = "Add";
       this.service.updateTargetDetails(this.tgAdd.targetID, Editval).subscribe(res => {
         this.spinner.hide();
-        this.showNotification('top','center','Target Updated Successfully!','Success','success');
+        this.showNotification('top','center','Target updated successfully!','','success');
         this.service.GetTargetsForm(this.tgAdd.nodeID);      
         this.tgAdd.targetID = 0;
         this.tgAdd.quaterOne = "";
@@ -283,7 +283,7 @@ export class TargetAddComponent implements OnInit {
       } 
     }
     else {
-      this.showNotification('top', 'center', 'Please add a financial Start Date before saving!', '', 'danger');
+      this.showNotification('top', 'center', 'Please add a financial start date before saving!', '', 'danger');
     }
   }
 
