@@ -136,7 +136,7 @@ export class RoleaccessComponent implements OnInit {
     }
     else{
       this.treeService.assignIndicators(this.assigned,this.roleID,this.treeID).subscribe(res=>{
-        this.showNotification('top', 'center', 'Assigned indicators successfully!', '', 'success');
+        this.showNotification('top', 'center', 'Indicators asaigned successfully!', '', 'success');
         this.myStepper.previous();
         this.myStepper.previous();
       });

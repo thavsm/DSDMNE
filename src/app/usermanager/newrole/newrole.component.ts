@@ -66,7 +66,7 @@ export class NewroleComponent implements OnInit {
     }
     this.service.addNewRole(body,concurrency,-1,this.facilityType).subscribe(
       (res: any) => {
-        this.showNotification('top','right',"Added role successfully", '','success');
+        this.showNotification('top','right',"Role added successfully", '','success');
         this.dialogRef.close();
       },
       err => {
@@ -83,7 +83,7 @@ export class NewroleComponent implements OnInit {
     }
     this.service.addNewRole(body,concurrency,this.data.data.roleID,this.facilityType).subscribe(
       (res: any) => {
-        this.showNotification('top','right',"Updated role successfully", '','success');
+        this.showNotification('top','right',"Role updated successfully", '','success');
         this.dialogRef.close();
       },
       err => {

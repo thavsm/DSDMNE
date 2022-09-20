@@ -76,7 +76,7 @@ export class ProcessComponent implements OnInit {
     this.http.post(url, body, { 'headers': headers, observe: 'response' }).subscribe(response => {
 
       this.closeModal();
-      this.showNotification('top','right','Successfully Added.', 'Process successful','success');
+      this.showNotification('top','right','Process added successfully', '','success');
       this.getRecords();
       this.procName = '';
       this.procDesc = '';
