@@ -88,6 +88,10 @@ export class HierarchyManagementService {
     return this.http.get<any>(this.API_URL+'Trees/indicatorNodes');
   }
 
+  getIndicatorNodesByLocation(LocationID:any):Observable<any[]>{
+    return this.http.get<any>(this.API_URL+'Trees/'+LocationID+'/getIndicatorNodesByLocation');
+  }
+
   getAllIndicatorNodes(){
     return this.http.get<any>(this.API_URL+'nodes/getAllIndicatorNodes');
   }

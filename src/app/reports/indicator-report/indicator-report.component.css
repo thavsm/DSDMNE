@@ -1,0 +1,30 @@
+.example-month-picker .mat-calendar-period-button {
+    pointer-events: none;
+  }
+  
+  .example-month-picker .mat-calendar-arrow {
+    display: none;
+  }
+ 
+ ::ng-deep .mat-option {
+   white-space: normal !important;
+   line-height: normal !important;
+   height:max-content !important;
+   padding-top: 0.9em !important;
+   padding-bottom: 0.9em !important;
+ }
+
+ ::ng-deep .mat-option-text{
+  font-size: small;
+ }
+
+ .indicator-border{
+  border: 1px solid black;
+  border-collapse: collapse;
+ }
+
+ .indicator-border-headers{
+  border: 1px solid black;
+  border-collapse: collapse;
+  font-weight:bold;
+ }

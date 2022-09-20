@@ -149,9 +149,12 @@ export class FormCaptureComponent implements OnInit {
       this.service.GetUserLocationHierachy(this.userDetail.formData.userID).subscribe(location => {
         this.spinner.show();
         this.userLocation=location;
+        console.log("location"+location);
+        console.log("Role"+this.userDetail.formData.role);
         this.service.getFormCaptureCountPerLocation(location,this.userDetail.formData.role).subscribe(result => {
           this.data =  result;
           if(this.data.length>0){
+            console.log(this.data[0].levelID);
             this.userLocationLevel=this.data[0].levelID;
             this.PeriodStatus=this.data[0].periodStatus;
           }
