@@ -94,12 +94,12 @@
       <div id="mModalbody" class="modal-body">
         <div id="dvNewProcess">
           <mat-form-field class="example-full-width">
-            <input matInput type="text" id="txtProcessName" placeholder="Process Name" [(ngModel)]="procName">
+            <textarea matInput id="txtProcessName" placeholder="Process Name" [(ngModel)]="procName"></textarea>
+            <!-- <input matInput type="text" id="txtProcessName" placeholder="Process Name" [(ngModel)]="procName"> -->
           </mat-form-field>
           <mat-form-field class="example-full-width">
             <textarea matInput id="txtDescription" placeholder="Description" [(ngModel)]="procDesc"></textarea>
           </mat-form-field>
-          
         </div>
       </div>
 
