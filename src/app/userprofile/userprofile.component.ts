@@ -70,6 +70,7 @@ export class UserProfileComponent implements OnInit {
           this.isParent = true;
       }
       
+
       //this.isParent = true;
       console.log(this.isParent);
       if(this.isParent) {
@@ -79,6 +80,45 @@ export class UserProfileComponent implements OnInit {
                 this.formData = res['formData'];
                 console.log(this.formData);
                 console.log(this.formData["active"]);
+                switch(this.formData["locationType"])
+                {
+                case 4260:
+                  this.isBranch=true;
+                  this.isProvince=false;
+                  this.isDistrict=false;
+                  this.isSP=false;
+                  this.isFac=false;
+                  break;
+                  case 4261:
+                  this.isBranch=false;
+                  this.isProvince=true;
+                  this.isDistrict=false;
+                  this.isSP=false;
+                  this.isFac=false;
+                  break;
+                  case 4262:
+                  this.isBranch=false;
+                  this.isProvince=true;
+                  this.isDistrict=true;
+                  this.isSP=false;
+                  this.isFac=false;
+                  break;
+                  case 4263:
+                  this.isBranch=false;
+                  this.isProvince=true;
+                  this.isDistrict=true;
+                  this.isSP=true;
+                  this.isFac=false;
+                  break;
+                  case 4264:
+                  this.isBranch=false;
+                  this.isProvince=true;
+                  this.isDistrict=true;
+                  this.isSP=true;
+                  this.isFac=true;
+                  break;
+                }
+                
                 if(this.formData["active"])
                   this.active = "Active";
                 else
@@ -97,8 +137,47 @@ export class UserProfileComponent implements OnInit {
               else
                 this.active = "InActive";
           this.isButtonVisible = true;
+          switch(this.formData["locationType"])
+          {
+          case 4260:
+            this.isBranch=true;
+            this.isProvince=false;
+            this.isDistrict=false;
+            this.isSP=false;
+            this.isFac=false;
+            break;
+            case 4261:
+            this.isBranch=false;
+            this.isProvince=true;
+            this.isDistrict=false;
+            this.isSP=false;
+            this.isFac=false;
+            break;
+            case 4262:
+            this.isBranch=false;
+            this.isProvince=true;
+            this.isDistrict=true;
+            this.isSP=false;
+            this.isFac=false;
+            break;
+            case 4263:
+            this.isBranch=false;
+            this.isProvince=true;
+            this.isDistrict=true;
+            this.isSP=true;
+            this.isFac=false;
+            break;
+            case 4264:
+            this.isBranch=false;
+            this.isProvince=true;
+            this.isDistrict=true;
+            this.isSP=true;
+            this.isFac=true;
+            break;
+          } 
+         
         }      
-        
+                
       } 
       else{
         this.service.getUserByID(this.formData["userID"]).subscribe(
@@ -123,49 +202,88 @@ export class UserProfileComponent implements OnInit {
         );
           console.log(this.formData);
           if(this.formData["active"])
-                this.active = "Active";
+              {  this.active = "Active";}
               else
-                this.active = "InActive";
+              {  this.active = "InActive";}
+
+          switch(this.formData["locationType"])
+          {
+          case 4260:
+            this.isBranch=true;
+            this.isProvince=false;
+            this.isDistrict=false;
+            this.isSP=false;
+            this.isFac=false;
+            break;
+            case 4261:
+            this.isBranch=false;
+            this.isProvince=true;
+            this.isDistrict=false;
+            this.isSP=false;
+            this.isFac=false;
+            break;
+            case 4262:
+            this.isBranch=false;
+            this.isProvince=true;
+            this.isDistrict=true;
+            this.isSP=false;
+            this.isFac=false;
+            break;
+            case 4263:
+            this.isBranch=false;
+            this.isProvince=true;
+            this.isDistrict=true;
+            this.isSP=true;
+            this.isFac=false;
+            break;
+            case 4264:
+            this.isBranch=false;
+            this.isProvince=true;
+            this.isDistrict=true;
+            this.isSP=true;
+            this.isFac=true;
+            break;
+          }                
       } 
 
-      switch(this.formData["locationType"])
-        {
-        case 4260:
-          this.isBranch=true;
-          this.isProvince=false;
-          this.isDistrict=false;
-          this.isSP=false;
-          this.isFac=false;
-          break;
-          case 4261:
-          this.isBranch=false;
-          this.isProvince=true;
-          this.isDistrict=false;
-          this.isSP=false;
-          this.isFac=false;
-          break;
-          case 4262:
-          this.isBranch=false;
-          this.isProvince=true;
-          this.isDistrict=true;
-          this.isSP=false;
-          this.isFac=false;
-          break;
-          case 4263:
-          this.isBranch=false;
-          this.isProvince=true;
-          this.isDistrict=true;
-          this.isSP=true;
-          this.isFac=false;
-          break;
-          case 4264:
-          this.isBranch=false;
-          this.isProvince=true;
-          this.isDistrict=true;
-          this.isSP=true;
-          this.isFac=true;
-          break;
-        }
+      // switch(this.formData["locationType"])
+      //   {
+      //   case 4260:
+      //     this.isBranch=true;
+      //     this.isProvince=false;
+      //     this.isDistrict=false;
+      //     this.isSP=false;
+      //     this.isFac=false;
+      //     break;
+      //     case 4261:
+      //     this.isBranch=false;
+      //     this.isProvince=true;
+      //     this.isDistrict=false;
+      //     this.isSP=false;
+      //     this.isFac=false;
+      //     break;
+      //     case 4262:
+      //     this.isBranch=false;
+      //     this.isProvince=true;
+      //     this.isDistrict=true;
+      //     this.isSP=false;
+      //     this.isFac=false;
+      //     break;
+      //     case 4263:
+      //     this.isBranch=false;
+      //     this.isProvince=true;
+      //     this.isDistrict=true;
+      //     this.isSP=true;
+      //     this.isFac=false;
+      //     break;
+      //     case 4264:
+      //     this.isBranch=false;
+      //     this.isProvince=true;
+      //     this.isDistrict=true;
+      //     this.isSP=true;
+      //     this.isFac=true;
+      //     break;
+      //   }
     }       
 
     updateFormData() {
