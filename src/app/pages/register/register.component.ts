@@ -270,7 +270,7 @@ timer: 1500,
             this.spinner.hide();
             if (res.succeeded) {
               this.formModel.reset();
-              this.showNotification('top','right','New user created!', 'Registration successful.','success');
+              this.showNotification('top','right','User registered successfully', '','success');
             } 
             else {  
               res.errors.forEach(element => {
