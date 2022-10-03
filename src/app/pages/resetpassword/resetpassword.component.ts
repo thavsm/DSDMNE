@@ -123,13 +123,13 @@ timer: 1500,
     this.service.getPasswordResetToken(this.formModel.value.UserName).subscribe(
       (res: any) => {
         this.spinner.hide();
-        this.showNotification('top','right',res.message, 'Success','success');
+        this.showNotification('top','right',res.message, '','success');
         this.EnableContorols(this.formModel.value.UserName);
       },
       err => {
         this.spinner.hide();
         console.log(err);
-        this.showNotification('top','right',err.error.message, 'Failed','danger');
+        this.showNotification('top','right',err.error.message, '','danger');
       },
     );
     
@@ -140,13 +140,13 @@ timer: 1500,
     this.service.resetPassword(rmodel).subscribe(
       (res: any) => {
         this.spinner.hide();
-        this.showNotification('top','right',res.message, 'Success','success');
+        this.showNotification('top','right',res.message, '','success');
         this.router.navigate(['/login']);
       },
       err => {
         this.spinner.hide();
         console.log(err);
-        this.showNotification('top','right',err.error.message[0].description, 'Failed','danger');
+        this.showNotification('top','right',err.error.message[0].description, '','danger');
       },
     );
 

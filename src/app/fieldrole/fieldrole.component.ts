@@ -83,7 +83,7 @@ export class FieldroleComponent implements OnInit {
   assign():void{
    if(this.assigned.length==0){
     this.treeService.assignIndicators(this.assigned,this.roleID,this.treeID).subscribe(res=>{
-      this.showNotification('top', 'center', 'Unassigned Indicators Successfully!', '', 'success');
+      this.showNotification('top', 'center', 'Indicators unassigned successfully!', '', 'success');
       this.myStepper.previous();
       this.myStepper.previous();
     });

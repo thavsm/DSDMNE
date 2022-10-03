@@ -470,7 +470,7 @@ export class IndicatorEditComponent implements OnInit {
         this.service.UpdateMetadataIndicatorForm(this.formDesignAddDataXML).subscribe(res => {
           this.spinner.hide();
 
-          this.showNotification('top', 'center', 'Indicator updated form successfully!', '', 'success');
+          this.showNotification('top', 'center', 'Indicator updated successfully', '', 'success');
         });
       });
 
