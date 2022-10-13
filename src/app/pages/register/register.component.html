@@ -65,7 +65,7 @@
                             <i class="material-icons">call</i>
                           </span>
                         </div>
-                        <input type="tel" class="form-control" placeholder="Cell Number..." formControlName="PhoneNumber" pattern="[0-9 ]{10}" maxlength="10">
+                        <input type="tel" class="form-control" placeholder="Contact Number..." formControlName="PhoneNumber" pattern="[0-9 ]{10}" maxlength="10">
                       </div>
                       <span class="text-danger ml-5"
                         *ngIf="formModel.get('PhoneNumber').touched && formModel.get('PhoneNumber').errors?.required">This field is mandatory.</span>
