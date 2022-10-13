@@ -292,7 +292,7 @@ export class AddFormComponent implements OnInit {
       }
     }
     else {
-      this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
+      this.showNotification('top', 'center', errorMessage, '', 'danger');
       errorMessage = "Please fill in ";
     }
   }
@@ -317,7 +317,7 @@ export class AddFormComponent implements OnInit {
           if (element.groupGUID !== "" && element.groupGUID !== "string" && element.fieldType.value !== "repeatgroup" && element.fieldType.value === "group" && element.fieldType.value !== "subSection" && element.fieldType.value !== "PageTitle") {
             let groupValues = element.groupGUID;
             groupValues.forEach(e => {
-              if (e.fieldValidations[0].isRequired === true && element.isAssigned === 1 && e.data === " ") {
+              if (e.fieldValidations[0].isRequired === true || e.data === "" || e.data === undefined ) {
                 errorMessage = errorMessage + e.questionName + ",";
               }
               if (e.parentFieldName === element.groupGUID) {
@@ -339,7 +339,7 @@ export class AddFormComponent implements OnInit {
           }
           else {
             element.groupGUID = "";
-            if (element.fieldValidations[0].isRequired === true && element.isAssigned === 1 && element.data === " ") {
+            if (element.fieldValidations[0].isRequired === true || element.data === "" || element.data === undefined ) {
               errorMessage = errorMessage + element.questionName + ",";
             }
           }
@@ -359,7 +359,7 @@ export class AddFormComponent implements OnInit {
             e.data = s;
           }
           e.groupGUID = "";
-          if (e.fieldValidations[0].isRequired === true && e.isAssigned === 1 && e.data === " ") {
+          if (e.fieldValidations[0].isRequired === true || e.data === "" || e.data === undefined ) {
             errorMessage = errorMessage + e.questionName + ",";
           }
           obj.push(e);
@@ -379,7 +379,7 @@ export class AddFormComponent implements OnInit {
           }
           obj.push(field);
         }
-        if (field.fieldValidations[0].isRequired === true && field.isAssigned === 1 && field.data === " ") {
+        if (field.fieldValidations[0].isRequired === true || field.data === "" || field.data === undefined ) {
           errorMessage = errorMessage + field.questionName + ","
         }
       }
@@ -423,7 +423,7 @@ export class AddFormComponent implements OnInit {
       }
     }
     else {
-      this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
+      this.showNotification('top', 'center', errorMessage, '', 'danger');
       errorMessage = "Please fill in ";
     }
   }
@@ -626,7 +626,7 @@ export class AddFormComponent implements OnInit {
       }
     }
     else {
-      this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
+      this.showNotification('top', 'center', errorMessage, '', 'danger');
       errorMessage = "Please fill in ";
     }
   }
