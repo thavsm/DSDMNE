@@ -3889,8 +3889,8 @@
 
                         <kendo-grid-column [width]="5" *ngIf="isViewOnly!='readonly'">
                             <ng-template kendoGridCellTemplate let-dataItem>
-                                <button mat-icon-button (click)="deleteFile(dataItem)">
-                                    <mat-icon class="mat-18"  style="color:red ;">delete</mat-icon>
+                                <button *ngIf="DisableButton(dataItem)==true" mat-icon-button (click)="deleteFile(dataItem);">
+                                    <mat-icon class="mat-18" style="color:red ;">delete</mat-icon>
                                 </button>
                             </ng-template>
                         </kendo-grid-column>
