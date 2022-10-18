@@ -132,7 +132,7 @@ export class MaterialModule {}
       useHash: false
     }),
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyBtkmQK6cnVNq70Cj7f0_0siF7wxw0uUlM',
+      apiKey: '',
       libraries: ['places']
     }),
     HttpClientModule,
