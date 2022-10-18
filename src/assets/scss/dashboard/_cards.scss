@@ -193,24 +193,100 @@
         }
         .card-category{
             margin-bottom: 0;
-            color: rgba($white-color, .62);
+            color:  rgb(13, 13, 13);// rgba($white-color, .62);
         }
 
         .ct-label{
-            color: rgba($white-color, .7);
+            color:   rgb(13, 13, 13);// rgba($white-color, .7);
         }
         .ct-grid{
-            stroke: rgba(255, 255, 255, 0.2);
+            stroke:  rgba(31, 6, 155, 0.8);// rgba(255, 255, 255, 0.2);
         }
         .ct-series-a .ct-point,
         .ct-series-a .ct-line,
         .ct-series-a .ct-bar,
         .ct-series-a .ct-slice-donut{
-            stroke: rgba(255,255,255,.8);
+            stroke:  rgba(31, 6, 155, 0.8);// rgba(255,255,255,.8);
         }
         .ct-series-a .ct-slice-pie,
         .ct-series-a .ct-area{
-            fill: rgba(255,255,255,.4);
+            fill:  rgba(31, 6, 155, 0.8);// rgba(255,255,255,.4);
+        }
+        .ct-series-a .ct-bar{
+          stroke-width: 10px;
+        }
+        .ct-point{
+          stroke-width: 10px;
+          stroke-linecap: round;
+        }
+        .ct-line{
+          fill: none;
+          stroke-width: 4px;
+        }
+      }
+
+      .ctgreen-chart{
+        .card-title{
+            color: $white-color;
+        }
+        .card-category{
+            margin-bottom: 0;
+            color:  rgb(13, 13, 13);// rgba($white-color, .62);
+        }
+
+        .ct-label{
+            color:   rgb(13, 13, 13);// rgba($white-color, .7);
+        }
+        .ct-grid{
+            stroke:  rgba(6, 155, 38, 0.8);// rgba(255, 255, 255, 0.2);
+        }
+        .ct-series-a .ct-point,
+        .ct-series-a .ct-line,
+        .ct-series-a .ct-bar,
+        .ct-series-a .ct-slice-donut{
+            stroke:  rgba(6, 155, 38, 0.8);// rgba(255,255,255,.8);
+        }
+        .ct-series-a .ct-slice-pie,
+        .ct-series-a .ct-area{
+            fill:  rgba(31, 6, 155, 0.8);// rgba(255,255,255,.4);
+        }
+        .ct-series-a .ct-bar{
+          stroke-width: 10px;
+        }
+        .ct-point{
+          stroke-width: 10px;
+          stroke-linecap: round;
+        }
+        .ct-line{
+          fill: none;
+          stroke-width: 4px;
+        }
+      }
+
+      .ctorange-chart{
+        .card-title{
+            color: $white-color;
+        }
+        .card-category{
+            margin-bottom: 0;
+            color:  rgb(13, 13, 13);// rgba($white-color, .62);
+        }
+
+        .ct-label{
+            color:   rgb(13, 13, 13);// rgba($white-color, .7);
+        }
+        .ct-grid{
+            stroke:  rgba(213, 28, 114, 0.8);// rgba(255, 255, 255, 0.2);
+        }
+        .ct-series-a .ct-point,
+        .ct-series-a .ct-line,
+        .ct-series-a .ct-bar,
+        .ct-series-a .ct-slice-donut{
+            stroke:  rgba(213, 28, 114, 0.8);// rgba(255,255,255,.8);
+        }
+        .ct-series-a .ct-slice-pie,
+        .ct-series-a .ct-area{
+            fill:  rgba(31, 6, 155, 0.8);// rgba(255,255,255,.4);
         }
         .ct-series-a .ct-bar{
           stroke-width: 10px;
