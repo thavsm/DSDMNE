@@ -53,12 +53,14 @@ export class AddFormComponent implements OnInit {
 
   public attachmentList: any;
   totalNumAttachments: number = 0;
-
+  attachmentID:any;
   public photoList: any;
   totalNumPhotos: number = 0;
 
   public commentList: any;
   totalNumComments: number = 0;
+
+  disableButton:boolean;
 
   @ViewChild('fileInput') fileInput: ElementRef;
   file: File = null;
@@ -292,7 +294,7 @@ export class AddFormComponent implements OnInit {
       }
     }
     else {
-      this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
+      this.showNotification('top', 'center', errorMessage, '', 'danger');
       errorMessage = "Please fill in ";
     }
   }
@@ -423,10 +425,19 @@ export class AddFormComponent implements OnInit {
       }
     }
     else {
-      this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
+      this.showNotification('top', 'center', errorMessage, '', 'danger');
       errorMessage = "Please fill in ";
     }
   }
+
+  DisableButton(attachmentID:any):boolean{
+    if(this.userDetail.formData.userID===attachmentID.userID){
+     return true;
+    }
+    else{
+      return false;
+    }
+   }
 
   goToPage(page: any) {
     this.currentPage = page;
@@ -626,7 +637,7 @@ export class AddFormComponent implements OnInit {
       }
     }
     else {
-      this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
+      this.showNotification('top', 'center', errorMessage, '', 'danger');
       errorMessage = "Please fill in ";
     }
   }
