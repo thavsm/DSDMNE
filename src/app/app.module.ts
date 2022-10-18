@@ -73,6 +73,7 @@ import { IndicatorapprovalModule } from './indicatorapproval/indicatorapproval.m
 import {NgxSpinnerModule} from 'ngx-spinner';
 import { PaginationService } from 'ngx-pagination';
 
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
 exports: [
@@ -114,10 +115,6 @@ declarations: [
 })
 export class MaterialModule {}
 
-
-
-
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -133,6 +130,10 @@ export class MaterialModule {}
     ReactiveFormsModule,
     RouterModule.forRoot(AppRoutes,{
       useHash: false
+    }),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBtkmQK6cnVNq70Cj7f0_0siF7wxw0uUlM',
+      libraries: ['places']
     }),
     HttpClientModule,
     DropDownsModule,

@@ -12,12 +12,12 @@ import { TargetAddComponent } from '../target-add/target-add.component';
 import { ExternaldataAddComponent } from '../externaldata-add/externaldata-add.component';
 import { HierarchyManagementService } from 'src/app/hierarchy-management.service';
 import { HierarchyFormPreviewComponent } from 'src/app/hierarchy-management/hierarchy-form-preview/hierarchy-form-preview.component';
+import { GoogleMapsComponent } from '../google-maps/google-maps.component';
 
 // './hierarchy-form-preview/hierarchy-form-preview.component';
 
 
 declare var $: any;
-
 
 @Component({
   selector: 'app-level-node-edit',
@@ -62,52 +62,53 @@ export class LevelNodeEditComponent implements OnInit {
   GetMetadataNodeFormID: any;
   tgAdd: any;
   OpnExternalData: any;
-  divLevelButtons : boolean  = true;
-  divAtrributes: boolean  = true;
-  thEdit: boolean  = true;
-  thDelete: boolean  = true;
+  divLevelButtons: boolean = true;
+  divAtrributes: boolean = true;
+  thEdit: boolean = true;
+  thDelete: boolean = true;
   tabIndex: number = 1;
   TabNodeEdit: string = "Node Edit";
   TabLevelEdit: string = "Level Edit";
-  btnSave : boolean  = true;
-  btnDelete: boolean  = true;
-  divIsIndicator: boolean  = false; 
-  Indicators:any=[];
-  FormCategory: any=[];
-  Form: any=[];
-  divForm: boolean  = false;
-  divFormField: boolean  = false;
+  btnSave: boolean = true;
+  btnDelete: boolean = true;
+  btnCoord: boolean = false;
+  divIsIndicator: boolean = false;
+  Indicators: any = [];
+  FormCategory: any = [];
+  Form: any = [];
+  divForm: boolean = false;
+  divFormField: boolean = false;
   FormFields: any[];
   IndicatorFormFields: any[];
-  ExternalDataType: any=[];
+  ExternalDataType: any = [];
   IndicatorAdd: any;
   XMLname: string = "";
   XMLdataExportName: string = "";
   SelectedForm: any;
   FormFieldsByFieldID: any;
   ExternalData: any;
-  divColName: boolean  = false;
-  divFormCat: boolean  = false;
-  divOperator: boolean  = false;
-  divSearchCriteriaCmb: boolean  = false;
-  divSearchCriteriaTxt: boolean  = false;
-  divSearchCriteriaNmb: boolean  = false;
-  divSearchCriteriaDate: boolean  = false;
-  divImportTableName: boolean  = false;
-  divExternalDataName: boolean  = false;
-  divExternalTableDataName: boolean  = false;
-  divFTIContorls : boolean  = false;
-  divEXTContorls: boolean  = true;
+  divColName: boolean = false;
+  divFormCat: boolean = false;
+  divOperator: boolean = false;
+  divSearchCriteriaCmb: boolean = false;
+  divSearchCriteriaTxt: boolean = false;
+  divSearchCriteriaNmb: boolean = false;
+  divSearchCriteriaDate: boolean = false;
+  divImportTableName: boolean = false;
+  divExternalDataName: boolean = false;
+  divExternalTableDataName: boolean = false;
+  divFTIContorls: boolean = false;
+  divEXTContorls: boolean = true;
   DataImportUpload: any;
   TableColumns: any;
   Dataservice: any;
   ExternalDataTableName: any;
   SelectedDataServiceID: any;
   dataServiceID: any;
-  divEXTForm: boolean  = false;
-  divEXTFormField: boolean  = false;
-  listCategory: any=[];
-  listValues: any=[];
+  divEXTForm: boolean = false;
+  divEXTFormField: boolean = false;
+  listCategory: any = [];
+  listValues: any = [];
   Calc: number = 0;
   DBCalc: any;
   FormName: any;
@@ -118,23 +119,24 @@ export class LevelNodeEditComponent implements OnInit {
   nodeID: number = 0;
   TotalVal: any;
   CalTotalVal: any;
-  isDisabled  : boolean  = false;
-  isAddDisabled : boolean  = true;
+  isDisabled: boolean = false;
+  isAddDisabled: boolean = true;
   ItemCalID: any;
-  divAdd: boolean  = true;
-  divEdit: boolean  = false;
-  divContorls : boolean  = true;
-  divNotForm: boolean  = false;
-  divIsForm: boolean  = false;
+  divAdd: boolean = true;
+  divEdit: boolean = false;
+  divContorls: boolean = true;
+  divNotForm: boolean = false;
+  divIsForm: boolean = false;
   divIsFormField: boolean = false;
   divIsFormD: boolean = false;
-  isDisabledDrp  : boolean  = true;
+  isDisabledDrp: boolean = true;
   ExtData: any[];
   FacilityTypes: any = [];
   IsFacility: number;
   divIsFacility: boolean = false;
   FacilityTypeID: any;
-  constructor(public dialog: MatDialog ,public dialogRef: MatDialogRef<LevelNodeEditComponent>,
+
+  constructor(public dialog: MatDialog, public dialogRef: MatDialogRef<LevelNodeEditComponent>,
     @Inject(MAT_DIALOG_DATA) data,
     public service: TreediagramService, public Hierarchyservice: HierarchyManagementService, public formBuilder: FormBuilder, private spinner: NgxSpinnerService) {
     this.NodeData = data;
@@ -186,28 +188,31 @@ export class LevelNodeEditComponent implements OnInit {
   divIsIndicatorButton: any;
 
   ngOnInit(): void {
-        
+    this.initializePoup();
+  }
+
+  initializePoup(){
     this.CalcAdd = {
       ViewEdit: 1
     }
 
     this.ExternalData = {
       name: "",
-      formCategoryName : "",
-      FormName : "",
-      fName : "",
-      calculation : "",
-      SearchCriteria : "",
-      selection : ""
-   
+      formCategoryName: "",
+      FormName: "",
+      fName: "",
+      calculation: "",
+      SearchCriteria: "",
+      selection: ""
+
     }
 
 
     this.Hierarchyservice.getNodeRoleFacilityType(this.NodeData.nodeID).subscribe(data => {
-      this.FacilityTypeID = data;   
+      this.FacilityTypeID = data;
 
-      if(typeof this.FacilityTypeID !== "undefined" && this.FacilityTypeID.length != 0){
-        this.NodeData.FaciltyID = this.FacilityTypeID[0].facilityTypeID; 
+      if (typeof this.FacilityTypeID !== "undefined" && this.FacilityTypeID.length != 0) {
+        this.NodeData.FaciltyID = this.FacilityTypeID[0].facilityTypeID;
       }
     });
 
@@ -230,13 +235,20 @@ export class LevelNodeEditComponent implements OnInit {
     this.nodeDescription = this.NodeData.nodeDescription;
     this.nodeParentD = this.NodeData.nodeParentD;
     this.NodeData.indicatorID = this.NodeData.indicatorID;
-    
+
+    if (this.levelID == 4264) {
+      this.btnCoord = true;
+    }
+    else {
+      this.btnCoord = false;
+    }
+
     this.Hierarchyservice.getFacilityTypes().subscribe(data => {
       this.spinner.show();
       this.FacilityTypes = data;
       this.spinner.hide();
     });
-    
+
     this.getNodeAttributesData(this.NodeData.nodeID);
     // this.getRoles();
     this.getUserfieldTypes();
@@ -263,11 +275,11 @@ export class LevelNodeEditComponent implements OnInit {
     this.getFormCategory();
 
     this.service.getTreeUpload().subscribe(data => {
-      this.DataImportUpload = data;         
+      this.DataImportUpload = data;
     });
 
     this.service.getDataService().subscribe(data => {
-      this.Dataservice = data;         
+      this.Dataservice = data;
     });
 
     this.getExternalDataType();
@@ -275,37 +287,37 @@ export class LevelNodeEditComponent implements OnInit {
     this.nodeID = this.NodeData.indicatorID;
 
 
-    this.ExternalData.SearchCriteria= "";
+    this.ExternalData.SearchCriteria = "";
     this.ExternalData.ArraySearchCriteria = "";
-    this.ExternalData.calcVal= "";
+    this.ExternalData.calcVal = "";
     this.ExternalData.column_name = "";
 
     this.CalTotalVal = {
-      total:  ""  
+      total: ""
     }
 
     this.service.getExternalTotalCalculationByNodeID(this.nodeID).subscribe(data => {
       this.TotalVal = data;
       this.CalTotalVal = {
-        total:  this.TotalVal[0].totalValue   
-      }    
+        total: this.TotalVal[0].totalValue
+      }
     });
 
 
     this.service.getTreeUpload().subscribe(data => {
-      this.DataImportUpload = data;         
+      this.DataImportUpload = data;
     });
 
     this.service.getDataService().subscribe(data => {
-      this.Dataservice = data;         
+      this.Dataservice = data;
     });
 
     this.CalcAdd = {
       ViewEdit: 1
     }
 
-    this.hideEditButtons();  
-    this.getIndicators();   
+    this.hideEditButtons();
+    this.getIndicators();
     //this.setIndicatorFileds();
 
     if (this.NodeData.IsFacilityLevel == 1) {
@@ -317,68 +329,66 @@ export class LevelNodeEditComponent implements OnInit {
     }
 
 
-    if(this.NodeData.IsIndicatorLevel == 1){
+    if (this.NodeData.IsIndicatorLevel == 1) {
       this.divIsIndicator = true;
       // this.btnSave = false;
       this.setIndicatorFileds();
-    }else{
+    } else {
       this.divIsIndicator = false;
 
-      if(this.NodeData.ViewEdit != 0){
+      if (this.NodeData.ViewEdit != 0) {
         this.btnSave = true;
       }
-      
     }
-
   }
 
   public filteredIndicators;
   public filteredFormFields;
-  
- 
 
-  getIndicators(){
-    this.spinner.show();   
+
+
+  getIndicators() {
+    this.spinner.show();
     this.Hierarchyservice.getIndicatorNodes().subscribe(data => {
-         this.Indicators = data;
-         this.filteredIndicators = this.Indicators.slice();
-         this.spinner.hide();
+      this.Indicators = data;
+      this.filteredIndicators = this.Indicators.slice();
+      this.spinner.hide();
     });
   }
 
-  EditCompCalculation(){
+  EditCompCalculation() {
 
     let Tname = "";
-    if(this.ExternalData.name == 1){
+    if (this.ExternalData.name == 1) {
 
       Tname = this.SelectedForm.formName;
 
 
-    }else if(this.ExternalData.name == 2){
+    } else if (this.ExternalData.name == 2) {
 
       Tname = this.ExternalData.uploadName.replace(/\s/g, "") + "_DataImport";
 
-    }else if(this.ExternalData.name == 3){
+    } else if (this.ExternalData.name == 3) {
 
       Tname = this.ExternalData.tablE_NAME.replace(/\s/g, "");
-     
+
     }
- 
+
     if (this.ExternalData.name != "" && this.ExternalData.calculation != "") {
 
       this.spinner.show();
-      this.service.UpdateExternalCalculation(this.ItemCalID,this.CalcAdd.nodeID,Tname, this.ExternalData.name,this.ExternalData.calculation.replaceAll('+', '*plus*').replaceAll('/', '*divide*'), this.ExternalData.calcVal).subscribe(res => {       
-        
-        if(this.ExternalData.name == 3){
-          this.service.insertExternalConnection(this.dataServiceID).subscribe(data => {});            
+      this.service.UpdateExternalCalculation(this.ItemCalID, this.CalcAdd.nodeID, Tname, this.ExternalData.name, this.ExternalData.calculation.replaceAll('+', '*plus*').replaceAll('/', '*divide*'), this.ExternalData.calcVal).subscribe(res => {
+
+        if (this.ExternalData.name == 3) {
+          this.service.insertExternalConnection(this.dataServiceID).subscribe(data => { });
         }
 
         this.service.getExternalTotalCalculationByNodeID(this.nodeID).subscribe(data => {
           this.TotalVal = data;
           this.CalTotalVal = {
-            total:  this.TotalVal[0].totalValue   
-          }  
-        });     
+            total: this.TotalVal[0].totalValue
+          }
+        });
         this.spinner.hide();
         this.service.getExternalCalculationByNodeID(this.nodeID);
         this.Clear();
@@ -397,19 +407,19 @@ export class LevelNodeEditComponent implements OnInit {
     this.DataVal = "";
     this.CalcEval = "";
     this.ExternalData.uploadName = "";
-    this.ExternalData.connectString  = "";
-    this.ExternalData.tablE_NAME  = "";
-    this.ExternalData.column_name  = "";
+    this.ExternalData.connectString = "";
+    this.ExternalData.tablE_NAME = "";
+    this.ExternalData.column_name = "";
     this.ExternalData.FormName = "";
-    this.ExternalData.fName  = "";
-    this.ExternalData.ArraySearchCriteria  = "";
+    this.ExternalData.fName = "";
+    this.ExternalData.ArraySearchCriteria = "";
     this.ExternalData.SearchCriteria = "";
-    this.ExternalData.selection  = "";
+    this.ExternalData.selection = "";
     this.ExternalData.calculation = "";
     this.ExternalData.calcVal = "";
-    this.ExternalData.tablE_NAME  = "";
-    this.ExternalData.tablE_NAME  = "";
-    this.ExternalData.tablE_NAME  = "";
+    this.ExternalData.tablE_NAME = "";
+    this.ExternalData.tablE_NAME = "";
+    this.ExternalData.tablE_NAME = "";
     this.isDisabled = false;
     this.divExternalDataName = false;
     this.divExternalTableDataName = false;
@@ -433,43 +443,43 @@ export class LevelNodeEditComponent implements OnInit {
 
 
     let Tname = "";
-    if(this.ExternalData.name == 1){
+    if (this.ExternalData.name == 1) {
 
       Tname = this.SelectedForm.formName;
 
 
-    }else if(this.ExternalData.name == 2){
+    } else if (this.ExternalData.name == 2) {
 
       Tname = this.ExternalData.uploadName.replace(/\s/g, "") + "_DataImport";
 
-    }else if(this.ExternalData.name == 3){
+    } else if (this.ExternalData.name == 3) {
 
       Tname = this.ExternalData.tablE_NAME.replace(/\s/g, "");
-     
+
     }
- 
+
     if (this.ExternalData.name != "" && this.ExternalData.calculation != "") {
 
       this.spinner.show();
-      this.service.insertExternalCalculation(this.CalcAdd.nodeID,Tname, this.ExternalData.name," ", " ",this.ExternalData.calculation.replaceAll('+', '*plus*').replaceAll('/', '*divide*'), this.ExternalData.calcVal).subscribe(res => {       
-        
-        if(this.ExternalData.name == 3){
-          this.service.insertExternalConnection(this.dataServiceID).subscribe(data => {});            
+      this.service.insertExternalCalculation(this.CalcAdd.nodeID, Tname, this.ExternalData.name, " ", " ", this.ExternalData.calculation.replaceAll('+', '*plus*').replaceAll('/', '*divide*'), this.ExternalData.calcVal).subscribe(res => {
+
+        if (this.ExternalData.name == 3) {
+          this.service.insertExternalConnection(this.dataServiceID).subscribe(data => { });
         }
-        
-        this.service.addNodeVal(this.CalcAdd.nodeID,Tname, " "," ",this.ExternalData.calculation.replaceAll('+', '*plus*').replaceAll('/', '*divide*'),this.ExternalData.calcVal,this.ExternalData.name,this.ExternalData.calculation.replaceAll('+', '*plus*').replaceAll('/', '*divide*')).subscribe(res => {
+
+        this.service.addNodeVal(this.CalcAdd.nodeID, Tname, " ", " ", this.ExternalData.calculation.replaceAll('+', '*plus*').replaceAll('/', '*divide*'), this.ExternalData.calcVal, this.ExternalData.name, this.ExternalData.calculation.replaceAll('+', '*plus*').replaceAll('/', '*divide*')).subscribe(res => {
           this.service.getExternalTotalCalculationByNodeID(this.nodeID).subscribe(data => {
             this.TotalVal = data;
             this.CalTotalVal = {
-              total:  this.TotalVal[0].totalValue   
-            }  
-          });     
+              total: this.TotalVal[0].totalValue
+            }
+          });
           this.spinner.hide();
           this.service.getExternalCalculationByNodeID(this.nodeID);
           this.Clear();
           this.showNotification('top', 'center', 'Calculation added successfully!', '', 'success');
         });
-         
+
       });
     }
     else {
@@ -478,17 +488,17 @@ export class LevelNodeEditComponent implements OnInit {
   }
 
   addCalculation() {
-   
-    if(this.ExternalData.name == 1){
+
+    if (this.ExternalData.name == 1) {
 
       this.addCalculationForm();
 
-    }else if(this.ExternalData.name == 2){
+    } else if (this.ExternalData.name == 2) {
 
       this.addCalculationImportData();
-      
 
-    }else if(this.ExternalData.name == 3){
+
+    } else if (this.ExternalData.name == 3) {
 
       this.addCalculationExternalData();
 
@@ -496,87 +506,87 @@ export class LevelNodeEditComponent implements OnInit {
 
     this.isAddDisabled = false;
     this.service.getExternalCalculationByNodeID(this.nodeID);
-  
+
   }
 
-  
+
   addCalculationExternalData() {
 
-    if(this.ExternalData.calculation != "" && this.ExternalData.selection == ""){
+    if (this.ExternalData.calculation != "" && this.ExternalData.selection == "") {
 
       this.showNotification('top', 'center', 'Please choose operation', '', 'danger');
 
-    }else{
+    } else {
 
-      if(this.ExternalData.column_name != "" && this.ExternalData.SearchCriteria != ""){
+      if (this.ExternalData.column_name != "" && this.ExternalData.SearchCriteria != "") {
 
         this.divOperator = true;
         this.listValues = this.ExternalData.SearchCriteria;
-    
-        
+
+
         let TableName = this.ExternalData.tablE_NAME.replace(/\s/g, "");
         this.ExternalData.calculation += this.ExternalData.selection + this.ExternalData.column_name + '(' + this.listValues + ')';
-  
-        
-        if(this.ExternalData.calcVal != "" ){
+
+
+        if (this.ExternalData.calcVal != "") {
           this.CalcEval = this.ExternalData.calcVal;
         }
-        
-  
-        if(this.ExternalData.SearchCriteria != "" ){
-  
+
+
+        if (this.ExternalData.SearchCriteria != "") {
+
           this.DataVal = this.listValues;
-  
+
           this.service.ExtrenalCountColumnData(this.ExternalData.column_name, this.DataVal, TableName, this.ExternalData.connectString).subscribe(data => {
             this.DBCalc = data;
             this.CalcEval += this.ExternalData.selection + this.DBCalc[0].counter;
             this.ExternalData.calcVal = eval(this.CalcEval);
           }
           );
-        } 
+        }
 
-      }else{
+      } else {
         this.showNotification('top', 'center', 'Please choose all required(*) fields', '', 'danger');
       }
-  
+
     }
 
   }
 
   addCalculationImportData() {
 
-    if(this.ExternalData.calculation != "" && this.ExternalData.selection == ""){
+    if (this.ExternalData.calculation != "" && this.ExternalData.selection == "") {
 
       this.showNotification('top', 'center', 'Please choose operation', '', 'danger');
 
-    }else{
+    } else {
 
-      if(this.ExternalData.column_name != "" && this.ExternalData.SearchCriteria != ""){
+      if (this.ExternalData.column_name != "" && this.ExternalData.SearchCriteria != "") {
 
 
         this.divOperator = true;
         this.listValues = this.ExternalData.SearchCriteria;
-    
-        
+
+
         let TableName = this.ExternalData.uploadName.replace(/\s/g, "") + "_DataImport";
         this.ExternalData.calculation += this.ExternalData.selection + this.ExternalData.column_name + '(' + this.listValues + ')';
-  
-        if(this.ExternalData.calcVal != "" ){
+
+        if (this.ExternalData.calcVal != "") {
           this.CalcEval = this.ExternalData.calcVal;
         }
-        
-        if(this.ExternalData.SearchCriteria != "" ){
-  
+
+        if (this.ExternalData.SearchCriteria != "") {
+
           this.DataVal = this.listValues;
-  
+
           this.service.CountColumnData(this.ExternalData.column_name, this.DataVal, TableName).subscribe(data => {
             this.DBCalc = data;
             this.CalcEval += this.ExternalData.selection + this.DBCalc[0].counter;
             this.ExternalData.calcVal = eval(this.CalcEval);
           }
           );
-        }   
-      }else{
+        }
+      } else {
         this.showNotification('top', 'center', 'Please choose all required(*) fields', '', 'danger');
       }
 
@@ -585,7 +595,7 @@ export class LevelNodeEditComponent implements OnInit {
 
   }
 
-  clickRefresh(item:any){
+  clickRefresh(item: any) {
 
     // if(item.externalDataTypeID == 1){
 
@@ -594,76 +604,30 @@ export class LevelNodeEditComponent implements OnInit {
     // }else if(item.externalDataTypeID == 2){
 
     //   this.refreshCalculationImportData(item);
-      
+
 
     // }else if(item.externalDataTypeID == 3){
 
     //   this.refreshCalculationExternalData(item);
 
     // }
-    
+
     this.service.RefreshExternalFormCalculation(item.calculationField.replaceAll('+', '*plus*').replaceAll('/', '*divide*'), item.externalDataName, item.calculationID, item.connectString, item.externalDataTypeID).subscribe(data => {
 
       this.spinner.show();
       this.service.getExternalCalculationByNodeID(this.nodeID);
-      this.showNotification('top','center','Calculation Refreshed Succesfully!','','success');
+      this.showNotification('top', 'center', 'Calculation Refreshed Succesfully!', '', 'success');
       this.service.getExternalTotalCalculationByNodeID(this.nodeID).subscribe(data => {
         this.TotalVal = data;
         this.CalTotalVal = {
-          total:  this.TotalVal[0].totalValue   
-        }  
+          total: this.TotalVal[0].totalValue
+        }
         this.spinner.hide();
-      });    
+      });
 
     });
 
   }
-
-  // refreshCalculationForm(item:any) {
-   
-    
-
-  // }
-
-  // refreshCalculationImportData(item:any) {
-
-  //   this.service.RefreshExternalFormCalculation(item.calculationField.replaceAll('+', '*plus*').replaceAll('/', '*divide*'), item.externalDataName, item.calculationID, item.connectString, item.externalDataTypeID).subscribe(data => {
-
-  //     this.spinner.show();
-  //     this.service.getExternalCalculationByNodeID(this.nodeID);
-  //     this.showNotification('top','center','Calculation Refreshed Succesfully!','Success.','success');
-  //     this.service.getExternalTotalCalculationByNodeID(this.nodeID).subscribe(data => {
-  //       this.TotalVal = data;
-  //       this.CalTotalVal = {
-  //         total:  this.TotalVal[0].totalValue   
-  //       }  
-  //       this.spinner.hide();
-  //     });    
-
-  //   });
-
-  // }
-
-  // refreshCalculationExternalData(item:any) {
-
-  //   this.service.RefreshExternalFormCalculation(item.calculationField.replaceAll('+', '*plus*').replaceAll('/', '*divide*'), item.externalDataName, item.calculationID, item.connectString, item.externalDataTypeID).subscribe(data => {
-
-  //     this.spinner.show();
-  //     this.service.getExternalCalculationByNodeID(this.nodeID);
-  //     this.showNotification('top','center','Calculation Refreshed Succesfully!','Success.','success');
-  //     this.service.getExternalTotalCalculationByNodeID(this.nodeID).subscribe(data => {
-  //       this.TotalVal = data;
-  //       this.CalTotalVal = {
-  //         total:  this.TotalVal[0].totalValue   
-  //       }  
-
-  //       this.spinner.hide();
-  //     });    
-
-  //   });
-
-  // }
-
 
   addCalculationForm() {
 
@@ -697,7 +661,7 @@ export class LevelNodeEditComponent implements OnInit {
           this.FormName = 'Data_' + this.SelectedForm.formName + "_" + this.FormFieldsByFieldID[0].formPage.name.replace(/\s/g, "");
           this.ExternalData.calculation += this.ExternalData.selection + this.selectedFieldName + '(' + this.listValues + ')';
 
-          if(this.ExternalData.calcVal != "" ){
+          if (this.ExternalData.calcVal != "") {
             this.CalcEval = this.ExternalData.calcVal;
           }
 
@@ -749,11 +713,11 @@ export class LevelNodeEditComponent implements OnInit {
 
   }
 
-  getExternalDataType(){
-    this.spinner.show();   
+  getExternalDataType() {
+    this.spinner.show();
     this.service.getExternalDataType().subscribe(data => {
-         this.ExternalDataType = data;
-         this.spinner.hide();
+      this.ExternalDataType = data;
+      this.spinner.hide();
     });
   }
 
@@ -766,13 +730,13 @@ export class LevelNodeEditComponent implements OnInit {
     this.ExternalData.calcVal = item.value;
     this.divOperator = true;
     this.isDisabled = true;
-    
 
-    this.divEdit =true;
-    this.divAdd =false;
+
+    this.divEdit = true;
+    this.divAdd = false;
 
     this.ItemCalID = item.calculationID;
-    if(item.externalDataTypeID  == 1){
+    if (item.externalDataTypeID == 1) {
 
       this.divFormCat = true;
       this.divImportTableName = false;
@@ -795,7 +759,7 @@ export class LevelNodeEditComponent implements OnInit {
         });
       });
 
-    }else if(item.externalDataTypeID == 2){
+    } else if (item.externalDataTypeID == 2) {
 
       this.divFormCat = false;
       this.divForm = false;
@@ -811,9 +775,9 @@ export class LevelNodeEditComponent implements OnInit {
       this.divColName = true;
 
       this.service.getTableColumns(TableName).subscribe(data => {
-      this.TableColumns = data;         
+        this.TableColumns = data;
 
-    });
+      });
 
     } else if (item.externalDataTypeID == 3) {
 
@@ -864,20 +828,20 @@ export class LevelNodeEditComponent implements OnInit {
         this.service.DeleteExternalCalculation(item.calculationID).subscribe(data => {
           this.spinner.hide();
           this.service.getExternalCalculationByNodeID(this.nodeID);
-          this.showNotification('top','center','Calculation deleted succesfully!','','success');
+          this.showNotification('top', 'center', 'Calculation deleted succesfully!', '', 'success');
           this.service.getExternalTotalCalculationByNodeID(this.nodeID).subscribe(data => {
             this.TotalVal = data;
             this.CalTotalVal = {
-              total:  this.TotalVal[0].totalValue   
-            }  
-          });    
+              total: this.TotalVal[0].totalValue
+            }
+          });
 
         });
       }
     })
   }
 
- 
+
 
   openFormDesign(): void {
 
@@ -886,57 +850,57 @@ export class LevelNodeEditComponent implements OnInit {
       this.Preview = {
         formID: this.NodeData.FormName,
         indicatorID: this.NodeData.indicatorID,
-        formName: '' , //'DevelopmentandResearch19'
-        formCaptureID:'', 
+        formName: '', //'DevelopmentandResearch19'
+        formCaptureID: '',
         state: 'edit',
         fieldID: this.NodeData.fName
       }
-  
+
       const dialogRef = this.dialog.open(HierarchyFormPreviewComponent, {
         width: '65%',
         height: '65%',
         data: this.Preview,
-        disableClose:true
+        disableClose: true
       });
 
-    }else {
+    } else {
       this.showNotification('top', 'center', 'Please select a form and form field before preview!', '', 'danger');
       return;
     }
 
   }
 
-  getFormCategory(){
-    this.spinner.show();   
+  getFormCategory() {
+    this.spinner.show();
     this.service.getformCategoryList().subscribe(data => {
-         this.FormCategory = data;       
-         this.spinner.hide();
+      this.FormCategory = data;
+      this.spinner.hide();
     });
   }
 
   onformCategoryChange(ob) {
 
     this.spinner.show();
-    this.service.GetFormCategoryId(ob.value).subscribe(data => {   
-      this.Form = data;     
+    this.service.GetFormCategoryId(ob.value).subscribe(data => {
+      this.Form = data;
       this.spinner.hide();
-      this.divForm = true; 
+      this.divForm = true;
     });
   }
 
-  onformChange(ob) {  
+  onformChange(ob) {
     this.spinner.show();
     this.service.GetFormFieldsByFormId(ob.value).subscribe(data => {
       this.FormFields = data;
       this.filteredFormFields = this.FormFields.slice();
       this.spinner.hide();
       this.divFormField = true;
-    }); 
+    });
 
     this.SelectedForm = this.Form.find(i => i.formID === ob.value);
   }
 
-  onformfieldChange(ob) {  
+  onformfieldChange(ob) {
     this.service.GetFormFieldsByFieldID(ob.value).subscribe(data => {
       this.FormFieldsByFieldID = data;
     });
@@ -946,47 +910,39 @@ export class LevelNodeEditComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  hideEditButtons(){
+  hideEditButtons() {
 
 
-    if(this.NodeData.ViewEdit == 1){
+    if (this.NodeData.ViewEdit == 1) {
 
-      this.divLevelButtons = true;  
-      this.divAddAtrributes = true;  
-      this.divAtrributes = true;  
-      this.thEdit= true;  
-      this.thDelete= true;  
+      this.divLevelButtons = true;
+      this.divAddAtrributes = true;
+      this.divAtrributes = true;
+      this.thEdit = true;
+      this.thDelete = true;
       this.TabNodeEdit = "Node Edit";
       this.TabLevelEdit = "Level Edit";
       this.tabIndex = 1;
-      this.btnSave= true;  
-      this.btnDelete= true;  
+      this.btnSave = true;
+      this.btnDelete = true;
 
-    }else if(this.NodeData.ViewEdit == 0){
+    } else if (this.NodeData.ViewEdit == 0) {
 
-      this.divLevelButtons = false;  
-      this.divAddAtrributes = false; 
-      this.divAtrributes = false;  
-      this.thEdit= false;  
-      this.thDelete= false;  
+      this.divLevelButtons = false;
+      this.divAddAtrributes = false;
+      this.divAtrributes = false;
+      this.thEdit = false;
+      this.thDelete = false;
       this.TabNodeEdit = "Node";
-      this.TabLevelEdit = "Level"; 
+      this.TabLevelEdit = "Level";
       this.tabIndex = 1;
-      this.btnSave= false;  
-      this.btnDelete= false;  
+      this.btnSave = false;
+      this.btnDelete = false;
+      this.btnCoord = false;
     }
 
   }
   public gridData: any = this.service.getLevelMetadata(this.levelID);
-
-  // getRoles(){
-  //   this.spinner.show();   
-  //   this.service.getRoles().subscribe(data => {
-  //        this.Roles = data;
-  //        this.spinner.hide();
-  //   });
-  // }
-
 
   splitString(text: string): any[] {
     let values = text.split(";");
@@ -1003,23 +959,21 @@ export class LevelNodeEditComponent implements OnInit {
 
 
   OpenTargets() {
-
     this.tgAdd = {
-      targetID:0,
-      quaterOne:"",
-      quaterTwo:"",
+      targetID: 0,
+      quaterOne: "",
+      quaterTwo: "",
       quaterThree: "",
-      quaterFour:"",
+      quaterFour: "",
       annualTarget: "",
       nodeID: this.NodeData.nodeID,
       financialYear: "",
       financialStartDate: "",
-      ViewEdit:this.NodeData.ViewEdit
-
+      ViewEdit: this.NodeData.ViewEdit
     }
 
-     let WinHeight = '75%';
-     let WinWidth = '55%';
+    let WinHeight = '75%';
+    let WinWidth = '55%';
 
     const dialogRef = this.dialog.open(TargetAddComponent, { width: WinWidth, data: this.tgAdd, disableClose: true }
     );
@@ -1034,8 +988,8 @@ export class LevelNodeEditComponent implements OnInit {
   OpenExternalData() {
 
     this.OpnExternalData = {
-      nodeID : this.NodeData.nodeID,
-      ViewEdit:1
+      nodeID: this.NodeData.nodeID,
+      ViewEdit: 1
     }
 
 
@@ -1066,7 +1020,7 @@ export class LevelNodeEditComponent implements OnInit {
           this.filteredParents = this.ParentNodes.slice();
           this.spinner.hide();
         });
-      }     
+      }
     });
   }
 
@@ -1080,7 +1034,7 @@ export class LevelNodeEditComponent implements OnInit {
     });
   }
 
-  
+
   getNodeAttributes(NodelevelID: any) {
     // this.formDesignData = this.getNodeAttributesData(this.NodeID); 
 
@@ -1161,7 +1115,7 @@ export class LevelNodeEditComponent implements OnInit {
 
                 // } else {
 
-                  
+
                 // }
 
                 element["data"] = value;
@@ -1334,7 +1288,7 @@ export class LevelNodeEditComponent implements OnInit {
     }
   }
 
-  deleteLevel(){
+  deleteLevel() {
 
     Swal.fire({
       title: 'Are you sure you want to delete Level?',
@@ -1358,8 +1312,8 @@ export class LevelNodeEditComponent implements OnInit {
 
   }
 
-  
-  deleteNode(){
+
+  deleteNode() {
 
     Swal.fire({
       title: 'Are you sure you want to delete node?',
@@ -1381,9 +1335,9 @@ export class LevelNodeEditComponent implements OnInit {
       }
     })
 
-    
+
   }
-  
+
 
   clickDelete(item: any) {
     Swal.fire({
@@ -1417,7 +1371,7 @@ export class LevelNodeEditComponent implements OnInit {
     this.divEditAtrributes = true;
   }
 
-  
+
   addAttributes() {
 
     this.service.getAttributesDataExportName(this.NodeAttributesData.friendlyname.replace(/\s/g, ""), this.NodeData.levelID).subscribe(data => {
@@ -1532,17 +1486,17 @@ export class LevelNodeEditComponent implements OnInit {
     //     };
 
     //     this.service.addupdateIndicatorNode(Indicatorvalues).subscribe(data => {
-   
+
     //     }); 
 
     //   }else {
     //     this.showNotification('top', 'center', 'Please select a Form and Form Field before saving!', '', 'danger');
     //     return;
     //   }
-      
+
     // }
 
-    if(this.IsFacility == 1){
+    if (this.IsFacility == 1) {
       var values = {
         "nodeID": this.NodeData.nodeID,
         "facilityTypeID": this.NodeData.FaciltyID
@@ -1610,8 +1564,8 @@ export class LevelNodeEditComponent implements OnInit {
 
           }
 
-          this.formDesignAddData[this.XMLdataExportName] = item.data 
-          
+          this.formDesignAddData[this.XMLdataExportName] = item.data
+
         }
       }
     })
@@ -1632,11 +1586,11 @@ export class LevelNodeEditComponent implements OnInit {
               "metadataNodeFormID": this.GetMetadataNodeFormID.filter(item => item)[0],
               "nodeID": this.NodeData.nodeID,
               "status": "1"
-  
+
             }
-  
+
             this.formDesignAddDataXML["data"] = JsonToXML.parse("Node", this.formDesignAddData);
-  
+
             this.service.UpdateNodeXMLForm(this.GetMetadataNodeFormID.filter(item => item)[0], this.formDesignAddDataXML).subscribe(res => {
               this.spinner.hide();
               this.showNotification('top', 'center', 'Node updated form successfully!', '', 'success');
@@ -1674,8 +1628,8 @@ export class LevelNodeEditComponent implements OnInit {
       message: message
     }, {
       type: type,
-    delay: 1500,
-timer: 1500,
+      delay: 1500,
+      timer: 1500,
       placement: {
         from: from,
         align: align
@@ -1703,58 +1657,58 @@ timer: 1500,
       if (typeof data !== 'undefined' && data.length > 0) {
 
         this.divIsForm = false;
-        this.divNotForm = true;    
-        this.isDisabled = true;    
-        this.ExternalData.name = this.ExtData[0].externalDataTypeID ;
-      }  
+        this.divNotForm = true;
+        this.isDisabled = true;
+        this.ExternalData.name = this.ExtData[0].externalDataTypeID;
+      }
 
-    });      
+    });
   }
-  
 
-  
-  setIndicatorFileds(){
-    this.spinner.show();    
+
+
+  setIndicatorFileds() {
+    this.spinner.show();
     this.service.getIndicatorNode(this.NodeData.indicatorID).subscribe(data => {
 
       if (typeof data !== 'undefined' && data.length > 0) {
         this.IndicatorFormFields = data;
         this.divIsForm = true;
-        this.divNotForm = false;  
-        this.isDisabled = true; 
+        this.divNotForm = false;
+        this.isDisabled = true;
         this.ExternalData.name = 1003;
-        if(this.IndicatorFormFields.length > 0 ){
-          this.spinner.show();  
-          this.service.GetFormCategoryId(this.IndicatorFormFields[0].formCategoryID).subscribe(data => {    
-            this.Form = data;     
+        if (this.IndicatorFormFields.length > 0) {
+          this.spinner.show();
+          this.service.GetFormCategoryId(this.IndicatorFormFields[0].formCategoryID).subscribe(data => {
+            this.Form = data;
             this.SelectedForm = this.Form.find(i => i.formID === this.IndicatorFormFields[0].formID);
             this.spinner.hide();
             this.divIsFormD = true;
           });
-  
+
           this.spinner.show();
           this.service.GetFormFieldsByFormId(this.IndicatorFormFields[0].formID).subscribe(data => {
             this.FormFields = data;
             this.filteredFormFields = this.FormFields.slice();
             this.spinner.hide();
             this.divIsFormField = true;
-          }); 
-  
+          });
+
           this.spinner.show();
           this.service.GetFormFieldsByFieldID(this.IndicatorFormFields[0].fieldID).subscribe(data => {
             this.FormFieldsByFieldID = data;
             this.spinner.hide();
-          });      
+          });
         }
 
         this.spinner.hide();
         this.NodeData.indicatorID = this.IndicatorFormFields[0].indicatorID;
-        this.NodeData.FormCategory = this.IndicatorFormFields[0].formCategoryID;     
+        this.NodeData.FormCategory = this.IndicatorFormFields[0].formCategoryID;
         this.NodeData.FormName = this.IndicatorFormFields[0].formID;
         this.NodeData.fName = this.IndicatorFormFields[0].fieldID;
-      }  
+      }
 
-    }); 
+    });
   }
 
   getIndicatorAttributes() {
@@ -1820,7 +1774,7 @@ timer: 1500,
 
           } else if (this.formDesign[index].dataExportName == "Description") {
 
-            element["data"] =this.IndicatorAdd.indicatorDescription;
+            element["data"] = this.IndicatorAdd.indicatorDescription;
 
           }
 
@@ -1830,7 +1784,7 @@ timer: 1500,
                 element["data"] = value;
               }
             }
-          }) 
+          })
         }
       });
 
@@ -1838,19 +1792,19 @@ timer: 1500,
     });
   }
 
-  onformChangeIsForm(ob) {  
+  onformChangeIsForm(ob) {
     this.spinner.show();
     this.service.GetFormFieldsByFormId(ob.value).subscribe(data => {
       this.FormFields = data;
       this.filteredFormFields = this.FormFields.slice();
       this.spinner.hide();
       this.divIsFormField = true;
-    }); 
+    });
 
     this.SelectedForm = this.Form.find(i => i.formID === ob.value);
-  }  
-  
-  onIsformfieldChange(ob) {  
+  }
+
+  onIsformfieldChange(ob) {
     this.service.GetFormFieldsByFieldID(ob.value).subscribe(data => {
       this.FormFieldsByFieldID = data;
     });
@@ -1858,8 +1812,8 @@ timer: 1500,
   onIsformCategoryChange(ob) {
 
     this.spinner.show();
-    this.service.GetFormCategoryId(ob.value).subscribe(data => {   
-      this.Form = data;     
+    this.service.GetFormCategoryId(ob.value).subscribe(data => {
+      this.Form = data;
       this.spinner.hide();
       this.divIsFormD = true;
     });
@@ -1867,37 +1821,37 @@ timer: 1500,
 
 
 
-  EXThideEditButtons(){
+  EXThideEditButtons() {
 
 
-    if(this.CalcAdd.ViewEdit == 1){
+    if (this.CalcAdd.ViewEdit == 1) {
 
       this.divContorls = true;
-      this.thEdit= true;  
-      this.thDelete= true;  
+      this.thEdit = true;
+      this.thDelete = true;
 
-    }else if(this.CalcAdd.ViewEdit == 0){
+    } else if (this.CalcAdd.ViewEdit == 0) {
 
       this.divContorls = false;
-      this.thEdit= false;  
-      this.thDelete= false;  
+      this.thEdit = false;
+      this.thDelete = false;
     }
 
   }
   public gridEXTData: any = this.service.getExternalCalculationByNodeID(this.nodeID);
 
-  onType(ob) {  
+  onType(ob) {
 
-    if(this.ExternalData.name == 1){
+    if (this.ExternalData.name == 1) {
 
       this.divFormCat = true;
       this.divImportTableName = false;
       this.divExternalTableDataName = false;
       this.divExternalDataName = false;
-      this.divNotForm  = true;
-      this.divIsForm  = false;
+      this.divNotForm = true;
+      this.divIsForm = false;
 
-    }else if(this.ExternalData.name == 2){
+    } else if (this.ExternalData.name == 2) {
 
       this.divFormCat = false;
       this.divForm = false;
@@ -1905,10 +1859,10 @@ timer: 1500,
       this.divImportTableName = true;
       this.divExternalTableDataName = false;
       this.divExternalDataName = false;
-      this.divNotForm  = true;
-      this.divIsForm  = false;
+      this.divNotForm = true;
+      this.divIsForm = false;
 
-    }else if(this.ExternalData.name == 3){
+    } else if (this.ExternalData.name == 3) {
 
       this.divFormCat = false;
       this.divForm = false;
@@ -1916,18 +1870,18 @@ timer: 1500,
       this.divImportTableName = false;
       this.divExternalTableDataName = false;
       this.divExternalDataName = true;
-      this.divNotForm  = true;
-      this.divIsForm  = false;
+      this.divNotForm = true;
+      this.divIsForm = false;
 
-    }else if(this.ExternalData.name == 1003){
-      this.divNotForm  = false;
-      this.divIsForm  = true;
+    } else if (this.ExternalData.name == 1003) {
+      this.divNotForm = false;
+      this.divIsForm = true;
     }
 
 
   }
 
-  
+
   onDataservice(ob) {
 
     this.divExternalTableDataName = true;
@@ -1940,10 +1894,10 @@ timer: 1500,
       });
     });
 
-    
+
     this.SelectedDataServiceID = this.Dataservice.find(i => i.connectString === ob.value);
     this.dataServiceID = this.SelectedDataServiceID.dataServiceID;
- 
+
   }
 
   onUploadNameChange(ob) {
@@ -1951,8 +1905,8 @@ timer: 1500,
     let TableName = ob.value + "_DataImport";
     this.divColName = true;
 
-     this.service.getTableColumns(TableName).subscribe(data => {
-      this.TableColumns = data;         
+    this.service.getTableColumns(TableName).subscribe(data => {
+      this.TableColumns = data;
     });
 
   }
@@ -1962,8 +1916,8 @@ timer: 1500,
     let TableName = ob.value;
     this.divColName = true;
 
-     this.service.getExternalTableColumns(this.ExternalData.connectString ,TableName).subscribe(data => {
-      this.TableColumns = data;         
+    this.service.getExternalTableColumns(this.ExternalData.connectString, TableName).subscribe(data => {
+      this.TableColumns = data;
     });
 
   }
@@ -1971,13 +1925,13 @@ timer: 1500,
   onColName(ob) {
     this.divSearchCriteriaTxt = true;
   }
-  
+
 
   getIndicatorAttributesData(IndicatorID: any) {
 
     this.spinner.show();
     this.Hierarchyservice.getIndicatorAttributesDataByIndicatorID(IndicatorID).subscribe(data => {
-      
+
       this.formDesignData = data;
       this.getIndicatorAttributes();
       this.spinner.hide();
@@ -1985,19 +1939,19 @@ timer: 1500,
   }
 
 
-  onEXTformfieldChange(ob) {  
+  onEXTformfieldChange(ob) {
 
     this.service.GetFormFieldsByFieldID(ob.value).subscribe(data => {
       this.FormFieldsByFieldID = data;
 
-      this.ExternalData.SearchCriteria= "";
+      this.ExternalData.SearchCriteria = "";
       this.ExternalData.ArraySearchCriteria = "";
       if (this.FormFieldsByFieldID[0].fieldTypeID == 5) {
 
         this.divSearchCriteriaCmb = true;
         this.divSearchCriteriaTxt = false;
         this.divSearchCriteriaNmb = false;
-        this.divSearchCriteriaDate= false;
+        this.divSearchCriteriaDate = false;
         this.listCategory = this.splitString(this.FormFieldsByFieldID[0].listValue);
 
 
@@ -2006,22 +1960,22 @@ timer: 1500,
         this.divSearchCriteriaCmb = false;
         this.divSearchCriteriaTxt = false;
         this.divSearchCriteriaNmb = false;
-        this.divSearchCriteriaDate= true;
+        this.divSearchCriteriaDate = true;
 
 
-      } else if (this.FormFieldsByFieldID[0].fieldTypeID  == 9) {
+      } else if (this.FormFieldsByFieldID[0].fieldTypeID == 9) {
 
         this.divSearchCriteriaCmb = false;
         this.divSearchCriteriaTxt = false;
         this.divSearchCriteriaNmb = true;
-        this.divSearchCriteriaDate= false;
+        this.divSearchCriteriaDate = false;
 
 
       } else {
         this.divSearchCriteriaCmb = false;
         this.divSearchCriteriaTxt = true;
         this.divSearchCriteriaNmb = false;
-        this.divSearchCriteriaDate= false;
+        this.divSearchCriteriaDate = false;
       }
 
       this.selectedFieldName = this.FormFieldsByFieldID[0].fieldName;
@@ -2033,26 +1987,38 @@ timer: 1500,
   onEXTformCategoryChange(ob) {
 
     this.spinner.show();
-    this.service.GetFormCategoryId(ob.value).subscribe(data => {   
-      this.Form = data;     
+    this.service.GetFormCategoryId(ob.value).subscribe(data => {
+      this.Form = data;
       this.spinner.hide();
       this.divEXTForm = true;
     });
   }
 
 
-  onEXTformChange(ob) {  
+  onEXTformChange(ob) {
     this.spinner.show();
     this.service.GetFormFieldsByFormId(ob.value).subscribe(data => {
       this.FormFields = data;
       this.filteredFormFields = this.FormFields.slice();
       this.spinner.hide();
       this.divFormField = true;
-    }); 
+    });
 
     this.SelectedForm = this.Form.find(i => i.formID === ob.value);
   }
-  
 
+  getCoord() {
+    let WinHeight = '55%';
+    let WinWidth = '55%';
 
+    const dialogRef = this.dialog.open(GoogleMapsComponent, 
+      { width: WinWidth, 
+        data: this.NodeData.nodeID, 
+        disableClose: true 
+      });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.initializePoup();
+    });
+  }
 }

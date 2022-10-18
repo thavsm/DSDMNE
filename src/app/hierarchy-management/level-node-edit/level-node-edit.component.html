@@ -554,7 +554,9 @@
                             </div>        
                         </mat-tab> -->
                     </mat-tab-group>
-                
+                    <div class="form-group">
+                        <button (click)="getCoord()" class="btn btn-md btn-primary" *ngIf="btnCoord">Capture/Edit Coordinates</button>
+                    </div>
                     <div class="form-group">
                         <button (click)="addForm()" class="btn btn-md btn-primary" *ngIf="btnSave">Save</button>
                         <!-- <div *ngIf="btnSave">
