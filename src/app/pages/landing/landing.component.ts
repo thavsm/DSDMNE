@@ -22,8 +22,25 @@ export class LandingComponent implements OnInit {
   
   images = [  
     { img: "./assets/img/carousel1.jpg" },  
-    { img: "./assets/img/carousel2.jpg" },  
-    { img: "./assets/img/carousel3.jpg" },   
+    { img: "./assets/img/carousel2.JPG" },  
+    { img: "./assets/img/carousel3.JPG" },
+    { img: "./assets/img/carousel4.JPG" },  
+    { img: "./assets/img/carousel5.JPG" },   
+    { img: "./assets/img/carousel6.JPG" },  
+    { img: "./assets/img/carousel7.JPG" },   
+    { img: "./assets/img/carousel8.JPG" },  
+    { img: "./assets/img/carousel9.jpg" },   
+    { img: "./assets/img/carousel10.jpg" },  
+    { img: "./assets/img/carousel11.jpg" },   
+    { img: "./assets/img/carousel12.jpg" },  
+    { img: "./assets/img/carousel13.jpg" },   
+    { img: "./assets/img/carousel14.jpg" },  
+    { img: "./assets/img/carousel15.jpg" },  
+    { img: "./assets/img/carousel16.jpg" },  
+    { img: "./assets/img/carousel17.jpg" },
+    { img: "./assets/img/carousel18.jpg" },  
+    { img: "./assets/img/carousel19.jpg" },
+    { img: "./assets/img/carousel20.jpg" }
   ];  
   
 
@@ -32,6 +49,7 @@ export class LandingComponent implements OnInit {
     "slidesToScroll": 1,  
     "dots": true,  
     "infinite": true,
+    "autoplay":true
   };  
 
   test: Date = new Date();

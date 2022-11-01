@@ -65,13 +65,17 @@ import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
 import { UserService } from './shared/user.service';
 import { AuthInterceptor } from './auth/auth.interceptor';
-
+// import {VgCoreModule} from '@videogular/ngx-videogular/core';
+// import {VgControlsModule} from '@videogular/ngx-videogular/controls';
+// import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
+// import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
 import { IndicatorapprovalModule } from './indicatorapproval/indicatorapproval.module';
 
 
 
 import {NgxSpinnerModule} from 'ngx-spinner';
 import { PaginationService } from 'ngx-pagination';
+
 
 
 @NgModule({
@@ -106,10 +110,17 @@ MatTabsModule,
 MatToolbarModule,
 MatTooltipModule,
 MatNativeDateModule,
-NgxSpinnerModule
+NgxSpinnerModule,
+
+    // VgCoreModule,
+    // VgControlsModule,
+    // VgOverlayPlayModule,
+    // VgBufferingModule
 ],
 declarations: [
   
+  
+ 
   ]
 })
 export class MaterialModule {}
@@ -144,7 +155,7 @@ export class MaterialModule {}
     NavbarModule,
     FooterModule,
     FixedpluginModule,
-    MatProgressSpinnerModule    
+    MatProgressSpinnerModule
   ],
   providers: [
     MatNativeDateModule,

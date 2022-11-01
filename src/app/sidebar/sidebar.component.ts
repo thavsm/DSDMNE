@@ -52,7 +52,8 @@ export const ROUTES: RouteInfo[] = [{
             //{path: 'level', title: 'level management', ab:'LM' , TreeCategoryID : 3},
             //{path: 'formroles',title: 'Forms', ab:'F'},
         ]
-    },{
+    }
+    ,{
         path: '/administration',
         title: 'Administration',
         type: 'sub',
@@ -161,6 +162,17 @@ export const ROUTES: RouteInfo[] = [{
         children: [
             {path: 'sqlreports',title: 'SQL Reports', ab:'S'},
             {path: 'powerBireports',title: 'PowerBi Reports', ab:'P'}
+        ]
+    },
+    ,{
+        path: '/usermanager',
+        title: 'help',
+        type: 'sub',
+        icontype: 'help',
+        role: [],
+        collapse: 'help',
+        children: [
+            {path: 'help',title: 'help', ab:'H'}       
         ]
     }
 ];

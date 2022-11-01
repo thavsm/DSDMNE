@@ -137,6 +137,10 @@ export const AppRoutes: Routes = [
       {
         path: 'indicatorReports',
         component: IndicatorReportComponent
+      },
+      {
+        path: 'usermanager/help',
+        loadChildren: () => import('./usermanager/usermanager.module').then(m => m.UserManagerModule)
       }
     ]
   },

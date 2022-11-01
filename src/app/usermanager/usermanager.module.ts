@@ -18,11 +18,18 @@ import { PDFModule, ExcelModule, } from "@progress/kendo-angular-grid";
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NewroleComponent } from './newrole/newrole.component';
 import { AngularDualListBoxModule } from 'angular-dual-listbox';
-import {MatStepperModule} from '@angular/material/stepper';
-import {MatListModule} from '@angular/material/list';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatListModule } from '@angular/material/list';
 import { FacilitymanagerComponent } from './facilitymanager/facilitymanager.component';
 import { FacilityUpdateComponent } from './facilitymanager/facility-update/facility-update.component';
 import { FacilityaddComponent } from './facilitymanager/facilityadd/facilityadd.component';
+import { HelpComponent } from './help/help.component';
+// import {VgCoreModule} from '@videogular/ngx-videogular/core';
+// import {VgControlsModule} from '@videogular/ngx-videogular/controls';
+// import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
+// import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
+
+
 @NgModule({
     imports: [
         CommonModule,
@@ -38,7 +45,11 @@ import { FacilityaddComponent } from './facilitymanager/facilityadd/facilityadd.
         NgxSpinnerModule,
         AngularDualListBoxModule,
         MatStepperModule,
-        MatListModule
+        MatListModule,
+        // VgCoreModule,
+        // VgControlsModule,
+        // VgOverlayPlayModule,
+        // VgBufferingModule
     ],
 
     declarations: [
@@ -51,7 +62,8 @@ import { FacilityaddComponent } from './facilitymanager/facilityadd/facilityadd.
         NewroleComponent,
         FacilitymanagerComponent,
         FacilityUpdateComponent,
-        FacilityaddComponent
+        FacilityaddComponent,
+        HelpComponent
     ]
 })
 
