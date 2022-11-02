@@ -22,6 +22,17 @@ export class UserService {
   private showMenu = new BehaviorSubject(true);
   public sm = this.showMenu.asObservable();
 
+  getUserRegistrations(): Observable<any[]> {
+    return this.http.get<any>(this.BaseURI + '/Dashboard/GetUserRegistrations');
+  }
+  
+  getCapturedForms(): Observable<any[]> {
+    return this.http.get<any>(this.BaseURI + '/Dashboard/GetFormsCaptured');
+  }
+
+  getCompletedTasks(): Observable<any[]> {
+    return this.http.get<any>(this.BaseURI + '/Dashboard/GetCompletedTasks');
+  }
 
   setMenuShow(show: boolean)
   {
