@@ -23,6 +23,7 @@ export class TaskDetailComponent implements OnInit {
   pid: number;
   taskArray: any[];
   actionTaken: number;
+  audittaskArray: any[];
 
   roles = [
     {value: '1', viewValue: 'Admin'},
@@ -100,11 +101,12 @@ export class TaskDetailComponent implements OnInit {
 
     this.service.getuserTask(body).subscribe(
         res => {
-          
+          console.log(res['workflow']);
           this.workflowData = res['workflow'];
           this.formData = res['formData'];
           this.pid = res['workflow']['processID'];
           this.taskArray = res['workflow']['list'];
+          this.audittaskArray = res['workflow']['auditTrailList'];
           let taskpend = this.taskArray.find((obj1: { id: number; }) => {
             return obj1.id == parseInt(tid)
         });
