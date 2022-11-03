@@ -46,7 +46,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { SignaturePadModule } from 'angular2-signaturepad';
-
+import { GoogleMapsComponent } from './google-maps/google-maps.component';
+import { AgmCoreModule } from '@agm/core';
 
 @Injectable({ providedIn: 'root' })
 
@@ -72,6 +73,10 @@ import { SignaturePadModule } from 'angular2-signaturepad';
     MatSelectFilterModule,
     PDFExportModule,
     RouterModule.forChild(hierarchymanagementRoutes),
+    AgmCoreModule.forRoot({
+      apiKey: '',
+      libraries: ['places']
+    }),
     FormsModule,  ReactiveFormsModule,  MatDialogModule,
     MatIconModule,
     MatTableModule,
@@ -99,7 +104,8 @@ import { SignaturePadModule } from 'angular2-signaturepad';
       IndicatorManagementComponent,
       IndicatorAddComponent,
       IndicatorEditComponent,
-      HierarchyFormPreviewComponent
+      HierarchyFormPreviewComponent,
+      GoogleMapsComponent
       ]
 ,
 bootstrap: [HierarchyManagementComponent],

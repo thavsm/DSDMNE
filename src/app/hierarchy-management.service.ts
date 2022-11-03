@@ -131,6 +131,13 @@ export class HierarchyManagementService {
   getFacilityType(){
     return this.http.get<any>(this.API_URL+'Trees/getFacilityType');
   }
+
+  getGeoCords(nodeID:any){
+    return this.http.get<any>(this.API_URL+'Trees/'+nodeID+'/getGeoCords');
+  }
+
+  UpdateGeoCords(nodeID:any,Address:any,Xcoordinate:any,Ycoordinate:any){
+    return this.http.post(this.API_URL+'Trees/'+nodeID+'/'+Address+'/'+Xcoordinate+'/'+Ycoordinate+'/updateGeoCords',{},{responseType:  'text'});
+  }
   //#endregion
 }
-

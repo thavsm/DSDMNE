@@ -63,7 +63,7 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <table id="tblProcess" class="table table-striped">
+                                            <!-- <table id="tblProcess" class="table table-striped">
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
@@ -75,13 +75,38 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr *ngFor="let obj of taskArray;let i = index">
+                                                    <tr *ngFor="let obj of audittaskArray;let i = index">
                                                         <td>{{ i+1 }}</td>
                                                         <td>{{ obj['userDescription'] }}</td>
                                                         <td>{{ obj['actionRequiredDescription'] }}</td>
                                                         <td>{{ obj['actionTakenDescription'] }}</td>
                                                         <td>{{ obj['postedOn'] }}</td>
                                                         <td>{{ obj['completedOn'] }}</td>
+                                                    </tr>
+                                                </tbody>
+
+                                            </table> -->
+                                            <table id="tblProcess" class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Task</th>
+                                                        <th>Role</th>
+                                                        <th>Location</th>
+                                                        <th>User</th>
+                                                        <th>Completed On</th>
+                                                        <th>Comment</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let obj of audittaskArray;let i = index">
+                                                        <td>{{ i+1 }}</td>
+                                                        <td>{{ obj['actionRequiredDescription'] }}</td>
+                                                        <td>{{ obj['quickComments'] }}</td>
+                                                        <td>{{ obj['actionTakenDescription'] }}</td>
+                                                        <td>{{ obj['userDescription'] }}</td>
+                                                        <td>{{ obj['completedOn'] }}</td>
+                                                        <td>{{ obj['comments'] }}</td>
                                                     </tr>
                                                 </tbody>
 
