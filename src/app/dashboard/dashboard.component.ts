@@ -169,7 +169,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         this.startAnimationForBarChart(websiteViewsChart);
       })
     })
-
     const optionsWebsiteViewsChart = {
       axisX: {
         showGrid: false
