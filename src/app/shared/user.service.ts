@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
 import { User } from './user.model';
 import { environment } from '../../environments/environment';
 import { role } from './lookup.model';
@@ -9,6 +9,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Observable } from 'rxjs';
 import {MatTableModule} from '@angular/material/table';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -16,12 +17,15 @@ export class UserService {
 
   constructor(private fb: FormBuilder, private http: HttpClient) { }
   readonly BaseURI = environment.API_URL;
+  readonly BaseURIHelp = environment.API_FormURLForHelp;
   //readonly BaseURI = 'https://app1.terra.group/DSDFormWeb/api';
   
   public ulist:User[];
   private showMenu = new BehaviorSubject(true);
   public sm = this.showMenu.asObservable();
-
+  downloadFile(): any {
+		return this.http.get(this.BaseURIHelp+'/PdfFiles/Terra Analytics_A New Dawn.pdf', {responseType: 'blob'});
+  }
   getUserRegistrations(): Observable<any[]> {
     return this.http.get<any>(this.BaseURI + '/Dashboard/GetUserRegistrations');
   }

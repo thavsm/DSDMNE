@@ -11,36 +11,28 @@
                             <h4 class="card-title">Help</h4>
                         </div>
                         <div class="card-body">
-
                             <div style="display: flex;">
                                 <mat-card style="flex: 1 1 auto;">
                                     <div>
-                                        <p style="font-size: xx-large; font-weight: normal; color: rgb(150, 68, 0); font-family: Verdana, Geneva, Tahoma, sans-serif;"> Pdf Manuals </p>
+                                        <p style="font-size: xx-large; font-weight: normal; color: rgb(150, 68, 0); font-family: Verdana, Geneva, Tahoma, sans-serif;">
+                                            Pdf Manuals </p>
                                     </div>
                                     <br>
-                                    <a download="Manual1" target="_blank" style="font-size: large"
-                                        href="/assets/pdf/Software-Architecture-Patterns.pdf">
-                                        Click here to download manual
-                                    </a>
-                                    <br>
-                                    <a download="Manual2" target="_blank" style="font-size: large"
-                                        href="/assets/pdf/Learning Angular A no-nonsense beginners guide to building web applications with Angular 10 and TypeScript by Aristeidis Bampakos, Pablo Deeleman (z-lib.org).pdf">
-                                        Click here to download manual
-                                    </a>
-                                    <br>
-                                    <a download="Manual3" target="_blank" style="font-size: large"
-                                        href="/assets/pdf/tableToPdf.pdf">
-                                        Click here to download manual
-                                    </a>
+                                    <div>
+                                        <input type="button" (click)="download()" value="Download Employee Data" />
+                 
+                                    </div>
                                 </mat-card>
 
                                 <mat-card style="flex: 1 1 auto;">
                                     <div>
-                                        <p style="font-size: xx-large; font-weight: normal; color: rgb(150, 68, 0); font-family: Verdana, Geneva, Tahoma, sans-serif;"> Videos </p>
+                                        <p
+                                            style="font-size: xx-large; font-weight: normal; color: rgb(150, 68, 0); font-family: Verdana, Geneva, Tahoma, sans-serif;">
+                                            Videos </p>
                                     </div>
                                     <br>
                                     <div style="font-size: large">
-                                       First Video
+                                        First Video
                                     </div>
                                     <div id="instructions">
                                         <div>
@@ -53,12 +45,6 @@
                                                     type='video/mp4' />
                                             </video>
                                         </div>
-                                        <!-- <div>
-                                            <button (click)="playPause()">Play/Pause</button>
-                                            <button (click)="restart();">Restart</button>
-                                            <button (click)="skip(-10)">Rewind</button>
-                                            <button (click)="skip(10)">Fastforward</button>
-                                        </div> -->
                                     </div>
                                     <br><br>
                                     <div style="font-size: large">
@@ -70,17 +56,10 @@
                                                 height="267px" controls preload="none"
                                                 poster='http://video-js.zencoder.com/oceans-clip.jpg'
                                                 data-setup='{ "aspectRatio":"640:267", "playbackRates": [1, 1.5, 2] }'>
-                                                <source
-                                                    src="assets\videos\y2mate.com - HTML in 100 Seconds_v144P.mp4"
+                                                <source src="assets\videos\y2mate.com - HTML in 100 Seconds_v144P.mp4"
                                                     type='video/mp4' />
                                             </video>
                                         </div>
-                                        <!-- <div>
-                                            <button (click)="playPause()">Play/Pause</button>
-                                            <button (click)="restart();">Restart</button>
-                                            <button (click)="skip(-10)">Rewind</button>
-                                            <button (click)="skip(10)">Fastforward</button>
-                                        </div> -->
                                     </div>
                                     <br><br>
                                     <div style="font-size: large">
@@ -97,12 +76,6 @@
                                                     type='video/mp4' />
                                             </video>
                                         </div>
-                                        <!-- <div>
-                                            <button (click)="playPause()">Play/Pause</button>
-                                            <button (click)="restart();">Restart</button>
-                                            <button (click)="skip(-10)">Rewind</button>
-                                            <button (click)="skip(10)">Fastforward</button>
-                                        </div> -->
                                     </div>
                                 </mat-card>
                             </div>
