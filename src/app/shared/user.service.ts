@@ -24,7 +24,7 @@ export class UserService {
   private showMenu = new BehaviorSubject(true);
   public sm = this.showMenu.asObservable();
   downloadFile(): any {
-		return this.http.get(this.BaseURIHelp+'/PdfFiles/Terra Analytics_A New Dawn.pdf', {responseType: 'blob'});
+		return this.http.get(this.BaseURIHelp+'/assets/pdf/Software-Architecture-Patterns.pdf', {responseType: 'blob'});
   }
   getUserRegistrations(): Observable<any[]> {
     return this.http.get<any>(this.BaseURI + '/Dashboard/GetUserRegistrations');
