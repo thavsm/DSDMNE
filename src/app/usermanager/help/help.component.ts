@@ -1,5 +1,11 @@
+import { HttpClient } from '@angular/common/http';
 import { variable } from '@angular/compiler/src/output/output_ast';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { environment } from 'src/environments/environment';
+
+import { saveAs } from 'file-saver';
+import { UserService } from 'src/app/shared/user.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-help',
@@ -8,46 +14,27 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 })
 
 export class HelpComponent implements OnInit {
-
-  constructor() { }
-
+  public link:string;
+  constructor(private http: HttpClient, private service: UserService) { }
+  readonly BaseURI = environment.API_URL;
   ngOnInit(): void {
+
   }
+ 
   name = 'Angular';
   @ViewChild('videoPlayer', { static: false }) videoplayer: ElementRef;
   isPlay: boolean = false;
   toggleVideo(event: any) {
     this.videoplayer.nativeElement.play();
   }
-  playPause() {
-    var myVideo: any = document.getElementById('my_video_1');
-    if (myVideo.paused) myVideo.play();
-    else myVideo.pause();
-  }
 
-  makeBig() {
-    var myVideo: any = document.getElementById('my_video_1');
-    myVideo.width = 560;
-  }
-
-  makeSmall() {
-    var myVideo: any = document.getElementById('my_video_1');
-    myVideo.width = 320;
-  }
-
-  makeNormal() {
-    var myVideo: any = document.getElementById('my_video_1');
-    myVideo.width = 420;
-  }
-
-  skip(value) {
-    let video: any = document.getElementById('my_video_1');
-    video.currentTime += value;
-  }
-
-  restart() {
-    let video: any = document.getElementById('my_video_1');
-    video.currentTime = 0;
-  }
-
+	download() {
+		this.service.downloadFile().subscribe((response: any) => {
+			let blob:any = new Blob([response], { type: 'text/json; charset=utf-8' });
+			const url = window.URL.createObjectURL(blob);
+			window.open(url);
+			saveAs(blob, 'employees.pdf');
+			}), (error: any) => console.log('Error downloading the file'),
+			() => console.info('File downloaded successfully');
+	}
 }
