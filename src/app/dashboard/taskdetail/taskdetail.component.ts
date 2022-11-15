@@ -181,7 +181,7 @@ export class TaskDetailComponent implements OnInit {
         this.service.completeTask(formData1).subscribe(
           res => {
             this.spinner.hide();
-            this.showNotification('top','center','User account approved successfully','','success');
+            this.showNotification('top','center','Data has been verified and approved','','success');
             this.router.navigate(['/dashboard']);
           },
           err => {
@@ -231,7 +231,7 @@ export class TaskDetailComponent implements OnInit {
           this.service.rejectTask(formData1, 'dd').subscribe(
             res => {
               this.spinner.hide();
-              this.showNotification('top','center','User account rejected succesfully','','success');
+              this.showNotification('top','center','User account has been rejected','','success');
               this.router.navigate(['/dashboard']);
             },
             err => {
