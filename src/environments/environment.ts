@@ -6,7 +6,7 @@ export const environment = {
   production: false,
    API_URL: 'https://localhost:44305/api',  
   API_FormURL: 'https://localhost:44305/1/', 
-  API_FormURLForHelp: 'https://https://app1.terra.group/dsd_uat',
+  API_FormURLForHelp: 'https://app1.terra.group/dsd_uat',
 
   // API_URL: 'https://testportal.dsd.gov.za/MNE_DSD_API/api',
   // API_FormURL: 'https://testportal.dsd.gov.za/MNE_DSD_API/1/',
