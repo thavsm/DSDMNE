@@ -28,7 +28,9 @@ export class HelpComponent implements OnInit {
     this.videoplayer.nativeElement.play();
   }
 
-	download() {
+	download(doc:any) {
+    if(doc == 1)
+    {
 		this.service.downloadFile().subscribe((response: any) => {
 			let blob:any = new Blob([response], { type: 'text/json; charset=utf-8' });
 			const url = window.URL.createObjectURL(blob);
@@ -36,5 +38,29 @@ export class HelpComponent implements OnInit {
 			saveAs(blob, 'employees.pdf');
 			}), (error: any) => console.log('Error downloading the file'),
 			() => console.info('File downloaded successfully');
-	}
+	  }
+
+    if(doc == 2)
+    {
+		this.service.downloadFile2().subscribe((response: any) => {
+			let blob:any = new Blob([response], { type: 'text/json; charset=utf-8' });
+			const url = window.URL.createObjectURL(blob);
+			window.open(url);
+			saveAs(blob, 'employees.pdf');
+			}), (error: any) => console.log('Error downloading the file'),
+			() => console.info('File downloaded successfully');
+	  }
+
+    if(doc == 3)
+    {
+		this.service.downloadFile3().subscribe((response: any) => {
+			let blob:any = new Blob([response], { type: 'text/json; charset=utf-8' });
+			const url = window.URL.createObjectURL(blob);
+			window.open(url);
+			saveAs(blob, 'employees.pdf');
+			}), (error: any) => console.log('Error downloading the file'),
+			() => console.info('File downloaded successfully');
+	  }
+  }
+
 }

@@ -26,6 +26,12 @@ export class UserService {
   downloadFile(): any {
 		return this.http.get(this.BaseURIHelp+'/assets/pdf/Software-Architecture-Patterns.pdf', {responseType: 'blob'});
   }
+  downloadFile2(): any {
+		return this.http.get(this.BaseURIHelp+'/assets/pdf/Software-Architecture-Patterns.pdf', {responseType: 'blob'});
+  }
+  downloadFile3(): any {
+		return this.http.get(this.BaseURIHelp+'/assets/pdf/Software-Architecture-Patterns.pdf', {responseType: 'blob'});
+  }
   getUserRegistrations(): Observable<any[]> {
     return this.http.get<any>(this.BaseURI + '/Dashboard/GetUserRegistrations');
   }
