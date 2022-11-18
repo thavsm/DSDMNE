@@ -17,6 +17,7 @@ export class HelpComponent implements OnInit {
   public link:string;
   constructor(private http: HttpClient, private service: UserService) { }
   readonly BaseURI = environment.API_URL;
+  readonly BaseURIHelp = environment.API_FormURLForHelp;
   ngOnInit(): void {
 
   }
@@ -28,39 +29,20 @@ export class HelpComponent implements OnInit {
     this.videoplayer.nativeElement.play();
   }
 
-	download(doc:any) {
-    if(doc == 1)
-    {
-		this.service.downloadFile().subscribe((response: any) => {
-			let blob:any = new Blob([response], { type: 'text/json; charset=utf-8' });
-			const url = window.URL.createObjectURL(blob);
-			window.open(url);
-			saveAs(blob, 'employees.pdf');
-			}), (error: any) => console.log('Error downloading the file'),
-			() => console.info('File downloaded successfully');
-	  }
-
-    if(doc == 2)
-    {
-		this.service.downloadFile2().subscribe((response: any) => {
-			let blob:any = new Blob([response], { type: 'text/json; charset=utf-8' });
-			const url = window.URL.createObjectURL(blob);
-			window.open(url);
-			saveAs(blob, 'employees.pdf');
-			}), (error: any) => console.log('Error downloading the file'),
-			() => console.info('File downloaded successfully');
-	  }
-
-    if(doc == 3)
-    {
-		this.service.downloadFile3().subscribe((response: any) => {
-			let blob:any = new Blob([response], { type: 'text/json; charset=utf-8' });
-			const url = window.URL.createObjectURL(blob);
-			window.open(url);
-			saveAs(blob, 'employees.pdf');
-			}), (error: any) => console.log('Error downloading the file'),
-			() => console.info('File downloaded successfully');
-	  }
+  download(doc: any) {
+    switch (doc) {
+      case 1:
+        window.open(this.BaseURIHelp + '/assets/pdf/DSD_Electronic ME System_Data Capturer_UserManual.pdf', '_blank');
+        break;
+      case 2:
+        window.open(this.BaseURIHelp + '/assets/pdf/DSD_Electronic ME System_Verifier_UserManual.pdf', '_blank');
+        break;
+      case 3:
+        window.open(this.BaseURIHelp + '/assets/pdf/DSD_Electronic ME System_Oversight_UserManual.pdf', '_blank');
+        break;
+      default:
+        console.log("No such manual exists!");
+        break;
+    }
   }
-
 }
