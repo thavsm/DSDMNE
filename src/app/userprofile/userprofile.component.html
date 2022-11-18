@@ -107,7 +107,7 @@
                     </div>
                     <div class="col-md-6">
                         <mat-form-field appearance="outline" *ngIf="isFac">
-                            <mat-label>Facilities</mat-label>
+                            <mat-label>Facilities/NPOs</mat-label>
                             <mat-select [(ngModel)]="formData['facilityID']" (selectionChange)="updateFormData()">
                                 <mat-option *ngFor="let f of facilities" [value]="f.nodeID">
                                     {{ f.nodeName }}
