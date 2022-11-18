@@ -10,7 +10,7 @@
                     <div class="col-md-6">
                         <mat-form-field appearance="outline">
                             <mat-label>First Name</mat-label>
-                            <input matInput [value]="formData['fullName']" (input)="updateFormData()">
+                            <input matInput [(ngModel)]="formData['fullName']" [value]="formData['fullName']" (input)="updateFormData()">
                         </mat-form-field>
                     </div>
                     <div class="col-md-6">
