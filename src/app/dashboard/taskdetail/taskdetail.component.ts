@@ -181,8 +181,14 @@ export class TaskDetailComponent implements OnInit {
         this.service.completeTask(formData1).subscribe(
           res => {
             this.spinner.hide();
-            this.showNotification('top','center','Data has been verified and approved','','success');
-            this.router.navigate(['/dashboard']);
+            if (this.pid === 1) {
+              this.showNotification('top', 'center', 'User Approved Successfully', '', 'success');
+              this.router.navigate(['/dashboard']);
+            }
+            else if (this.pid === 2){
+              this.showNotification('top', 'center', 'Data has been verified and approved', '', 'success');
+              this.router.navigate(['/dashboard']);
+            }
           },
           err => {
             this.spinner.hide();
