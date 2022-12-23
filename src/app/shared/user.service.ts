@@ -27,7 +27,9 @@ export class UserService {
   getUserRegistrations(): Observable<any[]> {
     return this.http.get<any>(this.BaseURI + '/Dashboard/GetUserRegistrations');
   }
-  
+  getTaskAuditTrail_User(WorkflowID: number,TaskID:number, UserID:string): Observable<any[]> {
+    return this.http.get<any>(this.BaseURI + '/Dashboard/getTaskAuditTrail_User');
+  }
   getCapturedForms(): Observable<any[]> {
     return this.http.get<any>(this.BaseURI + '/Dashboard/GetFormsCaptured');
   }

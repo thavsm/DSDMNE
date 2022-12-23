@@ -106,7 +106,7 @@ export class TaskDetailComponent implements OnInit {
           this.formData = res['formData'];
           this.pid = res['workflow']['processID'];
           this.taskArray = res['workflow']['list'];
-          this.audittaskArray = res['workflow']['auditTrailList'];
+          //this.audittaskArray = res['workflow']['auditTrailList'];
           let taskpend = this.taskArray.find((obj1: { id: number; }) => {
             return obj1.id == parseInt(tid)
         });
@@ -131,6 +131,10 @@ export class TaskDetailComponent implements OnInit {
           console.log(err);
         },
       );
+    this.service.getTaskAuditTrail_User(parseInt(wkid),parseInt(tid),this.nextUserID).subscribe(taskuser=>{
+      this.audittaskArray=taskuser;
+    }
+    )
   }
 
   completeTask() {
@@ -287,7 +291,3 @@ export class TaskDetailComponent implements OnInit {
 }
 
 }
-
-
-
-

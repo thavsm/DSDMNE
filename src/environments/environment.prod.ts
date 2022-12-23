@@ -1,8 +1,10 @@
 export const environment = {
   production: true,
   API_URL: 'https://testportal.dsd.gov.za/MNE_DSD_API/api',
+
   API_FormURL: 'https://testportal.dsd.gov.za/MNE_DSD_API/1/',
-  API_FormURLForHelp: 'https://testportal.dsd.gov.za/MNE_DSD_API',
+
+  API_FormURLForHelp: 'https://testportal.dsd.gov.za/mne_app_uat',
   
   // API_URL: 'https://app1.terra.group/MNE_UAT_API/api',
   // API_FormURL: 'https://app1.terra.group/MNE_UAT_API/1/'  ,
