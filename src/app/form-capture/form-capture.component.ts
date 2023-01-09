@@ -39,7 +39,7 @@ export class FormCaptureComponent implements OnInit {
   userLocation:any;
   userLocationLevel:any;
   PeriodStatus:any;
-
+  NonFacilityCaptured:any;
   ngOnInit(): void {
     this.spinner.show();
     this.userService.getUserProfile().subscribe(
@@ -147,19 +147,23 @@ export class FormCaptureComponent implements OnInit {
 
   refreshLocationList() {
       this.service.GetUserLocationHierachy(this.userDetail.formData.userID).subscribe(location => {
+        let levelID:any=[];
         this.spinner.show();
         this.userLocation=location;
-        console.log("location"+location);
-        console.log("Role"+this.userDetail.formData.role);
         this.service.getFormCaptureCountPerLocation(location,this.userDetail.formData.role).subscribe(result => {
-          this.data =  result;
-          if(this.data.length>0){
-            console.log(this.data[0].levelID);
-            this.userLocationLevel=this.data[0].levelID;
-            this.PeriodStatus=this.data[0].periodStatus;
-          }
-          this.spinner.hide();
-        });
+          levelID=result;
+          this.service.getFormCaptureCountPerLocationLevel(location,this.userDetail.formData.role,levelID[0].levelID).subscribe(result => {
+            this.data =  result;
+            if(this.data.length>0){
+              console.log(this.data[0].levelID);
+              this.userLocationLevel=this.data[0].levelID;
+              this.PeriodStatus=this.data[0].periodStatus;
+              this.NonFacilityCaptured=this.data[0].nonFacilityCaptured;
+              console.log(this.data[0].nonFacilityCaptured);
+            }
+            this.spinner.hide();
+          });
+      });
       });
   }
 
