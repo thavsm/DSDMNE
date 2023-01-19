@@ -1,18 +1,20 @@
-
-import { lexdata } from 'src/app/form-capture/lexdata';
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { FormAddComponent } from 'src/app/form-list/form-add/form-add.component';
 import { FormbuilderService } from 'src/app/shared/formbuilder.service';
 import Swal from 'sweetalert2'
-//import { AddSignatureComponent } from './add-signature.component';
+import { merge } from 'jquery';
+import { SignaturePad } from 'angular2-signaturepad';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { saveAs } from 'file-saver';
 import * as FileSaver from 'file-saver';
-//import { lexdata } from '../lexdata';
+import { lexdata } from 'src/app/form-capture/lexdata';
+import { ignoreElements } from 'rxjs/operators';
 import { UserService } from 'src/app/shared/user.service';
-import { AddSignatureComponent } from 'src/app/form-capture/add-form/add-signature.component';
-
-
+import { NgModel } from '@angular/forms';
+import { ItemTemplateDirective } from '@progress/kendo-angular-dropdowns';
+import { CalcReportComponent } from '../calc-report.component';
 
 declare var $: any;
 
@@ -32,10 +34,11 @@ interface Item {
 })
 export class ApprovalFormComponent implements OnInit {
 
- 
   panelOpenState = false;
 
   formDesign: any = [];
+
+  oldFormDesign:any=[];
 
   pages: any = [];
 
@@ -63,14 +66,12 @@ export class ApprovalFormComponent implements OnInit {
 
   public attachmentList: any;
   totalNumAttachments: number = 0;
-  attachmentID:any;
+
   public photoList: any;
   totalNumPhotos: number = 0;
 
   public commentList: any;
   totalNumComments: number = 0;
-
-  disableButton:boolean;
 
   @ViewChild('fileInput') fileInput: ElementRef;
   file: File = null;
@@ -92,12 +93,30 @@ export class ApprovalFormComponent implements OnInit {
 
   IndicatorData: any;
 
-  isViewOnly: any;
+  isViewOnly:boolean=true;
 
-  constructor(public dialog: MatDialog, private service: FormbuilderService, private spinner: NgxSpinnerService, public dialogRef: MatDialogRef<ApprovalFormComponent>, private userService: UserService) {
-    this.formData = JSON.parse(localStorage.getItem('formCaptureDetails') || '{}');
-    this.IndicatorData = localStorage.getItem('IndicatorData') || '';
-    //this.IndicatorData='80';
+  disableButton:boolean;
+
+  constructor(public dialog: MatDialog, private service: FormbuilderService, private spinner: NgxSpinnerService, public dialogRef: MatDialogRef<CalcReportComponent>, private userService: UserService, @Inject(MAT_DIALOG_DATA) data) {
+    console.log(data);
+
+    // this.IndicatorData=27;
+    // this.formData  = {
+    //   formID: 6,
+    //   formName: 'ProvincialIndicators',
+    //   formCaptureID:'8581',
+    //   state: 'edit'
+    // };
+
+    this.IndicatorData = data["indicatorID"];
+    this.formData  = {
+      formID: data["formID"],
+      formName: data["formName"],
+      formCaptureID: data["formcapturedID"],
+      state: 'edit'
+    };
+
+    //this.formData = JSON.parse(localStorage.getItem('formApprovalDetails') || '{}');
     this.tabIndex = parseInt(localStorage.getItem('tabIndex'));
     this.ClickedRow = function (index) {
       this.HighlightRow = index;
@@ -107,15 +126,21 @@ export class ApprovalFormComponent implements OnInit {
     }
     localStorage.setItem('fieldNameAttach', "");
     localStorage.setItem('fieldNamePhoto', "");
-    localStorage.setItem('fieldNameComment', "");
   }
 
-  ngOnInit(): void {
-    this.isViewOnly = this.formData.view;
+  ngOnInit(): void {    
     localStorage.setItem('cloneNumberForEdit', "0");
     this.userService.getUserProfile().subscribe(
       res => {
         this.userDetail = res;
+        let userRoleID = this.userDetail.formData.role;
+        this.userService.getFormsRole(userRoleID).subscribe(formRole => {
+          formRole.forEach(role => {
+            if (role.id===this.formData.formID && role.capture == false) {
+              this.isViewOnly=true;
+            }
+          });
+        });
         this.refreshPageList();
         this.refreshAttachmentList();
         this.refreshPhotoList();
@@ -130,6 +155,16 @@ export class ApprovalFormComponent implements OnInit {
       },
     );
   }
+
+  
+  DisableButton(attachmentID:any):boolean{
+    if(this.userDetail.formData.userID===attachmentID.userID){
+     return true;
+    }
+    else{
+      return false;
+    }
+   }
 
   //#region Page Methods
   prevPage() {
@@ -148,14 +183,10 @@ export class ApprovalFormComponent implements OnInit {
             });
             element.data = s;
           }
-          if(element.fieldType.value === "lexicon list"){
-            let val = element.data;
-            element.data = val.name;
-          }
           if (element.groupGUID !== "" && element.groupGUID !== "string" && element.fieldType.value !== "repeatgroup" && element.fieldType.value === "group" && element.fieldType.value !== "subSection" && element.fieldType.value !== "PageTitle") {
             let groupValues = element.groupGUID;
             groupValues.forEach(e => {
-              if (e.fieldValidations[0].isRequired === true && element.isAssigned === 1 && e.data === " ") {
+              if (e.fieldValidations[0].isRequired === true && e.isAssigned===1 && e.data === " ") {
                 errorMessage = errorMessage + e.questionName + ",";
               }
               if (e.parentFieldName === element.groupGUID) {
@@ -168,11 +199,7 @@ export class ApprovalFormComponent implements OnInit {
                 val.forEach(listValue => {
                   s += listValue.name + ","
                 });
-                e.data = s;
-              }
-              if(e.fieldType.value === "lexicon list"){
-                let val = e.data;
-                e.data = val.name;
+               e.data = s;
               }
               obj.push(e);
               element.groupGUID = "";
@@ -181,7 +208,7 @@ export class ApprovalFormComponent implements OnInit {
           }
           else {
             element.groupGUID = "";
-            if (element.fieldValidations[0].isRequired === true && element.isAssigned === 1 && element.data === " ") {
+            if (element.fieldValidations[0].isRequired === true && element.isAssigned===1 && element.data === " ") {
               errorMessage = errorMessage + element.questionName + ",";
             }
           }
@@ -200,12 +227,8 @@ export class ApprovalFormComponent implements OnInit {
             });
             e.data = s;
           }
-          if(e.fieldType.value === "lexicon list"){
-            let val = e.data;
-            e.data = val.name;
-          }
           e.groupGUID = "";
-          if (e.fieldValidations[0].isRequired === true && e.isAssigned === 1 && e.data === " ") {
+          if (e.fieldValidations[0].isRequired === true && e.isAssigned===1 && e.data === " ") {
             errorMessage = errorMessage + e.questionName + ",";
           }
           obj.push(e);
@@ -223,13 +246,9 @@ export class ApprovalFormComponent implements OnInit {
             });
             field.data = s;
           }
-          if(field.fieldType.value === "lexicon list"){
-            let val = field.data;
-            field.data = val.name;
-          }
           obj.push(field);
         }
-        if (field.fieldValidations[0].isRequired === true && field.isAssigned === 1 && field.data === " ") {
+        if (field.fieldValidations[0].isRequired === true && field.isAssigned===1 && field.data === " ") {
           errorMessage = errorMessage + field.questionName + ","
         }
       }
@@ -237,7 +256,7 @@ export class ApprovalFormComponent implements OnInit {
     });
     if (errorMessage === "Please fill in ") {
       if (this.formData.state === 'add') {
-        this.service.saveFormMetadata(this.formData.formCaptureID, obj, this.userDetail.formData.userID).subscribe(res => {
+        this.service.saveFormMetadata(this.formData.formCaptureID, obj,this.userDetail.formData.userID).subscribe(res => {
           let pg = this.currentPage.pageNumber;
           let pageStatus = {
             "userID": this.userDetail.formData.userID,
@@ -246,6 +265,7 @@ export class ApprovalFormComponent implements OnInit {
             "pageGUID": this.currentPage.pageGUID
           }
           this.service.modifyPageStatus(this.formData.formCaptureID, this.currentPage.pageGUID, pageStatus).subscribe(result => {
+            this.showNotification('top', 'center', 'Page data has been saved successfully!', '', 'success');
             this.currentPage.color = "green";
             this.formData.state = 'edit';
             var index = -1;
@@ -255,23 +275,22 @@ export class ApprovalFormComponent implements OnInit {
                 index = i;
                 return i;
               }
-            });
+           });
             if ((index !== -1) && ((index - 1) !== -1)) {
-              this.showNotification('top', 'center', 'Page data has been saved successfully!', '', 'success');
               this.currentPage = this.pages[index - 1];
               this.pageStatus = this.currentPage.name;
               this.getDesignPerPage(this.currentPage.pageGUID);
+              //this.getDesignPerPageHistory(this.currentPage.pageGUID);
             }
             else {
               this.showNotification('top', 'center', 'There are no pages before this page for this form!', '', 'warning');
-              this.pageStatus = this.currentPage.name;
-              this.getDesignPerPage(this.currentPage.pageGUID);
             };
           });
+
         });
       }
       else {
-        this.service.UpdateFormMetadata(this.formData.formCaptureID, obj, this.userDetail.formData.userID).subscribe(res => {
+        this.service.UpdateFormMetadata(this.formData.formCaptureID, obj,this.userDetail.formData.userID).subscribe(res => {
           let pg = this.currentPage.pageNumber;
           let pageStatus = {
             "userID": this.userDetail.formData.userID,
@@ -280,6 +299,7 @@ export class ApprovalFormComponent implements OnInit {
             "pageGUID": this.currentPage.pageGUID
           }
           this.service.modifyPageStatus(this.formData.formCaptureID, this.currentPage.pageGUID, pageStatus).subscribe(result => {
+            this.showNotification('top', 'center', 'Page data has been saved successfully!', '', 'success');
             this.currentPage.color = "green";
             this.formData.state = 'edit';
             var index = -1;
@@ -291,10 +311,10 @@ export class ApprovalFormComponent implements OnInit {
               }
             });
             if ((index !== -1) && ((index - 1) !== -1)) {
-              this.showNotification('top', 'center', 'Page data has been saved successfully!', '', 'success');
               this.currentPage = this.pages[index - 1];
               this.pageStatus = this.currentPage.name;
               this.getDesignPerPage(this.currentPage.pageGUID);
+              //this.getDesignPerPageHistory(this.currentPage.pageGUID);
             }
             else {
               this.showNotification('top', 'center', 'There are no pages before this page for this form!', '', 'warning');
@@ -304,7 +324,7 @@ export class ApprovalFormComponent implements OnInit {
       }
     }
     else {
-      this.showNotification('top', 'center', errorMessage, '', 'danger');
+      this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
       errorMessage = "Please fill in ";
     }
   }
@@ -312,6 +332,7 @@ export class ApprovalFormComponent implements OnInit {
   savePage() {
     var errorMessage = "Please fill in ";
     let obj = [];
+    let obj2=[];
 
     this.formDesign.forEach(field => {
       if (field.groupGUID !== "" && field.groupGUID !== "string" && field.fieldType.value !== "repeatgroup" && field.fieldType.value === "section" && field.fieldType.value !== "subSection" && field.fieldType.value !== "PageTitle") {
@@ -329,7 +350,7 @@ export class ApprovalFormComponent implements OnInit {
           if (element.groupGUID !== "" && element.groupGUID !== "string" && element.fieldType.value !== "repeatgroup" && element.fieldType.value === "group" && element.fieldType.value !== "subSection" && element.fieldType.value !== "PageTitle") {
             let groupValues = element.groupGUID;
             groupValues.forEach(e => {
-              if (e.fieldValidations[0].isRequired === true && element.isAssigned === 1 && e.data === " ") {
+              if (e.fieldValidations[0].isRequired === true && element.isAssigned===1 && e.data === " ") {
                 errorMessage = errorMessage + e.questionName + ",";
               }
               if (e.parentFieldName === element.groupGUID) {
@@ -351,7 +372,7 @@ export class ApprovalFormComponent implements OnInit {
           }
           else {
             element.groupGUID = "";
-            if (element.fieldValidations[0].isRequired === true && element.isAssigned === 1 && element.data === " ") {
+            if (element.fieldValidations[0].isRequired === true && element.isAssigned===1 && element.data === " ") {
               errorMessage = errorMessage + element.questionName + ",";
             }
           }
@@ -371,7 +392,7 @@ export class ApprovalFormComponent implements OnInit {
             e.data = s;
           }
           e.groupGUID = "";
-          if (e.fieldValidations[0].isRequired === true && e.isAssigned === 1 && e.data === " ") {
+          if (e.fieldValidations[0].isRequired === true && e.isAssigned===1  && e.data === " ") {
             errorMessage = errorMessage + e.questionName + ",";
           }
           obj.push(e);
@@ -391,7 +412,92 @@ export class ApprovalFormComponent implements OnInit {
           }
           obj.push(field);
         }
-        if (field.fieldValidations[0].isRequired === true && field.isAssigned === 1 && field.data === " ") {
+        if (field.fieldValidations[0].isRequired === true && field.isAssigned===1 && field.data === " ") {
+          errorMessage = errorMessage + field.questionName + ","
+        }
+      }
+
+    });
+
+    this.oldFormDesign.forEach(field => {
+      if (field.groupGUID !== "" && field.groupGUID !== "string" && field.fieldType.value !== "repeatgroup" && field.fieldType.value === "section" && field.fieldType.value !== "subSection" && field.fieldType.value !== "PageTitle") {
+        let sectionValues = field.groupGUID;
+        sectionValues.forEach(element => {
+          element.listValue = "";
+          if (element.fieldType.value === "link multi select") {
+            let val = element.data;
+            let s = "";
+            val.forEach(listValue => {
+              s += listValue.name + ","
+            });
+            element.data = s;
+          }
+          if (element.groupGUID !== "" && element.groupGUID !== "string" && element.fieldType.value !== "repeatgroup" && element.fieldType.value === "group" && element.fieldType.value !== "subSection" && element.fieldType.value !== "PageTitle") {
+            let groupValues = element.groupGUID;
+            groupValues.forEach(e => {
+              if (e.fieldValidations[0].isRequired === true && element.isAssigned===1 && e.data === " ") {
+                errorMessage = errorMessage + e.questionName + ",";
+              }
+              if (e.parentFieldName === element.groupGUID) {
+                e.groupGUID = "";
+              }
+              e.listValue = "";
+              if (e.fieldType.value === "link multi select") {
+                let val = e.data;
+                let s = "";
+                val.forEach(listValue => {
+                  s += listValue.name + ","
+                });
+                e.data = s;
+              }
+              obj2.push(e);
+              element.groupGUID = "";
+              element.listValue = "";
+            });
+          }
+          else {
+            element.groupGUID = "";
+            if (element.fieldValidations[0].isRequired === true && element.isAssigned===1 && element.data === " ") {
+              errorMessage = errorMessage + element.questionName + ",";
+            }
+          }
+          obj2.push(element);
+        });
+      }
+      else if (field.groupGUID !== "" && field.groupGUID !== "string" && field.fieldType.value !== "repeatgroup" && field.fieldType.value === "group" && field.fieldType.value !== "subSection" && field.fieldType.value !== "PageTitle" && field.parentFieldName === "") {
+        let groupValues = field.groupGUID;
+        groupValues.forEach(e => {
+          e.listValue = "";
+          if (e.fieldType.value === "link multi select") {
+            let val = e.data;
+            let s = "";
+            val.forEach(listValue => {
+              s += listValue.name + ","
+            });
+            e.data = s;
+          }
+          e.groupGUID = "";
+          if (e.fieldValidations[0].isRequired === true && e.isAssigned===1  && e.data === " ") {
+            errorMessage = errorMessage + e.questionName + ",";
+          }
+          obj2.push(e);
+        });
+      }
+      else {
+        if (field.parentFieldName === "" && field.groupGUID === "string") {
+          field.listValue = "";
+          field.groupGUID = "";
+          if (field.fieldType.value === "link multi select") {
+            let val = field.data;
+            let s = "";
+            val.forEach(listValue => {
+              s += listValue.name + ","
+            });
+            field.data = s;
+          }
+          obj2.push(field);
+        }
+        if (field.fieldValidations[0].isRequired === true && field.isAssigned===1 && field.data === " ") {
           errorMessage = errorMessage + field.questionName + ","
         }
       }
@@ -409,69 +515,50 @@ export class ApprovalFormComponent implements OnInit {
             "pageGUID": this.currentPage.pageGUID
           }
           this.service.modifyPageStatus(this.formData.formCaptureID, this.currentPage.pageGUID, pageStatus).subscribe(result => {
-            this.showNotification('top', 'center', 'Data has been submitted successfully!', '', 'success');
+            this.showNotification('top', 'center', 'Page data has been saved successfully!', '', 'success');
             this.getDesignPerPage(this.currentPage.pageGUID);
+            //this.getDesignPerPageHistory(this.currentPage.pageGUID);
             this.currentPage.color = "green";
             this.formData.state = 'edit';
           });
         });
       }
-      else {
-        this.service.UpdateFormMetadata(this.formData.formCaptureID, obj, this.userDetail.formData.userID).subscribe(res => {
-          let pg = this.currentPage.pageNumber;
-          let pageStatus = {
-            "userID": this.userDetail.formData.userID,
-            "pageNumber": (parseInt(this.currentPage.pageNumber) + 1).toString(),
-            "formCaptureID": this.formData.formCaptureID,
-            "pageGUID": this.currentPage.pageGUID
-          }
-          this.service.modifyPageStatus(this.formData.formCaptureID, this.currentPage.pageGUID, pageStatus).subscribe(result => {
-            this.showNotification('top', 'center', 'Data has been submitted successfully!', '', 'success');
-            this.getDesignPerPage(this.currentPage.pageGUID);
-            this.currentPage.color = "green";
-            this.formData.state = 'edit';
+      else {        
+          this.service.UpdateFormMetadata(this.formData.formCaptureID, obj, this.userDetail.formData.userID).subscribe(res => {
+            this.service.FormHistory(this.formData.formCaptureID, this.IndicatorData, obj2).subscribe(result => {
+            let pg = this.currentPage.pageNumber;
+            let pageStatus = {
+              "userID": this.userDetail.formData.userID,
+              "pageNumber": (parseInt(this.currentPage.pageNumber) + 1).toString(),
+              "formCaptureID": this.formData.formCaptureID,
+              "pageGUID": this.currentPage.pageGUID
+            }
+            this.service.modifyPageStatus(this.formData.formCaptureID, this.currentPage.pageGUID, pageStatus).subscribe(result => {
+              this.showNotification('top', 'center', 'Page data has been saved successfully!', '', 'success');
+              //this.getDesignPerPage(this.currentPage.pageGUID);
+              //this.getDesignPerPageHistory(this.currentPage.pageGUID);
+              this.currentPage.color = "green";
+              this.formData.state = 'edit';
+            });
           });
         });
       }
     }
     else {
-      this.showNotification('top', 'center', errorMessage, '', 'danger');
+      this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
       errorMessage = "Please fill in ";
     }
   }
-
-  DisableButton(attachmentID:any):boolean{
-    if(this.userDetail.formData.userID===attachmentID.userID){
-     return true;
-    }
-    else{
-      return false;
-    }
-   }
 
   goToPage(page: any) {
     this.currentPage = page;
     this.pageStatus = this.currentPage.name;
     this.getDesignPerPage(page.pageGUID);
+    //this.getDesignPerPageHistory(this.currentPage.pageGUID);
   }
 
   closePopup() {
-    Swal.fire({
-      title: "<h5 style='color:white;font-weight:400'> Are you sure you want to close this form?</h5>",
-      showCancelButton: true,
-      confirmButtonText: 'Yes',
-      cancelButtonText: 'No',
-      toast: true,
-      position: 'top',
-      allowOutsideClick: false,
-      confirmButtonColor: '#000000',
-      cancelButtonColor: '#000000',
-      background: '#CA0B00'
-    }).then((result) => {
-      if (result.value) {
-        this.dialogRef.close();
-      }
-    })
+    this.dialogRef.close();
   }
 
   nextPage() {
@@ -490,14 +577,10 @@ export class ApprovalFormComponent implements OnInit {
             });
             element.data = s;
           }
-          if(element.fieldType.value === "lexicon list"){
-            let val = element.data;
-            element.data = val.name;
-          }
           if (element.groupGUID !== "" && element.groupGUID !== "string" && element.fieldType.value !== "repeatgroup" && element.fieldType.value === "group" && element.fieldType.value !== "subSection" && element.fieldType.value !== "PageTitle") {
             let groupValues = element.groupGUID;
             groupValues.forEach(e => {
-              if (e.fieldValidations[0].isRequired === true && element.isAssigned === 1 && e.data === " ") {
+              if (e.fieldValidations[0].isRequired === true && e.isAssigned===1 && e.data === " ") {
                 errorMessage = errorMessage + e.questionName + ",";
               }
               if (e.parentFieldName === element.groupGUID) {
@@ -512,10 +595,6 @@ export class ApprovalFormComponent implements OnInit {
                 });
                 e.data = s;
               }
-              if(e.fieldType.value === "lexicon list"){
-                let val = e.data;
-                e.data = val.name;
-              }
               obj.push(e);
               element.groupGUID = "";
               element.listValue = "";
@@ -523,7 +602,7 @@ export class ApprovalFormComponent implements OnInit {
           }
           else {
             element.groupGUID = "";
-            if (element.fieldValidations[0].isRequired === true && element.isAssigned === 1 && element.data === " ") {
+            if (element.fieldValidations[0].isRequired === true && element.isAssigned===1 && element.data === " ") {
               errorMessage = errorMessage + element.questionName + ",";
             }
           }
@@ -542,12 +621,8 @@ export class ApprovalFormComponent implements OnInit {
             });
             e.data = s;
           }
-          if(e.fieldType.value === "lexicon list"){
-            let val = e.data;
-            e.data = val.name;
-          }
           e.groupGUID = "";
-          if (e.fieldValidations[0].isRequired === true && e.isAssigned === 1 && e.data === " ") {
+          if (e.fieldValidations[0].isRequired === true && e.isAssigned===1 && e.data === " ") {
             errorMessage = errorMessage + e.questionName + ",";
           }
           obj.push(e);
@@ -565,13 +640,9 @@ export class ApprovalFormComponent implements OnInit {
             });
             field.data = s;
           }
-          if(field.fieldType.value === "lexicon list"){
-            let val = field.data;
-            field.data = val.name;
-          }
           obj.push(field);
         }
-        if (field.fieldValidations[0].isRequired === true && field.isAssigned === 1 && field.data === " ") {
+        if (field.fieldValidations[0].isRequired === true && field.isAssigned===1&& field.data === " ") {
           errorMessage = errorMessage + field.questionName + ","
         }
       }
@@ -579,7 +650,7 @@ export class ApprovalFormComponent implements OnInit {
     });
     if (errorMessage === "Please fill in ") {
       if (this.formData.state === 'add') {
-        this.service.saveFormMetadata(this.formData.formCaptureID, obj, this.userDetail.formData.userID).subscribe(res => {
+        this.service.saveFormMetadata(this.formData.formCaptureID, obj,this.userDetail.formData.userID).subscribe(res => {
           let pg = this.currentPage.pageNumber;
           let pageStatus = {
             "userID": this.userDetail.formData.userID,
@@ -588,6 +659,7 @@ export class ApprovalFormComponent implements OnInit {
             "pageGUID": this.currentPage.pageGUID
           }
           this.service.modifyPageStatus(this.formData.formCaptureID, this.currentPage.pageGUID, pageStatus).subscribe(result => {
+            this.showNotification('top', 'center', 'Page data has been saved successfully!', '', 'success');
             this.currentPage.color = "green";
             this.formData.state = 'edit';
             var index = -1;
@@ -599,22 +671,20 @@ export class ApprovalFormComponent implements OnInit {
               }
             });
             if ((index !== -1) && ((index + 1) !== Object.keys(this.pages).length)) {
-              this.showNotification('top', 'center', 'Page data has been saved successfully!', '', 'success');
               this.currentPage = this.pages[index + 1];
               this.pageStatus = this.currentPage.name;
               this.getDesignPerPage(this.currentPage.pageGUID);
+              //this.getDesignPerPageHistory(this.currentPage.pageGUID);
             }
             else {
               this.showNotification('top', 'center', 'There are no more pages for this form!', '', 'warning');
-              this.currentPage = this.pages[index];
-              this.pageStatus = this.currentPage.name;
-              this.getDesignPerPage(this.currentPage.pageGUID);
             };
           });
         });
       }
       else {
-        this.service.UpdateFormMetadata(this.formData.formCaptureID, obj, this.userDetail.formData.userID).subscribe(res => {
+        this.service.UpdateFormMetadata(this.formData.formCaptureID, obj,this.userDetail.formData.userID).subscribe(res => {
+          this.showNotification('top', 'center', 'Page data has been saved successfully!', '', 'success');
           let pg = this.currentPage.pageNumber;
           let pageStatus = {
             "userID": this.userDetail.formData.userID,
@@ -634,10 +704,10 @@ export class ApprovalFormComponent implements OnInit {
               }
             });
             if ((index !== -1) && ((index + 1) !== Object.keys(this.pages).length)) {
-              this.showNotification('top', 'center', 'Page data has been saved successfully!', '', 'success');
               this.currentPage = this.pages[index + 1];
               this.pageStatus = this.currentPage.name;
               this.getDesignPerPage(this.currentPage.pageGUID);
+              //this.getDesignPerPageHistory(this.currentPage.pageGUID);
             }
             else {
               this.showNotification('top', 'center', 'There are no more pages for this form!', '', 'warning');
@@ -647,7 +717,7 @@ export class ApprovalFormComponent implements OnInit {
       }
     }
     else {
-      this.showNotification('top', 'center', errorMessage, '', 'danger');
+      this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
       errorMessage = "Please fill in ";
     }
   }
@@ -656,6 +726,7 @@ export class ApprovalFormComponent implements OnInit {
     this.service.getFormPages(this.formData.formID).subscribe(data => {
       this.pages = data;
       this.getDesignPerPage(this.pages[0].pageGUID);
+      this.getDesignPerPageHistory(this.pages[0].pageGUID);
       this.currentPage = this.pages[0];
       this.firstPage = this.pages[0];
 
@@ -706,11 +777,7 @@ export class ApprovalFormComponent implements OnInit {
   getDesignPerPage(pageGUID: any) {
     this.spinner.show();
     localStorage.setItem('cloneNumberForEdit', "0");
-    var locationRole = this.formData.roleID;
-    if (locationRole == 0) {
-      locationRole = this.userDetail.formData.role;
-    }
-    this.service.GetFieldsForCapturePerPage(locationRole, pageGUID).subscribe(formFields => {
+    this.service.GetFieldsForApprovalPerPage(this.IndicatorData, pageGUID).subscribe(formFields => {
       this.formDesign = formFields;
       this.formDesign.forEach((element, index) => {
         element.fieldStyles[0].height = Math.ceil(parseInt(element.fieldStyles[0].height) / 23.2); //23.2 is the size of one row in textarea
@@ -721,6 +788,7 @@ export class ApprovalFormComponent implements OnInit {
         }
 
         if (this.formData.state === 'add') {
+
           element["data"] = "";
 
           if (element.listValue !== "") {
@@ -730,8 +798,9 @@ export class ApprovalFormComponent implements OnInit {
           if (element.groupGUID !== "" && element.groupGUID !== "string" && element.parentFieldName === "") {
             let children: any[] = [];
 
-            this.service.getFieldsInGroup(element.groupGUID).subscribe(kids => {
-              children = kids.filter(item1 => this.formDesign.some(item2 => item1.fieldID === item2.fieldID));
+            this.service.getFieldsInGroup(element.groupGUID).subscribe(groupFields => {
+              children = groupFields;
+
               children.forEach((field, i) => {
 
                 field.fieldStyles[0].height = Math.ceil(parseInt(field.fieldStyles[0].height) / 23.2);
@@ -776,17 +845,17 @@ export class ApprovalFormComponent implements OnInit {
               if (element.fieldType.value === "checkbox") {
                 element["data"] = Boolean(res);
               }
-              else if (element.fieldType.value === "link multi select" || element.fieldType.value === "lexicon list") {
+              else if(element.fieldType.value === "link multi select"){
                 element["data"] = this.splitString(res) as Array<string>;
               }
-              else {
+              else{
                 element["data"] = res;
               }
             });
           }
 
           if (element.listValue !== "") {
-            this.formDesign[index].listValue = this.splitString(element.listValue);
+              this.formDesign[index].listValue = this.splitString(element.listValue);
           }
 
           if (element.fieldType.value === "repeatgroup") {
@@ -808,15 +877,15 @@ export class ApprovalFormComponent implements OnInit {
                         if (field.fieldType.value === "checkbox") {
                           field["data"] = Boolean(JSON.parse(res));
                         }
-                        else if (field.fieldType.value === "link multi select") {
+                        else if(field.fieldType.value === "link multi select"){
                           field["data"] = this.splitString(res) as Array<string>;
                         }
-                        else {
+                        else{
                           field["data"] = res;
                         }
                       });
                     }
-                  });
+                  });        
                 }
 
                 field.fieldStyles[0].height = Math.ceil(parseInt(field.fieldStyles[0].height) / 23.2);
@@ -843,10 +912,10 @@ export class ApprovalFormComponent implements OnInit {
                               if (subField.fieldType.value === "checkbox") {
                                 subField["data"] = Boolean(JSON.parse(res));
                               }
-                              else if (subField.fieldType.value === "link multi select") {
+                              else if(subField.fieldType.value === "link multi select"){
                                 subField["data"] = this.splitString(res) as Array<string>;
                               }
-                              else {
+                              else{
                                 subField["data"] = res;
                               }
                             });
@@ -871,8 +940,124 @@ export class ApprovalFormComponent implements OnInit {
             });
           }
         }
-      });
-      this.spinner.hide();
+        this.spinner.hide();
+      }); 
+    });
+  }
+
+  getDesignPerPageHistory(pageGUID: any) {
+    this.service.GetFieldsForApprovalPerPage(this.IndicatorData, pageGUID).subscribe(formFields => {
+      this.oldFormDesign = formFields;
+      this.oldFormDesign.forEach((element, index) => {
+        element.fieldStyles[0].height = Math.ceil(parseInt(element.fieldStyles[0].height) / 23.2); //23.2 is the size of one row in textarea
+        if (element.fieldType.value === "repeatgroup") {
+          this.service.getGroupTableData(element.groupGUID, this.formData.formCaptureID).subscribe(resultant => {
+            element["groupTableList"] = resultant;
+          });
+        }
+
+        if (this.formData.state === 'edit') {
+          if (element.fieldType.value !== "subSection" && element.fieldType.value !== "section" && element.fieldType.value !== "group" && element.fieldType.value !== "repeatgroup" && element.fieldType.value !== "attachment" && element.fieldType.value !== "PageTitle" && element.parentFieldName === "") {
+            this.service.getMetadataValue(pageGUID, element.fieldName, this.formData.formCaptureID).subscribe(res => {
+              if (element.fieldType.value === "checkbox") {
+                element["data"] = Boolean(res);
+              }
+              else if(element.fieldType.value === "link multi select"){
+                element["data"] = this.splitString(res) as Array<string>;
+              }
+              else{
+                element["data"] = res;
+              }
+            });
+          }
+
+          if (element.listValue !== "") {
+              this.oldFormDesign[index].listValue = this.splitString(element.listValue);
+          }
+
+          if (element.fieldType.value === "repeatgroup") {
+            this.service.getGroupTableData(element.groupGUID, this.formData.formCaptureID).subscribe(resultant => {
+              element["groupTableList"] = resultant;
+            });
+          }
+
+          if (element.groupGUID !== "" && element.groupGUID !== "string" && element.parentFieldName === "") {
+            let children: any[] = [];
+
+            this.service.getFieldsInGroup(element.groupGUID).subscribe(kids => {
+              children = kids.filter(item1 => this.formDesign.some(item2 => item1.fieldID === item2.fieldID));
+              children.forEach((field, i) => {
+                if (field.fieldType.value !== "subSection" && field.fieldType.value !== "section" && field.fieldType.value !== "group" && field.fieldType.value !== "repeatgroup" && field.fieldType.value !== "attachment" && field.fieldType.value !== "PageTitle") {
+                  this.service.getGroupType(field.parentFieldName).subscribe(name => {
+                    if (name === "group" || name === "section") {
+                      this.service.getMetadataValue(pageGUID, field.fieldName, this.formData.formCaptureID).subscribe(res => {
+                        if (field.fieldType.value === "checkbox") {
+                          field["data"] = Boolean(JSON.parse(res));
+                        }
+                        else if(field.fieldType.value === "link multi select"){
+                          field["data"] = this.splitString(res) as Array<string>;
+                        }
+                        else{
+                          field["data"] = res;
+                        }
+                      });
+                    }
+                  });        
+                }
+
+                field.fieldStyles[0].height = Math.ceil(parseInt(field.fieldStyles[0].height) / 23.2);
+
+                if (field.fieldType.value === "repeatgroup") {
+                  this.service.getGroupTableData(field.groupGUID, this.formData.formCaptureID).subscribe(resultant => {
+                    field["groupTableList"] = resultant;
+                  });
+                }
+
+                if (field.listValue !== "") {
+                  children[i].listValue = this.splitString(field.listValue);
+                }
+
+                if (field.groupGUID !== "" && field.groupGUID !== "string") {
+                  let subChildren: any[] = [];
+                  this.service.getFieldsInGroup(field.groupGUID).subscribe(result => {
+                    subChildren = result;
+                    subChildren.forEach((subField, j) => {
+                      if (subField.fieldType.value !== "subSection" && subField.fieldType.value !== "section" && subField.fieldType.value !== "group" && subField.fieldType.value !== "repeatgroup" && subField.fieldType.value !== "attachment" && subField.fieldType.value !== "PageTitle") {
+                        this.service.getGroupType(subField.parentFieldName).subscribe(name => {
+                          if (name === "group" || name === "section") {
+                            this.service.getMetadataValue(pageGUID, subField.fieldName, this.formData.formCaptureID).subscribe(res => {
+                              if (subField.fieldType.value === "checkbox") {
+                                subField["data"] = Boolean(JSON.parse(res));
+                              }
+                              else if(subField.fieldType.value === "link multi select"){
+                                subField["data"] = this.splitString(res) as Array<string>;
+                              }
+                              else{
+                                subField["data"] = res;
+                              }
+                            });
+                          }
+                        });
+                      }
+                      subField.fieldStyles[0].height = Math.ceil(parseInt(subField.fieldStyles[0].height) / 23.2);
+                      if (subField.fieldType.value === "repeatgroup") {
+                        this.service.getGroupTableData(subField.groupGUID, this.formData.formCaptureID).subscribe(resultant => {
+                          subField["groupTableList"] = resultant;
+                        });
+                      }
+                      if (subField.listValue !== "") {
+                        subChildren[j].listValue = this.splitString(subField.listValue);
+                      }
+                    });
+                    children[i].groupGUID = subChildren;
+                  });
+                }
+              });
+              this.oldFormDesign[index].groupGUID = children;
+            });
+          }
+        }
+      }); 
     });
   }
 
@@ -884,7 +1069,7 @@ export class ApprovalFormComponent implements OnInit {
     if (localStorage.getItem('cloneNumberForEdit') === "0") {
       data.forEach(field => {
         field.listValue = "";
-        if (field.fieldType.value === "link multi select") {
+       if (field.fieldType.value === "link multi select") {
           let val = field.data;
           let s = "";
           val.forEach(listValue => {
@@ -893,11 +1078,12 @@ export class ApprovalFormComponent implements OnInit {
           field.data = s;
         }
       });
-      this.service.saveGroupMetadata(this.formData.formCaptureID, data[0].parentFieldName, data, this.userDetail.formData.userID).subscribe(res => {
+      this.service.saveGroupMetadata(this.formData.formCaptureID, data[0].parentFieldName, data,this.userDetail.formData.userID).subscribe(res => {
         this.showNotification('top', 'center', 'Repeat data has been saved successfully!', '', 'success');
         localStorage.setItem('cloneNumberForEdit', "0");
         this.spinner.hide();
         this.getDesignPerPage(this.currentPage.pageGUID);
+        //this.getDesignPerPageHistory(this.currentPage.pageGUID);
       },
         error => {
           this.showNotification('top', 'center', 'Error saving repeat data, please try again', '', 'danger');
@@ -916,12 +1102,13 @@ export class ApprovalFormComponent implements OnInit {
           field.data = s;
         }
       });
-      this.service.UpdateGroupMetadata(this.formData.formCaptureID, data[0].parentFieldName, localStorage.getItem('cloneNumberForEdit'), data, this.userDetail.formData.userID).subscribe(res => {
+      this.service.UpdateGroupMetadata(this.formData.formCaptureID, data[0].parentFieldName, localStorage.getItem('cloneNumberForEdit'), data,this.userDetail.formData.userID).subscribe(res => {
         this.showNotification('top', 'center', 'Repeat data has been updated successfully!', '', 'success');
         localStorage.setItem('cloneNumberForEdit', "0");
         this.HighlightRow = -1;
         this.spinner.hide();
         this.getDesignPerPage(this.currentPage.pageGUID);
+        //this.getDesignPerPageHistory(this.currentPage.pageGUID);
       },
         error => {
           this.showNotification('top', 'center', 'Error updating repeat data, please try again', '', 'danger');
@@ -948,7 +1135,7 @@ export class ApprovalFormComponent implements OnInit {
 
   deleteClone(cloneNum: any, groupGUID: any) {
     Swal.fire({
-      title: "<h5 style='color:white;font-weight:400'> Are you sure you want to remove this repeat data? </h5>",
+      title: "<h5 style='color:white;font-weight:400'> Are you sure want to remove this repeat data? </h5>",
       showCancelButton: true,
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
@@ -963,6 +1150,7 @@ export class ApprovalFormComponent implements OnInit {
         this.service.deleteClone(groupGUID, this.formData.formCaptureID, cloneNum).subscribe(res => {
           this.showNotification('top', 'center', 'Repeat data has been deleted successfully!', '', 'success');
           this.getDesignPerPage(this.currentPage.pageGUID);
+          //this.getDesignPerPageHistory(this.currentPage.pageGUID);
         });
       }
     })
@@ -988,15 +1176,6 @@ export class ApprovalFormComponent implements OnInit {
   }
 
   savePad(item: any) {
-    localStorage.setItem('imageData', item.data);
-    const dialogRef = this.dialog.open(AddSignatureComponent, {
-      width: '55%',
-      height: '55%',
-      disableClose: true
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      item["data"] = localStorage.getItem('imageData');
-    });
   }
 
   showNotification(from: any, align: any, message: any, title: any, type: string) {
@@ -1006,8 +1185,8 @@ export class ApprovalFormComponent implements OnInit {
       message: message
     }, {
       type: type,
-      delay: 1500,
-      timer: 1500,
+    delay: 1500,
+timer: 1500,
       placement: {
         from: from,
         align: align
@@ -1069,7 +1248,7 @@ export class ApprovalFormComponent implements OnInit {
       reader.readAsDataURL(this.file);
     }
     else {
-      this.showNotification('top', 'center', 'File exceeds maximum size of 4mb,Please upload a file of 4mb or less', '', 'danger');
+      this.showNotification('top', 'center', 'File exceeds maximum size of 4mb, Please upload a file of 4mb or less', '', 'danger');
       this.file = null;
     }
   }
@@ -1105,7 +1284,8 @@ export class ApprovalFormComponent implements OnInit {
             this.refreshAttachmentList();
             localStorage.setItem('fieldNameAttach', "");
             localStorage.setItem('fieldNamePhoto', "");
-            //this.getDesignPerPage(this.currentPage.pageGUID);
+            this.getDesignPerPage(this.currentPage.pageGUID);
+            //this.getDesignPerPageHistory(this.currentPage.pageGUID);
             this.spinner.hide();
           });
         });
@@ -1139,7 +1319,8 @@ export class ApprovalFormComponent implements OnInit {
           this.refreshAttachmentList();
           localStorage.setItem('fieldNameAttach', "");
           localStorage.setItem('fieldNamePhoto', "");
-          //this.getDesignPerPage(this.currentPage.pageGUID);
+          this.getDesignPerPage(this.currentPage.pageGUID);
+          //this.getDesignPerPageHistory(this.currentPage.pageGUID);
           this.spinner.hide();
         });
       }
@@ -1152,7 +1333,8 @@ export class ApprovalFormComponent implements OnInit {
 
   clickDownloadPhoto(data: any) {
     console.log(data)
-    const file = new Blob([this.base64toBlob(data.photo, 'image/' + data.photoDesc.split('.').pop())], { type: 'image/' + data.photoDesc.split('.').pop() });
+    alert(data.photoDesc.split('.').pop());
+    const file = new Blob([this.base64toBlob(data.photo, 'image/' + data.photoDesc.split('.').pop())], { type: 'image/' + data.photoDesc.split('.').pop()});
     FileSaver.saveAs(file, data.postedFileName);
   }
 
@@ -1169,7 +1351,7 @@ export class ApprovalFormComponent implements OnInit {
       reader.readAsDataURL(this.photoFile);
     }
     else {
-      this.showNotification('top', 'center', 'Photo exceeds maximum size of 4mb, Please upload a photo of 4mb or less', '', 'danger');
+      this.showNotification('top', 'center', 'Photo exceeds maximum size of 4mb,Please upload a photo of 4mb or less', '', 'danger');
       this.photoFile = null;
     }
   }
@@ -1180,9 +1362,9 @@ export class ApprovalFormComponent implements OnInit {
       photoName = localStorage.getItem('fieldNamePhoto').toString();
     }
     if (photoName !== "") {
-      var fileType = this.photoFile.name.split('.').pop();
-      if (fileType == 'jpg') {
-        fileType = 'jpeg';
+      var fileType=this.photoFile.name.split('.').pop();
+     if(fileType=='jpg'){
+        fileType='jpeg';
       }
       if (this.photoFile !== null) {
         this.spinner.show();
@@ -1197,7 +1379,7 @@ export class ApprovalFormComponent implements OnInit {
             "fileName": "",
             "postedFileName": photoName + '_' + res,
             "createDate": "string",
-            "photoDesc": "." + fileType,
+            "photoDesc": "."+fileType,
             "userID": this.userDetail.formData.userID,
             "formCaptureID": this.formData.formCaptureID
           }
@@ -1209,7 +1391,8 @@ export class ApprovalFormComponent implements OnInit {
             this.refreshPhotoList();
             localStorage.setItem('fieldNameAttach', "");
             localStorage.setItem('fieldNamePhoto', "");
-            //this.getDesignPerPage(this.currentPage.pageGUID);
+            this.getDesignPerPage(this.currentPage.pageGUID);
+            //this.getDesignPerPageHistory(this.currentPage.pageGUID);
             this.spinner.hide();
           });
         })
@@ -1220,9 +1403,9 @@ export class ApprovalFormComponent implements OnInit {
     }
     else {
       if (this.photoFile !== null) {
-        var fileType = this.photoFile.name.split('.').pop();
-        if (fileType == 'jpg') {
-          fileType = 'jpeg';
+        var fileType=this.photoFile.name.split('.').pop();
+        if(fileType=='jpg'){
+          fileType='jpeg';
         }
         this.spinner.show();
         var item = document.querySelector('#hidden_upload_itemPhoto2').innerHTML;
@@ -1235,7 +1418,7 @@ export class ApprovalFormComponent implements OnInit {
           "fileName": "",
           "postedFileName": this.photoFile.name.substring(0, this.photoFile.name.indexOf('.')),
           "createDate": "string",
-          "photoDesc": "." + fileType,
+          "photoDesc": "."+fileType,
           "userID": this.userDetail.formData.userID,
           "formCaptureID": this.formData.formCaptureID
         }
@@ -1247,7 +1430,8 @@ export class ApprovalFormComponent implements OnInit {
           this.refreshPhotoList();
           localStorage.setItem('fieldNameAttach', "");
           localStorage.setItem('fieldNamePhoto', "");
-          //this.getDesignPerPage(this.currentPage.pageGUID);
+          this.getDesignPerPage(this.currentPage.pageGUID);
+          //this.getDesignPerPageHistory(this.currentPage.pageGUID);
           this.spinner.hide();
         });
       }
@@ -1257,19 +1441,10 @@ export class ApprovalFormComponent implements OnInit {
     }
 
   }
+
   viewPhoto(data: any) {
 
   }
-  // viewPhoto(data: any) {
-  //   const dialogRef = this.dialog.open(formPhotoPreview, {
-  //     width: '70%',
-  //     height: '70%',
-  //     data: { image: data.photo },
-  //   });
-  //   dialogRef.afterClosed().subscribe(result => {
-
-  //   });
-  // }
 
   validateEmail(fieldName: any, email: any) {
     if (email !== "") {
@@ -1290,106 +1465,103 @@ export class ApprovalFormComponent implements OnInit {
     if (localStorage.getItem('fieldNameComment') !== null || localStorage.getItem('fieldNameComment') !== undefined) {
       commentName = localStorage.getItem('fieldNameComment').toString();
     }
-    if (this.formComment !== "" && this.formComment !== null) {
-      if (commentName !== "") {
-        if (this.addEditComment === 'Add') {
-          this.spinner.show();
-          let obj = {
-            "commentID": 0,
-            "userID": this.userDetail.formData.userID,
-            "deviceFormGUID": "0FA12DB7-D725-48A9-BED2-A44C95E94F7D",
-            "comment": this.formComment,
-            "stepID": 0,
-            "timeStamp": "2022-01-21T13:29:23.713Z",
-            "formCaptureID": this.formData.formCaptureID,
-            "fullName": "string",
-            "LinkedTo": commentName
-          }
-          this.service.addFormComment(obj).subscribe(res => {
-            this.showNotification('top', 'center', 'Form comment has been saved successfully!', '', 'success');
-            this.formComment = '';
-            this.refreshCommentList();
-            localStorage.setItem('fieldNameComment', "");
-            this.addEditComment = 'Add';
-            //this.getDesignPerPage(this.currentPage.pageGUID);
-            this.spinner.hide();
-          });
+    if (commentName !== "") {
+      if (this.addEditComment === 'Add') {
+        this.spinner.show();
+        let obj = {
+          "commentID": 0,
+          "userID": this.userDetail.formData.userID,
+          "deviceFormGUID": "0FA12DB7-D725-48A9-BED2-A44C95E94F7D",
+          "comment": this.formComment,
+          "stepID": 0,
+          "timeStamp": "2022-01-21T13:29:23.713Z",
+          "formCaptureID": this.formData.formCaptureID,
+          "fullName": "string",
+          "LinkedTo": commentName
         }
-        else {
-          this.spinner.show();
-          let obj = {
-            "commentID": 0,
-            "userID": this.userDetail.formData.userID,
-            "deviceFormGUID": "0FA12DB7-D725-48A9-BED2-A44C95E94F7D",
-            "comment": this.formComment,
-            "stepID": 0,
-            "timeStamp": "2022-01-21T13:29:23.713Z",
-            "formCaptureID": this.formData.formCaptureID,
-            "fullName": "string",
-            "LinkedTo": commentName
-          }
-          this.service.updateFormComment(obj, this.commentID).subscribe(res => {
-            this.showNotification('top', 'center', 'Form comment has been updated successfully!', '', 'success');
-            this.formComment = '';
-            this.refreshCommentList();
-            localStorage.setItem('fieldNameComment', "");
-            this.addEditComment = 'Add';
-            this.HighlightRowComment = -1;
-            //this.getDesignPerPage(this.currentPage.pageGUID);
-            this.spinner.hide();
-          });
-        }
+        this.service.addFormComment(obj).subscribe(res => {
+          this.showNotification('top', 'center', 'Form comment has been saved successfully!', '', 'success');
+          this.formComment = '';
+          this.refreshCommentList();
+          localStorage.setItem('fieldNameComment', "");
+          this.addEditComment = 'Add';
+          this.getDesignPerPage(this.currentPage.pageGUID);
+          //this.getDesignPerPageHistory(this.currentPage.pageGUID);
+          this.spinner.hide();
+        });
       }
       else {
-        if (this.addEditComment === 'Add') {
-          this.spinner.show();
-          let obj = {
-            "commentID": 0,
-            "userID": this.userDetail.formData.userID,
-            "deviceFormGUID": "0FA12DB7-D725-48A9-BED2-A44C95E94F7D",
-            "comment": this.formComment,
-            "stepID": 0,
-            "timeStamp": "2022-01-21T13:29:23.713Z",
-            "formCaptureID": this.formData.formCaptureID,
-            "fullName": "string",
-            "LinkedTo": ""
-          }
-          this.service.addFormComment(obj).subscribe(res => {
-            this.showNotification('top', 'center', 'Form comment has been saved successfully!', '', 'success');
-            this.formComment = '';
-            this.refreshCommentList();
-            this.addEditComment = 'Add';
-            localStorage.setItem('fieldNameComment', "");
-            this.spinner.hide();
-          });
+        this.spinner.show();
+        let obj = {
+          "commentID": 0,
+          "userID": this.userDetail.formData.userID,
+          "deviceFormGUID": "0FA12DB7-D725-48A9-BED2-A44C95E94F7D",
+          "comment": this.formComment,
+          "stepID": 0,
+          "timeStamp": "2022-01-21T13:29:23.713Z",
+          "formCaptureID": this.formData.formCaptureID,
+          "fullName": "string",
+          "LinkedTo": commentName
         }
-        else {
-          this.spinner.show();
-          let obj = {
-            "commentID": 0,
-            "userID": this.userDetail.formData.userID,
-            "deviceFormGUID": "0FA12DB7-D725-48A9-BED2-A44C95E94F7D",
-            "comment": this.formComment,
-            "stepID": 0,
-            "timeStamp": "2022-01-21T13:29:23.713Z",
-            "formCaptureID": this.formData.formCaptureID,
-            "fullName": "string",
-            "LinkedTo": ""
-          }
-          this.service.updateFormComment(obj, this.commentID).subscribe(res => {
-            this.showNotification('top', 'center', 'Form comment has been updated successfully!', '', 'success');
-            this.formComment = '';
-            this.refreshCommentList();
-            this.addEditComment = 'Add';
-            this.HighlightRowComment = -1;
-            localStorage.setItem('fieldNameComment', "");
-            this.spinner.hide();
-          });
-        }
+        this.service.updateFormComment(obj, this.commentID).subscribe(res => {
+          this.showNotification('top', 'center', 'Form comment has been updated successfully!', '', 'success');
+          this.formComment = '';
+          this.refreshCommentList();
+          localStorage.setItem('fieldNameComment', "");
+          this.addEditComment = 'Add';
+          this.HighlightRowComment = -1;
+          this.getDesignPerPage(this.currentPage.pageGUID);
+          //this.getDesignPerPageHistory(this.currentPage.pageGUID);
+          this.spinner.hide();
+        });
       }
     }
     else {
-      this.showNotification('top', 'center', 'Please enter a comment before saving!', '', 'danger');
+      if (this.addEditComment === 'Add') {
+        this.spinner.show();
+        let obj = {
+          "commentID": 0,
+          "userID": this.userDetail.formData.userID,
+          "deviceFormGUID": "0FA12DB7-D725-48A9-BED2-A44C95E94F7D",
+          "comment": this.formComment,
+          "stepID": 0,
+          "timeStamp": "2022-01-21T13:29:23.713Z",
+          "formCaptureID": this.formData.formCaptureID,
+          "fullName": "string",
+          "LinkedTo": ""
+        }
+        this.service.addFormComment(obj).subscribe(res => {
+          this.showNotification('top', 'center', 'Form comment has been saved successfully!', '', 'success');
+          this.formComment = '';
+          this.refreshCommentList();
+          this.addEditComment = 'Add';
+          localStorage.setItem('fieldNameComment', "");
+          this.spinner.hide();
+        });
+      }
+      else {
+        this.spinner.show();
+        let obj = {
+          "commentID": 0,
+          "userID": this.userDetail.formData.userID,
+          "deviceFormGUID": "0FA12DB7-D725-48A9-BED2-A44C95E94F7D",
+          "comment": this.formComment,
+          "stepID": 0,
+          "timeStamp": "2022-01-21T13:29:23.713Z",
+          "formCaptureID": this.formData.formCaptureID,
+          "fullName": "string",
+          "LinkedTo": ""
+        }
+        this.service.updateFormComment(obj, this.commentID).subscribe(res => {
+          this.showNotification('top', 'center', 'Form comment has been updated successfully!', '', 'success');
+          this.formComment = '';
+          this.refreshCommentList();
+          this.addEditComment = 'Add';
+          this.HighlightRowComment = -1;
+          localStorage.setItem('fieldNameComment', "");
+          this.spinner.hide();
+        });
+      }
     }
 
   }
@@ -1408,7 +1580,7 @@ export class ApprovalFormComponent implements OnInit {
 
   deleteFile(item: any) {
     Swal.fire({
-      title: "<h5 style='color:white;font-weight:400'> Are you sure you want to remove this file? </h5>",
+      title: "<h5 style='color:white;font-weight:400'> Are you sure want to remove this file? </h5>",
       showCancelButton: true,
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
@@ -1432,7 +1604,7 @@ export class ApprovalFormComponent implements OnInit {
 
   deleteComment(item: any) {
     Swal.fire({
-      title: "<h5 style='color:white;font-weight:400'> Are you sure you want to remove this comment? </h5>",
+      title: "<h5 style='color:white;font-weight:400'> Are you sure want to remove this comment? </h5>",
       showCancelButton: true,
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
@@ -1456,7 +1628,7 @@ export class ApprovalFormComponent implements OnInit {
 
   deletePhoto(item: any) {
     Swal.fire({
-      title: "<h5 style='color:white;font-weight:400'> Are you sure you want to remove this photo? </h5>",
+      title: "<h5 style='color:white;font-weight:400'> Are you sure want to remove this photo? </h5>",
       showCancelButton: true,
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
@@ -1600,10 +1772,11 @@ export class ApprovalFormComponent implements OnInit {
         if (calc !== "") {
           var stringArray = calc.split(/(\s+)/);
           stringArray.forEach(num => {
+            console.log(this.formDesign);
             data.forEach(res => {
               if ('#' + res.fieldName === num) {
                 var re = new RegExp(num, "gi");
-                if (res.data === "" || res.data === undefined || res.data == null) {
+                if (res.data === "" || res.data === undefined) {
                   calc = calc.replace(re, "0");
                 }
                 else {
@@ -1632,22 +1805,5 @@ export class ApprovalFormComponent implements OnInit {
     this.tabIndex = 3;
     localStorage.setItem('fieldNameComment', item.questionName + '(' + item.fieldName + ')');
   }
-
 }
-
-// @Component({
-//   selector: 'formPhotoPreview',
-//   templateUrl: 'formPhotoPreview.html',
-// })
-// export class formPhotoPreview {
-//   constructor(
-//     public dialogRef: MatDialogRef<formPhotoPreview>,
-//     @Inject(MAT_DIALOG_DATA) public data: DialogData,
-//   ) { }
-
-  // onNoClick(): void {
-  //   this.dialogRef.close();
-  // }
-
-
 

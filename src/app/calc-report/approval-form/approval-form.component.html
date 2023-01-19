@@ -13,7 +13,7 @@
             </mat-option>
         </mat-select>
     </mat-form-field>
-    <mat-button-toggle-group name="buttons" *ngIf="isViewOnly!='readonly'">
+    <mat-button-toggle-group name="buttons" *ngIf="isViewOnly">
         <mat-button-toggle value="Prev" (click)="prevPage()"
             style="font-weight: 500;background-color: whitesmoke;color: black;">Prev & Save</mat-button-toggle>
         <mat-button-toggle value="save" style="background-color: whitesmoke;font-weight: 500;width: 150px;color: black;"
@@ -3760,7 +3760,7 @@
             <div style="height: 10px;"></div>
             <div class="parent">
                 <h4>Upload/Download Photo</h4>
-                <mat-form-field style="width: 30%;" *ngIf="isViewOnly!='readonly'">
+                <mat-form-field style="width: 30%;" *ngIf="isViewOnly">
                     <div style="text-align: center;">
                         <mat-toolbar>
                             <input matInput (blur)="checkInfo()" [(ngModel)]="photoFileAttr" readonly name="Photoname"
@@ -3776,7 +3776,7 @@
                         <div id="hidden_upload_itemPhoto2" style="display: none;"></div>
                     </div>
                 </mat-form-field>
-                <button *ngIf="isViewOnly!='readonly'" mat-flat-button (click)="onUploadPhoto()" class="btn btn-md btn-primary">
+                <button *ngIf="isViewOnly" mat-flat-button (click)="onUploadPhoto()" class="btn btn-md btn-primary">
                     Upload
                 </button>
                 <div style="height: 10px;"></div>
@@ -3806,7 +3806,7 @@
                         <kendo-grid-column field="createDate" title="Created On" [width]="15">
                         </kendo-grid-column>
 
-                        <kendo-grid-column [width]="5" title="" *ngIf="isViewOnly!='readonly'">
+                        <kendo-grid-column [width]="5" title="" *ngIf="isViewOnly">
                             <ng-template kendoGridCellTemplate let-dataItem>
                                 <button mat-icon-button (click)="clickDownloadPhoto(dataItem)">
                                     <mat-icon class="mat-18">file_download</mat-icon>
@@ -3814,7 +3814,7 @@
                             </ng-template>
                         </kendo-grid-column>
 
-                        <kendo-grid-column [width]="5" *ngIf="isViewOnly!='readonly'">
+                        <kendo-grid-column [width]="5" *ngIf="isViewOnly">
                             <ng-template kendoGridCellTemplate let-dataItem>
                                 <button mat-icon-button (click)="deletePhoto(dataItem)">
                                     <mat-icon class="mat-18" style="color:red ;">delete</mat-icon>
@@ -3834,7 +3834,7 @@
             <div style="height: 10px;"></div>
             <div class="parent">
                 <h4>Upload/Download Files</h4>
-                <mat-form-field style="width: 30%;" *ngIf="isViewOnly!='readonly'">
+                <mat-form-field style="width: 30%;" *ngIf="isViewOnly">
                     <div style="text-align: center;">
                         <mat-toolbar>
                             <input matInput (blur)="checkInfo()" [(ngModel)]="fileAttr" readonly name="name"
@@ -3850,7 +3850,7 @@
                         <div id="hidden_upload_item" style="display: none;"></div>
                     </div>
                 </mat-form-field>
-                <button *ngIf="isViewOnly!='readonly'" mat-flat-button (click)="onUpload()" class="btn btn-md btn-primary">
+                <button *ngIf="isViewOnly" mat-flat-button (click)="onUpload()" class="btn btn-md btn-primary">
                     Upload
                 </button>
                 <div style="height: 10px;"></div>
@@ -3879,7 +3879,7 @@
                         <kendo-grid-column field="fileSize" title="File Size" [width]="15">
                         </kendo-grid-column>
 
-                        <kendo-grid-column [width]="5" title="" *ngIf="isViewOnly!='readonly'">
+                        <kendo-grid-column [width]="5" title="" *ngIf="isViewOnly">
                             <ng-template kendoGridCellTemplate let-dataItem>
                                 <button mat-icon-button (click)="clickDownload(dataItem)">
                                     <mat-icon class="mat-18">file_download</mat-icon>
@@ -3887,7 +3887,7 @@
                             </ng-template>
                         </kendo-grid-column>
 
-                        <kendo-grid-column [width]="5" *ngIf="isViewOnly!='readonly'">
+                        <kendo-grid-column [width]="5" *ngIf="isViewOnly">
                             <ng-template kendoGridCellTemplate let-dataItem>
                                 <button *ngIf="DisableButton(dataItem)==true" mat-icon-button (click)="deleteFile(dataItem);">
                                     <mat-icon class="mat-18" style="color:red ;">delete</mat-icon>
@@ -3907,12 +3907,12 @@
             <div style="height: 10px;"></div>
             <div class="parent">
                 <h4>Comments</h4>
-                <mat-form-field *ngIf="isViewOnly!='readonly'" class="example-full-width" appearance="outline">
+                <mat-form-field *ngIf="isViewOnly" class="example-full-width" appearance="outline">
                     <mat-label>Leave a comment</mat-label>
                     <textarea matInput (blur)="checkInfo()" [(ngModel)]=formComment
                         placeholder="Type comment here..."></textarea>
                 </mat-form-field>
-                <button *ngIf="isViewOnly!='readonly'" mat-flat-button (click)="addComment()" class="btn btn-md btn-primary">
+                <button *ngIf="isViewOnly" mat-flat-button (click)="addComment()" class="btn btn-md btn-primary">
                     {{addEditComment}} Comment
                 </button>
                 <div style="height: 10px;"></div>
@@ -3943,7 +3943,7 @@
                     <kendo-grid-column field="linkedTo" title="Fields Linked To" [width]="15">
                     </kendo-grid-column>
 
-                    <kendo-grid-column [width]="3" *ngIf="isViewOnly!='readonly'">
+                    <kendo-grid-column [width]="3" *ngIf="isViewOnly">
                         <ng-template kendoGridCellTemplate let-dataItem>
                             <button mat-icon-button (click)="showComment(dataItem)">
                                 <mat-icon class="mat-18">edit</mat-icon>
@@ -3951,7 +3951,7 @@
                         </ng-template>
                     </kendo-grid-column>
 
-                    <kendo-grid-column [width]="3" *ngIf="isViewOnly!='readonly'">
+                    <kendo-grid-column [width]="3" *ngIf="isViewOnly">
                         <ng-template kendoGridCellTemplate let-dataItem>
                             <button mat-icon-button (click)="deleteComment(dataItem)">
                                 <mat-icon class="mat-18"  style="color:red ;">delete</mat-icon>

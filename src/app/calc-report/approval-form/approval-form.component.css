@@ -132,3 +132,9 @@ td.mat-cell {
 ::ng-deep .k-pager-wrap {
     background-color: white;
 }
+
+input[matinput]::-webkit-outer-spin-button,
+input[matinput]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
