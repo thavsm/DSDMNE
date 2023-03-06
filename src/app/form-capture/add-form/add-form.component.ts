@@ -64,7 +64,7 @@ export class AddFormComponent implements OnInit {
 
   @ViewChild('fileInput') fileInput: ElementRef;
   file: File = null;
-  fileAttr = 'Choose File(Max Size:4MB)';
+  fileAttr = 'Choose File(Max Size:20MB)';
 
   @ViewChild('photoInput') photoInput: ElementRef;
   photoFile: File = null;
@@ -1048,7 +1048,7 @@ export class AddFormComponent implements OnInit {
 
   onChange(event) {
     this.file = <File>event.target.files[0];
-    if (this.file.size < 4194304) {
+    if (this.file.size < 20971520) {
       this.fileAttr = this.file.name;
       let reader = new FileReader();
       reader.onload = function (readerEvt: any) {
@@ -1059,7 +1059,7 @@ export class AddFormComponent implements OnInit {
       reader.readAsDataURL(this.file);
     }
     else {
-      this.showNotification('top', 'center', 'File exceeds maximum size of 4mb,Please upload a file of 4mb or less', '', 'danger');
+      this.showNotification('top', 'center', 'File exceeds maximum size of 20MB,Please upload a file of 20MB or less', '', 'danger');
       this.file = null;
     }
   }
@@ -1090,7 +1090,7 @@ export class AddFormComponent implements OnInit {
           this.service.addFormAttachments(obj).subscribe(res => {
             this.showNotification('top', 'center', 'Attachment has been saved successfully!', '', 'success');
             this.file = null;
-            this.fileAttr = 'Choose File(Max Size:4MB)';
+            this.fileAttr = 'Choose File(Max Size:20MB)';
             //this.fileInput = ElementRef;
             this.refreshAttachmentList();
             localStorage.setItem('fieldNameAttach', "");
@@ -1124,7 +1124,7 @@ export class AddFormComponent implements OnInit {
         this.service.addFormAttachments(obj).subscribe(res => {
           this.showNotification('top', 'center', 'Attachment has been saved successfully!', '', 'success');
           this.file = null;
-          this.fileAttr = 'Choose File(Max Size:4MB)';
+          this.fileAttr = 'Choose File(Max Size:20MB)';
           // this.fileInput = null;
           this.refreshAttachmentList();
           localStorage.setItem('fieldNameAttach', "");
