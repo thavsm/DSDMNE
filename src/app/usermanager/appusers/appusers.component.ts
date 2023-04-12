@@ -21,7 +21,7 @@ export class AppusersComponent implements OnInit {
 
   
   formAdd: any;
-  public displayedColumns = ['userName', 'email', 'role', 'update' ];
+  public displayedColumns = ['userName', 'email', 'province','role', 'update' ];
   //public userList = new MatTableDataSource<any>();
   public userList: any[];
 
