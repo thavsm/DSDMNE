@@ -33,7 +33,7 @@ export class UsersComponent implements OnInit {
 
   
   formAdd: any;
-  public displayedColumns = ['userid', 'userName', 'email', 'update' ];
+  public displayedColumns = ['userid', 'userName', 'email', 'province','update' ];
   public userList = new MatTableDataSource<any>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;

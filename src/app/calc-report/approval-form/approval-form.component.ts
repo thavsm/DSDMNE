@@ -15,6 +15,7 @@ import { UserService } from 'src/app/shared/user.service';
 import { NgModel } from '@angular/forms';
 import { ItemTemplateDirective } from '@progress/kendo-angular-dropdowns';
 import { CalcReportComponent } from '../calc-report.component';
+import { AddCommentComponent } from 'src/app/form-capture/add-form/add-comment/add-comment.component';
 
 declare var $: any;
 
@@ -333,6 +334,138 @@ export class ApprovalFormComponent implements OnInit {
     var errorMessage = "Please fill in ";
     let obj = [];
     let obj2=[];
+    let commentName = "";
+    if (localStorage.getItem('fieldNameComment') !== null || localStorage.getItem('fieldNameComment') !== undefined) {
+      commentName = localStorage.getItem('fieldNameComment').toString();
+    }
+  
+    if (this.commentList == null && commentName ==" " ){
+      this.formDesign.forEach(field => {
+        if (field.groupGUID !== "" && field.groupGUID !== "string" && field.fieldType.value !== "repeatgroup" && field.fieldType.value === "section" && field.fieldType.value !== "subSection" && field.fieldType.value !== "PageTitle") {
+          let sectionValues = field.groupGUID;
+          sectionValues.forEach(element => {
+            element.listValue = "";
+            if (element.fieldType.value === "link multi select") {
+              let val = element.data;
+              let s = "";
+              val.forEach(listValue => {
+                s += listValue.name + ","
+              });
+              element.data = s;
+            }
+            if (element.groupGUID !== "" && element.groupGUID !== "string" && element.fieldType.value !== "repeatgroup" && element.fieldType.value === "group" && element.fieldType.value !== "subSection" && element.fieldType.value !== "PageTitle") {
+              let groupValues = element.groupGUID;
+              groupValues.forEach(e => {
+                if (e.fieldValidations[0].isRequired === true && element.isAssigned === 1 && e.data === " ") {
+                  errorMessage = errorMessage + e.questionName + ",";
+                }
+                if (e.parentFieldName === element.groupGUID) {
+                  e.groupGUID = "";
+                }
+                e.listValue = "";
+                if (e.fieldType.value === "link multi select") {
+                  let val = e.data;
+                  let s = "";
+                  val.forEach(listValue => {
+                    s += listValue.name + ","
+                  });
+                  e.data = s;
+                }
+                obj.push(e);
+                element.groupGUID = "";
+                element.listValue = "";
+              });
+            }
+            else {
+              element.groupGUID = "";
+              if (element.fieldValidations[0].isRequired === true && element.isAssigned === 1 && element.data === " ") {
+                errorMessage = errorMessage + element.questionName + ",";
+              }
+            }
+            obj.push(element);
+          });
+        }
+        else if (field.groupGUID !== "" && field.groupGUID !== "string" && field.fieldType.value !== "repeatgroup" && field.fieldType.value === "group" && field.fieldType.value !== "subSection" && field.fieldType.value !== "PageTitle" && field.parentFieldName === "") {
+          let groupValues = field.groupGUID;
+          groupValues.forEach(e => {
+            e.listValue = "";
+            if (e.fieldType.value === "link multi select") {
+              let val = e.data;
+              let s = "";
+              val.forEach(listValue => {
+                s += listValue.name + ","
+              });
+              e.data = s;
+            }
+            e.groupGUID = "";
+            if (e.fieldValidations[0].isRequired === true && e.isAssigned === 1 && e.data === " ") {
+              errorMessage = errorMessage + e.questionName + ",";
+            }
+            obj.push(e);
+          });
+        }
+        else {
+          if (field.parentFieldName === "" && field.groupGUID === "string") {
+            field.listValue = "";
+            field.groupGUID = "";
+            if (field.fieldType.value === "link multi select") {
+              let val = field.data;
+              let s = "";
+              val.forEach(listValue => {
+                s += listValue.name + ","
+              });
+              field.data = s;
+            }
+            obj.push(field);
+          }
+          if (field.fieldValidations[0].isRequired === true && field.isAssigned === 1 && field.data === " ") {
+            errorMessage = errorMessage + field.questionName + ","
+          }
+        }
+  
+      });
+  
+      if (errorMessage === "Please fill in ") {
+        if (this.formData.state === 'add') {
+          this.service.saveFormMetadata(this.formData.formCaptureID, obj, this.userDetail.formData.userID).subscribe(res => {
+            let pg = this.currentPage.pageNumber;
+            let pageStatus = {
+              "userID": this.userDetail.formData.userID,
+              "pageNumber": (parseInt(this.currentPage.pageNumber) + 1).toString(),
+              "formCaptureID": this.formData.formCaptureID,
+              "pageGUID": this.currentPage.pageGUID
+            }
+            this.service.modifyPageStatus(this.formData.formCaptureID, this.currentPage.pageGUID, pageStatus).subscribe(result => {
+              this.showNotification('top', 'center', 'Data has been submitted successfully!', '', 'success');
+              this.getDesignPerPage(this.currentPage.pageGUID);
+              this.currentPage.color = "green";
+              this.formData.state = 'edit';
+            });
+          });
+        }
+        else {
+          this.service.UpdateFormMetadata(this.formData.formCaptureID, obj, this.userDetail.formData.userID).subscribe(res => {
+            let pg = this.currentPage.pageNumber;
+            let pageStatus = {
+              "userID": this.userDetail.formData.userID,
+              "pageNumber": (parseInt(this.currentPage.pageNumber) + 1).toString(),
+              "formCaptureID": this.formData.formCaptureID,
+              "pageGUID": this.currentPage.pageGUID
+            }
+            this.service.modifyPageStatus(this.formData.formCaptureID, this.currentPage.pageGUID, pageStatus).subscribe(result => {
+              this.showNotification('top', 'center', 'Data has been submitted successfully!', '', 'success');
+              this.getDesignPerPage(this.currentPage.pageGUID);
+              this.currentPage.color = "green";
+              this.formData.state = 'edit';
+            });
+          });
+        }
+      }
+      else {
+        this.showNotification('top', 'center', errorMessage, '', 'danger');
+        errorMessage = "Please fill in ";
+      }
+      
 
     this.formDesign.forEach(field => {
       if (field.groupGUID !== "" && field.groupGUID !== "string" && field.fieldType.value !== "repeatgroup" && field.fieldType.value === "section" && field.fieldType.value !== "subSection" && field.fieldType.value !== "PageTitle") {
@@ -548,6 +681,22 @@ export class ApprovalFormComponent implements OnInit {
       this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
       errorMessage = "Please fill in ";
     }
+    }
+    else
+    {
+      this.showNotification('top', 'center', 'Please enter a comment before saving!', '', 'danger');
+      const dialogRef = this.dialog.open(AddCommentComponent, {
+        width: '55%',
+        height: '55%',
+        disableClose: true
+      });
+
+       dialogRef.afterClosed().subscribe(result => {
+         //console.log('The dialog was closed');
+        this.refreshCommentList();
+       });
+
+    }
   }
 
   goToPage(page: any) {
@@ -743,6 +892,13 @@ export class ApprovalFormComponent implements OnInit {
 
   refreshAttachmentList() {
     this.service.getFormAttachments(this.formData.formCaptureID).subscribe(data => {
+      data.forEach(field=>{
+        var new_date_time = new Date( field.createdTS);
+        var s = new_date_time.toISOString().replace(/T.*/,'').split('-').join('-');
+        field.createdTS = s;
+        console.log(s);
+        //new_date_time.toLocaleDateString(('zh-Hans-CN')).replace(/\//g, '-')
+      });
       this.attachmentList = data;
       this.totalNumAttachments = Object.keys(this.attachmentList).length;
     });
@@ -757,6 +913,15 @@ export class ApprovalFormComponent implements OnInit {
 
   refreshCommentList() {
     this.service.getFormComments(this.formData.formCaptureID).subscribe(data => {
+    data.forEach(field=>{
+    var new_date_time = new Date( field.timeStamp );
+    var s = new_date_time.toLocaleDateString(('zh-Hans-CN')).replace(/\//g, '-');
+    console.log(s);
+    
+      field.timeStamp = s;
+   
+    });
+
       this.commentList = data;
       this.totalNumComments = Object.keys(this.commentList).length
     });
@@ -1248,7 +1413,7 @@ timer: 1500,
       reader.readAsDataURL(this.file);
     }
     else {
-      this.showNotification('top', 'center', 'File exceeds maximum size of 20mb, Please upload a file of 20mb or less', '', 'danger');
+      this.showNotification('top', 'center', 'File exceeds maximum size of 20MB,Please upload a file of 20MB or less', '', 'danger');
       this.file = null;
     }
   }
@@ -1266,7 +1431,7 @@ timer: 1500,
           let obj = {
             "attachmentID": 0,
             "pgcFormGUID": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-            "createdTS": "2022-01-21T09:19:01.931Z",
+            "createdTS": "2022-01-21",
             "fileName": fileName + '_' + res,
             "fileDesc": this.file.name.substring(0, this.file.name.indexOf('.')),
             "fileExtention": "." + this.file.name.split('.').pop(),
@@ -1274,7 +1439,9 @@ timer: 1500,
             "contentType": this.file.type,
             "attachmentData": item,
             "userID": this.userDetail.formData.userID,
-            "formCaptureID": this.formData.formCaptureID
+            "formCaptureID": this.formData.formCaptureID,
+            "fullName": "string",
+            "linkedTo": fileName
           }
           this.service.addFormAttachments(obj).subscribe(res => {
             this.showNotification('top', 'center', 'Attachment has been saved successfully!', '', 'success');
@@ -1301,7 +1468,7 @@ timer: 1500,
         let obj = {
           "attachmentID": 0,
           "pgcFormGUID": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-          "createdTS": "2022-01-21T09:19:01.931Z",
+          "createdTS": "2022-01-21",
           "fileName": this.file.name.substring(0, this.file.name.indexOf('.')),
           "fileDesc": this.file.name.substring(0, this.file.name.indexOf('.')),
           "fileExtention": "." + this.file.name.split('.').pop(),
@@ -1309,7 +1476,9 @@ timer: 1500,
           "contentType": this.file.type,
           "attachmentData": item,
           "userID": this.userDetail.formData.userID,
-          "formCaptureID": this.formData.formCaptureID
+          "formCaptureID": this.formData.formCaptureID,
+          "fullName": "string",
+          "linkedTo": "General "
         }
         this.service.addFormAttachments(obj).subscribe(res => {
           this.showNotification('top', 'center', 'Attachment has been saved successfully!', '', 'success');
@@ -1374,14 +1543,16 @@ timer: 1500,
             "pgcFormGUID": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
             "photoGUID": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
             "formDetailID": "0",
-            "timestamp": "2022-01-21T13:29:23.713Z",
+            "timestamp": "2022-01-21",
             "photo": item,
             "fileName": "",
             "postedFileName": photoName + '_' + res,
             "createDate": "string",
             "photoDesc": "."+fileType,
             "userID": this.userDetail.formData.userID,
-            "formCaptureID": this.formData.formCaptureID
+            "formCaptureID": this.formData.formCaptureID,
+            "fullName": "string",
+            "linkedTo": photoName
           }
           this.service.addFormPhotos(obj).subscribe(res => {
             this.showNotification('top', 'center', 'Photo has been saved successfully!', '', 'success');
@@ -1413,14 +1584,16 @@ timer: 1500,
           "pgcFormGUID": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
           "photoGUID": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
           "formDetailID": "0",
-          "timestamp": "2022-01-21T13:29:23.713Z",
+          "timestamp": "2022-01-21",
           "photo": item,
           "fileName": "",
           "postedFileName": this.photoFile.name.substring(0, this.photoFile.name.indexOf('.')),
           "createDate": "string",
           "photoDesc": "."+fileType,
           "userID": this.userDetail.formData.userID,
-          "formCaptureID": this.formData.formCaptureID
+          "formCaptureID": this.formData.formCaptureID,
+          "fullName": "string",
+          "linkedTo": "General "
         }
         this.service.addFormPhotos(obj).subscribe(res => {
           this.showNotification('top', 'center', 'Photo has been saved successfully!', '', 'success');
@@ -1474,7 +1647,7 @@ timer: 1500,
           "deviceFormGUID": "0FA12DB7-D725-48A9-BED2-A44C95E94F7D",
           "comment": this.formComment,
           "stepID": 0,
-          "timeStamp": "2022-01-21T13:29:23.713Z",
+          "timeStamp": "2022-01-21",
           "formCaptureID": this.formData.formCaptureID,
           "fullName": "string",
           "LinkedTo": commentName
@@ -1498,7 +1671,7 @@ timer: 1500,
           "deviceFormGUID": "0FA12DB7-D725-48A9-BED2-A44C95E94F7D",
           "comment": this.formComment,
           "stepID": 0,
-          "timeStamp": "2022-01-21T13:29:23.713Z",
+          "timeStamp": "2022-01-21",
           "formCaptureID": this.formData.formCaptureID,
           "fullName": "string",
           "LinkedTo": commentName
@@ -1525,10 +1698,10 @@ timer: 1500,
           "deviceFormGUID": "0FA12DB7-D725-48A9-BED2-A44C95E94F7D",
           "comment": this.formComment,
           "stepID": 0,
-          "timeStamp": "2022-01-21T13:29:23.713Z",
+          "timeStamp": "2022-01-21",
           "formCaptureID": this.formData.formCaptureID,
           "fullName": "string",
-          "LinkedTo": ""
+          "LinkedTo": "General"
         }
         this.service.addFormComment(obj).subscribe(res => {
           this.showNotification('top', 'center', 'Form comment has been saved successfully!', '', 'success');
@@ -1547,10 +1720,10 @@ timer: 1500,
           "deviceFormGUID": "0FA12DB7-D725-48A9-BED2-A44C95E94F7D",
           "comment": this.formComment,
           "stepID": 0,
-          "timeStamp": "2022-01-21T13:29:23.713Z",
+          "timeStamp": "2022-01-21",
           "formCaptureID": this.formData.formCaptureID,
           "fullName": "string",
-          "LinkedTo": ""
+          "LinkedTo": "General"
         }
         this.service.updateFormComment(obj, this.commentID).subscribe(res => {
           this.showNotification('top', 'center', 'Form comment has been updated successfully!', '', 'success');

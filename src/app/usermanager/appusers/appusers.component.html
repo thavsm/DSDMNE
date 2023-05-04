@@ -16,13 +16,18 @@
                         <kendo-grid [kendoGridBinding]="userList" [pageSize]="10" [pageable]="true" [height]="700" 
                           [filterable]="true" [sortable]="true" [groupable]="false">
               
-                        <kendo-grid-column field="fullName" title="First Name" [width]="6">
+                        <kendo-grid-column field="fullName" title="First Name" [width]="5">
                         </kendo-grid-column>
               
-                        <kendo-grid-column field="email" title="Email" [width]="8">
+                        <kendo-grid-column field="email" title="Email" [width]="5">
+                        </kendo-grid-column>
+
+                        
+                        <kendo-grid-column field="province" title="Province" [width]="5">
                         </kendo-grid-column>
                         
-                        <kendo-grid-column field="roleName" title="Role Name" [width]="6">
+                        
+                        <kendo-grid-column field="roleName" title="Role Name" [width]="5">
                         </kendo-grid-column>
               
                         <kendo-grid-column [width]="1">

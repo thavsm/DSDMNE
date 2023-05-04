@@ -32,14 +32,17 @@ import { GridModule } from "@progress/kendo-angular-grid";
 import { ButtonsModule } from "@progress/kendo-angular-buttons";
 import {PDFModule,ExcelModule,} from "@progress/kendo-angular-grid";
 import {MatTooltipModule} from '@angular/material/tooltip';
-import { TreeListModule } from '@progress/kendo-angular-treelist'
+import { TreeListModule } from '@progress/kendo-angular-treelist';
+import { AddCommentComponent } from './add-form/add-comment/add-comment.component'
 
 
 @NgModule({
   declarations: [
     FormCaptureComponent,
     AddFormComponent,
-    AddSignatureComponent
+    AddSignatureComponent,
+    AddCommentComponent,
+
   ],
   imports: [
     CommonModule,
