@@ -3797,13 +3797,26 @@
                             </ng-template>
                         </kendo-grid-column>
 
+                        <kendo-grid-column field="createDate" title="Uploaded On" [width]="15">
+                        </kendo-grid-column>
+                        
                         <kendo-grid-column field="postedFileName" title="Photo Name" [width]="12">
                         </kendo-grid-column>
 
-                        <kendo-grid-column field="photoDesc" title="Photo Description" [width]="15">
+                        <kendo-grid-column field="photoDesc" title="Photo Type" [width]="10">
                         </kendo-grid-column>
 
-                        <kendo-grid-column field="createDate" title="Created On" [width]="15">
+                        
+                        <kendo-grid-column field="fullName" title="Added By" [width]="15">
+                        </kendo-grid-column>
+    
+                        <kendo-grid-column field="roleName" title="Role" [width]="15">
+                        </kendo-grid-column>
+    
+                        <kendo-grid-column field="locationName" title="Location" [width]="15">
+                        </kendo-grid-column>
+    
+                        <kendo-grid-column field="linkedTo" title="Fields Linked To" [width]="15">
                         </kendo-grid-column>
 
                         <kendo-grid-column [width]="5" title="" *ngIf="isViewOnly">
@@ -3870,14 +3883,26 @@
                         <kendo-grid-column field="fileName" title="File Name" [width]="15">
                         </kendo-grid-column>
 
-                        <kendo-grid-column field="fileDesc" title="File Description" [width]="15">
-                        </kendo-grid-column>
+                        <!-- <kendo-grid-column field="fileDesc" title="File Description" [width]="15">
+                        </kendo-grid-column>-->
 
                         <kendo-grid-column field="fileExtention" title="File Extension" [width]="15">
                         </kendo-grid-column>
 
-                        <kendo-grid-column field="fileSize" title="File Size" [width]="15">
-                        </kendo-grid-column>
+                           <!--  <kendo-grid-column field="fileSize" title="File Size" [width]="15">
+                        </kendo-grid-column>-->
+                             
+                    <kendo-grid-column field="fullName" title="Added By" [width]="15">
+                    </kendo-grid-column>
+
+                    <kendo-grid-column field="roleName" title="Role" [width]="15">
+                    </kendo-grid-column>
+
+                    <kendo-grid-column field="locationName" title="Location" [width]="15">
+                    </kendo-grid-column>
+
+                    <kendo-grid-column field="linkedTo" title="Fields Linked To" [width]="15">
+                    </kendo-grid-column>
 
                         <kendo-grid-column [width]="5" title="" *ngIf="isViewOnly">
                             <ng-template kendoGridCellTemplate let-dataItem>
@@ -3925,7 +3950,7 @@
                         <button kendoGridPDFCommand icon="file-pdf">Export to PDF</button>
                     </ng-template> -->
 
-                    <kendo-grid-column field="timeStamp" title="Date Added" [width]="12">
+                    <kendo-grid-column field="timeStamp" title="Captured On" [width]="12">
                     </kendo-grid-column>
 
                     <kendo-grid-column field="comment" title="Comment" [width]="15">

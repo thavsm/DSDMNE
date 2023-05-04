@@ -1,0 +1,20 @@
+<div style="margin-left: 0%;">
+  <button mat-icon-button color="warn" (click)="closePopup()">
+      <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<div style="height: 10px;"></div>
+<div class="parent">
+    <h4>Comments</h4>
+    <mat-form-field *ngIf="isViewOnly!='readonly'" class="example-full-width" appearance="outline">
+        <mat-label>Leave a comment</mat-label>
+        <textarea matInput  [(ngModel)]=formComment
+            placeholder="Type comment here..."></textarea>
+    </mat-form-field>
+    <button mat-flat-button *ngIf="isViewOnly!='readonly'"  (click)="addComment()"  class="btn btn-md btn-primary">
+       Add Comment
+    </button>
+    <div style="height: 10px;"></div>
+</div>
+

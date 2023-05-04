@@ -8,6 +8,8 @@ import { AddSignatureComponent } from './add-signature.component';
 import * as FileSaver from 'file-saver';
 import { lexdata } from '../lexdata';
 import { UserService } from 'src/app/shared/user.service';
+import { AddCommentComponent } from './add-comment/add-comment.component';
+
 
 declare var $: any;
 
@@ -84,7 +86,7 @@ export class AddFormComponent implements OnInit {
 
   isViewOnly: any;
 
-  constructor(public dialog: MatDialog, private service: FormbuilderService, private spinner: NgxSpinnerService, public dialogRef: MatDialogRef<FormAddComponent>, private userService: UserService) {
+  constructor(public dialog: MatDialog, private service: FormbuilderService, private spinner: NgxSpinnerService, public dialogRef: MatDialogRef<FormAddComponent>,public POPupRef: MatDialogRef<AddCommentComponent>, private userService: UserService) {
     this.formData = JSON.parse(localStorage.getItem('formCaptureDetails') || '{}');
     this.IndicatorData = localStorage.getItem('IndicatorData') || '';
     //this.IndicatorData='80';
@@ -302,7 +304,11 @@ export class AddFormComponent implements OnInit {
   savePage() {
     var errorMessage = "Please fill in ";
     let obj = [];
-
+    let commentName = "";
+    if (localStorage.getItem('fieldNameComment') !== null || localStorage.getItem('fieldNameComment') !== undefined) {
+      commentName = localStorage.getItem('fieldNameComment').toString();
+    }
+    if (this.commentList == null && commentName ==" " ) {
     this.formDesign.forEach(field => {
       if (field.groupGUID !== "" && field.groupGUID !== "string" && field.fieldType.value !== "repeatgroup" && field.fieldType.value === "section" && field.fieldType.value !== "subSection" && field.fieldType.value !== "PageTitle") {
         let sectionValues = field.groupGUID;
@@ -427,6 +433,22 @@ export class AddFormComponent implements OnInit {
     else {
       this.showNotification('top', 'center', errorMessage, '', 'danger');
       errorMessage = "Please fill in ";
+    }
+    }
+    else
+    {
+      this.showNotification('top', 'center', 'Please enter a comment before saving!', '', 'danger');
+      const dialogRef = this.dialog.open(AddCommentComponent, {
+        width: '55%',
+        height: '55%',
+        disableClose: true
+      });
+
+       dialogRef.afterClosed().subscribe(result => {
+         //console.log('The dialog was closed');
+        this.refreshCommentList();
+       });
+
     }
   }
 
@@ -662,6 +684,13 @@ export class AddFormComponent implements OnInit {
 
   refreshAttachmentList() {
     this.service.getFormAttachments(this.formData.formCaptureID).subscribe(data => {
+      data.forEach(field=>{
+        var new_date_time = new Date( field.createdTS);
+        var s = new_date_time.toISOString().replace(/T.*/,'').split('-').join('-');
+        field.createdTS = s;
+        console.log(s);
+        //new_date_time.toLocaleDateString(('zh-Hans-CN')).replace(/\//g, '-')
+      });
       this.attachmentList = data;
       this.totalNumAttachments = Object.keys(this.attachmentList).length;
     });
@@ -676,6 +705,15 @@ export class AddFormComponent implements OnInit {
 
   refreshCommentList() {
     this.service.getFormComments(this.formData.formCaptureID).subscribe(data => {
+    data.forEach(field=>{
+    var new_date_time = new Date( field.timeStamp );
+    var s = new_date_time.toLocaleDateString(('zh-Hans-CN')).replace(/\//g, '-');
+    console.log(s);
+    
+      field.timeStamp = s;
+   
+    });
+
       this.commentList = data;
       this.totalNumComments = Object.keys(this.commentList).length
     });
@@ -1077,7 +1115,7 @@ export class AddFormComponent implements OnInit {
           let obj = {
             "attachmentID": 0,
             "pgcFormGUID": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-            "createdTS": "2022-01-21T09:19:01.931Z",
+            "createdTS": "string",
             "fileName": fileName + '_' + res,
             "fileDesc": this.file.name.substring(0, this.file.name.indexOf('.')),
             "fileExtention": "." + this.file.name.split('.').pop(),
@@ -1085,7 +1123,9 @@ export class AddFormComponent implements OnInit {
             "contentType": this.file.type,
             "attachmentData": item,
             "userID": this.userDetail.formData.userID,
-            "formCaptureID": this.formData.formCaptureID
+            "formCaptureID": this.formData.formCaptureID,
+            "fullName": "string",
+            "linkedTo":   fileName
           }
           this.service.addFormAttachments(obj).subscribe(res => {
             this.showNotification('top', 'center', 'Attachment has been saved successfully!', '', 'success');
@@ -1111,7 +1151,7 @@ export class AddFormComponent implements OnInit {
         let obj = {
           "attachmentID": 0,
           "pgcFormGUID": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-          "createdTS": "2022-01-21T09:19:01.931Z",
+          "createdTS": "2022-01-21",
           "fileName": this.file.name.substring(0, this.file.name.indexOf('.')),
           "fileDesc": this.file.name.substring(0, this.file.name.indexOf('.')),
           "fileExtention": "." + this.file.name.split('.').pop(),
@@ -1119,7 +1159,9 @@ export class AddFormComponent implements OnInit {
           "contentType": this.file.type,
           "attachmentData": item,
           "userID": this.userDetail.formData.userID,
-          "formCaptureID": this.formData.formCaptureID
+          "formCaptureID": this.formData.formCaptureID,
+          "fullName": "string",
+          "linkedTo": "General "
         }
         this.service.addFormAttachments(obj).subscribe(res => {
           this.showNotification('top', 'center', 'Attachment has been saved successfully!', '', 'success');
@@ -1182,14 +1224,16 @@ export class AddFormComponent implements OnInit {
             "pgcFormGUID": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
             "photoGUID": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
             "formDetailID": "0",
-            "timestamp": "2022-01-21T13:29:23.713Z",
+            "timestamp": "2022-01-21",
             "photo": item,
             "fileName": "",
             "postedFileName": photoName + '_' + res,
             "createDate": "string",
             "photoDesc": "." + fileType,
             "userID": this.userDetail.formData.userID,
-            "formCaptureID": this.formData.formCaptureID
+            "formCaptureID": this.formData.formCaptureID,
+            "fullName": "string",
+            "LinkedTo":   photoName
           }
           this.service.addFormPhotos(obj).subscribe(res => {
             this.showNotification('top', 'center', 'Photo has been saved successfully!', '', 'success');
@@ -1220,14 +1264,16 @@ export class AddFormComponent implements OnInit {
           "pgcFormGUID": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
           "photoGUID": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
           "formDetailID": "0",
-          "timestamp": "2022-01-21T13:29:23.713Z",
+          "timestamp": "2022-01-21",
           "photo": item,
           "fileName": "",
           "postedFileName": this.photoFile.name.substring(0, this.photoFile.name.indexOf('.')),
           "createDate": "string",
           "photoDesc": "." + fileType,
           "userID": this.userDetail.formData.userID,
-          "formCaptureID": this.formData.formCaptureID
+          "formCaptureID": this.formData.formCaptureID,
+          "fullName": "string",
+          "LinkedTo": "General"
         }
         this.service.addFormPhotos(obj).subscribe(res => {
           this.showNotification('top', 'center', 'Photo has been saved successfully!', '', 'success');
@@ -1288,7 +1334,7 @@ export class AddFormComponent implements OnInit {
             "deviceFormGUID": "0FA12DB7-D725-48A9-BED2-A44C95E94F7D",
             "comment": this.formComment,
             "stepID": 0,
-            "timeStamp": "2022-01-21T13:29:23.713Z",
+            "timeStamp": "2022-01-21",
             "formCaptureID": this.formData.formCaptureID,
             "fullName": "string",
             "LinkedTo": commentName
@@ -1311,7 +1357,7 @@ export class AddFormComponent implements OnInit {
             "deviceFormGUID": "0FA12DB7-D725-48A9-BED2-A44C95E94F7D",
             "comment": this.formComment,
             "stepID": 0,
-            "timeStamp": "2022-01-21T13:29:23.713Z",
+            "timeStamp": "2022-01-21",
             "formCaptureID": this.formData.formCaptureID,
             "fullName": "string",
             "LinkedTo": commentName
@@ -1337,10 +1383,10 @@ export class AddFormComponent implements OnInit {
             "deviceFormGUID": "0FA12DB7-D725-48A9-BED2-A44C95E94F7D",
             "comment": this.formComment,
             "stepID": 0,
-            "timeStamp": "2022-01-21T13:29:23.713Z",
+            "timeStamp": "2022-01-21",
             "formCaptureID": this.formData.formCaptureID,
             "fullName": "string",
-            "LinkedTo": ""
+            "LinkedTo": "General"
           }
           this.service.addFormComment(obj).subscribe(res => {
             this.showNotification('top', 'center', 'Form comment has been saved successfully!', '', 'success');
@@ -1359,10 +1405,10 @@ export class AddFormComponent implements OnInit {
             "deviceFormGUID": "0FA12DB7-D725-48A9-BED2-A44C95E94F7D",
             "comment": this.formComment,
             "stepID": 0,
-            "timeStamp": "2022-01-21T13:29:23.713Z",
+            "timeStamp": "2022-01-21",
             "formCaptureID": this.formData.formCaptureID,
             "fullName": "string",
-            "LinkedTo": ""
+            "LinkedTo": "General"
           }
           this.service.updateFormComment(obj, this.commentID).subscribe(res => {
             this.showNotification('top', 'center', 'Form comment has been updated successfully!', '', 'success');
