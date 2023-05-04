@@ -64,11 +64,11 @@ export class AddFormComponent implements OnInit {
 
   @ViewChild('fileInput') fileInput: ElementRef;
   file: File = null;
-  fileAttr = 'Choose File(Max Size:4MB)';
+  fileAttr = 'Choose File(Max Size:20MB)';
 
   @ViewChild('photoInput') photoInput: ElementRef;
   photoFile: File = null;
-  photoFileAttr = 'Choose Photo(Max Size:4MB)';
+  photoFileAttr = 'Choose Photo(Max Size:20MB)';
 
   ClickedRow: any;
   HighlightRow: Number;
@@ -701,6 +701,7 @@ export class AddFormComponent implements OnInit {
       locationRole = this.userDetail.formData.role;
     }
     this.service.GetFieldsForCapturePerPage(locationRole, pageGUID).subscribe(formFields => {
+      console.log(formFields);
       this.formDesign = formFields;
       this.formDesign.forEach((element, index) => {
         element.fieldStyles[0].height = Math.ceil(parseInt(element.fieldStyles[0].height) / 23.2); //23.2 is the size of one row in textarea
@@ -1048,7 +1049,7 @@ export class AddFormComponent implements OnInit {
 
   onChange(event) {
     this.file = <File>event.target.files[0];
-    if (this.file.size < 4194304) {
+    if (this.file.size < 20971520) {
       this.fileAttr = this.file.name;
       let reader = new FileReader();
       reader.onload = function (readerEvt: any) {
@@ -1059,7 +1060,7 @@ export class AddFormComponent implements OnInit {
       reader.readAsDataURL(this.file);
     }
     else {
-      this.showNotification('top', 'center', 'File exceeds maximum size of 4mb,Please upload a file of 4mb or less', '', 'danger');
+      this.showNotification('top', 'center', 'File exceeds maximum size of 20mb,Please upload a file of 20mb or less', '', 'danger');
       this.file = null;
     }
   }
@@ -1090,7 +1091,7 @@ export class AddFormComponent implements OnInit {
           this.service.addFormAttachments(obj).subscribe(res => {
             this.showNotification('top', 'center', 'Attachment has been saved successfully!', '', 'success');
             this.file = null;
-            this.fileAttr = 'Choose File(Max Size:4MB)';
+            this.fileAttr = 'Choose File(Max Size:20MB)';
             //this.fileInput = ElementRef;
             this.refreshAttachmentList();
             localStorage.setItem('fieldNameAttach', "");
@@ -1124,7 +1125,7 @@ export class AddFormComponent implements OnInit {
         this.service.addFormAttachments(obj).subscribe(res => {
           this.showNotification('top', 'center', 'Attachment has been saved successfully!', '', 'success');
           this.file = null;
-          this.fileAttr = 'Choose File(Max Size:4MB)';
+          this.fileAttr = 'Choose File(Max Size:20MB)';
           // this.fileInput = null;
           this.refreshAttachmentList();
           localStorage.setItem('fieldNameAttach', "");

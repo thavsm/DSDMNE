@@ -123,7 +123,7 @@
                     
                     <kendo-grid-column field="data" title="Value">
                     <ng-template kendoGridCellTemplate let-dataItem>
-                        <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.data}}</u></a>
+                        <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.data|number:'1.2-2'}}</u></a>
                     </ng-template>
                     </kendo-grid-column>
                     
