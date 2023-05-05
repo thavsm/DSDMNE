@@ -24,6 +24,7 @@ export class TaskDetailComponent implements OnInit {
   taskArray: any[];
   actionTaken: number;
   audittaskArray: any[];
+  userID: any;
 
   roles = [
     {value: '1', viewValue: 'Admin'},
@@ -131,9 +132,15 @@ export class TaskDetailComponent implements OnInit {
           console.log(err);
         },
       );
-    this.service.getTaskAuditTrail_User(parseInt(wkid),parseInt(tid),this.nextUserID).subscribe(taskuser=>{
-      this.audittaskArray=taskuser;
-    }
+
+      this.userID = 0;
+      //sessionStorage.getItem("wfUser");
+      this.service.getTaskAuditTrail_User(parseInt(wkid),parseInt(tid), this.userID).subscribe(taskuser=>{
+        this.audittaskArray=taskuser;
+      }
+    // this.service.getTaskAuditTrail_User(parseInt(wkid),parseInt(tid),this.nextUserID).subscribe(taskuser=>{
+    //   this.audittaskArray=taskuser;
+    // }
     )
   }
 

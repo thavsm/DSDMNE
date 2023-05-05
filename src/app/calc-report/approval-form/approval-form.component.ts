@@ -80,7 +80,7 @@ export class ApprovalFormComponent implements OnInit {
 
   @ViewChild('photoInput') photoInput: ElementRef;
   photoFile: File = null;
-  photoFileAttr = 'Choose Photo(Max Size:4MB)';
+  photoFileAttr = 'Choose Photo(Max Size:20MB)';
 
   ClickedRow: any;
   HighlightRow: Number;
@@ -1913,7 +1913,10 @@ timer: 1500,
             });
           });
         }
-        field.data = eval(calc);
+        
+        console.log(calc.toFixed(2));
+        console.log(calc);
+        field.data = eval(calc.toFixed(2));
       }
     });
   }
@@ -1958,7 +1961,8 @@ timer: 1500,
               }
             });
           });
-        }
+        } 
+        
         field.data = eval(calc);
       }
     });

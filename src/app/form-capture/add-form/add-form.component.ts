@@ -70,7 +70,7 @@ export class AddFormComponent implements OnInit {
 
   @ViewChild('photoInput') photoInput: ElementRef;
   photoFile: File = null;
-  photoFileAttr = 'Choose Photo(Max Size:4MB)';
+  photoFileAttr = 'Choose Photo(Max Size:20MB)';
 
   ClickedRow: any;
   HighlightRow: Number;
@@ -739,6 +739,7 @@ export class AddFormComponent implements OnInit {
       locationRole = this.userDetail.formData.role;
     }
     this.service.GetFieldsForCapturePerPage(locationRole, pageGUID).subscribe(formFields => {
+      console.log(formFields);
       this.formDesign = formFields;
       this.formDesign.forEach((element, index) => {
         element.fieldStyles[0].height = Math.ceil(parseInt(element.fieldStyles[0].height) / 23.2); //23.2 is the size of one row in textarea

@@ -210,6 +210,8 @@ export class SidebarComponent implements OnInit {
               this.userDetail = res['formData'];
               this.location = this.userDetail.location;
               console.log(this.userDetail);
+
+              //sessionStorage.setItem("wfUser",this.userDetail.userID);
             // },
             // err => {
             //   console.log(err);

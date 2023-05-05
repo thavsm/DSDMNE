@@ -155,6 +155,7 @@ export class FormCaptureComponent implements OnInit {
           this.service.getFormCaptureCountPerLocationLevel(location,this.userDetail.formData.role,levelID[0].levelID).subscribe(result => {
             this.data =  result;
             if(this.data.length>0){
+              console.log(this.data[0]);
               console.log(this.data[0].levelID);
               this.userLocationLevel=this.data[0].levelID;
               this.PeriodStatus=this.data[0].periodStatus;
