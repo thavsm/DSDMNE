@@ -1115,7 +1115,7 @@ export class AddFormComponent implements OnInit {
           let obj = {
             "attachmentID": 0,
             "pgcFormGUID": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-            "createdTS": "string",
+            "createdTS": "2022-01-21",
             "fileName": fileName + '_' + res,
             "fileDesc": this.file.name.substring(0, this.file.name.indexOf('.')),
             "fileExtention": "." + this.file.name.split('.').pop(),
