@@ -136,6 +136,10 @@ export class FormbuilderService {
   unlockForm(formID: any, item: any) {
     return this.http.patch(this.APIUrl + 'Forms/' + formID + '/unlock', item);
   }
+  
+  GetFormEditing(formCaptureID: any) {
+    return this.http.get(this.APIUrl + formCaptureID + '/FormEditingResults',{ responseType: 'text' })
+  }
 
   getFormAttachments(formCaptureID: any): Observable<any[]> {
     return this.http.get<any>(this.APIUrl + formCaptureID + '/FormAttachment')

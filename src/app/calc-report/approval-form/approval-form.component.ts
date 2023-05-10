@@ -80,7 +80,7 @@ export class ApprovalFormComponent implements OnInit {
 
   @ViewChild('photoInput') photoInput: ElementRef;
   photoFile: File = null;
-  photoFileAttr = 'Choose Photo(Max Size:20MB)';
+  photoFileAttr = 'Choose Photo(Max Size:4MB)';
 
   ClickedRow: any;
   HighlightRow: Number;
@@ -338,8 +338,160 @@ export class ApprovalFormComponent implements OnInit {
     if (localStorage.getItem('fieldNameComment') !== null || localStorage.getItem('fieldNameComment') !== undefined) {
       commentName = localStorage.getItem('fieldNameComment').toString();
     }
+    this.service.GetFormEditing(this.formData.formCaptureID).subscribe(res => {
+      if (this.totalNumComments == 0 && commentName =="" && res =="TRUE")
+      {
+
+        this.showNotification('top', 'center', 'Please enter a comment before saving!', '', 'danger');
+        const dialogRef = this.dialog.open(AddCommentComponent, {
+          width: '55%',
+          height: '55%',
+          disableClose: true,
+          data: this.formData
+        });
   
-    if (this.commentList == null && commentName ==" " ){
+         dialogRef.afterClosed().subscribe(result => {
+           //console.log('The dialog was closed');
+           //console.log(result);
+           //dialogRef.close(this.formData);
+           this.formComment = '';
+          // this.refreshCommentList();
+           localStorage.setItem('fieldNameComment', "");
+           //this.addEditComment = 'Add';
+          this.refreshCommentList();
+         });
+  
+      
+      }
+      else
+      {
+        this.formDesign.forEach(field => {
+          if (field.groupGUID !== "" && field.groupGUID !== "string" && field.fieldType.value !== "repeatgroup" && field.fieldType.value === "section" && field.fieldType.value !== "subSection" && field.fieldType.value !== "PageTitle") {
+            let sectionValues = field.groupGUID;
+            sectionValues.forEach(element => {
+              element.listValue = "";
+              if (element.fieldType.value === "link multi select") {
+                let val = element.data;
+                let s = "";
+                val.forEach(listValue => {
+                  s += listValue.name + ","
+                });
+                element.data = s;
+              }
+              if (element.groupGUID !== "" && element.groupGUID !== "string" && element.fieldType.value !== "repeatgroup" && element.fieldType.value === "group" && element.fieldType.value !== "subSection" && element.fieldType.value !== "PageTitle") {
+                let groupValues = element.groupGUID;
+                groupValues.forEach(e => {
+                  if (e.fieldValidations[0].isRequired === true && element.isAssigned === 1 && e.data === " ") {
+                    errorMessage = errorMessage + e.questionName + ",";
+                  }
+                  if (e.parentFieldName === element.groupGUID) {
+                    e.groupGUID = "";
+                  }
+                  e.listValue = "";
+                  if (e.fieldType.value === "link multi select") {
+                    let val = e.data;
+                    let s = "";
+                    val.forEach(listValue => {
+                      s += listValue.name + ","
+                    });
+                    e.data = s;
+                  }
+                  obj.push(e);
+                  element.groupGUID = "";
+                  element.listValue = "";
+                });
+              }
+              else {
+                element.groupGUID = "";
+                if (element.fieldValidations[0].isRequired === true && element.isAssigned === 1 && element.data === " ") {
+                  errorMessage = errorMessage + element.questionName + ",";
+                }
+              }
+              obj.push(element);
+            });
+          }
+          else if (field.groupGUID !== "" && field.groupGUID !== "string" && field.fieldType.value !== "repeatgroup" && field.fieldType.value === "group" && field.fieldType.value !== "subSection" && field.fieldType.value !== "PageTitle" && field.parentFieldName === "") {
+            let groupValues = field.groupGUID;
+            groupValues.forEach(e => {
+              e.listValue = "";
+              if (e.fieldType.value === "link multi select") {
+                let val = e.data;
+                let s = "";
+                val.forEach(listValue => {
+                  s += listValue.name + ","
+                });
+                e.data = s;
+              }
+              e.groupGUID = "";
+              if (e.fieldValidations[0].isRequired === true && e.isAssigned === 1 && e.data === " ") {
+                errorMessage = errorMessage + e.questionName + ",";
+              }
+              obj.push(e);
+            });
+          }
+          else {
+            if (field.parentFieldName === "" && field.groupGUID === "string") {
+              field.listValue = "";
+              field.groupGUID = "";
+              if (field.fieldType.value === "link multi select") {
+                let val = field.data;
+                let s = "";
+                val.forEach(listValue => {
+                  s += listValue.name + ","
+                });
+                field.data = s;
+              }
+              obj.push(field);
+            }
+            if (field.fieldValidations[0].isRequired === true && field.isAssigned === 1 && field.data === " ") {
+              errorMessage = errorMessage + field.questionName + ","
+            }
+          }
+    
+        });
+    
+        if (errorMessage === "Please fill in ") {
+          if (this.formData.state === 'add') {
+            this.service.saveFormMetadata(this.formData.formCaptureID, obj, this.userDetail.formData.userID).subscribe(res => {
+              let pg = this.currentPage.pageNumber;
+              let pageStatus = {
+                "userID": this.userDetail.formData.userID,
+                "pageNumber": (parseInt(this.currentPage.pageNumber) + 1).toString(),
+                "formCaptureID": this.formData.formCaptureID,
+                "pageGUID": this.currentPage.pageGUID
+              }
+              this.service.modifyPageStatus(this.formData.formCaptureID, this.currentPage.pageGUID, pageStatus).subscribe(result => {
+                this.showNotification('top', 'center', 'Data has been submitted successfully!', '', 'success');
+                this.getDesignPerPage(this.currentPage.pageGUID);
+                this.currentPage.color = "green";
+                this.formData.state = 'edit';
+              });
+            });
+          }
+          else {
+            this.service.UpdateFormMetadata(this.formData.formCaptureID, obj, this.userDetail.formData.userID).subscribe(res => {
+              let pg = this.currentPage.pageNumber;
+              let pageStatus = {
+                "userID": this.userDetail.formData.userID,
+                "pageNumber": (parseInt(this.currentPage.pageNumber) + 1).toString(),
+                "formCaptureID": this.formData.formCaptureID,
+                "pageGUID": this.currentPage.pageGUID
+              }
+              this.service.modifyPageStatus(this.formData.formCaptureID, this.currentPage.pageGUID, pageStatus).subscribe(result => {
+                this.showNotification('top', 'center', 'Data has been submitted successfully!', '', 'success');
+                this.getDesignPerPage(this.currentPage.pageGUID);
+                this.currentPage.color = "green";
+                this.formData.state = 'edit';
+              });
+            });
+          }
+        }
+        else {
+          this.showNotification('top', 'center', errorMessage, '', 'danger');
+          errorMessage = "Please fill in ";
+        }
+        
+  
       this.formDesign.forEach(field => {
         if (field.groupGUID !== "" && field.groupGUID !== "string" && field.fieldType.value !== "repeatgroup" && field.fieldType.value === "section" && field.fieldType.value !== "subSection" && field.fieldType.value !== "PageTitle") {
           let sectionValues = field.groupGUID;
@@ -356,7 +508,7 @@ export class ApprovalFormComponent implements OnInit {
             if (element.groupGUID !== "" && element.groupGUID !== "string" && element.fieldType.value !== "repeatgroup" && element.fieldType.value === "group" && element.fieldType.value !== "subSection" && element.fieldType.value !== "PageTitle") {
               let groupValues = element.groupGUID;
               groupValues.forEach(e => {
-                if (e.fieldValidations[0].isRequired === true && element.isAssigned === 1 && e.data === " ") {
+                if (e.fieldValidations[0].isRequired === true && element.isAssigned===1 && e.data === " ") {
                   errorMessage = errorMessage + e.questionName + ",";
                 }
                 if (e.parentFieldName === element.groupGUID) {
@@ -378,7 +530,7 @@ export class ApprovalFormComponent implements OnInit {
             }
             else {
               element.groupGUID = "";
-              if (element.fieldValidations[0].isRequired === true && element.isAssigned === 1 && element.data === " ") {
+              if (element.fieldValidations[0].isRequired === true && element.isAssigned===1 && element.data === " ") {
                 errorMessage = errorMessage + element.questionName + ",";
               }
             }
@@ -398,7 +550,7 @@ export class ApprovalFormComponent implements OnInit {
               e.data = s;
             }
             e.groupGUID = "";
-            if (e.fieldValidations[0].isRequired === true && e.isAssigned === 1 && e.data === " ") {
+            if (e.fieldValidations[0].isRequired === true && e.isAssigned===1  && e.data === " ") {
               errorMessage = errorMessage + e.questionName + ",";
             }
             obj.push(e);
@@ -418,7 +570,92 @@ export class ApprovalFormComponent implements OnInit {
             }
             obj.push(field);
           }
-          if (field.fieldValidations[0].isRequired === true && field.isAssigned === 1 && field.data === " ") {
+          if (field.fieldValidations[0].isRequired === true && field.isAssigned===1 && field.data === " ") {
+            errorMessage = errorMessage + field.questionName + ","
+          }
+        }
+  
+      });
+  
+      this.oldFormDesign.forEach(field => {
+        if (field.groupGUID !== "" && field.groupGUID !== "string" && field.fieldType.value !== "repeatgroup" && field.fieldType.value === "section" && field.fieldType.value !== "subSection" && field.fieldType.value !== "PageTitle") {
+          let sectionValues = field.groupGUID;
+          sectionValues.forEach(element => {
+            element.listValue = "";
+            if (element.fieldType.value === "link multi select") {
+              let val = element.data;
+              let s = "";
+              val.forEach(listValue => {
+                s += listValue.name + ","
+              });
+              element.data = s;
+            }
+            if (element.groupGUID !== "" && element.groupGUID !== "string" && element.fieldType.value !== "repeatgroup" && element.fieldType.value === "group" && element.fieldType.value !== "subSection" && element.fieldType.value !== "PageTitle") {
+              let groupValues = element.groupGUID;
+              groupValues.forEach(e => {
+                if (e.fieldValidations[0].isRequired === true && element.isAssigned===1 && e.data === " ") {
+                  errorMessage = errorMessage + e.questionName + ",";
+                }
+                if (e.parentFieldName === element.groupGUID) {
+                  e.groupGUID = "";
+                }
+                e.listValue = "";
+                if (e.fieldType.value === "link multi select") {
+                  let val = e.data;
+                  let s = "";
+                  val.forEach(listValue => {
+                    s += listValue.name + ","
+                  });
+                  e.data = s;
+                }
+                obj2.push(e);
+                element.groupGUID = "";
+                element.listValue = "";
+              });
+            }
+            else {
+              element.groupGUID = "";
+              if (element.fieldValidations[0].isRequired === true && element.isAssigned===1 && element.data === " ") {
+                errorMessage = errorMessage + element.questionName + ",";
+              }
+            }
+            obj2.push(element);
+          });
+        }
+        else if (field.groupGUID !== "" && field.groupGUID !== "string" && field.fieldType.value !== "repeatgroup" && field.fieldType.value === "group" && field.fieldType.value !== "subSection" && field.fieldType.value !== "PageTitle" && field.parentFieldName === "") {
+          let groupValues = field.groupGUID;
+          groupValues.forEach(e => {
+            e.listValue = "";
+            if (e.fieldType.value === "link multi select") {
+              let val = e.data;
+              let s = "";
+              val.forEach(listValue => {
+                s += listValue.name + ","
+              });
+              e.data = s;
+            }
+            e.groupGUID = "";
+            if (e.fieldValidations[0].isRequired === true && e.isAssigned===1  && e.data === " ") {
+              errorMessage = errorMessage + e.questionName + ",";
+            }
+            obj2.push(e);
+          });
+        }
+        else {
+          if (field.parentFieldName === "" && field.groupGUID === "string") {
+            field.listValue = "";
+            field.groupGUID = "";
+            if (field.fieldType.value === "link multi select") {
+              let val = field.data;
+              let s = "";
+              val.forEach(listValue => {
+                s += listValue.name + ","
+              });
+              field.data = s;
+            }
+            obj2.push(field);
+          }
+          if (field.fieldValidations[0].isRequired === true && field.isAssigned===1 && field.data === " ") {
             errorMessage = errorMessage + field.questionName + ","
           }
         }
@@ -436,267 +673,43 @@ export class ApprovalFormComponent implements OnInit {
               "pageGUID": this.currentPage.pageGUID
             }
             this.service.modifyPageStatus(this.formData.formCaptureID, this.currentPage.pageGUID, pageStatus).subscribe(result => {
-              this.showNotification('top', 'center', 'Data has been submitted successfully!', '', 'success');
-              this.getDesignPerPage(this.currentPage.pageGUID);
-              this.currentPage.color = "green";
-              this.formData.state = 'edit';
-            });
-          });
-        }
-        else {
-          this.service.UpdateFormMetadata(this.formData.formCaptureID, obj, this.userDetail.formData.userID).subscribe(res => {
-            let pg = this.currentPage.pageNumber;
-            let pageStatus = {
-              "userID": this.userDetail.formData.userID,
-              "pageNumber": (parseInt(this.currentPage.pageNumber) + 1).toString(),
-              "formCaptureID": this.formData.formCaptureID,
-              "pageGUID": this.currentPage.pageGUID
-            }
-            this.service.modifyPageStatus(this.formData.formCaptureID, this.currentPage.pageGUID, pageStatus).subscribe(result => {
-              this.showNotification('top', 'center', 'Data has been submitted successfully!', '', 'success');
-              this.getDesignPerPage(this.currentPage.pageGUID);
-              this.currentPage.color = "green";
-              this.formData.state = 'edit';
-            });
-          });
-        }
-      }
-      else {
-        this.showNotification('top', 'center', errorMessage, '', 'danger');
-        errorMessage = "Please fill in ";
-      }
-      
-
-    this.formDesign.forEach(field => {
-      if (field.groupGUID !== "" && field.groupGUID !== "string" && field.fieldType.value !== "repeatgroup" && field.fieldType.value === "section" && field.fieldType.value !== "subSection" && field.fieldType.value !== "PageTitle") {
-        let sectionValues = field.groupGUID;
-        sectionValues.forEach(element => {
-          element.listValue = "";
-          if (element.fieldType.value === "link multi select") {
-            let val = element.data;
-            let s = "";
-            val.forEach(listValue => {
-              s += listValue.name + ","
-            });
-            element.data = s;
-          }
-          if (element.groupGUID !== "" && element.groupGUID !== "string" && element.fieldType.value !== "repeatgroup" && element.fieldType.value === "group" && element.fieldType.value !== "subSection" && element.fieldType.value !== "PageTitle") {
-            let groupValues = element.groupGUID;
-            groupValues.forEach(e => {
-              if (e.fieldValidations[0].isRequired === true && element.isAssigned===1 && e.data === " ") {
-                errorMessage = errorMessage + e.questionName + ",";
-              }
-              if (e.parentFieldName === element.groupGUID) {
-                e.groupGUID = "";
-              }
-              e.listValue = "";
-              if (e.fieldType.value === "link multi select") {
-                let val = e.data;
-                let s = "";
-                val.forEach(listValue => {
-                  s += listValue.name + ","
-                });
-                e.data = s;
-              }
-              obj.push(e);
-              element.groupGUID = "";
-              element.listValue = "";
-            });
-          }
-          else {
-            element.groupGUID = "";
-            if (element.fieldValidations[0].isRequired === true && element.isAssigned===1 && element.data === " ") {
-              errorMessage = errorMessage + element.questionName + ",";
-            }
-          }
-          obj.push(element);
-        });
-      }
-      else if (field.groupGUID !== "" && field.groupGUID !== "string" && field.fieldType.value !== "repeatgroup" && field.fieldType.value === "group" && field.fieldType.value !== "subSection" && field.fieldType.value !== "PageTitle" && field.parentFieldName === "") {
-        let groupValues = field.groupGUID;
-        groupValues.forEach(e => {
-          e.listValue = "";
-          if (e.fieldType.value === "link multi select") {
-            let val = e.data;
-            let s = "";
-            val.forEach(listValue => {
-              s += listValue.name + ","
-            });
-            e.data = s;
-          }
-          e.groupGUID = "";
-          if (e.fieldValidations[0].isRequired === true && e.isAssigned===1  && e.data === " ") {
-            errorMessage = errorMessage + e.questionName + ",";
-          }
-          obj.push(e);
-        });
-      }
-      else {
-        if (field.parentFieldName === "" && field.groupGUID === "string") {
-          field.listValue = "";
-          field.groupGUID = "";
-          if (field.fieldType.value === "link multi select") {
-            let val = field.data;
-            let s = "";
-            val.forEach(listValue => {
-              s += listValue.name + ","
-            });
-            field.data = s;
-          }
-          obj.push(field);
-        }
-        if (field.fieldValidations[0].isRequired === true && field.isAssigned===1 && field.data === " ") {
-          errorMessage = errorMessage + field.questionName + ","
-        }
-      }
-
-    });
-
-    this.oldFormDesign.forEach(field => {
-      if (field.groupGUID !== "" && field.groupGUID !== "string" && field.fieldType.value !== "repeatgroup" && field.fieldType.value === "section" && field.fieldType.value !== "subSection" && field.fieldType.value !== "PageTitle") {
-        let sectionValues = field.groupGUID;
-        sectionValues.forEach(element => {
-          element.listValue = "";
-          if (element.fieldType.value === "link multi select") {
-            let val = element.data;
-            let s = "";
-            val.forEach(listValue => {
-              s += listValue.name + ","
-            });
-            element.data = s;
-          }
-          if (element.groupGUID !== "" && element.groupGUID !== "string" && element.fieldType.value !== "repeatgroup" && element.fieldType.value === "group" && element.fieldType.value !== "subSection" && element.fieldType.value !== "PageTitle") {
-            let groupValues = element.groupGUID;
-            groupValues.forEach(e => {
-              if (e.fieldValidations[0].isRequired === true && element.isAssigned===1 && e.data === " ") {
-                errorMessage = errorMessage + e.questionName + ",";
-              }
-              if (e.parentFieldName === element.groupGUID) {
-                e.groupGUID = "";
-              }
-              e.listValue = "";
-              if (e.fieldType.value === "link multi select") {
-                let val = e.data;
-                let s = "";
-                val.forEach(listValue => {
-                  s += listValue.name + ","
-                });
-                e.data = s;
-              }
-              obj2.push(e);
-              element.groupGUID = "";
-              element.listValue = "";
-            });
-          }
-          else {
-            element.groupGUID = "";
-            if (element.fieldValidations[0].isRequired === true && element.isAssigned===1 && element.data === " ") {
-              errorMessage = errorMessage + element.questionName + ",";
-            }
-          }
-          obj2.push(element);
-        });
-      }
-      else if (field.groupGUID !== "" && field.groupGUID !== "string" && field.fieldType.value !== "repeatgroup" && field.fieldType.value === "group" && field.fieldType.value !== "subSection" && field.fieldType.value !== "PageTitle" && field.parentFieldName === "") {
-        let groupValues = field.groupGUID;
-        groupValues.forEach(e => {
-          e.listValue = "";
-          if (e.fieldType.value === "link multi select") {
-            let val = e.data;
-            let s = "";
-            val.forEach(listValue => {
-              s += listValue.name + ","
-            });
-            e.data = s;
-          }
-          e.groupGUID = "";
-          if (e.fieldValidations[0].isRequired === true && e.isAssigned===1  && e.data === " ") {
-            errorMessage = errorMessage + e.questionName + ",";
-          }
-          obj2.push(e);
-        });
-      }
-      else {
-        if (field.parentFieldName === "" && field.groupGUID === "string") {
-          field.listValue = "";
-          field.groupGUID = "";
-          if (field.fieldType.value === "link multi select") {
-            let val = field.data;
-            let s = "";
-            val.forEach(listValue => {
-              s += listValue.name + ","
-            });
-            field.data = s;
-          }
-          obj2.push(field);
-        }
-        if (field.fieldValidations[0].isRequired === true && field.isAssigned===1 && field.data === " ") {
-          errorMessage = errorMessage + field.questionName + ","
-        }
-      }
-
-    });
-
-    if (errorMessage === "Please fill in ") {
-      if (this.formData.state === 'add') {
-        this.service.saveFormMetadata(this.formData.formCaptureID, obj, this.userDetail.formData.userID).subscribe(res => {
-          let pg = this.currentPage.pageNumber;
-          let pageStatus = {
-            "userID": this.userDetail.formData.userID,
-            "pageNumber": (parseInt(this.currentPage.pageNumber) + 1).toString(),
-            "formCaptureID": this.formData.formCaptureID,
-            "pageGUID": this.currentPage.pageGUID
-          }
-          this.service.modifyPageStatus(this.formData.formCaptureID, this.currentPage.pageGUID, pageStatus).subscribe(result => {
-            this.showNotification('top', 'center', 'Page data has been saved successfully!', '', 'success');
-            this.getDesignPerPage(this.currentPage.pageGUID);
-            //this.getDesignPerPageHistory(this.currentPage.pageGUID);
-            this.currentPage.color = "green";
-            this.formData.state = 'edit';
-          });
-        });
-      }
-      else {        
-          this.service.UpdateFormMetadata(this.formData.formCaptureID, obj, this.userDetail.formData.userID).subscribe(res => {
-            this.service.FormHistory(this.formData.formCaptureID, this.IndicatorData, obj2).subscribe(result => {
-            let pg = this.currentPage.pageNumber;
-            let pageStatus = {
-              "userID": this.userDetail.formData.userID,
-              "pageNumber": (parseInt(this.currentPage.pageNumber) + 1).toString(),
-              "formCaptureID": this.formData.formCaptureID,
-              "pageGUID": this.currentPage.pageGUID
-            }
-            this.service.modifyPageStatus(this.formData.formCaptureID, this.currentPage.pageGUID, pageStatus).subscribe(result => {
               this.showNotification('top', 'center', 'Page data has been saved successfully!', '', 'success');
-              //this.getDesignPerPage(this.currentPage.pageGUID);
+              this.getDesignPerPage(this.currentPage.pageGUID);
               //this.getDesignPerPageHistory(this.currentPage.pageGUID);
               this.currentPage.color = "green";
               this.formData.state = 'edit';
             });
           });
-        });
+        }
+        else {        
+            this.service.UpdateFormMetadata(this.formData.formCaptureID, obj, this.userDetail.formData.userID).subscribe(res => {
+              this.service.FormHistory(this.formData.formCaptureID, this.IndicatorData, obj2).subscribe(result => {
+              let pg = this.currentPage.pageNumber;
+              let pageStatus = {
+                "userID": this.userDetail.formData.userID,
+                "pageNumber": (parseInt(this.currentPage.pageNumber) + 1).toString(),
+                "formCaptureID": this.formData.formCaptureID,
+                "pageGUID": this.currentPage.pageGUID
+              }
+              this.service.modifyPageStatus(this.formData.formCaptureID, this.currentPage.pageGUID, pageStatus).subscribe(result => {
+                this.showNotification('top', 'center', 'Page data has been saved successfully!', '', 'success');
+                //this.getDesignPerPage(this.currentPage.pageGUID);
+                //this.getDesignPerPageHistory(this.currentPage.pageGUID);
+                this.currentPage.color = "green";
+                this.formData.state = 'edit';
+              });
+            });
+          });
+        }
       }
-    }
-    else {
-      this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
-      errorMessage = "Please fill in ";
-    }
-    }
-    else
-    {
-      this.showNotification('top', 'center', 'Please enter a comment before saving!', '', 'danger');
-      const dialogRef = this.dialog.open(AddCommentComponent, {
-        width: '55%',
-        height: '55%',
-        disableClose: true
-      });
+      else {
+        this.showNotification('top', 'center', errorMessage, 'Error.', 'danger');
+        errorMessage = "Please fill in ";
+      }
 
-       dialogRef.afterClosed().subscribe(result => {
-         //console.log('The dialog was closed');
-        this.refreshCommentList();
-       });
+      }
+    });
 
-    }
   }
 
   goToPage(page: any) {
@@ -894,7 +907,7 @@ export class ApprovalFormComponent implements OnInit {
     this.service.getFormAttachments(this.formData.formCaptureID).subscribe(data => {
       data.forEach(field=>{
         var new_date_time = new Date( field.createdTS);
-        var s = new_date_time.toISOString().replace(/T.*/,'').split('-').join('-');
+        var s = new_date_time.toLocaleDateString(('en-ZA')).replace(/\//g, '-');
         field.createdTS = s;
         console.log(s);
         //new_date_time.toLocaleDateString(('zh-Hans-CN')).replace(/\//g, '-')
@@ -915,7 +928,7 @@ export class ApprovalFormComponent implements OnInit {
     this.service.getFormComments(this.formData.formCaptureID).subscribe(data => {
     data.forEach(field=>{
     var new_date_time = new Date( field.timeStamp );
-    var s = new_date_time.toLocaleDateString(('zh-Hans-CN')).replace(/\//g, '-');
+    var s = new_date_time.toLocaleDateString(('en-ZA')).replace(/\//g, '-');
     console.log(s);
     
       field.timeStamp = s;

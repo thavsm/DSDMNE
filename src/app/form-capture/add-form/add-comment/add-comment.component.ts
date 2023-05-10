@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormbuilderService } from 'src/app/shared/formbuilder.service';
 import { UserService } from 'src/app/shared/user.service';
 
@@ -17,9 +17,14 @@ export class AddCommentComponent implements OnInit {
   formData: any = [];
 
 isViewOnly: any;
-  constructor(public dialogRef: MatDialogRef<AddCommentComponent>, private userService: UserService,private service: FormbuilderService) {
-    this.formData = JSON.parse(localStorage.getItem('formCaptureDetails') || '{}');
-    
+  constructor(public dialogRef: MatDialogRef<AddCommentComponent>, private userService: UserService,private service: FormbuilderService, @Inject(MAT_DIALOG_DATA) public data: any) {
+    //this.formData = JSON.parse(localStorage.getItem('formCaptureDetails') || '{}');
+    this.formData  = {
+      formCaptureID: data["formCaptureID"],
+      formID: data["formID"],
+      formName: data["formName"],
+      state: 'edit'
+    };
    }
 
   ngOnInit(): void {
@@ -42,7 +47,8 @@ isViewOnly: any;
     //   commentName = localStorage.getItem('fieldNameComment').toString();
     // }
     // if (commentName !== "") {
-    if (this.formComment !== "" && this.formComment !== null) {
+    if (this.formComment !== "" && this.formComment !== null) 
+    {
       //this.spinner.show();
       let obj = {
         "commentID": 0,
@@ -64,7 +70,8 @@ isViewOnly: any;
         //this.spinner.hide();
       });
     }
-   else {
+   else 
+   {
       this.showNotification('top', 'center', 'Please enter a comment before saving!', '', 'danger');
     }
   
