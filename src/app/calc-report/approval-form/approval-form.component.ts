@@ -72,6 +72,7 @@ export class ApprovalFormComponent implements OnInit {
   totalNumPhotos: number = 0;
 
   public commentList: any;
+  public newcommentList: any;
   totalNumComments: number = 0;
 
   @ViewChild('fileInput') fileInput: ElementRef;
@@ -925,19 +926,30 @@ export class ApprovalFormComponent implements OnInit {
   }
 
   refreshCommentList() {
-    this.service.getFormComments(this.formData.formCaptureID).subscribe(data => {
-    data.forEach(field=>{
-    var new_date_time = new Date( field.timeStamp );
-    var s = new_date_time.toLocaleDateString(('en-ZA')).replace(/\//g, '-');
-    console.log(s);
+    let commentName = "";
+    let linkedtofield ="Number of Family Members Participating in Parenting Programmes"
+    if (localStorage.getItem('fieldNameComment') !== null || localStorage.getItem('fieldNameComment') !== undefined) {
+      commentName = localStorage.getItem('fieldNameComment').toString();
+    }
+    // this.service.getFormComments(this.formData.formCaptureID).subscribe(data => {
     
-      field.timeStamp = s;
-   
-    });
 
+    //   this.commentList = data  //data;
+      
+    //   this.totalNumComments = Object.keys(this.commentList).length
+    // });
+     this.service.getIndicatorComments(this.IndicatorData, this.formData.formCaptureID).subscribe(data => {
+     data.forEach(field=>{
+     var new_date_time = new Date( field.timeStamp );
+     var s = new_date_time.toLocaleDateString(('en-ZA')).replace(/\//g, '-');
+    // console.log(s);
+     field.timeStamp = s;
+
+     });
       this.commentList = data;
+      
       this.totalNumComments = Object.keys(this.commentList).length
-    });
+     });
   }
 
   compareFn(option1: lexdata, option2: lexdata) {
