@@ -1927,8 +1927,6 @@ timer: 1500,
           });
         }
         
-        console.log(calc.toFixed(2));
-        console.log(calc);
         field.data = eval(calc.toFixed(2));
       }
     });
@@ -1976,7 +1974,7 @@ timer: 1500,
           });
         } 
         
-        field.data = eval(calc);
+        field.data = eval(calc).toFixed(2);
       }
     });
   }

@@ -1588,7 +1588,7 @@ export class AddFormComponent implements OnInit {
             });
           });
         }
-        field.data = eval(calc);
+        field.data = eval(calc).toFixed(2);
       }
     });
   }
@@ -1633,7 +1633,7 @@ export class AddFormComponent implements OnInit {
             });
           });
         }
-        field.data = eval(calc);
+        field.data = eval(calc).toFixed(2);
       }
     });
   }
