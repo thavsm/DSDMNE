@@ -70,7 +70,7 @@ export class AddFormComponent implements OnInit {
 
   @ViewChild('photoInput') photoInput: ElementRef;
   photoFile: File = null;
-  photoFileAttr = 'Choose Photo(Max Size:4MB)';
+  photoFileAttr = 'Choose Photo(Max Size:20MB)';
 
   ClickedRow: any;
   HighlightRow: Number;
@@ -1176,7 +1176,7 @@ export class AddFormComponent implements OnInit {
 
   onChangePhoto(event) {
     this.photoFile = <File>event.target.files[0];
-    if (this.photoFile.size < 4194304) {
+    if (this.photoFile.size <  20971520) {
       this.photoFileAttr = this.photoFile.name;
       let reader = new FileReader();
       reader.onload = function (readerEvt: any) {
@@ -1187,7 +1187,7 @@ export class AddFormComponent implements OnInit {
       reader.readAsDataURL(this.photoFile);
     }
     else {
-      this.showNotification('top', 'center', 'Photo exceeds maximum size of 4mb, Please upload a photo of 4mb or less', '', 'danger');
+      this.showNotification('top', 'center', 'Photo exceeds maximum size of 20mb, Please upload a photo of 20mb or less', '', 'danger');
       this.photoFile = null;
     }
   }
@@ -1224,7 +1224,7 @@ export class AddFormComponent implements OnInit {
           this.service.addFormPhotos(obj).subscribe(res => {
             this.showNotification('top', 'center', 'Photo has been saved successfully!', '', 'success');
             this.photoFile = null;
-            this.photoFileAttr = 'Choose Photo(Max Size:4MB)';
+            this.photoFileAttr = 'Choose Photo(Max Size:20MB)';
             //this.photoInput = null;
             this.refreshPhotoList();
             localStorage.setItem('fieldNameAttach', "");
@@ -1264,7 +1264,7 @@ export class AddFormComponent implements OnInit {
         this.service.addFormPhotos(obj).subscribe(res => {
           this.showNotification('top', 'center', 'Photo has been saved successfully!', '', 'success');
           this.photoFile = null;
-          this.photoFileAttr = 'Choose Photo(Max Size:4MB)';
+          this.photoFileAttr = 'Choose Photo(Max Size:20MB)';
           //this.photoInput = null;
           this.refreshPhotoList();
           localStorage.setItem('fieldNameAttach', "");

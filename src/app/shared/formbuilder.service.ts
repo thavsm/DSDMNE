@@ -173,6 +173,10 @@ export class FormbuilderService {
     return this.http.get<any>(this.APIUrl + formCaptureID + '/FormComment')
   }
 
+  getIndicatorComments(indicatorID :any ,formCaptureID: any): Observable<any[]> {
+    return this.http.get<any>(this.APIUrl + indicatorID + '/' + formCaptureID + '/IndicatorComment')
+  }
+
   addFormComment(data: any) {
     return this.http.post(this.APIUrl + 'AddFormComment', data, { responseType: 'text' });
   }
