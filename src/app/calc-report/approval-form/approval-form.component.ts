@@ -81,7 +81,7 @@ export class ApprovalFormComponent implements OnInit {
 
   @ViewChild('photoInput') photoInput: ElementRef;
   photoFile: File = null;
-  photoFileAttr = 'Choose Photo(Max Size:4MB)';
+  photoFileAttr = 'Choose Photo(Max Size:20MB)';
 
   ClickedRow: any;
   HighlightRow: Number;
@@ -343,7 +343,7 @@ export class ApprovalFormComponent implements OnInit {
       if (this.totalNumComments == 0 && commentName =="" && res =="TRUE")
       {
 
-        this.showNotification('top', 'center', 'Please enter a comment before saving!', '', 'danger');
+        this.showNotification('top', 'center', 'Please leave comment related to your update', '', 'danger');
         const dialogRef = this.dialog.open(AddCommentComponent, {
           width: '55%',
           height: '55%',
@@ -905,7 +905,8 @@ export class ApprovalFormComponent implements OnInit {
   }
 
   refreshAttachmentList() {
-    this.service.getFormAttachments(this.formData.formCaptureID).subscribe(data => {
+    //this.service.getFormAttachments(this.formData.formCaptureID).subscribe(data => {
+      this.service.getIndicatorAttachments(this.IndicatorData, this.formData.formCaptureID).subscribe(data =>{
       data.forEach(field=>{
         var new_date_time = new Date( field.createdTS);
         var s = new_date_time.toLocaleDateString(('en-ZA')).replace(/\//g, '-');
@@ -919,10 +920,15 @@ export class ApprovalFormComponent implements OnInit {
   }
 
   refreshPhotoList() {
-    this.service.getFormPhotos(this.formData.formCaptureID).subscribe(data => {
-      this.photoList = data;
-      this.totalNumPhotos = Object.keys(this.photoList).length
-    });
+    // this.service.getFormPhotos(this.formData.formCaptureID).subscribe(data => {
+    //   this.photoList = data;
+    //   this.totalNumPhotos = Object.keys(this.photoList).length
+    // });
+
+    this.service.getIndicatorPhotos(this.IndicatorData,this.formData.formCaptureID ).subscribe(data => {
+       this.photoList = data;
+         this.totalNumPhotos = Object.keys(this.photoList).length
+      });
   }
 
   refreshCommentList() {
@@ -1376,7 +1382,7 @@ export class ApprovalFormComponent implements OnInit {
     }, {
       type: type,
     delay: 1500,
-timer: 1500,
+timer: 5000,
       placement: {
         from: from,
         align: align
@@ -1457,7 +1463,7 @@ timer: 1500,
             "attachmentID": 0,
             "pgcFormGUID": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
             "createdTS": "2022-01-21",
-            "fileName": fileName + '_' + res,
+            "fileName": this.file.name.substring(0, this.file.name.indexOf('.')), //fileName + '_' + res,
             "fileDesc": this.file.name.substring(0, this.file.name.indexOf('.')),
             "fileExtention": "." + this.file.name.split('.').pop(),
             "fileSize": this.file.size,
@@ -1534,7 +1540,7 @@ timer: 1500,
 
   onChangePhoto(event) {
     this.photoFile = <File>event.target.files[0];
-    if (this.photoFile.size < 4194304) {
+    if (this.photoFile.size < 20971520) {
       this.photoFileAttr = this.photoFile.name;
       let reader = new FileReader();
       reader.onload = function (readerEvt: any) {
@@ -1545,7 +1551,7 @@ timer: 1500,
       reader.readAsDataURL(this.photoFile);
     }
     else {
-      this.showNotification('top', 'center', 'Photo exceeds maximum size of 4mb,Please upload a photo of 4mb or less', '', 'danger');
+      this.showNotification('top', 'center', 'Photo exceeds maximum size of 20mb,Please upload a photo of 20mb or less', '', 'danger');
       this.photoFile = null;
     }
   }
@@ -1571,7 +1577,7 @@ timer: 1500,
             "timestamp": "2022-01-21",
             "photo": item,
             "fileName": "",
-            "postedFileName": photoName + '_' + res,
+            "postedFileName": this.photoFile.name.substring(0, this.photoFile.name.indexOf('.')),//photoName + '_' + res,
             "createDate": "string",
             "photoDesc": "."+fileType,
             "userID": this.userDetail.formData.userID,
@@ -1582,7 +1588,7 @@ timer: 1500,
           this.service.addFormPhotos(obj).subscribe(res => {
             this.showNotification('top', 'center', 'Photo has been saved successfully!', '', 'success');
             this.photoFile = null;
-            this.photoFileAttr = 'Choose Photo(Max Size:4MB)';
+            this.photoFileAttr = 'Choose Photo(Max Size:20MB)';
             //this.photoInput = null;
             this.refreshPhotoList();
             localStorage.setItem('fieldNameAttach', "");
@@ -1623,7 +1629,7 @@ timer: 1500,
         this.service.addFormPhotos(obj).subscribe(res => {
           this.showNotification('top', 'center', 'Photo has been saved successfully!', '', 'success');
           this.photoFile = null;
-          this.photoFileAttr = 'Choose Photo(Max Size:4MB)';
+          this.photoFileAttr = 'Choose Photo(Max Size:20MB)';
           //this.photoInput = null;
           this.refreshPhotoList();
           localStorage.setItem('fieldNameAttach', "");
