@@ -54,7 +54,7 @@
                                         </form>
                                     </mat-step>
                                     <mat-step>
-                                        <ng-template matStepLabel>Select Questions</ng-template>
+                                        <ng-template matStepLabel>Select Indicators</ng-template>
                                         <hr>
                                         <div>
                                             <dual-list [source]="source" [(destination)]="assigned" height="300px"
@@ -70,8 +70,8 @@
                                         </div>
                                     </mat-step>
                                     <mat-step>
-                                        <ng-template matStepLabel>Export Questions to Excel</ng-template>
-                                        <h5>Are you sure you want to export these Questions to an Excel sheet?</h5>
+                                        <ng-template matStepLabel>Export Indicators to Excel</ng-template>
+                                        <h5>Are you sure you want to export these Indicators to an Excel sheet?</h5>
                                         <mat-list>
                                             <mat-list-item *ngFor="let assign of assigned">
                                                 -> {{assign.questionName}}

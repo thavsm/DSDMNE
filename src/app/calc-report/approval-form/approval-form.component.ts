@@ -1945,8 +1945,6 @@ timer: 5000,
           });
         }
         
-        console.log(calc.toFixed(2));
-        console.log(calc);
         field.data = eval(calc.toFixed(2));
       }
     });
@@ -1994,7 +1992,7 @@ timer: 5000,
           });
         } 
         
-        field.data = eval(calc);
+        field.data = eval(calc).toFixed(2);
       }
     });
   }
