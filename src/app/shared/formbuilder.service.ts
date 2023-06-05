@@ -177,6 +177,14 @@ export class FormbuilderService {
     return this.http.get<any>(this.APIUrl + indicatorID + '/' + formCaptureID + '/IndicatorComment')
   }
 
+
+  getIndicatorPhotos(indicatorID :any ,formCaptureID: any): Observable<any[]> {
+    return this.http.get<any>(this.APIUrl + indicatorID + '/' + formCaptureID + '/IndicatorPhoto')
+  }
+
+  getIndicatorAttachments(indicatorID :any ,formCaptureID: any): Observable<any[]> {
+    return this.http.get<any>(this.APIUrl + indicatorID + '/' + formCaptureID + '/IndicatorAttachment')
+  }
   addFormComment(data: any) {
     return this.http.post(this.APIUrl + 'AddFormComment', data, { responseType: 'text' });
   }
