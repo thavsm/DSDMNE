@@ -149,6 +149,9 @@ export class FormbuilderService {
     return this.http.post(this.APIUrl + 'FormAttachment', data, { responseType: 'text' });
   }
 
+  addFormAttachmentsDataApproval(data: any) {
+    return this.http.post(this.APIUrl + 'FormAttachmentDataApproval', data, { responseType: 'text' });
+  }
   getFormPhotos(formCaptureID: any): Observable<any[]> {
     return this.http.get<any>(this.APIUrl + formCaptureID + '/FormPhoto')
   }
@@ -157,6 +160,9 @@ export class FormbuilderService {
     return this.http.post(this.APIUrl + 'FormPhoto', data, { responseType: 'text' });
   }
 
+  addFormPhotosDataApproval(data: any) {
+    return this.http.post(this.APIUrl + 'FormPhotoDataApproval', data, { responseType: 'text' });
+  }
   UpdateFormVersion(formID: any) {
     return this.http.put(this.APIUrl + formID + '/UpdateFormVersion', '', { responseType: 'text' });
   }
@@ -185,13 +191,32 @@ export class FormbuilderService {
   getIndicatorAttachments(indicatorID :any ,formCaptureID: any): Observable<any[]> {
     return this.http.get<any>(this.APIUrl + indicatorID + '/' + formCaptureID + '/IndicatorAttachment')
   }
+
+  getReassignedUserTasks(UserID: any): Observable<any[]> {
+    return this.http.get<any>(this.APIUrl + UserID + '/ReassignedUserTasks')
+  }
+
+
   addFormComment(data: any) {
     return this.http.post(this.APIUrl + 'AddFormComment', data, { responseType: 'text' });
   }
 
+  addFormCommentDataApproval(data: any) {
+    return this.http.post(this.APIUrl + 'AddFormCommentDataApproval', data, { responseType: 'text' });
+  }
+  AddReassignedTasks(data: any) {
+    return this.http.post(this.APIUrl + 'AddUserTasks', data, { responseType: 'text' });
+  }
+
+
   updateFormComment(data: any, commentID: any) {
     return this.http.put(this.APIUrl + commentID + '/UpdateFormComment', data, { responseType: 'text' });
   }
+
+  UpdateTaskReassigned(data: any, taskID: any) {
+    return this.http.put(this.APIUrl + taskID + '/UpdateTaskReassigned', data, { responseType: 'text' });
+  }
+
 
   getLockedByUserName(userID: any) {
     return this.http.get(this.APIUrl + userID + '/getLockedUserName', { responseType: 'text' })
@@ -205,6 +230,9 @@ export class FormbuilderService {
     return this.http.delete(this.APIUrl + AttachmentID + '/' + 'DeleteComment', { responseType: 'text' });
   }
 
+  DeleteReassignedTask(TaskID: any) {
+    return this.http.put(this.APIUrl + TaskID + '/' + 'DeleteReassignedTask', { responseType: 'text' });
+  }
   DeletePhoto(PhotoGUID: any) {
     return this.http.delete(this.APIUrl + PhotoGUID + '/' + 'DeletePhoto', { responseType: 'text' });
   }
@@ -329,6 +357,12 @@ export class FormbuilderService {
   addformcategories(data: any) {
     return this.http.post(this.APIUrl + 'formcategories', data);
   }
+
+  GetUsersByLocation(LocationID: any, UserID: any) : Observable<any[]> {
+    return this.http.get<any>(this.APIUrl + LocationID + '/'+ UserID +'/AllUsersByLocation')
+  }
+
+ 
   //#endregion
 
 }

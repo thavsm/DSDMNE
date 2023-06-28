@@ -15,10 +15,13 @@ export class AddCommentComponent implements OnInit {
   userDetail: any;
 
   formData: any = [];
+  IndicatorData: any;
 
 isViewOnly: any;
   constructor(public dialogRef: MatDialogRef<AddCommentComponent>, private userService: UserService,private service: FormbuilderService, @Inject(MAT_DIALOG_DATA) public data: any) {
     //this.formData = JSON.parse(localStorage.getItem('formCaptureDetails') || '{}');
+    console.log("data");
+    this.IndicatorData = data["indicatorID"];
     this.formData  = {
       formCaptureID: data["formCaptureID"],
       formID: data["formID"],
@@ -59,9 +62,10 @@ isViewOnly: any;
         "timeStamp": "2022-01-21T13:29:23.713Z",
         "formCaptureID": this.formData.formCaptureID,
         "fullName": "string",
-        "LinkedTo": "General"
+        "LinkedTo": "",
+        "indicatorID" :  this.IndicatorData
       }
-      this.service.addFormComment(obj).subscribe(res => {
+      this.service.addFormCommentDataApproval(obj).subscribe(res => {
         this.showNotification('top', 'center', 'Form comment has been saved successfully!', '', 'success');
         this.formComment = '';
         //this.refreshCommentList();

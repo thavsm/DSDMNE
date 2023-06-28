@@ -59,6 +59,7 @@ export class ApprovalFormComponent implements OnInit {
 
   formComment: string = '';
 
+
   addEditComment: string = 'Add';
 
   commentID: number = 0;
@@ -112,6 +113,7 @@ export class ApprovalFormComponent implements OnInit {
 
     this.IndicatorData = data["indicatorID"];
     this.formData  = {
+      indicatorID:data["indicatorID"],
       formID: data["formID"],
       formName: data["formName"],
       formCaptureID: data["formcapturedID"],
@@ -1472,7 +1474,8 @@ timer: 5000,
             "userID": this.userDetail.formData.userID,
             "formCaptureID": this.formData.formCaptureID,
             "fullName": "string",
-            "linkedTo": fileName
+            "linkedTo": fileName,
+            
           }
           this.service.addFormAttachments(obj).subscribe(res => {
             this.showNotification('top', 'center', 'Attachment has been saved successfully!', '', 'success');
@@ -1492,7 +1495,7 @@ timer: 5000,
         this.showNotification('top', 'center', 'Select a file before uploading!', '', 'danger');
       }
     }
-    else {
+   else {
       if (this.file !== null) {
         this.spinner.show();
         var item = document.querySelector('#hidden_upload_item').innerHTML;
@@ -1509,18 +1512,20 @@ timer: 5000,
           "userID": this.userDetail.formData.userID,
           "formCaptureID": this.formData.formCaptureID,
           "fullName": "string",
-          "linkedTo": "General "
+          "linkedTo": "",
+          "indicatorID" : this.IndicatorData
+       
         }
-        this.service.addFormAttachments(obj).subscribe(res => {
+        this.service.addFormAttachmentsDataApproval(obj).subscribe(res => {
           this.showNotification('top', 'center', 'Attachment has been saved successfully!', '', 'success');
           this.file = null;
           this.fileAttr = 'Choose File(Max Size:20MB)';
-          // this.fileInput = null;
+          this.fileInput = null;
           this.refreshAttachmentList();
           localStorage.setItem('fieldNameAttach', "");
           localStorage.setItem('fieldNamePhoto', "");
           this.getDesignPerPage(this.currentPage.pageGUID);
-          //this.getDesignPerPageHistory(this.currentPage.pageGUID);
+          this.getDesignPerPageHistory(this.currentPage.pageGUID);
           this.spinner.hide();
         });
       }
@@ -1584,6 +1589,7 @@ timer: 5000,
             "formCaptureID": this.formData.formCaptureID,
             "fullName": "string",
             "linkedTo": photoName
+ 
           }
           this.service.addFormPhotos(obj).subscribe(res => {
             this.showNotification('top', 'center', 'Photo has been saved successfully!', '', 'success');
@@ -1602,7 +1608,7 @@ timer: 5000,
       else {
         this.showNotification('top', 'center', 'Select a photo before uploading', '', 'danger');
       }
-    }
+   }
     else {
       if (this.photoFile !== null) {
         var fileType=this.photoFile.name.split('.').pop();
@@ -1624,9 +1630,11 @@ timer: 5000,
           "userID": this.userDetail.formData.userID,
           "formCaptureID": this.formData.formCaptureID,
           "fullName": "string",
-          "linkedTo": "General "
+          "linkedTo": "",
+          "indicatorID" : this.IndicatorData
+          
         }
-        this.service.addFormPhotos(obj).subscribe(res => {
+        this.service.addFormPhotosDataApproval(obj).subscribe(res => {
           this.showNotification('top', 'center', 'Photo has been saved successfully!', '', 'success');
           this.photoFile = null;
           this.photoFileAttr = 'Choose Photo(Max Size:20MB)';
@@ -1681,7 +1689,8 @@ timer: 5000,
           "timeStamp": "2022-01-21",
           "formCaptureID": this.formData.formCaptureID,
           "fullName": "string",
-          "LinkedTo": commentName
+          "LinkedTo":   commentName
+          
         }
         this.service.addFormComment(obj).subscribe(res => {
           this.showNotification('top', 'center', 'Form comment has been saved successfully!', '', 'success');
@@ -1706,6 +1715,8 @@ timer: 5000,
           "formCaptureID": this.formData.formCaptureID,
           "fullName": "string",
           "LinkedTo": commentName
+          
+          
         }
         this.service.updateFormComment(obj, this.commentID).subscribe(res => {
           this.showNotification('top', 'center', 'Form comment has been updated successfully!', '', 'success');
@@ -1732,9 +1743,11 @@ timer: 5000,
           "timeStamp": "2022-01-21",
           "formCaptureID": this.formData.formCaptureID,
           "fullName": "string",
-          "LinkedTo": "General"
+          "LinkedTo": "",
+          "indicatorID" : this.IndicatorData
+  
         }
-        this.service.addFormComment(obj).subscribe(res => {
+        this.service.addFormCommentDataApproval(obj).subscribe(res => {
           this.showNotification('top', 'center', 'Form comment has been saved successfully!', '', 'success');
           this.formComment = '';
           this.refreshCommentList();
@@ -1754,7 +1767,9 @@ timer: 5000,
           "timeStamp": "2022-01-21",
           "formCaptureID": this.formData.formCaptureID,
           "fullName": "string",
-          "LinkedTo": "General"
+          "LinkedTo": "",
+          "indicatorID" : this.IndicatorData
+
         }
         this.service.updateFormComment(obj, this.commentID).subscribe(res => {
           this.showNotification('top', 'center', 'Form comment has been updated successfully!', '', 'success');
@@ -2000,16 +2015,19 @@ timer: 5000,
   fieldPhoto(item: any) {
     this.tabIndex = 1;
     localStorage.setItem('fieldNamePhoto', item.questionName + '(' + item.fieldName + ')');
+
   }
 
   fieldAttachment(item: any) {
     this.tabIndex = 2;
     localStorage.setItem('fieldNameAttach', item.questionName + '(' + item.fieldName + ')');
+
   }
 
   fieldComment(item: any) {
     this.tabIndex = 3;
     localStorage.setItem('fieldNameComment', item.questionName + '(' + item.fieldName + ')');
+
   }
 }
 
