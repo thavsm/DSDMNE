@@ -946,11 +946,12 @@ export class ApprovalFormComponent implements OnInit {
       
     //   this.totalNumComments = Object.keys(this.commentList).length
     // });
+    console.log(this.IndicatorData);
      this.service.getIndicatorComments(this.IndicatorData, this.formData.formCaptureID).subscribe(data => {
      data.forEach(field=>{
      var new_date_time = new Date( field.timeStamp );
      var s = new_date_time.toLocaleDateString(('en-ZA')).replace(/\//g, '-');
-    // console.log(s);
+     console.log(s);
      field.timeStamp = s;
 
      });
@@ -1960,7 +1961,7 @@ timer: 5000,
           });
         }
         
-        field.data = eval(calc.toFixed(2));
+        field.data = eval(calc);
       }
     });
   }
@@ -2007,7 +2008,7 @@ timer: 5000,
           });
         } 
         
-        field.data = eval(calc).toFixed(2);
+        field.data = eval(calc);
       }
     });
   }

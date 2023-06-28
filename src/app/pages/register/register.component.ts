@@ -26,6 +26,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     isSP:boolean;
     isFac:boolean;
     isBranch:boolean;
+    isSPMultiple:boolean;
+    isSPSingle:boolean;
 
     selectTheme = 'primary';
     // cities = [
@@ -103,6 +105,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       ProvinceID:[''],
       DistrictID:[''],
       ServicePointID:[''],
+      ServicePointID2:[''],
       FacilityID:[''],
       //,     Programme:['']
     }, 
@@ -222,6 +225,7 @@ timer: 1500,
         var locProvince = 0;
         var locDistrict = 0;
         var locSPoint = 0;
+        var locSPoints = [];
         var locFacility = 0;
         var loc = 0;
         if(this.formModel.value.Branch!='') {
@@ -244,7 +248,11 @@ timer: 1500,
           locFacility = this.formModel.value.FacilityID;
           loc = this.formModel.value.FacilityID;
         }
-
+        if(this.formModel.value.ServicePointID2!='') {
+          locSPoints = this.formModel.value.ServicePointID2;
+          loc = locSPoints[0];
+          locSPoint = locSPoints[0];
+        }
         var body = {
           Email: this.formModel.value.Email,
           FullName: this.formModel.value.FullName,
@@ -262,6 +270,7 @@ timer: 1500,
           ProvinceID: locProvince,
           DistrictID: locDistrict,
           ServicePointID: locSPoint,
+          ServicePointIDs: locSPoints,
           FacilityID: locFacility
         };
         //let bd ={Email: this.formModel.Email, Password: this.formModel.Password, FullName: this.formModel.FullName};
@@ -301,6 +310,8 @@ timer: 1500,
      this.districts = [];
      this.servicePoints = [];
      this.facilities = [];
+     this.isSPMultiple=false;
+     this.isSPSingle=false;
 
      switch(loctype.value)
      {
@@ -334,6 +345,8 @@ timer: 1500,
         this.isSP=true;
         this.isFac=false;
         this.loadProvince();
+        this.isSPMultiple=true;
+        this.isSPSingle=false;
         break;
         case 4264:
         this.isBranch=false;
@@ -513,6 +526,13 @@ timer: 1500,
      }
      
   }
+
+  onSPMultiSelect(sp:any)
+  {
+     console.log(sp.nodeID);
+     console.log(this.formModel.value.ServicePointID2);
+  }
+
 
   // onRoleChange(e)
   // {
