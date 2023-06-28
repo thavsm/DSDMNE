@@ -121,7 +121,7 @@
                             <i class="material-icons">accessibility</i>
                           </span>
                         </div>
-                        <mat-select class="form-control" placeholder="Location Type..." formControlName="LocationType" >
+                        <mat-select  class="form-control" placeholder="Location Type..." formControlName="LocationType"  >
                           <mat-option *ngFor="let loctype of locationType" [value]="loctype.value" (click)="loadLocation(loctype)" >
                             {{ loctype.viewValue }}
                           </mat-option>
@@ -188,8 +188,13 @@
                             <i class="material-icons">face</i>
                           </span>
                         </div>                        
-                        <mat-select class="form-control" placeholder="Service Point..." formControlName="ServicePointID">
+                        <mat-select class="form-control" placeholder="Service Point..." formControlName="ServicePointID" *ngIf="isSPSingle">
                           <mat-option *ngFor="let b of servicePoints" [value]="b.nodeID"  (click)="loadFacilities(b)">
+                            {{ b.nodeName }}
+                          </mat-option>
+                        </mat-select>
+                        <mat-select multiple class="form-control" placeholder="Service Point..." formControlName="ServicePointID2"  *ngIf="isSPMultiple">
+                          <mat-option *ngFor="let b of servicePoints" [value]="b.nodeID"  (click)="onSPMultiSelect(b)">
                             {{ b.nodeName }}
                           </mat-option>
                         </mat-select>
