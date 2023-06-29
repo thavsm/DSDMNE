@@ -5,6 +5,7 @@ import { HolidayComponent } from './holiday/holiday.component';
 import { RouterModule } from '@angular/router';
 import { AdministrationRoutes } from './administration.routing';
 import { MaterialModule } from '../app.module';
+import { ReassignUserTasksComponent } from './reassign-user-tasks/reassign-user-tasks.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -34,12 +35,17 @@ import { ButtonsModule } from "@progress/kendo-angular-buttons";
 import { InputsModule } from "@progress/kendo-angular-inputs";
 import {PDFModule,ExcelModule,GridModule} from "@progress/kendo-angular-grid";
 import { HolidayAddComponent } from './holiday/holiday-add/holiday-add.component';
+import { ReassignUserTasksAdComponent } from './reassign-user-tasks-ad/reassign-user-tasks-ad.component';
+
+
 
 @NgModule({
   declarations: [
     SchedulerComponent,
     HolidayComponent,
-    HolidayAddComponent
+    HolidayAddComponent,
+    ReassignUserTasksComponent,
+    ReassignUserTasksAdComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,139 @@
+<div class="main-content">
+    <div class="container-fluid">
+      <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                  <div class="card-header card-header-rose card-header-icon">
+                    <h4 class="card-title">Reassign Tasks</h4>
+            </div>
+
+            <div class="card-body">
+                <form class="form" [formGroup]="formModel"  method="" action=""  >
+                    <div class="row"> 
+                      <div class="col-md-5 ml-auto">
+                        <div class="form-group has-default">
+                          <div class="form-group">
+                            <div class="input-group">
+                              Assigned From   
+                            <mat-form-field appearance="outline">
+                            <!-- <mat-select formControlName="AssingedBy" [(ngModel)]="formData['fullName']" >
+                                <mat-option  >
+                                 {{formData['fullName']}}
+                                </mat-option>
+                              </mat-select>  -->
+                              <input matInput formControlName="FirstName"  [(ngModel)]="AssignedBy" [value]="formData['fullName']" [readonly]="true">
+                            </mat-form-field>   
+                          </div>                           
+                          </div>
+                        </div>
+                      </div>  
+                      <div class="col-md-5 mr-auto">
+                        <div class="form-group has-default">
+                          <div class="form-group">
+                            <div class="input-group">
+                              Assigned To      
+                            <mat-form-field appearance="outline">
+                              <mat-select  [(ngModel)]="AssignedTo" formControlName="UsersList"  (selectionChange)="changeClient($event.value)" >
+                                <mat-option  *ngFor="let us of UsersList" [value]="us.userID" >
+                                  {{us.fullName}} 
+                                </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+                          </div>                            
+                          </div>
+                        </div>
+                      </div>  
+                          <div class="col-md-5 ml-auto" >
+                            <div class="form-group has-default">
+                              <div class="input-group">                                    
+                                Start Date
+                                <mat-form-field appearance="outline"> 
+                                  <input matInput [matDatepicker]="start" [min]="todayDate" (click)="start.open()"  formControlName="Start" [(ngModel)]="StartDate">
+                                  <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
+                                  <mat-datepicker #start></mat-datepicker>
+                              </mat-form-field>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="col-md-5 mr-auto" >
+                            <div class="form-group has-default">
+                              <div class="input-group">
+                                End Date
+                                <mat-form-field appearance="outline"> 
+                                    <input matInput [matDatepicker]="end" [min]="todayDate"  (click)="end.open()" formControlName="End" [(ngModel)]="EndDate">
+                                    <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
+                                    <mat-datepicker #end></mat-datepicker>
+                                </mat-form-field>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="col-md-12 ml-auto" >
+                            <div class="text-center">
+                              <button  (click)="InsertTaskDetails()" class="btn btn-md btn-primary">{{addEditTask}} Reassign Task</button>                   
+                            </div>
+
+                          </div>
+                          <div class="col-md-12 mr-auto" >
+                          <div class="text-center" *ngIf="hideCancelButton">
+                            <button (click)="clear()" class="btn btn-md btn-danger">Cancel</button>                   
+                          </div>
+                        </div>
+                    </div>
+                    </form>   
+                    
+                    <div class="parent">
+                      <kendo-grid [kendoGridBinding]="List" [pageSize]="4" [pageable]="true" [height]="400"
+                          [filterable]="true" [sortable]="true" [groupable]="true">
+                          <!-- <ng-template kendoGridToolbarTemplate>
+                              <kendo-grid-spacer></kendo-grid-spacer>
+                              <button kendoGridPDFCommand icon="file-pdf">Export to PDF</button>
+                          </ng-template> -->
+      
+                          <kendo-grid-column field="assignedBy" title="Assigned From" [width]="12">
+                          </kendo-grid-column>
+      
+                          <kendo-grid-column field="assignedTo" title="Assigned To" [width]="15">
+                          </kendo-grid-column>
+      
+                          <kendo-grid-column field="startDate" title="StartDate" [width]="15">
+                          </kendo-grid-column>
+      
+                          <kendo-grid-column field="endDate" title="EndDate" [width]="15">
+                          </kendo-grid-column>
+      
+                          <kendo-grid-column field="reassignedDate" title="ReassignedON" [width]="15">
+                          </kendo-grid-column>
+      
+                        <!--  <kendo-grid-column field="ReassignByUserID" title="Reassigned By" [width]="15">
+                          </kendo-grid-column>-->
+                          <kendo-grid-column [width]="3" >
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <button mat-icon-button (click)="showComment(dataItem)">
+                                    <mat-icon class="mat-18">edit</mat-icon>
+                                </button>
+                            </ng-template>
+                        </kendo-grid-column>
+    
+                        <kendo-grid-column [width]="3" >
+                            <ng-template kendoGridCellTemplate let-dataItem>
+                                <button mat-icon-button  (click)="deleteTasks(dataItem)">
+                                    <mat-icon class="mat-18"  style="color:red ;">delete</mat-icon>
+                                </button>
+                            </ng-template>
+                        </kendo-grid-column>
+      
+                      </kendo-grid>
+                  </div>
+            </div>
+            </div>
+            </div>
+
+</div>
+</div>
+</div>
+<ngx-spinner bdColor="rgba( 237, 237, 237,0.8)" size="medium" color="black" type="ball-scale-multiple">
+  <p style="font-size: 20px; color: black"></p>

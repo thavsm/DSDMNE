@@ -63,6 +63,8 @@ export const ROUTES: RouteInfo[] = [{
         children: [
             {path: 'holiday',title: 'Holidays', ab:'U'},
             {path: 'scheduler',title: 'Scheduler', ab:'R'},
+            {path: 'reassign-user-taskAd',title: 'Re-Assign User Task', ab:'RT'},
+            {path: 'reassign-task',title: 'Re-Assign Task', ab:'T'}    
         ]
     },{
         path: '/pages',
@@ -172,7 +174,8 @@ export const ROUTES: RouteInfo[] = [{
         role: [],
         collapse: 'help',
         children: [
-            {path: 'help',title: 'help', ab:'H'}       
+            {path: 'help',title: 'help', ab:'H'}
+               
         ]
     }
 ];
