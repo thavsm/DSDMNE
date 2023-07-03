@@ -102,7 +102,8 @@ console.log(this.addEditTask);
   if(this.formModel.value["Start"] != "" && this.formModel.value["End"] != "" ) {
     if(this.formModel.value["Start"] != undefined && this.formModel.value["End"] != undefined ) {
       if(this.formModel.value["End"] > this.formModel.value["Start"]) {
-        if (this.addEditTask == 'Add'){
+        if (this.addEditTask === 'Add')
+        {
           this.spinner.show();
           var val = {
             "AssignedByID": this.userID,    
@@ -112,14 +113,12 @@ console.log(this.addEditTask);
             //"ReassignedON": "2022-01-21",
             'ReassignByUserID' :this.userID
           
-          };
-    
-       
+          }
           this.fservice.AddReassignedTasks(val).subscribe(res => {
-          this.showNotification('top', 'center', ' Task reassigned successfully!', '', 'success');      
+          this.showNotification('top', 'center', ' Task reassigned successfully!', '', 'success');
+          this.clear();      
           this.refreshTaskList();
           this.addEditTask = 'Add';
-          this.clear();
           this.spinner.hide();
           });
 
@@ -133,23 +132,22 @@ console.log(this.addEditTask);
             "AssignedToID": this.AssignToUserID,
             "StartDate": this.datepipe.transform(this.formModel.value["Start"], 'dd-MMM-YYYY') ,       
             "EndDate": this.datepipe.transform(this.formModel.value["End"], 'dd-MMM-YYYY'),
-            //"ReassignedON": "2022-01-21",
+            "ReassignedON": "2022-01-21",
             'ReassignByUserID' :this.userID
           
-          };
+          }
+          this.fservice.UpdateTaskReassigned(obj ,this.taskID).subscribe(res => {
+            this.fservice.GetUsersByLocation(this.userlocation, this.userID).subscribe(results=>{
 
-      //     this.fservice.UpdateTaskReassigned(obj ,this.taskID).subscribe(res => {
-      //       this.fservice.GetUsersByLocation(this.userlocation, this.userID).subscribe(results=>{
-
-      //         this.UsersList = results;
+              this.UsersList = results;
             
-      //  });
-      //       this.showNotification('top', 'center', ' Task updated successfully!', '', 'success');   
-      //       this.refreshTaskList();
-      //       this.clear();   
-      //       this.addEditTask = 'Add';
-      //       this.spinner.hide();
-      //       });
+              });
+            this.showNotification('top', 'center', ' Task updated successfully!', '', 'success');
+            this.clear();    
+            this.refreshTaskList();
+            this.addEditTask = 'Add';
+            this.spinner.hide();
+            });
        }
  
     }
@@ -170,7 +168,7 @@ showComment(data: any) {
   this.addEditTask = 'Edit';
   this.StartDate = data.startDate ;
   this.EndDate =data.endDate  ;
- //this.editUser=  data.assignedTo;
+ this.editUser=  data.assignedTo;
  this.taskID = data.id;
  this.hideCancelButton = true;
   

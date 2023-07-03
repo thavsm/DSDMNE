@@ -151,11 +151,17 @@
                             </div>
                           </div>
 
-                          <div class="col-md-12">
+                          <div class="col-md-12 ml-auto" >
                             <div class="text-center">
-                              <button  (click)="InsertTaskDetails()" class="btn btn-md btn-primary">Reassign Task</button>                   
+                              <button  (click)="InsertTaskDetails()" class="btn btn-md btn-primary">{{addEditTask}} Reassign Task</button>                   
                             </div>
+
                           </div>
+                          <div class="col-md-12 mr-auto" >
+                          <div class="text-center" *ngIf="hideCancelButton">
+                            <button (click)="clear()" class="btn btn-md btn-danger">Cancel</button>                   
+                          </div>
+                        </div>
                     </div>
                     </form>   
                     
@@ -187,7 +193,7 @@
 
                           <kendo-grid-column [width]="3" >
                             <ng-template kendoGridCellTemplate let-dataItem>
-                                <button mat-icon-button >
+                                <button mat-icon-button (click)="showComment(dataItem)">
                                     <mat-icon class="mat-18">edit</mat-icon>
                                 </button>
                             </ng-template>

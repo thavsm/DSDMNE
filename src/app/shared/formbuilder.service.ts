@@ -231,8 +231,9 @@ export class FormbuilderService {
   }
 
   DeleteReassignedTask(TaskID: any) {
-    return this.http.put(this.APIUrl + TaskID + '/' + 'DeleteReassignedTask', { responseType: 'text' });
+    return this.http.put(this.APIUrl + TaskID + '/' + 'DeleteReassignedTask','', { responseType: 'text' });
   }
+
   DeletePhoto(PhotoGUID: any) {
     return this.http.delete(this.APIUrl + PhotoGUID + '/' + 'DeletePhoto', { responseType: 'text' });
   }

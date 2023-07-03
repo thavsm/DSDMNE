@@ -30,6 +30,7 @@ export class ReassignUserTasksAdComponent implements OnInit {
   hideElementProv: boolean = false;
   hideElementDist: boolean = false;
   hideElementService: boolean = false;
+  hideCancelButton: boolean = false;
   locations: lexdata[] = [
   { name: "Province", value: "Province" }, { name: "District", value: "District" }, { name: "Service Point", value: "Service Point" }
   ];
@@ -62,6 +63,8 @@ export class ReassignUserTasksAdComponent implements OnInit {
   locationTypeValue :string;
   selectedprovince:any;
   selectedDistrict:any;
+  taskID:string;
+  addEditTask: string = 'Add';
   
   //today's date
 todayDate:Date = new Date();
@@ -108,15 +111,18 @@ this.AssignByUserID = value;
 }
 
 clear(){
+  this.addEditTask = 'Add';
   this.StartDate = null;
   this.EndDate =  null;
   this.userDetail = null;
   this.AssignedBy = null;
   this.AssignedTo = null;
   this.assignedLocation = null;
+  this.locationTypeValue = "";
   this.hideElementProv = false;
   this.hideElementDist = false;
   this.hideElementService = false;
+  this.hideCancelButton = false;
 
 }
 
@@ -129,6 +135,12 @@ locationTypeV(value) {
       this.hideElementDist = false;
       this.hideElementService = false;
       this.getProvinces();
+      // this.tservice.getNodesLevelID(4261).subscribe(data => {
+      //   data.array.forEach(element => {
+          
+      //   });
+      //   this.provinces = data;
+      // });
     }
     else if(value == 'District'){ 
       this.hideElementProv = true;
@@ -141,31 +153,61 @@ locationTypeV(value) {
     }
    
 
-  //this.locationTypeValue = value;
+  this.locationTypeValue = value;
 }
 
 InsertTaskDetails() {
-
+console.log(this.addEditTask);
   if(this.formModel.value["Start"] != "" && this.formModel.value["End"] != "" ) {
     if(this.formModel.value["Start"] != undefined && this.formModel.value["End"] != undefined ) {
       if(this.formModel.value["End"] > this.formModel.value["Start"]) {
-      var val = {
-        "AssignedByID": this.AssignByUserID,    
-        "AssignedToID": this.AssignToUserID,
-        "StartDate": this.datepipe.transform(this.formModel.value["Start"], 'dd-MMM-YYYY') ,       
-        "EndDate": this.datepipe.transform(this.formModel.value["End"], 'dd-MMM-YYYY'),
-        //"ReassignedON": "2022-01-21",
-        'ReassignByUserID' :this.userID
-      
-      };
-
-      this.spinner.show();
-      this.fservice.AddReassignedTasks(val).subscribe(res => {
-      this.showNotification('top', 'center', ' Task reassigned successfully!', '', 'success');      
-      this.refreshTaskList();
-      this.clear();
-      this.spinner.hide();  
-      });
+        if (this.addEditTask === 'Add')
+        {
+          var val = {
+            "AssignedByID": this.AssignByUserID,    
+            "AssignedToID": this.AssignToUserID,
+            "StartDate": this.datepipe.transform(this.formModel.value["Start"], 'dd-MMM-YYYY') ,       
+            "EndDate": this.datepipe.transform(this.formModel.value["End"], 'dd-MMM-YYYY'),
+            //"ReassignedON": "2022-01-21",
+            'ReassignByUserID' :this.userID
+          
+          };
+    
+          this.spinner.show();
+          this.fservice.AddReassignedTasks(val).subscribe(res => {
+          this.showNotification('top', 'center', ' Task reassigned successfully!', '', 'success');      
+          this.refreshTaskList();
+          this.clear();
+          this.spinner.hide();  
+          });
+        }
+        else
+        {
+           this.spinner.show();
+           var obj = {
+             "Id" :this.taskID,
+             "AssignedByID": this.userID,    
+             "AssignedToID": this.AssignToUserID,
+             "StartDate": this.datepipe.transform(this.formModel.value["Start"], 'dd-MMM-YYYY') ,       
+             "EndDate": this.datepipe.transform(this.formModel.value["End"], 'dd-MMM-YYYY'),
+             "ReassignedON": "2022-01-21",
+             'ReassignByUserID' :this.userID
+           
+           }
+           this.fservice.UpdateTaskReassigned(obj ,this.taskID).subscribe(res => {
+            //  this.fservice.GetUsersByLocation(this.userlocation, this.userID).subscribe(results=>{
+ 
+            //    this.UsersList = results;
+             
+            //    });
+             this.showNotification('top', 'center', ' Task updated successfully!', '', 'success');
+             this.clear();    
+             this.refreshTaskList();
+             this.addEditTask = 'Add';
+             this.spinner.hide();
+             });
+        }
+  
 
     }
     else
@@ -186,6 +228,17 @@ InsertTaskDetails() {
 
 }
 
+
+showComment(data: any) {
+  this.addEditTask = 'Edit';
+  this.StartDate = data.startDate ;
+  this.EndDate =data.endDate  ;
+ //this.editUser=  data.assignedTo;
+ this.taskID = data.id;
+ this.hideCancelButton = true;
+  
+}
+
 deleteTasks(item:any)
 {
    Swal.fire({
@@ -204,11 +257,11 @@ deleteTasks(item:any)
         this.spinner.show();
         this.fservice.DeleteReassignedTask(item.id).subscribe(data => {
           console.log("successfull");
-      
+          this.spinner.hide();
+          this.refreshTaskList();
+          this.showNotification('top', 'center', 'User tasks removed  successfully!', '', 'success');
         });
-        this.spinner.hide();
-        this.showNotification('top', 'center', 'User tasks removed  successfully!', '', 'success');
-        this.refreshTaskList();
+        
       }
     })
 }
