@@ -35,7 +35,7 @@
                             <div class="input-group">
                               Assigned To      
                             <mat-form-field appearance="outline">
-                              <mat-select  [(ngModel)]="AssignedTo" formControlName="UsersList" [placeholder]="editUser" (selectionChange)="changeClient($event.value)" >
+                              <mat-select  ngModel= "{{AssignedTo}}" [placeholder]="editUser" formControlName="UsersList" (selectionChange)="changeClient($event.value)" required>
                                 <mat-option  *ngFor="let us of UsersList" [value]="us.userID" >
                                   {{us.fullName}} 
                                 </mat-option>

@@ -89,7 +89,7 @@
                       <div class="col-md-5 ml-auto">
                         <div class="form-group has-default">
                           <div class="form-group">
-                            <div class="input-group">
+                            <div class="input-group" *ngIf="hideElementAssignFrom">
                               Assigned From   
                             <!-- <mat-select formControlName="AssingedBy" [(ngModel)]="formData['fullName']" >
                                 <mat-option  >
@@ -98,7 +98,7 @@
                               </mat-select>  
                               <input matInput [(ngModel)]="AssingedBy" [value]="formData['fullName']" [readonly]="true">-->
                               <mat-form-field appearance="outline">
-                                <mat-select  [(ngModel)]="AssignedBy" (selectionChange)="changeUserAssign($event.value)" >
+                                <mat-select  [(ngModel)]="AssignedBy"[placeholder]="placeholder2"  (selectionChange)="changeUserAssign($event.value)" required >
                                   <mat-option  *ngFor="let us of AssignedBy" [value]="us.userID" >
                                     {{us.fullName}}
                                   </mat-option>
@@ -112,10 +112,10 @@
                       <div class="col-md-5 mr-auto">
                         <div class="form-group has-default">
                           <div class="form-group">
-                            <div class="input-group">
+                            <div class="input-group" *ngIf="hideElementAssignTo">
                               Assigned To      
                             <mat-form-field appearance="outline">
-                              <mat-select  [(ngModel)]="AssignedTo" (selectionChange)="changeClient($event.value)" >
+                              <mat-select  [(ngModel)]="AssignedTo" [placeholder]="placeholder1" (selectionChange)="changeClient($event.value)" required>
                                 <mat-option  *ngFor="let us of AssignedTo" [value]="us.userID" >
                                   {{us.fullName}}
                                 </mat-option>

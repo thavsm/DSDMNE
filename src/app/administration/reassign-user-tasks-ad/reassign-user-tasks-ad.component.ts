@@ -18,7 +18,8 @@ export interface lexdata {
 })
 export class ReassignUserTasksAdComponent implements OnInit {
 
- 
+  public placeholder1;
+  public placeholder2;
   assignedDistricts: any[];
   assignedProvinces: any[];
   assignedServicePoint: any[];
@@ -27,6 +28,8 @@ export class ReassignUserTasksAdComponent implements OnInit {
   servicePoint: any[];
   assignedlocations: any[];
   assignedLocation : any;
+  hideElementAssignFrom: boolean = false;
+  hideElementAssignTo: boolean = false;
   hideElementProv: boolean = false;
   hideElementDist: boolean = false;
   hideElementService: boolean = false;
@@ -119,6 +122,8 @@ clear(){
   this.AssignedTo = null;
   this.assignedLocation = null;
   this.locationTypeValue = "";
+  this.hideElementAssignFrom = false;
+  this.hideElementAssignTo = false;
   this.hideElementProv = false;
   this.hideElementDist = false;
   this.hideElementService = false;
@@ -132,6 +137,8 @@ locationTypeV(value) {
     if (value == 'Province')
     {
       this.hideElementProv = true;
+      this.hideElementAssignFrom = true;
+      this.hideElementAssignTo = true;
       this.hideElementDist = false;
       this.hideElementService = false;
       this.getProvinces();
@@ -142,13 +149,20 @@ locationTypeV(value) {
       //   this.provinces = data;
       // });
     }
-    else if(value == 'District'){ 
+    else if(value == 'District')
+    { 
       this.hideElementProv = true;
      this.hideElementDist = true;
+     this.hideElementAssignFrom = true;
+      this.hideElementAssignTo = true;
       this.hideElementService = false;
-    }else if(value == 'Service Point'){
+    }
+    else if(value == 'Service Point')
+    {
       this.hideElementProv = true;
       this.hideElementDist = true;
+      this.hideElementAssignFrom = true;
+      this.hideElementAssignTo = true;
       this.hideElementService = true;
     }
    
@@ -160,7 +174,8 @@ InsertTaskDetails() {
 console.log(this.addEditTask);
   if(this.formModel.value["Start"] != "" && this.formModel.value["End"] != "" ) {
     if(this.formModel.value["Start"] != undefined && this.formModel.value["End"] != undefined ) {
-      if(this.formModel.value["End"] > this.formModel.value["Start"]) {
+      if(this.datepipe.transform(this.formModel.value["End"], 'dd-MMM-YYYY') > this.datepipe.transform(this.formModel.value["Start"], 'dd-MMM-YYYY' )) 
+      {
         if (this.addEditTask === 'Add')
         {
           var val = {
@@ -233,8 +248,11 @@ showComment(data: any) {
   this.addEditTask = 'Edit';
   this.StartDate = data.startDate ;
   this.EndDate =data.endDate  ;
- //this.editUser=  data.assignedTo;
+  this.AssignToUserID = data.assignedToID;
+  this.AssignByUserID = data.assignedByID;
  this.taskID = data.id;
+ this.hideElementAssignFrom = false;
+ this.hideElementAssignTo = false;
  this.hideCancelButton = true;
   
 }

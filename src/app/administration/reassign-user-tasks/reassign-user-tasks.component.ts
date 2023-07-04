@@ -22,11 +22,12 @@ export interface lexdata {
 export class ReassignUserTasksComponent implements OnInit {
 
 
- 
+  public editUser;
   assignedlocations: any[];
   Userss: any[];
   public List: any;
   UsersList :any[];
+  EditList :0;
   hideCancelButton: boolean = false;
   
   formModel = this.fb.group({
@@ -48,7 +49,8 @@ export class ReassignUserTasksComponent implements OnInit {
   userlocation: any;
   userID : 0;
   AssignToUserID:0;
-  editUser:string;
+  //editUser:string;
+  AssignedtoID:0;
   taskID:string;
   addEditTask: string = 'Add';
 
@@ -65,12 +67,18 @@ todayDate:Date = new Date();
        this.userDetail = res;
        this.userlocation = this.userDetail.formData.location;
        this.userID = this.userDetail.formData.userID;
-      
+
+       
        this.fservice.GetUsersByLocation(this.userlocation, this.userID).subscribe(results=>{
 
             this.UsersList = results;
           
      });
+  
+    
+      //this.UsersList = this.editUser;
+    
+
      this.refreshTaskList();
       });
 
@@ -93,15 +101,18 @@ clear()
   this.addEditTask = 'Add';
   this.StartDate = null;
   this.EndDate =  null;
-  this.AssignedTo =  null;
+  this.AssignedTo =  "";
   this.hideCancelButton = false;
 }
 
 InsertTaskDetails() {
 console.log(this.addEditTask);
-  if(this.formModel.value["Start"] != "" && this.formModel.value["End"] != "" ) {
-    if(this.formModel.value["Start"] != undefined && this.formModel.value["End"] != undefined ) {
-      if(this.formModel.value["End"] > this.formModel.value["Start"]) {
+  if(this.formModel.value["Start"] != "" && this.formModel.value["End"] != "" ) 
+  {
+    if(this.formModel.value["Start"] != undefined && this.formModel.value["End"] != undefined )
+     {
+      if(this.datepipe.transform(this.formModel.value["End"], 'dd-MMM-YYYY') > this.datepipe.transform(this.formModel.value["Start"], 'dd-MMM-YYYY' )&& this.formModel.value["UsersList"] != "") 
+      {
         if (this.addEditTask === 'Add')
         {
           this.spinner.show();
@@ -125,7 +136,7 @@ console.log(this.addEditTask);
         }
        else
        {
-          this.spinner.show();
+          this.spinner.show();                   
           var obj = {
             "Id" :this.taskID,
             "AssignedByID": this.userID,    
@@ -137,11 +148,11 @@ console.log(this.addEditTask);
           
           }
           this.fservice.UpdateTaskReassigned(obj ,this.taskID).subscribe(res => {
-            this.fservice.GetUsersByLocation(this.userlocation, this.userID).subscribe(results=>{
+            // this.fservice.GetUsersByLocation(this.userlocation, this.userID).subscribe(results=>{
 
-              this.UsersList = results;
+            //   this.UsersList = results;
             
-              });
+            //   });
             this.showNotification('top', 'center', ' Task updated successfully!', '', 'success');
             this.clear();    
             this.refreshTaskList();
@@ -150,6 +161,9 @@ console.log(this.addEditTask);
             });
        }
  
+    }
+    else{
+      this.showNotification('top', 'center', 'Please  select user to assign to!', '', 'danger');
     }
 
     }
@@ -168,7 +182,9 @@ showComment(data: any) {
   this.addEditTask = 'Edit';
   this.StartDate = data.startDate ;
   this.EndDate =data.endDate  ;
- this.editUser=  data.assignedTo;
+  this.editUser=  data.assignedTo;
+  this.AssignToUserID = data.assignedToID;
+ //this.AssignedTo = data.assignedTo;
  this.taskID = data.id;
  this.hideCancelButton = true;
   
