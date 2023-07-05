@@ -174,7 +174,7 @@ InsertTaskDetails() {
 console.log(this.addEditTask);
   if(this.formModel.value["Start"] != "" && this.formModel.value["End"] != "" ) {
     if(this.formModel.value["Start"] != undefined && this.formModel.value["End"] != undefined ) {
-      if(this.datepipe.transform(this.formModel.value["End"], 'dd-MMM-YYYY') > this.datepipe.transform(this.formModel.value["Start"], 'dd-MMM-YYYY' )) 
+      if(this.datepipe.transform(this.formModel.value["End"], 'dd-MMM-YYYY') > this.datepipe.transform(this.formModel.value["Start"], 'dd-MMM-YYYY')&& this.formModel.value["Assigned"] != "" && this.formModel.value["Assigning"] != "") 
       {
         if (this.addEditTask === 'Add')
         {

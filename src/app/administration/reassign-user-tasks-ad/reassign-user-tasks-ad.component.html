@@ -98,7 +98,7 @@
                               </mat-select>  
                               <input matInput [(ngModel)]="AssingedBy" [value]="formData['fullName']" [readonly]="true">-->
                               <mat-form-field appearance="outline">
-                                <mat-select  [(ngModel)]="AssignedBy"[placeholder]="placeholder2"  (selectionChange)="changeUserAssign($event.value)" required >
+                                <mat-select  [(ngModel)]="AssignedBy"[placeholder]="placeholder2"  (selectionChange)="changeUserAssign($event.value)" formControlName="Assigning" required >
                                   <mat-option  *ngFor="let us of AssignedBy" [value]="us.userID" >
                                     {{us.fullName}}
                                   </mat-option>
@@ -115,7 +115,7 @@
                             <div class="input-group" *ngIf="hideElementAssignTo">
                               Assigned To      
                             <mat-form-field appearance="outline">
-                              <mat-select  [(ngModel)]="AssignedTo" [placeholder]="placeholder1" (selectionChange)="changeClient($event.value)" required>
+                              <mat-select  [(ngModel)]="AssignedTo" [placeholder]="placeholder1" (selectionChange)="changeClient($event.value)" formControlName="Assigned" required>
                                 <mat-option  *ngFor="let us of AssignedTo" [value]="us.userID" >
                                   {{us.fullName}}
                                 </mat-option>
