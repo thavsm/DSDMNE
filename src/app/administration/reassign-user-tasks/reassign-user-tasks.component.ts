@@ -98,6 +98,7 @@ todayDate:Date = new Date();
 
 clear()
 {
+  this.editUser = "";
   this.addEditTask = 'Add';
   this.StartDate = null;
   this.EndDate =  null;
