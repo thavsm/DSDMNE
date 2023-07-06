@@ -13,12 +13,18 @@ import { FormbuilderService } from 'src/app/shared/formbuilder.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HierarchyManagementService } from 'src/app/hierarchy-management.service';
 import { MatStepper } from '@angular/material/stepper';
+import { ReportRole } from '../reportrole.model';
 
 
 declare var $: any;
 
 export interface roleItem {
   id: number;
+  name: string;
+}
+
+export interface Item {
+  reportID: number;
   name: string;
 }
 
@@ -35,6 +41,9 @@ export class RoleaccessComponent implements OnInit {
   mrole: MenuRole;
   mroles:any = [];
 
+  Reportrole: ReportRole;
+  Reportroles:any = [];
+
   formID: number = 0;
   frole: FormRole;
   fvrole: FormRole;
@@ -50,16 +59,18 @@ export class RoleaccessComponent implements OnInit {
   constructor(private service: UserService, @Inject(MAT_DIALOG_DATA) data,public dialogRef: MatDialogRef<MenurolesComponent>,private fbservice: FormbuilderService, private spinner: NgxSpinnerService, private _formBuilder: FormBuilder,private treeService:HierarchyManagementService) { 
     this.roleAdd = data;
   }
-
+  public displayedReportsColumns = ['report', 'select'];
   public displayedColumns = ['menu', 'select'];
   public displayedFormColumns = ['form', 'capture', 'view'];
   public displayedRoleColumns = ['role', 'select'];
   public menuList = new MatTableDataSource<any>();
+  public reportList = new MatTableDataSource<any>();
   public formList = new MatTableDataSource<any>();
   public roleList = new MatTableDataSource<any>();
   selection = new SelectionModel<roleItem>(true, []);
   selectionForms = new SelectionModel<roleItem>(true, []);
   selectionRole = new SelectionModel<roleItem>(true, []);
+  selectionReport = new SelectionModel<Item>(true, []);
 
   selectionCaptureForms = new SelectionModel<roleItem>(true, []);
   selectionViewForms = new SelectionModel<roleItem>(true, []);
@@ -80,6 +91,7 @@ export class RoleaccessComponent implements OnInit {
   source=[];
 
   @ViewChild('menuPaginator', {read:MatPaginator}) paginator: MatPaginator;
+  @ViewChild('reportPaginator', {read:MatPaginator}) paginatorReports: MatPaginator;
   @ViewChild('formPaginator', {read:MatPaginator}) paginatorForms: MatPaginator;
   @ViewChild('rolePaginator', {read:MatPaginator}) paginatorRoles: MatPaginator;
   @ViewChild('stepper') private myStepper: MatStepper;
@@ -88,6 +100,7 @@ export class RoleaccessComponent implements OnInit {
     this.menuList.paginator = this.paginator;
     this.formList.paginator = this.paginatorForms;
     this.roleList.paginator = this.paginatorRoles;
+    this.reportList.paginator = this.paginatorReports;
   }
   
   ngOnInit(): void {
@@ -158,6 +171,10 @@ export class RoleaccessComponent implements OnInit {
       this.roleList.data = data;
     });
 
+    this.service.getReportsRole(this.roleID).subscribe(data => {
+      this.reportList.data = data;
+      console.log( this.reportList.data)
+    });
     //this.checkAll();
     
   }
@@ -168,6 +185,12 @@ export class RoleaccessComponent implements OnInit {
       if(row.checked)
       this.selection.select(row);
     });
+
+    this.reportList.data.forEach(row => {
+      if(row.checked)
+      this.selectionReport.select(row);
+    });
+
 
     this.formList.data.forEach(row => {
       // if(row.checked)
@@ -193,6 +216,12 @@ export class RoleaccessComponent implements OnInit {
     return numSelected === numRows;
   }
 
+  isAllReportsSelected() {
+    const numSelected = this.selectionReport.selected.length;
+    const numRows = this.reportList.data.length;
+    return numSelected === numRows;
+  }
+
   isAllFormsSelected() {
     const numSelected = this.selectionForms.selected.length;
     const numRows = this.formList.data.length;
@@ -210,6 +239,12 @@ export class RoleaccessComponent implements OnInit {
     this.isAllSelected() ?
         this.selection.clear() :
         this.menuList.data.forEach(row => this.selection.select(row));
+  }
+
+  masterToggleReports() {
+    this.isAllReportsSelected()  ?
+        this.selectionReport.clear() :
+        this.reportList.data.forEach(row => this.selectionReport.select(row));
   }
 
   masterToggleForms() {
@@ -310,18 +345,18 @@ addRoleAccess()
       }
     );
 
-    this.mroles = [];
-    this.selection.selected.forEach(row => {
-      this.mrole = new MenuRole();      
-      this.mrole.roleID = this.roleID;
-      this.mrole.menuID = row.id;
-      this.mrole.uid = 0;
-      this.mroles.push(this.mrole);
+    this.Reportroles = [];
+    this.selectionReport.selected.forEach(row => {
+      this.Reportrole = new ReportRole();  
+      this.Reportrole.Id = 0;  
+      this.Reportrole.reportID = row.reportID;
+      this.Reportrole.roleID = this.roleID;
+      this.Reportroles.push(this.Reportrole);
     });
 
-    this.service.addMenusRole(this.mroles,this.roleID).subscribe(
+    this.service.addReportsRole(this.Reportroles,this.roleID).subscribe(
       (res: any) => {
-        if (res.message == 'Menus') {
+        if (res.message == 'Reports') {
         //this.showNotification('top','right','', 'Menu access updated successfully.','success');
         }
         else{}
@@ -357,6 +392,30 @@ addRoleAccess()
       }
     );
 
+
+    this.mroles = [];
+    this.selection.selected.forEach(row => {
+      this.mrole = new MenuRole();      
+      this.mrole.roleID = this.roleID;
+      this.mrole.menuID = row.id;
+      this.mrole.uid = 0;
+      this.mroles.push(this.mrole);
+    });
+
+    this.service.addMenusRole(this.mroles,this.roleID).subscribe(
+      (res: any) => {
+        if (res.message == 'Menus') {
+        //this.showNotification('top','right','', 'Menu access updated successfully.','success');
+        }
+        else{}
+      },
+      err => {
+        console.log(err);
+        if (err.status == 400) {
+          this.showNotification('top','right','Menu access updated failed. Please try again', '','danger');
+        }          
+      }
+    );
   }
 
 onToggleChangeCaptureForms(row:any,event:any){
@@ -392,6 +451,25 @@ else{
   this.formList.data.forEach(r=>{
     if(r==row){
       r.view=true;
+    }
+  });
+}
+}
+
+onToggleChangeReport(row:any,event:any){
+  if(event.checked==false){
+  this.selectionReport.deselect(row);
+  this.reportList.data.forEach(r=>{
+    if(r==row){
+      r.checked=0;
+    }
+  });
+}
+else{
+  this.selectionReport.select(row);
+  this.reportList.data.forEach(r=>{
+    if(r==row){
+      r.checked=1;
     }
   });
 }
