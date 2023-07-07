@@ -300,8 +300,8 @@ export class UserService {
   }
   
 
-  getRoleReports(role: string) {
-    return this.http.get<any>(this.BaseURI + '/ApplicationUser/GetRoleReports?role='+role);
+  getRoleReportsPage(role: string) {
+    return this.http.get<any>(this.BaseURI + '/ApplicationUser/getRoleReportsPage?role='+role);
   }
 
 }

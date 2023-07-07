@@ -27,7 +27,7 @@ export class SqlreportsComponent implements OnInit {
       
       let userRole= this.service.getRole();
       console.log(userRole);
-      this.service.getRoleReports(userRole).subscribe(
+      this.service.getRoleReportsPage(userRole).subscribe(
         res => {
 
           console.log(res);
