@@ -197,6 +197,7 @@ export class UserService {
     return this.http.get<any>(this.BaseURI + '/ApplicationUser/GetRoleMenus?roleID='+roleID);
   }
 
+
   
   getFormsRole(roleID: number) {
     return this.http.get<any>(this.BaseURI + '/ApplicationUser/GetRoleForms?roleID='+roleID);
@@ -286,5 +287,9 @@ export class UserService {
     return this.http.get<any>(this.BaseURI + '/ApplicationUser/GetUserByID?userID='+userID);
   }
   
+
+  getRoleReports(role: string) {
+    return this.http.get<any>(this.BaseURI + '/ApplicationUser/GetRoleReports?role='+role);
+  }
 
 }
