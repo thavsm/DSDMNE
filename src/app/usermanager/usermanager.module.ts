@@ -24,6 +24,9 @@ import { FacilitymanagerComponent } from './facilitymanager/facilitymanager.comp
 import { FacilityUpdateComponent } from './facilitymanager/facility-update/facility-update.component';
 import { FacilityaddComponent } from './facilitymanager/facilityadd/facilityadd.component';
 import { HelpComponent } from './help/help.component';
+import { ReportrolesComponent } from './reportroles/reportroles.component';
+
+
 // import {VgCoreModule} from '@videogular/ngx-videogular/core';
 // import {VgControlsModule} from '@videogular/ngx-videogular/controls';
 // import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
@@ -63,7 +66,9 @@ import { HelpComponent } from './help/help.component';
         FacilitymanagerComponent,
         FacilityUpdateComponent,
         FacilityaddComponent,
-        HelpComponent
+        HelpComponent,
+        ReportrolesComponent
+        
     ]
 })
 

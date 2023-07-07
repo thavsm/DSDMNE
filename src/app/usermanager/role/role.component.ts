@@ -10,6 +10,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { PageSizeItem } from '@progress/kendo-angular-grid';
 import { NewroleComponent } from '../newrole/newrole.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { ReportrolesComponent } from '../reportroles/reportroles.component';
 
 
 declare var $: any;
@@ -25,6 +26,7 @@ export class RoleComponent implements OnInit {
   errorMessage = '';
   isValid = false;
   menuAdd: any;
+  reportAdd : any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -130,6 +132,21 @@ timer: 1500,
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The menu dialog was closed');
+      this.loadUsers();
+    });
+  }
+
+  clickReportAccess(item: any) {
+    this.reportAdd = item;
+    const dialogRef = this.dialog.open(ReportrolesComponent, {
+      width: '60%',
+      height: '60%',
+      data: this.reportAdd,
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The report dialog was closed');
       this.loadUsers();
     });
   }

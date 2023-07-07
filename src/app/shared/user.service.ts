@@ -197,6 +197,9 @@ export class UserService {
     return this.http.get<any>(this.BaseURI + '/ApplicationUser/GetRoleMenus?roleID='+roleID);
   }
 
+  getReportsRole(roleID: number) {
+    return this.http.get<any>(this.BaseURI + '/ApplicationUser/GetRoleReports?roleID='+roleID);
+  }
 
   
   getFormsRole(roleID: number) {
@@ -212,8 +215,17 @@ export class UserService {
     return this.http.post(this.BaseURI + '/ApplicationUser/AddRoleMenus?roleID='+role, menusRole);
   }
   
+  addReportsRole(reportRole: any,role:any) {
+    return this.http.post(this.BaseURI + '/ApplicationUser/AddRoleReports?roleID='+role, reportRole);
+  }
+
+
   getRoleMenus(role: string) {
     return this.http.get<any>(this.BaseURI + '/ApplicationUser/GetRoleNameMenus?role='+role);
+  }
+
+  getRoleReports(role: string) {
+    return this.http.get<any>(this.BaseURI + '/ApplicationUser/GetRoleNameReport?role='+role);
   }
 
   getPasswordResetToken(email: string) {

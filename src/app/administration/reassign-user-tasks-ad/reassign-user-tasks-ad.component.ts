@@ -201,7 +201,7 @@ console.log(this.addEditTask);
            this.spinner.show();
            var obj = {
              "Id" :this.taskID,
-             "AssignedByID": this.userID,    
+             "AssignedByID": this.AssignByUserID,   
              "AssignedToID": this.AssignToUserID,
              "StartDate": this.datepipe.transform(this.formModel.value["Start"], 'dd-MMM-YYYY') ,       
              "EndDate": this.datepipe.transform(this.formModel.value["End"], 'dd-MMM-YYYY'),
