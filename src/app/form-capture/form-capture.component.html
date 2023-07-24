@@ -19,15 +19,15 @@
                   <ng-template kendoTreeListCellTemplate let-dataItem let-rowIndex="rowIndex">
                     <div class="row">
                       <div class="col">
-                        <label *ngIf="dataItem.levelID!=4264"> ({{dataItem.completedForms}}) Facilities Captured</label>
+                        <label> ({{dataItem.completedForms}}) Facilities Captured</label>
                       </div>
                       <div class="col" *ngIf="dataItem.roleID!=0">
                         <button
-                          *ngIf="dataItem.levelID==userLocationLevel && (dataItem.levelID!=4263 ) && NonFacilityCaptured!=0 "
+                          *ngIf="(dataItem.levelID==userDetail.formData.locationType) && NonFacilityCaptured!=0 "
                           class="btn btn-sm" (click)="addForm(dataItem)"
                           style="background-color: green;width: 150px;">Complete My Form</button>
                         <button
-                          *ngIf="dataItem.levelID==userLocationLevel && (dataItem.levelID!=4263 )  && NonFacilityCaptured==0 "
+                          *ngIf="(dataItem.levelID==userDetail.formData.locationType)  && NonFacilityCaptured==0 "
                           class="btn btn-sm" (click)="addForm(dataItem)"
                           style="background-color: red;width: 150px;">Complete My Form</button>
                       </div>

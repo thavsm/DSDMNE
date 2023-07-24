@@ -45,6 +45,7 @@ export class FormCaptureComponent implements OnInit {
     this.userService.getUserProfile().subscribe(
       res => {
         this.userDetail = res;
+        console.log(this.userDetail);
         this.refreshFormsList();
         this.refreshLocationList();
       },
@@ -146,27 +147,46 @@ export class FormCaptureComponent implements OnInit {
   }
 
   refreshLocationList() {
-      this.service.GetUserLocationHierachy(this.userDetail.formData.userID).subscribe(location => {
-        let levelID:any=[];
-        this.spinner.show();
-        this.userLocation=location;
-        this.service.getFormCaptureCountPerLocation(location,this.userDetail.formData.role).subscribe(result => {
-          levelID=result;
-          this.service.getFormCaptureCountPerLocationLevel(location,this.userDetail.formData.role,levelID[0].levelID).subscribe(result => {
-            this.data =  result;
-            if(this.data.length>0){
-              console.log(this.data[0]);
-              console.log(this.data[0].levelID);
-              this.userLocationLevel=this.data[0].levelID;
-              this.PeriodStatus=this.data[0].periodStatus;
-              this.NonFacilityCaptured=this.data[0].nonFacilityCaptured;
-              console.log(this.data[0].nonFacilityCaptured);
-            }
-            this.spinner.hide();
-          });
-      });
-      });
-  }
+    this.service.GetUserLocationHierachy(this.userDetail.formData.userID).subscribe(location => {
+      let levelID:any=[];
+      this.spinner.show();
+      this.userLocation=location;
+        this.service.getFormCaptureCountPerLocation(location,this.userDetail.formData.userID).subscribe(result => {
+          this.data =  result;
+          console.log(this.data);
+          if(this.data.length>0){
+            this.userLocationLevel=this.data[0].levelID;
+            this.PeriodStatus=this.data[0].periodStatus;
+            this.NonFacilityCaptured=this.data[0].nonFacilityCaptured;
+          }
+          this.spinner.hide();
+        });                           
+    });
+}
+
+
+  // refreshLocationList() {
+  //     this.service.GetUserLocationHierachy(this.userDetail.formData.userID).subscribe(location => {
+  //       let levelID:any=[];
+  //       this.spinner.show();
+  //       this.userLocation=location;
+  //       this.service.getFormCaptureCountPerLocation(location,this.userDetail.formData.role).subscribe(result => {
+  //         levelID=result;
+  //         this.service.getFormCaptureCountPerLocationLevel(location,this.userDetail.formData.role,levelID[0].levelID).subscribe(result => {
+  //           this.data =  result;
+  //           if(this.data.length>0){
+  //             console.log(this.data[0]);
+  //             console.log(this.data[0].levelID);
+  //             this.userLocationLevel=this.data[0].levelID;
+  //             this.PeriodStatus=this.data[0].periodStatus;
+  //             this.NonFacilityCaptured=this.data[0].nonFacilityCaptured;
+  //             console.log(this.data[0].nonFacilityCaptured);
+  //           }
+  //           this.spinner.hide();
+  //         });
+  //     });
+  //     });
+  // }
 
   showNotification(from: any, align: any, message: any, title: any, type: string) {
     $.notify({
