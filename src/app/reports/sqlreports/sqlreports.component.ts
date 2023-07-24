@@ -24,29 +24,43 @@ export class SqlreportsComponent implements OnInit {
     
     public tableData2: TableData;
     ngOnInit() {    
-      
-      let userRole= this.service.getRole();
-      console.log(userRole);
-      this.service.getRoleReportsPage(userRole).subscribe(
+
+      this.service.getUserProfile().subscribe(
         res => {
+          this.userDetail = res;
+          console.log(this.userDetail);
 
-          console.log(res);
-          let reports2: Array<any>=[];
-          for (let subArr of res) {
-            let report: Array<string>=[];
-              report.push(subArr.v);
-              report.push(subArr.report);
-              report.push(subArr.reportName);
-              reports2.push(report);
-          }
+          
+          let userID = this.userDetail.formData.userID;
+          console.log(userID);
+          let userRole= this.service.getRole();
+          console.log(userRole);
+          this.service.getRoleReportsPage(userRole, userID).subscribe(
+            res => {
 
-          console.log(reports2);
-          this.tableData = {
-            headerRow: [ '', 'Report Name'],
-            dataRows: reports2
+              console.log(res);
+              let reports2: Array<any>=[];
+              for (let subArr of res) {
+                let report: Array<string>=[];
+                  report.push(subArr.v);
+                  report.push(subArr.report);
+                  report.push(subArr.reportName);
+                  reports2.push(report);
+              }
 
-         };
+              console.log(reports2);
+              this.tableData = {
+                headerRow: [ '', 'Report Name'],
+                dataRows: reports2
 
+            };
+
+            }
+          );
+
+        },
+        err => {
+          console.log(err);
         }
       );
     

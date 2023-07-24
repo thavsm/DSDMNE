@@ -16,7 +16,7 @@ export interface Report {
 @Component({
   selector: 'app-reportroles',
   templateUrl: './reportroles.component.html',
-  styleUrls: ['./reportroles.component.css']
+  styleUrls: []
 })
 export class ReportrolesComponent implements OnInit {
 
