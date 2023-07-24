@@ -338,11 +338,16 @@ export class FormbuilderService {
     return this.http.get(this.APIUrl + 'Forms/'+userID +'/UserLocationHierachy', { responseType: 'text' });
   }
 
-  getFormCaptureCountPerLocationLevel(locationID: any,roleID,levelID:any): Observable<any[]>  {
-    return this.http.get<any>(this.APIUrl + locationID +'/'+roleID+'/'+levelID+'/CaptureCount');
-  }
-  getFormCaptureCountPerLocation(locationID: any,roleID): Observable<any[]>  {
-    return this.http.get<any>(this.APIUrl + locationID +'/'+roleID+'/CaptureCount');
+  //Katelyn
+  // getFormCaptureCountPerLocationLevel(locationID: any,roleID,levelID:any): Observable<any[]>  {
+  //   return this.http.get<any>(this.APIUrl + locationID +'/'+roleID+'/'+levelID+'/CaptureCount');
+  // }
+  // getFormCaptureCountPerLocation(locationID: any,roleID): Observable<any[]>  {
+  //   return this.http.get<any>(this.APIUrl + locationID +'/'+roleID+'/CaptureCount');
+  // }
+
+  getFormCaptureCountPerLocation(locationID: any,userID): Observable<any[]>  {
+    return this.http.get<any>(this.APIUrl + locationID +'/'+userID+'/CaptureCount');
   }
   //#endregion
 
