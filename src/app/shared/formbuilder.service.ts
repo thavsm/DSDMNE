@@ -81,6 +81,10 @@ export class FormbuilderService {
     return this.http.get<any>(this.APIUrl + LocationID + '/' + RoleID + '/CapturedForms');
   }
 
+  getEmbeddedCapturedForms(fieldID: any, FormID: any) {
+    return this.http.get<any>(this.APIUrl + fieldID + '/' + FormID + '/EmbeddedCapturedForms');
+  }
+
   addCapturedForms(data: any) {
     return this.http.post(this.APIUrl + 'CapturedForms', data, { responseType: 'text' });
   }
@@ -269,6 +273,14 @@ export class FormbuilderService {
     return this.http.get<any>(this.APIUrl + 'forms/' + RoleID + '/pages/' + pageGuID + '/fieldsForCapture');
   }
 
+  GetFieldsForEmbeddedCapturePerPage(pageGuID: any): Observable<any[]> {
+    return this.http.get<any>(this.APIUrl + 'Forms/pages/' + pageGuID + '/fieldsForEmbeddedCapture');
+  }
+
+  UpdateEmbeddedIndicator(fieldID: any,captureID:any,formID:any){
+    return this.http.put(this.APIUrl + 'Forms/field/' + fieldID +'/formCaptureID/' + captureID+'/formID/'+formID+ '/UpdateEmbeddedIndicator',{});
+  }
+
   checkIfFieldAssignedToRole(FieldID: any, RoleID: any) {
     return this.http.get(this.APIUrl + FieldID + '/' + RoleID + '/AssignedField', { responseType: 'text' })
   }
@@ -309,11 +321,12 @@ export class FormbuilderService {
     return this.http.get(this.APIUrl + 'Forms/'+userID +'/UserLocationHierachy', { responseType: 'text' });
   }
 
-  getFormCaptureCountPerLocationLevel(locationID: any,roleID,levelID:any): Observable<any[]>  {
-    return this.http.get<any>(this.APIUrl + locationID +'/'+roleID+'/'+levelID+'/CaptureCount');
-  }
-  getFormCaptureCountPerLocation(locationID: any,roleID): Observable<any[]>  {
-    return this.http.get<any>(this.APIUrl + locationID +'/'+roleID+'/CaptureCount');
+  // getFormCaptureCountPerLocationLevel(locationID: any,roleID,levelID:any): Observable<any[]>  {
+  //   return this.http.get<any>(this.APIUrl + locationID +'/'+roleID+'/'+levelID+'/CaptureCount');
+  // }
+
+  getFormCaptureCountPerLocation(locationID: any,userID): Observable<any[]>  {
+    return this.http.get<any>(this.APIUrl + locationID +'/'+userID+'/CaptureCount');
   }
   //#endregion
 

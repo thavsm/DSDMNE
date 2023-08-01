@@ -33,7 +33,8 @@ import { ButtonsModule } from "@progress/kendo-angular-buttons";
 import {PDFModule,ExcelModule,} from "@progress/kendo-angular-grid";
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { TreeListModule } from '@progress/kendo-angular-treelist';
-import { AddCommentComponent } from './add-form/add-comment/add-comment.component'
+import { AddCommentComponent } from './add-form/add-comment/add-comment.component';
+import { EmbeddedFormComponent } from './add-form/embedded-form/embedded-form.component'
 
 
 @NgModule({
@@ -42,6 +43,7 @@ import { AddCommentComponent } from './add-form/add-comment/add-comment.componen
     AddFormComponent,
     AddSignatureComponent,
     AddCommentComponent,
+    EmbeddedFormComponent,
 
   ],
   imports: [

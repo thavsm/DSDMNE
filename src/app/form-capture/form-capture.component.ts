@@ -18,6 +18,17 @@ export interface FormData {
   description: string;
 }
 
+export interface nodeData{
+  captureID:number;
+  completedForms:number;
+  levelID:number;
+  nodeID:number;
+  nodeName:string;
+  nodeParentD:number;
+  nonFacilityCaptured:number;
+  periodStatus:number;
+}
+
 @Component({
   selector: 'app-form-capture',
   templateUrl: './form-capture.component.html',
@@ -32,9 +43,9 @@ export class FormCaptureComponent implements OnInit {
 
   public formList: any = [];
 
-  userDetail: any;
+  public userDetail: any;
 
-  data: any = [];
+  public data: nodeData[];
 
   userLocation:any;
   userLocationLevel:any;
@@ -150,21 +161,16 @@ export class FormCaptureComponent implements OnInit {
         let levelID:any=[];
         this.spinner.show();
         this.userLocation=location;
-        this.service.getFormCaptureCountPerLocation(location,this.userDetail.formData.role).subscribe(result => {
-          levelID=result;
-          this.service.getFormCaptureCountPerLocationLevel(location,this.userDetail.formData.role,levelID[0].levelID).subscribe(result => {
+          this.service.getFormCaptureCountPerLocation(location,this.userDetail.formData.userID).subscribe(result => {
             this.data =  result;
+            console.log(this.data);
             if(this.data.length>0){
-              console.log(this.data[0]);
-              console.log(this.data[0].levelID);
               this.userLocationLevel=this.data[0].levelID;
               this.PeriodStatus=this.data[0].periodStatus;
               this.NonFacilityCaptured=this.data[0].nonFacilityCaptured;
-              console.log(this.data[0].nonFacilityCaptured);
             }
             this.spinner.hide();
-          });
-      });
+          });                           
       });
   }
 
