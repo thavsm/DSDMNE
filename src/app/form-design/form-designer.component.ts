@@ -19,7 +19,54 @@ declare var $: any;
 })
 
 export class FormDesignerComponent implements OnInit {
+    embeddedformSelected:any;
+    // EmbeddedForm: boolean;
+    // EmbeddedFormId:any; 
+    data:any;
+    formAdd:any;
+    userDetail:any;
+    formcategories: any = [];
+    formdescription: any = [];
+    //EmbeddedForm:boolean = true;
+    
+    constructor(public dialog: MatDialog, private route: Router, private service: FormbuilderService, private spinner: NgxSpinnerService, private userService: UserService) {
+        this.formData = JSON.parse(localStorage.getItem('formDesignInfo') || '{}');
+        this.checkStatus();
+    }
 
+    ngOnInit(): void {
+        this.checkStatus();
+        // this.getformDescription();
+        this.spinner.show();
+        this.refreshPageList();
+        this.types = this.fieldTypes;
+        console.log("types: "+this.types);
+        this.spinner.hide();
+        if (this.formData.isLocked === true) {
+            this.userService.setMenuShow(false);
+        }
+
+          this.userService.getUserProfile().subscribe(
+            res => {
+              this.userDetail = res;
+              this.getformDescription();
+              //this.refreshFormsList();
+            },
+            err => {
+              console.log(err);
+             this.getformDescription();
+            },
+          
+          ); 
+    /*      if(this.formData.embeddedForm == '1' )
+          {
+            this.EmbeddedForm = true
+          }
+          else{
+            this.EmbeddedForm = false;
+          } */
+    }
+  
     dateFormats: any = [
         {
             "value": "Date DD",
@@ -59,7 +106,9 @@ export class FormDesignerComponent implements OnInit {
     groupSectionList: any[];
 
     fieldList: any[] = [];
+  
 
+ 
     fieldTypes = [
         {
             "fieldID": 0,
@@ -133,6 +182,8 @@ export class FormDesignerComponent implements OnInit {
                     "isEditable": true,
                     "isRequired": false,
                     "isHidden": false,
+                    "EmbeddedForm": "0",
+                    "EmbeddedFormId": 0
                 }
             ]
         },
@@ -208,6 +259,8 @@ export class FormDesignerComponent implements OnInit {
                     "isEditable": true,
                     "isRequired": false,
                     "isHidden": false,
+                    "EmbeddedForm": "0",
+                    "EmbeddedFormId": 0
                 }
             ]
         },
@@ -284,6 +337,8 @@ export class FormDesignerComponent implements OnInit {
                     "isEditable": true,
                     "isRequired": false,
                     "isHidden": false,
+                    "EmbeddedForm": "0",
+                    "EmbeddedFormId": 0
                 }
             ]
         },
@@ -360,6 +415,8 @@ export class FormDesignerComponent implements OnInit {
                     "isEditable": true,
                     "isRequired": false,
                     "isHidden": false,
+                    "EmbeddedForm": "0",
+                    "EmbeddedFormId": 0
                 }
             ]
         },
@@ -390,6 +447,7 @@ export class FormDesignerComponent implements OnInit {
             "hasAttachment": false,
             "hasComment": false,
             "isPublished": -1,
+            
             "fieldType": {
                 "fieldTypeID": 29,
                 "displayName": "Decimal",
@@ -435,6 +493,8 @@ export class FormDesignerComponent implements OnInit {
                     "isEditable": true,
                     "isRequired": false,
                     "isHidden": false,
+                    "EmbeddedForm": "0",
+                    "EmbeddedFormId": 0
                 }
             ]
         },
@@ -510,6 +570,8 @@ export class FormDesignerComponent implements OnInit {
                     "isEditable": true,
                     "isRequired": false,
                     "isHidden": false,
+                    "EmbeddedForm": "0",
+                    "EmbeddedFormId": 0
                 }
             ]
         },
@@ -585,6 +647,8 @@ export class FormDesignerComponent implements OnInit {
                     "isEditable": true,
                     "isRequired": false,
                     "isHidden": false,
+                    "EmbeddedForm": "0",
+                    "EmbeddedFormId": 0
                 }
             ]
         },
@@ -657,10 +721,12 @@ export class FormDesignerComponent implements OnInit {
             "fieldValidations": [
                 {
                     "fieldValidationID": 0,
-                    "dataLength": 500,
+                    "dataLength": 50,
                     "isEditable": true,
                     "isRequired": false,
                     "isHidden": false,
+                    "EmbeddedForm": "0",
+                    "EmbeddedFormId": 0
                 }
             ]
         },
@@ -737,6 +803,8 @@ export class FormDesignerComponent implements OnInit {
                     "isEditable": true,
                     "isRequired": false,
                     "isHidden": false,
+                    "EmbeddedForm": "0",
+                    "EmbeddedFormId": 0
                 }
             ]
         },
@@ -813,6 +881,8 @@ export class FormDesignerComponent implements OnInit {
                     "isEditable": true,
                     "isRequired": false,
                     "isHidden": false,
+                    "EmbeddedForm": "0",
+                    "EmbeddedFormId": 0
                 }
             ]
         },
@@ -889,6 +959,8 @@ export class FormDesignerComponent implements OnInit {
                     "isEditable": true,
                     "isRequired": false,
                     "isHidden": false,
+                    "EmbeddedForm": "0",
+                    "EmbeddedFormId": 0
                 }
             ]
         },
@@ -963,6 +1035,8 @@ export class FormDesignerComponent implements OnInit {
                     "isEditable": true,
                     "isRequired": false,
                     "isHidden": false,
+                    "EmbeddedForm": "0",
+                    "EmbeddedFormId": 0
                 }
             ]
         },
@@ -1039,6 +1113,8 @@ export class FormDesignerComponent implements OnInit {
                     "isEditable": true,
                     "isRequired": false,
                     "isHidden": false,
+                    "EmbeddedForm": "0",
+                    "EmbeddedFormId": 0
                 }
             ]
         },
@@ -1114,6 +1190,8 @@ export class FormDesignerComponent implements OnInit {
                     "isEditable": true,
                     "isRequired": false,
                     "isHidden": false,
+                    "EmbeddedForm": "0",
+                    "EmbeddedFormId": 0
                 }
             ]
         },
@@ -1189,6 +1267,8 @@ export class FormDesignerComponent implements OnInit {
                     "isEditable": true,
                     "isRequired": false,
                     "isHidden": false,
+                    "EmbeddedForm": "0",
+                    "EmbeddedFormId": 0
                 }
             ]
         },
@@ -1264,6 +1344,8 @@ export class FormDesignerComponent implements OnInit {
                     "isEditable": true,
                     "isRequired": false,
                     "isHidden": false,
+                    "EmbeddedForm": "0",
+                    "EmbeddedFormId": 0
                 }
             ]
         },
@@ -1339,6 +1421,8 @@ export class FormDesignerComponent implements OnInit {
                     "isEditable": true,
                     "isRequired": false,
                     "isHidden": false,
+                    "EmbeddedForm": "0",
+                    "EmbeddedFormId": 0
                 }
             ]
         },
@@ -1414,6 +1498,8 @@ export class FormDesignerComponent implements OnInit {
                     "isEditable": true,
                     "isRequired": false,
                     "isHidden": false,
+                    "EmbeddedForm": "0",
+                    "EmbeddedFormId": 0
                 }
             ]
         },
@@ -1490,6 +1576,8 @@ export class FormDesignerComponent implements OnInit {
                     "isEditable": true,
                     "isRequired": false,
                     "isHidden": false,
+                    "EmbeddedForm": "0",
+                    "EmbeddedFormId": 0
                 }
             ]
         },
@@ -1565,6 +1653,8 @@ export class FormDesignerComponent implements OnInit {
                     "isEditable": true,
                     "isRequired": false,
                     "isHidden": false,
+                    "EmbeddedForm": "0",
+                    "EmbeddedFormId": 0
                 }
             ]
         }
@@ -1618,10 +1708,7 @@ export class FormDesignerComponent implements OnInit {
 
     formStatus: string = "background-color: #eee;";
 
-    constructor(public dialog: MatDialog, private route: Router, private service: FormbuilderService, private spinner: NgxSpinnerService, private userService: UserService) {
-        this.formData = JSON.parse(localStorage.getItem('formDesignInfo') || '{}');
-        this.checkStatus();
-    }
+   
 
     checkStatus() {
         if (this.formData.publishStatus === -1) {
@@ -1637,16 +1724,7 @@ export class FormDesignerComponent implements OnInit {
         }
     }
 
-    ngOnInit(): void {
-        this.checkStatus();
-        this.spinner.show();
-        this.refreshPageList();
-        this.types = this.fieldTypes;
-        this.spinner.hide();
-        if (this.formData.isLocked === true) {
-            this.userService.setMenuShow(false);
-        }
-    }
+   
 
     toggleValue(item: any) {
         this.refreshGroupSectionList();
@@ -1715,6 +1793,7 @@ export class FormDesignerComponent implements OnInit {
     }
 
     savePage() {
+       
         this.saveDesignPerPage(this.currentPage.pageGUID);
         this.publishStatus = 0;
     }
@@ -2008,6 +2087,8 @@ export class FormDesignerComponent implements OnInit {
                     "isEditable": true,
                     "isRequired": false,
                     "isHidden": false,
+                    "EmbeddedForm": this.formData.embeddedForm,
+                    "EmbeddedFormId":this.formData.formTypeID
                 }
             ]
         }]
@@ -2161,6 +2242,8 @@ export class FormDesignerComponent implements OnInit {
                                 "isEditable": true,
                                 "isRequired": false,
                                 "isHidden": false,
+                                "EmbeddedForm": "0",
+                                "EmbeddedFormId": 0
                             }
                         ]
                     },
@@ -2236,6 +2319,8 @@ export class FormDesignerComponent implements OnInit {
                                 "isEditable": true,
                                 "isRequired": false,
                                 "isHidden": false,
+                                "EmbeddedForm": "0",
+                                "EmbeddedFormId": 0
                             }
                         ]
                     },
@@ -2312,6 +2397,8 @@ export class FormDesignerComponent implements OnInit {
                                 "isEditable": true,
                                 "isRequired": false,
                                 "isHidden": false,
+                                "EmbeddedForm": "0",
+                                "EmbeddedFormId": 0
                             }
                         ]
                     },
@@ -2388,6 +2475,8 @@ export class FormDesignerComponent implements OnInit {
                                 "isEditable": true,
                                 "isRequired": false,
                                 "isHidden": false,
+                                "EmbeddedForm": "0",
+                                "EmbeddedFormId": 0
                             }
                         ]
                     },
@@ -2463,6 +2552,8 @@ export class FormDesignerComponent implements OnInit {
                                 "isEditable": true,
                                 "isRequired": false,
                                 "isHidden": false,
+                                "EmbeddedForm": "0",
+                                "EmbeddedFormId": 0
                             }
                         ]
                     },
@@ -2538,6 +2629,8 @@ export class FormDesignerComponent implements OnInit {
                                 "isEditable": true,
                                 "isRequired": false,
                                 "isHidden": false,
+                                "EmbeddedForm": "0",
+                                "EmbeddedFormId": 0
                             }
                         ]
                     },
@@ -2613,6 +2706,8 @@ export class FormDesignerComponent implements OnInit {
                                 "isEditable": true,
                                 "isRequired": false,
                                 "isHidden": false,
+                                "EmbeddedForm": "0",
+                                "EmbeddedFormId": 0
                             }
                         ]
                     },
@@ -2685,10 +2780,12 @@ export class FormDesignerComponent implements OnInit {
                         "fieldValidations": [
                             {
                                 "fieldValidationID": 0,
-                                "dataLength": 500,
+                                "dataLength": 50,
                                 "isEditable": true,
                                 "isRequired": false,
                                 "isHidden": false,
+                                "EmbeddedForm": "0",
+                                "EmbeddedFormId": 0
                             }
                         ]
                     },
@@ -2765,6 +2862,8 @@ export class FormDesignerComponent implements OnInit {
                                 "isEditable": true,
                                 "isRequired": false,
                                 "isHidden": false,
+                                "EmbeddedForm": "0",
+                                "EmbeddedFormId": 0
                             }
                         ]
                     },
@@ -2841,6 +2940,8 @@ export class FormDesignerComponent implements OnInit {
                                 "isEditable": true,
                                 "isRequired": false,
                                 "isHidden": false,
+                                "EmbeddedForm": "0",
+                                "EmbeddedFormId": 0
                             }
                         ]
                     },
@@ -2917,6 +3018,8 @@ export class FormDesignerComponent implements OnInit {
                                 "isEditable": true,
                                 "isRequired": false,
                                 "isHidden": false,
+                                "EmbeddedForm": "0",
+                                "EmbeddedFormId": 0
                             }
                         ]
                     },
@@ -2991,6 +3094,8 @@ export class FormDesignerComponent implements OnInit {
                                 "isEditable": true,
                                 "isRequired": false,
                                 "isHidden": false,
+                                "EmbeddedForm": "0",
+                                "EmbeddedFormId": 0
                             }
                         ]
                     },
@@ -3067,6 +3172,8 @@ export class FormDesignerComponent implements OnInit {
                                 "isEditable": true,
                                 "isRequired": false,
                                 "isHidden": false,
+                                "EmbeddedForm": "0",
+                                "EmbeddedFormId": 0
                             }
                         ]
                     },
@@ -3142,6 +3249,8 @@ export class FormDesignerComponent implements OnInit {
                                 "isEditable": true,
                                 "isRequired": false,
                                 "isHidden": false,
+                                "EmbeddedForm": "0",
+                                "EmbeddedFormId": 0
                             }
                         ]
                     },
@@ -3217,6 +3326,8 @@ export class FormDesignerComponent implements OnInit {
                                 "isEditable": true,
                                 "isRequired": false,
                                 "isHidden": false,
+                                "EmbeddedForm": "0",
+                                "EmbeddedFormId": 0
                             }
                         ]
                     },
@@ -3292,6 +3403,8 @@ export class FormDesignerComponent implements OnInit {
                                 "isEditable": true,
                                 "isRequired": false,
                                 "isHidden": false,
+                                "EmbeddedForm": "0",
+                                "EmbeddedFormId": 0
                             }
                         ]
                     },
@@ -3367,6 +3480,8 @@ export class FormDesignerComponent implements OnInit {
                                 "isEditable": true,
                                 "isRequired": false,
                                 "isHidden": false,
+                                "EmbeddedForm": "0",
+                                "EmbeddedFormId": 0
                             }
                         ]
                     },
@@ -3442,6 +3557,8 @@ export class FormDesignerComponent implements OnInit {
                                 "isEditable": true,
                                 "isRequired": false,
                                 "isHidden": false,
+                                "EmbeddedForm": "0",
+                                "EmbeddedFormId": 0
                             }
                         ]
                     },
@@ -3518,6 +3635,8 @@ export class FormDesignerComponent implements OnInit {
                                 "isEditable": true,
                                 "isRequired": false,
                                 "isHidden": false,
+                                "EmbeddedForm": "0",
+                                "EmbeddedFormId": 0
                             }
                         ]
                     },
@@ -3593,6 +3712,8 @@ export class FormDesignerComponent implements OnInit {
                                 "isEditable": true,
                                 "isRequired": false,
                                 "isHidden": false,
+                                "EmbeddedForm": "0",
+                                "EmbeddedFormId": 0
                             }
                         ]
                     }
@@ -3678,6 +3799,8 @@ export class FormDesignerComponent implements OnInit {
                             "isEditable": true,
                             "isRequired": false,
                             "isHidden": false,
+                            "EmbeddedForm": "0",
+                            "EmbeddedFormId": 0
                         }
                     ]
                 },
@@ -3753,6 +3876,8 @@ export class FormDesignerComponent implements OnInit {
                             "isEditable": true,
                             "isRequired": false,
                             "isHidden": false,
+                            "EmbeddedForm": "0",
+                            "EmbeddedFormId": 0
                         }
                     ]
                 },
@@ -3829,6 +3954,8 @@ export class FormDesignerComponent implements OnInit {
                             "isEditable": true,
                             "isRequired": false,
                             "isHidden": false,
+                            "EmbeddedForm": "0",
+                            "EmbeddedFormId": 0
                         }
                     ]
                 },
@@ -3905,6 +4032,8 @@ export class FormDesignerComponent implements OnInit {
                             "isEditable": true,
                             "isRequired": false,
                             "isHidden": false,
+                            "EmbeddedForm": "0",
+                            "EmbeddedFormId": 0
                         }
                     ]
                 },
@@ -3980,6 +4109,8 @@ export class FormDesignerComponent implements OnInit {
                             "isEditable": true,
                             "isRequired": false,
                             "isHidden": false,
+                            "EmbeddedForm": "0",
+                            "EmbeddedFormId": 0
                         }
                     ]
                 },
@@ -4055,6 +4186,8 @@ export class FormDesignerComponent implements OnInit {
                             "isEditable": true,
                             "isRequired": false,
                             "isHidden": false,
+                            "EmbeddedForm": "0",
+                            "EmbeddedFormId": 0
                         }
                     ]
                 },
@@ -4130,6 +4263,8 @@ export class FormDesignerComponent implements OnInit {
                             "isEditable": true,
                             "isRequired": false,
                             "isHidden": false,
+                            "EmbeddedForm": "0",
+                            "EmbeddedFormId": 0
                         }
                     ]
                 },
@@ -4202,10 +4337,12 @@ export class FormDesignerComponent implements OnInit {
                     "fieldValidations": [
                         {
                             "fieldValidationID": 0,
-                            "dataLength": 500,
+                            "dataLength": 50,
                             "isEditable": true,
                             "isRequired": false,
                             "isHidden": false,
+                            "EmbeddedForm": "0",
+                            "EmbeddedFormId": 0
                         }
                     ]
                 },
@@ -4282,6 +4419,8 @@ export class FormDesignerComponent implements OnInit {
                             "isEditable": true,
                             "isRequired": false,
                             "isHidden": false,
+                            "EmbeddedForm": "0",
+                            "EmbeddedFormId": 0
                         }
                     ]
                 },
@@ -4358,6 +4497,8 @@ export class FormDesignerComponent implements OnInit {
                             "isEditable": true,
                             "isRequired": false,
                             "isHidden": false,
+                            "EmbeddedForm": "0",
+                            "EmbeddedFormId": 0
                         }
                     ]
                 },
@@ -4434,6 +4575,8 @@ export class FormDesignerComponent implements OnInit {
                             "isEditable": true,
                             "isRequired": false,
                             "isHidden": false,
+                            "EmbeddedForm": "0",
+                            "EmbeddedFormId": 0
                         }
                     ]
                 },
@@ -4508,6 +4651,8 @@ export class FormDesignerComponent implements OnInit {
                             "isEditable": true,
                             "isRequired": false,
                             "isHidden": false,
+                            "EmbeddedForm": "0",
+                            "EmbeddedFormId": 0
                         }
                     ]
                 },
@@ -4584,6 +4729,8 @@ export class FormDesignerComponent implements OnInit {
                             "isEditable": true,
                             "isRequired": false,
                             "isHidden": false,
+                            "EmbeddedForm": "0",
+                            "EmbeddedFormId": 0
                         }
                     ]
                 },
@@ -4659,6 +4806,8 @@ export class FormDesignerComponent implements OnInit {
                             "isEditable": true,
                             "isRequired": false,
                             "isHidden": false,
+                            "EmbeddedForm": "0",
+                            "EmbeddedFormId": 0
                         }
                     ]
                 },
@@ -4734,6 +4883,8 @@ export class FormDesignerComponent implements OnInit {
                             "isEditable": true,
                             "isRequired": false,
                             "isHidden": false,
+                            "EmbeddedForm": "0",
+                            "EmbeddedFormId": 0
                         }
                     ]
                 },
@@ -4809,6 +4960,8 @@ export class FormDesignerComponent implements OnInit {
                             "isEditable": true,
                             "isRequired": false,
                             "isHidden": false,
+                            "EmbeddedForm": "0",
+                            "EmbeddedFormId": 0
                         }
                     ]
                 },
@@ -4884,6 +5037,8 @@ export class FormDesignerComponent implements OnInit {
                             "isEditable": true,
                             "isRequired": false,
                             "isHidden": false,
+                            "EmbeddedForm": "0",
+                            "EmbeddedFormId": 0
                         }
                     ]
                 },
@@ -4959,6 +5114,8 @@ export class FormDesignerComponent implements OnInit {
                             "isEditable": true,
                             "isRequired": false,
                             "isHidden": false,
+                            "EmbeddedForm": "0",
+                            "EmbeddedFormId": 0
                         }
                     ]
                 },
@@ -5035,6 +5192,8 @@ export class FormDesignerComponent implements OnInit {
                             "isEditable": true,
                             "isRequired": false,
                             "isHidden": false,
+                            "EmbeddedForm": "0",
+                            "EmbeddedFormId": 0
                         }
                     ]
                 },
@@ -5110,6 +5269,8 @@ export class FormDesignerComponent implements OnInit {
                             "isEditable": true,
                             "isRequired": false,
                             "isHidden": false,
+                            "EmbeddedForm": "0",
+                            "EmbeddedFormId": 0
                         }
                     ]
                 }
@@ -5174,6 +5335,17 @@ export class FormDesignerComponent implements OnInit {
             }
         });
     }
+
+    getformDescription() {
+        this.spinner.show();
+        this.service.getEmbeddedFormList().subscribe(data => {
+          this.formdescription = data;
+          console.log("formDes: "+this.formdescription[0].formID);
+          console.log("Embedded: " +this.formdescription[0].embeddedForm)
+          this.spinner.hide();
+        });
+      } 
+
 
     getDesignPerPage(pageGUID: any) {
         this.fieldList = [];
@@ -5297,6 +5469,9 @@ export class FormDesignerComponent implements OnInit {
             if (hasDuplicates == true) {
                 count1++
             }
+
+        
+            
             element.pageGUID = pageGUID;
             element.formPage.name = this.currentPage.name;
         });
@@ -5305,6 +5480,7 @@ export class FormDesignerComponent implements OnInit {
             if (errorMessage === "Please ensure number ") {
                 if (count1 == 0) {
                     if (errorMessage === "Please ensure number ") {
+
                         this.spinner.show();
                         this.service.addFieldPerPage(this.formDesign, this.formData.formID, this.currentPage.pageGUID).subscribe(data => {
                             this.formData.publishStatus = 0;

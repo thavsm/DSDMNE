@@ -23,10 +23,21 @@ export class FormbuilderService {
 
   //#region Form Design/Capture Methods
 
-  getDynamicFormList(): Observable<any[]> {
-    return this.http.get<any>(this.APIUrl + 'forms/filter/type/2')
+  getDynamicFormList(locationID: any): Observable<any[]> {
+    return this.http.get<any>(this.APIUrl + 'forms/filter/type/2/'+locationID+'?')
   }
 
+  //added for embedded forms
+  getEmbeddedFormList(): Observable<any[]> {
+    return this.http.get<any>(this.APIUrl + 'forms/type/2/1')
+  }
+
+/*   getNodes(): Observable<any[]>{
+    return this.http.get<any>(this.APIUrl + 'forms/type/2')
+  } */
+  getNodes(levelID:number){
+    return this.http.get<any>(this.APIUrl+'Nodes/GetNodeByLevelID/'+levelID);
+  }
 
   addDynamicForm(data: any) {
     return this.http.post(this.APIUrl + 'forms', data);

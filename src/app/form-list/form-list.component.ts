@@ -19,25 +19,28 @@ declare var $: any;
   styleUrls: ['./form-list.component.css']
 })
 export class FormListComponent implements OnInit {
-
-  constructor(public dialog: MatDialog, private route: Router, private service: FormbuilderService, private spinner: NgxSpinnerService,public userService: UserService) { }
-
+  formcategories: any = [];
+  userDetail: any;
+  formAdd: any;
+  locationID : any;
+  locationNode: any;
+  public formList :any[];
+  formlist: any[];
+  isDisabled: boolean= false;
+  nodeList:any[];
+  constructor(public dialog: MatDialog, private route: Router, private service: FormbuilderService, private spinner: NgxSpinnerService,public userService: UserService) {
+   }
+  
   public pageSize = 10;
   public pageSizes: Array<number | PageSizeItem> = [5, 10, 20, {
     text: 'All',
     value: 'all'
      }];
-  formAdd: any;
-  userDetail:any;
+   
+  
   public displayedColumns = ['displayName', 'formDescription', 'formCategory', 'formDetails', 'update', 'delete'];
-  public formList :any[];
-
+  
   @ViewChild(MatPaginator) paginator: MatPaginator;
-
-  ngAfterViewInit() {
-    //this.formList.paginator = this.paginator;
-  }
-
 
   public onPageChange(state: any): void {
     this.pageSize = state.take;
@@ -45,20 +48,27 @@ export class FormListComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.refreshFormsList();
     // this.formList.filterPredicate = function (data, filter: string): boolean {
     //   return data.formName.toLowerCase().includes(filter) || data.formDescription.toLowerCase().includes(filter) || data.formCategory.toString().includes(filter) === filter;
     // };
     this.userService.getUserProfile().subscribe(
       res => {
         this.userDetail = res;
+        console.log("Test: "+this.userDetail.formData.location+"nodeid: " +this.userDetail.formData.nodeid);
+        this.refreshFormsList();
       },
       err => {
         console.log(err);
       },
+    
     );
+this.locationNode = this.userDetail.formData.location;
+console.log("New: "+ this.locationNode)
   }
 
+  ngAfterViewInit() {
+    //this.formList.paginator = this.paginator;
+  }
 
   clickDelete(item: any) {
     Swal.fire({
@@ -111,7 +121,8 @@ export class FormListComponent implements OnInit {
           lastModifiedByUserID: item.lastModifiedByUserID,
           publishStatus:item.publishStatus,
           DateArchived:item.DateArchived,
-          ArchivedByUserID:item.ArchivedByUserID
+          ArchivedByUserID:item.ArchivedByUserID,
+          locationID: this.userDetail.formData.location
         };
         localStorage.setItem('formDesignInfo', JSON.stringify(myObj));
         this.userService.setMenuShow(false);
@@ -136,6 +147,7 @@ export class FormListComponent implements OnInit {
   }
 
   openDialogAdd(): void {
+  
     this.formAdd = {
       formID: 0,
       formTypeID: 0,
@@ -153,8 +165,10 @@ export class FormListComponent implements OnInit {
       lastModifiedByUserID: 0,
       publishStatus:0,
       DateArchived:"",
-      ArchivedByUserID:""
+      ArchivedByUserID:"",
+      locationID: this.userDetail.formData.location
     }
+ 
     const dialogRef = this.dialog.open(FormAddComponent, {
       width: '60%',
       height: '80%',
@@ -165,22 +179,47 @@ export class FormListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       this.refreshFormsList();
     });
-  }
 
+ 
+  }
+  
+ 
   refreshFormsList() {
     this.spinner.show();
-    this.service.getDynamicFormList().subscribe(data => {
+    //8658
+    this.service.getDynamicFormList(this.userDetail.formData.location).subscribe(data => {
       this.formList = data;
       this.spinner.hide();
     });
   }
-
+ 
+  checkForHasForm(formID: any): boolean{
+    let count =0;
+    this.formList.forEach(element=>{
+      if(element.formID === formID){
+        count++
+      }
+    });
+    return (count>1?true:false)
+  }
   applyFilter(data: any) {
     let filterValue: string = data.target.value;
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
    // this.formList.filter = filterValue;
   }
+  
+  
+/*   getformDescription() {
+    this.spinner.show();
+    this.service.getEmbeddedFormList().subscribe(data => {
+      this.nodeList = data;
+      console.log("formDes: "+this.nodeList[0].formID);
+      console.log("Embedded: " +this.nodeList[0].embeddedForm)
+      this.spinner.hide();
+    });
+  }  */
+
 
   showNotification(from: any, align: any, message: any, title: any, type: string) {
     $.notify({

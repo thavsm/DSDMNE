@@ -38,6 +38,7 @@ export class FormExportComponent implements OnInit {
   source = [];
   excelHeaders: string[] = [];
   formPages: any;
+  locationID: string;
 
 
   @ViewChild('stepper') private myStepper: MatStepper;
@@ -61,9 +62,10 @@ export class FormExportComponent implements OnInit {
   }
 
   filterForms() {
+    let locationID = this.locationID;
     let ID = this.categoryID;
     this.spinner.show();
-    this.service.getDynamicFormList().subscribe(data => {
+    this.service.getDynamicFormList(locationID).subscribe(data => {
       this.formList = data.filter(function (e) {
         return e.formCategoryID == ID;
       });

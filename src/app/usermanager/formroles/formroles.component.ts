@@ -24,7 +24,7 @@ export interface FormData {
 export class FormrolesComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private route: Router, private service: FormbuilderService, private spinner: NgxSpinnerService) { }
-
+  userDetail: any;
   formAdd: any;
   public displayedColumns = ['formName', 'formDescription','formCategory', 'roles'];
   //public formList = new MatTableDataSource<any>();
@@ -83,7 +83,7 @@ export class FormrolesComponent implements OnInit {
 
   refreshFormsList() {
     this.spinner.show();
-    this.service.getDynamicFormList().subscribe(data => {
+    this.service.getDynamicFormList(this.userDetail.formData.location).subscribe(data => {
       //this.formList.data = data;
       this.formList = data;
       this.spinner.hide();

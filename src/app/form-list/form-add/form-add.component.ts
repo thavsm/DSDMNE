@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit,Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormbuilderService } from 'src/app/shared/formbuilder.service';
@@ -15,11 +15,12 @@ declare var $: any;
   styleUrls: ['./form-add.component.css']
 })
 export class FormAddComponent implements OnInit {
-
+  data:any;
   submitted = false;
   formAdd: any;
   formcategories: any = [];
   formlist: any[];
+  EmbeddedFormTest:any;
 
   constructor(
     public dialogRef: MatDialogRef<FormAddComponent>,
@@ -27,6 +28,7 @@ export class FormAddComponent implements OnInit {
     private service: FormbuilderService, public formBuilder: FormBuilder, private spinner: NgxSpinnerService,private userService: UserService) {
     this.formAdd = data[0];
     this.formlist = data[1];
+    this.data= data;
   }
 
   formID: number = 0;
@@ -45,8 +47,18 @@ export class FormAddComponent implements OnInit {
   userDetail: any;
   DateArchived: string = "";
   ArchivedByUserID: string = "";
+  LocationID: string = "";
+  EmbeddedForm: boolean=true;
+  active='InActive';
+  @Output() newItemEvent = new EventEmitter<any>();
 
   ngOnInit(): void {
+   /*  if(this.formAdd.formID!=0){
+      if(this.data.data.EmbeddedForm!= false){
+        this.EmbeddedForm=true;
+      }
+    } */
+    this.updateFormData();
     this.formID = this.formAdd.formID;
     this.formTypeID = this.formAdd.formTypeID;
     this.formCategoryID = this.formAdd.formCategoryID;
@@ -62,9 +74,13 @@ export class FormAddComponent implements OnInit {
     this.lastModifiedByUserID = this.formAdd.lastModifiedByUserID;
     this.DateArchived=this.formAdd.DateArchived;
     this.ArchivedByUserID=this.formAdd.ArchivedByUserID;
+    this.LocationID = this.formAdd.location;
+    this.EmbeddedForm = this.formAdd.EmbeddedForm;
+
     this.userService.getUserProfile().subscribe(
       res => {
         this.userDetail = res;
+        console.log(this.userDetail["EmbeddedForm"]);
         this.getformCategories();
       },
       err => {
@@ -72,6 +88,18 @@ export class FormAddComponent implements OnInit {
         this.getformCategories();
       },
     );
+   
+    if(this.formAdd.formID!=0){
+      
+    if(this.formAdd.embeddedForm == '1')
+    {
+      this.formAdd.EmbeddedForm = true;
+      this.active='Active';
+    }else{
+      this.formAdd.EmbeddedForm = false;
+     this.active='In-Active';
+    }
+  } 
   }
 
   // group = new FormGroup({
@@ -79,13 +107,22 @@ export class FormAddComponent implements OnInit {
   // });
 
   addForm() {
+    
+     //var LocationID = this.userDetail.formData.location;
     if (this.formAdd.displayName != "" && this.formAdd.formCategoryID !== 0) {
       if (this.checkForDuplicate(this.formAdd.displayName)) {
         this.showNotification('top', 'center', 'This form name already exists, please enter a unique name!', '', 'danger');
       }
+      
       else {
         //adding form
         this.submitted = true;
+
+        if(this.formAdd.EmbeddedForm == true){
+          this.EmbeddedFormTest = "1";
+        }else{
+          this.EmbeddedFormTest = "0";
+        }
         var val = {
           "formID": 0,
           "formTypeID": 2,
@@ -100,7 +137,10 @@ export class FormAddComponent implements OnInit {
           "isDeleted": false,
           "dateLocked": "2021-11-30T11:28:23.351Z",
           "dateLastModified": "2021-11-30T11:28:23.351Z",
-          "lastModifiedByUserID": 0
+          "lastModifiedByUserID": 0,
+          "LocationID": this.userDetail.formData.location,
+          "EmbeddedForm":this.EmbeddedFormTest,
+         // "EmbeddedFormId":0,
         };
         this.spinner.show();
         this.service.addDynamicForm(val).subscribe(res => {
@@ -182,6 +222,8 @@ export class FormAddComponent implements OnInit {
                 "isEditable": true,
                 "isRequired": false,
                 "isHidden": false,
+                "EmbeddedForm": "0",  
+               "EmbeddedFormId":0
               }
             ],
             "isPublished":-1
@@ -208,11 +250,25 @@ export class FormAddComponent implements OnInit {
         this.formAdd.dateLocked = "";
         this.formAdd.dateLastModified = "";
         this.formAdd.lastModifiedByUserID = 0;
+        this.formAdd.LocationID = 0;
+        this.formAdd.EmbeddedForm="";
+        // this.formAdd.EmbeddedFormId=0;
       }
     }
     else {
       this.showNotification('top', 'center', 'Please fill in name and select a category field!', '', 'danger');
     }
+  }
+  updateFormData(){
+    if(this.formAdd.EmbeddedForm == true)
+    {
+      this.formAdd.EmbeddedForm = true;
+      this.active = "Active";
+    }else{
+      this.formAdd.EmbeddedForm = false;
+      this.active = "In-Active";
+    }
+    this.newItemEvent.emit(this.EmbeddedForm);
   }
 
   updateForm() {
@@ -222,7 +278,15 @@ export class FormAddComponent implements OnInit {
       }
       else {
       //updating form
+
       this.submitted = true;
+      //check if checkbox is ticked
+      if(this.formAdd.EmbeddedForm == true)
+      {
+        this.EmbeddedFormTest = "1";
+      }else{
+        this.EmbeddedFormTest = "0";
+      }
       // stop here if form is invalid
       var val = {
         formID: this.formAdd.formID,
@@ -238,7 +302,9 @@ export class FormAddComponent implements OnInit {
         isDeleted: this.formAdd.isDeleted,
         dateLocked: this.formAdd.dateLocked,
         dateLastModified: this.formAdd.dateLastModified,
-        lastModifiedByUserID: this.userDetail.formData.userID
+        lastModifiedByUserID: this.userDetail.formData.userID,
+        EmbeddedForm: this.EmbeddedFormTest
+        // EmbeddedFromID: this.userDetail.EmbeddedFormId
       };
       this.spinner.show();
       this.service.updateDynamicFormDetails(this.formAdd.formID, val).subscribe(res => {

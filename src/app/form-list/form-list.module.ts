@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import {MatButtonModule} from '@angular/material/button';
 import { FormAddComponent } from './form-add/form-add.component';
 import { MatTableModule } from '@angular/material/table';
@@ -37,6 +38,7 @@ import {PDFModule,ExcelModule,} from "@progress/kendo-angular-grid";
     FormsModule,
     MatDialogModule,
     MatIconModule,
+    MatCheckboxModule,
     MatButtonModule,
     ReactiveFormsModule,
     MatTableModule,
