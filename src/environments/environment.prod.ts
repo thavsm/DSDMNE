@@ -4,8 +4,8 @@ export const environment = {
   // API_FormURL: 'https://testportal.dsd.gov.za/MNE_DSD_API/1/',
   // API_FormURLForHelp: 'https://testportal.dsd.gov.za/MNE_DSD_API',
   
-  API_URL: 'https://app1.terra.group/MNE_UAT_API/api',
-  API_FormURL: 'https://app1.terra.group/MNE_UAT_API/1/'  ,
+  API_URL: 'https://app1.terra.group/MNE_PHASE2_API/api',
+  API_FormURL: 'https://app1.terra.group/MNE_PHASE2_API/1/'  ,
   API_FormURLForHelp: 'https://app1.terra.group/dsd_uat',
 
   REPORT_SERVER: 'https://app1.terra.group/DSDReportViewerSSRS/Default?ID=',
