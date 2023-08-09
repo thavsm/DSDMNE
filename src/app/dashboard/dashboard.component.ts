@@ -129,7 +129,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
     /* ----------==========     Completed Tasks Chart initialization    ==========---------- */
 
-    this.service.getCompletedTasks().subscribe(res => {
+    this.service.getWFCompletedTasks().subscribe(res => {
       var keys = Object.keys(res[0]);
       res.forEach((x, i) => {
         let excelValues = Object.values(res[i]);
@@ -155,7 +155,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     };
 
     /* ----------==========     Emails Subscription Chart initialization    ==========---------- */
-    this.service.getUserRegistrations().subscribe(res => {
+    this.service.getUserReportAccess().subscribe(res => {
       var keys = Object.keys(res[0]);
       res.forEach((x, i) => {
         let excelValues = Object.values(res[i]);
