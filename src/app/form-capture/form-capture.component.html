@@ -32,10 +32,14 @@
                           style="background-color: red;width: 150px;">Complete My Form</button>
                       </div>
                     </div>
-                    <button *ngIf="(dataItem.levelID==4263 || dataItem.levelID==4264 )  && dataItem.completedForms>=1 && dataItem.roleID!=0" class="btn btn-sm"
+                    <button *ngIf="(dataItem.levelID==4264 )  && dataItem.completedForms>=1 && dataItem.roleID!=0" class="btn btn-sm"
+                      (click)="addForm(dataItem)" style="background-color: green;width: 150px;">Complete Form</button>
+                    <button *ngIf="(dataItem.levelID==4264 )  && dataItem.completedForms==0 && dataItem.roleID!=0" class="btn btn-sm"
+                      (click)="addForm(dataItem)" style="background-color: red;width: 150px;">Complete Form</button>
+                    <!-- <button *ngIf="(dataItem.levelID==4263 || dataItem.levelID==4264 )  && dataItem.completedForms>=1 && dataItem.roleID!=0" class="btn btn-sm"
                       (click)="addForm(dataItem)" style="background-color: green;width: 150px;">Complete Form</button>
                     <button *ngIf="(dataItem.levelID==4263 || dataItem.levelID==4264 )  && dataItem.completedForms==0 && dataItem.roleID!=0" class="btn btn-sm"
-                      (click)="addForm(dataItem)" style="background-color: red;width: 150px;">Complete Form</button>
+                      (click)="addForm(dataItem)" style="background-color: red;width: 150px;">Complete Form</button> -->
                   </ng-template>
                 </kendo-treelist-column>
               </kendo-treelist>
