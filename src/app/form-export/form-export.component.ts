@@ -206,7 +206,7 @@ export class FormExportComponent implements OnInit {
   checkIfParentIsASection(field: any): Boolean {
     let isParent: Boolean = false;
     this.listOfQuestions.forEach(f => {
-      if (f.groupGUID === field.parentFieldName && f.fieldType.fieldTypeID === 9) {
+      if (f.groupGUID === field.parentFieldName && f.fieldType.fieldTypeID === 6) {
         isParent = true;
       }
     });
