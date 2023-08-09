@@ -564,7 +564,9 @@
                         </div>            -->
                         <button mat-button [mat-dialog-close]="" class="btn btn-md btn-primary">Cancel</button>
                         <!-- &nbsp; -->
-                        <button (click)="deleteNode()" class="btn btn-md btn-primary" *ngIf="btnDelete">Delete Node</button>
+                        <button (click)="SetActiveNode()" class="btn btn-md btn-primary" *ngIf="btnDelete == true && btnActive == false && btnHideActive == true">Set Active</button>
+                        <button (click)="deleteNode()" class="btn btn-md btn-primary" *ngIf="btnDelete == true && btnActive == true && btnHideActive == true">Set Inactive</button>
+                        <button (click)="deleteNode()" class="btn btn-md btn-primary" *ngIf="btnDelete == true && btnActive == true && btnHideDelete == true">Delete</button>
                     </div>                
                 </div>
             </div>

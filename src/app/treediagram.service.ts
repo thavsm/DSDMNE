@@ -124,6 +124,10 @@ export class TreediagramService {
     return this.http.post<any>(this.API_URL+'Nodes/DeleteNodeByNodeID/'+NodeID,"")
   } 
 
+  SetNodeActiveByNodeID(NodeID:any){
+    return this.http.post<any>(this.API_URL+'Nodes/SetNodeActiveByNodeID/'+NodeID,"")
+  }
+
   updateNodeDetails(nodeID:number,data:any){
     return this.http.put(this.API_URL+'Nodes/'+nodeID,data);
   }
@@ -290,12 +294,16 @@ export class TreediagramService {
     return this.http.post<any>(this.API_URL+'Trees/RefreshExternalCalculation/'+formData+'/'+tableName+'/'+CalculationID+'/'+Connstring+'/'+externalDataTypeID, "");
   }
 
-  getIndicatorsDataApproval(locationType:number, locationID:number, monthID:number, year:number){
-    return this.http.get<any>(this.API_URL+'Trees/getIndicatorsDataApproval?locationType='+locationType+'&locationID='+locationID+'&monthID='+monthID+'&year='+year);
+  getIndicatorsDataApproval(locationType:number, locationID:number, monthID:number, year:number, roleID:number){
+    return this.http.get<any>(this.API_URL+'Trees/getIndicatorsDataApproval?locationType='+locationType+'&locationID='+locationID+'&monthID='+monthID+'&year='+year+'&roleID='+roleID);
   }
 
   getFacilityIndicatorsDataApproval(indicatorID:number, locationType:number, locationID:number, year:number, monthID:number){
     return this.http.get<any>(this.API_URL+'Trees/getFacilityIndicatorsDataApproval?indicatorID='+indicatorID+'&locationType='+locationType+'&locationID='+locationID+'&year='+year+'&monthID='+monthID);
+  }
+
+  getIndicatorsDataApprovalHistory(indicatorID:number, formcapturedID:number){
+    return this.http.get<any>(this.API_URL+'Trees/getIndicatorsDataApprovalHistory?indicatorID='+indicatorID+'&formcapturedID='+formcapturedID);
   }
 
   getTaskDetails(taskID:number){

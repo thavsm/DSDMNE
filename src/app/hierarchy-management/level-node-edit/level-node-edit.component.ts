@@ -71,6 +71,7 @@ export class LevelNodeEditComponent implements OnInit {
   TabLevelEdit: string = "Level Edit";
   btnSave: boolean = true;
   btnDelete: boolean = true;
+  btnActive: boolean = true;
   btnCoord: boolean = false;
   divIsIndicator: boolean = false;
   Indicators: any = [];
@@ -135,6 +136,9 @@ export class LevelNodeEditComponent implements OnInit {
   IsFacility: number;
   divIsFacility: boolean = false;
   FacilityTypeID: any;
+
+  btnHideActive: any;
+  btnHideDelete: any;
 
   constructor(public dialog: MatDialog, public dialogRef: MatDialogRef<LevelNodeEditComponent>,
     @Inject(MAT_DIALOG_DATA) data,
@@ -912,6 +916,22 @@ export class LevelNodeEditComponent implements OnInit {
 
   hideEditButtons() {
 
+    if (this.NodeData.levelID == 4263 || this.NodeData.levelID == 4264 ) {
+      this.btnHideActive = true;
+      this.btnHideDelete = false;
+
+    }else{
+      this.btnHideActive = false;
+      this.btnHideDelete = true;
+    }
+
+
+    if (this.NodeData.Status == '1') {
+      this.btnActive = true;
+
+    }else{
+      this.btnActive = false;
+    }
 
     if (this.NodeData.ViewEdit == 1) {
 
@@ -1316,7 +1336,7 @@ export class LevelNodeEditComponent implements OnInit {
   deleteNode() {
 
     Swal.fire({
-      title: 'Are you sure you want to delete node?',
+      title: 'Are you sure you want to set node Inactive?',
       showCancelButton: true,
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
@@ -1330,7 +1350,7 @@ export class LevelNodeEditComponent implements OnInit {
         this.spinner.show();
         this.service.DeleteNode(this.NodeData.nodeID).subscribe(data => {
           this.spinner.hide();
-          this.showNotification('top', 'center', 'Node deleted succesfully!', '', 'success');
+          this.showNotification('top', 'center', 'Node set inactive succesfully!', '', 'success');
         });
       }
     })
@@ -1338,6 +1358,31 @@ export class LevelNodeEditComponent implements OnInit {
 
   }
 
+  
+  SetActiveNode() {
+
+    Swal.fire({
+      title: 'Are you sure you want to set node active?',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      toast: true,
+      position: 'top',
+      allowOutsideClick: false,
+      confirmButtonColor: '#000000',
+      cancelButtonColor: '#000000'
+    }).then((result) => {
+      if (result.value) {
+        this.spinner.show();
+        this.service.SetNodeActiveByNodeID(this.NodeData.nodeID).subscribe(data => {
+          this.spinner.hide();
+          this.showNotification('top', 'center', 'Node set active succesfully!', '', 'success');
+        });
+      }
+    })
+
+
+  }
 
   clickDelete(item: any) {
     Swal.fire({

@@ -111,7 +111,8 @@ export class TreediagramComponent implements OnInit {
       IsIndicatorLevel:event.dataItem.isIndicatorLevel,
       indicatorID: event.dataItem.indicatorID,
       IsFacilityLevel: event.dataItem.isFacilityLevel,
-      FaciltyID: 0
+      FaciltyID: 0,
+      Status: event.dataItem.status
     }
 
     const dialogRef = this.dialog.open(LevelNodeEditComponent, { width: '70%', data: this.NodeData, disableClose: true }

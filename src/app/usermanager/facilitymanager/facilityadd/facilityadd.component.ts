@@ -16,6 +16,7 @@ declare var $: any;
 export class FacilityaddComponent implements OnInit {
   submitted = false;
   FacilityAdd: any;
+  Facilities: any;
 
   constructor(
     public dialogRef: MatDialogRef<FacilityaddComponent>,
@@ -29,33 +30,97 @@ export class FacilityaddComponent implements OnInit {
   ngOnInit(): void {
     this.ID = this.FacilityAdd.ID;
     this.facilityType = this.FacilityAdd.facilityType;
+
+    this.getFacilities();
   }
-  getFacilities(){
-    this.service.getAllFacilities().subscribe(val=>{
-      let n:any[];
-      n=val;
-      console.log("haha"+JSON.stringify(n));
+
+  getFacilities() {
+    this.service.getAllFacilities().subscribe(val => {
+      this.Facilities = val;
+      console.log("haha" + JSON.stringify(this.Facilities));
     })
+
   }
+
   addFacility() {
+
     if (this.FacilityAdd.facilityType != "") {
-      this.submitted = true;
-      var val = {
-        "ID": 0,
-        "facilityType": this.FacilityAdd.facilityType,
-      };
-      this.service.addFacility(val).subscribe(res => {
-      });
-      this.spinner.hide();
-      this.showNotification('top','center','Facility saved successfully!','','success'); 
-      this.FacilityAdd.ID = 0;
-      this.FacilityAdd.facilityType = "";
-      this.closePopup();
+
+ 
+
+ 
+
+      if(this.Facilities.find(i => i.facilityType.toUpperCase() === this.FacilityAdd.facilityType.toUpperCase())){
+
+        this.showNotification('top', 'center', 'Facilty type already exists!', '', 'danger');
+
+      } else {
+
+        this.submitted = true;
+
+        var val = {
+
+          "ID": 0,
+
+          "facilityType": this.FacilityAdd.facilityType,
+
+        };
+
+        this.service.addFacility(val).subscribe(res => {
+
+        });
+
+        this.spinner.hide();
+
+        this.showNotification('top', 'center', 'Facility saved successfully!', '', 'success');
+
+        this.FacilityAdd.ID = 0;
+
+        this.FacilityAdd.facilityType = "";
+
+        this.closePopup();
+
+      }
+
+ 
+
     }
+
     else {
+
       this.showNotification('top', 'center', 'Please add a name before saving!', '', 'danger');
+
     }
+
   }
+
+  // getFacilities(){
+  //   this.service.getAllFacilities().subscribe(val=>{
+  //     let n:any[];
+  //     n=val;
+  //     console.log("haha"+JSON.stringify(n));
+  //   })
+  // }
+
+  // addFacility() {
+  //   if (this.FacilityAdd.facilityType != "") {
+  //     this.submitted = true;
+  //     var val = {
+  //       "ID": 0,
+  //       "facilityType": this.FacilityAdd.facilityType,
+  //     };
+  //     this.service.addFacility(val).subscribe(res => {
+  //     });
+  //     this.spinner.hide();
+  //     this.showNotification('top','center','Facility saved successfully!','','success'); 
+  //     this.FacilityAdd.ID = 0;
+  //     this.FacilityAdd.facilityType = "";
+  //     this.closePopup();
+  //   }
+  //   else {
+  //     this.showNotification('top', 'center', 'Please add a name before saving!', '', 'danger');
+  //   }
+  // }
 
   closePopup() {
     this.dialogRef.close();
