@@ -77,7 +77,7 @@ import {NgxSpinnerModule} from 'ngx-spinner';
 import { PaginationService } from 'ngx-pagination';
 
 import { AgmCoreModule } from '@agm/core';
-
+import { BnNgIdleService } from 'bn-ng-idle'; // import bn-ng-idle service
 
 @NgModule({
 exports: [
@@ -162,6 +162,7 @@ export class MaterialModule {}
     MatNativeDateModule,
     DatePipe,
     PaginationService,
+    BnNgIdleService,
     UserService, {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
