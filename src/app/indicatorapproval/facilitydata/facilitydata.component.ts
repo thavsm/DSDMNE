@@ -8,6 +8,7 @@ import { TreediagramService } from 'src/app/treediagram.service';
 import { PageSizeItem } from "@progress/kendo-angular-grid";
 import { GroupDescriptor } from '@progress/kendo-data-query';
 import { ApprovalFormComponent } from 'src/app/calc-report/approval-form/approval-form.component'
+import { IndicatorhistoryComponent } from 'src/app/indicatorapproval/indicatorhistory/indicatorhistory.component';
 
 @Component({
   selector: 'app-facilitydata',
@@ -158,6 +159,17 @@ export class FacilitydataComponent implements OnInit {
       data:item
     }).afterClosed().subscribe(() => { this.refreshFormsList(); });
   }
+
+  openHistoryPage(item: any,index:any): void {
+    console.log(item);
+    const dialogRef = this.dialog.open(IndicatorhistoryComponent, {
+      width: '85%',
+      height: '85%',
+      disableClose:true,
+      data:item
+    }).afterClosed().subscribe(() => { this.refreshFormsList(); });
+  }
+  
   
   closePopup() {
     this.dialogRef.close();
