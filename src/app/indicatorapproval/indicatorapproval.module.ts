@@ -30,11 +30,13 @@ import { DropDownsModule } from "@progress/kendo-angular-dropdowns";
 import { LabelModule } from "@progress/kendo-angular-label";
 import { MatMenuModule } from '@angular/material/menu';
 import { FacilitydataComponent } from './facilitydata/facilitydata.component';
+import { IndicatorhistoryComponent } from './indicatorhistory/indicatorhistory.component';
 
 @NgModule({
   declarations: [
     IndicatorapprovalComponent,
-    FacilitydataComponent
+    FacilitydataComponent,
+    IndicatorhistoryComponent
   ],
   imports: [
     CommonModule,

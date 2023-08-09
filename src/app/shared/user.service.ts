@@ -304,4 +304,11 @@ export class UserService {
     return this.http.get<any>(this.BaseURI + '/ApplicationUser/getRoleReportsPage?role='+role+'&userID='+userID);
   }
 
+  getUserReportAccess(): Observable<any[]> {
+    return this.http.get<any>(this.BaseURI + '/Dashboard/GetUserReportAccess');
+  }
+
+  getWFCompletedTasks(): Observable<any[]> {
+    return this.http.get<any>(this.BaseURI + '/Dashboard/GetWFCompletedTasks');
+  }
 }

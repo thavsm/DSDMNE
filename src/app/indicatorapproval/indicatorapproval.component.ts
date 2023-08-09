@@ -57,7 +57,7 @@ export class IndicatorapprovalComponent implements OnInit {
   public processName='';
   public taskName='';
   public endDate='';
-
+  public roleID=0;
 
   public groups: GroupDescriptor[] = [{ field: "programme" }, {field: "subProgram"}];
   public groupsNational: GroupDescriptor[] = [{ field: "chiefdirectorate" }, {field: "directorate"}];
@@ -73,11 +73,12 @@ export class IndicatorapprovalComponent implements OnInit {
     if(Object.keys(this.data).length ==0) {
       this.userService.getUserProfile().subscribe(
         res => {
-          console.log(res);
+          
           this.formData = res['formData'];
           console.log(this.formData);
 
-          
+          this.roleID = this.formData["role"];
+          console.log(this.roleID);
           if(!isNaN(Number(this.formData["location"]))){
             this.locationID = Number(this.formData["location"]);
           } else{
@@ -114,7 +115,7 @@ export class IndicatorapprovalComponent implements OnInit {
   refreshFormsList() {
     this.spinner.show();
     
-    this.service.getIndicatorsDataApproval(this.locationTypeID, this.locationID, this.monthID, this.year).subscribe(data => {
+    this.service.getIndicatorsDataApproval(this.locationTypeID, this.locationID, this.monthID, this.year, this.roleID).subscribe(data => {
       this.gridView=data;
       switch(this.locationTypeID)
       {
