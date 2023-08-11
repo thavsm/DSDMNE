@@ -368,6 +368,9 @@ export class FormbuilderService {
     return this.http.get<any>(this.APIUrl + LocationID + '/'+ UserID +'/AllUsersByLocation')
   }
 
+  GetUsersByUserID(UserID: any) : Observable<any[]> {
+    return this.http.get<any>(this.APIUrl +  UserID +'/AllUsersByUserID')
+  }
  
   //#endregion
 

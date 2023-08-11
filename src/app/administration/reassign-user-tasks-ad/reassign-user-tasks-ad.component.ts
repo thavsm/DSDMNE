@@ -109,7 +109,15 @@ todayDate:Date = new Date();
 
 changeUserAssign(value){
 console.log(value);
-this.AssignedTo = this.AssignedBy.filter(obj => obj.userID !== value)
+
+
+this.fservice.GetUsersByUserID(value).subscribe(results=>{
+
+  this.AssignedTo  = results;
+
+});
+
+// this.AssignedTo = this.AssignedBy.filter(obj => obj.userID !== value)
 this.AssignByUserID = value;
 }
 

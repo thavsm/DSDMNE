@@ -69,7 +69,7 @@ todayDate:Date = new Date();
        this.userID = this.userDetail.formData.userID;
 
        
-       this.fservice.GetUsersByLocation(this.userlocation, this.userID).subscribe(results=>{
+       this.fservice.GetUsersByUserID(this.userID).subscribe(results=>{
 
             this.UsersList = results;
           
