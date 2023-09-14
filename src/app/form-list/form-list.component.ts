@@ -187,8 +187,8 @@ console.log("New: "+ this.locationNode)
   refreshFormsList() {
     this.spinner.show();
     //8658
-    this.service.getDynamicFormsList().subscribe(data => {
-    //this.service.getDynamicFormList(this.userDetail.formData.location).subscribe(data => {
+    //this.service.getDynamicFormsList().subscribe(data => {
+    this.service.getDynamicFormList(this.userDetail.formData.location).subscribe(data => {
       this.formList = data;
       this.spinner.hide();
     });
