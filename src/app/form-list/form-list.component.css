@@ -31,3 +31,6 @@ td.mat-cell{
 ::ng-deep .k-pager-wrap {
     background-color: white;
 }
+
+button.btn[disabled] { 
+    background: grey; }

@@ -18,6 +18,17 @@ export interface FormData {
   description: string;
 }
 
+export interface nodeData{
+  captureID:number;
+  completedForms:number;
+  levelID:number;
+  nodeID:number;
+  nodeName:string;
+  nodeParentD:number;
+  nonFacilityCaptured:number;
+  periodStatus:number;
+}
+
 @Component({
   selector: 'app-form-capture',
   templateUrl: './form-capture.component.html',
@@ -32,26 +43,31 @@ export class FormCaptureComponent implements OnInit {
 
   public formList: any = [];
 
-  userDetail: any;
+  public userDetail: any;
 
-  data: any = [];
-
+  public data: nodeData[];
+  formIDNo: any;
   userLocation:any;
   userLocationLevel:any;
   PeriodStatus:any;
   NonFacilityCaptured:any;
+  formIDTest: any;
   ngOnInit(): void {
     this.spinner.show();
+    //this.getFormID();
     this.userService.getUserProfile().subscribe(
       res => {
         this.userDetail = res;
-        console.log(this.userDetail);
+        this.getFormID();
         this.refreshFormsList();
         this.refreshLocationList();
+        
       },
       err => {
         console.log(err);
+        this. getFormID();
         this.refreshFormsList();
+       
       }
     );
   }
@@ -125,6 +141,76 @@ export class FormCaptureComponent implements OnInit {
     }
   }
 
+ addProviceForm(dataItem:any){
+  if(dataItem.captureID==0){
+    this.spinner.show();
+    let formCaptureData = {
+      formCaptureID: 0,
+      formName: '',
+      formID: this.formIDNo,//6,
+      step: "string",
+      sentBy: this.userDetail.formData.userID,
+      dateSent: "string",
+      timeSent: "string",
+      displayableOne: "",
+      displayableTwo: "",
+      geography: dataItem.nodeID,
+      stage: "string",
+      formTemplateName: "string"
+    }
+    console.log("FormID: " +this.formIDNo);
+    this.service.addCapturedForms(formCaptureData).subscribe(res => {
+      let myObj = {
+        formID: this.formIDNo,//6,
+        formName: JSON.parse(res).formName,
+        formCaptureID: JSON.parse(res).formCaptureID,
+        state: 'add',
+        roleID:dataItem.roleID,
+        view:'readwrite'
+      };
+      this.spinner.hide();
+      // this.showNotification('top', 'center', 'Form created successfully', '', 'success');
+      localStorage.setItem('formNames', JSON.parse(res).formName);
+      localStorage.setItem('tabIndex', '0');
+      const dialogRef = this.dialog.open(AddFormComponent, {
+        width: '85%',
+        height: '85%',
+        disableClose: true
+      });
+      localStorage.setItem('formCaptureDetails', JSON.stringify(myObj));
+      this.formData.formName = "";
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+        this.refreshLocationList();
+      });
+    });
+  }
+  else{
+    let formCaptureObj = {
+      formID: this.formIDNo,//6,
+      formName: localStorage.getItem('formNames'),//'ProvincialIndicators',
+      formCaptureID: dataItem.captureID,
+      state: 'edit',
+      roleID:dataItem.roleID,
+      view:'readwrite'
+    };
+    localStorage.setItem('formCaptureDetails', JSON.stringify(formCaptureObj));
+    localStorage.setItem('tabIndex', '0');
+    const dialogRef = this.dialog.open(AddFormComponent, {
+      width: '85%',
+      height: '85%',
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      this.refreshFormsList();
+      this.refreshLocationList();
+      this.formList.filterPredicate = function (data, filter: string): boolean {
+        return data.formName.toLowerCase().includes(filter);
+      };
+    });
+  }
+ }
+
   refreshFormsList() {
     this.spinner.show();
     this.service.getPublishedListOfForms().subscribe(data => {
@@ -145,48 +231,29 @@ export class FormCaptureComponent implements OnInit {
       this.spinner.hide();
     });
   }
-
+  getFormID(){
+    this.service.getFormIDProvince(this.userDetail.formData.provinceID).subscribe(forms => {
+      this.formIDNo = forms;
+      });
+  }
+  
   refreshLocationList() {
-    this.service.GetUserLocationHierachy(this.userDetail.formData.userID).subscribe(location => {
-      let levelID:any=[];
-      this.spinner.show();
-      this.userLocation=location;
-        this.service.getFormCaptureCountPerLocation(location,this.userDetail.formData.userID).subscribe(result => {
-          this.data =  result;
-          console.log(this.data);
-          if(this.data.length>0){
-            this.userLocationLevel=this.data[0].levelID;
-            this.PeriodStatus=this.data[0].periodStatus;
-            this.NonFacilityCaptured=this.data[0].nonFacilityCaptured;
-          }
-          this.spinner.hide();
-        });                           
-    });
-}
-
-
-  // refreshLocationList() {
-  //     this.service.GetUserLocationHierachy(this.userDetail.formData.userID).subscribe(location => {
-  //       let levelID:any=[];
-  //       this.spinner.show();
-  //       this.userLocation=location;
-  //       this.service.getFormCaptureCountPerLocation(location,this.userDetail.formData.role).subscribe(result => {
-  //         levelID=result;
-  //         this.service.getFormCaptureCountPerLocationLevel(location,this.userDetail.formData.role,levelID[0].levelID).subscribe(result => {
-  //           this.data =  result;
-  //           if(this.data.length>0){
-  //             console.log(this.data[0]);
-  //             console.log(this.data[0].levelID);
-  //             this.userLocationLevel=this.data[0].levelID;
-  //             this.PeriodStatus=this.data[0].periodStatus;
-  //             this.NonFacilityCaptured=this.data[0].nonFacilityCaptured;
-  //             console.log(this.data[0].nonFacilityCaptured);
-  //           }
-  //           this.spinner.hide();
-  //         });
-  //     });
-  //     });
-  // }
+      this.service.GetUserLocationHierachy(this.userDetail.formData.userID).subscribe(location => {
+        let levelID:any=[];
+        this.spinner.show();
+        this.userLocation=location;
+          this.service.getFormCaptureCountPerLocation(location,this.userDetail.formData.userID).subscribe(result => {
+            this.data =  result;
+            console.log(this.data);
+            if(this.data.length>0){
+              this.userLocationLevel=this.data[0].levelID;
+              this.PeriodStatus=this.data[0].periodStatus;
+              this.NonFacilityCaptured=this.data[0].nonFacilityCaptured;
+            }
+            this.spinner.hide();
+          });                           
+      });
+  }
 
   showNotification(from: any, align: any, message: any, title: any, type: string) {
     $.notify({
