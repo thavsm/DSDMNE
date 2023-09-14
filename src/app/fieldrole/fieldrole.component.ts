@@ -43,6 +43,9 @@ export class FieldroleComponent implements OnInit {
   IndicatorRoleList:any[];
   assigned=[];
   source=[];
+  userData: any;
+  provID: any;
+
   public pageSize = 10;
   public pageSizes: Array<number | PageSizeItem> = [5, 10, 20, {text: 'All', value: 'all' }];
   @ViewChild('stepper') private myStepper: MatStepper; //allows to move to next/previous step programmatically
@@ -97,17 +100,34 @@ export class FieldroleComponent implements OnInit {
     }
   }
 
-  //Returns all indicators that belong to a roles and a tree
-  getAllIndicators():void{
-    this.spinner.show();
-    this.treeService.getIndicatorNodes().subscribe(res => {
-      this.source = res;
-      this.treeService.getAssignedIndicatorNodesByTreeRoleID(this.roleID, this.treeID).subscribe(val => {
-        this.assigned = val;
-        this.spinner.hide();
+  getAllIndicators() {
+    this.userService.getUserProfile().subscribe(data => {
+      
+      this.userData = data['formData'];
+      this.provID = this.userData["provinceID"]; 
+
+      this.spinner.show();
+      this.treeService.getIndicatorNodesByUserProvinceID(this.provID).subscribe(res => {
+        this.source = res;
+        this.treeService.getAssignedIndicatorNodesByTreeRoleID(this.roleID, this.treeID).subscribe(val => {
+          this.assigned = val;
+          this.spinner.hide();
+        });
       });
     });
   }
+
+  //Returns all indicators that belong to a roles and a tree
+  // getAllIndicators():void{
+  //   this.spinner.show();
+  //   this.treeService.getIndicatorNodes().subscribe(res => {
+  //     this.source = res;
+  //     this.treeService.getAssignedIndicatorNodesByTreeRoleID(this.roleID, this.treeID).subscribe(val => {
+  //       this.assigned = val;
+  //       this.spinner.hide();
+  //     });
+  //   });
+  // }
 
   onPageChange(state: any): void {
     this.pageSize = state.take;

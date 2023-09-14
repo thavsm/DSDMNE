@@ -35,9 +35,9 @@ export class TreediagramService {
     return this.http.post<any>(this.API_URL+'Levels',data)
   }
 
-  public getNodes(treeID:any):Observable<any[]>{
+  public getNodes(treeID:any, provinceID: any):Observable<any[]>{
 
-    return this.http.get<any>(this.API_URL+'nodes/'+treeID);
+    return this.http.get<any>(this.API_URL+'nodes/'+treeID+'/'+provinceID);
 
   }
 

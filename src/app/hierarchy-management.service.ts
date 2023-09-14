@@ -31,6 +31,13 @@ export class HierarchyManagementService {
     console.log(this.hlist);
   }
 
+  refreshlist(TreeCategoryID:any, RoleID:any, ProvinceID:any){
+    this.http.get(this.API_URL + 'Trees/GetHtreesCategoryID' + '/' + TreeCategoryID + '/' +RoleID+ '/' +ProvinceID)
+    .toPromise()
+    .then(res=> this.hlist = res as hierarchyManagement[]);
+    console.log(this.hlist);
+  }
+
   getTreeByCatergory(TreeCategoryID:any):Observable<any[]>{
     return this.http.get<any>(this.API_URL + 'Trees/GettreesCategoryID' + '/' + TreeCategoryID);
   }
@@ -88,12 +95,16 @@ export class HierarchyManagementService {
     return this.http.get<any>(this.API_URL+'Trees/indicatorNodes');
   }
 
+  getIndicatorNodesByUserProvinceID(ProvinceID:any):Observable<any[]>{
+    return this.http.get<any>(this.API_URL+'Trees/indicatorNodesByUserProvinceID/'+ProvinceID);
+  }
+
   getIndicatorNodesByLocation(LocationID:any):Observable<any[]>{
     return this.http.get<any>(this.API_URL+'Trees/'+LocationID+'/getIndicatorNodesByLocation');
   }
 
-  getAllIndicatorNodes(){
-    return this.http.get<any>(this.API_URL+'nodes/getAllIndicatorNodes');
+  getAllIndicatorNodes(ProvinceID:any){
+    return this.http.get<any>(this.API_URL+'nodes/getAllIndicatorNodes/'+ProvinceID);
   }
 
   getIndicatorAttributesDataByIndicatorID(IndicatorID:number){

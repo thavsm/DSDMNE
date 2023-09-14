@@ -8,6 +8,7 @@ import * as XLSX from 'xlsx';
 import * as Excel from 'exceljs';
 import { Workbook } from 'exceljs';
 import * as fs from 'file-saver';
+import { UserService } from 'src/app/shared/user.service';
 
 declare var $: any;
 
@@ -18,13 +19,14 @@ declare var $: any;
 })
 export class FormExportComponent implements OnInit {
 
-  constructor(private service: FormbuilderService, private spinner: NgxSpinnerService, private _formBuilder: FormBuilder, private treeService: TreediagramService) { }
+  constructor(public userService: UserService,private service: FormbuilderService, private spinner: NgxSpinnerService, private _formBuilder: FormBuilder, private treeService: TreediagramService) { }
 
   format = {
     add: 'Add Field', remove: 'Remove Field', all: 'Select All', none: 'Deselect All',
     direction: 'left-to-right', draggable: true, locale: 'undefined'
   };
-
+  userData: any;
+  provID: any;
   formCategoryList: any[];
   formList: any[];
   listOfQuestions: any[];
@@ -38,7 +40,7 @@ export class FormExportComponent implements OnInit {
   source = [];
   excelHeaders: string[] = [];
   formPages: any;
-
+  
 
   @ViewChild('stepper') private myStepper: MatStepper;
 
@@ -63,26 +65,31 @@ export class FormExportComponent implements OnInit {
   filterForms() {
     let ID = this.categoryID;
     this.spinner.show();
-    this.service.getDynamicFormList().subscribe(data => {
-      this.formList = data.filter(function (e) {
-        return e.formCategoryID == ID;
+    this.userService.getUserProfile().subscribe(data => {
+      this.userData = data['formData'];
+      this.provID = this.userData["provinceID"];
+      this.service.getDynamicFormListProvince(this.provID ).subscribe(data => {
+        this.formList = data.filter(function (e) {
+          return e.formCategoryID == ID;
+        });
+        if (this.formList.length == 0) {
+          this.showNotification('top', 'center', 'There are no forms linked to this category!', '', 'warning');
+          this.myStepper.previous();
+        }
+        this.spinner.hide();
       });
-      if (this.formList.length == 0) {
-        this.showNotification('top', 'center', 'There are no forms linked to this category!', '', 'warning');
-        this.myStepper.previous();
-      }
-      this.spinner.hide();
     });
   }
-
   filterFormQuestions() {
     let ID = this.formID;
     this.spinner.show();
     this.source=[];
     this.service.getFormPages(ID).subscribe(data => {
-      this.formPages = data;
-      this.service.getFormFieldsPerPage(ID, this.formPages[0].pageGUID).subscribe(data => {
-        this.listOfQuestions = data;
+     this.formPages = data;
+      this.service.   getFormFieldsPerPage(ID, this.formPages[0].pageGUID).subscribe(data => {
+       this.listOfQuestions = data;
+        console.log("data"+data);
+        console.log("lquestions" + this.listOfQuestions);
         data.forEach(lq => {
           if (lq.fieldType.fieldTypeID == 32) {
             this.source.push(lq);
@@ -105,8 +112,9 @@ export class FormExportComponent implements OnInit {
   assign() {
     const header = ["IndicatorName", "Disaggregation", "Value"];
     this.spinner.show();
+    //this.source=[];
     const data: any = [];
-    this.assigned.forEach((element, i) => {
+      this.assigned.forEach((element, i) => {
       let cell = [element.questionName, '', ''];
       data.push(cell);
       let kids = this.getChildrenFields(element);

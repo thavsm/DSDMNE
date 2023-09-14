@@ -54,7 +54,8 @@ export class IndicatorAddComponent implements OnInit {
         "indicatorName": this.IndicatorAdd.indicatorName,
         "indicatorDescription": this.IndicatorAdd.indicatorDescription,       
         "status": this.IndicatorAdd.status,
-        "locationID": this.IndicatorAdd.levelID
+        "locationID": this.IndicatorAdd.levelID,
+        "userID": this.IndicatorAdd.userID
       };
       this.spinner.show();
       this.service.addIndicator(val).subscribe(res => {

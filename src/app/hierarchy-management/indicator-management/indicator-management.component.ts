@@ -33,24 +33,30 @@ export class IndicatorManagementComponent implements OnInit {
   levels: any = [];
   divDeleteHide: boolean  = false; 
   userData: any;
+  userID: any;
+  provID: any;
 
   ngOnInit(): void {
 
-    this.getIndicators();
+    
 
     this.userService.getUserProfile().subscribe(data => {
       this.userData = data['formData'];
+      this.userID = this.userData["userID"]; 
+      this.provID = this.userData["provinceID"]; 
 
       if (this.userData["role"] != "1")
         this.divDeleteHide = false;
       else
         this.divDeleteHide = true;
+
+      this.getIndicators();
     });
   }
 
   getIndicators(){
     this.spinner.show();   
-    this.service.getAllIndicatorNodes().subscribe(data => {
+    this.service.getAllIndicatorNodes(this.provID).subscribe(data => {
          this.Indicators = data;
          this.spinner.hide();
     });
@@ -62,7 +68,8 @@ export class IndicatorManagementComponent implements OnInit {
       indicatorID : 0,
       indicatorName : "",
       indicatorDescription : "",
-      status : 1
+      status : 1,
+      userID: this.userID
     }
 
     const dialogRef = this.dialog.open(IndicatorAddComponent, { width: '40%', data: this.IndicatorAdd, disableClose: true }

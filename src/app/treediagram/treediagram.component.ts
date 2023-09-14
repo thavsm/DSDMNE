@@ -6,6 +6,7 @@ import { LevelNodeEditComponent } from '../hierarchy-management/level-node-edit/
 import { NodeAddComponent } from '../hierarchy-management/node-add/node-add.component';
 import { TreeItemDropEvent, DropPosition, TreeItemLookup, DropAction } from '@progress/kendo-angular-treeview';
 import { TreediagramService } from '../treediagram.service';
+import { UserService } from 'src/app/shared/user.service';
 const isFile = (name: string) => name.split('.').length > 1;
 
 export interface FormDataLevel {
@@ -38,18 +39,28 @@ export class TreediagramComponent implements OnInit {
   tdAddNode : boolean  = true;
   tdAddLevel : boolean  = true;
   treeViewEdit: any;
+  userData: any;
+  provID: any;
 
-  constructor(public dialog: MatDialog,private treediagramService: TreediagramService) {
+  constructor(public dialog: MatDialog,private treediagramService: TreediagramService , public userService: UserService) {
     this.treeData = JSON.parse(localStorage.getItem('treeData') || '{}');
   }
 
   public ngOnInit(): void {
-    // this.treenodes = this.treediagramService.fetchNodes();
-    this.treenodes = this.treediagramService.getNodes(this.treeData.treeID); 
-    this.getAllParentTextProperties(this.treenodes);
-    this.treediagramService.getNodes(this.treeData.treeID).subscribe(data => {
-      this.NodeLevelName  = data;
-   });
+
+    this.userService.getUserProfile().subscribe(data => {
+
+      this.userData = data['formData'];
+      this.provID = this.userData["provinceID"];
+
+      // this.treenodes = this.treediagramService.fetchNodes();
+      this.treenodes = this.treediagramService.getNodes(this.treeData.treeID, this.provID);
+      this.getAllParentTextProperties(this.treenodes);
+      this.treediagramService.getNodes(this.treeData.treeID, this.provID).subscribe(data => {
+      this.NodeLevelName = data;
+      });
+    });
+
 
    this.hideEditButtons();
   }
@@ -112,7 +123,8 @@ export class TreediagramComponent implements OnInit {
       indicatorID: event.dataItem.indicatorID,
       IsFacilityLevel: event.dataItem.isFacilityLevel,
       FaciltyID: 0,
-      Status: event.dataItem.status
+      Status: event.dataItem.status,
+      ProvinceID: event.dataItem.provinceID
     }
 
     const dialogRef = this.dialog.open(LevelNodeEditComponent, { width: '70%', data: this.NodeData, disableClose: true }
@@ -120,7 +132,7 @@ export class TreediagramComponent implements OnInit {
     );
 
     dialogRef.afterClosed().subscribe(result => {
-      this.treenodes = this.treediagramService.getNodes(this.treeData.treeID);
+      this.treenodes = this.treediagramService.getNodes(this.treeData.treeID, this.provID);
       console.log('The dialog was closed');
     });
 
@@ -142,7 +154,7 @@ export class TreediagramComponent implements OnInit {
     );
 
     dialogRef.afterClosed().subscribe(result => {
-      this.treenodes = this.treediagramService.getNodes(this.treeData.treeID);
+      this.treenodes = this.treediagramService.getNodes(this.treeData.treeID, this.provID);
       console.log('The dialog was closed');
     });
   }
@@ -193,7 +205,7 @@ export class TreediagramComponent implements OnInit {
     );
 
     dialogRef.afterClosed().subscribe(result => {
-      this.treenodes = this.treediagramService.getNodes(this.treeData.treeID);
+      this.treenodes = this.treediagramService.getNodes(this.treeData.treeID, this.provID);
       console.log('The dialog was closed');
     });
   }

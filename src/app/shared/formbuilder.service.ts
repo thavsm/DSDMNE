@@ -22,7 +22,17 @@ export class FormbuilderService {
   constructor(private http: HttpClient) { }
 
   //#region Form Design/Capture Methods
+  getDynamicFormListProvince(provinceID:any): Observable<any[]> {
 
+    return this.http.get<any>(this.APIUrl +'forms/' + provinceID + '/getFormByProvince')
+
+  }
+
+  getFormFieldsIndicatorsByProvince(formID: any, pageGuID: any,ProvinceID:any): Observable<any[]> {
+
+    return this.http.get<any>(this.APIUrl +'forms/' + formID + '/pages/' + pageGuID +'/'+ ProvinceID + '/loadIndicatorByProvince')
+
+  }
   getDynamicFormList(): Observable<any[]> {
     return this.http.get<any>(this.APIUrl + 'forms/filter/type/2')
   }

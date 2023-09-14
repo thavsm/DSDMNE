@@ -250,25 +250,26 @@ export class SidebarComponent implements OnInit {
                                     cs.forEach((subMenu)=>{
                                         let sub = res.find(menu => (menu.name).toLowerCase() === subMenu.title.toLowerCase());
                                         if (typeof sub !== 'undefined') {
-                                            if(el.title == 'Administration')
-                                            {
-                                                if(locType != 4260 && uRole == '3'){
-                                                    if(subMenu.title.toLowerCase() == 're-assign task'){
-                                                        subMenus.push(subMenu);
-                                                    }
-                                                    // else
-                                                    // {
-                                                    //     subMenus.push(subMenu);
-                                                    // }
-                                                }
-                                                else
-                                                {
-                                                    subMenus.push(subMenu);
-                                                }
-                                            }
-                                            else{
-                                            subMenus.push(subMenu); 
-                                            }
+                                            subMenus.push(subMenu);
+                                            // if(el.title == 'Administration')
+                                            // {
+                                            //     if(locType != 4260 && uRole == '3'){
+                                            //         if(subMenu.title.toLowerCase() == 're-assign task'){
+                                            //             subMenus.push(subMenu);
+                                            //         }
+                                            //         // else
+                                            //         // {
+                                            //         //     subMenus.push(subMenu);
+                                            //         // }
+                                            //     }
+                                            //     else
+                                            //     {
+                                            //         subMenus.push(subMenu);
+                                            //     }
+                                            // }
+                                            // else{
+                                            // subMenus.push(subMenu); 
+                                            // }
                                         }
                                     }
                                     )
@@ -282,11 +283,12 @@ export class SidebarComponent implements OnInit {
                         }
                     );
 
-                    if(uRole == '3' && locType != 4260){
-                        this.menuItems = ROUTES.filter(menuItem => menuItem.title == 'Dashboard' || menuItem.title == 'Administration' );
-                    }
-                    else
-                        this.menuItems = ROUTES.filter(menuItem => menuItem.role.indexOf(userRole) > -1 );
+                    // if(uRole == '3' && locType != 4260){
+                    //     this.menuItems = ROUTES.filter(menuItem => menuItem.title == 'Dashboard' || menuItem.title == 'Administration' );
+                    // }
+                    // else
+                    //     this.menuItems = ROUTES.filter(menuItem => menuItem.role.indexOf(userRole) > -1 );
+                    this.menuItems = ROUTES.filter(menuItem => menuItem.role.indexOf(userRole) > -1 );
                     console.log(this.menuItems);
                     },
                     err => {

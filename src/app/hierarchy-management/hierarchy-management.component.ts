@@ -49,10 +49,10 @@ export class HierarchyManagementComponent implements OnInit {
   }
 
   p: number = 1;
-
+  RoleID: any;
 
   ngOnInit(): void {
-    this.service.refreshhlist(this.TreeCategoryID);
+    
 
     if(this.TreeCategoryID == "2"){
       this.divHide = false;
@@ -66,7 +66,15 @@ export class HierarchyManagementComponent implements OnInit {
         this.divDeleteHide = false;
       else
         this.divDeleteHide = true;
+
+        this.service.refreshlist(this.TreeCategoryID, this.userData["role"], this.userData["provinceID"]);
     });
+
+    // if (this.userData["role"] != "3"){
+      
+    // }
+
+
 
   }
 
@@ -96,7 +104,7 @@ export class HierarchyManagementComponent implements OnInit {
   @ViewChild('buttonTemplate')
   public buttonTemplate: TemplateRef<any>;
 
-  public gridData: any = this.service.refreshhlist(this.TreeCategoryID);
+  //public gridData: any = this.service.refreshhlist(this.TreeCategoryID,this.RoleID);
 
   openDialogAdd(): void {
 

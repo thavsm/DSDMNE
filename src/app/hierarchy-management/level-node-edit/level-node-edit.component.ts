@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-
 import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
 import { merge } from 'jquery';
 import * as moment from 'moment';
@@ -13,7 +12,7 @@ import { ExternaldataAddComponent } from '../externaldata-add/externaldata-add.c
 import { HierarchyManagementService } from 'src/app/hierarchy-management.service';
 import { HierarchyFormPreviewComponent } from 'src/app/hierarchy-management/hierarchy-form-preview/hierarchy-form-preview.component';
 import { GoogleMapsComponent } from '../google-maps/google-maps.component';
-
+import { UserService } from  'src/app/shared/user.service';
 // './hierarchy-form-preview/hierarchy-form-preview.component';
 
 
@@ -136,11 +135,12 @@ export class LevelNodeEditComponent implements OnInit {
   IsFacility: number;
   divIsFacility: boolean = false;
   FacilityTypeID: any;
-
+  userData: any;
+  provID: any;
   btnHideActive: any;
   btnHideDelete: any;
 
-  constructor(public dialog: MatDialog, public dialogRef: MatDialogRef<LevelNodeEditComponent>,
+  constructor(private userService: UserService, public dialog: MatDialog, public dialogRef: MatDialogRef<LevelNodeEditComponent>,
     @Inject(MAT_DIALOG_DATA) data,
     public service: TreediagramService, public Hierarchyservice: HierarchyManagementService, public formBuilder: FormBuilder, private spinner: NgxSpinnerService) {
     this.NodeData = data;
@@ -933,34 +933,47 @@ export class LevelNodeEditComponent implements OnInit {
       this.btnActive = false;
     }
 
-    if (this.NodeData.ViewEdit == 1) {
+    this.userService.getUserProfile().subscribe(data => {
+      
+      this.userData = data['formData'];
+      this.provID = this.userData["provinceID"]; 
 
-      this.divLevelButtons = true;
-      this.divAddAtrributes = true;
-      this.divAtrributes = true;
-      this.thEdit = true;
-      this.thDelete = true;
-      this.TabNodeEdit = "Node Edit";
-      this.TabLevelEdit = "Level Edit";
-      this.tabIndex = 1;
-      this.btnSave = true;
-      this.btnDelete = true;
+      if (this.NodeData.ViewEdit == 1) {
 
-    } else if (this.NodeData.ViewEdit == 0) {
+        this.divLevelButtons = true;
+        this.divAddAtrributes = true;
+        this.divAtrributes = true;
+        this.thEdit = true;
+        this.thDelete = true;
+        this.TabNodeEdit = "Node Edit";
+        this.TabLevelEdit = "Level Edit";
+        this.tabIndex = 1;
+        this.btnSave = true;
+        this.btnDelete = true;
+  
+      } else if (this.NodeData.ViewEdit == 0) {
+  
+        this.divLevelButtons = false;
+        this.divAddAtrributes = false;
+        this.divAtrributes = false;
+        this.thEdit = false;
+        this.thDelete = false;
+        this.TabNodeEdit = "Node";
+        this.TabLevelEdit = "Level";
+        this.tabIndex = 1;
+        this.btnSave = false;
+        this.btnDelete = false;
+        this.btnCoord = false;
+      }
 
-      this.divLevelButtons = false;
-      this.divAddAtrributes = false;
-      this.divAtrributes = false;
-      this.thEdit = false;
-      this.thDelete = false;
-      this.TabNodeEdit = "Node";
-      this.TabLevelEdit = "Level";
-      this.tabIndex = 1;
-      this.btnSave = false;
-      this.btnDelete = false;
-      this.btnCoord = false;
-    }
+      if(this.provID != 0 ){
+        if(this.NodeData.ProvinceID != this.provID){
+          this.btnDelete = false;
+          this.btnSave = false;
+        }
+      }
 
+    });
   }
   public gridData: any = this.service.getLevelMetadata(this.levelID);
 

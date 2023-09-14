@@ -11,6 +11,7 @@ import { merge } from 'jquery';
 import { FormControl } from '@angular/forms';
 import { DropDownListComponent } from "@progress/kendo-angular-dropdowns";
 import { ReplaySubject, Subject } from 'rxjs';
+import { UserService } from 'src/app/shared/user.service';
 
 declare var $: any;
 
@@ -58,7 +59,7 @@ export class NodeAddComponent implements OnInit {
     public dialogRef: MatDialogRef<NodeAddComponent>,
     @Inject(MAT_DIALOG_DATA) data,
 
-  private service: HierarchyManagementService, private Treeservice: TreediagramService, public formBuilder: FormBuilder, private spinner: NgxSpinnerService, private treediagramService: TreediagramService
+  private service: HierarchyManagementService, public userService: UserService, private Treeservice: TreediagramService, public formBuilder: FormBuilder, private spinner: NgxSpinnerService, private treediagramService: TreediagramService
   ) {
     this.NodeAdd = data;
     this.treeData = JSON.parse(localStorage.getItem('treeData') || '{}');
@@ -76,6 +77,8 @@ export class NodeAddComponent implements OnInit {
   divIsNotIndicator: boolean = true;
   divIsIndicator: boolean = false;
   IsFacility:  number = 0;
+  userData: any;
+  provID: any;
 
   ngOnInit(): void {
 
@@ -87,8 +90,10 @@ export class NodeAddComponent implements OnInit {
     this.NodeAdd.indicatorID = 0;
     this.NodeAdd.fName = "";
     this.NodeAdd.FormName = "";
+
+   
     this.getLevels();
-    this.getIndicators();
+    
     this.getFormCategory();
 
     this.service.getFacilityTypes().subscribe(data => {
@@ -96,6 +101,8 @@ export class NodeAddComponent implements OnInit {
       this.FacilityTypes = data;
       this.spinner.hide();
     });
+
+    this.getIndicators();
 
   }
 
@@ -204,7 +211,7 @@ export class NodeAddComponent implements OnInit {
         this.NodeAdd.nodeDescription = "";
         this.divIsNotIndicator = true;
         this.divIsIndicator = false;
-        this.treediagramService.getNodes(this.treeData.treeID);
+        this.treediagramService.getNodes(this.treeData.treeID, this.provID);
       });
 
     } else {
@@ -251,7 +258,7 @@ export class NodeAddComponent implements OnInit {
           this.divIsFacility = false;
           this.divIsNotIndicator = true;
           this.divIsIndicator = false;
-          this.treediagramService.getNodes(this.treeData.treeID);
+          this.treediagramService.getNodes(this.treeData.treeID, this.provID);
         });
         // this.NodeAdd.nodeID = 0;
         // this.NodeAdd.nodeName = " ";
@@ -275,6 +282,48 @@ export class NodeAddComponent implements OnInit {
       this.levels = data;
       this.spinner.hide();
 
+      
+      this.userService.getUserProfile().subscribe(udata => {
+      
+        this.userData = udata['formData'];
+        this.provID = this.userData["provinceID"]; 
+  
+        // if(this.provID != 0 && this.treeData.treeID == 4093)
+         //National Tree
+        if(this.provID != 0 && this.treeData.treeID == 4093)
+        {
+
+          let indexNationalNode = this.levels.findIndex(d => d.levelID === 4311); //find index in your array
+          this.levels.splice(indexNationalNode, 1);//remove element from array
+
+          let indexBranchNode = this.levels.findIndex(d => d.levelID === 4312); //find index in your array
+          this.levels.splice(indexBranchNode, 1);//remove element from array
+
+          let indexChiefDirectorateNode = this.levels.findIndex(d => d.levelID === 4313); //find index in your array
+          this.levels.splice(indexChiefDirectorateNode, 1);//remove element from array
+
+          let indexDirectorateNode = this.levels.findIndex(d => d.levelID === 4314); //find index in your array
+          this.levels.splice(indexDirectorateNode, 1);//remove element from array
+
+        
+        }
+        //Provincial Tree
+        if(this.provID != 0 && this.treeData.treeID == 5099)
+        {
+          let indexProgramNode = this.levels.findIndex(d => d.levelID === 5350); //find index in your array
+          this.levels.splice(indexProgramNode, 1);//remove element from array
+
+          let indexSubProgramNode = this.levels.findIndex(d => d.levelID === 5351); //find index in your array
+          this.levels.splice(indexSubProgramNode, 1);//remove element from array
+
+          let indexSubIndicatorNode = this.levels.findIndex(d => d.levelID === 5376); //find index in your array
+          this.levels.splice(indexSubIndicatorNode, 1);//remove element from array
+     
+     
+        }
+
+      });
+
       if(this.treeData.treeID == 4082){
         let indexNational = this.levels.findIndex(d => d.levelID === 4260); //find index in your array
         this.levels.splice(indexNational, 1);//remove element from array
@@ -286,11 +335,17 @@ export class NodeAddComponent implements OnInit {
   }
 
   getIndicators() {
-    this.spinner.show();
-    this.service.getIndicatorNodes().subscribe(data => {
-      this.Indicators = data;
-      this.filteredIndicators = this.Indicators.slice();
-      this.spinner.hide();
+    this.userService.getUserProfile().subscribe(data => {
+      
+      this.userData = data['formData'];
+      this.provID = this.userData["provinceID"]; 
+
+      this.spinner.show();
+      this.service.getIndicatorNodesByUserProvinceID(this.provID).subscribe(data => {
+        this.Indicators = data;
+        this.filteredIndicators = this.Indicators.slice();
+        this.spinner.hide();
+      });
     });
   }
 

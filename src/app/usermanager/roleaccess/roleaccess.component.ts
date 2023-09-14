@@ -89,6 +89,8 @@ export class RoleaccessComponent implements OnInit {
   IndicatorRoleList:any[];
   assigned=[];
   source=[];
+  // userData: any;
+  // provID: any;
 
   @ViewChild('menuPaginator', {read:MatPaginator}) paginator: MatPaginator;
   @ViewChild('reportPaginator', {read:MatPaginator}) paginatorReports: MatPaginator;
@@ -129,6 +131,24 @@ export class RoleaccessComponent implements OnInit {
       this.treeList = res;
     });
   };
+
+  //Returns all indicators that belong to a roles and a tree
+  // getAllIndicators() {
+  //   this.service.getUserProfile().subscribe(data => {
+      
+  //     this.userData = data['formData'];
+  //     this.provID = this.userData["provinceID"]; 
+
+  //     this.spinner.show();
+  //     this.treeService.getIndicatorNodesByUserProvinceID(this.provID).subscribe(res => {
+  //       this.source = res;
+  //       this.treeService.getAssignedIndicatorNodesByTreeRoleID(this.roleID, this.treeID).subscribe(val => {
+  //         this.assigned = val;
+  //         this.spinner.hide();
+  //       });
+  //     });
+  //   });
+  // }
 
     //Returns all indicators that belong to a roles and a tree
     getAllIndicators():void{
