@@ -16,7 +16,7 @@
                         <h4 class="card-title" *ngIf="formAdd.formID==0">Add Form Design</h4>
                         <h4 class="card-title" *ngIf="formAdd.formID!=0">Edit Form Design</h4>
                     </div>
-                    <div class="card-body p-2">
+                    <div class="card-body">
                             <div class="form-group">
                                 <label style="font-size: 14px;">Form Design Name</label>
                                 <mat-form-field appearance="outline">
@@ -40,6 +40,17 @@
                                             {{c.name}}
                                         </mat-option>
                                     </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div>
+                                 <label style="font-size: 14px;">Embedded Form</label>
+                                <mat-form-field appearance="outline">
+                                    <mat-label>{{active}}</mat-label>
+                                    <input matInput [hidden]="true" [(ngModel)]="formAdd.EmbeddedForm">
+                                   <mat-checkbox [(ngModel)]="formAdd.EmbeddedForm" (input)="updateFormData()">
+                                    </mat-checkbox>
+                                    <!-- <input type="checkbox" 
+                                    [(ngModel)]="formAdd.EmbeddedForm"> -->
                                 </mat-form-field>
                             </div>
                             <button mat-button cdkFocusInitial (click)="addForm()" class="btn btn-md btn-primary"

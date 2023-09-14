@@ -4,12 +4,13 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { FormAddComponent } from 'src/app/form-list/form-add/form-add.component';
 import { FormbuilderService } from 'src/app/shared/formbuilder.service';
 import Swal from 'sweetalert2'
-import { AddSignatureComponent } from './add-signature.component';
+import { AddSignatureComponent } from 'src/app/form-capture/add-form/add-signature.component';
 import * as FileSaver from 'file-saver';
-import { lexdata } from '../lexdata';
+import { lexdata } from 'src/app/form-capture/lexdata'
 import { UserService } from 'src/app/shared/user.service';
-import { AddCommentComponent } from './add-comment/add-comment.component';
-import { EmbeddedFormComponent } from './embedded-form/embedded-form.component';
+import { DataBindingDirective, PageSizeItem } from '@progress/kendo-angular-grid';
+import { MatPaginator } from '@angular/material/paginator';
+import { merge } from 'rxjs';
 
 
 declare var $: any;
@@ -18,13 +19,33 @@ export interface DialogData {
   image: any;
 }
 
-
 @Component({
-  selector: 'app-add-form',
-  templateUrl: './add-form.component.html',
-  styleUrls: ['./add-form.component.css']
+  selector: 'app-embedded-form',
+  templateUrl: './embedded-form.component.html',
+  styleUrls: ['./embedded-form.component.css']
 })
-export class AddFormComponent implements OnInit {
+export class EmbeddedFormComponent implements OnInit {
+  @ViewChild(DataBindingDirective) dataBinding: DataBindingDirective;
+
+  public pageSize = 10;
+  public pageSizes: Array<number | PageSizeItem> = [5, 10, 20, {
+    text: 'All',
+    value: 'all'
+  }];
+
+  public formList: any = [];
+
+  public gridView: any[];
+  public FormIDTest: any;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  ngAfterViewInit() {
+  }
+
+  public onPageChange(state: any): void {
+    this.pageSize = state.take;
+  }
 
   panelOpenState = false;
 
@@ -86,12 +107,22 @@ export class AddFormComponent implements OnInit {
   IndicatorData: any;
 
   isViewOnly: any;
+  EmbeddedFormNo:any;
+  EmbeddedFieldID:any;
+  EmbeddedParentID:any;
 
-  constructor(public dialog: MatDialog, private service: FormbuilderService, private spinner: NgxSpinnerService, public dialogRef: MatDialogRef<FormAddComponent>,public POPupRef: MatDialogRef<AddCommentComponent>, private userService: UserService) {
-    this.formData = JSON.parse(localStorage.getItem('formCaptureDetails') || '{}');
+  isCaptureOrEdit:string="No";
+
+  DisplayOne: string = "Display One";
+  DisplayTwo: string = "Display Two";
+
+  constructor(public dialog: MatDialog, private service: FormbuilderService, private spinner: NgxSpinnerService, public dialogRef: MatDialogRef<FormAddComponent>, private userService: UserService) {
     this.IndicatorData = localStorage.getItem('IndicatorData') || '';
     //this.IndicatorData='80';
     this.tabIndex = parseInt(localStorage.getItem('tabIndex'));
+    this.EmbeddedFormNo = parseInt(localStorage.getItem('fieldEmbeddedFormID'));
+    this.EmbeddedParentID=parseInt(localStorage.getItem('EmbeddedParentID'));
+    this.EmbeddedFieldID=parseInt(localStorage.getItem('EmbeddedFieldID'));
     this.ClickedRow = function (index) {
       this.HighlightRow = index;
     }
@@ -106,24 +137,89 @@ export class AddFormComponent implements OnInit {
   ngOnInit(): void {
     this.isViewOnly = this.formData.view;
     localStorage.setItem('cloneNumberForEdit', "0");
+   
+    this.refreshFormsList();
+    
     this.userService.getUserProfile().subscribe(
       res => {
         this.userDetail = res;
-        this.refreshPageList();
-        this.refreshAttachmentList();
-        this.refreshPhotoList();
-        this.refreshCommentList();
+        this.getFormID();
       },
       err => {
         console.log(err);
-        this.refreshPageList();
-        this.refreshAttachmentList();
-        this.refreshPhotoList();
-        this.refreshCommentList();
+        this.getFormID();
       },
     );
   }
 
+  createForm(){
+      this.spinner.show();
+      let formCaptureData = {
+        formCaptureID: 0,
+        formName: '',
+        formID: 5152,//this.FormIDTest,  
+        step: "string",
+        sentBy: this.userDetail.formData.userID,
+        dateSent: "string",
+        timeSent: "string",
+        displayableOne: "",
+        displayableTwo: "",
+        geography: 0,
+        stage: "string",
+        formTemplateName: "string"
+      }
+      this.service.addCapturedForms(formCaptureData).subscribe(res => {
+        let myObj = {
+          formID: this.EmbeddedFormNo, // 5152,
+          formName: JSON.parse(res).formName,
+          formCaptureID: JSON.parse(res).formCaptureID,
+          state: 'add',
+          roleID:0,
+          view:'readwrite'
+        };
+        this.spinner.hide();
+        this.formData =  myObj;
+        this.refreshPageList();
+        //this.refreshFormsList();
+        this.formList.filterPredicate = function (data, filter: string): boolean {
+          return data.formName.toLowerCase().includes(filter);
+        };
+        this.DisplayOne = "Display One";
+        this.DisplayTwo = "Display Two";
+      });
+    
+  }
+
+  editForm(dataItem: any){
+    let formCaptureObj = {
+      formID: 5152,  //dataItem.formID, 
+      formName: 'BeneficiaryDetails',//dataItem.formName,
+      formCaptureID: dataItem.formCaptureID, //this.formData.formCaptureID,
+      state: 'edit',
+      roleID:0,
+      view:'readwrite'
+    };
+    //this.formData =  JSON.stringify(formCaptureObj);
+    this.formData =  formCaptureObj;
+  this.refreshPageList();
+  this.formList.filterPredicate = function (data, filter: string): boolean {
+    return data.formName.toLowerCase().includes(filter);
+  };
+  }
+
+  refreshFormsList() {
+    this.spinner.show();
+    this.service.getEmbeddedCapturedForms(this.EmbeddedFieldID, this.EmbeddedParentID).subscribe(data => {
+      this.gridView = data;
+      this.spinner.hide();
+      });
+  }
+
+  getFormID(){
+    this.service.getFormIDProvince(this.userDetail.formData.provinceID).subscribe(forms => {
+      this.FormIDTest = forms;
+      });
+  }
   //#region Page Methods
   prevPage() {
     var errorMessage = "Please fill in ";
@@ -231,6 +327,7 @@ export class AddFormComponent implements OnInit {
     if (errorMessage === "Please fill in ") {
       if (this.formData.state === 'add') {
         this.service.saveFormMetadata(this.formData.formCaptureID, obj, this.userDetail.formData.userID).subscribe(res => {
+          this.isCaptureOrEdit='No';
           let pg = this.currentPage.pageNumber;
           let pageStatus = {
             "userID": this.userDetail.formData.userID,
@@ -238,6 +335,11 @@ export class AddFormComponent implements OnInit {
             "formCaptureID": this.formData.formCaptureID,
             "pageGUID": this.currentPage.pageGUID
           }
+          this.service.UpdateEmbeddedIndicator(this.EmbeddedFieldID,this.formData.formCaptureID,this.EmbeddedParentID).subscribe(
+            res=>{
+              console.log("id updated");
+            }
+          )
           this.service.modifyPageStatus(this.formData.formCaptureID, this.currentPage.pageGUID, pageStatus).subscribe(result => {
             this.currentPage.color = "green";
             this.formData.state = 'edit';
@@ -349,6 +451,7 @@ export class AddFormComponent implements OnInit {
               }
               obj.push(element);
             });
+            this.refreshFormsList();
           }
           else if (field.groupGUID !== "" && field.groupGUID !== "string" && field.fieldType.value !== "repeatgroup" && field.fieldType.value === "group" && field.fieldType.value !== "subSection" && field.fieldType.value !== "PageTitle" && field.parentFieldName === "") {
             let groupValues = field.groupGUID;
@@ -400,13 +503,21 @@ export class AddFormComponent implements OnInit {
                 "formCaptureID": this.formData.formCaptureID,
                 "pageGUID": this.currentPage.pageGUID
               }
+              this.refreshFormsList();
+              this.service.UpdateEmbeddedIndicator(this.EmbeddedFieldID,this.formData.formCaptureID,this.EmbeddedParentID).subscribe(
+                res=>{
+                  console.log("id updated");
+                }
+              )
               this.service.modifyPageStatus(this.formData.formCaptureID, this.currentPage.pageGUID, pageStatus).subscribe(result => {
                 this.showNotification('top', 'center', 'Data has been submitted successfully!', '', 'success');
                 this.getDesignPerPage(this.currentPage.pageGUID);
                 this.currentPage.color = "green";
                 this.formData.state = 'edit';
               });
+               this.refreshFormsList();
             });
+           
           }
           else {
             this.service.UpdateFormMetadata(this.formData.formCaptureID, obj, this.userDetail.formData.userID).subscribe(res => {
@@ -418,23 +529,20 @@ export class AddFormComponent implements OnInit {
                 "pageGUID": this.currentPage.pageGUID
               }
               this.service.modifyPageStatus(this.formData.formCaptureID, this.currentPage.pageGUID, pageStatus).subscribe(result => {
-                this.showNotification('top', 'center', 'Data has been submitted successfully!', '', 'success');
-                this.getDesignPerPage(this.currentPage.pageGUID);
+                this.showNotification('top', 'center', 'Data has been updated successfully!', '', 'success');
+                //this.getDesignPerPage(this.currentPage.pageGUID);
                 this.currentPage.color = "green";
                 this.formData.state = 'edit';
               });
+              this.refreshFormsList();
             });
+            
           }
         }
         else {
           this.showNotification('top', 'center', errorMessage, '', 'danger');
           errorMessage = "Please fill in ";
         }
-        
-
-     
-
-    
   }
 
   DisableButton(attachmentID:any):boolean{
@@ -650,7 +758,7 @@ export class AddFormComponent implements OnInit {
   }
 
   refreshPageList() {
-    this.service.getFormPages(this.formData.formID).subscribe(data => {
+    this.service.getFormPages(parseInt(localStorage.getItem('fieldEmbeddedFormID'))).subscribe(data => {
       this.pages = data;
       this.getDesignPerPage(this.pages[0].pageGUID);
       this.currentPage = this.pages[0];
@@ -668,41 +776,41 @@ export class AddFormComponent implements OnInit {
   }
 
   refreshAttachmentList() {
-    this.service.getFormAttachments(this.formData.formCaptureID).subscribe(data => {
-      data.forEach(field=>{
-        var new_date_time = new Date( field.createdTS);
-        var s = new_date_time.toLocaleDateString(('en-ZA')).replace(/\//g, '-')
-        //new_date_time.toISOString().replace(/T.*/,'').split('-').join('-');
-        field.createdTS = s;
-        console.log(s);
+    // this.service.getFormAttachments(this.formData.formCaptureID).subscribe(data => {
+    //   data.forEach(field=>{
+    //     var new_date_time = new Date( field.createdTS);
+    //     var s = new_date_time.toLocaleDateString(('en-ZA')).replace(/\//g, '-')
+    //     //new_date_time.toISOString().replace(/T.*/,'').split('-').join('-');
+    //     field.createdTS = s;
+    //     console.log(s);
        
-      });
-      this.attachmentList = data;
-      this.totalNumAttachments = Object.keys(this.attachmentList).length;
-    });
+    //   });
+    //   this.attachmentList = data;
+    //   this.totalNumAttachments = Object.keys(this.attachmentList).length;
+    // });
   }
 
   refreshPhotoList() {
-    this.service.getFormPhotos(this.formData.formCaptureID).subscribe(data => {
-      this.photoList = data;
-      this.totalNumPhotos = Object.keys(this.photoList).length
-    });
+    // this.service.getFormPhotos(this.formData.formCaptureID).subscribe(data => {
+    //   this.photoList = data;
+    //   this.totalNumPhotos = Object.keys(this.photoList).length
+    // });
   }
 
   refreshCommentList() {
-    this.service.getFormComments(this.formData.formCaptureID).subscribe(data => {
-    data.forEach(field=>{
-    var new_date_time = new Date( field.timeStamp );
-    var s = new_date_time.toLocaleDateString(('en-ZA')).replace(/\//g, '-');
-    console.log(s);
+    // this.service.getFormComments(this.formData.formCaptureID).subscribe(data => {
+    // data.forEach(field=>{
+    // var new_date_time = new Date( field.timeStamp );
+    // var s = new_date_time.toLocaleDateString(('en-ZA')).replace(/\//g, '-');
+    // console.log(s);
     
-      field.timeStamp = s;
+    //   field.timeStamp = s;
    
-    });
+    // });
 
-      this.commentList = data;
-      this.totalNumComments = Object.keys(this.commentList).length
-    });
+    //   this.commentList = data;
+    //   this.totalNumComments = Object.keys(this.commentList).length
+    // });
   }
 
   compareFn(option1: lexdata, option2: lexdata) {
@@ -717,6 +825,24 @@ export class AddFormComponent implements OnInit {
     });
   }
 
+  refreshEditPageList()
+{
+  this.service.getFormPages(parseInt(localStorage.getItem('fieldEmbeddedFormID'))).subscribe(data => {
+    this.pages = data;
+    this.getDesignPerPage(this.pages[0].pageGUID);
+    this.currentPage = this.pages[0];
+    this.firstPage = this.pages[0];
+
+    this.lastPage = Object.keys(this.pages).length;
+    this.pages.forEach((page, index) => {
+      this.service.getPageStatus(this.formData.formCaptureID, page.pageGUID).subscribe(val => {
+        page["pageNumber"] = index;
+        page["color"] = val;
+      });
+    });
+    this.pageStatus = this.pages[0].name;
+  });
+}
   getDesignPerPage(pageGUID: any) {
     this.spinner.show();
     localStorage.setItem('cloneNumberForEdit', "0");
@@ -724,7 +850,7 @@ export class AddFormComponent implements OnInit {
     if (locationRole == 0) {
       locationRole = this.userDetail.formData.role;
     }
-    this.service.GetFieldsForCapturePerPage(locationRole, pageGUID).subscribe(formFields => {
+    this.service.GetFieldsForEmbeddedCapturePerPage(pageGUID).subscribe(formFields => {
       console.log(formFields);
       this.formDesign = formFields;
       this.formDesign.forEach((element, index) => {
@@ -784,15 +910,19 @@ export class AddFormComponent implements OnInit {
             });
           }
         }
-
+console.log('state: '+this.formData.state);
+console.log('formcaptureID: ' +this.formData.formcapturedID);
         if (this.formData.state === 'edit') {
           if (element.fieldType.value !== "subSection" && element.fieldType.value !== "section" && element.fieldType.value !== "group" && element.fieldType.value !== "repeatgroup" && element.fieldType.value !== "attachment" && element.fieldType.value !== "PageTitle" && element.parentFieldName === "") {
             this.service.getMetadataValue(pageGUID, element.fieldName, this.formData.formCaptureID).subscribe(res => {
               if (element.fieldType.value === "checkbox") {
                 element["data"] = Boolean(res);
               }
-              else if (element.fieldType.value === "link multi select" || element.fieldType.value === "lexicon list") {
-                element["data"] = this.splitString(res) as Array<string>;
+               //else if (element.fieldType.value === "link multi select" || element.fieldType.value === "lexicon list")
+              else if (element.fieldType.value === "link multi select") {
+               element["data"] = this.splitString(res) as Array<string>;
+
+               
               }
               else {
                 element["data"] = res;
@@ -833,7 +963,7 @@ export class AddFormComponent implements OnInit {
                     }
                   });
                 }
-
+console.log('Fields: '+field["data"]);
                 field.fieldStyles[0].height = Math.ceil(parseInt(field.fieldStyles[0].height) / 23.2);
 
                 if (field.fieldType.value === "repeatgroup") {
@@ -858,7 +988,7 @@ export class AddFormComponent implements OnInit {
                               if (subField.fieldType.value === "checkbox") {
                                 subField["data"] = Boolean(JSON.parse(res));
                               }
-                              else if (subField.fieldType.value === "link multi select") {
+                              else if (subField.fieldType.value === "link multi select" ){
                                 subField["data"] = this.splitString(res) as Array<string>;
                               }
                               else {
@@ -1282,14 +1412,6 @@ export class AddFormComponent implements OnInit {
   }
 
   viewPhoto(data: any) {
-    const dialogRef = this.dialog.open(formPhotoPreview, {
-      width: '70%',
-      height: '70%',
-      data: { image: data.photo },
-    });
-    dialogRef.afterClosed().subscribe(result => {
-
-    });
   }
 
   validateEmail(fieldName: any, email: any) {
@@ -1539,6 +1661,46 @@ export class AddFormComponent implements OnInit {
     });
   }
 
+//check id number is valid
+  checkID() {
+    this.formDesign.forEach(field => {
+      if (field.fieldType.value === "number") {
+        let idnumber = field.data;
+        console.log('IDNO: '+ idnumber);
+         if(idnumber != ""){
+         //1. numeric and 13 digits
+         if (isNaN(idnumber) || (idnumber.length != 13)) 
+         {
+           this.showNotification('top', 'center', 'Please enter a 13 digit ID!', '', 'danger');
+          
+         }
+       //2. first 6 numbers is a valid date
+     var tempDate = new Date(idnumber.substring(0, 2), idnumber.substring(2, 4) - 1, idnumber.substring(4, 6));
+    if (!((tempDate.getFullYear() == idnumber.substring(0, 2)) && (tempDate.getMonth() == idnumber.substring(2, 4) - 1) && (tempDate.getDate() == idnumber.substring(4, 6))))
+     { 
+       this.showNotification('top', 'center', 'Please enter a 13 digit ID!', '', 'danger');
+    
+    }
+       //3. luhn formula
+       var tempTotal = 0; var checkSum = 0; var multiplier = 1;
+       for (var i = 0; i < 13; ++i) {
+           tempTotal = parseInt(idnumber.charAt(i)) * multiplier;
+           if (tempTotal > 9) { tempTotal = parseInt(tempTotal.toString().charAt(0)) + parseInt(tempTotal.toString().charAt(1)); }
+          checkSum = checkSum + tempTotal;
+           multiplier = (multiplier % 2 == 0) ? 1 : 2;
+      }  
+       if ((checkSum % 10) == 0) 
+       { 
+         console.log('idnotest: '+checkSum);
+       }
+     
+     }
+    field.data = idnumber;
+    }
+    });
+  }
+
+
   checkForCalc() {
     this.formDesign.forEach(field => {
       if (field.fieldType.value === "calculation") {
@@ -1655,32 +1817,10 @@ export class AddFormComponent implements OnInit {
   }
 
   fieldEmbeddedForm(item: any) {
-   // localStorage.setItem('fieldEmbeddedFormID',item.embeddedFormId); //changed from hard codded value
-    localStorage.setItem('fieldEmbeddedFormID','5152');
-    localStorage.setItem('EmbeddedFieldID',item.fieldID);
-    localStorage.setItem('EmbeddedParentID',this.formData.formCaptureID);
-    const dialogRef = this.dialog.open(EmbeddedFormComponent, {
-      width: '75%',
-      height: '75%',
-      disableClose: true
-    });
+    this.tabIndex = 1;
+    localStorage.setItem('fieldEmbeddedForm', item.questionName + '(' + item.fieldName + ')');
   }
 
+
+
 }
-
-@Component({
-  selector: 'formPhotoPreview',
-  templateUrl: 'formPhotoPreview.html',
-})
-export class formPhotoPreview {
-  constructor(
-    public dialogRef: MatDialogRef<formPhotoPreview>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
-  ) { }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-}
-
-

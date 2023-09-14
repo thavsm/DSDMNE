@@ -1,0 +1,52 @@
+.radio {
+
+    display: inline-flex;
+
+    flex-direction: row;
+
+    margin-left: 8px;
+
+     color:black !important;
+    }
+
+    .checkbox {
+
+        display: inline-flex;
+    
+        flex-direction: row;
+    
+        margin-left: 8px;
+
+        color:black !important;
+    }
+          
+    .mat-toolbar-single-row {
+        height: auto !important;
+        background: transparent;
+    }
+    
+    .mat-toolbar-single-row button {
+        width: 200px;
+    }
+    
+    #uploadFile {
+        top: 0px;
+        left: 0px;
+        width: 100%;    
+        z-index: 9;
+        opacity: 0;
+        height: 100%;
+        cursor: pointer;
+        position: absolute;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    .signature-container {
+        border-style: dotted;
+        border-width: 1px;
+        margin-bottom: 20px;
+        background-color: rgb(213, 242, 255);
+    }

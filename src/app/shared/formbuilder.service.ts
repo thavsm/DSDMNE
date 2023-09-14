@@ -28,15 +28,27 @@ export class FormbuilderService {
 
   }
 
-  getFormFieldsIndicatorsByProvince(formID: any, pageGuID: any,ProvinceID:any): Observable<any[]> {
-
-    return this.http.get<any>(this.APIUrl +'forms/' + formID + '/pages/' + pageGuID +'/'+ ProvinceID + '/loadIndicatorByProvince')
-
-  }
-  getDynamicFormList(): Observable<any[]> {
+ 
+  getDynamicFormsList(): Observable<any[]> {
     return this.http.get<any>(this.APIUrl + 'forms/filter/type/2')
   }
 
+  getDynamicFormList(locationID: any): Observable<any[]> {
+
+    return this.http.get<any>(this.APIUrl + 'forms/filter/type/2/'+locationID+'?')
+
+  }
+  //added for embedded forms
+  getEmbeddedFormList(): Observable<any[]> {
+    return this.http.get<any>(this.APIUrl + 'forms/type/2/1')
+  }
+
+/*   getNodes(): Observable<any[]>{
+    return this.http.get<any>(this.APIUrl + 'forms/type/2')
+  } */
+  getNodes(levelID:number){
+    return this.http.get<any>(this.APIUrl+'Nodes/GetNodeByLevelID/'+levelID);
+  }
 
   addDynamicForm(data: any) {
     return this.http.post(this.APIUrl + 'forms', data);
@@ -54,7 +66,11 @@ export class FormbuilderService {
   getFormPages(formID: any): Observable<any[]> {
     return this.http.get<any>(this.APIUrl + 'forms/' + formID + '/pages');
   }
-
+  
+  getFormFieldsIndicatorsByProvince(formID: any, pageGuID: any,ProvinceID:any): Observable<any[]> {
+    return this.http.get<any>(this.APIUrl +'forms/' + formID + '/pages/' + pageGuID +'/'+ ProvinceID + '/loadIndicatorByProvince')
+  }
+  
   getFormFieldsPerPage(formID: any, pageGuID: any): Observable<any[]> {
     return this.http.get<any>(this.APIUrl + 'forms/' + formID + '/pages/' + pageGuID + '/fields');
   }
@@ -91,8 +107,20 @@ export class FormbuilderService {
     return this.http.get<any>(this.APIUrl + LocationID + '/' + RoleID + '/CapturedForms');
   }
 
+  getFormIDProvince(provinceID: any){
+    return this.http.get(this.APIUrl+'forms/type/'+provinceID);
+  }
+
+  getEmbeddedCapturedForms(fieldID: any, FormID: any) {
+    return this.http.get<any>(this.APIUrl + fieldID + '/' + FormID + '/EmbeddedCapturedForms');
+  }
+
   addCapturedForms(data: any) {
     return this.http.post(this.APIUrl + 'CapturedForms', data, { responseType: 'text' });
+  }
+
+  getCaptureForms(data:any){
+    return this.http.get(this.APIUrl + 'GetCapturedForms', data);
   }
 
   getMetadataValue(pageGUID: any, columnName: any, formCaptureID: any) {
@@ -151,6 +179,10 @@ export class FormbuilderService {
     return this.http.get(this.APIUrl + formCaptureID + '/FormEditingResults',{ responseType: 'text' })
   }
 
+  GetfieldsEditing(formcaptureID: any){
+    return this.http.get(this.APIUrl + formcaptureID, {responseType: 'text'})
+  }
+
   getFormAttachments(formCaptureID: any): Observable<any[]> {
     return this.http.get<any>(this.APIUrl + formCaptureID + '/FormAttachment')
   }
@@ -201,7 +233,7 @@ export class FormbuilderService {
   getIndicatorAttachments(indicatorID :any ,formCaptureID: any): Observable<any[]> {
     return this.http.get<any>(this.APIUrl + indicatorID + '/' + formCaptureID + '/IndicatorAttachment')
   }
-
+  
   getReassignedUserTasks(UserID: any): Observable<any[]> {
     return this.http.get<any>(this.APIUrl + UserID + '/ReassignedUserTasks')
   }
@@ -308,6 +340,14 @@ export class FormbuilderService {
     return this.http.get<any>(this.APIUrl + 'forms/' + RoleID + '/pages/' + pageGuID + '/fieldsForCapture');
   }
 
+  GetFieldsForEmbeddedCapturePerPage(pageGuID: any): Observable<any[]> {
+    return this.http.get<any>(this.APIUrl + 'Forms/pages/' + pageGuID + '/fieldsForEmbeddedCapture');
+  }
+
+  UpdateEmbeddedIndicator(fieldID: any,captureID:any,formID:any){
+    return this.http.put(this.APIUrl + 'Forms/field/' + fieldID +'/formCaptureID/' + captureID+'/formID/'+formID+ '/UpdateEmbeddedIndicator',{});
+  }
+
   checkIfFieldAssignedToRole(FieldID: any, RoleID: any) {
     return this.http.get(this.APIUrl + FieldID + '/' + RoleID + '/AssignedField', { responseType: 'text' })
   }
@@ -348,7 +388,7 @@ export class FormbuilderService {
     return this.http.get(this.APIUrl + 'Forms/'+userID +'/UserLocationHierachy', { responseType: 'text' });
   }
 
-  //Katelyn
+    //Katelyn
   // getFormCaptureCountPerLocationLevel(locationID: any,roleID,levelID:any): Observable<any[]>  {
   //   return this.http.get<any>(this.APIUrl + locationID +'/'+roleID+'/'+levelID+'/CaptureCount');
   // }
@@ -373,7 +413,7 @@ export class FormbuilderService {
   addformcategories(data: any) {
     return this.http.post(this.APIUrl + 'formcategories', data);
   }
-
+  
   GetUsersByLocation(LocationID: any, UserID: any) : Observable<any[]> {
     return this.http.get<any>(this.APIUrl + LocationID + '/'+ UserID +'/AllUsersByLocation')
   }
