@@ -22,7 +22,7 @@
                             </div>
                         </mat-list-option>
                     </mat-selection-list>
-                    <button class="btn btn-sm btn-primary" style="width: 150px;" (click)="addField()">Add
+                    <button id="btn" class="btn btn-sm btn-primary" style="width: 150px;" (click)="addField()" [disabled]="(this.formData.formID>=5160 && this.formData.formID<=5176) && this.LocationID<=8658">Add
                         Field</button>
                 </div>
             </div>
@@ -35,9 +35,9 @@
                     <h6>{{formData.formDescription}}</h6>
                     <div style="width: 500px;">
                         <!-- <mat-icon>save</mat-icon> -->
-                        <button class="btn btn-sm btn-primary" (click)="savePage()">Save</button>
-
-                        <button class="btn btn-sm btn-primary" (click)="publishPage()">Publish</button>
+                        <button id="btn" class="btn btn-sm btn-primary" (click)="savePage()" [disabled]="(this.formData.formID>=5160 && this.formData.formID<=5176) && this.LocationID==8658">Save</button>
+                       
+                        <button id="btn" class="btn btn-sm btn-primary" (click)="publishPage()" [disabled]="(this.formData.formID>=5160 && this.formData.formID<=5176) && this.LocationID==8658">Publish</button>
 
                         <!-- <button class="btn btn-sm btn-primary" (click)="previewPage()">Preview</button> -->
                     </div>
@@ -2779,7 +2779,7 @@
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-sm btn-primary" style="width: 150px;" (click)="addPage()">Add Page</button>
+                    <button id="btn" class="btn btn-sm btn-primary" style="width: 150px;" (click)="addPage()" [disabled]="(this.formData.formID>=5160 && this.formData.formID<=5176) && this.LocationID<=8658">Add Page</button>
                 </div>
             </div>
         </div>

@@ -193,7 +193,7 @@ export class EmbeddedFormComponent implements OnInit {
   editForm(dataItem: any){
     let formCaptureObj = {
       formID: 5152,  //dataItem.formID, 
-      formName: 'BeneficiaryDetails',//dataItem.formName,
+      formName: dataItem.formName,
       formCaptureID: dataItem.formCaptureID, //this.formData.formCaptureID,
       state: 'edit',
       roleID:0,
@@ -471,6 +471,7 @@ export class EmbeddedFormComponent implements OnInit {
               }
               obj.push(e);
             });
+            this.refreshFormsList();
           }
           else {
             if (field.parentFieldName === "" && field.groupGUID === "string") {
@@ -489,6 +490,7 @@ export class EmbeddedFormComponent implements OnInit {
             if (field.fieldValidations[0].isRequired === true && field.isAssigned === 1 && field.data === " ") {
               errorMessage = errorMessage + field.questionName + ","
             }
+            this.refreshFormsList();
           }
     
         });
@@ -530,7 +532,7 @@ export class EmbeddedFormComponent implements OnInit {
               }
               this.service.modifyPageStatus(this.formData.formCaptureID, this.currentPage.pageGUID, pageStatus).subscribe(result => {
                 this.showNotification('top', 'center', 'Data has been updated successfully!', '', 'success');
-                //this.getDesignPerPage(this.currentPage.pageGUID);
+                this.getDesignPerPage(this.currentPage.pageGUID);
                 this.currentPage.color = "green";
                 this.formData.state = 'edit';
               });
@@ -1015,6 +1017,7 @@ console.log('Fields: '+field["data"]);
               this.formDesign[index].groupGUID = children;
             });
           }
+          this.refreshFormsList();
         }
       });
       this.spinner.hide();

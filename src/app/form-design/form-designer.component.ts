@@ -25,8 +25,12 @@ export class FormDesignerComponent implements OnInit {
     data:any;
     formAdd:any;
     userDetail:any;
+    userData:any;
     formcategories: any = [];
     formdescription: any = [];
+    LocationType:any;
+    ProvinceID:any;
+    LocationID: any;
     //EmbeddedForm:boolean = true;
     
     constructor(public dialog: MatDialog, private route: Router, private service: FormbuilderService, private spinner: NgxSpinnerService, private userService: UserService) {
@@ -49,6 +53,13 @@ export class FormDesignerComponent implements OnInit {
           this.userService.getUserProfile().subscribe(
             res => {
               this.userDetail = res;
+              this.userData = res['formData']
+              this.LocationType = this.userData['locationType'];
+              this.ProvinceID = this.userData['provinceID'];
+              this.LocationID = this.userData['location'];
+          console.log("locationtYPE: "+this.LocationType);
+          console.log("ProvinceID: "+this.ProvinceID);
+          console.log("LocationID: "+this.LocationID);
               this.getformDescription();
               //this.refreshFormsList();
             },
@@ -58,6 +69,8 @@ export class FormDesignerComponent implements OnInit {
             },
           
           ); 
+
+          
     /*      if(this.formData.embeddedForm == '1' )
           {
             this.EmbeddedForm = true

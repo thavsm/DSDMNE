@@ -1016,7 +1016,6 @@
                                                         <input matInput type="number" onmousewheel="return false;"
                                                             (blur)="checkInfo()" [(ngModel)]=subsectionItem.data
                                                             (blur)="checkInfo()" [(ngModel)]=subsectionItem.data
-                                                            (blur)="checkID()"
                                                             maxlength={{subsectionItem.fieldValidations[0].dataLength}}
                                                             oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
                                                             placeholder="{{subsectionItem.toolTip}}"
