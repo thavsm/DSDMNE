@@ -23,11 +23,11 @@
                       </div>
                       <div class="col" *ngIf="dataItem.roleID!=0">
                         <button
-                          *ngIf="(dataItem.levelID==userDetail.formData.locationType) && NonFacilityCaptured!=0 "
+                          *ngIf="(dataItem.levelID==userDetail.formData.locationType) && this.dataItem.captureID!=0 "
                           class="btn btn-sm" (click)="addForm(dataItem)"
                           style="background-color: rgb(2, 173, 2);width: 150px;">Complete My Form</button>
                         <button
-                          *ngIf="(dataItem.levelID==userDetail.formData.locationType)  && NonFacilityCaptured==0 "
+                          *ngIf="(dataItem.levelID==userDetail.formData.locationType)  && this.dataItem.captureID==0 "
                           class="btn btn-sm" (click)="addForm(dataItem)"
                           style="background-color: red;width: 150px;">Complete My Form</button>
                       </div>
@@ -41,6 +41,16 @@
                 <kendo-treelist-column title="{{userDetail.formData.nodeName}} Capture" [width]="15" [filterable]="false">
                   <ng-template kendoTreeListCellTemplate let-dataItem let-rowIndex="rowIndex">
                     <div class="row">
+                      <div class="col" *ngIf="dataItem.roleID!=0">
+                        <button
+                          *ngIf="(dataItem.levelID==userDetail.formData.locationType) && this.dataItem.NonFacilityCaptured!=0 "
+                          class="btn btn-sm" (click)="addProviceForm(dataItem)"
+                          style="background-color: rgb(2, 173, 2);width: 150px;">Complete My Form</button>
+                        <button
+                          *ngIf="(dataItem.levelID==userDetail.formData.locationType)  && this.dataItem.NonFacilityCaptured==0 "
+                          class="btn btn-sm" (click)="addProviceForm(dataItem)"
+                          style="background-color:orange;width: 150px;">Complete My Form</button>
+                      </div>
                       <div class="col">
                         <button *ngIf="(dataItem.levelID==4264)  && dataItem.completedForms>=1 && dataItem.roleID!=0" class="btn btn-sm"
                           (click)="addProviceForm(dataItem)" style="background-color: rgb(2, 173, 2);width: 150px;">Complete Form</button>

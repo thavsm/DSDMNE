@@ -16,6 +16,8 @@ import { NgModel } from '@angular/forms';
 import { ItemTemplateDirective } from '@progress/kendo-angular-dropdowns';
 import { CalcReportComponent } from '../calc-report.component';
 import { AddCommentComponent } from 'src/app/form-capture/add-form/add-comment/add-comment.component';
+import { DataBindingDirective, PageSizeItem } from '@progress/kendo-angular-grid';
+import { EmbeddedFormComponent } from 'src/app/form-capture/add-form/embedded-form/embedded-form.component';
 
 declare var $: any;
 
@@ -34,6 +36,32 @@ interface Item {
   styleUrls: ['./approval-form.component.css']
 })
 export class ApprovalFormComponent implements OnInit {
+
+  @ViewChild(DataBindingDirective) dataBinding: DataBindingDirective;
+
+  public pageSize = 10;
+  public pageSizes: Array<number | PageSizeItem> = [5, 10, 20, {
+    text: 'All',
+    value: 'all'
+  }];
+
+  public formList: any = [];
+
+  public gridView: any[];
+  public FormIDTest: any;
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  ngAfterViewInit() {
+  }
+
+  public onPageChange(state: any): void {
+    this.pageSize = state.take;
+  }
+
+  userData: any;
+
+  provID: any;
 
   panelOpenState = false;
 
@@ -99,6 +127,10 @@ export class ApprovalFormComponent implements OnInit {
   isViewOnly:boolean=true;
 
   disableButton:boolean;
+  
+  EmbeddedFormNo:any;
+  EmbeddedFieldID:any;
+  EmbeddedParentID:any;
 
   constructor(public dialog: MatDialog, private service: FormbuilderService, private spinner: NgxSpinnerService, public dialogRef: MatDialogRef<CalcReportComponent>, private userService: UserService, @Inject(MAT_DIALOG_DATA) data) {
     console.log(data);
@@ -111,6 +143,14 @@ export class ApprovalFormComponent implements OnInit {
     //   state: 'edit'
     // };
 
+    this.userService.getUserProfile().subscribe(data => {
+
+      this.userData = data['formData'];
+
+      this.provID = this.userData["provinceID"];
+   
+
+
     this.IndicatorData = data["indicatorID"];
     console.log(this.IndicatorData);
     this.formData  = {
@@ -120,6 +160,8 @@ export class ApprovalFormComponent implements OnInit {
       formCaptureID: data["formcapturedID"],
       state: 'edit'
     };
+
+  });
 
     //this.formData = JSON.parse(localStorage.getItem('formApprovalDetails') || '{}');
     this.tabIndex = parseInt(localStorage.getItem('tabIndex'));
@@ -269,6 +311,11 @@ export class ApprovalFormComponent implements OnInit {
             "formCaptureID": this.formData.formCaptureID,
             "pageGUID": this.currentPage.pageGUID
           }
+          this.service.UpdateEmbeddedIndicator(this.EmbeddedFieldID,this.formData.formCaptureID,this.EmbeddedParentID).subscribe(
+            res=>{
+              console.log("id updated");
+            }
+          )
           this.service.modifyPageStatus(this.formData.formCaptureID, this.currentPage.pageGUID, pageStatus).subscribe(result => {
             this.showNotification('top', 'center', 'Page data has been saved successfully!', '', 'success');
             this.currentPage.color = "green";
@@ -282,6 +329,7 @@ export class ApprovalFormComponent implements OnInit {
               }
            });
             if ((index !== -1) && ((index - 1) !== -1)) {
+              this.showNotification('top', 'center', 'Page data has been saved successfully!', '', 'success');
               this.currentPage = this.pages[index - 1];
               this.pageStatus = this.currentPage.name;
               this.getDesignPerPage(this.currentPage.pageGUID);
@@ -289,6 +337,8 @@ export class ApprovalFormComponent implements OnInit {
             }
             else {
               this.showNotification('top', 'center', 'There are no pages before this page for this form!', '', 'warning');
+              this.pageStatus = this.currentPage.name;
+              this.getDesignPerPage(this.currentPage.pageGUID);
             };
           });
 
@@ -2069,6 +2119,16 @@ timer: 5000,
     this.tabIndex = 3;
     localStorage.setItem('fieldNameComment', item.questionName + '(' + item.fieldName + ')');
 
+  }
+  fieldEmbeddedForm(item: any) {
+    localStorage.setItem('fieldEmbeddedFormID','5152');
+    localStorage.setItem('EmbeddedFieldID',item.fieldID);
+    localStorage.setItem('EmbeddedParentID',this.formData.formCaptureID);
+    const dialogRef = this.dialog.open(EmbeddedFormComponent, {
+      width: '75%',
+      height: '75%',
+      disableClose: true
+    });
   }
 }
 

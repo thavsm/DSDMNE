@@ -11,6 +11,7 @@ import { UserService } from 'src/app/shared/user.service';
 import { DataBindingDirective, PageSizeItem } from '@progress/kendo-angular-grid';
 import { MatPaginator } from '@angular/material/paginator';
 import { merge } from 'rxjs';
+import { MatAccordion, MatExpansionPanel } from '@angular/material/expansion';
 
 
 declare var $: any;
@@ -39,6 +40,8 @@ export class EmbeddedFormComponent implements OnInit {
   public FormIDTest: any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatAccordion) accordion: MatAccordion;
+  @ViewChild('panel') panel: MatExpansionPanel;
 
   ngAfterViewInit() {
   }
@@ -72,6 +75,8 @@ export class EmbeddedFormComponent implements OnInit {
   addEditComment: string = 'Add';
 
   commentID: number = 0;
+
+  isPanelExpanded = true; 
 
   public selectedValues: string = "yes";
 
@@ -213,6 +218,7 @@ export class EmbeddedFormComponent implements OnInit {
       this.gridView = data;
       this.spinner.hide();
       });
+      this.isPanelExpanded = true;
   }
 
   getFormID(){
@@ -505,7 +511,6 @@ export class EmbeddedFormComponent implements OnInit {
                 "formCaptureID": this.formData.formCaptureID,
                 "pageGUID": this.currentPage.pageGUID
               }
-              this.refreshFormsList();
               this.service.UpdateEmbeddedIndicator(this.EmbeddedFieldID,this.formData.formCaptureID,this.EmbeddedParentID).subscribe(
                 res=>{
                   console.log("id updated");
@@ -516,8 +521,9 @@ export class EmbeddedFormComponent implements OnInit {
                 this.getDesignPerPage(this.currentPage.pageGUID);
                 this.currentPage.color = "green";
                 this.formData.state = 'edit';
+              this.refreshFormsList();
+              this.clearDesignPerPage(this.currentPage.pageGUID);
               });
-               this.refreshFormsList();
             });
            
           }
@@ -535,10 +541,11 @@ export class EmbeddedFormComponent implements OnInit {
                 this.getDesignPerPage(this.currentPage.pageGUID);
                 this.currentPage.color = "green";
                 this.formData.state = 'edit';
+                this.refreshFormsList();
+                this.clearDesignPerPage(this.currentPage.pageGUID);
               });
-              this.refreshFormsList();
             });
-            
+            this.isPanelExpanded = false;
           }
         }
         else {
@@ -775,6 +782,7 @@ export class EmbeddedFormComponent implements OnInit {
       });
       this.pageStatus = this.pages[0].name;
     });
+    this.isPanelExpanded = true;
   }
 
   refreshAttachmentList() {
@@ -912,8 +920,8 @@ export class EmbeddedFormComponent implements OnInit {
             });
           }
         }
-console.log('state: '+this.formData.state);
-console.log('formcaptureID: ' +this.formData.formcapturedID);
+//console.log('state: '+this.formData.state);
+//console.log('formcaptureID: ' +this.formData.formcapturedID);
         if (this.formData.state === 'edit') {
           if (element.fieldType.value !== "subSection" && element.fieldType.value !== "section" && element.fieldType.value !== "group" && element.fieldType.value !== "repeatgroup" && element.fieldType.value !== "attachment" && element.fieldType.value !== "PageTitle" && element.parentFieldName === "") {
             this.service.getMetadataValue(pageGUID, element.fieldName, this.formData.formCaptureID).subscribe(res => {
@@ -1017,13 +1025,81 @@ console.log('Fields: '+field["data"]);
               this.formDesign[index].groupGUID = children;
             });
           }
-          this.refreshFormsList();
         }
       });
       this.spinner.hide();
     });
   }
 
+  clearDesignPerPage(pageGUID: any) {
+    this.spinner.show();
+    localStorage.setItem('cloneNumberForEdit', "0");
+    var locationRole = this.formData.roleID;
+    if (locationRole == 0) {
+      locationRole = this.userDetail.formData.role;
+    }
+    this.service.GetFieldsForEmbeddedCapturePerPage(pageGUID).subscribe(formFields => {
+      console.log(formFields);
+      this.formDesign = formFields;
+      this.formDesign.forEach((element, index) => {
+        element.fieldStyles[0].height = Math.ceil(parseInt(element.fieldStyles[0].height) / 23.2); //23.2 is the size of one row in textarea
+        if (element.fieldType.value === "repeatgroup") {
+          this.service.getGroupTableData(element.groupGUID, this.formData.formCaptureID).subscribe(resultant => {
+            element["groupTableList"] = resultant;
+          });
+        }
+          element["data"] = "";
+  
+          if (element.listValue !== "") {
+            this.formDesign[index].listValue = this.splitString(element.listValue);
+          }
+  
+          if (element.groupGUID !== "" && element.groupGUID !== "string" && element.parentFieldName === "") {
+            let children: any[] = [];
+  
+            this.service.getFieldsInGroup(element.groupGUID).subscribe(kids => {
+              children = kids.filter(item1 => this.formDesign.some(item2 => item1.fieldID === item2.fieldID));
+              children.forEach((field, i) => {
+  
+                field.fieldStyles[0].height = Math.ceil(parseInt(field.fieldStyles[0].height) / 23.2);
+  
+                if (field.fieldType.value === "repeatgroup") {
+                  this.service.getGroupTableData(field.groupGUID, this.formData.formCaptureID).subscribe(resultant => {
+                    field["groupTableList"] = resultant;
+                  });
+                }
+  
+                if (field.listValue !== "") {
+                  children[i].listValue = this.splitString(field.listValue);
+                }
+  
+                if (field.groupGUID !== "" && field.groupGUID !== "string") {
+                  let subChildren: any[] = [];
+                  this.service.getFieldsInGroup(field.groupGUID).subscribe(result => {
+                    subChildren = result;
+                    subChildren.forEach((subField, j) => {
+                      subField.fieldStyles[0].height = Math.ceil(parseInt(subField.fieldStyles[0].height) / 23.2);
+                      if (subField.fieldType.value === "repeatgroup") {
+                        this.service.getGroupTableData(subField.groupGUID, this.formData.formCaptureID).subscribe(resultant => {
+                          subField["groupTableList"] = resultant;
+                        });
+                      }
+                      if (subField.listValue !== "") {
+                        subChildren[j].listValue = this.splitString(subField.listValue);
+                      }
+                    });
+                    children[i].groupGUID = subChildren;
+                  });
+                }
+              });
+              this.formDesign[index].groupGUID = children;
+            });
+        }
+      });
+      this.spinner.hide();
+    });
+    this.isPanelExpanded = false;
+  }
   //#endregion
 
   //#region group methods
@@ -1667,7 +1743,7 @@ console.log('Fields: '+field["data"]);
 //check id number is valid
   checkID() {
     this.formDesign.forEach(field => {
-      if (field.fieldType.value === "number") {
+      if (field.fieldType.value === "calculation") {
         let idnumber = field.data;
         console.log('IDNO: '+ idnumber);
          if(idnumber != ""){
@@ -1678,30 +1754,95 @@ console.log('Fields: '+field["data"]);
           
          }
        //2. first 6 numbers is a valid date
-     var tempDate = new Date(idnumber.substring(0, 2), idnumber.substring(2, 4) - 1, idnumber.substring(4, 6));
-    if (!((tempDate.getFullYear() == idnumber.substring(0, 2)) && (tempDate.getMonth() == idnumber.substring(2, 4) - 1) && (tempDate.getDate() == idnumber.substring(4, 6))))
+     var tempDate = new Date(idnumber.toString().substring(0, 2), idnumber.toString().substring(2, 4) - 1, idnumber.toString().substring(4, 6));
+     var s = tempDate.toLocaleDateString(('en-ZA')).replace(/\//g, '-');
+     var newDate=tempDate.toLocaleDateString();
+     console.log('s: '+ s);
+     console.log('newDate: '+ newDate);
+    if (!((tempDate.getFullYear() == idnumber.toString().substring(0, 2)) && (tempDate.getMonth() == idnumber.toString().substring(2, 4) - 1) && (tempDate.getDate() == idnumber.toString().substring(4, 6))))
      { 
-       this.showNotification('top', 'center', 'Please enter a 13 digit ID!', '', 'danger');
-    
+       this.showNotification('top', 'center', 'Please enter a valid 13 digit ID!', '', 'danger');
     }
+    
        //3. luhn formula
        var tempTotal = 0; var checkSum = 0; var multiplier = 1;
        for (var i = 0; i < 13; ++i) {
-           tempTotal = parseInt(idnumber.charAt(i)) * multiplier;
+           tempTotal = parseInt(idnumber.toString().charAt(i)) * multiplier;
            if (tempTotal > 9) { tempTotal = parseInt(tempTotal.toString().charAt(0)) + parseInt(tempTotal.toString().charAt(1)); }
           checkSum = checkSum + tempTotal;
            multiplier = (multiplier % 2 == 0) ? 1 : 2;
       }  
        if ((checkSum % 10) == 0) 
        { 
-         console.log('idnotest: '+checkSum);
+         //console.log('idnotest: '+checkSum);
        }
      
      }
-    field.data = idnumber;
-    }
+     var datePick = newDate;
+     var genderPick = idnumber.toString().substring(6, 10);
+     var gender ="";
+     if(genderPick >= "0000" && genderPick <= "4999" )
+     {
+       gender = "Female";
+     }
+     else if(genderPick >= "5000" && genderPick <= "9999" )
+     {
+       gender="Male";
+     }
+     console.log("gender: "+gender);
+     console.log("date: "+newDate);
+      let calc = field.calculation;
+      if (calc !== "") {
+        var stringArray = calc.split(/(\s+)/);
+        stringArray.forEach(num => {
+          this.formDesign.forEach(res => {
+            if (res.fieldType.value === "date") {
+              let sectionItems = res.groupGUID;
+              sectionItems.forEach(sectionItem => {
+                if ('#' + sectionItem.fieldName === num) {
+                  var re = new RegExp(num, "gi");
+                  if (sectionItem.data === "" || sectionItem.data === undefined) {
+                    calc = calc.replace(re, "0");
+                  }
+                  else {
+                    sectionItem.data = datePick;
+                  }
+                }
+                if (sectionItem.fieldType.value === "lexicon list") {
+                  let groupItems = sectionItem.groupGUID;
+                  groupItems.forEach(groupItem => {
+                    if ('#' + groupItem.fieldName === num) {
+                      var re = new RegExp(num, "gi");
+                      if (groupItem.data === "" || groupItem.data === undefined) {
+                        calc = calc.replace(re, "0");
+                      }
+                      else {
+                        groupItem.data = gender;
+                      }
+                    }
+                  })
+                }
+              })
+            }
+            else {
+              if ('#' + res.fieldName === num) {
+                var re = new RegExp(num, "gi");
+                if (res.data === "" || res.data === undefined) {
+                  res.data = calc.replace(re, "0");
+                }
+                else {
+                  res.data = calc.replace(re, res.data.toString());
+                }
+              }
+            }
+          });
+        });
+      }
+      //field.data = eval(calc).toFixed(2);
+          //field.data = idnumber;
+      }
     });
-  }
+}
 
 
   checkForCalc() {

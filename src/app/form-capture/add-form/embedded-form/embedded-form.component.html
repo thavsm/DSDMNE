@@ -69,6 +69,7 @@
         <mat-tab label="Data" style="background-color: black;font-weight: 500;">
             <div style="background-color: white;">
                 <mat-accordion>
+                    <mat-expansion-panel #panel [expanded]="isPanelExpanded">
                     <ng-container *ngFor="let item of formDesign;let i= index;"
                         style="background-color: white;height: 100px;font-weight: bold;">
 
@@ -1106,6 +1107,7 @@
                                                     <mat-form-field appearance="outline"
                                                         style="background: rgb(236, 236, 236);">
                                                         <input matInput type="number" onmousewheel="return false;"
+                                                        (blur)="checkID()"
                                                             (blur)="checkInfo()" [(ngModel)]=subsectionItem.data
                                                             readonly placeholder="{{subsectionItem.toolTip}}"
                                                             value="{{subsectionItem.data}}">
@@ -1820,6 +1822,7 @@
                                                     <mat-form-field appearance="outline"
                                                         style="background: rgb(236, 236, 236);">
                                                         <input matInput type="number" onmousewheel="return false;"
+                                                        (blur)="checkID()"
                                                             (blur)="checkInfo()" [(ngModel)]=subSectionItem.data
                                                             (change)="setSubSectionValue(subSectionItem.fieldName,subSectionItem.data)"
                                                             readonly placeholder="{{subSectionItem.toolTip}}">
@@ -2242,6 +2245,7 @@
                                         </div>
                                         <mat-form-field appearance="outline" style="background: rgb(236, 236, 236);">
                                             <input matInput type="number" onmousewheel="return false;"
+                                            (blur)="checkID()"
                                                 (blur)="checkInfo()" [(ngModel)]=sectionItem.data readonly
                                                 placeholder="{{sectionItem.toolTip}}">
                                         </mat-form-field>
@@ -2792,6 +2796,7 @@
                                         </div>
                                         <mat-form-field appearance="outline" style="background: rgb(236, 236, 236);">
                                             <input matInput type="number" onmousewheel="return false;"
+                                            (blur)="checkID()"
                                                 (blur)="checkInfo()" [(ngModel)]=sectionItem.data readonly
                                                 placeholder="{{sectionItem.toolTip}}">
                                         </mat-form-field>
@@ -3342,9 +3347,10 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <mat-form-field appearance="outline" style="background: rgb(236, 236, 236);">
+                                        <mat-form-field appearance="outline">
                                             <input matInput type="number" onmousewheel="return false;"
-                                                (blur)="checkInfo()" [(ngModel)]=sectionItem.data readonly
+                                            (blur)="checkID()"
+                                                (blur)="checkInfo()" [(ngModel)]=sectionItem.data 
                                                 placeholder="{{sectionItem.toolTip}}">
                                         </mat-form-field>
                                         <div style="height: 5px;"></div>
@@ -3723,9 +3729,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <mat-form-field appearance="outline" style="background: rgb(236, 236, 236);">
-                                <input matInput type="number" onmousewheel="return false;" (blur)="checkInfo()"
-                                    [(ngModel)]=item.data readonly placeholder="{{item.toolTip}}" (blur)="checkInfo()">
+                            <mat-form-field appearance="outline">
+                                <input matInput type="number" onmousewheel="return false;" (blur)="checkID()" (blur)="checkInfo()"
+                                    [(ngModel)]=item.data placeholder="{{item.toolTip}}" (blur)="checkInfo()">
                             </mat-form-field>
                             <div style="height: 5px;"></div>
                         </ng-container>
@@ -3838,6 +3844,7 @@
                             <div style="height: 5px;"></div>
                         </ng-container>
                     </ng-container>
+                </mat-expansion-panel>
                 </mat-accordion>
             </div>
         </mat-tab>
