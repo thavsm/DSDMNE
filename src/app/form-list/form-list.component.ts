@@ -28,6 +28,8 @@ export class FormListComponent implements OnInit {
   formlist: any[];
   isDisabled: boolean= false;
   nodeList:any[];
+  userData: any;
+  locationDis: any;
   constructor(public dialog: MatDialog, private route: Router, private service: FormbuilderService, private spinner: NgxSpinnerService,public userService: UserService) {
    }
   
@@ -54,6 +56,9 @@ export class FormListComponent implements OnInit {
     this.userService.getUserProfile().subscribe(
       res => {
         this.userDetail = res;
+        this.userData = res['formData'];
+        this.locationDis = this.userData['location'];
+        console.log("locationdis: "+this.locationDis);
         console.log("Test: "+this.userDetail.formData.location+"nodeid: " +this.userDetail.formData.nodeid);
         this.refreshFormsList();
       },

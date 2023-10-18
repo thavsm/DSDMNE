@@ -73,7 +73,7 @@ export class FormCaptureComponent implements OnInit {
   }
 
   addForm(dataItem:any) {
-    console.log(dataItem)
+    console.log("dataItem: "+dataItem);
     if(dataItem.captureID==0){
       this.spinner.show();
       let formCaptureData = {
@@ -111,7 +111,6 @@ export class FormCaptureComponent implements OnInit {
         this.formData.formName = "";
         dialogRef.afterClosed().subscribe(result => {
           console.log('The dialog was closed');
-          this.refreshLocationList();
         });
       });
     }
@@ -132,8 +131,7 @@ export class FormCaptureComponent implements OnInit {
         disableClose: true
       });
       dialogRef.afterClosed().subscribe(result => {
-        this.refreshFormsList();
-        this.refreshLocationList();
+    
         this.formList.filterPredicate = function (data, filter: string): boolean {
           return data.formName.toLowerCase().includes(filter);
         };
@@ -142,7 +140,8 @@ export class FormCaptureComponent implements OnInit {
   }
 
  addProviceForm(dataItem:any){
-  if(dataItem.captureID==0){
+  console.log("dataItem: "+dataItem);
+  if(dataItem.nonFacilityCaptured==0){
     this.spinner.show();
     let formCaptureData = {
       formCaptureID: 0,
@@ -162,12 +161,13 @@ export class FormCaptureComponent implements OnInit {
     this.service.addCapturedForms(formCaptureData).subscribe(res => {
       let myObj = {
         formID: this.formIDNo,//6,
-        formName: JSON.parse(res).formName,
+        formName: JSON.parse(res).formName,//.replace('/[0-9]/g',''),
         formCaptureID: JSON.parse(res).formCaptureID,
         state: 'add',
         roleID:dataItem.roleID,
         view:'readwrite'
       };
+      console.log('myobj: '+myObj);
       this.spinner.hide();
       // this.showNotification('top', 'center', 'Form created successfully', '', 'success');
       localStorage.setItem('formNames', JSON.parse(res).formName);
@@ -181,15 +181,16 @@ export class FormCaptureComponent implements OnInit {
       this.formData.formName = "";
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
-        this.refreshLocationList();
+
       });
     });
   }
   else{
+   // var fromNameZ = localStorage.getItem('formNames')
     let formCaptureObj = {
       formID: this.formIDNo,//6,
-      formName: localStorage.getItem('formNames'),//'ProvincialIndicators',
-      formCaptureID: dataItem.captureID,
+      formName: localStorage.getItem('formNames'), //fromNameZ.replace('/[0-9]/g',''),//'ProvincialIndicators',
+      formCaptureID: dataItem.nonFacilityCaptured,
       state: 'edit',
       roleID:dataItem.roleID,
       view:'readwrite'
@@ -202,8 +203,7 @@ export class FormCaptureComponent implements OnInit {
       disableClose: true
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.refreshFormsList();
-      this.refreshLocationList();
+  
       this.formList.filterPredicate = function (data, filter: string): boolean {
         return data.formName.toLowerCase().includes(filter);
       };

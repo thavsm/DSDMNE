@@ -86,7 +86,7 @@ export class FormExportComponent implements OnInit {
     this.source=[];
     this.service.getFormPages(ID).subscribe(data => {
      this.formPages = data;
-      this.service.   getFormFieldsPerPage(ID, this.formPages[0].pageGUID).subscribe(data => {
+      this.service.getFormFieldsPerPage(ID, this.formPages[0].pageGUID).subscribe(data => {
        this.listOfQuestions = data;
         console.log("data"+data);
         console.log("lquestions" + this.listOfQuestions);
