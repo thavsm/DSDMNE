@@ -145,7 +145,7 @@
                                         <mat-form-field appearance="outline">
                                             <mat-label>Form Name</mat-label>
                                             <mat-select [(ngModel)]="NodeData.FormName" (selectionChange)="onformChangeIsForm($event)">
-                                                <mat-option *ngFor="let c of Form" [value]="c.formID">
+                                                <mat-option *ngFor="let c of Formfiltered" [value]="c.formID">
                                                     {{c.displayName}}
                                                 </mat-option>
                                             </mat-select>

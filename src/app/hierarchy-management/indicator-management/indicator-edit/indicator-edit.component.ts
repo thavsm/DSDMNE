@@ -11,6 +11,8 @@ import * as JsonToXML from "js2xmlparser";
 import { HierarchyManagementService } from 'src/app/hierarchy-management.service';
 import { HierarchyFormPreviewComponent } from '../../hierarchy-form-preview/hierarchy-form-preview.component';
 import { ExternaldataAddComponent } from '../../externaldata-add/externaldata-add.component';
+import { UserService } from 'src/app/shared/user.service';
+
 declare var $: any;
 
 @Component({
@@ -89,7 +91,11 @@ export class IndicatorEditComponent implements OnInit {
   divIsFormD: boolean = false;
   ExtData: any[];
   levels: any = [];
-  constructor(public dialog: MatDialog , private Treeservice: TreediagramService, public dialogRef: MatDialogRef<IndicatorEditComponent>,
+  Formfiltered: any[] = [];
+  userData: any;
+  provID: any;
+
+  constructor(public dialog: MatDialog , public userService : UserService , private Treeservice: TreediagramService, public dialogRef: MatDialogRef<IndicatorEditComponent>,
     @Inject(MAT_DIALOG_DATA) data,
   public service: TreediagramService, public Hierarchyservice: HierarchyManagementService, public formBuilder: FormBuilder, private spinner: NgxSpinnerService)  
   {
@@ -222,9 +228,16 @@ export class IndicatorEditComponent implements OnInit {
         this.ExternalData.name = 1003;
         if(this.IndicatorFormFields.length > 0 ){
           this.spinner.show();  
-          this.service.GetFormCategoryId(this.IndicatorFormFields[0].formCategoryID).subscribe(data => {    
-            this.Form = data;     
-            this.SelectedForm = this.Form.find(i => i.formID === this.IndicatorFormFields[0].formID);
+          this.service.GetFormCategoryId(this.IndicatorFormFields[0].formCategoryID).subscribe(data => {  
+            this.Form = data;   
+            this.userService.getUserProfile().subscribe(UserData => {
+              this.userData = UserData['formData'];
+              this.provID = this.userData['provinceID'];  
+              this.Formfiltered.push(this.Form.find(i => i.locationID === this.provID)); 
+              this.spinner.hide();
+              this.divIsFormD = true;
+            });
+            this.SelectedForm = this.Formfiltered.find(i => i.formID === this.IndicatorFormFields[0].formID);
             this.spinner.hide();
             this.divIsFormD = true;
           });
@@ -577,15 +590,32 @@ export class IndicatorEditComponent implements OnInit {
       this.FormFieldsByFieldID = data;
     });
   }
+
   onIsformCategoryChange(ob) {
 
     this.spinner.show();
-    this.service.GetFormCategoryId(ob.value).subscribe(data => {   
-      this.Form = data;     
-      this.spinner.hide();
-      this.divIsFormD = true;
+    this.service.GetFormCategoryId(ob.value).subscribe(data => {
+      this.Form = data
+      this.userService.getUserProfile().subscribe(UserData => {
+        this.userData = UserData['formData'];
+        this.provID = this.userData['provinceID'];  
+        this.Formfiltered.push(this.Form.find(i => i.locationID === this.provID)); 
+        // this.Formfiltered = this.Form.find(i => i.locationID === this.provID);
+        this.spinner.hide();
+        this.divIsFormD = true;
+      })
     });
   }
+
+  // onIsformCategoryChange(ob) {
+
+  //   this.spinner.show();
+  //   this.service.GetFormCategoryId(ob.value).subscribe(data => {   
+  //     this.Form = data;     
+  //     this.spinner.hide();
+  //     this.divIsFormD = true;
+  //   });
+  // }
   openFormDesign(): void {
 
     if (this.NodeData.FormName != "" && this.NodeData.fName) {

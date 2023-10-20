@@ -123,6 +123,10 @@ export class HierarchyManagementService {
     return this.http.get<any>(this.API_URL+'Trees/'+RoleID+'/'+treeID+'/AssignedIndicatorNodesByRole');
   }
 
+  getAssignedIndicatorNodesByTreeRoleIDProvID(RoleID :any ,treeID, ProvID):Observable<any[]>{
+    return this.http.get<any>(this.API_URL+'Trees/'+RoleID+'/'+treeID+'/'+ProvID+'/AssignedIndicatorNodesByRoleProvID');
+  }
+
   getUnassignedIndicatorNodesByTreeRoleID(RoleID :any ,treeID):Observable<any[]>{
     return this.http.get<any>(this.API_URL+'Trees/'+RoleID+'/'+treeID+'/UnassignedIndicatorNodesByRole');
   }
@@ -130,6 +134,11 @@ export class HierarchyManagementService {
   assignIndicators(data:any,roleID:any,treeID:any){
     return this.http.post(this.API_URL+'Trees/'+roleID+'/'+treeID+'/AssignIndicatorRole',data,{responseType: 'text'});
   }
+
+  assignIndicatorsProvID(data:any,roleID:any,treeID:any, ProvID:any){
+    return this.http.post(this.API_URL+'Trees/'+roleID+'/'+treeID+'/'+ProvID+'/AssignIndicatorRoleProvID',data,{responseType: 'text'});
+  }
+
 
   AssignRoles(indicatorID:any,data:any,treeID:any){
     return this.http.post(this.API_URL+'Trees/'+indicatorID+'/'+treeID+'/AssignRole',data,{responseType: 'text'});
