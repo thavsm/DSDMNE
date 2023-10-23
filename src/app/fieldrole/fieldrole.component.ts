@@ -84,20 +84,28 @@ export class FieldroleComponent implements OnInit {
 
   //Assigns indicator/s to a role
   assign():void{
-   if(this.assigned.length==0){
-    this.treeService.assignIndicators(this.assigned,this.roleID,this.treeID).subscribe(res=>{
-      this.showNotification('top', 'center', 'Indicators unassigned successfully!', '', 'success');
-      this.myStepper.previous();
-      this.myStepper.previous();
+
+    this.userService.getUserProfile().subscribe(data => {
+      
+      this.userData = data['formData'];
+      this.provID = this.userData["provinceID"]; 
+
+      if(this.assigned.length==0){
+        this.treeService.assignIndicatorsProvID(this.assigned,this.roleID,this.treeID, this.provID).subscribe(res=>{
+          this.showNotification('top', 'center', 'Indicators unassigned successfully!', '', 'success');
+          this.myStepper.previous();
+          this.myStepper.previous();
+        });
+        }
+        else{
+          this.treeService.assignIndicatorsProvID(this.assigned,this.roleID,this.treeID, this.provID).subscribe(res=>{
+            this.showNotification('top', 'center', 'Indicators assigned successfully!', '', 'success');
+            this.myStepper.previous();
+            this.myStepper.previous();
+          });
+        }
+
     });
-    }
-    else{
-      this.treeService.assignIndicators(this.assigned,this.roleID,this.treeID).subscribe(res=>{
-        this.showNotification('top', 'center', 'Indicators assigned successfully!', '', 'success');
-        this.myStepper.previous();
-        this.myStepper.previous();
-      });
-    }
   }
 
   getAllIndicators() {
@@ -109,7 +117,7 @@ export class FieldroleComponent implements OnInit {
       this.spinner.show();
       this.treeService.getIndicatorNodesByUserProvinceID(this.provID).subscribe(res => {
         this.source = res;
-        this.treeService.getAssignedIndicatorNodesByTreeRoleID(this.roleID, this.treeID).subscribe(val => {
+        this.treeService.getAssignedIndicatorNodesByTreeRoleIDProvID(this.roleID, this.treeID, this.provID).subscribe(val => {
           this.assigned = val;
           this.spinner.hide();
         });
