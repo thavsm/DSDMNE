@@ -8,7 +8,7 @@ export const environment = {
   API_FormURL: 'https://app1.terra.group/MNE_PHASE2_API/1/'  ,
   API_FormURLForHelp: 'https://app1.terra.group/MNE_PHASE2_API',
 
-  REPORT_SERVER: 'https://app1.terra.group/DSDReportViewerSSRS/Default?ID=',
+  REPORT_SERVER: 'https://app1.terra.group/DSDReportViewerSSRS_PHASE2/Default?ID=',
   //REPORT_SERVER: 'http://DB2/ReportServer/',
   REPORT_URL : 'DSD MnE/',
 
