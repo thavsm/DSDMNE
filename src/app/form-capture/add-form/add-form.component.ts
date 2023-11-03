@@ -1589,6 +1589,7 @@ export class AddFormComponent implements OnInit {
             });
           });
         }
+        console.log('calc: '+calc);
         field.data = eval(calc).toFixed(2);
       }
     });
