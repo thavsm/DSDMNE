@@ -115,7 +115,7 @@ export class IndicatorapprovalComponent implements OnInit {
   refreshFormsList() {
     this.spinner.show();
     
-    this.service.getIndicatorsDataApproval(this.locationTypeID, this.locationID, this.monthID, this.year, this.roleID).subscribe(data => {
+    this.service.getIndicatorsDataApproval_PS(this.locationTypeID, this.locationID, this.monthID, this.year, this.roleID, this.wfid).subscribe(data => {
       this.gridView=data;
       switch(this.locationTypeID)
       {

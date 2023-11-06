@@ -298,6 +298,10 @@ export class TreediagramService {
     return this.http.get<any>(this.API_URL+'Trees/getIndicatorsDataApproval?locationType='+locationType+'&locationID='+locationID+'&monthID='+monthID+'&year='+year+'&roleID='+roleID);
   }
 
+  getIndicatorsDataApproval_PS(locationType:number, locationID:number, monthID:number, year:number, roleID:number, wfid:number){
+    return this.http.get<any>(this.API_URL+'Trees/getIndicatorsDataApproval_PS?locationType='+locationType+'&locationID='+locationID+'&monthID='+monthID+'&year='+year+'&roleID='+roleID+'&wfID='+wfid);
+  }
+
   getFacilityIndicatorsDataApproval(indicatorID:number, locationType:number, locationID:number, year:number, monthID:number){
     return this.http.get<any>(this.API_URL+'Trees/getFacilityIndicatorsDataApproval?indicatorID='+indicatorID+'&locationType='+locationType+'&locationID='+locationID+'&year='+year+'&monthID='+monthID);
   }
