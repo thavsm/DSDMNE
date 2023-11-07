@@ -27,6 +27,8 @@ export interface nodeData{
   nodeParentD:number;
   nonFacilityCaptured:number;
   periodStatus:number;
+  provinceCaptureID:number;
+  provinceNonFacilityCapturedID:number;
 }
 
 @Component({
@@ -52,6 +54,8 @@ export class FormCaptureComponent implements OnInit {
   PeriodStatus:any;
   NonFacilityCaptured:any;
   formIDTest: any;
+  ProvinceCaptureID:any;
+  ProvinceNonFacilityCapturedID:any;
   ngOnInit(): void {
     this.spinner.show();
     //this.getFormID();
@@ -141,7 +145,7 @@ export class FormCaptureComponent implements OnInit {
 
  addProviceForm(dataItem:any){
   console.log("dataItem: "+dataItem);
-  if(dataItem.nonFacilityCaptured==0){
+  if(dataItem.provinceCaptureID==0){
     this.spinner.show();
     let formCaptureData = {
       formCaptureID: 0,
@@ -187,10 +191,11 @@ export class FormCaptureComponent implements OnInit {
   }
   else{
    // var fromNameZ = localStorage.getItem('formNames')
+  
     let formCaptureObj = {
       formID: this.formIDNo,//6,
       formName: localStorage.getItem('formNames'), //fromNameZ.replace('/[0-9]/g',''),//'ProvincialIndicators',
-      formCaptureID: dataItem.nonFacilityCaptured,
+      formCaptureID: dataItem.provinceCaptureID,
       state: 'edit',
       roleID:dataItem.roleID,
       view:'readwrite'

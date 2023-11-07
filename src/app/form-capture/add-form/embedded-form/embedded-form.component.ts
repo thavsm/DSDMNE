@@ -1807,9 +1807,24 @@ checkID(){
           } else if (genderPick >= "5000" && genderPick <= "9999") {
             gender = 'Male';
           }
-        }
-      }
-      console.log("gender: " + gender);
+
+          console.log("gender: " + gender);
+          //console.log("date: " + newDate);
+          console.log("tempdate: " + tempDate);
+          let calc = field.calculation;
+          if (calc !== "") {
+            var stringArray = calc.split(/(\s+)/);
+            stringArray.forEach(num => {
+              this.formDesign.forEach(res => {
+                if (res.fieldType.value === "section") {
+                  let sectionItems = res.groupGUID;
+                  
+                  sectionItems.forEach(sectionItem => {
+                    console.log('secItems: ' +sectionItems);
+                    if ('#' + sectionItem.fieldName === num) {
+                      var re = new RegExp(num, "gi");
+                      if (sectionItem.data === "" || sectionItem.data === undefined) {
+                        field.data =   console.log("gender: " + gender);
       //console.log("date: " + newDate);
       console.log("tempdate: " + tempDate);
       let calc = field.calculation;
@@ -1825,7 +1840,7 @@ checkID(){
                 if ('#' + sectionItem.fieldName === num) {
                   var re = new RegExp(num, "gi");
                   if (sectionItem.data === "" || sectionItem.data === undefined) {
-                    field.data = "MM/DD/YYYY";
+                    field.data = newDate;
                   } else {
                     field.data = newDate;
                   }
@@ -1838,7 +1853,7 @@ checkID(){
                       if (listItem.data === "" || listItem.data === undefined) {
                         field.data = gender.toString();
                       } else {
-                        field.data = "";
+                        field.data = gender.toString();
                       }
                     }
                   })
@@ -1869,7 +1884,54 @@ checkID(){
             }
           });
         });
+      };
+                      } else {
+                        field.data = newDate;
+                      }
+                    }
+                    if (sectionItem.fieldType.value === "lexicon list") {
+                      let listItems = sectionItem.groupGUID;
+                      listItems.forEach(listItem => {
+                        if ('#' + listItem.fieldName === num) {
+                          var re = new RegExp(num, "gi");
+                          if (listItem.data === "" || listItem.data === undefined) {
+                            field.data = gender.toString();
+                          } else {
+                            field.data = "";
+                          }
+                        }
+                      })
+                    }
+                  })
+                } else {
+    
+                  if ('#' + res.fieldName === num) {
+                    if(res.fieldType.value === "date"){
+                    var re = new RegExp(num, "gi");
+                    if (res.data === "" || res.data === undefined) {
+                      res.data = newDate;
+                    } else {
+                      res.data =newDate;
+                    }
+                  }
+                  else if ('#' + res.fieldName === num) {
+                    if(res.fieldType.value === "lexicon list"){
+                    var re = new RegExp(num, "gi");
+                    if (res.data === "" || res.data === undefined) {
+                      res.data = gender.toString();
+                    } else {
+                      res.data = gender.toString();
+                    }
+                  }
+                  }
+                }
+                }
+              });
+            });
+          }
+        }
       }
+    
     }
   });
 }
