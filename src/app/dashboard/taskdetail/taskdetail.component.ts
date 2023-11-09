@@ -25,6 +25,7 @@ export class TaskDetailComponent implements OnInit {
   actionTaken: number;
   audittaskArray: any[];
   userID: any;
+  userDetail: any;
 
   roles = [
     {value: '1', viewValue: 'Admin'},
@@ -100,6 +101,18 @@ export class TaskDetailComponent implements OnInit {
         ProcessID:0
       };
 
+
+      this.service.getUserProfile().subscribe(
+        res => {
+          this.userDetail = res['formData'];
+          console.log(this.userDetail);
+          this.getAuditTrail(wkid, tid, this.userDetail.userID);
+        },
+        err => {
+          console.log(err);
+        }
+      );
+
     this.service.getuserTask(body).subscribe(
         res => {
           console.log(res['workflow']);
@@ -132,17 +145,20 @@ export class TaskDetailComponent implements OnInit {
           console.log(err);
         },
       );
-
-      this.userID = 0;
-      //sessionStorage.getItem("wfUser");
-      this.service.getTaskAuditTrail_User(parseInt(wkid),parseInt(tid), this.userID).subscribe(taskuser=>{
-        this.audittaskArray=taskuser;
       }
-    // this.service.getTaskAuditTrail_User(parseInt(wkid),parseInt(tid),this.nextUserID).subscribe(taskuser=>{
-    //   this.audittaskArray=taskuser;
-    // }
-    )
-  }
+      
+      getAuditTrail(wkid:any, tid:any, userid:string){
+        this.userID = this.userDetail.userID;
+        //sessionStorage.getItem("wfUser");
+        this.service.getTaskAuditTrail_User(parseInt(wkid),parseInt(tid), userid).subscribe(taskuser=>{
+          this.audittaskArray=taskuser;
+          console.log(this.audittaskArray);
+        }
+      // this.service.getTaskAuditTrail_User(parseInt(wkid),parseInt(tid),this.nextUserID).subscribe(taskuser=>{
+      //   this.audittaskArray=taskuser;
+      // }
+      )
+      }
 
   completeTask() {
 

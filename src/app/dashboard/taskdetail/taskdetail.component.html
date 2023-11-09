@@ -17,7 +17,7 @@
                                     <textarea matInput rows="1" [(ngModel)]="comment"></textarea>
                                 </mat-form-field>
                             </div>
-                            <div class="col-sm-2" *ngIf="pid>2">
+                            <div class="col-sm-2" *ngIf="pid>7">
                                 <mat-form-field appearance="standard">
                                     <mat-label>Action Taken</mat-label>
                                     <mat-select [(value)]="actTakenID" (selectionChange)='onActionSelected($event)'>
@@ -27,7 +27,7 @@
                                     </mat-select>
                                 </mat-form-field>
                             </div>
-                            <div class="col-sm-2" *ngIf="pid>2">
+                            <div class="col-sm-2" *ngIf="pid>7">
                                 <mat-form-field appearance="standard">
                                     <mat-label>User</mat-label>
                                     <mat-select [(value)]="nextUserID" (selectionChange)='onUserSelected($event)'>
@@ -90,23 +90,21 @@
                                                 <thead>
                                                     <tr>
                                                         <th>#</th>
-                                                        <th>Task</th>
-                                                        <th>Role</th>
                                                         <th>Location</th>
-                                                        <th>User</th>
                                                         <th>Completed On</th>
+                                                        <th>User</th>
+                                                        <th>Role</th>
                                                         <th>Comment</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr *ngFor="let obj of audittaskArray;let i = index">
                                                         <td>{{ i+1 }}</td>
-                                                        <td>{{ obj['actionRequiredDescription'] }}</td>
-                                                        <td>{{ obj['quickComments'] }}</td>
-                                                        <td>{{ obj['actionTakenDescription'] }}</td>
-                                                        <td>{{ obj['userDescription'] }}</td>
-                                                        <td>{{ obj['completedOn'] }}</td>
-                                                        <td>{{ obj['comments'] }}</td>
+                                                        <td>{{ obj['location'] }}</td>
+                                                        <td>{{ obj['approveDate'] }}</td>
+                                                        <td>{{ obj['fullName'] }}</td>
+                                                        <td>{{ obj['role'] }}</td>                                                     
+                                                        <td>{{ obj['comment'] }}</td>
                                                     </tr>
                                                 </tbody>
 
