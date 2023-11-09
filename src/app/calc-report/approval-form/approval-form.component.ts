@@ -127,6 +127,7 @@ export class ApprovalFormComponent implements OnInit {
   isViewOnly:boolean=true;
 
   disableButton:boolean;
+  userIDn:any;
   
   EmbeddedFormNo:any;
   EmbeddedFieldID:any;
@@ -143,12 +144,6 @@ export class ApprovalFormComponent implements OnInit {
     //   state: 'edit'
     // };
 
-    this.userService.getUserProfile().subscribe(data => {
-
-      this.userData = data['formData'];
-
-      this.provID = this.userData["provinceID"];
-   
 
 
     this.IndicatorData = data["indicatorID"];
@@ -161,7 +156,6 @@ export class ApprovalFormComponent implements OnInit {
       state: 'edit'
     };
 
-  });
 
     //this.formData = JSON.parse(localStorage.getItem('formApprovalDetails') || '{}');
     this.tabIndex = parseInt(localStorage.getItem('tabIndex'));
@@ -180,6 +174,9 @@ export class ApprovalFormComponent implements OnInit {
     this.userService.getUserProfile().subscribe(
       res => {
         this.userDetail = res;
+        this.userIDn=this.userDetail.formData.userID;
+        console.log(this.userIDn);
+        this.provID=this.userDetail.formData.provinceID;
         let userRoleID = this.userDetail.formData.role;
         this.userService.getFormsRole(userRoleID).subscribe(formRole => {
           formRole.forEach(role => {
@@ -1746,7 +1743,14 @@ timer: 5000,
   }
 
   viewPhoto(data: any) {
+    const dialogRef = this.dialog.open(formPhotoPreview, {
+      width: '70%',
+      height: '70%',
+      data: { image: data.photo },
+    });
+    dialogRef.afterClosed().subscribe(result => {
 
+    });
   }
 
   validateEmail(fieldName: any, email: any) {
@@ -2130,5 +2134,20 @@ timer: 5000,
       disableClose: true
     });
   }
+  
 }
 
+@Component({
+  selector: 'formPhotoPreview',
+  templateUrl: 'formPhotoPreview.html',
+})
+export class formPhotoPreview {
+  constructor(
+    public dialogRef: MatDialogRef<formPhotoPreview>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+  ) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+}

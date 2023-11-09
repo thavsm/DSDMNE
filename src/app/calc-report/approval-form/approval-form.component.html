@@ -3866,7 +3866,7 @@
 
                         <kendo-grid-column [width]="5" *ngIf="isViewOnly">
                             <ng-template kendoGridCellTemplate let-dataItem>
-                                <button mat-icon-button (click)="deletePhoto(dataItem)">
+                                <button mat-icon-button (click)="deletePhoto(dataItem)" *ngIf="this.userIDn==dataItem.userID">
                                     <mat-icon class="mat-18" style="color:red ;">delete</mat-icon>
                                 </button>
                             </ng-template>

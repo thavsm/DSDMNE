@@ -27,6 +27,8 @@ export interface nodeData{
   nodeParentD:number;
   nonFacilityCaptured:number;
   periodStatus:number;
+  provinceCaptureID:number;
+  provinceNonFacilityCapturedID:number;
 }
 
 @Component({
@@ -52,6 +54,8 @@ export class FormCaptureComponent implements OnInit {
   PeriodStatus:any;
   NonFacilityCaptured:any;
   formIDTest: any;
+  ProvinceCaptureID:any;
+  ProvinceNonFacilityCapturedID:any;
   ngOnInit(): void {
     this.spinner.show();
     //this.getFormID();
@@ -111,6 +115,8 @@ export class FormCaptureComponent implements OnInit {
         this.formData.formName = "";
         dialogRef.afterClosed().subscribe(result => {
           console.log('The dialog was closed');
+          this.refreshFormsList();
+          this.refreshLocationList();
         });
       });
     }
@@ -131,7 +137,8 @@ export class FormCaptureComponent implements OnInit {
         disableClose: true
       });
       dialogRef.afterClosed().subscribe(result => {
-    
+        this.refreshFormsList();
+        this.refreshLocationList();
         this.formList.filterPredicate = function (data, filter: string): boolean {
           return data.formName.toLowerCase().includes(filter);
         };
@@ -141,7 +148,7 @@ export class FormCaptureComponent implements OnInit {
 
  addProviceForm(dataItem:any){
   console.log("dataItem: "+dataItem);
-  if(dataItem.nonFacilityCaptured==0){
+  if(dataItem.provinceCaptureID==0){
     this.spinner.show();
     let formCaptureData = {
       formCaptureID: 0,
@@ -170,6 +177,7 @@ export class FormCaptureComponent implements OnInit {
       console.log('myobj: '+myObj);
       this.spinner.hide();
       // this.showNotification('top', 'center', 'Form created successfully', '', 'success');
+      localStorage.setItem('formCaptureDetails', JSON.stringify(myObj));
       localStorage.setItem('formNames', JSON.parse(res).formName);
       localStorage.setItem('tabIndex', '0');
       const dialogRef = this.dialog.open(AddFormComponent, {
@@ -177,20 +185,21 @@ export class FormCaptureComponent implements OnInit {
         height: '85%',
         disableClose: true
       });
-      localStorage.setItem('formCaptureDetails', JSON.stringify(myObj));
       this.formData.formName = "";
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
-
+        this.refreshFormsList();
+        this.refreshLocationList();
       });
     });
   }
   else{
    // var fromNameZ = localStorage.getItem('formNames')
+  
     let formCaptureObj = {
       formID: this.formIDNo,//6,
       formName: localStorage.getItem('formNames'), //fromNameZ.replace('/[0-9]/g',''),//'ProvincialIndicators',
-      formCaptureID: dataItem.nonFacilityCaptured,
+      formCaptureID: dataItem.provinceCaptureID,
       state: 'edit',
       roleID:dataItem.roleID,
       view:'readwrite'
@@ -203,7 +212,8 @@ export class FormCaptureComponent implements OnInit {
       disableClose: true
     });
     dialogRef.afterClosed().subscribe(result => {
-  
+      this.refreshFormsList();
+      this.refreshLocationList();
       this.formList.filterPredicate = function (data, filter: string): boolean {
         return data.formName.toLowerCase().includes(filter);
       };
