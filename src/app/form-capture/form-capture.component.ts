@@ -115,6 +115,8 @@ export class FormCaptureComponent implements OnInit {
         this.formData.formName = "";
         dialogRef.afterClosed().subscribe(result => {
           console.log('The dialog was closed');
+          this.refreshFormsList();
+          this.refreshLocationList();
         });
       });
     }
@@ -135,7 +137,8 @@ export class FormCaptureComponent implements OnInit {
         disableClose: true
       });
       dialogRef.afterClosed().subscribe(result => {
-    
+        this.refreshFormsList();
+        this.refreshLocationList();
         this.formList.filterPredicate = function (data, filter: string): boolean {
           return data.formName.toLowerCase().includes(filter);
         };
@@ -174,6 +177,7 @@ export class FormCaptureComponent implements OnInit {
       console.log('myobj: '+myObj);
       this.spinner.hide();
       // this.showNotification('top', 'center', 'Form created successfully', '', 'success');
+      localStorage.setItem('formCaptureDetails', JSON.stringify(myObj));
       localStorage.setItem('formNames', JSON.parse(res).formName);
       localStorage.setItem('tabIndex', '0');
       const dialogRef = this.dialog.open(AddFormComponent, {
@@ -181,11 +185,11 @@ export class FormCaptureComponent implements OnInit {
         height: '85%',
         disableClose: true
       });
-      localStorage.setItem('formCaptureDetails', JSON.stringify(myObj));
       this.formData.formName = "";
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
-
+        this.refreshFormsList();
+        this.refreshLocationList();
       });
     });
   }
@@ -208,7 +212,8 @@ export class FormCaptureComponent implements OnInit {
       disableClose: true
     });
     dialogRef.afterClosed().subscribe(result => {
-  
+      this.refreshFormsList();
+      this.refreshLocationList();
       this.formList.filterPredicate = function (data, filter: string): boolean {
         return data.formName.toLowerCase().includes(filter);
       };

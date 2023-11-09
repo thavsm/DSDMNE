@@ -47,9 +47,7 @@ export class UsersComponent implements OnInit {
     console.log('before');
     this.service.getUsers(); 
     
-    this.service.getAllUsers().subscribe(data => {
-      this.userList.data = data;
-    });
+    this.refreshUsers();
     
   }
 
@@ -64,8 +62,14 @@ export class UsersComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      this.refreshUsers();
       console.log('The dialog was closed');      
     });
   }
-
+   
+  refreshUsers(){
+    this.service.getAllUsers().subscribe(data => {
+      this.userList.data = data;
+    });
+  }
 }
