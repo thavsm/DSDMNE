@@ -198,7 +198,7 @@ export class IndicatorEditComponent implements OnInit {
 
         var Indicatorvalues = {
           "indicatorID": this.IndicatorAdd.indicatorID,
-          "tableName": 'Data_' + this.SelectedForm.formName + "_" + this.FormFieldsByFieldID[0].formPage.name.replace(/\s/g, ""),
+          "tableName": 'Data_' + this.SelectedForm.formName+ "_" + this.FormFieldsByFieldID[0].formPage.name.replace(/\s/g, ""),
           "fieldID": this.NodeData.fName,
           "formID": this.NodeData.FormName        
         };
@@ -588,6 +588,8 @@ export class IndicatorEditComponent implements OnInit {
   onIsformfieldChange(ob) {  
     this.service.GetFormFieldsByFieldID(ob.value).subscribe(data => {
       this.FormFieldsByFieldID = data;
+
+      let test = this.SelectedForm.formName+ "_" + this.FormFieldsByFieldID[0].formPage.name.replace(/\s/g, "");
     });
   }
 
