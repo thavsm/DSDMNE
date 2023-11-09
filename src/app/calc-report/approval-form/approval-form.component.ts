@@ -390,7 +390,8 @@ export class ApprovalFormComponent implements OnInit {
     if (localStorage.getItem('fieldNameComment') !== null && localStorage.getItem('fieldNameComment') !== undefined) {
       commentName = localStorage.getItem('fieldNameComment').toString();
     }
-    //console.log(this.totalNumComments);
+    console.log(this.totalNumComments + '- ' + commentName);
+    
     // if (this.totalNumComments == 0 && commentName =="")
     //   {
 
@@ -398,6 +399,7 @@ export class ApprovalFormComponent implements OnInit {
     //     return;
     //   }
     this.service.GetFormEditing(this.formData.formCaptureID).subscribe(res => {
+      console.log(res);
       if(typeof this.totalNumComments === 'undefined' )
       {
         this.showNotification('top', 'center', 'Please leave comment related to your update', '', 'danger');
