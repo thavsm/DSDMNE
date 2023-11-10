@@ -103,6 +103,7 @@ export class ApprovalFormComponent implements OnInit {
   public commentList: any;
   public newcommentList: any;
   public totalNumComments: number = 0;
+  public totalUserComments: number = 0;
 
   @ViewChild('fileInput') fileInput: ElementRef;
   file: File = null;
@@ -383,6 +384,7 @@ export class ApprovalFormComponent implements OnInit {
 
   savePage() {
     var errorMessage = "Please fill in ";
+    this.formData.state = 'edit';
     let obj = [];
     let obj2=[];
     let commentName = "";
@@ -390,7 +392,7 @@ export class ApprovalFormComponent implements OnInit {
     if (localStorage.getItem('fieldNameComment') !== null && localStorage.getItem('fieldNameComment') !== undefined) {
       commentName = localStorage.getItem('fieldNameComment').toString();
     }
-    console.log(this.totalNumComments + '- ' + commentName);
+    console.log('User comments: ' + this.totalUserComments + '- ' + commentName);
     
     // if (this.totalNumComments == 0 && commentName =="")
     //   {
@@ -400,7 +402,7 @@ export class ApprovalFormComponent implements OnInit {
     //   }
     this.service.GetFormEditing(this.formData.formCaptureID).subscribe(res => {
       console.log(res);
-      if(typeof this.totalNumComments === 'undefined' )
+      if(typeof this.totalUserComments === 'undefined' )
       {
         this.showNotification('top', 'center', 'Please leave comment related to your update', '', 'danger');
         const dialogRef = this.dialog.open(AddCommentComponent, {
@@ -423,7 +425,7 @@ export class ApprovalFormComponent implements OnInit {
 
       }
       else
-      if (this.totalNumComments == 0 && commentName =="" && res =="TRUE")
+      if (this.totalUserComments == 0 && commentName =="" && res =="TRUE")
       {
 
         this.showNotification('top', 'center', 'Please leave comment related to your update', '', 'danger');
@@ -1032,20 +1034,24 @@ export class ApprovalFormComponent implements OnInit {
     
     console.log(this.IndicatorData);
     console.log(this.formData.formCaptureID);
+    this.totalUserComments = 0;
      this.service.getIndicatorComments(this.IndicatorData, this.formData.formCaptureID).subscribe(data => {
      data.forEach(field=>{
      var new_date_time = new Date( field.timeStamp );
      var s = new_date_time.toLocaleDateString(('en-ZA')).replace(/\//g, '-');
      console.log(s);
      field.timeStamp = s;
-
+      if(field.userID == this.userDetail.formData.userID)
+        this.totalUserComments = this.totalUserComments + 1;
      });
       this.commentList = data;
+
+      console.log(this.userDetail.formData.userID);
       
-      //this.totalNumComments = Object.keys(this.commentList).length
-      console.log(Object.keys(this.commentList).length);
-      this.totalNumComments = Object.keys(this.commentList).length;
-      console.log(this.totalNumComments);
+      this.totalNumComments = Object.keys(this.commentList).length
+      // console.log(Object.keys(this.commentList).length);
+      // this.totalNumComments = Object.keys(this.commentList).length;
+      console.log(this.totalUserComments);
      });
   }
 

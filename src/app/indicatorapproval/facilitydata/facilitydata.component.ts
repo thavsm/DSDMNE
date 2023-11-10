@@ -56,7 +56,7 @@ export class FacilitydataComponent implements OnInit {
   public provIndicator = false;
 
   //public groupsServicePoint: GroupDescriptor[] = [{ }];
-  public groupsDistrict: GroupDescriptor[] = [{ field: "servicePoint" }]; //, {field: "facilityID"}, {field: "facilityName"}];
+  public groupsDistrict: GroupDescriptor[] = [{ field: "District" }]; //, {field: "facilityID"}, {field: "facilityName"}];
   public groupsProvince: GroupDescriptor[] = [{ field: "district" }, { field: "servicePoint" }]; //, {field: "facilityID"}, {field: "facilityName"}];
   public groupsNational: GroupDescriptor[] = [{ field: "province" }, { field: "district" }, { field: "servicePoint" }]; //, {field: "facilityID"}, {field: "facilityName"}];
     
