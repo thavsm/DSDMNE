@@ -76,7 +76,8 @@ export class EmbeddedFormComponent implements OnInit {
   commentID: number = 0;
 
   isPanelExpanded = true; 
-
+  thisMonth:any;
+  result:any;
   public selectedValues: string = "yes";
 
   public attachmentList: any;
@@ -109,7 +110,9 @@ export class EmbeddedFormComponent implements OnInit {
   pageStatus: any;
 
   IndicatorData: any;
-
+ locationID: any;
+ userData:any;
+ nodeName:any;
   isViewOnly: any;
   EmbeddedFormNo:any;
   EmbeddedFieldID:any;
@@ -142,18 +145,26 @@ export class EmbeddedFormComponent implements OnInit {
     this.isViewOnly = this.formData.view;
     localStorage.setItem('cloneNumberForEdit', "0");
    
-    this.refreshFormsList();
+  
     
     this.userService.getUserProfile().subscribe(
       res => {
         this.userDetail = res;
+        this.userData = res['formData'];
+        console.log('userdata: '+this.userData);
+        this.locationID=this.userData['provinceID'];
+        this.nodeName=this.userData['nodeName'];
         this.getFormID();
+        this.refreshFormsList();
       },
       err => {
         console.log(err);
         this.getFormID();
+        this.refreshFormsList();
       },
+
     );
+    
   }
 
   createForm(){
@@ -213,7 +224,8 @@ export class EmbeddedFormComponent implements OnInit {
 
   refreshFormsList() {
     this.spinner.show();
-    this.service.getEmbeddedCapturedForms(this.EmbeddedFieldID, this.EmbeddedParentID).subscribe(data => {
+    //this.locationID = this.formData.provinceID;
+    this.service.getEmbeddedCapturedForms(this.EmbeddedFieldID, this.EmbeddedParentID,this.locationID).subscribe(data => {
       this.gridView = data;
       this.spinner.hide();
       });
@@ -1738,36 +1750,65 @@ console.log('Fields: '+field["data"]);
       }
     });
   }
+  
   checkID() {
     this.formDesign.forEach(field => {
       if (field.fieldType.value === "calculation") {
         let origIdNum = field.data.toString();
         let idnumber;
   
-        if (origIdNum.length === 11) {
+        if (origIdNum.length === 10) {
+          idnumber = '000' + origIdNum;
+        } else if (origIdNum.length === 11) {
           idnumber = '00' + origIdNum;
         } else if (origIdNum.length === 12) {
           idnumber = '0' + origIdNum;
         } else {
           idnumber = origIdNum;
         }
-  
-        console.log('IDNO: ' + idnumber);
+
+        if(idnumber===""){
+          this.showNotification('top', 'center', 'Please enter a ID number', '', 'danger');
+        }
+        else{
+        var todaysDate = new Date();
+        this.thisMonth = todaysDate.getMonth()+1;
+        
+        this.service.checkIDinMonth(idnumber, this.thisMonth).subscribe(res => {
+           this.result=res;
+
+           if(this.result==1)
+           {
+            this.showNotification('top', 'center', 'This ID number has already been used, please try another ID number', '', 'danger');
+           }
+           else{
+            console.log('IDNO: ' + idnumber);
   
         if (idnumber !== "") {
           // 1. Validate numeric and 13 digits
           if (isNaN(idnumber) || idnumber.toString().length !== 13) {
-            this.showNotification('top', 'center', 'Please enter a valid 13-digit ID!', '', 'danger');
+            this.showNotification('top', 'center', 'Please enter a 13-digit ID!', '', 'danger');
             this.setPlaintextFieldToInvalid();
           } else {
+          var currentYear = new Date().getFullYear() % 100;
+          var yy = parseInt(idnumber.toString().substring(0, 2));
+          yy += (yy > currentYear ? 1900 : 2000);
+            console.log('yy: '+yy);
+
             // 2. Check the first 6 numbers for a valid date
             var tempDate = new Date(
-              idnumber.toString().substring(0, 2),
+              yy,
               idnumber.toString().substring(2, 4) - 1,
               idnumber.toString().substring(4, 6)
             );
+console.log('firstTEMP: ' +tempDate);
+
+             
+
             var newDate = tempDate.toLocaleDateString('en-ZA').replace(/\//g, '-');
             var todayDate = new Date();
+            //var thisMonth= todayDate.getMonth();
+
             var age = todayDate.getFullYear() - tempDate.getFullYear();
 
             
@@ -1781,14 +1822,12 @@ if (
 }
 
 console.log('Age:', age);
-            if (
-              !(
-                parseInt(tempDate.getFullYear().toString().substring(2, 4)) === parseInt(idnumber.toString().substring(0, 2)) &&
-                tempDate.getMonth() === parseInt(idnumber.toString().substring(2, 4)) - 1 &&
-                tempDate.getDate() === parseInt(idnumber.toString().substring(4, 6))
-              )
-            ) {
-              this.showNotification('top', 'center', 'Please enter a valid 13-digit ID!', '', 'danger');
+if (tempDate.getFullYear() !== yy || tempDate.getMonth() !== parseInt(idnumber.toString().substring(2, 4)) - 1 || tempDate.getDate() !== parseInt(idnumber.toString().substring(4, 6))) {
+  console.log('expected yy', yy);
+  console.log('tempDate ', tempDate.getFullYear());
+  console.log('mmonth yy', tempDate.getMonth());
+  console.log('date yy', tempDate.getDate());
+  this.showNotification('top', 'center', 'Please enter a valid 13-digit ID!', '', 'danger');
               this.setPlaintextFieldToInvalid();
             } else {
               // 3. Validate using Luhn formula
@@ -1808,7 +1847,6 @@ console.log('Age:', age);
                 this.showNotification('top', 'center', 'Please enter a valid 13-digit ID!', '', 'danger');
                 this.setPlaintextFieldToInvalid();
               } else {
-                // Further processing if needed (e.g., extracting gender, etc.)
                 var genderPick = idnumber.toString().substring(6, 10);
                 var gender = (genderPick >= "0000" && genderPick <= "4999") ? 'Female' : 'Male';
                 console.log("gender: " + gender);
@@ -1819,7 +1857,6 @@ console.log('Age:', age);
                   stringArray.forEach(num => {
                     this.formDesign.forEach(res => {
                       if (res.fieldType.value === "section") {
-                        // ... (section handling)
                       } else {
                         if ('#' + res.fieldName === num) {
                           if (res.fieldType.value === "date") {
@@ -1866,13 +1903,14 @@ console.log('Age:', age);
             }
           }
         }
+           }
+        });
+      }
       }
     });
   }
   
   setPlaintextFieldToInvalid() {
-    // Add logic here to set the "plaintext" field to 'Invalid'
-    // You may need to identify the specific "plaintext" field and update its data property
     this.formDesign.forEach(field => {
     let calc = field.calculation;
     if (calc !== "") {
@@ -1880,13 +1918,12 @@ console.log('Age:', age);
       stringArray.forEach(num => {
         this.formDesign.forEach(res => {
           if (res.fieldType.value === "section") {
-            // ... (section handling)
           } else {
             if ('#' + res.fieldName === num) {
           
               if (res.fieldType.value === "plaintext") {
                 if (res.data === "" || res.data === undefined) {
-                  res.data = 'Invalid'; // Assuming it should be 'Valid' when it's not 'Invalid'
+                  res.data = 'Invalid';
                 }
                 else{
                   res.data = 'Invalid'; 

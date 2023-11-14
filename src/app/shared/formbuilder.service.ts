@@ -111,8 +111,8 @@ export class FormbuilderService {
     return this.http.get(this.APIUrl+'forms/type/'+provinceID);
   }
 
-  getEmbeddedCapturedForms(fieldID: any, FormID: any) {
-    return this.http.get<any>(this.APIUrl + fieldID + '/' + FormID + '/EmbeddedCapturedForms');
+  getEmbeddedCapturedForms(fieldID: any, FormID: any,locationID:any) {
+    return this.http.get<any>(this.APIUrl + fieldID + '/' + FormID + '/'+locationID+ '/EmbeddedCapturedForms');
   }
 
   addCapturedForms(data: any) {
@@ -286,6 +286,10 @@ export class FormbuilderService {
 
   GetDisplayables(formID: any): Observable<any[]> {
     return this.http.get<any>(this.APIUrl + formID + '/GetDisplayables')
+  }
+
+  checkIDinMonth(idnumber: any,thisMonth: any){
+    return this.http.get(this.APIUrl +idnumber+ '/'+thisMonth+ '/GetIDMonthExists');
   }
 
   getPageStatus(formCaptureID: any, pageGUID: any) {
