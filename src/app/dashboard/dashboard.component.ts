@@ -114,7 +114,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
             excelValues
           ]
         };
-        const dailySalesChart = new Chartist.Line('#dailySalesChart', dataDailySalesChart, optionsDailySalesChart);
+        const dailySalesChart = new Chartist.Bar('#dailySalesChart', dataDailySalesChart, optionsDailySalesChart);
         this.startAnimationForLineChart(dailySalesChart);
       })
     })
