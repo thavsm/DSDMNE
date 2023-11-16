@@ -210,6 +210,7 @@ export class UserProfileComponent implements OnInit {
             this.active = "InActive";
             });
             
+            this.loadSelectedServicePoints_Update(this.formData["userID"], this.formData["districtID"]);
           },
           err => {
             this.spinner.hide();
@@ -253,7 +254,7 @@ export class UserProfileComponent implements OnInit {
             this.isFac=false;
             this.isSPMultiple=true;
             this.isSPSingle=false;
-            this.loadSelectedServicePoints(this.formData["userID"]);
+            this.loadSelectedServicePoints_Update(this.formData["userID"], this.formData["districtID"]);
             break;
             case 4264:
             this.isBranch=false;
@@ -637,6 +638,15 @@ timer: 1500,
 
   loadSelectedServicePoints(userID:number)
   {
+    this.service.getNodesByParent(this.formData["districtID"]).subscribe(
+      res => {
+        this.servicePoints = res;
+      },
+      err => {
+        console.log(err);
+      },
+    )
+    
     this.service.getUserServicePoints(userID).subscribe(
       res => {
         
@@ -646,13 +656,22 @@ timer: 1500,
           this.selectedServicePoints.push(item.nodeID);
         }
         console.log(this.selectedServicePoints);
+        this.formData["servicePointIDs"] = this.selectedServicePoints;
       },
       err => {
         console.log(err);
       },
     );
 
-     this.service.getNodesByParent(this.formData["districtID"]).subscribe(
+        
+
+  }
+
+  loadSelectedServicePoints_Update(userID:number, distID:number)
+  {
+    console.log(userID + '-' + distID);
+
+    this.service.getNodesByParent(distID).subscribe(
       res => {
         this.servicePoints = res;
       },
@@ -660,7 +679,21 @@ timer: 1500,
         console.log(err);
       },
     )
-  
+
+    this.service.getUserServicePoints(userID).subscribe(
+      res => {
+        
+        this.userServicePoints = res;
+        for (const item of this.userServicePoints) {
+          this.selectedServicePoints.push(item.nodeID);
+        }
+        this.formData["servicePointIDs"] = this.selectedServicePoints;
+        console.log(this.selectedServicePoints);
+      },
+      err => {
+        console.log(err);
+      },
+    );
    
 
   }

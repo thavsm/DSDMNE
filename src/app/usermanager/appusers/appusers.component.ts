@@ -37,8 +37,12 @@ export class AppusersComponent implements OnInit {
     this.service.getUsers(); 
     
     this.service.getAllUsers().subscribe(data => {
-      //this.userList.data = data;
-      this.userList = data;
+      
+      this.userList = data.filter((value, index, self) =>
+          self.findIndex(item => item.fullName === value.fullName && item.email === value.email && item.provinceName === value.provinceName && item.roleName === value.roleName) === index
+        );
+      
+      //this.userList = data;
     });
         
   }
