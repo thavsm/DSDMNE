@@ -35,6 +35,8 @@ export class UserProfileComponent implements OnInit {
   districts: any[];
   servicePoints: any[];
   facilities: any[];
+  selectedServicePoints: any[] = [];
+  userServicePoints: any[];
 
   roleSelected:number;
   isNational:boolean;
@@ -43,6 +45,8 @@ export class UserProfileComponent implements OnInit {
   isSP:boolean;
   isFac:boolean;
   isBranch:boolean;
+  isSPMultiple:boolean;
+  isSPSingle:boolean;
 
   active = 'InActive';
 
@@ -70,6 +74,8 @@ export class UserProfileComponent implements OnInit {
           this.isParent = true;
       }
       
+      this.isSPMultiple=false;
+      this.isSPSingle=true;
 
       //this.isParent = true;
       console.log(this.isParent);
@@ -109,6 +115,9 @@ export class UserProfileComponent implements OnInit {
                   this.isDistrict=true;
                   this.isSP=true;
                   this.isFac=false;
+                  this.isSPMultiple=true;
+                  this.isSPSingle=false;
+                  this.loadSelectedServicePoints(this.formData["userID"]);
                   break;
                   case 4264:
                   this.isBranch=false;
@@ -116,6 +125,8 @@ export class UserProfileComponent implements OnInit {
                   this.isDistrict=true;
                   this.isSP=true;
                   this.isFac=true;
+                  this.isSPMultiple=false;
+                  this.isSPSingle=true;
                   break;
                 }
                 
@@ -166,6 +177,9 @@ export class UserProfileComponent implements OnInit {
             this.isDistrict=true;
             this.isSP=true;
             this.isFac=false;
+            this.isSPMultiple=true;
+            this.isSPSingle=false;
+            this.loadSelectedServicePoints(this.formData["userID"]);
             break;
             case 4264:
             this.isBranch=false;
@@ -173,6 +187,8 @@ export class UserProfileComponent implements OnInit {
             this.isDistrict=true;
             this.isSP=true;
             this.isFac=true;
+            this.isSPMultiple=false;
+            this.isSPSingle=true;
             break;
           } 
          
@@ -235,6 +251,9 @@ export class UserProfileComponent implements OnInit {
             this.isDistrict=true;
             this.isSP=true;
             this.isFac=false;
+            this.isSPMultiple=true;
+            this.isSPSingle=false;
+            this.loadSelectedServicePoints(this.formData["userID"]);
             break;
             case 4264:
             this.isBranch=false;
@@ -242,6 +261,8 @@ export class UserProfileComponent implements OnInit {
             this.isDistrict=true;
             this.isSP=true;
             this.isFac=true;
+            this.isSPMultiple=false;
+            this.isSPSingle=true;
             break;
           }                
       } 
@@ -326,11 +347,14 @@ export class UserProfileComponent implements OnInit {
         break;
         case 4263: this.formData["facilityID"] = "0";
         this.formData["location"] = this.formData["servicePointID"];
+        this.formData["servicePointIDs"] = this.selectedServicePoints;
         break;
         case 4264: this.formData["location"] = this.formData["facilityID"];
         break;               
         
       }
+      
+      console.log(this.formData);
       this.service.UpdateUserProfile(this.formData).subscribe(
         res => {          
           //this.data1 = res;
@@ -379,14 +403,14 @@ export class UserProfileComponent implements OnInit {
       },
     );
   
-    this.service.getNodes(4263).subscribe(
-      res => {
-        this.servicePoints = res;
-      },
-      err => {
-        console.log(err);
-      },
-    );
+    // this.service.getNodes(4263).subscribe(
+    //   res => {
+    //     this.servicePoints = res;
+    //   },
+    //   err => {
+    //     console.log(err);
+    //   },
+    // );
   
     this.service.getNodes(4264).subscribe(
       res => {
@@ -510,6 +534,9 @@ timer: 1500,
      this.servicePoints = [];
      this.facilities = [];
 
+     this.isSPMultiple=false;
+     this.isSPSingle=true;
+
      switch(loctype.value)
      {
        case 4260:
@@ -541,6 +568,8 @@ timer: 1500,
         this.isDistrict=true;
         this.isSP=true;
         this.isFac=false;
+        this.isSPMultiple=true;
+        this.isSPSingle=false;
         this.loadProvince();
         break;
         case 4264:
@@ -606,6 +635,35 @@ timer: 1500,
     );
   }
 
+  loadSelectedServicePoints(userID:number)
+  {
+    this.service.getUserServicePoints(userID).subscribe(
+      res => {
+        
+        this.userServicePoints = res;
+        
+        for (const item of this.userServicePoints) {
+          this.selectedServicePoints.push(item.nodeID);
+        }
+        console.log(this.selectedServicePoints);
+      },
+      err => {
+        console.log(err);
+      },
+    );
+
+     this.service.getNodesByParent(this.formData["districtID"]).subscribe(
+      res => {
+        this.servicePoints = res;
+      },
+      err => {
+        console.log(err);
+      },
+    )
+  
+   
+
+  }
 
 
 }

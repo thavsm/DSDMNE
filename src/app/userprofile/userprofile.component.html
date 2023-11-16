@@ -95,13 +95,24 @@
                         </mat-form-field>
                     </div>
                     <div class="col-md-6">
-                        <mat-form-field appearance="outline" *ngIf="isSP">
+                        <mat-form-field appearance="outline" *ngIf="isSP&&isSPSingle">
                             <mat-label>Service Point</mat-label>
+                            <!-- <mat-select [(ngModel)]="formData['servicePointID']" (selectionChange)="updateFormData()" *ngIf="isSPSingle"> -->
                             <mat-select [(ngModel)]="formData['servicePointID']" (selectionChange)="updateFormData()">
                                 <mat-option *ngFor="let s of servicePoints" [value]="s.nodeID"
                                     (click)="loadFacilities(s)">
                                     {{ s.nodeName }}
-                                </mat-option>
+                                </mat-option> 
+                            </mat-select>
+                           
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" *ngIf="isSP&&isSPMultiple">
+                            <mat-label>Service Point</mat-label>
+                            <mat-select multiple [(ngModel)]="selectedServicePoints" (selectionChange)="updateFormData()"  singleSelection="false" >
+                                <mat-option *ngFor="let s of servicePoints" [value]="s.nodeID"
+                                    (click)="loadFacilities(s)">
+                                    {{ s.nodeName }}
+                                </mat-option> 
                             </mat-select>
                         </mat-form-field>
                     </div>
