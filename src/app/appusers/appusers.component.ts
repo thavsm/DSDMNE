@@ -46,7 +46,7 @@ export class UsersComponent implements OnInit {
   ngOnInit(): void {
     console.log('before');
     this.service.getUsers(); 
-    
+
     this.refreshUsers();
     
   }
@@ -68,8 +68,15 @@ export class UsersComponent implements OnInit {
   }
    
   refreshUsers(){
+    // this.service.getAllUsers().subscribe(data => {
+    //   this.userList.data = data;
+    // });
+
     this.service.getAllUsers().subscribe(data => {
-      this.userList.data = data;
+      
+      this.userList = data.filter((value, index, self) =>
+          self.findIndex(item => item.fullName === value.fullName && item.email === value.email && item.provinceName === value.provinceName && item.roleName === value.roleName) === index
+        );
     });
   }
 }
