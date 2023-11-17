@@ -294,42 +294,63 @@ export class NodeAddComponent implements OnInit {
         {
 
           let indexNationalNode = this.levels.findIndex(d => d.levelID === 4311); //find index in your array
-          this.levels.splice(indexNationalNode, 1);//remove element from array
+          if(indexNationalNode != -1){
+            this.levels.splice(indexNationalNode, 1);//remove element from array
+          }
+
 
           let indexBranchNode = this.levels.findIndex(d => d.levelID === 4312); //find index in your array
-          this.levels.splice(indexBranchNode, 1);//remove element from array
+          if(indexBranchNode != -1){
+            this.levels.splice(indexBranchNode, 1);//remove element from array
+          }
+
 
           let indexChiefDirectorateNode = this.levels.findIndex(d => d.levelID === 4313); //find index in your array
-          this.levels.splice(indexChiefDirectorateNode, 1);//remove element from array
+          if(indexChiefDirectorateNode != -1){
+            this.levels.splice(indexChiefDirectorateNode, 1);//remove element from array
+          }
 
+          
           let indexDirectorateNode = this.levels.findIndex(d => d.levelID === 4314); //find index in your array
-          this.levels.splice(indexDirectorateNode, 1);//remove element from array
-
-        
+          if(indexDirectorateNode != -1){
+            this.levels.splice(indexDirectorateNode, 1);//remove element from array
+          }
+       
         }
         //Provincial Tree
         if(this.provID != 0 && this.treeData.treeID == 5099)
         {
           let indexProgramNode = this.levels.findIndex(d => d.levelID === 5350); //find index in your array
-          this.levels.splice(indexProgramNode, 1);//remove element from array
+          if(indexProgramNode != -1){
+            this.levels.splice(indexProgramNode, 1);//remove element from array
+          }
+
 
           let indexSubProgramNode = this.levels.findIndex(d => d.levelID === 5351); //find index in your array
-          this.levels.splice(indexSubProgramNode, 1);//remove element from array
+          if(indexSubProgramNode != -1){
+            this.levels.splice(indexSubProgramNode, 1);//remove element from array
+          }
+
 
           let indexSubIndicatorNode = this.levels.findIndex(d => d.levelID === 5376); //find index in your array
-          this.levels.splice(indexSubIndicatorNode, 1);//remove element from array
-     
-     
+          if(indexSubIndicatorNode != -1){
+            this.levels.splice(indexSubIndicatorNode, 1);//remove element from array
+          }    
         }
 
       });
 
       if(this.treeData.treeID == 4082){
         let indexNational = this.levels.findIndex(d => d.levelID === 4260); //find index in your array
-        this.levels.splice(indexNational, 1);//remove element from array
+        if(indexNational != -1){
+          this.levels.splice(indexNational, 1);//remove element from array
+        }
+
   
         let indexProvincial = this.levels.findIndex(d => d.levelID === 4261); //find index in your array
-        this.levels.splice(indexProvincial, 1);//remove element from array
+        if(indexProvincial != -1){
+          this.levels.splice(indexProvincial, 1);//remove element from array
+        }
       }
     });
   }

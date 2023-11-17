@@ -233,13 +233,20 @@ export class IndicatorEditComponent implements OnInit {
             this.userService.getUserProfile().subscribe(UserData => {
               this.userData = UserData['formData'];
               this.provID = this.userData['provinceID'];  
-              this.Formfiltered.push(this.Form.find(i => i.locationID === this.provID)); 
+
+              if(this.provID != 0){
+                this.Formfiltered.push(this.Form.find(i => i.locationID === this.provID)); 
+                this.SelectedForm = this.Formfiltered.find(i => i.formID === this.IndicatorFormFields[0].formID);
+        
+              }else{
+                this.Formfiltered = this.Form; 
+                this.SelectedForm = this.Formfiltered.find(i => i.formID === this.IndicatorFormFields[0].formID);        
+              }
+              
               this.spinner.hide();
               this.divIsFormD = true;
             });
-            this.SelectedForm = this.Formfiltered.find(i => i.formID === this.IndicatorFormFields[0].formID);
-            this.spinner.hide();
-            this.divIsFormD = true;
+           
           });
   
           this.spinner.show();
@@ -600,8 +607,15 @@ export class IndicatorEditComponent implements OnInit {
       this.Form = data
       this.userService.getUserProfile().subscribe(UserData => {
         this.userData = UserData['formData'];
-        this.provID = this.userData['provinceID'];  
-        this.Formfiltered.push(this.Form.find(i => i.locationID === this.provID)); 
+        this.provID = this.userData['provinceID']; 
+        
+        if(this.provID != 0){
+          this.Formfiltered.push(this.Form.find(i => i.locationID === this.provID)); 
+        }else{
+          this.Formfiltered.push(this.Form); 
+        }
+        
+        //this.Formfiltered.push(this.Form.find(i => i.locationID === this.provID)); 
         // this.Formfiltered = this.Form.find(i => i.locationID === this.provID);
         this.spinner.hide();
         this.divIsFormD = true;
