@@ -258,6 +258,10 @@ export class UserService {
     return this.http.get<any>(this.BaseURI+'/Nodes/GetnodesByParentID/'+parentNode);
   }
 
+  getUserServicePoints(userID:number){
+    return this.http.get<any>(this.BaseURI+'/Nodes/GetServicenodesByUser/'+userID);
+  }
+  
   getBranches() {
 
     return this.http.get<any>(this.BaseURI + '/ApplicationUser/GetBranches');

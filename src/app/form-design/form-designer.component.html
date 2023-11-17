@@ -288,6 +288,33 @@
                                                         [(ngModel)]="item.fieldValidations[0].isRequired">
                                                     </mat-checkbox>
                                                 </td>
+                                                <tr mat-row>
+                                                    <td mat-cell>
+                                                        <label style="color: black;">Embedded: </label>
+                                                    </td>
+                                                    <td mat-cell>
+                                                        <mat-checkbox class="example-margin" [(ngModel)]="item.EmbeddedForm">
+                                                        </mat-checkbox>
+                                                    </td>
+                                                </tr>
+                                                <tr mat-row *ngIf="item.EmbeddedForm == true">
+                                                    <td mat-cell>
+                                                        <label style="color: black;">EmbeddedForm List: </label>
+                                                    </td>
+                                                    <td mat-cell>
+                                                        <mat-form-field appearance="outline">
+                                                            <mat-label>Select a Embedded Form </mat-label>
+
+                                                            <mat-select [(ngModel)]="item.EmbeddedFormId">
+                                                                <mat-option *ngFor="let fd of formdescription" [value]="fd.formID">
+                                                                    {{fd.formDescription}}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                        </mat-form-field>
+                                                    </td>
+                                                </tr>
+
+
                                             </table>
                                         </mat-tab>
                                         <mat-tab label="Attachments">

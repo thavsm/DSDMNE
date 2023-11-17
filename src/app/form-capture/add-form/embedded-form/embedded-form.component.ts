@@ -1,4 +1,4 @@
-import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild,NgModule } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { FormAddComponent } from 'src/app/form-list/form-add/form-add.component';
@@ -12,8 +12,6 @@ import { DataBindingDirective, PageSizeItem } from '@progress/kendo-angular-grid
 import { MatPaginator } from '@angular/material/paginator';
 import { merge } from 'rxjs';
 import { MatAccordion, MatExpansionPanel } from '@angular/material/expansion';
-
-
 declare var $: any;
 
 export interface DialogData {
@@ -25,6 +23,7 @@ export interface DialogData {
   templateUrl: './embedded-form.component.html',
   styleUrls: ['./embedded-form.component.css']
 })
+
 export class EmbeddedFormComponent implements OnInit {
   @ViewChild(DataBindingDirective) dataBinding: DataBindingDirective;
 
@@ -77,7 +76,8 @@ export class EmbeddedFormComponent implements OnInit {
   commentID: number = 0;
 
   isPanelExpanded = true; 
-
+  thisMonth:any;
+  result:any;
   public selectedValues: string = "yes";
 
   public attachmentList: any;
@@ -110,7 +110,9 @@ export class EmbeddedFormComponent implements OnInit {
   pageStatus: any;
 
   IndicatorData: any;
-
+ locationID: any;
+ userData:any;
+ nodeName:any;
   isViewOnly: any;
   EmbeddedFormNo:any;
   EmbeddedFieldID:any;
@@ -143,18 +145,26 @@ export class EmbeddedFormComponent implements OnInit {
     this.isViewOnly = this.formData.view;
     localStorage.setItem('cloneNumberForEdit', "0");
    
-    this.refreshFormsList();
+  
     
     this.userService.getUserProfile().subscribe(
       res => {
         this.userDetail = res;
+        this.userData = res['formData'];
+        console.log('userdata: '+this.userData);
+        this.locationID=this.userData['provinceID'];
+        this.nodeName=this.userData['nodeName'];
         this.getFormID();
+        this.refreshFormsList();
       },
       err => {
         console.log(err);
         this.getFormID();
+        this.refreshFormsList();
       },
+
     );
+    
   }
 
   createForm(){
@@ -214,7 +224,8 @@ export class EmbeddedFormComponent implements OnInit {
 
   refreshFormsList() {
     this.spinner.show();
-    this.service.getEmbeddedCapturedForms(this.EmbeddedFieldID, this.EmbeddedParentID).subscribe(data => {
+    //this.locationID = this.formData.provinceID;
+    this.service.getEmbeddedCapturedForms(this.EmbeddedFieldID, this.EmbeddedParentID,this.locationID).subscribe(data => {
       this.gridView = data;
       this.spinner.hide();
       });
@@ -1739,202 +1750,425 @@ console.log('Fields: '+field["data"]);
       }
     });
   }
-
-  //check id number is valid
-checkID(){
-  this.formDesign.forEach(field => {
-    if (field.fieldType.value === "calculation") {
-      let idnumber = field.data;
-
-      if (typeof idnumber === 'number') {
-        console.log('variable is a number');
-      }
-      console.log('IDNO: ' + idnumber);
-
-      if (idnumber !== "") {
-        // 1. Validate numeric and 13 digits
-        if (isNaN(idnumber) || idnumber.toString().length !== 13) {
-          this.showNotification('top', 'center', 'Please enter a 13 digit ID!', '', 'danger');
+  
+  checkID() {
+    this.formDesign.forEach(field => {
+      if (field.fieldType.value === "calculation") {
+        let origIdNum = field.data.toString();
+        let idnumber;
+  
+        if (origIdNum.length === 10) {
+          idnumber = '000' + origIdNum;
+        } else if (origIdNum.length === 11) {
+          idnumber = '00' + origIdNum;
+        } else if (origIdNum.length === 12) {
+          idnumber = '0' + origIdNum;
+        } else {
+          idnumber = origIdNum;
         }
 
-        // 2. Check the first 6 numbers for a valid date
-        var tempDate = new Date(
-          idnumber.toString().substring(0, 2),
-          idnumber.toString().substring(2, 4) - 1,
-          idnumber.toString().substring(4, 6)
-        );
-        var newDate = tempDate.toLocaleDateString('en-ZA').replace(/\//g, '-');
-        //var newDate = tempDate.toLocaleDateString();
-        console.log('s: ' + newDate);
-        console.log('newDate: ' + newDate);
-        var fullyear = tempDate.getFullYear();
-          var year= parseInt(fullyear.toString().substring(2,4)) === parseInt(idnumber.toString().substring(0, 2));
-          var month = tempDate.getMonth() === parseInt(idnumber.toString().substring(2, 4)) - 1 ;
-          var date = tempDate.getDate() === parseInt(idnumber.toString().substring(4, 6));
-          console.log("Year from tempDate:", parseInt(fullyear.toString().substring(2,4)));
-          console.log("Year from idnumber:", parseInt(idnumber.toString().substring(0, 2)));
-          console.log('"'+year+'"'+month+'"'+date);
-        if (
-          !(
-            parseInt(fullyear.toString().substring(2,4)) === parseInt(idnumber.toString().substring(0, 2)) &&
-            tempDate.getMonth() === parseInt(idnumber.toString().substring(2, 4)) - 1 &&
-            tempDate.getDate() === parseInt(idnumber.toString().substring(4, 6))
-          )
-        ) {
-          this.showNotification('top', 'center', 'Please enter a valid 13 digit ID!', '', 'danger');
+        if(idnumber===""){
+          this.showNotification('top', 'center', 'Please enter a ID number', '', 'danger');
         }
+        else{
+        var todaysDate = new Date();
+        this.thisMonth = todaysDate.getMonth()+1;
+        
+        this.service.checkIDinMonth(idnumber, this.thisMonth).subscribe(res => {
+           this.result=res;
 
-        // 3. Validate using Luhn formula
-        var tempTotal = 0;
-        var checkSum = 0;
-        var multiplier = 1;
-        for (var i = 0; i < 13; ++i) {
-          tempTotal = parseInt(idnumber.toString().charAt(i)) * multiplier;
-          if (tempTotal > 9) {
-            tempTotal = parseInt(tempTotal.toString().charAt(0)) + parseInt(tempTotal.toString().charAt(1));
-          }
-          checkSum = checkSum + tempTotal;
-          multiplier = (multiplier % 2 === 0) ? 1 : 2;
-        }
+           if(this.result==1)
+           {
+            this.showNotification('top', 'center', 'This ID number has already been used, please try another ID number', '', 'danger');
+           }
+           else{
+            console.log('IDNO: ' + idnumber);
+  
+        if (idnumber !== "") {
+          // 1. Validate numeric and 13 digits
+          if (isNaN(idnumber) || idnumber.toString().length !== 13) {
+            this.showNotification('top', 'center', 'Please enter a 13-digit ID!', '', 'danger');
+            this.setPlaintextFieldToInvalid();
+          } else {
+          var currentYear = new Date().getFullYear() % 100;
+          var yy = parseInt(idnumber.toString().substring(0, 2));
+          yy += (yy > currentYear ? 1900 : 2000);
+            console.log('yy: '+yy);
 
-        if (checkSum % 10 === 0) {
-          var datePick = newDate.toString();
-          var genderPick = idnumber.toString().substring(6, 10);
+            // 2. Check the first 6 numbers for a valid date
+            var tempDate = new Date(
+              yy,
+              idnumber.toString().substring(2, 4) - 1,
+              idnumber.toString().substring(4, 6)
+            );
+console.log('firstTEMP: ' +tempDate);
 
-          var gender = '';
-          if (genderPick >= "0000" && genderPick <= "4999") {
-            gender = 'Female';
-          } else if (genderPick >= "5000" && genderPick <= "9999") {
-            gender = 'Male';
-          }
+             
 
-          console.log("gender: " + gender);
-          //console.log("date: " + newDate);
-          console.log("tempdate: " + tempDate);
-          let calc = field.calculation;
-          if (calc !== "") {
-            var stringArray = calc.split(/(\s+)/);
-            stringArray.forEach(num => {
-              this.formDesign.forEach(res => {
-                if (res.fieldType.value === "section") {
-                  let sectionItems = res.groupGUID;
-                  
-                  sectionItems.forEach(sectionItem => {
-                    console.log('secItems: ' +sectionItems);
-                    if ('#' + sectionItem.fieldName === num) {
-                      var re = new RegExp(num, "gi");
-                      if (sectionItem.data === "" || sectionItem.data === undefined) {
-                        field.data =   console.log("gender: " + gender);
-      //console.log("date: " + newDate);
-      console.log("tempdate: " + tempDate);
-      let calc = field.calculation;
-      if (calc !== "") {
-        var stringArray = calc.split(/(\s+)/);
-        stringArray.forEach(num => {
-          this.formDesign.forEach(res => {
-            if (res.fieldType.value === "section") {
-              let sectionItems = res.groupGUID;
-              
-              sectionItems.forEach(sectionItem => {
-                console.log('secItems: ' +sectionItems);
-                if ('#' + sectionItem.fieldName === num) {
-                  var re = new RegExp(num, "gi");
-                  if (sectionItem.data === "" || sectionItem.data === undefined) {
-                    field.data = newDate;
-                  } else {
-                    field.data = newDate;
-                  }
-                }
-                if (sectionItem.fieldType.value === "lexicon list") {
-                  let listItems = sectionItem.groupGUID;
-                  listItems.forEach(listItem => {
-                    if ('#' + listItem.fieldName === num) {
-                      var re = new RegExp(num, "gi");
-                      if (listItem.data === "" || listItem.data === undefined) {
-                        field.data = gender.toString();
-                      } else {
-                        field.data = gender.toString();
-                      }
-                    }
-                  })
-                }
-              })
+            var newDate = tempDate.toLocaleDateString('en-ZA').replace(/\//g, '-');
+            var todayDate = new Date();
+            //var thisMonth= todayDate.getMonth();
+console.log('NEWDAT: '+newDate);
+            var age = todayDate.getFullYear() - tempDate.getFullYear();
+
+            
+// Check if the birthday hasn't occurred yet this year
+if (
+  todayDate.getMonth() < tempDate.getMonth() ||
+  (todayDate.getMonth() === tempDate.getMonth() &&
+    todayDate.getDate() < tempDate.getDate())
+) {
+  age--;
+}
+
+console.log('Age:', age);
+if (tempDate.getFullYear() !== yy || tempDate.getMonth() !== parseInt(idnumber.toString().substring(2, 4)) - 1 || tempDate.getDate() !== parseInt(idnumber.toString().substring(4, 6))) {
+  console.log('expected yy', yy);
+  console.log('tempDate ', tempDate.getFullYear());
+  console.log('mmonth yy', tempDate.getMonth());
+  console.log('date yy', tempDate.getDate());
+  this.showNotification('top', 'center', 'Please enter a valid 13-digit ID!', '', 'danger');
+              this.setPlaintextFieldToInvalid();
             } else {
-
-              if ('#' + res.fieldName === num) {
-                if(res.fieldType.value === "date"){
-                var re = new RegExp(num, "gi");
-                if (res.data === "" || res.data === undefined) {
-                  res.data = newDate;
-                } else {
-                  res.data =newDate;
+              // 3. Validate using Luhn formula
+              var checkSum = 0;
+              var multiplier = 1;
+  
+              for (var i = 0; i < 13; ++i) {
+                var tempTotal = parseInt(idnumber.toString().charAt(i)) * multiplier;
+                if (tempTotal > 9) {
+                  tempTotal = parseInt(tempTotal.toString().charAt(0)) + parseInt(tempTotal.toString().charAt(1));
                 }
+                checkSum = checkSum + tempTotal;
+                multiplier = (multiplier % 2 === 0) ? 1 : 2;
               }
-              else if ('#' + res.fieldName === num) {
-                if(res.fieldType.value === "lexicon list"){
-                var re = new RegExp(num, "gi");
-                if (res.data === "" || res.data === undefined) {
-                  res.data = gender.toString();
-                } else {
-                  res.data = gender.toString();
-                }
-              }
-              }
-            }
-            }
-          });
-        });
-      };
+  
+              if (checkSum % 10 !== 0) {
+                this.showNotification('top', 'center', 'Please enter a valid 13-digit ID!', '', 'danger');
+                this.setPlaintextFieldToInvalid();
+              } else {
+                var genderPick = idnumber.toString().substring(6, 10);
+                var gender = (genderPick >= "0000" && genderPick <= "4999") ? 'Female' : 'Male';
+                console.log("gender: " + gender);
+  
+                let calc = field.calculation;
+                if (calc !== "") {
+                  var stringArray = calc.split(/(\s+)/);
+                  stringArray.forEach(num => {
+                    this.formDesign.forEach(res => {
+                      if (res.fieldType.value === "section") {
                       } else {
-                        field.data = newDate;
-                      }
-                    }
-                    if (sectionItem.fieldType.value === "lexicon list") {
-                      let listItems = sectionItem.groupGUID;
-                      listItems.forEach(listItem => {
-                        if ('#' + listItem.fieldName === num) {
-                          var re = new RegExp(num, "gi");
-                          if (listItem.data === "" || listItem.data === undefined) {
-                            field.data = gender.toString();
-                          } else {
-                            field.data = "";
+                        if ('#' + res.fieldName === num) {
+                          if (res.fieldType.value === "date") {
+                            if (res.data === "" || res.data === undefined) {
+                              res.data = newDate;
+                            }
+                            else{
+                              res.data = newDate;
+                            }
+                          }
+                          if (res.fieldType.value === "lexicon list") {
+                            if (res.data === "" || res.data === undefined) {
+                              res.data = gender.toString();
+                            }
+                            else{
+                              res.data = gender.toString();
+                            }
+
+                          }
+                          if (res.fieldType.value === "plaintext") {
+                            if (res.data === "" || res.data === undefined) {
+                              res.data = 'Valid';
+                            }
+                            else{
+                              res.data = 'Valid'; 
+                            }
+                          }
+                          if(res.fieldType.value==='number')
+                        {
+                          if (res.data === "" || res.data === undefined) {
+                            res.data = age;
+                          }
+                          else{
+                            res.data = age; 
                           }
                         }
-                      })
-                    }
-                  })
-                } else {
-    
-                  if ('#' + res.fieldName === num) {
-                    if(res.fieldType.value === "date"){
-                    var re = new RegExp(num, "gi");
-                    if (res.data === "" || res.data === undefined) {
-                      res.data = newDate;
-                    } else {
-                      res.data =newDate;
-                    }
-                  }
-                  else if ('#' + res.fieldName === num) {
-                    if(res.fieldType.value === "lexicon list"){
-                    var re = new RegExp(num, "gi");
-                    if (res.data === "" || res.data === undefined) {
-                      res.data = gender.toString();
-                    } else {
-                      res.data = gender.toString();
-                    }
-                  }
-                  }
+
+                        }
+                      }
+                    });
+                  });
                 }
-                }
-              });
-            });
+              }
+            }
           }
         }
+           }
+        });
       }
-    
+      }
+    });
+  }
+  
+  setPlaintextFieldToInvalid() {
+    this.formDesign.forEach(field => {
+    let calc = field.calculation;
+    if (calc !== "") {
+      var stringArray = calc.split(/(\s+)/);
+      stringArray.forEach(num => {
+        this.formDesign.forEach(res => {
+          if (res.fieldType.value === "section") {
+          } else {
+            if ('#' + res.fieldName === num) {
+          
+              if (res.fieldType.value === "plaintext") {
+                if (res.data === "" || res.data === undefined) {
+                  res.data = 'Invalid';
+                }
+                else{
+                  res.data = 'Invalid'; 
+                }
+              }
+            }
+          }
+        });
+      });
     }
   });
-}
+  }
+  
+  
+  //check id number is valid
+// checkID(){
+//   this.formDesign.forEach(field => {
+//     if (field.fieldType.value === "calculation") {
+//       let origIdNum=field.data.toString();
+//       let idnumber;        
+//       var valid;
+//       if(origIdNum.length===11)
+//       {
+//         idnumber='00'+origIdNum;
+
+//       }
+//       else if(origIdNum.length===12)
+//       {
+//         idnumber='0'+origIdNum;
+//       }
+//       else{
+//      idnumber=origIdNum;
+//      }
+
+//       if (typeof idnumber === 'number') {
+//         console.log('variable is a number');
+//       }
+//       console.log('IDNO: ' + idnumber);
+
+//       if (idnumber !== "") {
+//         // 1. Validate numeric and 13 digits
+//         if (isNaN(idnumber) || idnumber.toString().length !== 13) {
+//           this.showNotification('top', 'center', 'Please enter a 13 digit ID!', '', 'danger');
+          
+//           valid='Invalid';
+//         }
+//         else{valid='Valid'}
+
+
+//         // 2. Check the first 6 numbers for a valid date
+//         var tempDate = new Date(
+//           idnumber.toString().substring(0, 2),
+//           idnumber.toString().substring(2, 4) - 1,
+//           idnumber.toString().substring(4, 6)
+//         );
+//         var newDate = tempDate.toLocaleDateString('en-ZA').replace(/\//g, '-');
+//         //var newDate = tempDate.toLocaleDateString();
+//         console.log('s: ' + newDate);
+//         console.log('newDate: ' + newDate);
+//         var fullyear = tempDate.getFullYear();
+//           var year= parseInt(fullyear.toString().substring(2,4)) === parseInt(idnumber.toString().substring(0, 2));
+//           var month = tempDate.getMonth() === parseInt(idnumber.toString().substring(2, 4)) - 1 ;
+//           var date = tempDate.getDate() === parseInt(idnumber.toString().substring(4, 6));
+//           console.log("Year from tempDate:", parseInt(fullyear.toString().substring(2,4)));
+//           console.log("Year from idnumber:", parseInt(idnumber.toString().substring(0, 2)));
+//           console.log('"'+year+'"'+month+'"'+date);
+//         if (
+//           !(
+//             parseInt(fullyear.toString().substring(2,4)) === parseInt(idnumber.toString().substring(0, 2)) &&
+//             tempDate.getMonth() === parseInt(idnumber.toString().substring(2, 4)) - 1 &&
+//             tempDate.getDate() === parseInt(idnumber.toString().substring(4, 6))
+//           )
+//         ) {
+//           this.showNotification('top', 'center', 'Please enter a valid 13 digit ID!', '', 'danger');
+//         }
+
+//         // 3. Validate using Luhn formula
+//         var tempTotal = 0;
+//         var checkSum = 0;
+//         var multiplier = 1;
+       
+//         for (var i = 0; i < 13; ++i) {
+//           tempTotal = parseInt(idnumber.toString().charAt(i)) * multiplier;
+//           if (tempTotal > 9) {
+//             tempTotal = parseInt(tempTotal.toString().charAt(0)) + parseInt(tempTotal.toString().charAt(1));
+//           }
+//           checkSum = checkSum + tempTotal;
+//           multiplier = (multiplier % 2 === 0) ? 1 : 2;
+//         }
+
+//         if (checkSum % 10 === 0) {
+
+//         }
+//         var datePick = newDate.toString();
+//         var genderPick = idnumber.toString().substring(6, 10);
+
+//         var gender = '';
+//         if (genderPick >= "0000" && genderPick <= "4999") {
+//           gender = 'Female';
+//         } else if (genderPick >= "5000" && genderPick <= "9999") {
+//           gender = 'Male';
+//         }
+    
+
+//         console.log("gender: " + gender);
+//         //console.log("date: " + newDate);
+//         console.log("tempdate: " + tempDate);
+//         let calc = field.calculation;
+//         if (calc !== "") {
+//           var stringArray = calc.split(/(\s+)/);
+//           stringArray.forEach(num => {
+//             this.formDesign.forEach(res => {
+//               if (res.fieldType.value === "section") {
+//                 let sectionItems = res.groupGUID;
+                
+//                 sectionItems.forEach(sectionItem => {
+//                   console.log('secItems: ' +sectionItems);
+//                   if ('#' + sectionItem.fieldName === num) {
+//                     var re = new RegExp(num, "gi");
+//                     if (sectionItem.data === "" || sectionItem.data === undefined) {
+//                       field.data =   console.log("gender: " + gender);
+//     //console.log("date: " + newDate);
+//     console.log("tempdate: " + tempDate);
+//     let calc = field.calculation;
+//     if (calc !== "") {
+//       var stringArray = calc.split(/(\s+)/);
+//       stringArray.forEach(num => {
+//         this.formDesign.forEach(res => {
+//           if (res.fieldType.value === "section") {
+//             let sectionItems = res.groupGUID;
+            
+//             sectionItems.forEach(sectionItem => {
+//               console.log('secItems: ' +sectionItems);
+//               if ('#' + sectionItem.fieldName === num) {
+//                 var re = new RegExp(num, "gi");
+//                 if (sectionItem.data === "" || sectionItem.data === undefined) {
+//                   field.data = newDate;
+//                 } else {
+//                   field.data = newDate;
+//                 }
+//               }
+//               if (sectionItem.fieldType.value === "lexicon list") {
+//                 let listItems = sectionItem.groupGUID;
+//                 listItems.forEach(listItem => {
+//                   if ('#' + listItem.fieldName === num) {
+//                     var re = new RegExp(num, "gi");
+//                     if (listItem.data === "" || listItem.data === undefined) {
+//                       field.data = gender.toString();
+//                     } else {
+//                       field.data = gender.toString();
+//                     }
+//                   }
+//                 })
+//               }
+//             })
+//           } else {
+
+//             if ('#' + res.fieldName === num) {
+//               if(res.fieldType.value === "date"){
+//               var re = new RegExp(num, "gi");
+//               if (res.data === "" || res.data === undefined) {
+//                 res.data = newDate;
+//               } else {
+//                 res.data =newDate;
+//               }
+//             }
+          
+//               if(res.fieldType.value === "lexicon list"){
+//               var re = new RegExp(num, "gi");
+//               if (res.data === "" || res.data === undefined) {
+//                 res.data = gender.toString();
+//               } else {
+//                 res.data = gender.toString();
+//               }
+           
+//             }
+           
+//               if(res.fieldType.value === "plaintext"){
+//               var re = new RegExp(num, "gi");
+//               if ((res.data === "" || res.data === undefined)&&(checkSum % 10 !== 0)) {
+//                 res.data = valid;
+//               } else {
+//                 res.data = valid;
+//               }
+            
+//             }
+//           }
+//           }
+//         });
+//       });
+//     };
+//                     } else {
+//                       field.data = newDate;
+//                     }
+//                   }
+//                   if (sectionItem.fieldType.value === "lexicon list") {
+//                     let listItems = sectionItem.groupGUID;
+//                     listItems.forEach(listItem => {
+//                       if ('#' + listItem.fieldName === num) {
+//                         var re = new RegExp(num, "gi");
+//                         if (listItem.data === "" || listItem.data === undefined) {
+//                           field.data = gender.toString();
+//                         } else {
+//                           field.data = "";
+//                         }
+//                       }
+//                     })
+//                   }
+//                 })
+//               } else {
+  
+//                 if ('#' + res.fieldName === num) {
+//                   if (res.fieldType.value === "date") {
+//                     var re = new RegExp(num, "gi");
+//                     if (res.data === "" || res.data === undefined) {
+//                       res.data = newDate;
+//                     } else {
+//                       res.data = newDate;
+//                     }
+//                   } else if (res.fieldType.value === "lexicon list") {
+//                     var re = new RegExp(num, "gi");
+//                     if (res.data === "" || res.data === undefined) {
+//                       res.data = gender.toString();
+//                     } else {
+//                       res.data = gender.toString();
+//                     }
+//                   } else if(res.fieldType.value === "plaintext"){
+//                     var re = new RegExp(num, "gi");
+//                     if ((res.data === "" || res.data === undefined)) {
+//                       res.data = 'Invalid';
+//                     } else {
+//                       res.data = 'Valid';
+//                     }
+//                   }
+                  
+//                 }
+//               }
+//             });
+//           });
+//         }
+//       }
+    
+//     }
+//   });
+// }
 
 //check id number is valid
 //   checkID() {

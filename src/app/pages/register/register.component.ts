@@ -311,7 +311,7 @@ timer: 1500,
      this.servicePoints = [];
      this.facilities = [];
      this.isSPMultiple=false;
-     this.isSPSingle=false;
+     this.isSPSingle=true;
 
      switch(loctype.value)
      {

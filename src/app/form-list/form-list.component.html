@@ -48,8 +48,8 @@
 
                   <kendo-grid-column [width]="2">
                     <ng-template kendoGridCellTemplate let-dataItem>
-                      <button mat-icon-button (click)="clickDelete(dataItem)">
-                        <mat-icon matTooltip="Delete" class="mat-18" style="color: red;">delete</mat-icon>
+                      <button  mat-icon-button (click)="clickDelete(dataItem)"  >
+                        <mat-icon matTooltip="Delete" class="mat-18" style="color: red;" *ngIf="this.locationDis== 8658">delete</mat-icon>
                       </button>
                     </ng-template>
                   </kendo-grid-column>
