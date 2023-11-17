@@ -553,7 +553,7 @@ export class EmbeddedFormComponent implements OnInit {
                 this.currentPage.color = "green";
                 this.formData.state = 'edit';
                 this.refreshFormsList();
-                //this.clearDesignPerPage(this.currentPage.pageGUID);
+                this.clearDesignPerPage(this.currentPage.pageGUID);
               });
             });
             this.isPanelExpanded = false;
@@ -1808,7 +1808,7 @@ console.log('firstTEMP: ' +tempDate);
             var newDate = tempDate.toLocaleDateString('en-ZA').replace(/\//g, '-');
             var todayDate = new Date();
             //var thisMonth= todayDate.getMonth();
-
+console.log('NEWDAT: '+newDate);
             var age = todayDate.getFullYear() - tempDate.getFullYear();
 
             
