@@ -41,6 +41,7 @@ export class TreediagramComponent implements OnInit {
   treeViewEdit: any;
   userData: any;
   provID: any;
+  locationID:any;
 
   constructor(public dialog: MatDialog,private treediagramService: TreediagramService , public userService: UserService) {
     this.treeData = JSON.parse(localStorage.getItem('treeData') || '{}');
@@ -52,7 +53,7 @@ export class TreediagramComponent implements OnInit {
 
       this.userData = data['formData'];
       this.provID = this.userData["provinceID"];
-
+      this.locationID=this.userData.location;
       // this.treenodes = this.treediagramService.fetchNodes();
       this.treenodes = this.treediagramService.getNodes(this.treeData.treeID, this.provID);
       this.getAllParentTextProperties(this.treenodes);
