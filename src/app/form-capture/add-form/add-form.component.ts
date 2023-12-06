@@ -44,6 +44,10 @@ export class AddFormComponent implements OnInit {
 
   dataToSave: any = [];
 
+  formCapID: any;
+
+  formCapIDLoc:any;
+
   tabIndex = 0;
 
   formComment: string = '';
@@ -89,6 +93,7 @@ export class AddFormComponent implements OnInit {
 
   constructor(public dialog: MatDialog, private service: FormbuilderService, private spinner: NgxSpinnerService, public dialogRef: MatDialogRef<FormAddComponent>,public POPupRef: MatDialogRef<AddCommentComponent>, private userService: UserService) {
     this.formData = JSON.parse(localStorage.getItem('formCaptureDetails') || '{}');
+
     this.IndicatorData = localStorage.getItem('IndicatorData') || '';
     //this.IndicatorData='80';
     this.tabIndex = parseInt(localStorage.getItem('tabIndex'));
@@ -105,6 +110,8 @@ export class AddFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.isViewOnly = this.formData.view;
+
+    console.log('capture  '+this.formCapID);
     localStorage.setItem('cloneNumberForEdit', "0");
     this.userService.getUserProfile().subscribe(
       res => {
@@ -1090,9 +1097,11 @@ export class AddFormComponent implements OnInit {
   }
 
   onUpload() {
+
     let fileName = "";
     if (localStorage.getItem('fieldNameAttach') !== null || localStorage.getItem('fieldNameAttach') !== undefined) {
-      fileName = localStorage.getItem('fieldNameAttach').toString();
+
+      fileName = encodeURIComponent(localStorage.getItem('fieldNameAttach').toString());
     }
     if (fileName !== "") {
       if (this.file !== null) {
@@ -1196,7 +1205,7 @@ export class AddFormComponent implements OnInit {
   onUploadPhoto() {
     let photoName = "";
     if (localStorage.getItem('fieldNamePhoto') !== null || localStorage.getItem('fieldNamePhoto') !== undefined) {
-      photoName = localStorage.getItem('fieldNamePhoto').toString();
+      photoName = encodeURIComponent(localStorage.getItem('fieldNamePhoto').toString());
     }
     if (photoName !== "") {
       var fileType = this.photoFile.name.split('.').pop();
