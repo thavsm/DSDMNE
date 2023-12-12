@@ -40,11 +40,32 @@ export class FormExportComponent implements OnInit {
   source = [];
   excelHeaders: string[] = [];
   formPages: any;
-  
+  userDetail:any;
+  LocateID: any;
+  localLocation:any;
 
   @ViewChild('stepper') private myStepper: MatStepper;
 
   ngOnInit(): void {
+    this.userService.getUserProfile().subscribe(
+      res => {
+        this.userDetail = res;
+        this.userData = res['formData'];
+        console.log('userdata: '+this.userData);
+        this.LocateID=this.userData['location'];
+        console.log('lOcation: '+this.LocateID);
+        localStorage.setItem('formLocation',this.LocateID);
+       
+       
+      },
+      err => {
+        console.log(err);
+      
+       
+      },
+
+    ); 
+    
     this.refreshFormsCategoryList();
     this.firstFormGroup = this._formBuilder.group({
       category: ['', Validators.required],
@@ -64,11 +85,12 @@ export class FormExportComponent implements OnInit {
 
   filterForms() {
     let ID = this.categoryID;
+    this.localLocation = parseInt(localStorage.getItem('formLocation'));
     this.spinner.show();
-    this.userService.getUserProfile().subscribe(data => {
-      this.userData = data['formData'];
-      this.provID = this.userData["provinceID"];
-      this.service.getDynamicFormListProvince(this.provID ).subscribe(data => {
+    // this.userService.getUserProfile().subscribe(data => {
+    //   this.userData = data['formData'];
+    //   this.provID = this.userData["provinceID"];
+      this.service.getDynamicFormListProvince(this.localLocation ).subscribe(data => {
         this.formList = data.filter(function (e) {
           return e.formCategoryID == ID;
         });
@@ -78,7 +100,7 @@ export class FormExportComponent implements OnInit {
         }
         this.spinner.hide();
       });
-    });
+    // });
   }
   filterFormQuestions() {
     let ID = this.formID;
