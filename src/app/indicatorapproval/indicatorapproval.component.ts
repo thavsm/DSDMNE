@@ -58,6 +58,7 @@ export class IndicatorapprovalComponent implements OnInit {
   public taskName='';
   public endDate='';
   public roleID=0;
+  public userID=0;
 
   public groups: GroupDescriptor[] = [{ field: "programme" }, {field: "subProgram"}];
   public groupsNational: GroupDescriptor[] = [{ field: "chiefdirectorate" }, {field: "directorate"}];
@@ -76,6 +77,8 @@ export class IndicatorapprovalComponent implements OnInit {
           
           this.formData = res['formData'];
           console.log(this.formData);
+
+          this.userID = this.formData['userID'];
 
           this.roleID = this.formData["role"];
           console.log(this.roleID);
@@ -115,7 +118,8 @@ export class IndicatorapprovalComponent implements OnInit {
   refreshFormsList() {
     this.spinner.show();
     
-    this.service.getIndicatorsDataApproval_PS(this.locationTypeID, this.locationID, this.monthID, this.year, this.roleID, this.wfid).subscribe(data => {
+    //this.service.getIndicatorsDataApproval_PS(this.locationTypeID, this.locationID, this.monthID, this.year, this.roleID, this.wfid).subscribe(data => {
+    this.service.getIndicatorsDataApproval_PS_User(this.locationTypeID, this.locationID, this.monthID, this.year, this.roleID, this.wfid, this.userID).subscribe(data => {
       this.gridView=data;
       switch(this.locationTypeID)
       {
@@ -144,7 +148,8 @@ export class IndicatorapprovalComponent implements OnInit {
       locationID: this.locationID,
       year: this.year,
       month: this.monthID,
-      indLocation: item["indicatorLocation"]
+      indLocation: item["indicatorLocation"],
+      userID: this.userID
     }
     
     const dialogRef = this.dialog.open(FacilitydataComponent, {
