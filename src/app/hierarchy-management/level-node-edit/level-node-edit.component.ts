@@ -1569,7 +1569,8 @@ export class LevelNodeEditComponent implements OnInit {
       "nodeID": this.NodeData.nodeID,
       "nodeParentD": this.NodeData.nodeParentD,
       "levelID": this.NodeData.levelID,
-      "status": "1"
+      "status": "1",
+      "indicatorID" : this.NodeData.indicatorID
     };
 
 
