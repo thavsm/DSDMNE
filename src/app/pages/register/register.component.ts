@@ -220,7 +220,6 @@ timer: 1500,
         this.showNotification('top','right','Please complete all fields.','Error', 'info');
       }    
       else{  
-        this.spinner.show();
         var locBranch = 0;
         var locProvince = 0;
         var locDistrict = 0;
@@ -253,53 +252,88 @@ timer: 1500,
           loc = locSPoints[0];
           locSPoint = locSPoints[0];
         }
-        var body = {
-          Email: this.formModel.value.Email,
-          FullName: this.formModel.value.FullName,
-          Password: this.formModel.value.Password,
-          Location: loc ,
-          Role: this.formModel.value.Role,
-          PhoneNumber: this.formModel.value.PhoneNumber,
-          EmployeeNo: this.formModel.value.EmployeeNo,
-          ServicePoint: this.formModel.value.ServicePoint,
-          Address: this.formModel.value.Address,
-          Branch: locBranch,
-          Surname: this.formModel.value.Surname,
-          LocationType: this.formModel.value.LocationType,
-          RoleType: this.formModel.value.RoleType,
-          ProvinceID: locProvince,
-          DistrictID: locDistrict,
-          ServicePointID: locSPoint,
-          ServicePointIDs: locSPoints,
-          FacilityID: locFacility
-        };
-        //let bd ={Email: this.formModel.Email, Password: this.formModel.Password, FullName: this.formModel.FullName};
-        this.service.register(body).subscribe(
-          (res: any) => {
-            this.spinner.hide();
-            if (res.succeeded) {
-              this.formModel.reset();
-              this.showNotification('top','right','User registered successfully', '','success');
-            } 
-            else {  
-              res.errors.forEach(element => {
-                switch (element.code) {
-                  case 'DuplicateUserName':
-                    this.showNotification('top','right','Email is already taken','Registration failed.','danger');
-                    break;
-    
-                  default:
-                    this.showNotification('top','right',element.description,'Registration failed.','danger');
-                    break;
-                }
-              });
-            }
-          },
-          err => {
-            this.spinner.hide();
-            console.log(err);
+
+        var locSelected = true;
+        console.log('fac: ' + locFacility + ' sp: ' + locSPoint + ' sp2: ' + locSPoints + ' d: ' + locDistrict + ' p: ' + locProvince);
+        switch(this.formModel.value.LocationType)
+        {
+          case 4264:{
+              if(locFacility==0 || locSPoint==0 || locDistrict==0 || locProvince==0)
+              {locSelected = false;}
+              break;
           }
-        );
+          case 4263:{
+            if(locSPoint==0 || locDistrict==0 || locProvince==0)
+            {locSelected = false;}
+            break;
+          }
+          case 4262:{
+            if(locDistrict==0 || locProvince==0)
+            {locSelected = false;}
+            break;
+          }
+          case 4261:{
+            if(locBranch==0)
+            {locSelected = false;}
+            break;
+          }
+        }
+
+        console.log('location: ' + loc + ' - ' + locSelected);
+        if(loc==0 || !locSelected){
+          this.showNotification('top','right','Please complete all fields.','Error', 'info');
+        }
+        else{
+          this.spinner.show();
+          var body = {
+            Email: this.formModel.value.Email,
+            FullName: this.formModel.value.FullName,
+            Password: this.formModel.value.Password,
+            Location: loc ,
+            Role: this.formModel.value.Role,
+            PhoneNumber: this.formModel.value.PhoneNumber,
+            EmployeeNo: this.formModel.value.EmployeeNo,
+            ServicePoint: this.formModel.value.ServicePoint,
+            Address: this.formModel.value.Address,
+            Branch: locBranch,
+            Surname: this.formModel.value.Surname,
+            LocationType: this.formModel.value.LocationType,
+            RoleType: this.formModel.value.RoleType,
+            ProvinceID: locProvince,
+            DistrictID: locDistrict,
+            ServicePointID: locSPoint,
+            ServicePointIDs: locSPoints,
+            FacilityID: locFacility
+          };
+          //let bd ={Email: this.formModel.Email, Password: this.formModel.Password, FullName: this.formModel.FullName};
+          this.service.register(body).subscribe(
+            (res: any) => {
+              this.spinner.hide();
+              if (res.succeeded) {
+                this.formModel.reset();
+                this.showNotification('top','right','User registered successfully', '','success');
+              } 
+              else {  
+                res.errors.forEach(element => {
+                  switch (element.code) {
+                    case 'DuplicateUserName':
+                      this.showNotification('top','right','Email is already taken','Registration failed.','danger');
+                      break;
+      
+                    default:
+                      this.showNotification('top','right',element.description,'Registration failed.','danger');
+                      break;
+                  }
+                });
+              }
+            },
+            err => {
+              this.spinner.hide();
+              console.log(err);
+            }
+          );
+
+        }
       }
   }
 
@@ -312,6 +346,11 @@ timer: 1500,
      this.facilities = [];
      this.isSPMultiple=false;
      this.isSPSingle=true;
+
+     this.formModel.value.FacilityID = '';
+     this.formModel.value.ServicePointID = '';
+     this.formModel.value.DistrictID = '';
+     this.formModel.value.ProvinceID = '';
 
      switch(loctype.value)
      {

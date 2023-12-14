@@ -27,6 +27,13 @@ export const environment = {
   //PowerBiREPORT_URL: 'https://app.powerbi.com/view?r=eyJrIjoiZTZkMWIzNzQtZWNkYy00MWNlLTk5N2YtMTk2ZGM2ODc1YWNjIiwidCI6IjJkZTliNDMxLTc4ODItNDczZC05YTQwLThjYjg0YzA2ODA5OSJ9', 
 
   PowerBiREPORT_URL: 'https://app.powerbi.com/view?r=eyJrIjoiMGY3MTM0OTktNmVjNS00NDZjLWI1YWYtN2MwZWZjOTI0ZmJlIiwidCI6IjJkZTliNDMxLTc4ODItNDczZC05YTQwLThjYjg0YzA2ODA5OSJ9&pageName=ReportSection' ,
+  PowerBiREPORT_Province_URL: 'https://app.powerbi.com/view?r=eyJrIjoiN2UxYjZmZGUtODU0Yi00MTgwLWEyZDItNDQ5Y2I3MWYxN2MwIiwidCI6IjJkZTliNDMxLTc4ODItNDczZC05YTQwLThjYjg0YzA2ODA5OSJ9',
+
+      //dsd
+      // PowerBiREPORT_URL: 'https://app.powerbi.com/view?r=eyJrIjoiYzM3YmEyNmMtZmJjNS00MTY2LTgzZTYtMzY4MTRmMWUzMjFiIiwidCI6Ijg2ZmY0ZTBmLTZiNzQtNGUyNy05OTk0LWMzZWY2OGM5YmIyNSIsImMiOjl9',
+
+      // PowerBiREPORT_Province_URL:"https://app.powerbi.com/view?r=eyJrIjoiZDg4ZTc3YTYtYWRiNC00OTQzLThiODUtYTFkZjZhZWRmMWQwIiwidCI6Ijg2ZmY0ZTBmLTZiNzQtNGUyNy05OTk0LWMzZWY2OGM5YmIyNSIsImMiOjl9",
+  
 };
 
 /*

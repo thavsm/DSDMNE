@@ -50,6 +50,7 @@ export class FacilitydataComponent implements OnInit {
   public month=0;
   public indicatorName='';
   public indicatorLocation=0;
+  public userID=0;
 
   public facIndicator = false;
   public spIndicator = false;
@@ -65,6 +66,7 @@ export class FacilitydataComponent implements OnInit {
     console.log(this.data);
 
     this.indicatorName = this.data["indicator"];
+    this.userID = this.data["userID"];
     
     if(!isNaN(Number(this.data["indicatorID"]))){
       this.indicatorID = Number(this.data["indicatorID"]);
@@ -142,7 +144,9 @@ export class FacilitydataComponent implements OnInit {
 
   refreshFormsList() {
     this.spinner.show();
-    this.service.getFacilityIndicatorsDataApproval(this.indicatorID, this.locationTypeID, this.locationID, this.year, this.month).subscribe(data => {
+    //this.service.getFacilityIndicatorsDataApproval(this.indicatorID, this.locationTypeID, this.locationID, this.year, this.month).subscribe(data => {
+    
+    this.service.getFacilityIndicatorsDataApproval_User(this.indicatorID, this.locationTypeID, this.locationID, this.year, this.month, this.userID).subscribe(data => {
       console.log(data);
       this.gridView=data;
       

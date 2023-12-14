@@ -1107,7 +1107,7 @@
                                                     <mat-form-field appearance="outline"
                                                         style="background: rgb(236, 236, 236);">
                                                         <input matInput type="number" onmousewheel="return false;"
-                                                        (blur)="checkID()"
+                                                        
                                                             (blur)="checkInfo()" [(ngModel)]=subsectionItem.data
                                                             readonly placeholder="{{subsectionItem.toolTip}}"
                                                             value="{{subsectionItem.data}}">
@@ -1822,7 +1822,7 @@
                                                     <mat-form-field appearance="outline"
                                                         style="background: rgb(236, 236, 236);">
                                                         <input matInput type="number" onmousewheel="return false;"
-                                                        (blur)="checkID()"
+                                                        
                                                             (blur)="checkInfo()" [(ngModel)]=subSectionItem.data
                                                             (change)="setSubSectionValue(subSectionItem.fieldName,subSectionItem.data)"
                                                             readonly placeholder="{{subSectionItem.toolTip}}">
@@ -2245,7 +2245,7 @@
                                         </div>
                                         <mat-form-field appearance="outline" style="background: rgb(236, 236, 236);">
                                             <input matInput type="number" onmousewheel="return false;"
-                                            (blur)="checkID()"
+                                            
                                                 (blur)="checkInfo()" [(ngModel)]=sectionItem.data readonly
                                                 placeholder="{{sectionItem.toolTip}}">
                                         </mat-form-field>
@@ -2796,7 +2796,7 @@
                                         </div>
                                         <mat-form-field appearance="outline" style="background: rgb(236, 236, 236);">
                                             <input matInput type="number" onmousewheel="return false;"
-                                            (blur)="checkID()"
+                                            
                                                 (blur)="checkInfo()" [(ngModel)]=sectionItem.data readonly
                                                 placeholder="{{sectionItem.toolTip}}">
                                         </mat-form-field>
@@ -3349,7 +3349,7 @@
                                         </div>
                                         <mat-form-field appearance="outline">
                                             <input matInput type="number" onmousewheel="return false;"
-                                            (blur)="checkID()"
+                                            
                                                 (blur)="checkInfo()" [(ngModel)]=sectionItem.data 
                                                 placeholder="{{sectionItem.toolTip}}">
                                         </mat-form-field>
@@ -3730,7 +3730,7 @@
                                 </div>
                             </div>
                             <mat-form-field appearance="outline">
-                                <input matInput type="number" onmousewheel="return false;" (blur)="checkID()" (blur)="checkInfo()"
+                                <input matInput type="number" onmousewheel="return false;"  (blur)="checkInfo()"
                                     [(ngModel)]=item.data placeholder="{{item.toolTip}}" (blur)="checkInfo()">
                             </mat-form-field>
                             <div style="height: 5px;"></div>
