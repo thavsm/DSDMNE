@@ -4,6 +4,7 @@ import { ReportsviewerComponent } from './reportsviewer/reportsviewer.component'
 import { SqlreportsComponent } from './sqlreports/sqlreports.component'
 import { PowerBiViewerComponent } from './power-bi-viewer/power-bi-viewer.component';
 import { IndicatorReportComponent } from './indicator-report/indicator-report.component';
+import { PowerBiProvinceComponent } from './power-bi-province/power-bi-province.component';
 
 export const ReportsRoutes: Routes = [
     {
@@ -15,6 +16,10 @@ export const ReportsRoutes: Routes = [
         {
             path: 'powerBireports',
             component: PowerBiViewerComponent
+        },
+        {
+            path: 'powerBiProvincereports',
+            component: PowerBiProvinceComponent
         },
         {
             path: 'iframereportsviewer/:id',

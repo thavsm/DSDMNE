@@ -68,7 +68,7 @@ export class EmbeddedFormComponent implements OnInit {
   dataToSave: any = [];
 
   tabIndex = 0;
-
+  formCapIDLoc:any;
   formComment: string = '';
 
   addEditComment: string = 'Add';
@@ -117,6 +117,7 @@ export class EmbeddedFormComponent implements OnInit {
   EmbeddedFormNo:any;
   EmbeddedFieldID:any;
   EmbeddedParentID:any;
+  IndicatorIDNo:any;
 
   isCaptureOrEdit:string="No";
 
@@ -194,6 +195,8 @@ export class EmbeddedFormComponent implements OnInit {
         };
         this.spinner.hide();
         this.formData =  myObj;
+       localStorage.setItem('FormcaptID',JSON.parse(res).formCaptureID );
+        
         this.refreshPageList();
         //this.refreshFormsList();
         this.formList.filterPredicate = function (data, filter: string): boolean {
@@ -1750,7 +1753,79 @@ console.log('Fields: '+field["data"]);
       }
     });
   }
-  
+//   //new changes
+// checkAge(){
+//   this.formDesign.forEach(field=>{
+//     if(field.fieldName === "DateofBirth"){
+//       let Dob = field.data;
+//       localStorage.setItem('Dob',field.data);
+//       console.log('Dob: '+Dob);
+//       this.formDesign.forEach(id=>{
+//       if(id.fieldName ==="IdentiType")
+//       {
+//         let fieldDob = id.data;
+//         if(fieldDob === 'D.O.B')
+//         {
+//           let currentDate = new Date();
+          
+ 
+//           console.log('currentDate: '+currentDate); 
+//           console.log('getdob: '+localStorage.getItem('Dob'));
+//           let storedDob = localStorage.getItem('Dob');
+//           let DobDate = new Date(storedDob);
+//           console.log('getdob: '+DobDate);
+//           let Age = currentDate.getFullYear() - DobDate.getFullYear();
+//                    // Check if the birthday hasn't occurred yet this year
+//       if (
+//        currentDate.getMonth() < DobDate.getMonth() ||
+//         (currentDate.getMonth() === DobDate.getMonth() &&
+//         currentDate.getDate() < DobDate.getDate())
+//         ) {
+//         Age--;
+//         }
+
+//           console.log('age: '+Age);
+//           this.formDesign.forEach(res=>{
+//             if(res.fieldName ==="Age"){
+//               if(res.data ==="" || res.data ===undefined){
+//                 res.data = Age;
+//               }
+//               else{
+//                 res.data=Age;
+//               }
+//             }
+
+//           });
+
+//         }
+//       }
+//     });
+//     }
+//   });
+// }
+//   checkUnique(){
+//     this.formDesign.forEach(field => {
+//       if(field.fieldName ==="IdentiType"){
+//          let IdentType = field.data;
+//          if(IdentType === 'Unknown'){
+//           this.formDesign.forEach(res => {
+//           if(res.fieldName ==="IDNumber"){
+//             if(res.data === "" || res.data === undefined){
+//             res.data=localStorage.getItem('FormcaptID');
+//            console.log('formcapture: ' +res.data);
+//             }
+//             else{
+//               res.data=localStorage.getItem('FormcaptID');
+//            console.log('formcapture: ' +res.data);
+//             }
+//          }
+       
+//         });
+ 
+//          }
+//       }
+//     });
+//   }
   checkID() {
     this.formDesign.forEach(field => {
       if (field.fieldType.value === "calculation") {
@@ -1773,8 +1848,12 @@ console.log('Fields: '+field["data"]);
         else{
         var todaysDate = new Date();
         this.thisMonth = todaysDate.getMonth()+1;
-        
-        this.service.checkIDinMonth(idnumber, this.thisMonth).subscribe(res => {
+
+  this.service.getIndicatorID(this.EmbeddedFieldID).subscribe(emb =>{
+    this.IndicatorIDNo = emb;
+    console.log('IndicatorID: '+this.IndicatorIDNo);
+  });
+        this.service.checkIDinMonth(idnumber, this.thisMonth,this.IndicatorIDNo).subscribe(res => {
            this.result=res;
 
            if(this.result==1)

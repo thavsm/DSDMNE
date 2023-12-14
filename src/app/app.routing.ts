@@ -11,6 +11,7 @@ import { IframereportsviewerComponent } from './reports/iframereportsviewer/ifra
 import { IndicatorReportComponent } from './reports/indicator-report/indicator-report.component';
 import { PowerBiViewerComponent } from './reports/power-bi-viewer/power-bi-viewer.component';
 import { SqlreportsComponent } from './reports/sqlreports/sqlreports.component';
+import { PowerBiProvinceComponent } from './reports/power-bi-province/power-bi-province.component';
 
 export const AppRoutes: Routes = [
   {
@@ -172,6 +173,10 @@ export const AppRoutes: Routes = [
     {
       path: 'powerBireports',
       component: PowerBiViewerComponent
+    },
+    {
+      path: 'powerBiProvincereports',
+      component: PowerBiProvinceComponent
     },
     {
       path: 'iframereportsviewer/:id',

@@ -7,6 +7,13 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UserProfileComponent } from 'src/app/userprofile/userprofile.component';
 import {MatTableModule} from '@angular/material/table';
+
+							 
+					  
+					  
+					   
+ 
+
 declare var $: any;
 
 
@@ -16,6 +23,11 @@ declare var $: any;
   styleUrls: []
 })
 export class AppusersComponent implements OnInit {
+
+							  
+					
+			 
+				
 
   constructor(public service: UserService, public dialog: MatDialog) { }
 
@@ -35,16 +47,9 @@ export class AppusersComponent implements OnInit {
   ngOnInit(): void {
     console.log('before');
     this.service.getUsers(); 
+
+		this.refreshUsers();				
     
-    this.service.getAllUsers().subscribe(data => {
-      
-      this.userList = data.filter((value, index, self) =>
-          self.findIndex(item => item.fullName === value.fullName && item.email === value.email && item.provinceName === value.provinceName && item.roleName === value.roleName) === index
-        );
-      
-      //this.userList = data;
-    });
-        
   }
 
   clickEdit(item: any) {    
@@ -59,12 +64,24 @@ export class AppusersComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+		this.refreshUsers();				  
       console.log('The dialog was closed');      
     });
   }
-
-  public doFilter = (event: any) => {
-    this.userList.filter = event.target.value.trim();
-  }
+   
+	  refreshUsers(){
+ this.service.getAllUsers().subscribe(data => {
+      this.userList = data.filter((value, index, self) =>
+          self.findIndex(item => item.fullName === value.fullName && item.email === value.email && item.provinceName === value.provinceName && item.roleName === value.roleName) === index
+        );
+    });
+  }	
+  //public doFilter = (event: any) => {
+   // this.userList.filter = event.target.value.trim();
+														 
+																																														  
+		  
+	   
+ // }
 
 }

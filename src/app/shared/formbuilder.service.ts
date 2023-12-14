@@ -288,8 +288,12 @@ export class FormbuilderService {
     return this.http.get<any>(this.APIUrl + formID + '/GetDisplayables')
   }
 
-  checkIDinMonth(idnumber: any,thisMonth: any){
-    return this.http.get(this.APIUrl +idnumber+ '/'+thisMonth+ '/GetIDMonthExists');
+  getIndicatorID(fieldID: any){
+    return this.http.get(this.APIUrl + 'Forms/field/' + fieldID + '/GetEmbeddedIndicator');
+  }
+
+  checkIDinMonth(idnumber: any,thisMonth: any,indicatorIDNo:any){
+    return this.http.get(this.APIUrl +idnumber+ '/'+thisMonth+ '/'+indicatorIDNo+ '/GetIDMonthExists');
   }
 
   getPageStatus(formCaptureID: any, pageGUID: any) {

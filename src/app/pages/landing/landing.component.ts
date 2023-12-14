@@ -44,6 +44,8 @@ export class LandingComponent implements OnInit {
   ];  
   
 
+  mainimage = "./assets/img/carousel1.jpg";
+  
   slideConfig = {  
     "slidesToShow": 1,  
     "slidesToScroll": 1,  

@@ -50,12 +50,16 @@
                 </span>
               </div>
               <div class="text-center">
-                <button type="submit" class="btn btn-primary btn-round mt-4" [disabled]="!formModel.valid">Login</button>
+                  <button type="submit" class="btn btn-primary btn-round mt-4" [disabled]="!formModel.valid">Login</button>
+              
+                <button type="submit" class="btn btn-danger btn-round mt-4" [routerLink]="['/resetpassword']">Forgot password?</button>
+              
+              
                 <!-- <p><a style="color:#bf7c00;" [routerLink]="['/resetpassword']">Forgot Password?</a></p> -->
               </div>
-              <div class="text-center">
+              <!-- <div class="text-center">
                 <button type="submit" class="btn btn-danger btn-round mt-4" [routerLink]="['/resetpassword']">Forgot password?</button>
-              </div>
+              </div> -->
             </div>                     
           </form>
         </div>

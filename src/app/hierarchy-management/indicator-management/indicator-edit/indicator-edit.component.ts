@@ -94,7 +94,9 @@ export class IndicatorEditComponent implements OnInit {
   Formfiltered: any[] = [];
   userData: any;
   provID: any;
-
+  userDetail:any;
+  LocateID: any;
+  localLocation:any;
   constructor(public dialog: MatDialog , public userService : UserService , private Treeservice: TreediagramService, public dialogRef: MatDialogRef<IndicatorEditComponent>,
     @Inject(MAT_DIALOG_DATA) data,
   public service: TreediagramService, public Hierarchyservice: HierarchyManagementService, public formBuilder: FormBuilder, private spinner: NgxSpinnerService)  
@@ -104,7 +106,24 @@ export class IndicatorEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  
+    this.userService.getUserProfile().subscribe(
+      res => {
+        this.userDetail = res;
+        this.userData = res['formData'];
+        console.log('userdata: '+this.userData);
+        this.LocateID=this.userData['location'];
+        console.log('lOcation: '+this.LocateID);
+        localStorage.setItem('formLocation',this.LocateID);
+       
+       
+      },
+      err => {
+        console.log(err);
+      
+       
+      },
+
+    ); 
     this.getExternalDataType();
 
     this.NodeData = {
@@ -605,12 +624,11 @@ export class IndicatorEditComponent implements OnInit {
     this.spinner.show();
     this.service.GetFormCategoryId(ob.value).subscribe(data => {
       this.Form = data
-      this.userService.getUserProfile().subscribe(UserData => {
-        this.userData = UserData['formData'];
-        this.provID = this.userData['provinceID']; 
-        
-        if(this.provID != 0){
-          this.Formfiltered.push(this.Form.find(i => i.locationID === this.provID)); 
+      // this.userService.getUserProfile().subscribe(UserData => {
+      //   this.userData = UserData['formData'];
+        this.localLocation = parseInt(localStorage.getItem('formLocation'));
+        if(this.localLocation != 0){
+          this.Formfiltered.push(this.Form.find(i => i.locationID === this.localLocation)); 
         }else{
           this.Formfiltered.push(this.Form); 
         }
@@ -620,7 +638,7 @@ export class IndicatorEditComponent implements OnInit {
         this.spinner.hide();
         this.divIsFormD = true;
       })
-    });
+    // });
   }
 
   // onIsformCategoryChange(ob) {
