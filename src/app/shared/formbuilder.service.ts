@@ -292,10 +292,10 @@ export class FormbuilderService {
     return this.http.get(this.APIUrl + 'Forms/field/' + fieldID + '/GetEmbeddedIndicator');
   }
 
-  checkIDinMonth(idnumber: any,thisMonth: any,indicatorIDNo:any){
-    return this.http.get(this.APIUrl +idnumber+ '/'+thisMonth+ '/'+indicatorIDNo+ '/GetIDMonthExists');
-  }
 
+  checkIDinMonth(idnumber: any,thisMonth: any){
+    return this.http.get(this.APIUrl +idnumber+ '/'+thisMonth+'/GetIDMonthExists');
+  }
   getPageStatus(formCaptureID: any, pageGUID: any) {
     return this.http.get(this.APIUrl + formCaptureID + '/' + pageGUID + '/PageStatus', { responseType: 'text' })
   }

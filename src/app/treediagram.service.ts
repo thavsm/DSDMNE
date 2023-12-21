@@ -302,8 +302,16 @@ export class TreediagramService {
     return this.http.get<any>(this.API_URL+'Trees/getIndicatorsDataApproval_PS?locationType='+locationType+'&locationID='+locationID+'&monthID='+monthID+'&year='+year+'&roleID='+roleID+'&wfID='+wfid);
   }
 
+  getIndicatorsDataApproval_PS_User(locationType:number, locationID:number, monthID:number, year:number, roleID:number, wfid:number, userID:number){
+    return this.http.get<any>(this.API_URL+'Trees/getIndicatorsDataApproval_PS_User?locationType='+locationType+'&locationID='+locationID+'&monthID='+monthID+'&year='+year+'&roleID='+roleID+'&wfID='+wfid+'&userID='+userID);
+  }
+
   getFacilityIndicatorsDataApproval(indicatorID:number, locationType:number, locationID:number, year:number, monthID:number){
     return this.http.get<any>(this.API_URL+'Trees/getFacilityIndicatorsDataApproval?indicatorID='+indicatorID+'&locationType='+locationType+'&locationID='+locationID+'&year='+year+'&monthID='+monthID);
+  }
+
+  getFacilityIndicatorsDataApproval_User(indicatorID:number, locationType:number, locationID:number, year:number, monthID:number, userID:number){
+    return this.http.get<any>(this.API_URL+'Trees/getFacilityIndicatorsDataApproval_User?indicatorID='+indicatorID+'&locationType='+locationType+'&locationID='+locationID+'&year='+year+'&monthID='+monthID+'&userID='+userID);
   }
 
   getIndicatorsDataApprovalHistory(indicatorID:number, formcapturedID:number){

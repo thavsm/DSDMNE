@@ -1853,7 +1853,8 @@ console.log('Fields: '+field["data"]);
     this.IndicatorIDNo = emb;
     console.log('IndicatorID: '+this.IndicatorIDNo);
   });
-        this.service.checkIDinMonth(idnumber, this.thisMonth,this.IndicatorIDNo).subscribe(res => {
+        // this.service.checkIDinMonth(idnumber, this.thisMonth,this.IndicatorIDNo).subscribe(res => {
+          this.service.checkIDinMonth(idnumber, this.thisMonth).subscribe(res => {
            this.result=res;
 
            if(this.result==1)
