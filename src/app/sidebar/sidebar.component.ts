@@ -163,7 +163,7 @@ export const ROUTES: RouteInfo[] = [{
         collapse: 'reports',
         children: [
             {path: 'sqlreports',title: 'SQL Reports', ab:'S'},
-            {path: 'powerBireports',title: 'PowerBi Reports', ab:'P'},
+            {path: 'powerBireports',title: 'Power BI Sector Reports', ab:'P'},
             {path: 'powerBiProvincereports',title: 'PowerBi Province Reports', ab:'P'}
         ]
     },
