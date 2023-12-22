@@ -26,6 +26,7 @@ export interface DialogData {
 
 export class EmbeddedFormComponent implements OnInit {
   @ViewChild(DataBindingDirective) dataBinding: DataBindingDirective;
+  @ViewChild('inputField') inputField!: ElementRef;
 
   public pageSize = 10;
   public pageSizes: Array<number | PageSizeItem> = [5, 10, 20, {
@@ -1826,22 +1827,23 @@ console.log('Fields: '+field["data"]);
 //       }
 //     });
 //   }
-  checkID() {
+  checkID(inputField: any) {
     this.formDesign.forEach(field => {
       if (field.fieldType.value === "calculation") {
-        let origIdNum = field.data.toString();
-        let idnumber;
+        let idnumber = inputField.value.toString();
+        //let idnumber;
   
-        if (origIdNum.length === 10) {
-          idnumber = '000' + origIdNum;
-        } else if (origIdNum.length === 11) {
-          idnumber = '00' + origIdNum;
-        } else if (origIdNum.length === 12) {
-          idnumber = '0' + origIdNum;
-        } else {
-          idnumber = origIdNum;
-        }
+        // if (origIdNum.length === 10) {
+        //   idnumber = '000' + origIdNum;
+        // } else if (origIdNum.length === 11) {
+        //   idnumber = '00' + origIdNum;
+        // } else if (origIdNum.length === 12) {
+        //   idnumber = '0' + origIdNum;
+        // } else {
+        //   idnumber = origIdNum;
+        // }
 
+        console.log('idnom: '+idnumber);
         if(idnumber===""){
           this.showNotification('top', 'center', 'Please enter a ID number', '', 'danger');
         }
@@ -1849,24 +1851,24 @@ console.log('Fields: '+field["data"]);
         var todaysDate = new Date();
         this.thisMonth = todaysDate.getMonth()+1;
 
-  this.service.getIndicatorID(this.EmbeddedFieldID).subscribe(emb =>{
-    this.IndicatorIDNo = emb;
-    console.log('IndicatorID: '+this.IndicatorIDNo);
-  });
+        this.service.getIndicatorID(this.EmbeddedFieldID).subscribe(emb =>{
+        this.IndicatorIDNo = emb;
+        console.log('IndicatorID: '+this.IndicatorIDNo);
+        });
         // this.service.checkIDinMonth(idnumber, this.thisMonth,this.IndicatorIDNo).subscribe(res => {
           this.service.checkIDinMonth(idnumber, this.thisMonth).subscribe(res => {
-           this.result=res;
+          this.result=res;
 
-           if(this.result==1)
-           {
+          if(this.result==1)
+          {
             this.showNotification('top', 'center', 'This ID number has already been used, please try another ID number', '', 'danger');
-           }
-           else{
+          }
+          else{
             console.log('IDNO: ' + idnumber);
   
         if (idnumber !== "") {
           // 1. Validate numeric and 13 digits
-          if (isNaN(idnumber) || idnumber.toString().length !== 13) {
+          if (idnumber.length !== 13) {
             this.showNotification('top', 'center', 'Please enter a 13-digit ID!', '', 'danger');
             this.setPlaintextFieldToInvalid();
           } else {
@@ -1926,6 +1928,7 @@ if (tempDate.getFullYear() !== yy || tempDate.getMonth() !== parseInt(idnumber.t
               if (checkSum % 10 !== 0) {
                 this.showNotification('top', 'center', 'Please enter a valid 13-digit ID!', '', 'danger');
                 this.setPlaintextFieldToInvalid();
+                
               } else {
                 var genderPick = idnumber.toString().substring(6, 10);
                 var gender = (genderPick >= "0000" && genderPick <= "4999") ? 'Female' : 'Male';
@@ -1940,6 +1943,7 @@ if (tempDate.getFullYear() !== yy || tempDate.getMonth() !== parseInt(idnumber.t
                       } else {
                         if ('#' + res.fieldName === num) {
                           if (res.fieldType.value === "date") {
+                            if(res.fieldName === "DateofBirth"){
                             if (res.data === "" || res.data === undefined) {
                               res.data = newDate;
                             }
@@ -1947,16 +1951,9 @@ if (tempDate.getFullYear() !== yy || tempDate.getMonth() !== parseInt(idnumber.t
                               res.data = newDate;
                             }
                           }
-                          if (res.fieldType.value === "lexicon list") {
-                            if (res.data === "" || res.data === undefined) {
-                              res.data = gender.toString();
-                            }
-                            else{
-                              res.data = gender.toString();
-                            }
-
                           }
                           if (res.fieldType.value === "plaintext") {
+                            if(res.fieldName === "ValidID"){
                             if (res.data === "" || res.data === undefined) {
                               res.data = 'Valid';
                             }
@@ -1964,14 +1961,28 @@ if (tempDate.getFullYear() !== yy || tempDate.getMonth() !== parseInt(idnumber.t
                               res.data = 'Valid'; 
                             }
                           }
-                          if(res.fieldType.value==='number')
+                          }
+                   
+                          if (res.fieldType.value === "lexicon list") {
+                            if (res.data === "" || res.data === undefined) {
+                              if(res.fieldName === "Gender"){
+                              res.data = gender.toString();
+                            }
+                            else{
+                              res.data = gender.toString();
+                            }
+                          }
+                          }
+                         if(res.fieldType.value==='number')
                         {
+                          if(res.fieldName === "Age"){
                           if (res.data === "" || res.data === undefined) {
                             res.data = age;
                           }
                           else{
                             res.data = age; 
                           }
+                        }
                         }
 
                         }
@@ -2008,6 +2019,18 @@ if (tempDate.getFullYear() !== yy || tempDate.getMonth() !== parseInt(idnumber.t
                 else{
                   res.data = 'Invalid'; 
                 }
+              }
+
+              else if(res.fieldName === "DateofBirth"){
+                //res.data = 'mm/dd/yyyy';
+                res.data = '';
+              }
+
+              else if(res.fieldName === 'Age'){
+                res.data='';
+              }
+              else if(res.fieldName ==='Gender'){
+                res.data = '';
               }
             }
           }

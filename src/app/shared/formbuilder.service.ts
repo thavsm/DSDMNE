@@ -103,8 +103,8 @@ export class FormbuilderService {
     return this.http.post(this.APIUrl + 'FormTables', data, { responseType: 'text' });
   }
 
-  getCapturedForms(LocationID: any, RoleID: any) {
-    return this.http.get<any>(this.APIUrl + LocationID + '/' + RoleID + '/CapturedForms');
+  getCapturedForms(LocationID: any) {
+    return this.http.get<any>(this.APIUrl + LocationID +'/CapturedForms');
   }
 
   getFormIDProvince(provinceID: any){

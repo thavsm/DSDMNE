@@ -95,7 +95,7 @@ export class FormInboxComponent implements OnInit {
       this.userDetail = res;
       let userRoleID = this.userDetail.formData.role;
       this.service.GetUserLocationHierachy(this.userDetail.formData.userID).subscribe(location => {
-      this.service.getCapturedForms(location, this.userDetail.formData.role).subscribe(data => {
+      this.service.getCapturedForms(location).subscribe(data => {
         this.gridView = data;
         this.service.getPublishedListOfForms().subscribe(x => {
           this.formList = [
@@ -141,7 +141,7 @@ export class FormInboxComponent implements OnInit {
     if (input === 'All Forms') {
       this.spinner.show();
       this.service.GetUserLocationHierachy(this.userDetail.formData.userID).subscribe(location => {
-      this.service.getCapturedForms(location,this.userDetail.formData.role).subscribe(data => {
+      this.service.getCapturedForms(location).subscribe(data => {
         this.gridView = data;
         this.service.getPublishedListOfForms().subscribe(data => {
           this.formList = [
@@ -174,7 +174,7 @@ export class FormInboxComponent implements OnInit {
     else {
       this.spinner.show();
       this.service.GetUserLocationHierachy(this.userDetail.formData.userID).subscribe(location => {
-      this.service.getCapturedForms(location,this.userDetail.formData.role).subscribe(data => {
+      this.service.getCapturedForms(location).subscribe(data => {
         this.gridView = data;
         this.service.getPublishedListOfForms().subscribe(data => {
           this.gridView = process(this.gridView, {
