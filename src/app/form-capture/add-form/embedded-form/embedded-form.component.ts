@@ -1964,8 +1964,9 @@ if (tempDate.getFullYear() !== yy || tempDate.getMonth() !== parseInt(idnumber.t
                           }
                    
                           if (res.fieldType.value === "lexicon list") {
+                            if(res.fieldName === "Gender"){
                             if (res.data === "" || res.data === undefined) {
-                              if(res.fieldName === "Gender"){
+               
                               res.data = gender.toString();
                             }
                             else{
