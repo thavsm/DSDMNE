@@ -106,7 +106,7 @@
                             </mat-select>
                            
                         </mat-form-field>
-                        <mat-form-field appearance="outline" *ngIf="isSP&&isSPMultiple">
+                        <mat-form-field appearance="outline" *ngIf="isSP&&isSPMultiple" >
                             <mat-label>Service Point</mat-label>
                             <mat-select multiple [(ngModel)]="selectedServicePoints" (selectionChange)="updateFormData()"  singleSelection="false" >
                                 <mat-option *ngFor="let s of servicePoints" [value]="s.nodeID"

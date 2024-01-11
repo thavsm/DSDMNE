@@ -69,6 +69,7 @@ export class UserProfileComponent implements OnInit {
 
     public ngOnInit() {
       this.loadLookups();
+      
       if(this.isParent == undefined)
       {
           this.isParent = true;
@@ -84,7 +85,7 @@ export class UserProfileComponent implements OnInit {
             this.service.getUserProfile().subscribe(
               res => {
                 this.formData = res['formData'];
-                console.log(this.formData);
+                console.log('formdata: '+this.formData);
                 console.log(this.formData["active"]);
                 switch(this.formData["locationType"])
                 {
@@ -139,6 +140,8 @@ export class UserProfileComponent implements OnInit {
                 console.log(err);
               },
             );
+            this.loadSelectedServicePoints(this.formData["userID"]);
+            
         }      
         else{
           this.formData = this.data.data;
@@ -191,7 +194,7 @@ export class UserProfileComponent implements OnInit {
             this.isSPSingle=true;
             break;
           } 
-         
+          this.loadSelectedServicePoints(this.formData["userID"]);
         }      
                 
       } 
@@ -404,14 +407,14 @@ export class UserProfileComponent implements OnInit {
       },
     );
   
-    // this.service.getNodes(4263).subscribe(
-    //   res => {
-    //     this.servicePoints = res;
-    //   },
-    //   err => {
-    //     console.log(err);
-    //   },
-    // );
+    this.service.getNodes(4263).subscribe(
+      res => {
+        this.servicePoints = res;
+      },
+      err => {
+        console.log(err);
+      },
+    );
   
     this.service.getNodes(4264).subscribe(
       res => {
@@ -655,8 +658,9 @@ timer: 1500,
         for (const item of this.userServicePoints) {
           this.selectedServicePoints.push(item.nodeID);
         }
-        console.log(this.selectedServicePoints);
+        console.log('servicePoints: '+this.selectedServicePoints);
         this.formData["servicePointIDs"] = this.selectedServicePoints;
+        console.log('ServicePointID: '+ this.formData["servicePointIDs"])
       },
       err => {
         console.log(err);
