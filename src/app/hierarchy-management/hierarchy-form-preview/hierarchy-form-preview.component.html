@@ -1048,6 +1048,11 @@
                                                                     <mat-icon class="mat-14" matTooltip="">photo_camera
                                                                     </mat-icon>
                                                                 </button>
+
+                                                                
+                                                                <button mat-icon-button *ngIf="subsectionItem.embeddedForm===true">
+                                                                    <mat-icon class="mat-14" matTooltip="">receipt</mat-icon>
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1713,6 +1718,10 @@
                                                                     <mat-icon class="mat-14" matTooltip="">photo_camera
                                                                     </mat-icon>
                                                                 </button>
+
+                                                                <button mat-icon-button *ngIf="subSectionItem.embeddedForm===true">
+                                                                    <mat-icon class="mat-14" matTooltip="">receipt</mat-icon>
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1758,6 +1767,11 @@
                                                                     (click)="fieldPhoto(subSectionItem)">
                                                                     <mat-icon class="mat-14" matTooltip="">photo_camera
                                                                     </mat-icon>
+                                                                </button>
+
+                                                                
+                                                                <button mat-icon-button *ngIf="subSectionItem.embeddedForm===true">
+                                                                    <mat-icon class="mat-14" matTooltip="">receipt</mat-icon>
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -2108,6 +2122,10 @@
                                                         <mat-icon class="mat-14" matTooltip="1"
                                                             style="color: rgb(153, 149, 149);">photo_camera</mat-icon>
                                                     </button>
+
+                                                    <button mat-icon-button *ngIf="sectionItem.embeddedForm===true">
+                                                        <mat-icon class="mat-14" matTooltip="">receipt</mat-icon>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -2143,6 +2161,10 @@
                                                     <button mat-icon-button *ngIf="sectionItem.hasPhoto===true"
                                                         (click)="fieldPhoto(sectionItem)">
                                                         <mat-icon class="mat-14" matTooltip="">photo_camera</mat-icon>
+                                                    </button>
+
+                                                    <button mat-icon-button *ngIf="sectionItem.embeddedForm===true">
+                                                        <mat-icon class="mat-14" matTooltip="">receipt</mat-icon>
                                                     </button>
                                                 </div>
                                             </div>
@@ -2180,6 +2202,10 @@
                                                     <button mat-icon-button *ngIf="sectionItem.hasPhoto===true"
                                                         (click)="fieldPhoto(sectionItem)">
                                                         <mat-icon class="mat-14" matTooltip="">photo_camera</mat-icon>
+                                                    </button>
+
+                                                    <button mat-icon-button *ngIf="sectionItem.embeddedForm===true">
+                                                        <mat-icon class="mat-14" matTooltip="">receipt</mat-icon>
                                                     </button>
                                                 </div>
                                             </div>
@@ -2693,6 +2719,10 @@
                                                     <button mat-icon-button *ngIf="sectionItem.hasPhoto===true"
                                                         (click)="fieldPhoto(sectionItem)">
                                                         <mat-icon class="mat-14" matTooltip="">photo_camera</mat-icon>
+                                                    </button>
+
+                                                    <button mat-icon-button *ngIf="sectionItem.embeddedForm===true">
+                                                        <mat-icon class="mat-14" matTooltip="">receipt</mat-icon>
                                                     </button>
                                                 </div>
                                             </div>
@@ -3244,6 +3274,10 @@
                                                         (click)="fieldPhoto(sectionItem)">
                                                         <mat-icon class="mat-14" matTooltip="">photo_camera</mat-icon>
                                                     </button>
+
+                                                    <button mat-icon-button *ngIf="sectionItem.embeddedForm===true">
+                                                        <mat-icon class="mat-14" matTooltip="">receipt</mat-icon>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -3281,6 +3315,10 @@
                                                     <button mat-icon-button *ngIf="sectionItem.hasPhoto===true"
                                                         (click)="fieldPhoto(sectionItem)">
                                                         <mat-icon class="mat-14" matTooltip="">photo_camera</mat-icon>
+                                                    </button>
+                                        
+                                                    <button mat-icon-button *ngIf="sectionItem.embeddedForm===true">
+                                                        <mat-icon class="mat-14" matTooltip="">receipt</mat-icon>
                                                     </button>
                                                 </div>
                                             </div>
@@ -3598,6 +3636,10 @@
                                         <button mat-icon-button *ngIf="item.hasPhoto===true" (click)="fieldPhoto(item)">
                                             <mat-icon class="mat-14" matTooltip="">photo_camera</mat-icon>
                                         </button>
+
+                                        <button mat-icon-button *ngIf="item.embeddedForm===true">
+                                            <mat-icon class="mat-14" matTooltip="">receipt</mat-icon>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -3632,6 +3674,10 @@
 
                                         <button mat-icon-button *ngIf="item.hasPhoto===true" (click)="fieldPhoto(item)">
                                             <mat-icon class="mat-14" matTooltip="">photo_camera</mat-icon>
+                                        </button>
+
+                                        <button mat-icon-button *ngIf="item.embeddedForm===true">
+                                            <mat-icon class="mat-14" matTooltip="">receipt</mat-icon>
                                         </button>
                                     </div>
                                 </div>
