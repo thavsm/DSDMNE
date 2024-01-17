@@ -61,7 +61,7 @@ export class IndicatorapprovalComponent implements OnInit {
   public userID=0;
 
   public groups: GroupDescriptor[] = [{ field: "programme" }, {field: "subProgram"}];
-  public groupsNational: GroupDescriptor[] = [{ field: "chiefdirectorate" }, {field: "directorate"}];
+  public groupsNational: GroupDescriptor[] = [{ field: "chiefDirectorate" }, {field: "directorate"}];
   
   ngOnInit(): void {
 
