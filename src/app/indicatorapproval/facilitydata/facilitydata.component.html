@@ -20,19 +20,30 @@
                 [filterable]="true" [sortable]="false" [groupable]="false" [group]="groupsNational">
 
 
+<!-- 
                     <kendo-grid-column field="facilityName" title="Location" [width]="600" *ngIf="facIndicator">
-                    </kendo-grid-column>
+                    </kendo-grid-column> -->
                     
-                    <kendo-grid-column field="servicePoint" title="Service Point" [width]="600" *ngIf="spIndicator">
+                    <!-- <kendo-grid-column field="servicePoint" title="Service Point" [width]="600" *ngIf="spIndicator">
                     </kendo-grid-column>
 
                     <kendo-grid-column field="province" title="Province" [width]="600" *ngIf="provIndicator">
-                    </kendo-grid-column>
+                    </kendo-grid-column> -->
         
+                    <kendo-grid-column field="facilityName" title="Location" [width]="600" >
+                    </kendo-grid-column>
+
                     <kendo-grid-column field="data" title="Value">
                     <ng-template kendoGridCellTemplate let-dataItem>
                         <a mat-button (click)="openFormDesign(dataItem,'0')"><u>{{dataItem.data}}</u></a>
                     </ng-template>
+                    </kendo-grid-column>
+
+                    <kendo-grid-column field="data" title="History">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                            <!-- <a mat-button (click)="openHistoryPage(dataItem,'0')"><u>{{dataItem.data|number:'1.2-2'}}</u></a> -->
+                            <a mat-button (click)="openHistoryPage(dataItem,'0')"><u>View</u></a>
+                        </ng-template>
                     </kendo-grid-column>
                     
                     <ng-template kendoPagerTemplate let-totalPages="totalPages" let-currentPage="currentPage">
