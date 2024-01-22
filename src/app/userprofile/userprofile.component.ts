@@ -348,6 +348,7 @@ export class UserProfileComponent implements OnInit {
         break;
         case 4262: this.formData["servicePointID"] = "0";
         this.formData["facilityID"] = "0";
+        this.formData["servicePointIDs"] = "";
         this.formData["location"] = this.formData["districtID"];
         break;
         case 4263: this.formData["facilityID"] = "0";
@@ -355,6 +356,7 @@ export class UserProfileComponent implements OnInit {
         this.formData["servicePointIDs"] = this.selectedServicePoints;
         break;
         case 4264: this.formData["location"] = this.formData["facilityID"];
+        this.formData["servicePointIDs"] = "";
         break;               
         
       }
