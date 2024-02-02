@@ -338,6 +338,7 @@ export class UserProfileComponent implements OnInit {
         this.formData["districtID"] = "0";
         this.formData["servicePointID"] = "0";
         this.formData["facilityID"] = "0";
+        this.formData["servicePointIDs"] = "";
         this.formData["location"] = "8658";
         break;
         case 4261: this.formData["districtID"] = "0";
