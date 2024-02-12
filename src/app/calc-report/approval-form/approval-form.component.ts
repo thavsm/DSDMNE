@@ -1550,7 +1550,8 @@ timer: 5000,
   onUpload() {
     let fileName = "";
     if (localStorage.getItem('fieldNameAttach') !== null || localStorage.getItem('fieldNameAttach') !== undefined) {
-      fileName = localStorage.getItem('fieldNameAttach').toString();
+      //fileName = localStorage.getItem('fieldNameAttach').toString();
+      fileName = encodeURIComponent(localStorage.getItem('fieldNameAttach').toString());
     }
     if (fileName !== "") {
       if (this.file !== null) {
@@ -1660,7 +1661,8 @@ timer: 5000,
   onUploadPhoto() {
     let photoName = "";
     if (localStorage.getItem('fieldNamePhoto') !== null || localStorage.getItem('fieldNamePhoto') !== undefined) {
-      photoName = localStorage.getItem('fieldNamePhoto').toString();
+      //photoName = localStorage.getItem('fieldNamePhoto').toString();
+      photoName = encodeURIComponent(localStorage.getItem('fieldNamePhoto').toString());
     }
     if (photoName !== "") {
       var fileType=this.photoFile.name.split('.').pop();
