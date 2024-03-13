@@ -118,7 +118,6 @@ export class UserProfileComponent implements OnInit {
                   this.isFac=false;
                   this.isSPMultiple=true;
                   this.isSPSingle=false;
-                  this.loadSelectedServicePoints(this.formData["userID"]);
                   break;
                   case 4264:
                   this.isBranch=false;
@@ -140,7 +139,6 @@ export class UserProfileComponent implements OnInit {
                 console.log(err);
               },
             );
-            this.loadSelectedServicePoints(this.formData["userID"]);
             
         }      
         else{
@@ -182,7 +180,6 @@ export class UserProfileComponent implements OnInit {
             this.isFac=false;
             this.isSPMultiple=true;
             this.isSPSingle=false;
-            this.loadSelectedServicePoints(this.formData["userID"]);
             break;
             case 4264:
             this.isBranch=false;
@@ -194,7 +191,6 @@ export class UserProfileComponent implements OnInit {
             this.isSPSingle=true;
             break;
           } 
-          this.loadSelectedServicePoints(this.formData["userID"]);
         }      
                 
       } 
@@ -331,7 +327,8 @@ export class UserProfileComponent implements OnInit {
 
       this.spinner.show();
 
-      
+      this.formData["servicePointIDs"] = "";
+
       switch(this.formData["locationType"])
       {
         case 4260: this.formData["provinceID"] = "0";
@@ -354,7 +351,12 @@ export class UserProfileComponent implements OnInit {
         break;
         case 4263: this.formData["facilityID"] = "0";
         this.formData["location"] = this.formData["servicePointID"];
-        this.formData["servicePointIDs"] = this.selectedServicePoints;
+        console.log("Selected service points:", this.selectedServicePoints); 
+        if (this.selectedServicePoints && this.selectedServicePoints.length !== 0) {
+          this.formData["servicePointIDs"] = this.selectedServicePoints;
+      } else {
+          this.formData["servicePointIDs"] = [];
+      }
         break;
         case 4264: this.formData["location"] = this.formData["facilityID"];
         this.formData["servicePointIDs"] = "";
@@ -363,6 +365,8 @@ export class UserProfileComponent implements OnInit {
       }
       
       console.log(this.formData);
+
+
           if (this.formData["locationType"] === 4263) {
             if (this.formData["servicePointIDs"] !== null && this.formData["servicePointIDs"].length !== 0){
             this.service.UpdateUserProfile(this.formData).subscribe(
