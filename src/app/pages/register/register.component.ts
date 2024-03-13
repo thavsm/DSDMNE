@@ -273,6 +273,12 @@ timer: 1500,
             break;
           }
           case 4261:{
+            if(locProvince==0)
+            {locSelected = false;}
+            break;
+          }
+
+          case 4260:{
             if(locBranch==0)
             {locSelected = false;}
             break;

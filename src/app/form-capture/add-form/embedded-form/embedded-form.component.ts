@@ -1831,17 +1831,6 @@ console.log('Fields: '+field["data"]);
     this.formDesign.forEach(field => {
       if (field.fieldType.value === "calculation") {
         let idnumber = inputField.value.toString();
-        //let idnumber;
-  
-        // if (origIdNum.length === 10) {
-        //   idnumber = '000' + origIdNum;
-        // } else if (origIdNum.length === 11) {
-        //   idnumber = '00' + origIdNum;
-        // } else if (origIdNum.length === 12) {
-        //   idnumber = '0' + origIdNum;
-        // } else {
-        //   idnumber = origIdNum;
-        // }
 
         console.log('idnom: '+idnumber);
         if(idnumber===""){
