@@ -1,8 +1,12 @@
 export const environment = {
   production: true,
-  API_URL: 'https://testportal.dsd.gov.za/MNE_DSD_API/api',
-  API_FormURL: 'https://testportal.dsd.gov.za/MNE_DSD_API/1/',
-  API_FormURLForHelp: 'https://testportal.dsd.gov.za/MNE_DSD_API',
+  // API_URL: 'https://testportal.dsd.gov.za/MNE_DSD_API/api',
+  // API_FormURL: 'https://testportal.dsd.gov.za/MNE_DSD_API/1/',
+  // API_FormURLForHelp: 'https://testportal.dsd.gov.za/MNE_APP_UAT',
+
+  API_URL: 'https://10.121.72.125/MNE_DSD_API/api',
+  API_FormURL: 'https://10.121.72.125/MNE_DSD_API/1/',
+  API_FormURLForHelp: 'https://10.121.72.125/MNE_DSD_API',
 
   // API_URL: 'https://app1.terra.group/MNE_PHASE2_API/api',
   // API_FormURL: 'https://app1.terra.group/MNE_PHASE2_API/1/',
@@ -14,7 +18,9 @@ export const environment = {
   
   //REPORT_SERVER: 'https://app1.terra.group/DSDReportViewerSSRS_CLIENT/Default?ID=',
   //REPORT_SERVER: 'https://app1.terra.group/DSDReportViewerSSRS_PHASE2/Default?ID=',
-  REPORT_SERVER: 'https://testportal.dsd.gov.za/MNEReportViewerSSRS/Default?ID=',
+  //REPORT_SERVER: 'https://testportal.dsd.gov.za/MNEReportViewerSSRS/Default?ID=',
+  
+  REPORT_SERVER: 'https://10.121.72.125/MNEReportViewerSSRS/Default?ID=',
   REPORT_URL: 'DSD MnE/',
 
       //dsd
