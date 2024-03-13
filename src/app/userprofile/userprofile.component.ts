@@ -363,18 +363,52 @@ export class UserProfileComponent implements OnInit {
       }
       
       console.log(this.formData);
-      this.service.UpdateUserProfile(this.formData).subscribe(
-        res => {          
-          //this.data1 = res;
-          //window.location.replace("/dashboard");
-          this.showNotification('top','right','User details updated successfully', '','success');
-          this.spinner.hide();
-        },
-        err => {
-          this.spinner.hide();
-          console.log(err);
-        },
-      );
+          if (this.formData["locationType"] === 4263) {
+            if (this.formData["servicePointIDs"] !== null && this.formData["servicePointIDs"].length !== 0){
+            this.service.UpdateUserProfile(this.formData).subscribe(
+                res => {
+                    //this.data1 = res;
+                    //window.location.replace("/dashboard");
+                    this.showNotification('top', 'right', 'User details updated successfully', '', 'success');
+                    this.spinner.hide();
+                },
+                err => {
+                    this.spinner.hide();
+                    console.log(err);
+                },
+            );
+        } else {
+            this.showNotification('top', 'right', 'Please enter a service point', '', 'danger');
+            this.spinner.hide();
+            return;
+        }
+    }
+     else {
+        this.service.UpdateUserProfile(this.formData).subscribe(
+            res => {
+                //this.data1 = res;
+                //window.location.replace("/dashboard");
+                this.showNotification('top', 'right', 'User details updated successfully', '', 'success');
+                this.spinner.hide();
+            },
+            err => {
+                this.spinner.hide();
+                console.log(err);
+            },
+        );
+    }
+      // this.service.UpdateUserProfile(this.formData).subscribe(
+      //   res => {          
+      //     //this.data1 = res;
+      //     //window.location.replace("/dashboard");
+      //     this.showNotification('top','right','User details updated successfully', '','success');
+      //     this.spinner.hide();
+      //   },
+      //   err => {
+      //     this.spinner.hide();
+      //     console.log(err);
+      //   },
+      // );
 
     }
 
