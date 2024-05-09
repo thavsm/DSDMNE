@@ -12,7 +12,7 @@ import { IndicatorReportComponent } from './reports/indicator-report/indicator-r
 import { PowerBiViewerComponent } from './reports/power-bi-viewer/power-bi-viewer.component';
 import { SqlreportsComponent } from './reports/sqlreports/sqlreports.component';
 import { PowerBiProvinceComponent } from './reports/power-bi-province/power-bi-province.component';
-
+import { NewPasswordComponent } from './pages/resetpassword/newpassword.component';
 export const AppRoutes: Routes = [
   {
     path: '',
@@ -162,6 +162,9 @@ export const AppRoutes: Routes = [
     }, {
       path: 'resetpassword',
       component: ResetPasswordComponent
+    },{
+      path: 'newpassword',
+      component: NewPasswordComponent
     }]
   },
   {

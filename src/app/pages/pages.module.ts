@@ -14,7 +14,7 @@ import { LockComponent } from './lock/lock.component';
 import { LoginComponent } from './login/login.component';
 import { ResetPasswordComponent } from './resetpassword/resetpassword.component';
 import { LandingComponent } from './landing/landing.component';
-
+import { NewPasswordComponent } from './resetpassword/newpassword.component';
 @NgModule({
   imports: [
     CommonModule,
@@ -30,7 +30,8 @@ import { LandingComponent } from './landing/landing.component';
     PricingComponent,
     LockComponent,
     ResetPasswordComponent,
-    LandingComponent
+    LandingComponent,
+    NewPasswordComponent
   ]
 })
 

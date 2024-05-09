@@ -35,6 +35,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { TreeListModule } from '@progress/kendo-angular-treelist';
 import { AddCommentComponent } from './add-form/add-comment/add-comment.component';
 import { EmbeddedFormComponent } from './add-form/embedded-form/embedded-form.component'
+import { AddBeneficiaryComponent } from './add-form/embedded-form/add-beneficiary.component';
 
 
 @NgModule({
@@ -44,6 +45,7 @@ import { EmbeddedFormComponent } from './add-form/embedded-form/embedded-form.co
     AddSignatureComponent,
     AddCommentComponent,
     EmbeddedFormComponent,
+    AddBeneficiaryComponent,
 
   ],
   imports: [

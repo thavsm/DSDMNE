@@ -4,38 +4,57 @@ import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms'
 import { UserService } from 'src/app/shared/user.service';
 import { Router } from '@angular/router';
 import {NgxSpinner, NgxSpinnerService} from 'ngx-spinner';
-
+import { ActivatedRoute } from '@angular/router';
 declare var $: any;
 
 @Component({
-    selector: 'app-resetpassword-cmp',
-    templateUrl: './resetpassword.component.html'
+    selector: 'app-newpassword-cmp',
+    templateUrl: './newpassword.component.html'
 })
 
-export class ResetPasswordComponent implements OnInit, OnDestroy {
+export class NewPasswordComponent implements OnInit, OnDestroy {
     test: Date = new Date();
     private toggleButton: any;
     private sidebarVisible: boolean;
     private nativeElement: Node;
-    formModel = this.fb.group({
-      UserName: ['',[Validators.required,Validators.email]],
-      NewPassword: [''],
-      Token: ['']
-     
-    });
-
+    formModel: FormGroup;
+    public showPassword: boolean = false;  
+    public showConfirmPassword: boolean = false;
     email = '';
+    NewPassword = '';
+    ConfirmPassword = '';
     code = '';
     cardDesc = '';
     isControlVisible = true;
 
-    constructor(private element: ElementRef, private fb: FormBuilder, private service: UserService, private router: Router, private spinner: NgxSpinnerService) {
+    constructor(private element: ElementRef, private fb: FormBuilder, private service: UserService, private router: Router, private spinner: NgxSpinnerService,private route: ActivatedRoute) {
         this.nativeElement = element.nativeElement;
         this.sidebarVisible = false;
         
     }
 
     ngOnInit() {
+      
+      this.formModel = this.fb.group({
+        UserName: [''],
+        NewPassword: [''],
+        ConfirmPassword :[''],
+        Token:['']
+      });
+
+      this.route.queryParams.subscribe(params => {
+        const token = params['token'];
+        const username = params['email'];
+        if (token) {
+            this.formModel.patchValue({
+                UserName : username,
+                Token: token
+            });
+        }
+    });
+   
+    // Your existing initialization code...
+
         var navbar : HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
         const body = document.getElementsByTagName('body')[0];
@@ -49,11 +68,12 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
 
         this.EnableContorols(null);
        //new URLSearchParams(window.location.search).get('email')
+       
     }
 
     EnableContorols(emailv: string) {
       if(emailv == null) {
-        this.cardDesc ='Please enter your email address to request a password reset.';
+        this.cardDesc ='Please enter your new password.';
         this.isControlVisible =true;
       }
       // if( emailv != null) {
@@ -122,46 +142,46 @@ timer: 1500,
   onSubmit() {
     
     this.spinner.show();
-    if(this.isControlVisible) {
-    this.service.getPasswordResetToken(this.formModel.value.UserName).subscribe(
-      (res: any) => {
-        this.spinner.hide();
-        this.showNotificationAndRedirect(res.message, 'success', '/login');
-        // this.EnableContorols(this.formModel.value.UserName);
-        // this.router.navigate(['/login']);
-      },
-      err => {
-        this.spinner.hide();
-        console.log(err);
-        this.showNotification('top','right',err.error.message, '','danger');
-      },
-    );
-    
-  }
-  else {
+    // if(this.isControlVisible) {
+      if(this.NewPassword!= this.ConfirmPassword){
+        this.showNotification('top','right','Passwords do not match', '','danger');
+      }
+      else{
+        let rmodel =this.formModel.value;
+        this.service.resetPassword(rmodel).subscribe(
+          (res: any) => {
+            this.spinner.hide();
+            this.showNotificationAndClose(res.message, 'success');
+          },
+          err => {
+            this.spinner.hide();
+            console.log(err);
+            this.showNotification('top','right',err.error.message[0].description, '','danger');
+          },
+        );}
+      
+  // }
+  // else {
    
-    let rmodel =this.formModel.value;
-    this.service.resetPassword(rmodel).subscribe(
-      (res: any) => {
-        this.spinner.hide();
-        this.showNotificationAndRedirect(res.message, 'success', '/login');
-      },
-      err => {
-        this.spinner.hide();
-        console.log(err);
-        this.showNotification('top','right',err.error.message[0].description, '','danger');
-      },
-    );
 
-  }
+
+  // }
  
   }
 
-  showNotificationAndRedirect(message: string, type: string, redirectUrl: string) {
+  showNotificationAndClose(message: string, type: string) {
     this.showNotification('top', 'right', message, '', type);
     setTimeout(() => {
-      this.router.navigate([redirectUrl]);
+    // window.close();
+
+    window.location.href = '/pages/login';
     }, 3000); // Adjust the timeout as needed
   }
 
+  public togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
+  }
+  public toggleConfirmPasswordVisibility(): void {
+    this.showConfirmPassword = !this.showConfirmPassword;
+  }
 }

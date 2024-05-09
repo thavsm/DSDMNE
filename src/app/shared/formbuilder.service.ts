@@ -123,6 +123,10 @@ export class FormbuilderService {
     return this.http.get(this.APIUrl + 'GetCapturedForms', data);
   }
 
+  getIndcatorValue(fieldID:any,formcaptureID:any,tablename:any){
+    return this.http.get(this.APIUrl + fieldID + '/' + formcaptureID + '/' + tablename + '/IndicatorValue');
+  }
+
   getMetadataValue(pageGUID: any, columnName: any, formCaptureID: any) {
     return this.http.get(this.APIUrl + pageGUID + '/' + columnName + '/' + formCaptureID + '/MetadataValue', { responseType: 'text' });
   }
@@ -163,8 +167,8 @@ export class FormbuilderService {
     return this.http.put(this.APIUrl + formCaptureID + '/' + groupGUID + '/' + cloneNum + '/' + userID + '/UpdateGroupMetadata', data, { responseType: 'text' });
   }
 
-  deleteCapturedForm(formCaptureID: any) {
-    return this.http.delete(this.APIUrl + formCaptureID + '/' + 'DeleteCapturedForm', { responseType: 'text' });
+  deleteCapturedForm(formCaptureID: any, formID: any) {
+    return this.http.delete(this.APIUrl + formCaptureID + '/'+ formID + '/' + 'DeleteCapturedForm', { responseType: 'text' });
   }
 
   lockForm(formID: any, item: any) {

@@ -239,7 +239,7 @@ timer: 1500,
     }).then((result) => {
       if (result.value) {
         this.spinner.show();
-        this.service.deleteCapturedForm(item.formCaptureID).subscribe(data => {
+        this.service.deleteCapturedForm(item.formCaptureID,item.formID).subscribe(data => {
           this.spinner.hide();
           this.refreshFormsList();
           this.showNotification('top', 'center', 'Form deleted successfully!', '', 'success');

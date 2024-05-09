@@ -12,6 +12,7 @@ import { DataBindingDirective, PageSizeItem } from '@progress/kendo-angular-grid
 import { MatPaginator } from '@angular/material/paginator';
 import { merge } from 'rxjs';
 import { MatAccordion, MatExpansionPanel } from '@angular/material/expansion';
+import { AddBeneficiaryComponent } from './add-beneficiary.component';
 declare var $: any;
 
 export interface DialogData {
@@ -38,7 +39,7 @@ export class EmbeddedFormComponent implements OnInit {
 
   public gridView: any[];
   public FormIDTest: any;
-
+  hideButton: boolean = false;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatAccordion) accordion: MatAccordion;
   @ViewChild('panel') panel: MatExpansionPanel;
@@ -119,9 +120,9 @@ export class EmbeddedFormComponent implements OnInit {
   EmbeddedFieldID:any;
   EmbeddedParentID:any;
   IndicatorIDNo:any;
-
+  TotalValue:any;
+  getformName:any;
   isCaptureOrEdit:string="No";
-
   DisplayOne: string = "Display One";
   DisplayTwo: string = "Display Two";
 
@@ -132,6 +133,9 @@ export class EmbeddedFormComponent implements OnInit {
     this.EmbeddedFormNo = parseInt(localStorage.getItem('fieldEmbeddedFormID'));
     this.EmbeddedParentID=parseInt(localStorage.getItem('EmbeddedParentID'));
     this.EmbeddedFieldID=parseInt(localStorage.getItem('EmbeddedFieldID'));
+    this.TotalValue=parseInt(localStorage.getItem('TotalValue'));	
+    this.getformName= localStorage.getItem('FormName');
+
     this.ClickedRow = function (index) {
       this.HighlightRow = index;
     }
@@ -147,8 +151,15 @@ export class EmbeddedFormComponent implements OnInit {
     this.isViewOnly = this.formData.view;
     localStorage.setItem('cloneNumberForEdit', "0");
    
-  
-    
+    this.EmbeddedFieldID;
+    console.log('EmbeddedFieldID: '+this.EmbeddedFieldID);
+    this.EmbeddedParentID;
+    console.log(' EmbeddedParentID: '+ this.EmbeddedParentID);
+    this.getformName;
+    this.refreshFormsList();
+    this.TotalVal();
+    this.TotalValue;
+    console.log('TotalValue: '+this.TotalValue);
     this.userService.getUserProfile().subscribe(
       res => {
         this.userDetail = res;
@@ -169,12 +180,137 @@ export class EmbeddedFormComponent implements OnInit {
     
   }
 
-  createForm(){
+  TotalVal(){
+    this.service.getIndcatorValue(this.EmbeddedFieldID,this.EmbeddedParentID,this.getformName).subscribe(data => {
+      this.TotalValue = data;
+      localStorage.setItem('TotalValue',this.TotalValue);
+  });
+  }
+
+  
+  // createForm(){
+  //     this.spinner.show();
+  //     let formCaptureData = {
+  //       formCaptureID: 0,
+  //       formName: '',
+  //       formID: 5152,//this.FormIDTest,  
+  //       step: "string",
+  //       sentBy: this.userDetail.formData.userID,
+  //       dateSent: "string",
+  //       timeSent: "string",
+  //       displayableOne: "",
+  //       displayableTwo: "",
+  //       geography: 0,
+  //       stage: "string",
+  //       formTemplateName: "string"
+  //     }
+  //     this.service.addCapturedForms(formCaptureData).subscribe(res => {
+  //       let myObj = {
+  //         formID: this.EmbeddedFormNo, // 5152,
+  //         formName: JSON.parse(res).formName,
+  //         formCaptureID: JSON.parse(res).formCaptureID,
+  //         state: 'add',
+  //         roleID:0,
+  //         view:'readwrite'
+  //       };
+  //       this.spinner.hide();
+  //       this.formData =  myObj;
+  //      localStorage.setItem('FormcaptID',JSON.parse(res).formCaptureID );
+
+  //       this.refreshPageList();
+  //       //this.refreshFormsList();
+  //       this.formList.filterPredicate = function (data, filter: string): boolean {
+  //         return data.formName.toLowerCase().includes(filter);
+  //       };
+  //       this.DisplayOne = "Display One";
+  //       this.DisplayTwo = "Display Two";
+  //     });
+    
+  // }
+  // createForm() {
+  //   this.spinner.show();
+  //   let formCaptureData = {
+  //     formCaptureID: 0,
+  //     formName: '',
+  //     formID: 5152,
+  //     step: "string",
+  //     sentBy: this.userDetail.formData.userID,
+  //     dateSent: "string",
+  //     timeSent: "string",
+  //     displayableOne: "",
+  //     displayableTwo: "",
+  //     geography: 0,
+  //     stage: "string",
+  //     formTemplateName: "string"
+  //   };
+  
+  //   this.service.addCapturedForms(formCaptureData).subscribe(res => {
+  //     let myObj = {
+  //       formID: this.EmbeddedFormNo,
+  //       formName: JSON.parse(res).formName,
+  //       formCaptureID: JSON.parse(res).formCaptureID,
+  //       state: 'add',
+  //       roleID: 0,
+  //       view: 'readwrite'
+  //     };
+  
+  //     this.spinner.hide();
+  //     this.formData = myObj;
+  //     localStorage.setItem('fieldEmbeddedFormID1','5152');
+  //     localStorage.setItem('EmbeddedFieldID1',this.EmbeddedFieldID);
+  //     localStorage.setItem('EmbeddedParentID1',this.EmbeddedParentID);
+  //     localStorage.setItem('FormcaptID', JSON.parse(res).formCaptureID);
+  //     localStorage.setItem('Obj', JSON.stringify(this.formData)); // Store as string
+  
+  //     const dialogRef = this.dialog.open(AddBeneficiaryComponent, {
+  //       width: '75%',
+  //       height: '75%',
+  //       disableClose: true,
+  //       data: {
+  //         formData: this.formData // Pass formData to the dialog
+  //       }
+  //     });
+  
+  //     dialogRef.afterClosed().subscribe(result => {
+  //       // this.refreshPageList();
+  //       this.refreshFormsList();
+  //       this.DisplayOne = "Display One";
+  //       this.DisplayTwo = "Display Two";
+  //       console.log('The dialog was closed');
+  //     });
+  
+  //     // this.refreshPageList();
+  //     // this.refreshFormsList();
+  //     this.formList.filterPredicate = function (data, filter: string): boolean {
+  //       return data.formName.toLowerCase().includes(filter);
+  //     };
+  //     this.DisplayOne = "Display One";
+  //     this.DisplayTwo = "Display Two";
+  //   });
+  // }
+  // handleButtonClick() {
+  //     this.showDisabledButtonAlert();
+  // }
+
+
+  showDisabledButtonAlert() {
+    Swal.fire({
+      title: "<h5 style='color:white;font-weight:400'>The beneficiaries captured matches the total number indicated.</h5>",
+    toast: true,
+    position: 'top',
+    allowOutsideClick: false,
+    confirmButtonColor: '#000000',
+    cancelButtonColor: '#000000',
+     background: '#CA0B00'
+    });
+  }
+  
+  createForm() {
       this.spinner.show();
       let formCaptureData = {
         formCaptureID: 0,
         formName: '',
-        formID: 5152,//this.FormIDTest,  
+        formID: 5152,
         step: "string",
         sentBy: this.userDetail.formData.userID,
         dateSent: "string",
@@ -184,53 +320,140 @@ export class EmbeddedFormComponent implements OnInit {
         geography: 0,
         stage: "string",
         formTemplateName: "string"
-      }
+      };
+    
       this.service.addCapturedForms(formCaptureData).subscribe(res => {
         let myObj = {
-          formID: this.EmbeddedFormNo, // 5152,
+          formID: this.EmbeddedFormNo,
           formName: JSON.parse(res).formName,
           formCaptureID: JSON.parse(res).formCaptureID,
           state: 'add',
-          roleID:0,
-          view:'readwrite'
+          roleID: 0,
+          view: 'readwrite'
         };
+    
         this.spinner.hide();
-        this.formData =  myObj;
-       localStorage.setItem('FormcaptID',JSON.parse(res).formCaptureID );
-        
-        this.refreshPageList();
-        //this.refreshFormsList();
+        this.formData = myObj;
+        localStorage.setItem('fieldEmbeddedFormID1','5152');
+        localStorage.setItem('EmbeddedFieldID1',this.EmbeddedFieldID);
+        localStorage.setItem('EmbeddedParentID1',this.EmbeddedParentID);
+        localStorage.setItem('FormcaptID', JSON.parse(res).formCaptureID);
+        localStorage.setItem('Obj', JSON.stringify(this.formData)); // Store as string
+    
+        const dialogRef = this.dialog.open(AddBeneficiaryComponent, {
+          width: '75%',
+          height: '75%',
+          disableClose: true,
+          data: {
+            formData: this.formData // Pass formData to the dialog
+          }
+        });
+    
+        dialogRef.afterClosed().subscribe(result => {
+          // this.refreshPageList();
+          this.refreshFormsList();
+          this.DisplayOne = "Display One";
+          this.DisplayTwo = "Display Two";
+          console.log('The dialog was closed');
+        });
+    
+        // this.refreshPageList();
+        // this.refreshFormsList();
         this.formList.filterPredicate = function (data, filter: string): boolean {
           return data.formName.toLowerCase().includes(filter);
         };
         this.DisplayOne = "Display One";
         this.DisplayTwo = "Display Two";
       });
-    
+   
   }
+  
 
-  editForm(dataItem: any){
+
+  // editForm(dataItem: any){
+  //   let formCaptureObj = {
+  //     formID: 5152,  //dataItem.formID, 
+  //     formName: dataItem.formName,
+  //     formCaptureID: dataItem.formCaptureID, //this.formData.formCaptureID,
+  //     state: 'edit',
+  //     roleID:0,
+  //     view:'readwrite'
+  //   };
+  //   //this.formData =  JSON.stringify(formCaptureObj);
+  //   this.formData =  formCaptureObj;
+  // this.refreshPageList();
+  // this.formList.filterPredicate = function (data, filter: string): boolean {
+  //   return data.formName.toLowerCase().includes(filter);
+  // };
+  // }
+
+  editForm(dataItem: any) {
     let formCaptureObj = {
-      formID: 5152,  //dataItem.formID, 
+      formID: 5152,
       formName: dataItem.formName,
-      formCaptureID: dataItem.formCaptureID, //this.formData.formCaptureID,
+      formCaptureID: dataItem.formCaptureID,
       state: 'edit',
-      roleID:0,
-      view:'readwrite'
+      roleID: 0,
+      view: 'readwrite'
     };
-    //this.formData =  JSON.stringify(formCaptureObj);
-    this.formData =  formCaptureObj;
-  this.refreshPageList();
-  this.formList.filterPredicate = function (data, filter: string): boolean {
-    return data.formName.toLowerCase().includes(filter);
-  };
+  
+    // Open a dialog and pass the form data
+    const dialogRef = this.dialog.open(AddBeneficiaryComponent, {
+      width: '75%',
+      height: '75%',
+      disableClose: true,
+      data: {
+        formData: formCaptureObj // Pass the form data to the dialog
+      }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      // Handle dialog close event if needed
+      this.refreshFormsList();
+      console.log('The dialog was closed');
+    });
+  
+    // this.refreshPageList();
+    // this.refreshFormsList();
+    this.formList.filterPredicate = function (data, filter: string): boolean {
+      return data.formName.toLowerCase().includes(filter);
+    };
   }
-
+  // refreshFormsList() {
+  //   this.spinner.show();
+  //   //this.locationID = this.formData.provinceID;
+  //   this.service.getEmbeddedCapturedForms(this.EmbeddedFieldID, this.EmbeddedParentID, this.locationID).subscribe(data => {
+  //     this.gridView = data;
+  
+  //     // Count the items in the grid
+  //     const gridItemCount = this.gridView.length;
+  
+  //     // Compare with the total value
+  //     if (gridItemCount > this.TotalValue) {
+  //       this.hideButton = true; // Set a flag to hide the button
+  //     } else {
+  //       this.hideButton = false; // Show the button
+  //     }
+  
+  //     this.spinner.hide();
+  //   });
+  //   this.isPanelExpanded = true;
+  // }
   refreshFormsList() {
     this.spinner.show();
     //this.locationID = this.formData.provinceID;
     this.service.getEmbeddedCapturedForms(this.EmbeddedFieldID, this.EmbeddedParentID,this.locationID).subscribe(data => {
       this.gridView = data;
+       // Count the items in the grid
+    const gridItemCount = this.gridView.length;
+
+    // Compare with the total value
+    if (gridItemCount > this.TotalValue-1) {
+      this.hideButton = true; // Set a flag to hide the button
+    } else {
+      this.hideButton = false; // Show the button
+    }
+
       this.spinner.hide();
       });
       this.isPanelExpanded = true;
@@ -1297,7 +1520,7 @@ console.log('Fields: '+field["data"]);
 
   onChange(event) {
     this.file = <File>event.target.files[0];
-    if (this.file.size < 20971520) {
+    if (this.file.size < 31457280) {
       this.fileAttr = this.file.name;
       let reader = new FileReader();
       reader.onload = function (readerEvt: any) {
@@ -1308,7 +1531,7 @@ console.log('Fields: '+field["data"]);
       reader.readAsDataURL(this.file);
     }
     else {
-      this.showNotification('top', 'center', 'File exceeds maximum size of 20MB,Please upload a file of 20MB or less', '', 'danger');
+      this.showNotification('top', 'center', 'File exceeds maximum size of 30MB,Please upload a file of 30MB or less', '', 'danger');
       this.file = null;
     }
   }
@@ -1401,7 +1624,7 @@ console.log('Fields: '+field["data"]);
 
   onChangePhoto(event) {
     this.photoFile = <File>event.target.files[0];
-    if (this.photoFile.size <  20971520) {
+    if (this.photoFile.size <  31457280) {
       this.photoFileAttr = this.photoFile.name;
       let reader = new FileReader();
       reader.onload = function (readerEvt: any) {
@@ -1755,78 +1978,79 @@ console.log('Fields: '+field["data"]);
     });
   }
 //   //new changes
-// checkAge(){
-//   this.formDesign.forEach(field=>{
-//     if(field.fieldName === "DateofBirth"){
-//       let Dob = field.data;
-//       localStorage.setItem('Dob',field.data);
-//       console.log('Dob: '+Dob);
-//       this.formDesign.forEach(id=>{
-//       if(id.fieldName ==="IdentiType")
-//       {
-//         let fieldDob = id.data;
-//         if(fieldDob === 'D.O.B')
-//         {
-//           let currentDate = new Date();
+checkAge(){
+  this.formDesign.forEach(field=>{
+    if(field.fieldName === "DateofBirth"){
+      let Dob = field.data;
+      localStorage.setItem('Dob',field.data);
+      console.log('Dob: '+Dob);
+      this.formDesign.forEach(id=>{
+      if(id.fieldName ==="IdentiType")
+      {
+        let fieldDob = id.data;
+        if(fieldDob === 'D.O.B')
+        {
+          let currentDate = new Date();
           
  
-//           console.log('currentDate: '+currentDate); 
-//           console.log('getdob: '+localStorage.getItem('Dob'));
-//           let storedDob = localStorage.getItem('Dob');
-//           let DobDate = new Date(storedDob);
-//           console.log('getdob: '+DobDate);
-//           let Age = currentDate.getFullYear() - DobDate.getFullYear();
-//                    // Check if the birthday hasn't occurred yet this year
-//       if (
-//        currentDate.getMonth() < DobDate.getMonth() ||
-//         (currentDate.getMonth() === DobDate.getMonth() &&
-//         currentDate.getDate() < DobDate.getDate())
-//         ) {
-//         Age--;
-//         }
+          console.log('currentDate: '+currentDate); 
+          console.log('getdob: '+localStorage.getItem('Dob'));
+          let storedDob = localStorage.getItem('Dob');
+          let DobDate = new Date(storedDob);
+          console.log('getdob: '+DobDate);
+          let Age = currentDate.getFullYear() - DobDate.getFullYear();
+                   // Check if the birthday hasn't occurred yet this year
+      if (
+       currentDate.getMonth() < DobDate.getMonth() ||
+        (currentDate.getMonth() === DobDate.getMonth() &&
+        currentDate.getDate() < DobDate.getDate())
+        ) {
+        Age--;
+        }
 
-//           console.log('age: '+Age);
-//           this.formDesign.forEach(res=>{
-//             if(res.fieldName ==="Age"){
-//               if(res.data ==="" || res.data ===undefined){
-//                 res.data = Age;
-//               }
-//               else{
-//                 res.data=Age;
-//               }
-//             }
+          console.log('age: '+Age);
+          this.formDesign.forEach(res=>{
+            if(res.fieldName ==="Age"){
+              if(res.data ==="" || res.data ===undefined){
+                res.data = Age;
+              }
+              else{
+                res.data=Age;
+              }
+            }
 
-//           });
+          });
 
-//         }
-//       }
-//     });
-//     }
-//   });
-// }
-//   checkUnique(){
-//     this.formDesign.forEach(field => {
-//       if(field.fieldName ==="IdentiType"){
-//          let IdentType = field.data;
-//          if(IdentType === 'Unknown'){
-//           this.formDesign.forEach(res => {
-//           if(res.fieldName ==="IDNumber"){
-//             if(res.data === "" || res.data === undefined){
-//             res.data=localStorage.getItem('FormcaptID');
-//            console.log('formcapture: ' +res.data);
-//             }
-//             else{
-//               res.data=localStorage.getItem('FormcaptID');
-//            console.log('formcapture: ' +res.data);
-//             }
-//          }
+        }
+      }
+    });
+    }
+  });
+}
+  checkUnique(){
+    this.formDesign.forEach(field => {
+      if(field.fieldName ==="IdentiType"){
+         let IdentType = field.data;
+         if(IdentType === 'Unknown'){
+          this.formDesign.forEach(res => {
+          if(res.fieldName ==="IDNumber"){
+            if(res.data === "" || res.data === undefined){
+            res.data=localStorage.getItem('FormcaptID');
+           console.log('formcapture: ' +res.data);
+            }
+            else{
+              res.data=localStorage.getItem('FormcaptID');
+           console.log('formcapture: ' +res.data);
+            }
+         }
        
-//         });
+        });
  
-//          }
-//       }
-//     });
-//   }
+         }
+      }
+    });
+  }
+
   checkID(inputField: any) {
     this.formDesign.forEach(field => {
       if (field.fieldType.value === "calculation") {
@@ -2497,7 +2721,28 @@ if (tempDate.getFullYear() !== yy || tempDate.getMonth() !== parseInt(idnumber.t
     this.tabIndex = 1;
     localStorage.setItem('fieldEmbeddedForm', item.questionName + '(' + item.fieldName + ')');
   }
-
-
-
+  clickDelete(item: any) {
+    Swal.fire({
+      
+      title: "<h5 style='color:white;font-weight:400'>Are you sure you want to delete this form ?</h5>",
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      toast: true,
+      position: 'top',
+      allowOutsideClick: false,
+      confirmButtonColor: '#000000',
+      cancelButtonColor: '#000000'
+      , background: '#CA0B00'
+    }).then((result) => {
+      if (result.value) {
+        this.spinner.show();
+        this.service.deleteCapturedForm(item.formCaptureID,item.formID).subscribe(data => {
+          this.spinner.hide();
+          this.refreshFormsList();
+          this.showNotification('top', 'center', 'Form deleted successfully!', '', 'success');
+        });
+      }
+    })
+  }
 }
