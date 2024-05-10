@@ -1198,7 +1198,7 @@ export class AddFormComponent implements OnInit {
       reader.readAsDataURL(this.photoFile);
     }
     else {
-      this.showNotification('top', 'center', 'Photo exceeds maximum size of 20mb, Please upload a photo of 20mb or less', '', 'danger');
+      this.showNotification('top', 'center', 'Photo exceeds maximum size of 30mb, Please upload a photo of 30mb or less', '', 'danger');
       this.photoFile = null;
     }
   }

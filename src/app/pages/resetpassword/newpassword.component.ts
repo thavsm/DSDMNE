@@ -5,6 +5,7 @@ import { UserService } from 'src/app/shared/user.service';
 import { Router } from '@angular/router';
 import {NgxSpinner, NgxSpinnerService} from 'ngx-spinner';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
 declare var $: any;
 
 @Component({
@@ -174,7 +175,7 @@ timer: 1500,
     setTimeout(() => {
     // window.close();
 
-    window.location.href = '/pages/login';
+    window.location.href = environment.resetPasswordLink+'/pages/login';
     }, 3000); // Adjust the timeout as needed
   }
 

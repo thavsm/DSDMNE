@@ -7,6 +7,7 @@ export const environment = {
    API_URL: 'https://localhost:44305/api',  
   API_FormURL: 'https://localhost:44305/1/', 
   API_FormURLForHelp: 'https://app1.terra.group/DSD_client',
+  resetPasswordLink: 'https://app1.terra.group/dsd_client',
   // API_URL: 'https://testportal.dsd.gov.za/MNE_DSD_API/api',
 
   // API_FormURL: 'https://testportal.dsd.gov.za/MNE_DSD_API/1/',

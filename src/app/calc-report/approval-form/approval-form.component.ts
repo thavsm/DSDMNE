@@ -1653,7 +1653,7 @@ timer: 5000,
       reader.readAsDataURL(this.photoFile);
     }
     else {
-      this.showNotification('top', 'center', 'Photo exceeds maximum size of 20mb,Please upload a photo of 20mb or less', '', 'danger');
+      this.showNotification('top', 'center', 'Photo exceeds maximum size of 230mb,Please upload a photo of 30mb or less', '', 'danger');
       this.photoFile = null;
     }
   }
