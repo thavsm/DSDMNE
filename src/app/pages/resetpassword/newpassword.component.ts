@@ -5,7 +5,8 @@ import { UserService } from 'src/app/shared/user.service';
 import { Router } from '@angular/router';
 import {NgxSpinner, NgxSpinnerService} from 'ngx-spinner';
 import { ActivatedRoute } from '@angular/router';
-import { environment } from 'src/environments/environment';
+
+import { environment } from 'src/environments/environment.prod';
 declare var $: any;
 
 @Component({
