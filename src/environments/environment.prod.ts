@@ -1,5 +1,10 @@
 export const environment = {
   production: true,
+  API_URL: 'https://testportal.dsd.gov.za/MNE_DSD_API/api',
+  API_FormURL: 'https://testportal.dsd.gov.za/MNE_DSD_API/1/',
+  API_FormURLForHelp: 'https://testportal.dsd.gov.za/MNE_DSD_API',
+  REPORT_SERVER: 'https://testportal.dsd.gov.za/MNEReportViewerSSRS/Default?ID=',
+  resetPasswordLink: 'https://testportal.dsd.gov.za/MNE_APP_UAT',
   // API_URL: 'https://testportal.dsd.gov.za/MNE_DSD_API/api',
   // API_FormURL: 'https://testportal.dsd.gov.za/MNE_DSD_API/1/',
   // API_FormURLForHelp: 'https://testportal.dsd.gov.za/MNE_APP_UAT',
@@ -7,7 +12,7 @@ export const environment = {
   //  API_URL: 'https://testportal.dsd.gov.za/MNE_DSD_API_Live/api',
   // API_FormURL: 'https://testportal.dsd.gov.za/MNE_DSD_API_Live/1/',
   // API_FormURLForHelp: 'https://testportal.dsd.gov.za/MNE_APP_UAT',
-
+ 
   // API_URL: 'http://eme.dsd.gov.za/MNE_DSD_API/api',
   // API_FormURL: 'http://eme.dsd.gov.za/MNE_DSD_API/1/',
   // API_FormURLForHelp: 'http://eme.dsd.gov.za/MNE_DSD_API',
@@ -17,15 +22,15 @@ export const environment = {
   // API_FormURL: 'https://app1.terra.group/MNE_PHASE2_API/1/',
   // API_FormURLForHelp: 'https://app1.terra.group/MNE_PHASE2_API',
 
-  API_URL: 'https://app1.terra.group/MNE_Client_API/api',
-  API_FormURL: 'https://app1.terra.group/MNE_Client_API/1/',
-  API_FormURLForHelp: 'https://app1.terra.group/DSD_Client',
-  resetPasswordLink: 'https://app1.terra.group/dsd_client',
+  // API_URL: 'https://app1.terra.group/MNE_Client_API/api',
+  // API_FormURL: 'https://app1.terra.group/MNE_Client_API/1/',
+  // API_FormURLForHelp: 'https://app1.terra.group/DSD_Client',
+  //resetPasswordLink: 'https://app1.terra.group/dsd_client',
   //REPORT_SERVER: 'https://app1.terra.group/DSDReportViewerSSRS_CLIENT/Default?ID=',
   //REPORT_SERVER: 'https://app1.terra.group/DSDReportViewerSSRS_PHASE2/Default?ID=',
  //REPORT_SERVER: 'https://testportal.dsd.gov.za/MNEReportViewerSSRS/Default?ID=',
   
-  REPORT_SERVER: 'http://eme.dsd.gov.za/MNEReportViewerSSRS/Default?ID=',
+  //REPORT_SERVER: 'http://eme.dsd.gov.za/MNEReportViewerSSRS/Default?ID=',
   REPORT_URL: 'DSD MnE/',
 
       //dsd
