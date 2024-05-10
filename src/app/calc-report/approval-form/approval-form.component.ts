@@ -1531,7 +1531,7 @@ timer: 5000,
 
   onChange(event) {
     this.file = <File>event.target.files[0];
-    if (this.file.size < 20971520) {
+    if (this.file.size < 31457280) {
       this.fileAttr = this.file.name;
       let reader = new FileReader();
       reader.onload = function (readerEvt: any) {
@@ -1542,7 +1542,7 @@ timer: 5000,
       reader.readAsDataURL(this.file);
     }
     else {
-      this.showNotification('top', 'center', 'File exceeds maximum size of 20MB,Please upload a file of 20MB or less', '', 'danger');
+      this.showNotification('top', 'center', 'File exceeds maximum size of 30MB,Please upload a file of 30MB or less', '', 'danger');
       this.file = null;
     }
   }
@@ -1642,7 +1642,7 @@ timer: 5000,
 
   onChangePhoto(event) {
     this.photoFile = <File>event.target.files[0];
-    if (this.photoFile.size < 20971520) {
+    if (this.photoFile.size < 31457280) {
       this.photoFileAttr = this.photoFile.name;
       let reader = new FileReader();
       reader.onload = function (readerEvt: any) {

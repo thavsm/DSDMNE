@@ -118,6 +118,7 @@ export class UserProfileComponent implements OnInit {
                   this.isFac=false;
                   this.isSPMultiple=true;
                   this.isSPSingle=false;
+                  this.loadSelectedServicePoints_Update(this.formData["userID"], this.formData["districtID"]);
                   break;
                   case 4264:
                   this.isBranch=false;
@@ -180,6 +181,7 @@ export class UserProfileComponent implements OnInit {
             this.isFac=false;
             this.isSPMultiple=true;
             this.isSPSingle=false;
+            this.loadSelectedServicePoints_Update(this.formData["userID"], this.formData["districtID"]);
             break;
             case 4264:
             this.isBranch=false;
@@ -577,7 +579,7 @@ timer: 1500,
      console.log(loctype.value);
      this.provinces =[];
      this.districts = [];
-     this.servicePoints = [];
+     //this.servicePoints = [];
      this.facilities = [];
 
      this.isSPMultiple=false;

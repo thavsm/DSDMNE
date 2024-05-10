@@ -40,7 +40,7 @@ export class FormDesignerComponent implements OnInit {
 
     ngOnInit(): void {
         this.checkStatus();
-        // this.getformDescription();
+      
         this.spinner.show();
         this.refreshPageList();
         this.types = this.fieldTypes;
@@ -49,7 +49,7 @@ export class FormDesignerComponent implements OnInit {
         if (this.formData.isLocked === true) {
             this.userService.setMenuShow(false);
         }
-
+        this.getformDescription();
           this.userService.getUserProfile().subscribe(
             res => {
               this.userDetail = res;

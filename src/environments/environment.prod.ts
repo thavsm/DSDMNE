@@ -8,17 +8,18 @@ export const environment = {
   // API_FormURL: 'https://testportal.dsd.gov.za/MNE_DSD_API_Live/1/',
   // API_FormURLForHelp: 'https://testportal.dsd.gov.za/MNE_APP_UAT',
 
-  API_URL: 'http://eme.dsd.gov.za/MNE_DSD_API/api',
-  API_FormURL: 'http://eme.dsd.gov.za/MNE_DSD_API/1/',
-  API_FormURLForHelp: 'http://eme.dsd.gov.za/MNE_DSD_API',
+  // API_URL: 'http://eme.dsd.gov.za/MNE_DSD_API/api',
+  // API_FormURL: 'http://eme.dsd.gov.za/MNE_DSD_API/1/',
+  // API_FormURLForHelp: 'http://eme.dsd.gov.za/MNE_DSD_API',
 
+  
   // API_URL: 'https://app1.terra.group/MNE_PHASE2_API/api',
   // API_FormURL: 'https://app1.terra.group/MNE_PHASE2_API/1/',
   // API_FormURLForHelp: 'https://app1.terra.group/MNE_PHASE2_API',
 
-  // API_URL: 'https://app1.terra.group/MNE_Client_API/api',
-  // API_FormURL: 'https://app1.terra.group/MNE_Client_API/1/',
-  // API_FormURLForHelp: 'https://app1.terra.group/DSD_Client',
+  API_URL: 'https://app1.terra.group/MNE_Client_API/api',
+  API_FormURL: 'https://app1.terra.group/MNE_Client_API/1/',
+  API_FormURLForHelp: 'https://app1.terra.group/DSD_Client',
   
   //REPORT_SERVER: 'https://app1.terra.group/DSDReportViewerSSRS_CLIENT/Default?ID=',
   //REPORT_SERVER: 'https://app1.terra.group/DSDReportViewerSSRS_PHASE2/Default?ID=',
