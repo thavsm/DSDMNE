@@ -75,7 +75,7 @@ export class HierarchyFormPreviewComponent implements OnInit {
 
   @ViewChild('fileInput') fileInput: ElementRef;
   file: File = null;
-  fileAttr = 'Choose File(Max Size:20MB)';
+  fileAttr = 'Choose File(Max Size:30MB)';
 
   @ViewChild('photoInput') photoInput: ElementRef;
   photoFile: File = null;
@@ -1259,7 +1259,7 @@ timer: 1500,
           this.service.addFormAttachments(obj).subscribe(res => {
             this.showNotification('top', 'center', 'Attachment has been saved successfully!', '', 'success');
             this.file = null;
-            this.fileAttr = 'Choose File(Max Size:20MB)';
+            this.fileAttr = 'Choose File(Max Size:30MB)';
             //this.fileInput = ElementRef;
             this.refreshAttachmentList();
             localStorage.setItem('fieldNameAttach', "");
@@ -1294,7 +1294,7 @@ timer: 1500,
         this.service.addFormAttachments(obj).subscribe(res => {
           this.showNotification('top', 'center', 'Attachment has been saved successfully!', '', 'success');
           this.file = null;
-          this.fileAttr = 'Choose File(Max Size:20MB)';
+          this.fileAttr = 'Choose File(Max Size:30MB)';
           // this.fileInput = null;
           this.refreshAttachmentList();
           localStorage.setItem('fieldNameAttach', "");
