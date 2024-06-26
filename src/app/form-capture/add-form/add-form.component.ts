@@ -72,11 +72,11 @@ export class AddFormComponent implements OnInit {
 
   @ViewChild('fileInput') fileInput: ElementRef;
   file: File = null;
-  fileAttr = 'Choose File(Max Size:20MB)';
+  fileAttr = 'Choose File(Max Size:30MB)';
 
   @ViewChild('photoInput') photoInput: ElementRef;
   photoFile: File = null;
-  photoFileAttr = 'Choose Photo(Max Size:20MB)';
+  photoFileAttr = 'Choose Photo(Max Size:30MB)';
 
   ClickedRow: any;
   HighlightRow: Number;
@@ -1127,7 +1127,7 @@ export class AddFormComponent implements OnInit {
           this.service.addFormAttachments(obj).subscribe(res => {
             this.showNotification('top', 'center', 'Attachment has been saved successfully!', '', 'success');
             this.file = null;
-            this.fileAttr = 'Choose File(Max Size:20MB)';
+            this.fileAttr = 'Choose File(Max Size:30MB)';
             //this.fileInput = ElementRef;
             this.refreshAttachmentList();
             localStorage.setItem('fieldNameAttach', "");
@@ -1163,7 +1163,7 @@ export class AddFormComponent implements OnInit {
         this.service.addFormAttachments(obj).subscribe(res => {
           this.showNotification('top', 'center', 'Attachment has been saved successfully!', '', 'success');
           this.file = null;
-          this.fileAttr = 'Choose File(Max Size:20MB)';
+          this.fileAttr = 'Choose File(Max Size:30MB)';
           // this.fileInput = null;
           this.refreshAttachmentList();
           localStorage.setItem('fieldNameAttach', "");
@@ -1235,7 +1235,7 @@ export class AddFormComponent implements OnInit {
           this.service.addFormPhotos(obj).subscribe(res => {
             this.showNotification('top', 'center', 'Photo has been saved successfully!', '', 'success');
             this.photoFile = null;
-            this.photoFileAttr = 'Choose Photo(Max Size:20MB)';
+            this.photoFileAttr = 'Choose Photo(Max Size:30MB)';
             //this.photoInput = null;
             this.refreshPhotoList();
             localStorage.setItem('fieldNameAttach', "");
@@ -1275,7 +1275,7 @@ export class AddFormComponent implements OnInit {
         this.service.addFormPhotos(obj).subscribe(res => {
           this.showNotification('top', 'center', 'Photo has been saved successfully!', '', 'success');
           this.photoFile = null;
-          this.photoFileAttr = 'Choose Photo(Max Size:20MB)';
+          this.photoFileAttr = 'Choose Photo(Max Size:30MB)';
           //this.photoInput = null;
           this.refreshPhotoList();
           localStorage.setItem('fieldNameAttach', "");
