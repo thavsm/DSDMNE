@@ -149,14 +149,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
         },
       );
 
-      this.service.getLevels(4082).subscribe(
-        res => {
-          this.locationType = res;
-        },
-        err => {
-          console.log(err);
-        },
-      );
+      // this.service.getLevels(4082).subscribe(
+      //   res => {
+      //     this.locationType = res;
+      //   },
+      //   err => {
+      //     console.log(err);
+      //   },
+      // );
       
       this.service.getBranches().subscribe(
         res => {
@@ -455,7 +455,7 @@ timer: 1500,
   loadFacilities(sp:any)
   {
      console.log(sp.nodeID);
-     this.service.getNodesByParent(sp.nodeID).subscribe(
+     this.service.getNodesByParent(sp. nodeID).subscribe(
       res => {
         this.facilities = res;
       },
@@ -492,7 +492,16 @@ timer: 1500,
   {
      console.log(role.id);
 
-     this.service.getLevels(4082).subscribe(
+      //  this.service.getLevels(4082).subscribe(
+      //   res => {
+      //     this.locationType = res;
+      //   },
+      //   err => {
+      //     console.log(err);
+      //   },
+      // );
+      
+     this.service.getLevelsByRoleID(4082, role.id).subscribe(
       res => {
         this.locationType = res;
       },

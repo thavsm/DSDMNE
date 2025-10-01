@@ -169,8 +169,8 @@ export class UserService {
   }
 
   
-  addNewRole(role: string,concurrency:any,roleID:any,typeID:any) {
-    return this.http.post(this.BaseURI + '/ApplicationUser/AddNewRole?role='+role+'&concurrency='+concurrency+'&roleID='+roleID+'&typeID='+typeID,  role);
+  addNewRole(role: string,concurrency:any,roleID:any,typeID:any, locationtypeID:any) {
+    return this.http.post(this.BaseURI + '/ApplicationUser/AddNewRole?role='+role+'&concurrency='+concurrency+'&roleID='+roleID+'&typeID='+typeID + '&locationtypeID=' + locationtypeID,  role);
   }
 
   deleteFormRoles(formID: number) {
@@ -244,6 +244,10 @@ export class UserService {
   
   getLevels(treeID: number) {
     return this.http.get<any>(this.BaseURI + '/ApplicationUser/GetLevels?treeID='+treeID);
+  }
+
+  getLevelsByRoleID(treeID: number, roleID: number) {
+    return this.http.get<any>(this.BaseURI + '/ApplicationUser/GetLevelsByRoleID?treeID='+treeID+'&roleID='+roleID);
   }
 
   getLevelsList(treeID:number){

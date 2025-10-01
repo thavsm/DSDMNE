@@ -13,6 +13,7 @@ import { PowerBiViewerComponent } from './reports/power-bi-viewer/power-bi-viewe
 import { SqlreportsComponent } from './reports/sqlreports/sqlreports.component';
 import { PowerBiProvinceComponent } from './reports/power-bi-province/power-bi-province.component';
 import { NewPasswordComponent } from './pages/resetpassword/newpassword.component';
+import { ProgrammePowerBiComponent } from './reports/programme-power-bi/programme-power-bi.component';
 export const AppRoutes: Routes = [
   {
     path: '',
@@ -180,6 +181,10 @@ export const AppRoutes: Routes = [
     {
       path: 'powerBiProvincereports',
       component: PowerBiProvinceComponent
+    },
+    {
+      path: 'ProgrammePowerBireports',
+      component: ProgrammePowerBiComponent
     },
     {
       path: 'iframereportsviewer/:id',

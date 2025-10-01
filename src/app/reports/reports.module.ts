@@ -24,6 +24,7 @@ import { ButtonsModule } from "@progress/kendo-angular-buttons";
 import { InputsModule } from "@progress/kendo-angular-inputs";
 import { PDFModule, ExcelModule, } from "@progress/kendo-angular-grid";
 import { PowerBiProvinceComponent } from './power-bi-province/power-bi-province.component';
+import { ProgrammePowerBiComponent } from './programme-power-bi/programme-power-bi.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { PowerBiProvinceComponent } from './power-bi-province/power-bi-province.
     IframereportsviewerComponent,
     PowerBiViewerComponent,
     IndicatorReportComponent,
-    PowerBiProvinceComponent
+    PowerBiProvinceComponent,
+    ProgrammePowerBiComponent
   ],
   imports: [
     CommonModule,

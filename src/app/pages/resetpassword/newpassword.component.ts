@@ -176,8 +176,9 @@ timer: 1500,
     setTimeout(() => {
     // window.close();
 
-    window.location.href = environment.resetPasswordLink+'/pages/login';
-    console.log(window.location.href = environment.resetPasswordLink+'/pages/login');
+
+    window.location.href = environment.resetPasswordLink;
+    
     }, 3000); // Adjust the timeout as needed
   }
 

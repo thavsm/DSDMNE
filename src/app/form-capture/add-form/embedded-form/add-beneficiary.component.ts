@@ -124,8 +124,8 @@ export class AddBeneficiaryComponent implements OnInit {
 
   isCaptureOrEdit:string="No";
 
-  DisplayOne: string = "Display One";
-  DisplayTwo: string = "Display Two";
+  DisplayOne: string = "Display 1";
+  DisplayTwo: string = "Display 2";
 
   constructor(public dialog: MatDialog, private service: FormbuilderService, private spinner: NgxSpinnerService, public dialogRef: MatDialogRef<EmbeddedFormComponent>, private userService: UserService,@Inject(MAT_DIALOG_DATA) public data: any,) {
     

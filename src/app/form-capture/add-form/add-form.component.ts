@@ -1680,7 +1680,7 @@ export class AddFormComponent implements OnInit {
     // });
 
     const dialogRef = this.dialog.open(EmbeddedFormComponent, {
-      width: '75%',
+      width: '90%',
       height: '65%',
       disableClose: true
     });

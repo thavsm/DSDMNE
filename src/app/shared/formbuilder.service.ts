@@ -115,6 +115,10 @@ export class FormbuilderService {
     return this.http.get<any>(this.APIUrl + fieldID + '/' + FormID + '/'+locationID+ '/EmbeddedCapturedForms');
   }
 
+  getEmbeddedCapturedFormsDashboard(userID: any,locationID:any) {
+    return this.http.get<any>(this.APIUrl + userID + '/' + locationID + '/EmbeddedCapturedFormsDashboard');
+  }
+
   addCapturedForms(data: any) {
     return this.http.post(this.APIUrl + 'CapturedForms', data, { responseType: 'text' });
   }

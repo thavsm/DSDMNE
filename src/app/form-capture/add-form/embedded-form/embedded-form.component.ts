@@ -122,9 +122,10 @@ export class EmbeddedFormComponent implements OnInit {
   IndicatorIDNo:any;
   TotalValue:any;
   getformName:any;
+  Message:any;
   isCaptureOrEdit:string="No";
-  DisplayOne: string = "Display One";
-  DisplayTwo: string = "Display Two";
+  DisplayOne: string = "Display 1";
+  DisplayTwo: string = "Display 2";
 
   constructor(public dialog: MatDialog, private service: FormbuilderService, private spinner: NgxSpinnerService, public dialogRef: MatDialogRef<FormAddComponent>, private userService: UserService) {
     this.IndicatorData = localStorage.getItem('IndicatorData') || '';
@@ -133,7 +134,7 @@ export class EmbeddedFormComponent implements OnInit {
     this.EmbeddedFormNo = parseInt(localStorage.getItem('fieldEmbeddedFormID'));
     this.EmbeddedParentID=parseInt(localStorage.getItem('EmbeddedParentID'));
     this.EmbeddedFieldID=parseInt(localStorage.getItem('EmbeddedFieldID'));
-    this.TotalValue=parseInt(localStorage.getItem('TotalValue'));	
+    // this.TotalValue=parseInt(localStorage.getItem('TotalValue'));	
     this.getformName= localStorage.getItem('FormName');
 
     this.ClickedRow = function (index) {
@@ -148,6 +149,7 @@ export class EmbeddedFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // this.hideButton = false;
     this.isViewOnly = this.formData.view;
     localStorage.setItem('cloneNumberForEdit', "0");
    
@@ -156,10 +158,10 @@ export class EmbeddedFormComponent implements OnInit {
     this.EmbeddedParentID;
     console.log(' EmbeddedParentID: '+ this.EmbeddedParentID);
     this.getformName;
+    // this.TotalVal();
+    // this.TotalValue=parseInt(localStorage.getItem('TotalValue'));	
+    // console.log('TotalValue: '+this.TotalValue);
     this.refreshFormsList();
-    this.TotalVal();
-    this.TotalValue;
-    console.log('TotalValue: '+this.TotalValue);
     this.userService.getUserProfile().subscribe(
       res => {
         this.userDetail = res;
@@ -180,12 +182,12 @@ export class EmbeddedFormComponent implements OnInit {
     
   }
 
-  TotalVal(){
-    this.service.getIndcatorValue(this.EmbeddedFieldID,this.EmbeddedParentID,this.getformName).subscribe(data => {
-      this.TotalValue = data;
-      localStorage.setItem('TotalValue',this.TotalValue);
-  });
-  }
+  // TotalVal(){
+  //   this.service.getIndcatorValue(this.EmbeddedFieldID,this.EmbeddedParentID,this.getformName).subscribe(data => {
+  //     this.TotalValue = data;
+  //     localStorage.setItem('TotalValue',this.TotalValue);
+  // });
+  // }
 
   
   // createForm(){
@@ -295,7 +297,7 @@ export class EmbeddedFormComponent implements OnInit {
 
   showDisabledButtonAlert() {
     Swal.fire({
-      title: "<h5 style='color:white;font-weight:400'>The beneficiaries captured matches the total number indicated.</h5>",
+      title: "<h5 style='color:white;font-weight:400'>"+this.Message+"</h5>",
     toast: true,
     position: 'top',
     allowOutsideClick: false,
@@ -440,6 +442,7 @@ export class EmbeddedFormComponent implements OnInit {
   //   this.isPanelExpanded = true;
   // }
   refreshFormsList() {
+    // this.hideButton = false;
     this.spinner.show();
     //this.locationID = this.formData.provinceID;
     this.service.getEmbeddedCapturedForms(this.EmbeddedFieldID, this.EmbeddedParentID,this.locationID).subscribe(data => {
@@ -447,12 +450,26 @@ export class EmbeddedFormComponent implements OnInit {
        // Count the items in the grid
     const gridItemCount = this.gridView.length;
 
-    // Compare with the total value
-    if (gridItemCount > this.TotalValue-1) {
-      this.hideButton = true; // Set a flag to hide the button
-    } else {
-      this.hideButton = false; // Show the button
+    
+    this.service.getIndcatorValue(this.EmbeddedFieldID,this.EmbeddedParentID,this.getformName).subscribe(data => {
+      this.TotalValue = data;
+      // localStorage.setItem('TotalValue',this.TotalValue);
+          // Compare with the total value
+    if(data){
+      if (gridItemCount > parseInt(JSON.stringify(data))-1) {
+        this.hideButton = true; // Set a flag to hide the button
+      } else {
+        this.hideButton = false; // Show the button
+        this.Message = 'The beneficiaries captured matches the total number indicated';
+      }
+  
+    }else{
+      this.hideButton = true;
+      this.Message = 'Please capture indicator and save form, before capturing beneficiaries.';
     }
+    
+    });
+
 
       this.spinner.hide();
       });

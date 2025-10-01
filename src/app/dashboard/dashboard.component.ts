@@ -1,11 +1,14 @@
 import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TableData } from '../md/md-table/md-table.component';
 import { LegendItem, ChartType } from '../md/md-chart/md-chart.component';
-
+import { NgxSpinnerService } from 'ngx-spinner';
 import * as Chartist from 'chartist';
 import { UserService } from '../shared/user.service';
-import { DataBindingDirective } from '@progress/kendo-angular-grid';
+import { DataBindingDirective, PageSizeItem } from '@progress/kendo-angular-grid';
+import Swal from 'sweetalert2';
+import { FormbuilderService } from '../shared/formbuilder.service';
+import { AddBeneficiaryComponent } from '../form-capture/add-form/embedded-form/add-beneficiary.component';
 
 declare const $: any;
 
@@ -21,11 +24,124 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   public labeldata: string[] = [];
   public templabeldata: number[] = [];
   public data1: any = [];
+  public gridView: any[];
+  public DisplayOne: string = "Display 1";
+  public DisplayTwo: string = "Display 2";
+  public pageSize = 5;
+  public formList: any = [];
+  public pageSizes: Array<number | PageSizeItem> = [5, 10, 20, {
+      text: 'All',
+      value: 'all'
+  }];
+  userDetail: any;
+  userData:any;
+  nodeName:any;
+  locationID: any;
+  UserID: any;
 
-  constructor(private service: UserService) {
+  constructor(public dialog: MatDialog,private service: UserService, private Formservice: FormbuilderService,private spinner: NgxSpinnerService) {
 
   }
 
+  public onPageChange(state: any): void {
+    this.pageSize = state.take;
+  }
+
+   refreshFormsList() {
+    // this.hideButton = false;
+    this.spinner.show();
+    //this.locationID = this.formData.provinceID;
+    this.Formservice.getEmbeddedCapturedFormsDashboard(this.UserID,this.locationID).subscribe(data => {
+      this.gridView = data;
+       // Count the items in the grid
+    const gridItemCount = this.gridView.length;
+      this.spinner.hide();
+      });
+  }
+
+   editForm(dataItem: any) {
+      let formCaptureObj = {
+        formID: 5152,
+        formName: dataItem.formName,
+        formCaptureID: dataItem.formCaptureID,
+        state: 'edit',
+        roleID: 0,
+        view: 'readwrite'
+      };
+    
+      // Open a dialog and pass the form data
+      const dialogRef = this.dialog.open(AddBeneficiaryComponent, {
+        width: '75%',
+        height: '75%',
+        disableClose: true,
+        data: {
+          formData: formCaptureObj // Pass the form data to the dialog
+        }
+      });
+    
+      dialogRef.afterClosed().subscribe(result => {
+        // Handle dialog close event if needed
+        this.refreshFormsList();
+        console.log('The dialog was closed');
+      });
+    
+      // this.refreshPageList();
+      // this.refreshFormsList();
+      this.formList.filterPredicate = function (data, filter: string): boolean {
+        return data.formName.toLowerCase().includes(filter);
+      };
+    }
+
+  clickDelete(item: any) {
+      Swal.fire({
+        
+        title: "<h5 style='color:white;font-weight:400'>Are you sure you want to delete this form ?</h5>",
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'No',
+        toast: true,
+        position: 'top',
+        allowOutsideClick: false,
+        confirmButtonColor: '#000000',
+        cancelButtonColor: '#000000'
+        , background: '#CA0B00'
+      }).then((result) => {
+        if (result.value) {
+          this.spinner.show();
+          this.Formservice.deleteCapturedForm(item.formCaptureID,item.formID).subscribe(data => {
+            this.spinner.hide();
+            this.refreshFormsList();
+            this.showNotification('top', 'center', 'Form deleted successfully!', '', 'success');
+          });
+        }
+      })
+    }
+  showNotification(from: any, align: any, message: any, title: any, type: string) {
+    $.notify({
+      icon: 'notifications',
+      title: title,
+      message: message
+    }, {
+      type: type,
+      delay: 1500,
+      timer: 1500,
+      placement: {
+        from: from,
+        align: align
+      },
+
+      template: '<div data-notify="container" class="col-xs-11 col-sm-3 alert alert-{0}" role="alert">' +
+        '<button mat-raised-button type="button" aria-hidden="true" class="close" data-notify="dismiss">  <i class="material-icons">close</i></button>' +
+        '<i class="material-icons" data-notify="icon">notifications</i> ' +
+        '<span data-notify="title">{1}</span> ' +
+        '<span data-notify="message">{2}</span>' +
+        '<div class="progress" data-notify="progressbar">' +
+        '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
+        '</div>' +
+        '<a href="{3}" target="{4}" data-notify="url"></a>' +
+        '</div>'
+    });
+  }
   startAnimationForLineChart(chart: any) {
     let seq: any, delays: any, durations: any;
     seq = 0;
@@ -84,6 +200,24 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   // constructor(private navbarTitleService: NavbarTitleService) { }
   public ngOnInit() {
 
+    this.refreshFormsList();
+    this.service.getUserProfile().subscribe(
+      res => {
+        this.userDetail = res;
+        this.userData = res['formData'];
+        console.log('userdata: '+this.userData);
+        this.locationID=this.userData['provinceID'];
+        this.nodeName=this.userData['nodeName'];
+        this.UserID = this.userData['userID'];
+        this.refreshFormsList();
+      },
+      err => {
+        console.log(err);
+        this.refreshFormsList();
+      },
+
+    );
+    
     this.service.getInbox().subscribe(
       res => {
         this.data1 = res;
@@ -123,7 +257,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         tension: 0
       }),
       low: 0,
-      high: 250, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+      high: 4000, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
       chartPadding: { top: 0, right: 0, bottom: 0, left: 0 },
     };
 
@@ -174,7 +308,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         showGrid: false
       },
       low: 0,
-      high: 300,
+      high: 3000,
       chartPadding: { top: 0, right: 5, bottom: 0, left: 0 }
     };
     const responsiveOptions: any = [

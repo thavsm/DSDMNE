@@ -17,8 +17,10 @@ export class NewroleComponent implements OnInit {
   data:any;
   name:any='';
   facilityType:any='-1';
+  levelName:any='-1';
   isActive:boolean=true;
   facilityTypes:any=[];
+  locationTypes:any=[];
   formRole = this.fb.group({
     RoleName: ['',[Validators.required]]
   },{});
@@ -27,6 +29,9 @@ export class NewroleComponent implements OnInit {
   facilityType: ['', Validators.required],
   });
 
+  thirdFormGroup  = this.fb.group({
+    levelName: ['', Validators.required],
+  });
   constructor(
     public dialogRef: MatDialogRef<NewroleComponent>,
     private service: UserService, public formBuilder: FormBuilder, private spinner: NgxSpinnerService,
@@ -36,9 +41,13 @@ export class NewroleComponent implements OnInit {
 
 
   ngOnInit(): void {
+
     this.getFacilityTypes();
+    this.getLocationTypes();
+
     if(this.data.state=="edit"){
       this.facilityType=this.data.data.facilityTypeID;
+      this.levelName=this.data.data.levelID;
       this.name=this.data.data.role;
       if(this.data.data.concurrencyStamp!=null){
         this.isActive=false;
@@ -50,11 +59,23 @@ export class NewroleComponent implements OnInit {
         this.isActive=false;
       }
     }
+    this.facilityType=this.data.data.facilityTypeID;
+    this.levelName=this.data.data.levelID;
+
   }
 
   getFacilityTypes(){
     this.treeService.getFacilityType().subscribe(res=>{
       this.facilityTypes=res;
+      this.facilityType=this.data.data.facilityTypeID;
+  
+    })
+  }
+
+  getLocationTypes(){
+    this.treeService.getLocationType().subscribe(res=>{
+      this.locationTypes=res;
+      this.levelName=this.data.data.levelID;
     })
   }
 
@@ -64,7 +85,7 @@ export class NewroleComponent implements OnInit {
     if(this.isActive==false){
       concurrency=new Date().toUTCString();
     }
-    this.service.addNewRole(body,concurrency,-1,this.facilityType).subscribe(
+    this.service.addNewRole(body,concurrency,-1,this.facilityType, this.levelName).subscribe(
       (res: any) => {
         this.showNotification('top','right',"Role added successfully", '','success');
         this.dialogRef.close();
@@ -81,7 +102,7 @@ export class NewroleComponent implements OnInit {
     if(this.isActive==false){
       concurrency= new Date().toUTCString();
     }
-    this.service.addNewRole(body,concurrency,this.data.data.roleID,this.facilityType).subscribe(
+    this.service.addNewRole(body,concurrency,this.data.data.roleID,this.facilityType, this.levelName).subscribe(
       (res: any) => {
         this.showNotification('top','right',"Role updated successfully", '','success');
         this.dialogRef.close();

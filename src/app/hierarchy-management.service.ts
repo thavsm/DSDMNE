@@ -152,6 +152,10 @@ export class HierarchyManagementService {
     return this.http.get<any>(this.API_URL+'Trees/getFacilityType');
   }
 
+  getLocationType(){
+    return this.http.get<any>(this.API_URL+'Trees/getLocationType');
+  }
+
   getGeoCords(nodeID:any){
     return this.http.get<any>(this.API_URL+'Trees/'+nodeID+'/getGeoCords');
   }

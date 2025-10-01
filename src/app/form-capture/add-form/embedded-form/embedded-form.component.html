@@ -29,19 +29,25 @@
             <kendo-grid-column field="displayableTwo" title="{{DisplayTwo}}" [width]="10">
             </kendo-grid-column>
   
-            <kendo-grid-column field="geography" title="Location" [width]="18">
+            <kendo-grid-column field="geography" title="Location" [width]="15">
             </kendo-grid-column>
   
-            <kendo-grid-column field="sentBy" title="Sent By" [width]="18">
+            <kendo-grid-column field="sentBy" title="Sent By" [width]="15">
             </kendo-grid-column>
-        <kendo-grid-column title="Update" [width]="6">
+
+            <kendo-grid-column field="errorCode" title="Error Code" [width]="18">
+            </kendo-grid-column>
+
+            <kendo-grid-column field="isProcessed" title="Processed" [width]="10">
+            </kendo-grid-column>
+        <kendo-grid-column  [width]="6">
                 <ng-template kendoGridCellTemplate let-dataItem>
                   <mat-button-toggle value="editFrom" mat-icon-button (click)="editForm(dataItem)">
                     <mat-icon matTooltip="Update" style="color:#bf7c00;">edit</mat-icon>
                   </mat-button-toggle>
                 </ng-template>
               </kendo-grid-column>
-              <kendo-grid-column title="Delete" [width]="6">
+              <kendo-grid-column  [width]="6">
                 <ng-template kendoGridCellTemplate let-dataItem>
                   <mat-button-toggle value="deleteForm" mat-icon-button (click)="clickDelete(dataItem)"  >
                     <mat-icon matTooltip="Delete" style="color: red;">delete</mat-icon>

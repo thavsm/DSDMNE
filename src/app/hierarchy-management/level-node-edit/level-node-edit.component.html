@@ -40,9 +40,10 @@
 
                             <div class="form-group">
                                 <mat-form-field appearance="outline">
-                                    <mat-label>Select a parent node</mat-label>      
+                                    <mat-label>Select a parent node</mat-label>
                                     <mat-select [(ngModel)]="NodeData.nodeParentD">
-                                        <mat-select-filter [placeholder]="'Search'" [displayMember]="'nodeName'" [array]="ParentNodes"
+                                        <mat-select-filter [placeholder]="'Search'" [displayMember]="'nodeName'"
+                                            [array]="ParentNodes"
                                             (filteredReturn)="filteredParents =$event"></mat-select-filter>
                                         <mat-option *ngFor="let c of filteredParents" [value]="c.nodeID">
                                             {{c.nodeName}}
@@ -64,19 +65,9 @@
                                 <mat-accordion>
                                     <ng-container *ngFor="let item of formDesign;let i= index;"
                                         style="background-color: white;text-align: left;height: 100px;font-weight: bold;">
-                
-                                        <!-- Date Type -->
-                                        <ng-container *ngIf="item.recognitionType == 'Date' && item.status==='1'">
-                                            <div class="form-group">
-                                                <label style="font-size: medium;">{{item.questionName}}</label>
-                                                <mat-form-field appearance="outline">
-                                                    <input matInput type="date" [(ngModel)]=item.data placeholder="{{item.toolTip}}"
-                                                        value="{{item.data}}" [disabled]="divIsIndicator">
-                                                </mat-form-field>
-                
-                                            </div>
-                                        </ng-container>
-                
+
+
+
                                         <!-- Text Type -->
                                         <ng-container *ngIf="item.recognitionType == 'Text' && item.status=='1' ">
                                             <div class="form-group">
@@ -88,21 +79,22 @@
                                                 </mat-form-field>
                                             </div>
                                         </ng-container>
-                
+
                                         <!-- Number Type -->
                                         <ng-container *ngIf="item.recognitionType=='Number' && item.status=='1' ">
                                             <div class="form-group">
                                                 <label style="font-size: medium;">{{item.questionName}}</label>
                                                 <mat-form-field appearance="outline">
-                                                    <input matInput type="number" ngModel maxlength={{item.lengthValidation}}
-                                                        [disabled]="divIsIndicator"
+                                                    <input matInput type="number" ngModel
+                                                        maxlength={{item.lengthValidation}} [disabled]="divIsIndicator"
                                                         oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength); this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                                        [(ngModel)]=item.data placeholder="{{item.toolTip}}" value="{{item.data}}">
+                                                        [(ngModel)]=item.data placeholder="{{item.toolTip}}"
+                                                        value="{{item.data}}">
                                                 </mat-form-field>
                                                 <!-- <div style="height: 5px;"></div> -->
                                             </div>
                                         </ng-container>
-                
+
                                         <!-- select Type -->
                                         <ng-container *ngIf="item.recognitionType=='List' && item.status=='1' ">
                                             <div class="form-group">
@@ -110,8 +102,8 @@
                                                 <mat-form-field appearance="outline">
                                                     <mat-label>Select a option</mat-label>
                                                     <mat-select [(ngModel)]=item.data [disabled]="divIsIndicator">
-                                                        <mat-option *ngFor="let list of item.listValue" style="color: black;"
-                                                            [value]="list.value">
+                                                        <mat-option *ngFor="let list of item.listValue"
+                                                            style="color: black;" [value]="list.value">
                                                             {{list.name}}
                                                         </mat-option>
                                                     </mat-select>
@@ -119,16 +111,17 @@
                                                 <!-- <div style="height: 5px;"></div> -->
                                             </div>
                                         </ng-container>
-                
+
                                         <!-- Target -->
                                         <ng-container *ngIf="item.recognitionType=='Target' && item.status=='1' ">
                                             <div class="form-group">
                                                 <label style="font-size: medium;">{{item.questionName}}</label> <br>
-                                                <button (click)="OpenTargets()" class="btn btn-md btn-primary">Add/View Targets</button>
+                                                <button (click)="OpenTargets()" class="btn btn-md btn-primary">Add/View
+                                                    Targets</button>
                                                 <!-- <div style="height: 5px;"></div> -->
                                             </div>
                                         </ng-container>
-                
+
                                         <!-- External Data -->
                                         <!-- <ng-container *ngIf="item.recognitionType=='External Data' && item.status=='1' ">
                                             <div class="form-group">
@@ -137,7 +130,7 @@
                                                     class="btn btn-md btn-primary"   >Configure External Data</button>
                                             </div>
                                         </ng-container> -->
-                
+
                                         <!-- URL-->
                                         <ng-container *ngIf="item.recognitionType == 'URL' && item.status=='1' ">
                                             <div class="form-group">
@@ -149,42 +142,58 @@
                                                 </mat-form-field>
                                             </div>
                                         </ng-container>
-                
+
+
+                                        <!-- Date Type -->
+                                        <ng-container *ngIf="item.recognitionType == 'Date' && item.status==='1'">
+                                            <div class="form-group">
+                                                <label style="font-size: medium;">{{item.questionName}}</label>
+                                                <mat-form-field appearance="outline">
+                                                    <input matInput type="date" [(ngModel)]=item.data
+                                                        placeholder="{{item.toolTip}}" value="{{item.data}}"
+                                                        [disabled]="divIsIndicator">
+                                                </mat-form-field>
+
+                                            </div>
+                                        </ng-container>
                                     </ng-container>
-                
+
                                 </mat-accordion>
                             </div>
                         </mat-tab>
                         <mat-tab label="Datasource Mapping" *ngIf="divIsIndicator">
-                
+
                             <div class="form-group" *ngIf="divContorls">
                                 <div class="form-group">
                                     <mat-form-field appearance="outline">
                                         <mat-label>*Datasource Type</mat-label>
                                         <mat-select [(ngModel)]="ExternalData.name" (selectionChange)="onType($event)"
                                             [disabled]="isDisabledDrp">
-                                            <mat-option *ngFor="let c of ExternalDataType" [value]="c.externalDataTypeID">
+                                            <mat-option *ngFor="let c of ExternalDataType"
+                                                [value]="c.externalDataTypeID">
                                                 {{c.name}}
                                             </mat-option>
                                         </mat-select>
                                     </mat-form-field>
                                 </div>
-                
+
                                 <div class="form-group" *ngIf="divIsForm">
                                     <div class="form-group">
                                         <mat-form-field appearance="outline">
                                             <mat-label>Select an Indicator</mat-label>
                                             <mat-select [(ngModel)]="NodeData.indicatorID" [disabled]="isDisabledDrp">
-                                                <mat-select-filter [placeholder]="'Search'" [displayMember]="'indicatorName'"
-                                                    [array]="Indicators" (filteredReturn)="filteredIndicators =$event">
+                                                <mat-select-filter [placeholder]="'Search'"
+                                                    [displayMember]="'indicatorName'" [array]="Indicators"
+                                                    (filteredReturn)="filteredIndicators =$event">
                                                 </mat-select-filter>
-                                                <mat-option *ngFor="let c of filteredIndicators" [value]="c.indicatorID">
+                                                <mat-option *ngFor="let c of filteredIndicators"
+                                                    [value]="c.indicatorID">
                                                     {{c.indicatorName}}
                                                 </mat-option>
                                             </mat-select>
                                         </mat-form-field>
                                     </div>
-                
+
                                     <div class="form-group">
                                         <mat-form-field appearance="outline">
                                             <mat-label>Form Category</mat-label>
@@ -196,8 +205,8 @@
                                             </mat-select>
                                         </mat-form-field>
                                     </div>
-                
-                
+
+
                                     <div class="form-group" *ngIf="divIsFormD">
                                         <mat-form-field appearance="outline">
                                             <mat-label>Form Name</mat-label>
@@ -209,15 +218,16 @@
                                             </mat-select>
                                         </mat-form-field>
                                     </div>
-                
-                
+
+
                                     <div class="form-group" *ngIf="divIsFormField">
                                         <mat-form-field appearance="outline">
                                             <mat-label>Form Field</mat-label>
                                             <mat-select [(ngModel)]="NodeData.fName" [disabled]="isDisabledDrp"
                                                 (selectionChange)="onIsformfieldChange($event)">
-                                                <mat-select-filter [placeholder]="'Search'" [displayMember]="'questionName'"
-                                                    [array]="FormFields" (filteredReturn)="filteredFormFields =$event">
+                                                <mat-select-filter [placeholder]="'Search'"
+                                                    [displayMember]="'questionName'" [array]="FormFields"
+                                                    (filteredReturn)="filteredFormFields =$event">
                                                 </mat-select-filter>
                                                 <mat-option *ngFor="let c of filteredFormFields" [value]="c.fieldID">
                                                     {{c.questionName}}
@@ -225,17 +235,19 @@
                                             </mat-select>
                                         </mat-form-field>
                                     </div>
-                
+
                                     <div class="form-group">
-                                        <button (click)="openFormDesign()" class="btn btn-md btn-primary">Preview</button>
+                                        <button (click)="openFormDesign()"
+                                            class="btn btn-md btn-primary">Preview</button>
                                     </div>
-                
+
                                 </div>
-                
+
                                 <div class="form-group" *ngIf="divNotForm">
                                     <div class="form-group">
-                                        <kendo-grid [kendoGridBinding]="ExtData" [pageSize]="5" [pageable]="true" [filterable]="true"
-                                            [sortable]="true" [groupable]="false" [resizable]="true">
+                                        <kendo-grid [kendoGridBinding]="ExtData" [pageSize]="5" [pageable]="true"
+                                            [filterable]="true" [sortable]="true" [groupable]="false"
+                                            [resizable]="true">
                                             <kendo-grid-column field="externalDataName" title="Name" [width]="6">
                                             </kendo-grid-column>
                                             <kendo-grid-column field="externalDataType" title="Type" [width]="6">
@@ -271,7 +283,7 @@
                                         </kendo-grid>
                                     </div>
                                 </div>
-                
+
                             </div>
                             <!-- <div>
                                         <app-externaldata-add></app-externaldata-add>
@@ -555,7 +567,8 @@
                         </mat-tab> -->
                     </mat-tab-group>
                     <div class="form-group">
-                        <button (click)="getCoord()" class="btn btn-md btn-primary" *ngIf="btnCoord">Capture/Edit Coordinates</button>
+                        <button (click)="getCoord()" class="btn btn-md btn-primary" *ngIf="btnCoord">Capture/Edit
+                            Coordinates</button>
                     </div>
                     <div class="form-group">
                         <button (click)="addForm()" class="btn btn-md btn-primary" *ngIf="btnSave">Save</button>
@@ -564,10 +577,14 @@
                         </div>            -->
                         <button mat-button [mat-dialog-close]="" class="btn btn-md btn-primary">Cancel</button>
                         <!-- &nbsp; -->
-                        <button (click)="SetActiveNode()" class="btn btn-md btn-primary" *ngIf="btnDelete == true && btnActive == false && btnHideActive == true">Set Active</button>
-                        <button (click)="deleteNode()" class="btn btn-md btn-primary" *ngIf="btnDelete == true && btnActive == true && btnHideActive == true">Set Inactive</button>
-                        <button (click)="deleteNode()" class="btn btn-md btn-primary" *ngIf="btnDelete == true && btnActive == true && btnHideDelete == true">Delete</button>
-                    </div>                
+                        <button (click)="SetActiveNode()" class="btn btn-md btn-primary"
+                            *ngIf="btnDelete == true && btnActive == false && btnHideActive == true">Set Active</button>
+                        <button (click)="deleteNode()" class="btn btn-md btn-primary"
+                            *ngIf="btnDelete == true && btnActive == true && btnHideActive == true">Set
+                            Inactive</button>
+                        <button (click)="deleteNode()" class="btn btn-md btn-primary"
+                            *ngIf="btnDelete == true && btnActive == true && btnHideDelete == true">Delete</button>
+                    </div>
                 </div>
             </div>
         </div>
