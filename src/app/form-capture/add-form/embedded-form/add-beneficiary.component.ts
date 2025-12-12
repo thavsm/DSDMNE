@@ -1866,9 +1866,18 @@ checkAge(){
           this.service.checkIDinMonth(idnumber, this.thisMonth).subscribe(res => {
           this.result=res;
 
-          if(this.result==1)
-          {
-            this.showNotification('top', 'center', 'This ID number has already been used, please try another ID number', '', 'danger');
+          // if(this.result==1)
+          // {
+          //   this.showNotification('top', 'center', 'This ID number has already been used, please try another ID number', '', 'danger');
+          // }
+          if (this.result && this.result.trim() !== "") {            
+            this.showNotification(
+              'top',
+              'center',
+              this.result,   
+              '',
+              'info'         
+            );
           }
           else{
             console.log('IDNO: ' + idnumber);
@@ -1881,8 +1890,17 @@ checkAge(){
           } else {
           var currentYear = new Date().getFullYear() % 100;
           var yy = parseInt(idnumber.toString().substring(0, 2));
-          yy += (yy > currentYear ? 1900 : 2000);
-            console.log('yy: '+yy);
+
+          // yy += (yy > currentYear ? 1900 : 2000);
+          //   console.log('yy: '+yy);
+
+            var fullYear = yy > currentYear ? 1900 + yy : 2000 + yy;
+            // But if you know the ID belongs to someone born before 2000:
+            if (fullYear > new Date().getFullYear()) {
+                fullYear -= 100; // shift back a century
+            }
+            yy=fullYear;
+            console.log('fullYear: '+fullYear);
 
             // 2. Check the first 6 numbers for a valid date
             var tempDate = new Date(
@@ -1900,15 +1918,16 @@ console.log('firstTEMP: ' +tempDate);
 console.log('NEWDAT: '+newDate);
             var age = todayDate.getFullYear() - tempDate.getFullYear();
 
-            
+      //var age = getAgeFromSouthAfricanId(idnumber.toString()); 
+      var age =getAgeFromSouthAfricanIdWithTreshold(idnumber.toString(),10);    
 // Check if the birthday hasn't occurred yet this year
-if (
-  todayDate.getMonth() < tempDate.getMonth() ||
-  (todayDate.getMonth() === tempDate.getMonth() &&
-    todayDate.getDate() < tempDate.getDate())
-) {
-  age--;
-}
+// if (
+//   todayDate.getMonth() < tempDate.getMonth() ||
+//   (todayDate.getMonth() === tempDate.getMonth() &&
+//     todayDate.getDate() < tempDate.getDate())
+// ) {
+//   age--;
+// }
 
 console.log('Age:', age);
 if (tempDate.getFullYear() !== yy || tempDate.getMonth() !== parseInt(idnumber.toString().substring(2, 4)) - 1 || tempDate.getDate() !== parseInt(idnumber.toString().substring(4, 6))) {
@@ -2517,5 +2536,99 @@ if (tempDate.getFullYear() !== yy || tempDate.getMonth() !== parseInt(idnumber.t
   }
 
 
+  
 
+}
+
+function calculateAge(birthDate: Date): number {
+  const today = new Date();
+  let age = today.getFullYear() - birthDate.getFullYear();
+  
+  const monthDiff = today.getMonth() - birthDate.getMonth();
+  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+  
+  return age;
+}
+
+// Even better approach - handle the century ambiguity more explicitly
+function getAgeFromSouthAfricanId(idNumber: string): number {
+  if (!/^\d{13}$/.test(idNumber)) {
+    throw new Error('Invalid South African ID number format. Must be 13 digits.');
+  }
+
+  const yearPart = idNumber.substring(0, 2);
+  const monthPart = idNumber.substring(2, 4);
+  const dayPart = idNumber.substring(4, 6);
+
+  const year = parseInt(yearPart, 10);
+  
+  // Try both centuries and pick the one that gives a reasonable age
+  const birthDate1900 = new Date(1900 + year, parseInt(monthPart, 10) - 1, parseInt(dayPart, 10));
+  const birthDate2000 = new Date(2000 + year, parseInt(monthPart, 10) - 1, parseInt(dayPart, 10));
+  
+  const age1900 = calculateAge(birthDate1900);
+  const age2000 = calculateAge(birthDate2000);
+  
+  // Prefer the age that is reasonable (between 0 and 120 years)
+  if (age1900 >= 0 && age1900 <= 120) {
+    return age1900;
+  } else if (age2000 >= 0 && age2000 <= 120) {
+    return age2000;
+  } else {
+    // If neither is reasonable, return the 1900s age (more likely for SA IDs)
+    return age1900;
+  }
+}
+
+function getAgeFromSouthAfricanIdWithTreshold(idnumber, minAgeFallback = 14) {
+  // 1) Parse YYMMDD
+  const id = String(idnumber);
+  const yy = parseInt(id.substring(0, 2), 10);
+  const mm = parseInt(id.substring(2, 4), 10);
+  const dd = parseInt(id.substring(4, 6), 10);
+
+  // 2) Decide century via two-digit cutoff
+  const now = new Date();
+  const currentTwoDigit = now.getFullYear() % 100; // e.g., 25 in 2025
+  let fullYear = yy > currentTwoDigit ? 1900 + yy : 2000 + yy;
+
+  // 3) Construct the birth date (months are 0-based)
+  // Validate: JS Date will auto-roll invalid dates (e.g., 2025-02-31 → Mar 2),
+  // so check that components match after construction.
+  const birth = new Date(fullYear, mm - 1, dd);
+  const valid =
+    birth.getFullYear() === fullYear &&
+    birth.getMonth() === mm - 1 &&
+    birth.getDate() === dd;
+  if (!valid) {
+    throw new Error("Invalid ID date component (YYMMDD is not a real date).");
+  }
+
+  // 4) Exact age (account for whether birthday has occurred this year)
+  let age = now.getFullYear() - birth.getFullYear();
+  const hasBirthdayPassed =
+    (now.getMonth() > birth.getMonth()) ||
+    (now.getMonth() === birth.getMonth() && now.getDate() >= birth.getDate());
+  if (!hasBirthdayPassed) age--;
+
+  // 5) Century fallback: if age implausibly low, shift back a century
+  if (age < minAgeFallback) {
+    fullYear -= 100; // move to 1900s
+    const birth1900s = new Date(fullYear, mm - 1, dd);
+
+    let age2 = now.getFullYear() - birth1900s.getFullYear();
+    const hasBirthdayPassed2 =
+      (now.getMonth() > birth1900s.getMonth()) ||
+      (now.getMonth() === birth1900s.getMonth() && now.getDate() >= birth1900s.getDate());
+    if (!hasBirthdayPassed2) age2--;
+
+    // Only adopt the fallback if it results in a sensible age
+    if (age2 >= minAgeFallback) {
+      age = age2;
+    }
+  }
+
+  return age;
 }
