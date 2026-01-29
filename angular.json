@@ -89,6 +89,48 @@
               ],
               "outputHashing": "all"
             },
+            "uat": {
+               "budgets": [
+                  {
+                    "type": "initial",
+                    "maximumWarning": "3mb",
+                    "maximumError": "5mb"
+                  },
+                  {
+                    "type": "anyComponentStyle",
+                    "maximumWarning": "500kb",
+                    "maximumError": "1mb"
+                  }
+                ],
+                "fileReplacements": [
+                  {
+                    "replace": "src/environments/environment.ts",
+                    "with": "src/environments/environment.uat.ts"
+                  }
+                ],
+                "outputHashing": "all"                
+              },
+              "qa": {
+                 "budgets": [
+                  {
+                    "type": "initial",
+                    "maximumWarning": "3mb",
+                    "maximumError": "5mb"
+                  },
+                  {
+                    "type": "anyComponentStyle",
+                    "maximumWarning": "500kb",
+                    "maximumError": "1mb"
+                  }
+                ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.qa.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
             "development": {
               "buildOptimizer": false,
               "optimization": false,
@@ -105,6 +147,12 @@
           "configurations": {
             "production": {
               "browserTarget": "dsd_demo:build:production"
+            },
+              "uat": {
+              "browserTarget": "dsd_demo:build:uat"
+            },
+            "qa": {
+              "browserTarget": "dsd_demo:build:qa"
             },
             "development": {
               "browserTarget": "dsd_demo:build:development"

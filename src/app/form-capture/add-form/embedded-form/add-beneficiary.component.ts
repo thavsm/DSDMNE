@@ -262,6 +262,7 @@ refreshPageList() {
   refreshFormsList() {
     this.spinner.show();
     //this.locationID = this.formData.provinceID;
+    //this.locationID=this.userData.location;
     this.service.getEmbeddedCapturedForms(this.EmbeddedFieldID, this.EmbeddedParentID,this.locationID).subscribe(data => {
       this.gridView = data;
       this.spinner.hide();
@@ -458,6 +459,7 @@ refreshPageList() {
   }
 
   savePage() {
+    
     var errorMessage = "Please fill in ";
     let obj = [];
         this.formDesign.forEach(field => {
@@ -1260,8 +1262,8 @@ console.log('Fields: '+field["data"]);
       message: message
     }, {
       type: type,
-      delay: 1500,
-      timer: 1500,
+      delay: 0,
+      timer: 0,
       placement: {
         from: from,
         align: align
@@ -1876,7 +1878,7 @@ checkAge(){
               'center',
               this.result,   
               '',
-              'info'         
+              'danger'         
             );
           }
           else{

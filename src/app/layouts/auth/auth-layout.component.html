@@ -6,9 +6,9 @@
       <div  style="background-image: url('./assets/img/HomeBanner.jpg');width: 280px;height: 80px;">
 
       </div>
-      <p style="font-size:x-large;font-weight:normal;color:#964400;font-family:Verdana, Geneva, Tahoma, sans-serif;">Building a Caring Society. Together.</p>
+       <p *ngIf="isProd"  style="font-size:x-large;font-weight:normal;color:#964400;font-family:Verdana, Geneva, Tahoma, sans-serif;">Building a Caring Society. Together.</p>
       <!-- <br> -->
-      <!-- <p style="font-size:x-large;font-weight:normal;color:#FF0000;font-family:Verdana, Geneva, Tahoma, sans-serif;">TEST and TRAINING ENVIRONMENT.</p> -->
+      <p *ngIf="!isProd" style="font-size:x-large;font-weight:normal;color:#FF0000;font-family:Verdana, Geneva, Tahoma, sans-serif;">TEST and TRAINING ENVIRONMENT.</p>
       <!-- <a class="navbar-brand d-none d-sm-none d-md-block" [routerLink]="['/dashboard']">Monitoring and Evaluation</a> -->
     </div>
     <!-- <button mat-button class="navbar-toggler" type="button" (click)="sidebarToggle()">

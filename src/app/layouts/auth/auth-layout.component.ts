@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-layout',
@@ -11,6 +12,8 @@ export class AuthLayoutComponent implements OnInit {
   private sidebarVisible: boolean;
   mobile_menu_visible: any = 0;
   private _router: Subscription;
+
+  isProd = environment.isProductionEnv;
 
   constructor(private router: Router, private element: ElementRef) {
       this.sidebarVisible = false;

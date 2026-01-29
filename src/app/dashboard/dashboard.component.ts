@@ -48,7 +48,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   }
 
    refreshFormsList() {
-    // this.hideButton = false;
+    //this.hideButton = false;
     this.spinner.show();
     //this.locationID = this.formData.provinceID;
     this.Formservice.getEmbeddedCapturedFormsDashboard(this.UserID,this.locationID).subscribe(data => {

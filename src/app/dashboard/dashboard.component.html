@@ -80,7 +80,7 @@
       </div>
     </div>
     
-  <div class="row">
+   <div class="row">
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-rose card-header-icon">
@@ -143,36 +143,7 @@
           </kendo-grid>
             </div>
 
-            <!-- <div class="row">
-              <div class="col-md-12">
-                <table id="tblProcess" class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Action Required</th>
-                      <th>Process</th>
-                      <th>PostedOn</th>
-                      <th>User</th>
-                      <th>Task</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr *ngFor="let obj of data1;let i = index">
-                      <td>{{ i+1 }}</td>
-                      <td>{{ obj['actionDescription'] }}</td>
-                      <td><a [routerLink]="['/workflow']" [queryParams]="{ PID: obj['processID'] }">{{
-                          obj['processName'] }}</a></td>
-                      <td>{{ obj['postedOn'] }}</td>
-                      <td>{{ obj['userName'] }}</td>
-                      <td><a [routerLink]="['/taskdetail']"
-                          [queryParams]="{ workflowid: obj['workflowID'], taskid: obj['taskID'] }">View Task</a></td>
-                    </tr>
-                  </tbody>
-
-                </table>
-              </div>
-
-            </div> -->
+            
           </div>
         </div>
       </div>
