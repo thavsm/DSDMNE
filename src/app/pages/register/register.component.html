@@ -75,6 +75,40 @@
                           Please insert 10 digit phone number</span>
                     </div>
                   </div>
+                   <div class="col-md-5 ml-auto">
+                    <div class="form-group has-default">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="material-icons">assignment_ind</i>
+                          </span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Persal/Employee Number..." formControlName="PersalNo" pattern="[0-9 ]{10}" maxlength="10">
+                      </div>
+                      <span class="text-danger ml-5"
+                        *ngIf="formModel.get('PersalNo').touched && formModel.get('PersalNo').errors?.required">This
+                        field is mandatory.</span>
+                      <span class="text-danger ml-5"
+                        *ngIf="formModel.get('PersalNo').touched && formModel.get('PersalNo').errors?.PersalNo">Invalid
+                        PersalNo address.</span>
+                    </div>
+                  </div>
+                  <div class="col-md-5 mr-auto">
+                    <div class="form-group has-default">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">
+                            <i class="material-icons">badge</i>
+                          </span>
+                        </div>
+                        <input type="tel" class="form-control" placeholder="ID Number..." formControlName="IDNumber" pattern="[0-9]{13}$" maxlength="13"  onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                      </div>
+                      <span class="text-danger ml-5"
+                        *ngIf="formModel.get('IDNumber').touched && formModel.get('IDNumber').errors?.required">This field is mandatory.</span>
+                        <span class="text-danger ml-5" *ngIf="formModel.controls['IDNumber'].errors?.pattern">
+                          Please insert 13 digit ID number</span>
+                    </div>
+                  </div>
                   <div class="col-md-10 ml-auto">
                     <div class="form-group has-default">
                       <div class="input-group">

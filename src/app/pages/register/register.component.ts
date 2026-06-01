@@ -107,6 +107,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
       ServicePointID:[''],
       ServicePointID2:[''],
       FacilityID:[''],
+      PersalNo: ['',Validators.required],
+      IDNumber: ['',Validators.required],
       //,     Programme:['']
     }, 
     { validators: this.comparePasswords 
@@ -216,7 +218,7 @@ timer: 1500,
     onSubmit() {
       //this.saving = true;
       console.log(this.formModel.value);
-      if(this.formModel.value.FullName =='' || this.formModel.value.Surname =='' || this.formModel.value.Email =='' || this.formModel.value.PhoneNumber =='' || this.formModel.value.Role =='' || this.formModel.value.RoleType =='' || this.formModel.value.LocationType ==''){
+      if(this.formModel.value.FullName =='' || this.formModel.value.Surname =='' || this.formModel.value.Email =='' || this.formModel.value.PhoneNumber =='' || this.formModel.value.Role =='' || this.formModel.value.RoleType =='' || this.formModel.value.LocationType =='' || this.formModel.value.PersalNo =='' || this.formModel.value.IDNumber ==''){
         this.showNotification('top','right','Please complete all fields.','Error', 'info');
       }    
       else{  
@@ -309,7 +311,10 @@ timer: 1500,
             DistrictID: locDistrict,
             ServicePointID: locSPoint,
             ServicePointIDs: locSPoints,
-            FacilityID: locFacility
+            FacilityID: locFacility,
+            PersalNo: this.formModel.value.PersalNo,
+            IDNumber: this.formModel.value.IDNumber
+            //Programme: this.formModel.value.Programme
           };
           //let bd ={Email: this.formModel.Email, Password: this.formModel.Password, FullName: this.formModel.FullName};
           this.service.register(body).subscribe(

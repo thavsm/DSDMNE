@@ -59,6 +59,7 @@ export class UserService {
 
   
   getAllUsers(){
+    
     return this.http.get<any>(this.BaseURI + '/ApplicationUser');
   }
 
@@ -96,7 +97,7 @@ export class UserService {
   }
 
   getUserProfile() {
-    
+   
     return this.http.get(this.BaseURI + '/UserProfile');
   }
 

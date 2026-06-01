@@ -25,8 +25,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   public templabeldata: number[] = [];
   public data1: any = [];
   public gridView: any[];
-  public DisplayOne: string = "Display 1";
-  public DisplayTwo: string = "Display 2";
+  public DisplayOne: string = "Name";
+  public DisplayTwo: string = "Surname";
   public pageSize = 5;
   public formList: any = [];
   public pageSizes: Array<number | PageSizeItem> = [5, 10, 20, {

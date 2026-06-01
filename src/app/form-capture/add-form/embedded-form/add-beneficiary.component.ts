@@ -13,6 +13,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { merge } from 'rxjs';
 import { MatAccordion, MatExpansionPanel } from '@angular/material/expansion';
 import { EmbeddedFormComponent } from 'src/app/form-capture/add-form/embedded-form/embedded-form.component';
+import { stringify } from 'querystring';
 declare var $: any;
 
 export interface DialogData {
@@ -113,6 +114,7 @@ export class AddBeneficiaryComponent implements OnInit {
 
   IndicatorData: any;
  locationID: any;
+ districtID: any;
  userData:any;
  nodeName:any;
   isViewOnly: any;
@@ -124,8 +126,8 @@ export class AddBeneficiaryComponent implements OnInit {
 
   isCaptureOrEdit:string="No";
 
-  DisplayOne: string = "Display 1";
-  DisplayTwo: string = "Display 2";
+  DisplayOne: string = "Name";
+  DisplayTwo: string = "Surname";
 
   constructor(public dialog: MatDialog, private service: FormbuilderService, private spinner: NgxSpinnerService, public dialogRef: MatDialogRef<EmbeddedFormComponent>, private userService: UserService,@Inject(MAT_DIALOG_DATA) public data: any,) {
     
@@ -166,8 +168,10 @@ export class AddBeneficiaryComponent implements OnInit {
         console.log('userdata: '+this.userData);
         this.locationID=this.userData['provinceID'];
         this.nodeName=this.userData['nodeName'];
+        this.districtID=this.userData['districtID'];
         this.getFormID();
         this.refreshPageList();
+        //alert(JSON.stringify(this.userData['districtID'], null, 2));
         // this.refreshFormsList();
       },
       err => {
@@ -241,6 +245,10 @@ export class AddBeneficiaryComponent implements OnInit {
   
 }
 refreshPageList() {
+  
+  if(localStorage.getItem('fieldEmbeddedFormID1')==null){
+    localStorage.setItem('fieldEmbeddedFormID1','5152');
+  }
     this.service.getFormPages(parseInt(localStorage.getItem('fieldEmbeddedFormID1'))).subscribe(data => {
       this.pages = data;
       this.getDesignPerPage(this.pages[0].pageGUID);
@@ -1864,8 +1872,8 @@ checkAge(){
         this.IndicatorIDNo = emb;
         console.log('IndicatorID: '+this.IndicatorIDNo);
         });
-        // this.service.checkIDinMonth(idnumber, this.thisMonth,this.IndicatorIDNo).subscribe(res => {
-          this.service.checkIDinMonth(idnumber, this.thisMonth).subscribe(res => {
+         this.service.checkIDinMonth(idnumber, this.thisMonth,this.EmbeddedFieldID, this.districtID).subscribe(res => {
+         // this.service.checkIDinMonth(idnumber, this.thisMonth).subscribe(res => {
           this.result=res;
 
           // if(this.result==1)

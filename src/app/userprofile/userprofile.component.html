@@ -32,6 +32,22 @@
                             <input matInput [(ngModel)]="formData['phoneNumber']" (input)="updateFormData()">
                         </mat-form-field>
                     </div>
+                       <div class="col-md-6">
+                        <mat-form-field appearance="outline">
+                            <mat-label>IDNumber</mat-label>
+                            <input matInput [(ngModel)]="formData['idNumber']" name="idNumber"
+                            required
+                            maxlength="13"
+                            pattern="^[0-9]{13}$" (input)="updateFormData()" onkeypress="return event.charCode >= 48 && event.charCode <= 57">                            
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field appearance="outline">
+                            <mat-label>Persal Number</mat-label>
+                            <input matInput [(ngModel)]="formData['persalNo']" required
+                            maxlength="10" (input)="updateFormData()">
+                        </mat-form-field>
+                    </div>
                     <div class="col-md-10">
                         <mat-form-field appearance="outline">
                             <mat-label>Role Designation</mat-label>

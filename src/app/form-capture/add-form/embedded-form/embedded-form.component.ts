@@ -113,6 +113,7 @@ export class EmbeddedFormComponent implements OnInit {
 
   IndicatorData: any;
  locationID: any;
+ districtID: any;
  userData:any;
  nodeName:any;
   isViewOnly: any;
@@ -124,8 +125,8 @@ export class EmbeddedFormComponent implements OnInit {
   getformName:any;
   Message:any;
   isCaptureOrEdit:string="No";
-  DisplayOne: string = "Display 1";
-  DisplayTwo: string = "Display 2";
+  DisplayOne: string = "Name";
+  DisplayTwo: string = "Surname";
 
   constructor(public dialog: MatDialog, private service: FormbuilderService, private spinner: NgxSpinnerService, public dialogRef: MatDialogRef<FormAddComponent>, private userService: UserService) {
     this.IndicatorData = localStorage.getItem('IndicatorData') || '';
@@ -169,6 +170,7 @@ export class EmbeddedFormComponent implements OnInit {
         console.log('userdata: '+this.userData);
         this.locationID=this.userData['provinceID'];
         this.nodeName=this.userData['nodeName'];
+        this.districtID=this.userData['districtID'];
         this.getFormID();
         this.refreshFormsList();
       },
@@ -296,6 +298,10 @@ export class EmbeddedFormComponent implements OnInit {
 
 
   showDisabledButtonAlert() {
+     
+     if(this.Message =='Undefined' || this.Message =='' || this.Message == null){
+      this.Message="The beneficiaries captured matches the total number indicated";
+     }
     Swal.fire({
       title: "<h5 style='color:white;font-weight:400'>"+this.Message+"</h5>",
     toast: true,
@@ -308,6 +314,7 @@ export class EmbeddedFormComponent implements OnInit {
   }
   
   createForm() {
+   
       this.spinner.show();
       let formCaptureData = {
         formCaptureID: 0,
@@ -364,8 +371,8 @@ export class EmbeddedFormComponent implements OnInit {
         this.formList.filterPredicate = function (data, filter: string): boolean {
           return data.formName.toLowerCase().includes(filter);
         };
-        this.DisplayOne = "Display One";
-        this.DisplayTwo = "Display Two";
+        this.DisplayOne = "Name";
+        this.DisplayTwo = "Surname";
       });
    
   }
@@ -2085,8 +2092,8 @@ checkAge(){
         this.IndicatorIDNo = emb;
         console.log('IndicatorID: '+this.IndicatorIDNo);
         });
-        // this.service.checkIDinMonth(idnumber, this.thisMonth,this.IndicatorIDNo).subscribe(res => {
-          this.service.checkIDinMonth(idnumber, this.thisMonth).subscribe(res => {
+         this.service.checkIDinMonth(idnumber, this.thisMonth,this.IndicatorIDNo, this.districtID).subscribe(res => {
+          //this.service.checkIDinMonth(idnumber, this.thisMonth).subscribe(res => {
           this.result=res;
 
           if(this.result==1)

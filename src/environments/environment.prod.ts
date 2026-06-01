@@ -3,7 +3,8 @@ export const environment = {
   isProductionEnv: true,
 
   //// DSD LIVE
-  REPORT_SERVER: 'https://eme.dsd.gov.za/MNEReportViewerSSRS/Default?ID=',  
+  //REPORT_SERVER: 'https://eme.dsd.gov.za/MNEReportViewerSSRS/Default?ID=',  
+  REPORT_SERVER: 'https://testportal.dsd.gov.za/MNEReportViewerSSRSLive/Default?ID=',
 
   resetPasswordLink: 'https://eme.dsd.gov.za/pages/login',
   

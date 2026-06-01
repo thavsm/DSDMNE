@@ -61,14 +61,17 @@ export class UserProfileComponent implements OnInit {
       this.isDistrict=false;
       this.isSP=false;
       this.isFac=false;
+
+     
     }
 
     // closePopup(){
     //   this.dialogRef.close();
-    // }
+    // }  
 
     public ngOnInit() {
       this.loadLookups();
+       
       
       if(this.isParent == undefined)
       {
@@ -85,6 +88,7 @@ export class UserProfileComponent implements OnInit {
             this.service.getUserProfile().subscribe(
               res => {
                 this.formData = res['formData'];
+               
                 console.log('formdata: '+this.formData);
                 console.log(this.formData["active"]);
                 switch(this.formData["locationType"])

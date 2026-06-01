@@ -301,8 +301,8 @@ export class FormbuilderService {
   }
 
 
-  checkIDinMonth(idnumber: any,thisMonth: any){
-    return this.http.get(this.APIUrl +idnumber+ '/'+thisMonth+'/GetIDMonthExists',
+  checkIDinMonth(idnumber: any,thisMonth: any, fieldId: any, districtID: any) {
+    return this.http.get(this.APIUrl +idnumber+ '/'+thisMonth+  '/' +fieldId+ '/' +districtID+'/GetIDMonthExists',
     { responseType: 'text' } );
   }
   getPageStatus(formCaptureID: any, pageGUID: any) {

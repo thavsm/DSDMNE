@@ -172,7 +172,13 @@ export class IndicatorapprovalComponent implements OnInit {
       this.year = this.formData["year"];
       this.monthID = this.formData["month"];
 
-      switch(this.monthID)
+      // Calculate previous month (wrap around if January)
+      let prevMonthID = this.monthID - 1;
+      if (prevMonthID === 0) {
+        prevMonthID = 12;
+      }
+
+      switch(prevMonthID)
       {
         case 1: this.monthName = 'January'; break;
         case 2: this.monthName = 'February'; break;

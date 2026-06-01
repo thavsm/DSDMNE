@@ -3,6 +3,7 @@ import { UserService } from 'src/app/shared/user.service';
 import {NgxSpinner, NgxSpinnerService} from 'ngx-spinner';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { get } from 'jquery';
 
 declare const $: any;
 
@@ -161,6 +162,41 @@ export class TaskDetailComponent implements OnInit {
       }
 
   completeTask() {
+// to do check if 
+const urlObj = new URLSearchParams(window.location.search);
+const tid = urlObj.get('taskid');
+const taskId = tid ? parseInt(tid, 10) : null;
+
+let taskpend = taskId !== null 
+  ? this.taskArray.find(obj1 => obj1.id === taskId) 
+  : undefined;
+
+if (taskpend) {
+  const postedDate = new Date(taskpend.postedOn); 
+  const today = new Date();
+
+ 
+
+  const isSameDate =
+    postedDate.getFullYear() === today.getFullYear() &&
+    postedDate.getMonth() === today.getMonth() &&
+    postedDate.getDate() === today.getDate();
+
+  if (isSameDate && this.pid !== 1 && taskpend.nodeID==2) {
+    this.showNotification(
+      'top',
+      'center',
+      'Have to wait until the next business day to approve this task',
+      '',
+      'danger'
+    );
+    return;
+  }
+}
+
+
+
+
 
     Swal.fire({
       title: 'Are you sure you want to approve?',
