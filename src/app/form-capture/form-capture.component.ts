@@ -78,6 +78,7 @@ export class FormCaptureComponent implements OnInit {
 
   addForm(dataItem:any) {
     console.log("dataItem: "+dataItem);
+   // alert(JSON.stringify(dataItem));
     if(dataItem.captureID==0){
       this.spinner.show();
       let formCaptureData = {
@@ -254,6 +255,7 @@ export class FormCaptureComponent implements OnInit {
         this.userLocation=location;
           this.service.getFormCaptureCountPerLocation(location,this.userDetail.formData.userID).subscribe(result => {
             this.data =  result;
+          
             console.log(this.data);
             if(this.data.length>0){
               this.userLocationLevel=this.data[0].levelID;

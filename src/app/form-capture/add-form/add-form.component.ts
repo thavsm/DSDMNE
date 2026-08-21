@@ -96,6 +96,8 @@ export class AddFormComponent implements OnInit {
     this.formData = JSON.parse(localStorage.getItem('formCaptureDetails') || '{}');
 
     this.IndicatorData = localStorage.getItem('IndicatorData') || '';
+
+  
     //this.IndicatorData='80';
     this.tabIndex = parseInt(localStorage.getItem('tabIndex'));
     this.ClickedRow = function (index) {
@@ -121,6 +123,7 @@ export class AddFormComponent implements OnInit {
         this.refreshAttachmentList();
         this.refreshPhotoList();
         this.refreshCommentList();
+        
       },
       err => {
         console.log(err);
@@ -660,6 +663,7 @@ export class AddFormComponent implements OnInit {
   refreshPageList() {
     this.service.getFormPages(this.formData.formID).subscribe(data => {
       this.pages = data;
+     // alert(JSON.stringify(this.formData));
       this.getDesignPerPage(this.pages[0].pageGUID);
       this.currentPage = this.pages[0];
       this.firstPage = this.pages[0];
@@ -729,6 +733,7 @@ export class AddFormComponent implements OnInit {
     this.spinner.show();
     localStorage.setItem('cloneNumberForEdit', "0");
     var locationRole = this.formData.roleID;
+    
     if (locationRole == 0) {
       locationRole = this.userDetail.formData.role;
     }

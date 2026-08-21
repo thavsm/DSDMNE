@@ -27,6 +27,9 @@ export class TaskDetailComponent implements OnInit {
   audittaskArray: any[];
   userID: any;
   userDetail: any;
+  wkid!: number;
+  tid!: number;
+  matched!: number;
 
   roles = [
     {value: '1', viewValue: 'Admin'},
@@ -92,13 +95,21 @@ export class TaskDetailComponent implements OnInit {
 
   public ngOnInit() {
     
-    const urlObj = new URLSearchParams(window.location.search);
-    const wkid = urlObj.get('workflowid');
-    const tid = urlObj.get('taskid');
-    //this.pid = urlObj.get('pid');
+    // const urlObj = new URLSearchParams(window.location.search);
+    // const wkid = urlObj.get('workflowid');
+    // const tid = urlObj.get('taskid');
+    // this.matched = urlObj.get('matched');
+    const nav = this.router.getCurrentNavigation();
+    const state = history.state as { workflowid?: number; taskid?: number; matched?: number };
+//const state = nav?.extras.state as { workflowid: number, taskid: number, matched: number };
+this.wkid= state.workflowid;
+this.tid = state.taskid;
+this.matched = state.matched;
+
+    
     let body = {
-        WorkflowID: parseInt(wkid),
-        TaskID: parseInt(tid),
+        WorkflowID: this.wkid,//parseInt(this.wkid),
+        TaskID: this.tid,// parseInt(tid),
         ProcessID:0
       };
 
@@ -107,7 +118,7 @@ export class TaskDetailComponent implements OnInit {
         res => {
           this.userDetail = res['formData'];
           console.log(this.userDetail);
-          this.getAuditTrail(wkid, tid, this.userDetail.userID);
+          this.getAuditTrail(this.wkid, this.tid, this.userDetail.userID);
         },
         err => {
           console.log(err);
@@ -117,13 +128,14 @@ export class TaskDetailComponent implements OnInit {
     this.service.getuserTask(body).subscribe(
         res => {
           console.log(res['workflow']);
+           console.log(body);
           this.workflowData = res['workflow'];
           this.formData = res['formData'];
           this.pid = res['workflow']['processID'];
           this.taskArray = res['workflow']['list'];
-          //this.audittaskArray = res['workflow']['auditTrailList'];
+         
           let taskpend = this.taskArray.find((obj1: { id: number; }) => {
-            return obj1.id == parseInt(tid)
+            return obj1.id == this.tid// parseInt(tid)
         });
         
         if (taskpend !== undefined) {
@@ -150,10 +162,13 @@ export class TaskDetailComponent implements OnInit {
       
       getAuditTrail(wkid:any, tid:any, userid:string){
         this.userID = this.userDetail.userID;
+       
+        //this.userID =
         //sessionStorage.getItem("wfUser");
         this.service.getTaskAuditTrail_User(parseInt(wkid),parseInt(tid), userid).subscribe(taskuser=>{
           this.audittaskArray=taskuser;
-          console.log(this.audittaskArray);
+          // console.log("audittaskArray-->"+this.audittaskArray);
+          // alert(JSON.stringify(this.audittaskArray));
         }
       // this.service.getTaskAuditTrail_User(parseInt(wkid),parseInt(tid),this.nextUserID).subscribe(taskuser=>{
       //   this.audittaskArray=taskuser;
@@ -163,9 +178,13 @@ export class TaskDetailComponent implements OnInit {
 
   completeTask() {
 // to do check if 
-const urlObj = new URLSearchParams(window.location.search);
-const tid = urlObj.get('taskid');
-const taskId = tid ? parseInt(tid, 10) : null;
+// const urlObj = new URLSearchParams(window.location.search);
+// const tid = urlObj.get('taskid');
+
+
+const state = history.state as { workflowid?: number; taskid?: number; matched?: number };
+this.tid = state.taskid;
+const taskId = this.tid;
 
 let taskpend = taskId !== null 
   ? this.taskArray.find(obj1 => obj1.id === taskId) 
@@ -210,10 +229,20 @@ if (taskpend) {
       cancelButtonColor: '#000000',
       allowEscapeKey:true
     }).then((result) => {
-      if (result.value) {
-        this.spinner.show();
-        const wkid =new URLSearchParams(window.location.search).get('workflowid');
-        const tid =new URLSearchParams(window.location.search).get('taskid');
+      // if (result.value) {
+      //   this.spinner.show();
+      //   const wkid =new URLSearchParams(window.location.search).get('workflowid');
+      //   const tid =new URLSearchParams(window.location.search).get('taskid');
+if (result.value) {
+  this.spinner.show();
+  let wkidStr = new URLSearchParams(window.location.search).get('workflowid');
+let tidStr  = new URLSearchParams(window.location.search).get('taskid');
+
+if (wkidStr === null) wkidStr = this.wkid.toString();
+if (tidStr === null) tidStr = this.tid.toString();
+
+
+        
         
         let appUserModel =this.formData;
         
@@ -232,8 +261,8 @@ if (taskpend) {
       }
 
         let formData1 = {
-          WorkflowID: parseInt(wkid),
-          TaskID: parseInt(tid),
+          WorkflowID: parseInt(wkidStr),
+          TaskID: parseInt(tidStr),
           ProcessID:0,
           ActionTakenID: parseInt(this.actTakenID),
           NextUserID: parseInt(this.nextUserID),
@@ -282,14 +311,16 @@ if (taskpend) {
       if (result.value) {
 
         this.spinner.show();
-          const wkid =new URLSearchParams(window.location.search).get('workflowid');
-          const tid =new URLSearchParams(window.location.search).get('taskid');
+        const wkid=this.wkid;
+        const tid=this.tid;
+          // const wkid =new URLSearchParams(window.location.search).get('workflowid');
+          // const tid =new URLSearchParams(window.location.search).get('taskid');
           
           let appUserModel = this.formData;
 
           let formData1 = {
-            WorkflowID: parseInt(wkid),
-            TaskID: parseInt(tid),
+            WorkflowID: wkid,
+            TaskID: tid,
             ProcessID:0,
             ActionTakenID: 0,
             NextUserID: -1,

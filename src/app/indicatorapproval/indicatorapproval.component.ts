@@ -65,11 +65,15 @@ export class IndicatorapprovalComponent implements OnInit {
   
   ngOnInit(): void {
 
-    this.wfid = Number(new URLSearchParams(window.location.search).get('workflowid'));
-    this.taskID = Number(new URLSearchParams(window.location.search).get('taskid'));
+    // this.wfid = Number(new URLSearchParams(window.location.search).get('workflowid'));
+    // this.taskID = Number(new URLSearchParams(window.location.search).get('taskid'));
+
+    const state = history.state as { workflowid?: number; taskid?: number; matched?: number };
+  this.wfid = state.workflowid;
+  this.taskID = state.taskid;
     
-    console.log(this.wfid);
-    console.log(this.taskID);
+    // console.log(this.wfid);
+    // console.log(this.taskID);
     
     if(Object.keys(this.data).length ==0) {
       this.userService.getUserProfile().subscribe(

@@ -38,7 +38,7 @@
                                 </mat-form-field>
                             </div>
                             <div class="col-sm-4">
-                                <button id="btnSearch" class="btn btn-primary mr-1" (click)="completeTask()">Complete</button>
+                                <button id="btnSearch" class="btn btn-primary mr-1" *ngIf="matched==1" (click)="completeTask()">Complete</button>
                                 <button id="btnReject" class="btn btn-primary" *ngIf="pid==1" (click)="rejectTask()">Reject</button>
                             </div>
                             <div class="col-sm-12" *ngIf="pid==1; else elseBlock">

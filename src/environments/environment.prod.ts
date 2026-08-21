@@ -3,13 +3,19 @@ export const environment = {
   isProductionEnv: true,
 
   //// DSD LIVE
-  //REPORT_SERVER: 'https://eme.dsd.gov.za/MNEReportViewerSSRS/Default?ID=',  
-  REPORT_SERVER: 'https://testportal.dsd.gov.za/MNEReportViewerSSRSLive/Default?ID=',
+  REPORT_SERVER: 'https://eme.dsd.gov.za/MNEReportViewerSSRS/Default?ID=',  
+  //REPORT_SERVER: 'https://testportal.dsd.gov.za/MNEReportViewerSSRSLive/Default?ID=',
 
   resetPasswordLink: 'https://eme.dsd.gov.za/pages/login',
   
-  API_URL: 'https://testportal.dsd.gov.za/MNE_DSD_API_LIVE/api',
-  API_FormURL: 'https://testportal.dsd.gov.za/MNE_DSD_API_LIVE/1/',
+  // API_URL: 'https://testportal.dsd.gov.za/MNE_DSD_API_LIVE/api',
+  // API_FormURL: 'https://testportal.dsd.gov.za/MNE_DSD_API_LIVE/1/',
+
+  
+  
+   API_URL: 'https://eme.dsd.gov.za/MNE_DSD_API/api',
+   API_FormURL: 'https://eme.dsd.gov.za/MNE_DSD_API/1/', 
+
   API_FormURLForHelp: 'http://eme.dsd.gov.za',
   REPORT_URL: 'DSD MnE/',
 

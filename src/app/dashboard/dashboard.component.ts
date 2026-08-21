@@ -221,6 +221,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.service.getInbox().subscribe(
       res => {
         this.data1 = res;
+        //alert(JSON.stringify(this.data1));
       },
       err => {
         console.log(err);

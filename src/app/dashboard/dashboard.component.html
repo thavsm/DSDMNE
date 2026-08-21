@@ -38,7 +38,13 @@
 
                 <kendo-grid-column  title="Task" filter="text" [width]="6" [filterable]="false">
                   <ng-template kendoGridCellTemplate let-dataItem>
-                    <a  style="color:blue" [routerLink]="['/taskdetail']" [queryParams]="{ workflowid: dataItem.workflowID, taskid: dataItem.taskID }">View Task</a>
+                    <!-- <a  style="color:blue" [routerLink]="['/taskdetail']" [queryParams]="{ workflowid: dataItem.workflowID, taskid: dataItem.taskID, matched: dataItem.matched }">View Task</a> -->
+                  <a style="color:blue" 
+   [routerLink]="['/taskdetail']" 
+   [state]="{ workflowid: dataItem.workflowID, taskid: dataItem.taskID, matched: dataItem.matched }">
+   View Task
+</a>
+
                   </ng-template>
                 </kendo-grid-column>
 
@@ -98,8 +104,8 @@
             <kendo-grid-column field="dateSent" title="Date Sent" [width]="10">
             </kendo-grid-column>
   
-            <kendo-grid-column field="timeSent" title="Time Sent" [width]="10">
-            </kendo-grid-column>
+            <!-- <kendo-grid-column field="timeSent" title="Time Sent" [width]="10">
+            </kendo-grid-column> -->
 
             <kendo-grid-column field="displayableOne" title="{{DisplayOne}}" [width]="10">
             </kendo-grid-column>
@@ -115,9 +121,12 @@
 
             <kendo-grid-column field="errorCode" title="Error Code" [width]="18">
             </kendo-grid-column>
+             <kendo-grid-column field="deceasedDate" title="Deceased Date" [width]="10">
+            </kendo-grid-column>
 
             <kendo-grid-column field="indicatorName" title="Indicator" [width]="10">
             </kendo-grid-column>
+           
         <kendo-grid-column  [width]="6">
                 <ng-template kendoGridCellTemplate let-dataItem>
                   <mat-button-toggle value="editFrom" mat-icon-button (click)="editForm(dataItem)">
@@ -125,13 +134,13 @@
                   </mat-button-toggle>
                 </ng-template>
               </kendo-grid-column>
-              <kendo-grid-column  [width]="6">
+              <!-- <kendo-grid-column  [width]="6">
                 <ng-template kendoGridCellTemplate let-dataItem>
                   <mat-button-toggle value="deleteForm" mat-icon-button (click)="clickDelete(dataItem)"  >
                     <mat-icon matTooltip="Delete" style="color: red;">delete</mat-icon>
                   </mat-button-toggle>
                 </ng-template>
-              </kendo-grid-column> 
+              </kendo-grid-column>  -->
             <ng-template kendoPagerTemplate let-totalPages="totalPages" let-currentPage="currentPage">
               <kendo-pager-prev-buttons></kendo-pager-prev-buttons>             
               <kendo-pager-numeric-buttons [buttonCount]="10"></kendo-pager-numeric-buttons>
